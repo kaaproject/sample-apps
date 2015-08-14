@@ -1,0 +1,16 @@
+.idea/
+*.iml
+*.iws
+
+# Maven
+log/
+target/
+
+# Java
+*.class
+*.war
+*.ear
+
+#Kaa
+*.private
+*.log

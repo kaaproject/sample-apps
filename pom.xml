@@ -1,0 +1,220 @@
+<!--
+  Copyright 2014-2015 CyberVision, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+    <groupId>org.kaaproject.kaa</groupId>
+    <artifactId>examples</artifactId>
+    <version>0.7.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Sample applications for Kaa Sandbox</name>
+    <url>http://kaaproject.org</url>
+
+    <properties>
+        <main.dir>${basedir}</main.dir>
+        <kaa.version>[0.7.2-SNAPSHOT,)</kaa.version>
+        <jackson.version>2.4.1</jackson.version>
+        <avro.version>1.7.5</avro.version>
+        <junit.version>4.11</junit.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <logback.version>1.1.2</logback.version>
+        <mockito.version>1.9.5</mockito.version>
+        <jetty.version>9.2.2.v20140723</jetty.version>
+    </properties>
+
+    <modules>
+        <module>common</module>
+        <!--module>robotrun</module-->
+        <module>iotworld</module>
+        <module>smarthousedemo</module>
+        <module>configurationdemo</module>
+        <module>notificationdemo</module>
+        <module>datacollectiondemo</module>
+        <module>eventdemo</module>
+        <module>cityguide</module>
+        <module>cellmonitor</module>
+        <module>notificationdemo-android</module>
+        <module>photoframe</module>
+        <module>verifiersdemo</module>
+        <module>powerplant</module>
+        <module>powerplant-dashboard</module>
+        <module>econais</module>
+        <module>citylights-controller</module>
+        <module>twitterled</module>
+        <module>vehicletelemetry</module>
+        <module>connectedcar</module>
+        <module>powerplant-android</module>
+        <module>powerplant-couchbase-proxy</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.5.1</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                </plugin>
+                <!--This plugin's configuration is used to store Eclipse 
+                    m2e settings only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.apache.maven.plugins
+                                        </groupId>
+                                        <artifactId>
+                                            maven-dependency-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [2.1,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>
+                                                copy-dependencies
+                                            </goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+			    </pluginExecutions>                
+		        </lifecycleMappingMetadata>
+		    </configuration>
+		</plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+               <groupId>org.kaaproject.kaa.examples</groupId>
+               <artifactId>common</artifactId>
+               <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kaaproject.kaa.server.common</groupId>
+                <artifactId>admin-rest-client</artifactId>
+                <version>${kaa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kaaproject.kaa.common</groupId>
+                <artifactId>core</artifactId>
+                <version>${kaa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro</artifactId>
+                <version>${avro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-server</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>typesafe</id>
+            <name>Typesafe Repository</name>
+            <url>http://repo.typesafe.com/typesafe/releases/</url>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>http://repo1.maven.org/maven2/</url>
+        </repository>
+    	<repository>
+            <id>twitter-twttr</id>
+            <url>http://maven.twttr.com/</url>
+        </repository>
+        <repository>
+            <id>repository.kaaproject</id>
+            <url>http://repository.kaaproject.org/repository/internal/</url>
+        </repository>
+        <repository>
+            <id>repository.kaaproject.shapshots</id>
+            <url>http://repository.kaaproject.org/repository/snapshots/</url>
+        </repository>
+    </repositories>
+
+</project>

@@ -35,6 +35,7 @@
         <logback.version>1.1.2</logback.version>
         <mockito.version>1.9.5</mockito.version>
         <jetty.version>9.2.2.v20140723</jetty.version>
+        <rat.version>0.10</rat.version>
     </properties>
 
     <modules>
@@ -142,6 +143,68 @@
 		</plugin>
             </plugins>
         </pluginManagement>
+	<plugins>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>${rat.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.json</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/tmp_deb_control/control</exclude>
+                        <exclude>**/deb/control/control</exclude>
+                        <exclude>**/.classpath</exclude>
+                        <exclude>**/.project</exclude>
+                        <exclude>**/.settings/**</exclude>
+                        <exclude>**/logs/**</exclude>
+                        <exclude>**/target/**</exclude>
+                        <exclude>suppressions.xml</exclude>
+                        <exclude>**/.gwt/**</exclude>
+                        <exclude>**/*.css</exclude>
+                        <exclude>**/*.avsc</exclude>
+                        <exclude>**/*.html</exclude>
+                        <exclude>**/*_bckp</exclude>
+                        <exclude>**/*.log</exclude>
+                        <exclude>**/*.template</exclude>
+                        <exclude>**/kaa-it.log.*</exclude>
+                        <exclude>**/_remote.repositories</exclude>
+                        <exclude>**/*client.log.*</exclude>
+                        <exclude>**/*server.log.*</exclude>
+                        <exclude>**/gcovr.log</exclude>
+                        <exclude>**/gcovr-report.xml</exclude>
+                        <exclude>**/unittest_result.xml</exclude>
+                        <exclude>**/test/resources/kaa_status.file</exclude>
+                        <exclude>**/build/**</exclude>
+                        <exclude>**/gcovr</exclude>
+                        <exclude>**/README.md</exclude>
+                        <exclude>**/gen/*.java</exclude>
+                        <exclude>**/gen/**/*.java</exclude>
+                        <exclude>**/*.avsc</exclude>
+                        <exclude>**/*.iml</exclude>
+                        <exclude>**/.idea/**</exclude>
+                        <exclude>**/*.readme</exclude>
+                        <exclude>**/appcompat-v7/**</exclude>
+                        <exclude>**/support-v4/**</exclude>
+                        <exclude>**/bin/**</exclude>
+                        <exclude>**/thirdparty/**</exclude>
+                        <exclude>**/security.policy</exclude>
+                        <exclude>**/*-transport.config</exclude>
+                        <exclude>**/akka.conf</exclude>
+                        <exclude>**/*.cql</exclude>
+                        <exclude>**/openssl.framework/**</exclude>
+                        <exclude>**/openssl/**</exclude>
+                        <exclude>**/*xcodeproj/**</exclude>
+                        <exclude>**/*.plist</exclude>
+                        <exclude>**/*.cproject</exclude>
+			<exclude>**/source/esp8266/ld/*.ld</exclude>
+			<exclude>**/source/esp8266/driver/uart.c</exclude>
+			<exclude>**/source/esp8266/include/driver/uart*.h</exclude>
+			<exclude>**/source/cc32xx/platform/cc32xx/app.ld</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencyManagement>

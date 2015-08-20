@@ -38,6 +38,7 @@
 #include "uart.h"
 #include "uart_if.h"
 #include "udma_if.h"
+#include "pin.h"
 
 #include "common.h"
 

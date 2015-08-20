@@ -156,6 +156,11 @@ void BoardInit()
     PRCMCC3200MCUInit();
 
     UDMAInit();
+
+    MAP_PRCMPeripheralClkEnable(PRCM_UARTA0, PRCM_RUN_MODE_CLK);
+    MAP_PinTypeUART(PIN_55, PIN_MODE_3);
+    MAP_PinTypeUART(PIN_57, PIN_MODE_3);
+
     InitTerm();
 }
 

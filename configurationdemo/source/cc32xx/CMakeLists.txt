@@ -39,3 +39,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
 
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
 target_link_libraries(${APP_NAME} ${APP_LIBS})
+
+add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME}.afx ${APP_NAME}.bin)

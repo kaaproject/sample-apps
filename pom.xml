@@ -55,12 +55,13 @@
         <module>powerplant</module>
         <module>powerplant-dashboard</module>
         <module>econais</module>
-        <module>citylights-controller</module>
+<!--        <module>citylights-controller</module>-->
         <module>twitterled</module>
         <module>vehicletelemetry</module>
         <module>connectedcar</module>
         <module>powerplant-android</module>
         <module>powerplant-couchbase-proxy</module>
+	<module>gpiocontrol</module>
     </modules>
 
     <profiles>

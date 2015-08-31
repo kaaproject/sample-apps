@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="toolbar_color">#FFAB00</color>
-    <color name="primary">#FFAB00</color>
-    <color name="primary_pressed">#ffcb46</color>
-    <color name="ripple">#FFFF</color>
-</resources>

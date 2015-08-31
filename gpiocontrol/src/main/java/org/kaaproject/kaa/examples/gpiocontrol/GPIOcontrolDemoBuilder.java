@@ -16,11 +16,13 @@
 package org.kaaproject.kaa.examples.gpiocontrol;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
-import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
-import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
+import org.kaaproject.kaa.common.dto.admin.SdkPropertiesDto;
+import org.kaaproject.kaa.common.dto.event.*;
 import org.kaaproject.kaa.common.dto.user.UserVerifierDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
@@ -38,7 +40,31 @@ import org.slf4j.LoggerFactory;
 public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     
     private static final Logger logger = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
-    
+
+    private static final String GPIO_MASTER_ID = "gpio_master";
+    private static final String GPIO_SLAVE_ID = "gpio_slave";
+
+    private static final String REMOTE_CONTROL_ECF_NAME = "Remote Control Event Class Family";
+
+    private static Map<String, ApplicationEventAction> defaultMasterAefMap =
+            new HashMap<>();
+    static {
+        defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest", ApplicationEventAction.SOURCE);
+        defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse", ApplicationEventAction.SINK);
+        defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GPIOToggleRequest", ApplicationEventAction.SOURCE);
+    }
+
+    private static Map<String, ApplicationEventAction> defaultSlaveAefMap =
+            new HashMap<>();
+    static {
+        defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest", ApplicationEventAction.SINK);
+        defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse", ApplicationEventAction.SOURCE);
+        defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GPIOToggleRequest", ApplicationEventAction.SINK);
+    }
+
+    private Map<String, SdkPropertiesDto> projectsSdkMap = new HashMap<>();
+
+
     public GPIOcontrolDemoBuilder() {
         super("demo/gpiocontrol");
     }
@@ -49,48 +75,144 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         logger.info("Loading 'GPIO control Demo Application' data...");
         
         loginTenantAdmin(client);
-        
-        EventClassFamilyDto remoteControlECF = new EventClassFamilyDto();
-        remoteControlECF.setName("Remote Control Event Class Family");
-        remoteControlECF.setNamespace("org.kaaproject.kaa.examples.gpiocontrol");
-        remoteControlECF.setClassName("RemoteControlECF");
-        remoteControlECF = client.editEventClassFamily(remoteControlECF);
-        client.addEventClassFamilySchema(remoteControlECF.getId(), getResourcePath("remoteControlECF.json"));
-        
-        ApplicationDto GPIOcontrolApplication = new ApplicationDto();
-        GPIOcontrolApplication.setName("GPIO control");
-        GPIOcontrolApplication = client.editApplication(GPIOcontrolApplication);
-               
-        sdkPropertiesDto.setApplicationId(GPIOcontrolApplication.getId());
-        sdkPropertiesDto.setApplicationToken(GPIOcontrolApplication.getApplicationToken());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+
+        Map<String, EventClassFamilyDto> ecfMap = new HashMap<>();
+        ecfMap.put(REMOTE_CONTROL_ECF_NAME,
+                addEventClassFamily(client,
+                        REMOTE_CONTROL_ECF_NAME,
+                        "org.kaaproject.kaa.examples.gpiocontrol",
+                        "RemoteControlECF",
+                        "remoteControlECF.json"));
+
+        ApplicationDto GPIOcontrolApplicationMaster = new ApplicationDto();
+        GPIOcontrolApplicationMaster.setName("GPIO control master");
+        GPIOcontrolApplicationMaster = client.editApplication(GPIOcontrolApplicationMaster);
+
+        ApplicationDto GPIOcontrolApplicationSlave = new ApplicationDto();
+        GPIOcontrolApplicationSlave.setName("GPIO control slave");
+        GPIOcontrolApplicationSlave = client.editApplication(GPIOcontrolApplicationSlave);
 
         loginTenantDeveloper(client);
-        
-        ApplicationEventFamilyMapDto remoteControlAefMap = mapEventClassFamily(client, GPIOcontrolApplication, remoteControlECF);
+
+        configureMasterApp(client, GPIOcontrolApplicationMaster.getId(), ecfMap);
+        configureSlaveApp(client, GPIOcontrolApplicationSlave.getId(), ecfMap);
+
+        logger.info("Finished loading 'GPIO control Demo Application' data.");
+    }
+
+    private void configureMasterApp(AdminClient client,
+                                         String applicationId,
+                                         Map<String, EventClassFamilyDto> ecfMap) throws Exception {
+        SdkPropertiesDto sdkProperties = createSdkProperties(client, applicationId, true);
 
         List<String> aefMapIds = new ArrayList<>();
-        aefMapIds.add(remoteControlAefMap.getId());
-        sdkPropertiesDto.setAefMapIds(aefMapIds);
-        
-        TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();        
+
+        aefMapIds.add(createAefMap(client,
+                applicationId,
+                ecfMap.get(REMOTE_CONTROL_ECF_NAME),
+                defaultMasterAefMap));
+
+        sdkProperties.setAefMapIds(aefMapIds);
+
+        projectsSdkMap.put(GPIO_MASTER_ID, sdkProperties);
+    }
+
+    private void configureSlaveApp(AdminClient client,
+                                    String applicationId,
+                                    Map<String, EventClassFamilyDto> ecfMap) throws Exception {
+        SdkPropertiesDto sdkProperties = createSdkProperties(client, applicationId, true);
+
+        List<String> aefMapIds = new ArrayList<>();
+
+        aefMapIds.add(createAefMap(client,
+                applicationId,
+                ecfMap.get(REMOTE_CONTROL_ECF_NAME),
+                defaultSlaveAefMap));
+
+        sdkProperties.setAefMapIds(aefMapIds);
+
+        projectsSdkMap.put(GPIO_SLAVE_ID, sdkProperties);
+    }
+
+    private EventClassFamilyDto addEventClassFamily(AdminClient client,
+                                                    String name, String namespace, String className, String resource) throws Exception {
+        EventClassFamilyDto eventClassFamily = new EventClassFamilyDto();
+        eventClassFamily.setName(name);
+        eventClassFamily.setNamespace(namespace);
+        eventClassFamily.setClassName(className);
+        eventClassFamily = client.editEventClassFamily(eventClassFamily);
+        client.addEventClassFamilySchema(eventClassFamily.getId(), getResourcePath(resource));
+        return eventClassFamily;
+    }
+
+    private SdkPropertiesDto createSdkProperties(AdminClient client,
+                                                 String applicationId,
+                                                 boolean createVerifier) throws Exception {
+        SdkPropertiesDto sdkKey = new SdkPropertiesDto();
+        sdkKey.setApplicationId(applicationId);
+        sdkKey.setProfileSchemaVersion(1);
+        sdkKey.setConfigurationSchemaVersion(1);
+        sdkKey.setNotificationSchemaVersion(1);
+        sdkKey.setLogSchemaVersion(1);
+        if (createVerifier) {
+            sdkKey.setDefaultVerifierToken(createTrustfulVerifier(client, applicationId));
+        }
+        return sdkKey;
+    }
+
+    private String createTrustfulVerifier(AdminClient client, String applicationId) throws Exception {
+        TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();
         UserVerifierDto trustfulUserVerifier = new UserVerifierDto();
-        trustfulUserVerifier.setApplicationId(GPIOcontrolApplication.getId());
+        trustfulUserVerifier.setApplicationId(applicationId);
         trustfulUserVerifier.setName("Trustful verifier");
         trustfulUserVerifier.setPluginClassName(trustfulVerifierConfig.getPluginClassName());
         trustfulUserVerifier.setPluginTypeName(trustfulVerifierConfig.getPluginTypeName());
         RawSchema rawSchema = new RawSchema(trustfulVerifierConfig.getPluginConfigSchema().toString());
-        DefaultRecordGenerationAlgorithm<RawData> algotithm = 
-                    new DefaultRecordGenerationAlgorithmImpl<>(rawSchema, new RawDataFactory());
+        DefaultRecordGenerationAlgorithm<RawData> algotithm =
+                new DefaultRecordGenerationAlgorithmImpl<>(rawSchema, new RawDataFactory());
         RawData rawData = algotithm.getRootData();
-        trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());        
+        trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());
         trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
-        sdkPropertiesDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
-        
-        logger.info("Finished loading 'GPIO control Demo Application' data.");
+        return trustfulUserVerifier.getVerifierToken();
     }
+
+    private String createAefMap(AdminClient client,
+                                String applicationId,
+                                EventClassFamilyDto ecf,
+                                Map<String, ApplicationEventAction> actionsMap) throws Exception {
+        List<EventClassDto> eventClasses =
+                client.getEventClassesByFamilyIdVersionAndType(ecf.getId(), 1, EventClassType.EVENT);
+
+        ApplicationEventFamilyMapDto aefMap = new ApplicationEventFamilyMapDto();
+        aefMap.setApplicationId(applicationId);
+        aefMap.setEcfId(ecf.getId());
+        aefMap.setEcfName(ecf.getName());
+        aefMap.setVersion(1);
+
+        List<ApplicationEventMapDto> eventMaps = new ArrayList<>(eventClasses.size());
+        for (EventClassDto eventClass : eventClasses) {
+            ApplicationEventMapDto eventMap = new ApplicationEventMapDto();
+            eventMap.setEventClassId(eventClass.getId());
+            eventMap.setFqn(eventClass.getFqn());
+            eventMap.setAction(actionsMap.get(eventClass.getFqn()));
+            eventMaps.add(eventMap);
+        }
+
+        aefMap.setEventMaps(eventMaps);
+        aefMap = client.editApplicationEventFamilyMap(aefMap);
+
+        return aefMap.getId();
+    }
+
+    @Override
+    protected boolean isMultiApplicationProject() {
+        return true;
+    }
+
+    @Override
+    protected Map<String, SdkPropertiesDto> getProjectsSdkMap() {
+        return projectsSdkMap;
+    }
+
 
 }

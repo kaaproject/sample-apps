@@ -16,7 +16,7 @@ Copyright 2014-2015 CyberVision, Inc.
 -->
 
 <projectsConfig>
-    <project id="gpio_control">
+    <project id="gpio_master">
         <name>GPIO control</name>
 		<description>GPIO control Android app demonstrates Kaa event subsystem capabilities</description>
 		<details>
@@ -36,9 +36,9 @@ For more background on Kaa Event subsystem please refer to the corresponding <a 
 		</details>
         <platform>ANDROID</platform>
         <features>EVENT USER_VERIFIER</features>
-        <sourceArchive>android/gpio_control.tar.gz</sourceArchive>
-        <projectFolder>gpio_control/GPIOcontrol</projectFolder>
-        <sdkLibDir>gpio_control/GPIOcontrol/libs</sdkLibDir>
-        <destBinaryFile>gpio_control/GPIOcontrol/bin/GPIOcontrol-debug.apk</destBinaryFile>
+        <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
+        <projectFolder>gpiocontrol/gpiocontrol</projectFolder>
+        <sdkLibDir>gpiocontrol/gpiocontrol/libs</sdkLibDir>
+        <destBinaryFile>gpiocontrol/gpiocontrol/bin/gpiocontrol-debug.apk</destBinaryFile>
     </project>
 </projectsConfig>

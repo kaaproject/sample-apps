@@ -3,9 +3,7 @@
     package="com.nispok.snackbar"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="21" />
+    <uses-sdk android:minSdkVersion="7"/>
 
     <application />
 

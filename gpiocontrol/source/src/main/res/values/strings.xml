@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GPIO control</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_gpio">GPIO</string>
+    <string name="gpio_id">GPIO id</string>
+    <string name="gpio_status">GPIO status</string>
+    <string name="model">Model</string>
+    <string name="device_name">Device name</string>
+    <string name="gpio_count">GPIO count</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="settings">Settings</string>
+    <string name="endpoint_id">Endpoint id</string>
+    <string name="endpoint_id_hint">Enter endpoint id here…</string>
+    <string name="no_endpoints">No endpoints found. Use \"+\" button.</string>
+</resources>

@@ -20,28 +20,33 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import org.kaaproject.kaa.examples.gpiocontrol.R;
+import org.kaaproject.demo.remotecontrol.R;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
+import org.kaaproject.kaa.examples.gpiocontol.utils.PreferencesManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
-import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
 import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
 import org.kaaproject.kaa.examples.gpiocontrol.GPIOToggleRequest;
+import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
 
 public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
-    private Boolean[] gpioDataset;
+
+    private static final String LOG_TAG = "GPIOAdapter";
+
     private Device device;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        public boolean state;
         public CardView cardView;
         public TextView gpioId;
         public SwitchCompat switcher;
@@ -51,17 +56,17 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
             cardView = v;
             gpioId = (TextView)cardView.findViewById(R.id.gpioId);
             switcher = (SwitchCompat)cardView.findViewById(R.id.switcher);
+            state = false;
         }
     }
 
     public GPIOAdapter(Device device) {
         this.device = device;
-        this.gpioDataset = device.getGpioStatus();
     }
 
     @Override
     public GPIOAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                        int viewType) {
+                                                     int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gpio_status, parent, false);
 
@@ -70,7 +75,7 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.switcher.setChecked(gpioDataset[position]);
+        holder.switcher.setChecked(device.getGpioStatus()[position]);
         holder.gpioId.setText(position + "");
 
         final int teaColor = Color.parseColor("#009688");
@@ -89,6 +94,11 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
                     return;
                 }
 
+                //Skips system recycler invoking
+                if(!buttonView.isPressed()) return;
+
+                device.getGpioStatus()[position]=isChecked;
+
                 KaaClient kaaClient = KaaProvider.getClient(holder.cardView.getContext());
 
                 EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
@@ -105,6 +115,6 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return gpioDataset.length;
+        return device.getGpioStatus().length;
     }
 }

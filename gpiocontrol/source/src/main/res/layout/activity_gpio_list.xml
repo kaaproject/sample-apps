@@ -68,5 +68,5 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeLayout"
         android:padding="8dp"
-        android:animateLayoutChanges="true"/>
+        android:animateLayoutChanges="false"/>
 </RelativeLayout>

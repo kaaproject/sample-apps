@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import org.kaaproject.demo.remotecontrol.R;
+import org.kaaproject.kaa.examples.gpiocontrol.R;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
 import org.kaaproject.kaa.examples.gpiocontol.utils.PreferencesManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;

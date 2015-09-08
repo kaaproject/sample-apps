@@ -19,30 +19,28 @@ Copyright 2014-2015 CyberVision, Inc.
 <projectsConfig>
     <project id="notification_demo_java">
         <name>Notification demo</name>
-        <description>Kaa notification subsystem demo app based on Java SDK</description>
+        <description>Kaa Notification subsystem demo app based on Java SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates Kaa notification subsystem capabilities on Java SDK.
+This simple app demonstrates capabilities of the Kaa Notification subsystem on the Java SDK.
 
 <h2>Installation</h2>
-Download the jar file to your device by clicking the "Binary" button on the left. Make sure that the you have Java installed on your device. Run application using following command in console:
+Download the jar file to your device by clicking the "Binary" button on the left. Make sure that you have Java installed on your device. Run the application using the following command in the console:
 <pre>
 $ java -jar NotificationDemo.jar
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa sandbox is up and running. Starting the "Notification demo" app, you will get a list of notification topics accessible to the endpoint. Thre will be two topics in the list - mandatory and optional. You will also receive notification for mandatory topic automatically. Application will subscribe to optional topic. Once subsribed, you will also receive notification for optional topic<br/><br/>
+Make sure that the Kaa Sandbox is up and running. After starting the "Notification demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
 
-Now it's time to test things out: navigate to the Kaa server administrative interface by clicking on the "Administrative console" link from the Sandbox screen. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addingnotificationtopics">manage topics</a> and send notifications. Do not forget to <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addnotificationtopictoendpointgroup">assign</a> newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to see them. Make sure you have tried subscribing to an optional topic after sending a long-lived notification!
+You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
 
-Please note that all features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of Administration UI are also supported by REST API.
 
 <h2>What's next?</h2>
-Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
-
-For more background on Kaa Notification subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Using+notifications">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Notifications">design reference</a> sections.
-            ]]>
-		</details>
+For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+        	]]>
+        </details>
         <platform>JAVA</platform>
         <features>NOTIFICATION</features>
         <sourceArchive>java/notification_demo.tar.gz</sourceArchive>
@@ -52,27 +50,29 @@ For more background on Kaa Notification subsystem please refer to the correspond
     </project>
     <project id="notification_demo_cpp">
         <name>Notification demo</name>
-        <description>Kaa notification subsystem demo app based on C++ SDK</description>
+        <description>Kaa Notification subsystem demo app based on C++ SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates Kaa notification subsystem capabilities on C++ SDK.
+This simple app demonstrates capabilities of the Kaa Notification subsystem on the C++ SDK.
 
 <h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Build the source code using endpoint build and integration <a href="https://docs.kaaproject.org/display/KAA/Endpoint+build+and+integration+instructions#Endpointbuildandintegrationinstructions-BuildingC++endpointSDK">instructions</a>.
+Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh deploy
+</pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa sandbox is up and running. Starting the "Notification demo" app, you will get a list of notification topics accessible to the endpoint. Thre will be two topics in the list - mandatory and optional. You will also receive notification for mandatory topic automatically. Application will subscribe to optional topic. Once subsribed, you will also receive notification for optional topic<br/><br/>
+Make sure that the Kaa Sandbox is up and running. After starting the "Notification demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
 
-Now it's time to test things out: navigate to the Kaa server administrative interface by clicking on the "Administrative console" link from the Sandbox screen. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addingnotificationtopics">manage topics</a> and send notifications. Do not forget to <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addnotificationtopictoendpointgroup">assign</a> newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to see them. Make sure you have tried subscribing to an optional topic after sending a long-lived notification!
+You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
 
-Please note that all features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of Administration UI are also supported by REST API.
 
 <h2>What's next?</h2>
-Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
 
-For more background on Kaa Notification subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Using+notifications">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Notifications">design reference</a> sections.
-            ]]>
-		</details>
+For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+        	]]>
+        </details>
         <platform>CPP</platform>
         <features>NOTIFICATION</features>
         <sourceArchive>cpp/notification_demo.tar.gz</sourceArchive>
@@ -82,27 +82,29 @@ For more background on Kaa Notification subsystem please refer to the correspond
     </project>
     <project id="notification_demo_c">
         <name>Notification demo</name>
-        <description>Kaa notification subsystem demo app based on C SDK</description>
+        <description>Kaa Notification subsystem demo app based on C SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates Kaa notification subsystem capabilities on C SDK.
+This simple app demonstrates capabilities of the Kaa Notification subsystem on the C SDK.
 
 <h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Build the source code using endpoint build and integration <a href="https://docs.kaaproject.org/display/KAA/Endpoint+build+and+integration+instructions#Endpointbuildandintegrationinstructions-BuildingCendpointSDK">instructions</a>.
+Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh deploy
+</pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa sandbox is up and running. Starting the "Notification demo" app, you will get a list of notification topics accessible to the endpoint. Thre will be two topics in the list - mandatory and optional. You will also receive notification for mandatory topic automatically. Application will subscribe to optional topic. Once subsribed, you will also receive notification for optional topic<br/><br/>
+Make sure that the Kaa Sandbox is up and running. After starting the "Notification demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
 
-Now it's time to test things out: navigate to the Kaa server administrative interface by clicking on the "Administrative console" link from the Sandbox screen. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addingnotificationtopics">manage topics</a> and send notifications. Do not forget to <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addnotificationtopictoendpointgroup">assign</a> newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to see them. Make sure you have tried subscribing to an optional topic after sending a long-lived notification!
+You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
 
-Please note that all features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of Administration UI are also supported by REST API.
 
 <h2>What's next?</h2>
-Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
 
-For more background on Kaa Notification subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Using+notifications">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Notifications">design reference</a> sections.
-            ]]>
-		</details>
+For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+        	]]>
+        </details>
         <platform>C</platform>
         <features>NOTIFICATION</features>
         <sourceArchive>c/notification_demo.tar.gz</sourceArchive>

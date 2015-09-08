@@ -19,26 +19,25 @@ Copyright 2014-2015 CyberVision, Inc.
 <projectsConfig>
     <project id="notification_demo_android">
         <name>Android notifications</name>
-        <description>Kaa notifications subsystem demo app for Android</description>
+        <description>Kaa Notification subsystem demo app for Android</description>
         <details>
             <![CDATA[
-This simple app demonstrates Kaa notification subsystem capabilities on Android platform.
+This simple app demonstrates the capabilities of the Kaa Notification subsystem for Android.
 
 <h2>Installation</h2>
 Download the .apk to your Android device by clicking the "Binary" button on the left. Make sure that the device permits installing apps from "Unknown sources". Open the downloaded apk and follow the on-screen instructions.
 
 <h2>Playing around</h2>
-Make sure that the Kaa sandbox is up and running. Opening the "Kaa Notification Demo" app, you will get a list of notification topics accessible to the endpoint. Optional topics will have an active checkbox to the right of the name, that you can select or unselect to manage subscriptions. Mandatory topics will always be active.<br/><br/>
+Make sure that the Kaa Sandbox is up and running. After starting the "Notification demo" app, you will receive two notification topics accessible by the endpoint — one of which is mandatory and another is optional. A notification on the mandatory topic will be delivered automatically. Notifications on optional topics usually require subscription, but this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive a notification on the optional topic too.<br/><br/>
 
-Now it's time to test things out: navigate to the Kaa server administrative interface by clicking on the "Administrative console" link from the Sandbox screen. Log in as a tenant developer (devuser / devuser123), and navigate to the "Android notification" application, then select "Notification topics". From here you can <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addingnotificationtopics">manage topics</a>, and send notifications. Do not forget to <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Addnotificationtopictoendpointgroup">assign</a> newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to see them. Make sure you have tried subscribing to an optional topic after sending a long-lived notification!
+You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
 
-Please note that all features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of Administration UI are also supported by REST API.
 
 <h2>What's next?</h2>
-Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
 
-For more background on Kaa Notification subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Using+notifications">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Notifications">design reference</a> sections.
-            ]]>
+For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+        	]]>
         </details>
         <platform>ANDROID</platform>
         <features>NOTIFICATION</features>

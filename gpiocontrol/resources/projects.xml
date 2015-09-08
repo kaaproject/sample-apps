@@ -41,4 +41,20 @@ For more background on Kaa Event subsystem please refer to the corresponding <a 
         <sdkLibDir>gpiocontrol/gpiocontrol/libs</sdkLibDir>
         <destBinaryFile>gpiocontrol/gpiocontrol/bin/gpiocontrol-debug.apk</destBinaryFile>
     </project>
+
+    <project id="gpio_slave_cc">
+        <name>GPIO CC3200 client</name>
+        <description>Kaa configuration subsystem demo app based on C SDK</description>
+        <details>
+            <![CDATA[
+TODO
+            ]]>
+        </details>
+        <platform>C</platform>
+        <features>EVENTS USER_VERIFIER</features>
+        <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
+        <projectFolder>gpio-cc-client</projectFolder>
+        <sdkLibDir>gpio-cc-client/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
 </projectsConfig>

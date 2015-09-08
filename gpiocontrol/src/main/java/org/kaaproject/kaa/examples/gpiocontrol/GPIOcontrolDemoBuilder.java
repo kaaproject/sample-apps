@@ -42,7 +42,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     private static final Logger logger = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
 
     private static final String GPIO_MASTER_ID = "gpio_master";
-    private static final String GPIO_SLAVE_ID = "gpio_slave";
+    private static final String GPIO_SLAVE_ID = "gpio_slave_cc";
 
     private static final String REMOTE_CONTROL_ECF_NAME = "Remote Control Event Class Family";
 

@@ -1,61 +1,61 @@
-[ 
-    { 
+[
+    {
+        "namespace":"org.kaaproject.kaa.examples.gpiocontrol",
+        "type":"record",
+        "classType":"object",
+        "name":"GpioStatus",
+        "fields":[
+            {
+                "name":"id",
+                "type":"int"
+            },
+            {
+                "name":"status",
+                "type":"boolean"
+            }
+        ]
+    },
+    {
         "namespace":"org.kaaproject.kaa.examples.gpiocontrol",
         "type":"record",
         "classType":"event",
         "name":"DeviceInfoRequest",
-        "fields":[ 
+        "fields":[
 
         ]
     },
-    { 
-        "namespace":"org.kaaproject.kaa.examples.gpiocontrol",
-        "type":"record",
-        "classType":"object",
-        "name":"DeviceInfo",
-        "fields":[ 
-            { 
-                "name":"model",
-                "type":"string"
-            },
-            { 
-                "name":"deviceName",
-                "type":"string"
-            },
-	    {
-                "name":"gpioStatus",
-		"type": {
-			  "type":"array",
-		          "items":"boolean"
-                        }
-            }
-        ]
-    },
-    { 
+    {
         "namespace":"org.kaaproject.kaa.examples.gpiocontrol",
         "type":"record",
         "classType":"event",
         "name":"DeviceInfoResponse",
-        "fields":[ 
-            { 
-                "name":"deviceInfo",
-                "type":"org.kaaproject.kaa.examples.gpiocontrol.DeviceInfo"
+        "fields":[
+            {
+                "name":"model",
+                "type":"string"
+            },
+            {
+                "name":"deviceName",
+                "type":"string"
+            },
+            {
+                "name":"gpioStatus",
+                "type":{
+                    "type":"array",
+                    "items":"org.kaaproject.kaa.examples.gpiocontrol.GpioStatus"
+                }
             }
         ]
     },
-    { 
+    {
         "namespace":"org.kaaproject.kaa.examples.gpiocontrol",
         "type":"record",
         "classType":"event",
-        "name":"GPIOToggleRequest",
-        "fields":[ 
-            { 
-                "name":"gpioId",
-                "type":"int"
-            },
-	    {
-	    	"name":"status",
-		"type":"boolean"
+        "name":"GpioToggleRequest",
+        "fields":[
+            {
+                "name":"gpio",
+                "type":"org.kaaproject.kaa.examples.gpiocontrol.GpioStatus"
             }
         ]
     }

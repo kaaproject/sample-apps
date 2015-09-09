@@ -35,26 +35,23 @@ import android.widget.TextView;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.kaaproject.kaa.examples.gpiocontrol.R;
-import org.kaaproject.kaa.examples.gpiocontol.adapters.DevicesAdapter;
-import org.kaaproject.kaa.examples.gpiocontol.model.Device;
-import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
-import org.kaaproject.kaa.examples.gpiocontol.utils.PreferencesManager;
-import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
-import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
-import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EndpointAccessToken;
 import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.registration.OnAttachEndpointOperationCallback;
 import org.kaaproject.kaa.client.profile.ProfileContainer;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
-import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfo;
+import org.kaaproject.kaa.examples.gpiocontol.adapters.DevicesAdapter;
+import org.kaaproject.kaa.examples.gpiocontol.model.Device;
+import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
+import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
+import org.kaaproject.kaa.examples.gpiocontol.utils.PreferencesManager;
+import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse;
-import org.kaaproject.kaa.examples.gpiocontrol.GPIOToggleRequest;
+import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
 import org.kaaproject.kaa.schema.base.Profile;
 
-import java.lang.Override;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,11 +92,11 @@ public class DevicesListActivity extends AppCompatActivity {
         startKaa();
     }
 
-   @Override
+    @Override
     protected void onRestart(){
-       super.onRestart();
-       refreshActivity();
-   }
+        super.onRestart();
+        refreshActivity();
+    }
     public void refreshActivity(){
         devices.clear();
         mAdapter.notifyDataSetChanged();
@@ -165,18 +162,16 @@ public class DevicesListActivity extends AppCompatActivity {
 
 
         KaaProvider.setUpEventListener(this, new RemoteControlECF.Listener() {
-
             @Override
             public void onEvent(DeviceInfoResponse deviceInfoResponse, String s) {
-                DeviceInfo deviceInfo = deviceInfoResponse.getDeviceInfo();
-                int gpios_count = deviceInfo.getGpioStatus().size();
+                Log.d(LOG_TAG, "Got DeviceInfoResponse");
                 Device device = new Device(
-                        deviceInfo.getModel(),
-                        deviceInfo.getDeviceName(),
-                        deviceInfo.getGpioStatus().toArray(new Boolean[gpios_count]), s);
+                        deviceInfoResponse.getModel(),
+                        deviceInfoResponse.getDeviceName(),
+                        deviceInfoResponse.getGpioStatus(),
+                        s);
                 addItem(device);
             }
-
         });
     }
 

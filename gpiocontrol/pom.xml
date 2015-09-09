@@ -60,7 +60,8 @@
                 <configuration>
                     <descriptors>
                         <descriptor>${project.basedir}/assembly/src.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
+                        <descriptor>assembly/src-cc32xx.xml</descriptor>
+                        <descriptor>assembly/src-esp.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

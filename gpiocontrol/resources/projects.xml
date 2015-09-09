@@ -25,9 +25,9 @@ This app demonstrates Kaa event subsystem capabilities on Android platform.
 <h2>Installation</h2>
 Download the .apk to your Android device by clicking the "Binary" button on the left. Make sure that the device permits installing apps from "Unknown sources". Open the downloaded apk and follow the on-screen instructions.
 <h2>Playing around</h2>
-Make sure that the Kaa sandbox is up and running. You will need to install this application on two devices at least. 
-Start application on one of the devices and choose "GPIO control". Any password will be accepted since <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
-Start application on one of the devices and press on "+" button placed at the right bottom side of the screen. In dialog enter endpoint id and click OK. Then click on any appeared device and try to toggle the switches.
+Make sure that the Kaa sandbox is up and running. You will need to install this application on one Android and one ESP8266 or CC32XX devices at least.
+Start application on android device and press "+" button in right bottom side of the screen. Enter endpoint id (default is "12345"). No other data needed in case of <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
+Then click on appeared device and try to toggle the switches.
 Please note that all features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 <h2>What's next?</h2>
 Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
@@ -44,7 +44,7 @@ For more background on Kaa Event subsystem please refer to the corresponding <a 
 
     <project id="gpio_slave_cc">
         <name>GPIO CC3200 client</name>
-        <description>Kaa configuration subsystem demo app based on C SDK</description>
+        <description>GPIO control C app demonstrates Kaa event subsystem capabilities</description>
         <details>
             <![CDATA[
 TODO
@@ -55,6 +55,21 @@ TODO
         <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
         <projectFolder>gpio-cc-client</projectFolder>
         <sdkLibDir>gpio-cc-client/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+    <project id="gpio_slave_esp">
+        <name>GPIO ESP8266 client</name>
+        <description>GPIO control C app demonstrates Kaa event subsystem capabilities</description>
+        <details>
+            <![CDATA[
+TODO
+            ]]>
+        </details>
+        <platform>C</platform>
+        <features>EVENTS USER_VERIFIER</features>
+        <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
+        <projectFolder>gpio-esp-client</projectFolder>
+        <sdkLibDir>gpio-esp-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
 </projectsConfig>

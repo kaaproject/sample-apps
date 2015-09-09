@@ -42,7 +42,8 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     private static final Logger logger = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
 
     private static final String GPIO_MASTER_ID = "gpio_master";
-    private static final String GPIO_SLAVE_ID = "gpio_slave_cc";
+    private static final String GPIO_CC32XX_ID = "gpio_slave_cc";
+    private static final String GPIO_ESP8266_ID = "gpio_slave_esp";
 
     private static final String REMOTE_CONTROL_ECF_NAME = "Remote Control Event Class Family";
 
@@ -51,7 +52,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     static {
         defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest", ApplicationEventAction.SOURCE);
         defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse", ApplicationEventAction.SINK);
-        defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GPIOToggleRequest", ApplicationEventAction.SOURCE);
+        defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GpioToggleRequest", ApplicationEventAction.SOURCE);
     }
 
     private static Map<String, ApplicationEventAction> defaultSlaveAefMap =
@@ -59,7 +60,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     static {
         defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest", ApplicationEventAction.SINK);
         defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse", ApplicationEventAction.SOURCE);
-        defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GPIOToggleRequest", ApplicationEventAction.SINK);
+        defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GpioToggleRequest", ApplicationEventAction.SINK);
     }
 
     private Map<String, SdkPropertiesDto> projectsSdkMap = new HashMap<>();
@@ -131,7 +132,8 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
         sdkProperties.setAefMapIds(aefMapIds);
 
-        projectsSdkMap.put(GPIO_SLAVE_ID, sdkProperties);
+        projectsSdkMap.put(GPIO_CC32XX_ID, sdkProperties); //TODO maybe just duplicate this line with "ESP8266 slave id"?
+        projectsSdkMap.put(GPIO_ESP8266_ID, sdkProperties);
     }
 
     private EventClassFamilyDto addEventClassFamily(AdminClient client,

@@ -17,6 +17,7 @@
 package org.kaaproject.kaa.examples.gpiocontol.adapters;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,7 +56,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
 
     @Override
     public DevicesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+                                                        int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.device_view, parent, false);
 
@@ -66,13 +67,15 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.modelName.setText(devicesDataset.get(position).getModel());
         holder.deviceName.setText(devicesDataset.get(position).getDeviceName());
-        holder.gpioCount.setText(devicesDataset.get(position).getGpioStatus().length+" GPIO");
+        holder.gpioCount.setText(devicesDataset.get(position).getGpioStatuses().size()+" GPIO");
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), GPIOStatusListActivity.class);
-                intent.putExtra("device", devicesDataset.get(position));
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("device", devicesDataset.get(position));
+                intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
             }
         });

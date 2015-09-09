@@ -31,6 +31,8 @@ import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
 
 public class GPIOStatusListActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = "GPIOStatusListActivity";
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -54,6 +56,7 @@ public class GPIOStatusListActivity extends AppCompatActivity {
 
         //Get intent data from DevicesAdapter
         device = (Device)getIntent().getSerializableExtra("device");
+
 
         mAdapter = new GPIOAdapter(device);
         mRecyclerView.setAdapter(mAdapter);

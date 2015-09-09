@@ -39,8 +39,8 @@ KAA_SDK_TAR="kaa-client*.tar.gz"
 ESPTOOL="esptool.py"
 
 #Wifi settings
-SSID="cyber9"
-PASSWORD="Cha5hk123"
+SSID="xxx"
+PASSWORD="xxxxxxxxx"
 
 function build_thirdparty {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
@@ -78,10 +78,10 @@ function build_thirdparty {
 }
 
 function build_app {
-    #echo "Enter WiFi SSID:"
-    #read SSID
-    #echo "Enter WiFi Password:"
-    #read PASSWORD
+    echo "Enter WiFi SSID:"
+    read SSID
+    echo "Enter WiFi Password:"
+    read PASSWORD
     cd $PROJECT_HOME &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
     cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&

@@ -7,6 +7,7 @@
     android:layout_width="wrap_content"
     android:layout_height="70dp"
     card_view:cardCornerRadius="4dp"
+    android:layout_marginBottom="8dp"
     android:minHeight="60dp">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="fill_parent"

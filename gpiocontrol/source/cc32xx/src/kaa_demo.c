@@ -48,39 +48,37 @@
 static kaa_client_t *kaa_client = NULL;
 static bool is_shutdown = false;
 
-static gpio_led[] = { 0, 0, 0 };
+static int gpio_led[] = { 0, 0, 0 };
+static int led_number = sizeof (gpio_led) / sizeof (int);
 
 #define KAA_DEMO_UNUSED(x) (void)(x);
 
 /*
  * Event callback-s.
  */
- 
+
 void kaa_device_info_request(void *context
                            , kaa_remote_control_ecf_device_info_request_t *event
                            , kaa_endpoint_id_p source)
 {
-	KAA_DEMO_UNUSED(context);
+    KAA_DEMO_UNUSED(context);
     KAA_DEMO_UNUSED(source);
-	
-	kaa_remote_control_ecf_device_info_response_t *response = kaa_remote_control_ecf_device_info_response_create();
-	response->device_info = kaa_remote_control_ecf_device_info_create();
-	
-    response->device_info->device_name = kaa_string_copy_create("CC3200");
-	response->device_info->model       = kaa_string_copy_create("LaunchPad");
-    response->device_info->gpio_status = kaa_list_create();
 
-	char *led = calloc(1,1);
-	*led = gpio_led[0];
-	kaa_list_push_back(response->device_info->gpio_status, (void*)led);
-	led = calloc(1,1);
-	*led = gpio_led[1];
-	kaa_list_push_back(response->device_info->gpio_status, (void*)led);
-	led = calloc(1,1);
-	*led = gpio_led[2];
-	kaa_list_push_back(response->device_info->gpio_status, (void*)led);
-	
-	kaa_event_manager_send_kaa_remote_control_ecf_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response, NULL);
+    kaa_remote_control_ecf_device_info_response_t *response = kaa_remote_control_ecf_device_info_response_create();
+
+    response->device_name = kaa_string_copy_create("CC3200");
+    response->model       = kaa_string_copy_create("LaunchPad");
+    response->gpio_status = kaa_list_create();
+
+    int i = 0;
+    for (i = 0; i < led_number; ++i) {
+        kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
+        gio_status->id = i;
+        gio_status->status = gpio_led[i];
+        kaa_list_push_back(response->gpio_status, (void*)gio_status);
+    }
+
+    kaa_event_manager_send_kaa_remote_control_ecf_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response, NULL);
 
     response->destroy(response); // Destroying event that was successfully sent
     event->destroy(event);
@@ -90,35 +88,35 @@ void kaa_GPIOToggle_info_request(void *context
                               , kaa_remote_control_ecf_gpio_toggle_request_t *event
                               , kaa_endpoint_id_p source)
 {
-	KAA_DEMO_UNUSED(context);
+    KAA_DEMO_UNUSED(context);
     KAA_DEMO_UNUSED(source);
-	
-	if(event->status) {
-		GPIO_IF_LedOn(MCU_RED_LED_GPIO + event->gpio_id);
-		gpio_led[event->gpio_id] = 1;
+
+    if (event->gpio->status) {
+        GPIO_IF_LedOn(MCU_RED_LED_GPIO + event->gpio->id);
+        gpio_led[event->gpio->id] = 1;
     } else {
-        GPIO_IF_LedOff(MCU_RED_LED_GPIO + event->gpio_id);
-		gpio_led[event->gpio_id] = 0;
-	}
-	
-	event->destroy(event);
+        GPIO_IF_LedOff(MCU_RED_LED_GPIO + event->gpio->id);
+        gpio_led[event->gpio->id] = 0;
+    }
+
+    event->destroy(event);
 }
 
 int main(/*int argc, char *argv[]*/)
 {
 #ifdef CC32XX
     BoardInit();
-	
-	MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
+
+    MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
     MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);
     MAP_GPIODirModeSet(GPIOA1_BASE, 0x2, GPIO_DIR_MODE_OUT);
     MAP_PinTypeGPIO(PIN_01, PIN_MODE_0, false);
     MAP_GPIODirModeSet(GPIOA1_BASE, 0x4, GPIO_DIR_MODE_OUT);
     MAP_PinTypeGPIO(PIN_02, PIN_MODE_0, false);
     MAP_GPIODirModeSet(GPIOA1_BASE, 0x8, GPIO_DIR_MODE_OUT);
-	GPIO_IF_LedConfigure(LED1|LED2|LED3);
+    GPIO_IF_LedConfigure(LED1|LED2|LED3);
     GPIO_IF_LedOff(MCU_ALL_LED_IND);
-	
+
     wlan_configure();
     sl_Start(0, 0, 0);
     wlan_connect("cyber9", "Cha5hk123", SL_SEC_TYPE_WPA_WPA2);
@@ -136,16 +134,16 @@ int main(/*int argc, char *argv[]*/)
                                                        , "12345");
     KAA_RETURN_IF_ERR(error_code);
 
-	
-	error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager
+
+    error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager
                                                                                          , &kaa_device_info_request
                                                                                          , NULL);
-	KAA_RETURN_IF_ERR(error_code);
-																						 
-	error_code = kaa_event_manager_set_kaa_remote_control_ecf_gpio_toggle_request_listener(kaa_client_get_context(kaa_client)->event_manager
+    KAA_RETURN_IF_ERR(error_code);
+
+    error_code = kaa_event_manager_set_kaa_remote_control_ecf_gpio_toggle_request_listener(kaa_client_get_context(kaa_client)->event_manager
                                                                                          , &kaa_GPIOToggle_info_request
                                                                                          , NULL);
-	KAA_RETURN_IF_ERR(error_code);
+    KAA_RETURN_IF_ERR(error_code);
 
     /**
      * Start Kaa client main loop.

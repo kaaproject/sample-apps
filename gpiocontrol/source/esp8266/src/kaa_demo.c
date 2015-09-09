@@ -51,7 +51,6 @@
 
 static kaa_client_t *kaa_client = NULL;
 static int gpio_led[] = { 0, 0 };
-static int led_number = sizeof(gpio_led) / sizeof(int);
 
 
 
@@ -63,18 +62,20 @@ ICACHE_FLASH_ATTR void kaa_device_info_request(void *context
     KAA_DEMO_UNUSED(source);
 
     kaa_remote_control_ecf_device_info_response_t *response = kaa_remote_control_ecf_device_info_response_create();
-    response->device_info = kaa_remote_control_ecf_device_info_create();
 
-    response->device_info->device_name = kaa_string_copy_create(DEVICE_NAME);
-    response->device_info->model       = kaa_string_copy_create(DEVICE_MODEL);
-    response->device_info->gpio_status = kaa_list_create();
+    response->device_name = kaa_string_copy_create(DEVICE_NAME);
+    response->model       = kaa_string_copy_create(DEVICE_MODEL);
+    response->gpio_status = kaa_list_create();
 
-    int i = 0;
-    for (i = 0; i < led_number; ++i) {
-        char *led = malloc(1);
-        *led = gpio_led[i];
-        kaa_list_push_back(response->device_info->gpio_status, (void*)led);
-    }
+    kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
+    gio_status->id = 0;
+    gio_status->status = gpio_led[0];
+    kaa_list_push_back(response->gpio_status, (void*)gio_status);
+
+    gio_status = kaa_remote_control_ecf_gpio_status_create();
+    gio_status->id = 2;
+    gio_status->status = gpio_led[1];
+    kaa_list_push_back(response->gpio_status, (void*)gio_status);
 
     kaa_event_manager_send_kaa_remote_control_ecf_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response, NULL);
 
@@ -89,16 +90,17 @@ ICACHE_FLASH_ATTR void kaa_GPIOToggle_info_request(void *context
     KAA_DEMO_UNUSED(context);
     KAA_DEMO_UNUSED(source);
 
-    if (event->gpio_id == 1) {
-        event->gpio_id = 2;
+    int index = event->gpio->id;
+    if (event->gpio->id == 2) {
+        index = 1;
     }
 
-    if (event->status) {
-        GPIO_OUTPUT_SET(event->gpio_id, HIGH);
-        gpio_led[event->gpio_id] = HIGH;
+    if (event->gpio->status) {
+        GPIO_OUTPUT_SET(event->gpio->id, HIGH);
+        gpio_led[index] = HIGH;
     } else {
-        GPIO_OUTPUT_SET(event->gpio_id, LOW);
-        gpio_led[event->gpio_id] = LOW;
+        GPIO_OUTPUT_SET(event->gpio->id, LOW);
+        gpio_led[index] = LOW;
     }
 
     event->destroy(event);
@@ -127,10 +129,9 @@ int main(/*int argc, char* argv[] */)
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
 
-//    error_code = kaa_user_manager_default_attach_to_user(kaa_client_get_context(kaa_client)->user_manager
-//                                                       , "2"
-//                                                       , "12345");
-    error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager, "54321");
+    error_code = kaa_user_manager_default_attach_to_user(kaa_client_get_context(kaa_client)->user_manager
+                                                       , "2"
+                                                       , "54321");
     KAA_RETURN_IF_ERR(error_code);
 
 

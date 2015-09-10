@@ -24,6 +24,7 @@
 #include <kaa/platform/kaa_client.h>
 #include <kaa/utilities/kaa_log.h>
 #include <kaa/kaa_logging.h>
+#include <kaa/platform-impl/common/ext_log_upload_strategies.h>
 
 
 
@@ -46,13 +47,6 @@
  */
 extern kaa_error_t ext_unlimited_log_storage_create(void **log_storage_context_p
                                                   , kaa_logger_t *logger);
-
-extern kaa_error_t ext_log_upload_strategy_by_volume_create(void **strategy_p
-                                                          , kaa_channel_manager_t   *channel_manager
-                                                          , kaa_bootstrap_manager_t *bootstrap_manager);
-
-extern kaa_error_t ext_log_upload_strategy_by_volume_set_threshold_count(void *strategy, size_t threshold_count);
-
 
 
 static kaa_client_t *kaa_client = NULL;
@@ -113,13 +107,10 @@ int main(/*int argc, char *argv[]*/)
     error_code = ext_unlimited_log_storage_create(&log_storage_context, kaa_client_get_context(kaa_client)->logger);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create unlimited log storage");
 
-    error_code = ext_log_upload_strategy_by_volume_create(&log_upload_strategy_context
-                                                        , kaa_client_get_context(kaa_client)->channel_manager
-                                                        , kaa_client_get_context(kaa_client)->bootstrap_manager);
+    error_code = ext_log_upload_strategy_create(kaa_client_get_context(kaa_client), &log_upload_strategy_context, KAA_LOG_UPLOAD_VOLUME_STRATEGY);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create log upload strategy");
 
-    error_code = ext_log_upload_strategy_by_volume_set_threshold_count(log_upload_strategy_context
-                                                                     , KAA_DEMO_UPLOAD_COUNT_THRESHOLD);
+    error_code = ext_log_upload_strategy_set_threshold_count(log_upload_strategy_context, KAA_DEMO_UPLOAD_COUNT_THRESHOLD);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set threshold log record count");
 
     error_code = kaa_logging_init(kaa_client_get_context(kaa_client)->log_collector

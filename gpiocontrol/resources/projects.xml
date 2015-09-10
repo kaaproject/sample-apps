@@ -17,7 +17,7 @@ Copyright 2014-2015 CyberVision, Inc.
 
 <projectsConfig>
     <project id="gpio_master">
-        <name>GPIO control</name>
+        <name>GPIO control Android</name>
         <description>GPIO control Android app</description>
         <details>
             <![CDATA[

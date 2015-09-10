@@ -79,7 +79,7 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.switcher.setChecked(gpioStatusList.get(position).getStatus());
-        holder.gpioId.setText(gpioStatusList.get(position).getId() + "");
+        holder.gpioId.setText(position + "");
 
         final int teaColor = Color.parseColor("#009688");
 

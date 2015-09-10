@@ -18,22 +18,22 @@ Copyright 2014-2015 CyberVision, Inc.
 <projectsConfig>
     <project id="gpio_master">
         <name>GPIO control</name>
-		<description>GPIO control Android app demonstrates Kaa event subsystem capabilities</description>
-		<details>
+        <description>GPIO control Android app demonstrates Kaa event subsystem capabilities</description>
+        <details>
             <![CDATA[
 This app demonstrates Kaa event subsystem capabilities on Android platform.
 <h2>Installation</h2>
 Download the .apk to your Android device by clicking the "Binary" button on the left. Make sure that the device permits installing apps from "Unknown sources". Open the downloaded apk and follow the on-screen instructions.
 <h2>Playing around</h2>
 Make sure that the Kaa sandbox is up and running. You will need to install this application on one Android and one ESP8266 or CC32XX devices at least.
-Start application on android device and press "+" button in right bottom side of the screen. Enter endpoint id (default is "12345"). No other data needed in case of <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
+After you have configured and started ESP8266 or CC32XX application (You could read about its installation in “GPIO control CC3200” and “GPIO control CC3200” Sandbox’s apps), start application on android device and press "+" button on the right bottom side of the screen. Enter endpoint id (default is "12345" for CC3200 and "54321" for ESP8266). No other data needed because <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
 Then click on appeared device and try to toggle the switches.
 Please note that all features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 <h2>What's next?</h2>
 Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
 For more background on Kaa Event subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Messaging+across+endpoints">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Events">design reference</a> sections.
-            ]]>
-		</details>
+    ]]>
+        </details>
         <platform>ANDROID</platform>
         <features>EVENT USER_VERIFIER</features>
         <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
@@ -43,11 +43,14 @@ For more background on Kaa Event subsystem please refer to the corresponding <a 
     </project>
 
     <project id="gpio_slave_cc">
-        <name>GPIO CC3200 client</name>
-        <description>GPIO control C app demonstrates Kaa event subsystem capabilities</description>
+        <name>GPIO control CC32XX</name>
+        <description>GPIO control CC32XX app demonstrates Kaa event subsystem capabilities</description>
         <details>
             <![CDATA[
-TODO
+            <h2>Installation</h2>
+First of all read our <a href="http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200">documentation article</a> about integrating Kaa and CC3200.
+<h2>Playing around</h2>
+After you successfully installed this app on your CC32XX device, go to Android "GPIO control" Sandbox's app and follow steps described there.
             ]]>
         </details>
         <platform>C</platform>
@@ -58,11 +61,14 @@ TODO
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="gpio_slave_esp">
-        <name>GPIO ESP8266 client</name>
-        <description>GPIO control C app demonstrates Kaa event subsystem capabilities</description>
+        <name>GPIO control ESP8266</name>
+        <description>GPIO control ESP8266 app demonstrates Kaa event subsystem capabilities</description>
         <details>
             <![CDATA[
-TODO
+            <h2>Installation</h2>
+First of all read our <a href="http://docs.kaaproject.org/display/KAA/ESP8266">documentation article</a> about integrating Kaa and ESP8266.
+<h2>Playing around</h2>
+After you successfully installed this app on your ESP8266 device, go to Android "GPIO control" Sandbox's app and follow steps described there.
             ]]>
         </details>
         <platform>C</platform>

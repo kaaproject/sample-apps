@@ -24,14 +24,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.support.v7.app.AlertDialog;
+import android.content.DialogInterface;
+import android.util.Log;
 
 import org.kaaproject.kaa.examples.gpiocontrol.R;
+import org.kaaproject.kaa.client.KaaClient;
+import org.kaaproject.kaa.client.event.EndpointKeyHash;
+import org.kaaproject.kaa.client.event.registration.OnDetachEndpointOperationCallback;
+import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.examples.gpiocontol.GPIOStatusListActivity;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
+import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
 
 import java.util.List;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder>{
+
+    private static final String LOG_TAG = "DevicesAdapter";
 
     private List<Device> devicesDataset;
 
@@ -69,6 +79,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         holder.deviceName.setText(devicesDataset.get(position).getDeviceName());
         holder.gpioCount.setText(devicesDataset.get(position).getGpioStatuses().size()+" GPIO");
 
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showDeleteEndpointDialog(holder.cardView, devicesDataset.get(position).getKaaEndpointId(), position);
+                return true;
+            }
+        });
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,4 +104,39 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         return devicesDataset.size();
     }
 
+    private void showDeleteEndpointDialog(final View view, final String endpointKey, final int position){
+        LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
+        View promptView = layoutInflater.inflate(R.layout.dialog_delete_endpoint, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+        alertDialogBuilder.setView(promptView);
+
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        KaaClient kaaClient = KaaProvider.getClient(view.getContext());
+                        Log.d(LOG_TAG, "Going to detach....");
+                        kaaClient.detachEndpoint(new EndpointKeyHash(endpointKey), new OnDetachEndpointOperationCallback() {
+                            @Override
+                            public void onDetach(SyncResponseResultType syncResponseResultType) {
+                                Log.d(LOG_TAG, syncResponseResultType.name());
+                                if(syncResponseResultType == SyncResponseResultType.SUCCESS){
+                                    devicesDataset.remove(position);
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position, devicesDataset.size());
+                                }
+                            }
+
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
 }

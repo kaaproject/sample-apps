@@ -16,18 +16,21 @@
 
 package org.kaaproject.kaa.examples.gpiocontol.utils;
 
-import android.content.Context;
-import android.util.Log;
-
-import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
+import org.apache.avro.specific.SpecificRecordBase;
 import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
+import org.kaaproject.kaa.client.event.FindEventListenersCallback;
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest;
+import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
+import android.content.Context;
+import android.util.Log;
+
+import java.util.List;
 
 public class KaaProvider {
 
@@ -64,6 +67,14 @@ public class KaaProvider {
         final RemoteControlECF ecf = eventFamilyFactory.getRemoteControlECF();
 
         ecf.addListener(callback);
+
+        ecf.sendEventToAll(new DeviceInfoRequest());
+    }
+
+    public static void sendDeviceInfoRequestToAll(Context context){
+        final KaaClient client = getClient(context);
+        EventFamilyFactory eventFamilyFactory = client.getEventFamilyFactory();
+        final RemoteControlECF ecf = eventFamilyFactory.getRemoteControlECF();
 
         ecf.sendEventToAll(new DeviceInfoRequest());
     }

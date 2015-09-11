@@ -128,12 +128,8 @@ int main(/*int argc, char* argv[] */)
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
-
-    error_code = kaa_user_manager_default_attach_to_user(kaa_client_get_context(kaa_client)->user_manager
-                                                       , "2"
-                                                       , "54321");
+    error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager, "esp8266");
     KAA_RETURN_IF_ERR(error_code);
-
 
     error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager
                                                                                          , &kaa_device_info_request

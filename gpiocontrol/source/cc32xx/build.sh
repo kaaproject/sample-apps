@@ -66,7 +66,7 @@ function build_thirdparty {
         -DKAA_MAX_LOG_LEVEL=3"
 
         if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
-            ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin64/opt/kaa"
+            ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin/opt/kaa"
         fi
 
         cmake -G "Unix Makefiles" $ENV_VAR ..

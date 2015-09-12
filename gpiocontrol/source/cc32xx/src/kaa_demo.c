@@ -26,6 +26,7 @@
 #include <kaa/utilities/kaa_mem.h>
 #include <kaa/kaa_user.h>
 #include <kaa/gen/kaa_remote_control_ecf.h>
+#include <kaa/kaa_profile.h>
 
 #ifdef CC32XX
 #include "../cc32xx/cc32xx_support.h"
@@ -119,7 +120,7 @@ int main(/*int argc, char *argv[]*/)
 
     wlan_configure();
     sl_Start(0, 0, 0);
-    wlan_connect("cyber9", "Cha5hk123", SL_SEC_TYPE_WPA_WPA2);
+    wlan_connect(SSID, PWD, SL_SEC_TYPE_WPA_WPA2);
 #endif
     DEMO_LOG("Event demo started\n");
 
@@ -129,9 +130,8 @@ int main(/*int argc, char *argv[]*/)
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
-    error_code = kaa_user_manager_default_attach_to_user(kaa_client_get_context(kaa_client)->user_manager
-                                                       , "2"
-                                                       , "12345");
+    error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager, "cc3200");
+
     KAA_RETURN_IF_ERR(error_code);
 
 

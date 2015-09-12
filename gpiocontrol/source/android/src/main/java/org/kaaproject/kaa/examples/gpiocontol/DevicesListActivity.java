@@ -131,6 +131,7 @@ public class DevicesListActivity extends AppCompatActivity {
             if(isFirstLaunch()) {
                 initKaa();
             }
+            setUpEndpointListener();
         }
         progressBar.setVisibility(View.INVISIBLE);
     }
@@ -148,17 +149,9 @@ public class DevicesListActivity extends AppCompatActivity {
         if(kaaClient==null){
             startKaa();
         }
-        if(endpointId == null || endpointId.isEmpty()) {
-            SnackbarsManager.makeSnackBar(context, "Endpoint ID can't be empty");
-            return;
-        }
 
-        kaaClient.attachEndpoint(new EndpointAccessToken(endpointId), new OnAttachEndpointOperationCallback() {
-            @Override
-            public void onAttach(SyncResponseResultType syncResponseResultType, EndpointKeyHash endpointKeyHash) {
-                Log.d(LOG_TAG, "attachEndpoint result: " + syncResponseResultType.toString());
-            }
-        });
+
+
 
 
         KaaProvider.setUpEventListener(this, new RemoteControlECF.Listener() {
@@ -187,7 +180,19 @@ public class DevicesListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         endpointId = editText.getText().toString();
                         progressBar.setVisibility(View.VISIBLE);
-                        setUpEndpointListener();
+
+
+                        if(endpointId == null || endpointId.isEmpty()) {
+                            SnackbarsManager.makeSnackBar(context, "Endpoint ID can't be empty");
+                            return;
+                        }
+                        kaaClient.attachEndpoint(new EndpointAccessToken(endpointId), new OnAttachEndpointOperationCallback() {
+                            @Override
+                            public void onAttach(SyncResponseResultType syncResponseResultType, EndpointKeyHash endpointKeyHash) {
+                                Log.d(LOG_TAG, "attachEndpoint result: " + syncResponseResultType.toString());
+                            }
+                        });
+                        KaaProvider.sendDeviceInfoRequestToAll(context);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 })
@@ -228,3 +233,4 @@ public class DevicesListActivity extends AppCompatActivity {
         });
     }
 }
+

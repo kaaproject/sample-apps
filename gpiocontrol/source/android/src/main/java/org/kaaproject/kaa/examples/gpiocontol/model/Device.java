@@ -105,3 +105,4 @@ public class Device implements Serializable {
         return result;
     }
 }
+

@@ -36,7 +36,6 @@ KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-client*.tar.gz"
-ESPTOOL="esptool.py"
 
 #Wifi settings
 SSID="xxx"
@@ -60,19 +59,20 @@ function build_thirdparty {
     if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
     then
         cd $KAA_LIB_PATH &&
-        mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=0 \
-              -DKAA_MAX_LOG_LEVEL=3 \
-              -DKAA_PLATFORM=esp8266 \
-              -DCMAKE_TOOLCHAIN_FILE=../toolchains/esp8266.cmake \
-              -DKAA_WITHOUT_NOTIFICATION=1 \
-              -DKAA_WITHOUT_LOGGING=1 \
-              -DKAA_WITHOUT_CONFIGURATION=1 \
-              ..
+        mkdir -p $BUILD_DIR && cd $BUILD_DIR
+
+        ENV_VAR=" -DKAA_PLATFORM=cc32xx \
+        -DCMAKE_TOOLCHAIN_FILE=../toolchains/cc32xx.cmake \
+        -DKAA_MAX_LOG_LEVEL=3"
+
+        if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
+            ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin/opt/kaa"
+        fi
+
+        cmake -G "Unix Makefiles" $ENV_VAR ..
     fi
 
     cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    echo `ls`
     make -j4 &&
     cd $PROJECT_HOME
 }
@@ -85,9 +85,13 @@ function build_app {
     cd $PROJECT_HOME &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
     cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
-    cd $BUILD_DIR &&
-    cmake -DAPP_NAME=$APP_NAME -DCMAKE_TOOLCHAIN_FILE=esp8266.cmake \
-          -DSSID=$SSID -DPWD=$PASSWORD ..
+    cd $BUILD_DIR
+    ENV_VAR=" -DKAA_PLATFORM=cc32xx -DAPP_NAME=$APP_NAME"
+        if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
+                ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin/opt/kaa"
+        fi
+
+    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD $ENV_VAR .. &&
     make
 }
 
@@ -98,11 +102,12 @@ function clean {
 
 function run {
     cd "$PROJECT_HOME/$BUILD_DIR"
-    sudo $ESPTOOL write_flash 0x00000 0x00000.bin 0x40000 0x40000.bin
+    ./$APP_NAME
 }
 
-for cmd in $@
-do
+#for cmd in $@
+#do
+cmd=$1
 
 case "$cmd" in
     build)
@@ -124,7 +129,7 @@ case "$cmd" in
     clean)
         clean
     ;;
-    
+
     *)
         help
     ;;

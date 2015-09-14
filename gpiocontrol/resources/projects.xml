@@ -54,7 +54,7 @@ After you successfully installed this app on your CC32XX device, go to Android "
 ]]>
         </details>
         <platform>C</platform>
-        <features>EVENTS USER_VERIFIER</features>
+        <features>EVENT USER_VERIFIER</features>
         <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
         <projectFolder>gpio-cc-client</projectFolder>
         <sdkLibDir>gpio-cc-client/libs/kaa</sdkLibDir>
@@ -72,7 +72,7 @@ After you successfully installed this app on your ESP8266 device, go to Android 
             ]]>
         </details>
         <platform>C</platform>
-        <features>EVENTS USER_VERIFIER</features>
+        <features>EVENT USER_VERIFIER</features>
         <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
         <projectFolder>gpio-esp-client</projectFolder>
         <sdkLibDir>gpio-esp-client/libs/kaa</sdkLibDir>

@@ -1,5 +1,6 @@
 output/**
 *.class
+*~
 *.iml
 */.idea/**
 .idea/**

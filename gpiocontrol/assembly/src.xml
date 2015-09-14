@@ -1,0 +1,77 @@
+<!--
+  Copyright 2014 CyberVision, Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+       http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>gpiocontrol-android-src</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}/../thirdparty/android/appcompat_v7_22</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>gpiocontrol/appcompat_v7</outputDirectory>
+            <excludes>
+                <exclude>bin/</exclude>
+                <exclude>gen/</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/../thirdparty/android/recyclerview</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>gpiocontrol/recyclerview-v7</outputDirectory>
+            <excludes>
+                <exclude>bin/</exclude>
+                <exclude>gen/</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/../thirdparty/android/cardview</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>gpiocontrol/cardview-v7</outputDirectory>
+            <excludes>
+                <exclude>bin/</exclude>
+                <exclude>gen/</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/../thirdparty/android/snackbar</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>gpiocontrol/snackbar</outputDirectory>
+            <excludes>
+                <exclude>bin/</exclude>
+                <exclude>gen/</exclude>
+            </excludes>
+        </fileSet>
+	    <fileSet>
+            <directory>${project.basedir}/../thirdparty/android/floatingactionbutton</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>gpiocontrol/floatingactionbutton</outputDirectory>
+            <excludes>
+                <exclude>bin/</exclude>
+                <exclude>gen/</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/source/android</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>gpiocontrol/gpiocontrol</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

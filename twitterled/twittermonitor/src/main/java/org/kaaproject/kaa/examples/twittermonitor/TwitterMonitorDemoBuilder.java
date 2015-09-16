@@ -36,6 +36,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.kaaproject.kaa.common.dto.*;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
+import org.kaaproject.kaa.examples.twitterboard.TwitterBoardDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
-@KaaDemoBuilder
+@KaaDemoBuilder(dependsOnBuilders = TwitterBoardDemoBuilder.class)
 public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(TwitterMonitorDemoBuilder.class);
@@ -114,9 +115,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         logger.info("All available applications: [{}]", applications);
         ApplicationDto twitterBoardApplication = getTwitterBoardApplication(applications);
         if (twitterBoardApplication == null) {
-            logger.info("No application with name as 'Twitter board' was found. Possible reasons: " +
-                    "1. You haven't added Twitter board application to DemoBuildersRegistry or your Twitter monitor; " +
-                    "2. Twitter monitor build is registered before Twitter board");
+            logger.info("No application with name as 'Twitter board' was found.");
             throw new RuntimeException("Can't get twitter board application!");
         }
         String twitterBoardAppToken = twitterBoardApplication.getApplicationToken();

@@ -16,7 +16,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
@@ -36,6 +36,16 @@
             <groupId>org.kaaproject.kaa.examples</groupId>
             <artifactId>common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.kaaproject.kaa.examples.econais.ec19d</groupId>
+            <artifactId>trafficlights-driver</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kaaproject.kaa.examples.econais.ec19d</groupId>
+            <artifactId>streetlight-driver</artifactId>
+            <version>${project.version}</version>
+        </dependency>        
         <dependency>
             <groupId>org.kaaproject.kaa.server.common</groupId>
             <artifactId>admin-rest-client</artifactId>

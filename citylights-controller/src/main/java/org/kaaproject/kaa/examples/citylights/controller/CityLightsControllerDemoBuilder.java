@@ -24,6 +24,8 @@ import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
+import org.kaaproject.kaa.examples.streetlight.StreetLightDriverDemoBuilder;
+import org.kaaproject.kaa.examples.trafficlight.TrafficLightsDriverDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
@@ -32,7 +34,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
-@KaaDemoBuilder
+@KaaDemoBuilder(dependsOnBuilders={TrafficLightsDriverDemoBuilder.class, 
+								   StreetLightDriverDemoBuilder.class})
+
 public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(CityLightsControllerDemoBuilder.class);
@@ -140,9 +144,6 @@ public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
     }
 
     private String formErrorLogMessage(String applicationName) {
-        return  "No application with name as '" + applicationName +
-                "' was found. Possible reasons: " +
-                "1. You haven't added '" + applicationName + " application' to DemoBuildersRegistry; " +
-                "2. City lights controller build is registered before " + applicationName + ".";
+        return  "No application with name as '" + applicationName;
     }
 }

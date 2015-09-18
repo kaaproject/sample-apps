@@ -38,6 +38,6 @@ public abstract class AbstractGeoFencingDeviceCard<T extends AbstractGeoFencingD
         if (mode == null) {
             mode = OperationMode.OFF;
         } 
-        mGeofencingStatusView.setText(getResources().getStringArray(R.array.geofencing_status)[mode.ordinal()]);
+        mGeofencingStatusView.setText(getResources().getStringArray(R.array.geofencing_status)[AbstractGeoFencingDevice.getOperationModePosition(mode)]);
     }
 }

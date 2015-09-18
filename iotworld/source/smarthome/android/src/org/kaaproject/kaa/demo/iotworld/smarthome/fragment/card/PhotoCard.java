@@ -85,7 +85,7 @@ public class PhotoCard extends AbstractGeoFencingDeviceCard<PhotoDevice> {
                 mAlbumTitleView.setText(album.getTitle());
                 mPhotoNumberView.setText(getResources().getString(R.string.photo_number_text, photoFrameStatus.getPhotoNumber(), album.getSize()));
                 SlideShowStatus status = photoFrameStatus.getStatus();
-                mSlideshowStatusView.setText(getResources().getStringArray(R.array.slideshow_status)[status.ordinal()]);
+                mSlideshowStatusView.setText(getResources().getStringArray(R.array.slideshow_status)[PhotoDevice.getSlideShowStatusPosition(status)]);
             } else {
                 mNoAlbumSelectedView.setVisibility(View.VISIBLE);
                 mPhotoFrameDetailsView.setVisibility(View.GONE);

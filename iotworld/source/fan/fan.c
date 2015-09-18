@@ -56,14 +56,22 @@ static const char *device_model = "BeagleBone Black";
 
 static kaa_fan_event_class_family_fan_status_t current_status;
 
+#define log_info(...) \
+           if (kaa_client != NULL) { \
+               KAA_LOG_INFO(kaa_client_get_context(kaa_client)->logger, KAA_ERR_NONE, __VA_ARGS__); \
+           } else { \
+               printf(__VA_ARGS__); \
+               printf("\n"); \
+           }
+
 void exportGpio(bool exportGpio)
 {
     FILE *f;
     if (exportGpio) {
-        printf("Exporting fan gpio");
+        log_info("Exporting fan gpio");
         f = fopen("/sys/class/gpio/export", "w");
     } else {
-        printf("Unexporting fan gpio");
+        log_info("Unexporting fan gpio");
         f = fopen("/sys/class/gpio/unexport", "w");
     }
 
@@ -74,12 +82,12 @@ void exportGpio(bool exportGpio)
     fprintf(f, "%d", GPIO_NUM);
 
     if (ferror(f)) {
-        printf("Error writing to gpio (un)export file\n");
+        log_info("Error writing to gpio (un)export file");
     }
 
     fclose(f);
 
-    printf("gpio exported successfully\n");
+    log_info("gpio exported successfully");
 }
 
 void setDirection(bool out)
@@ -94,7 +102,7 @@ void setDirection(bool out)
     out ? fprintf(f, "out") : fprintf(f, "in");
 
     if (ferror(f)) {
-        printf("Error writing to gpio direction file\n");
+        log_info("Error writing to gpio direction file");
     }
 
     fclose(f);
@@ -102,6 +110,12 @@ void setDirection(bool out)
 
 void changeFanState(kaa_fan_event_class_family_fan_status_t status)
 {
+    if (status == ENUM_FAN_STATUS_ON) {
+        log_info("Change fan state: ON");
+    } else {
+        log_info("Change fan state: OFF");
+    }
+
     char value[50];
     sprintf(value, "/sys/class/gpio/gpio%d/value", GPIO_NUM);
     FILE *f = fopen(value, "w");
@@ -132,16 +146,16 @@ void kaa_on_device_change_name_request(void *context
                                      , kaa_device_event_class_family_device_change_name_request_t *event
                                      , kaa_endpoint_id_p source)
 {
-    printf("change_name_request recieved");
+    log_info("change_name_request recieved");
     event->destroy(event);
-    printf("Name changed\n");
+    log_info("Name changed");
 }
 
 void kaa_on_device_status_subscription_request(void *context
                                             , kaa_device_event_class_family_device_status_subscription_request_t *event
                                             , kaa_endpoint_id_p source)
 {
-    printf("status_subscription_request received");
+    log_info("status_subscription_request received");
 
     event->destroy(event);
 }
@@ -151,7 +165,7 @@ void kaa_on_device_info_request(void *context
                               , kaa_device_event_class_family_device_info_request_t *event
                               , kaa_endpoint_id_p source)
 {
-    printf("DeviceInfoRequest event received!\n");
+    log_info("DeviceInfoRequest event received!");
 
     kaa_device_event_class_family_device_info_response_t *response =
             kaa_device_event_class_family_device_info_response_create();
@@ -165,14 +179,14 @@ void kaa_on_device_info_request(void *context
     kaa_event_manager_send_kaa_device_event_class_family_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response,
     source);
 
-    printf("DeviceInfoResponse sent!\n");
+    log_info("DeviceInfoResponse sent!");
     response->destroy(response);
 
     event->destroy(event);
 }
 
 void kaa_on_switch_request(void *context, kaa_fan_event_class_family_switch_request_t *event, kaa_endpoint_id_p source) {
-    printf("SwitchRequest event received!\n");
+    log_info("SwitchRequest event received!");
     kaa_fan_event_class_family_fan_status_update_t *response = kaa_fan_event_class_family_fan_status_update_create();
 
     changeFanState(event->status);
@@ -186,32 +200,32 @@ void kaa_on_switch_request(void *context, kaa_fan_event_class_family_switch_requ
 }
 
 kaa_error_t kaa_on_event_listeners(void *context, const kaa_endpoint_id listeners[], size_t listeners_count) {
-    printf("%zu event listeners received\n", listeners_count);
+    log_info("%zu event listeners received", listeners_count);
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_event_listeners_failed(void *context) {
-    printf("Kaa Demo event listeners not found\n");
+    log_info("Kaa Demo event listeners not found");
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_attached(void *context, const char *user_external_id, const char *endpoint_access_token) {
-    printf("Kaa Demo attached to user %s, access token %s\n", user_external_id, endpoint_access_token);
+    log_info("Kaa Demo attached to user %s, access token %s", user_external_id, endpoint_access_token);
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_detached(void *context, const char *endpoint_access_token) {
-    printf("Kaa Demo detached from user access token %s\n", endpoint_access_token);
+    log_info("Kaa Demo detached from user access token %s", endpoint_access_token);
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_attach_success(void *context) {
-    printf("Kaa Demo attach success\n");
+    log_info("Kaa Demo attach success");
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_attach_failed(void *context, user_verifier_error_code_t error_code, const char *reason) {
-    printf("Kaa Demo attach failed\n");
+    log_info("Kaa Demo attach failed");
     kaa_client_stop(kaa_client);
     return KAA_ERR_NONE;
 }
@@ -224,8 +238,8 @@ kaa_error_t kaa_on_attach_failed(void *context, user_verifier_error_code_t error
 
 int main(/*int argc, char *argv[]*/)
 {
-    printf("Fan demo started\n");
-
+    log_info("Fan demo started");
+    
     initFan(true);
 
     /**
@@ -280,7 +294,7 @@ int main(/*int argc, char *argv[]*/)
     kaa_client_destroy(kaa_client);
     initFan(false);
 
-    printf("Fan demo stopped\n");
+    log_info("Fan demo stopped");
 
     return error_code;
 }

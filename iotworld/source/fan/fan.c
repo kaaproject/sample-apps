@@ -57,12 +57,8 @@ static const char *device_model = "BeagleBone Black";
 static kaa_fan_event_class_family_fan_status_t current_status;
 
 #define log_info(...) \
-           if (kaa_client != NULL) { \
-               KAA_LOG_INFO(kaa_client_get_context(kaa_client)->logger, KAA_ERR_NONE, __VA_ARGS__); \
-           } else { \
                printf(__VA_ARGS__); \
                printf("\n"); \
-           }
 
 void exportGpio(bool exportGpio)
 {

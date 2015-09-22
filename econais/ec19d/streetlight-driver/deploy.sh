@@ -52,7 +52,11 @@ function copySources {
 }
 
 function generateKey {
-    chmod +x ./generate_kaa_key.sh && ./generate_kaa_key.sh && rm -rf ./cfg/kaa_client.key && mv ./cfg/key.txt ./cfg/kaa_client.key  
+    chmod +x ./generate_kaa_key.sh && ./generate_kaa_key.sh
+}
+
+function generateMac {
+    $ECONAIS_HOME_VAR/sndc_sdk/tools/devConfGenerator/devConfGenerator dev.config && mv device.cfg ./cfg/
 }
 
 if [ -z ${ECONAIS_HOME_VAR+x} ]; then 
@@ -68,3 +72,4 @@ fi
 unpackSources;
 copySources;
 generateKey;
+generateMac;

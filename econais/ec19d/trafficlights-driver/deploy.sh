@@ -70,6 +70,6 @@ if [ ! -d "$ECONAIS_HOME_VAR" ]; then
 fi
 
 unpackSources;
-copySources;
 generateKey;
 generateMac;
+copySources;

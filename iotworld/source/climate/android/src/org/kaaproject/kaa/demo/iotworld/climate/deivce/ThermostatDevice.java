@@ -152,7 +152,7 @@ public class ThermostatDevice implements DeviceEventClassFamily.Listener,
         boolean operate = mClient.isAttachedToUser() && 
                 (mOperationMode == OperationMode.ON || 
                 (mOperationMode == OperationMode.GEOFENCING && 
-                 mPosition == GeoFencingPosition.HOME || mPosition == GeoFencingPosition.NEAR));
+                (mPosition == GeoFencingPosition.HOME || mPosition == GeoFencingPosition.NEAR)));
         if (operate) {
             mThermoSimulator.start();
         } else {

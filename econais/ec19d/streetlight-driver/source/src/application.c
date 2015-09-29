@@ -160,8 +160,8 @@ static void start_client(void)
 
 /* -------------------------------------------------------------------------*/
 
-#define LIGHT_ON             0
-#define LIGHT_OFF            1
+#define LIGHT_ON             1
+#define LIGHT_OFF            0
 #define LIGHT_ZONES_COUNT    6
 static const int light_zones[] = { IO_GPIO_1, IO_GPIO_2, IO_GPIO_3, IO_GPIO_4, IO_GPIO_5, IO_GPIO_6 };
 static int light_states[] = {LIGHT_OFF, LIGHT_OFF, LIGHT_OFF, LIGHT_OFF, LIGHT_OFF, LIGHT_OFF};

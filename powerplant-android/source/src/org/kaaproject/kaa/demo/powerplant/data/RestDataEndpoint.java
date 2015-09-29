@@ -58,7 +58,8 @@ import android.util.Log;
 public class RestDataEndpoint extends AbstractDataEndpoint {
     private static final String TAG = RestDataEndpoint.class.getSimpleName();
 
-    private static final int PANNELS_PER_ZONE = 1;
+    private static final int PANNELS_PER_ZONE = 1000;
+    private static final int VOLTAGE_MULTIPLICATION_COEFF = 1250;
     
     private String baseURL;
     private String latestURL;
@@ -128,11 +129,11 @@ public class RestDataEndpoint extends AbstractDataEndpoint {
             DataReport report = resultMap.get(time);
             if (report == null) {
                 List<DataPoint> dataPoints = new ArrayList<DataPoint>();
-                report = new DataReport(time, dataPoints, getConsumption(PANNELS_PER_ZONE * DashboardFragment.NUM_ZONES));
+                report = new DataReport(time, dataPoints, getConsumption(DashboardFragment.NUM_ZONES));
                 resultMap.put(time, report);
             }
             report.getDataPoints().add(new DataPoint(dataPoint.getInt("zoneId"), PANNELS_PER_ZONE,
-            		(float) dataPoint.getDouble("voltage")));
+            		(float) dataPoint.getDouble("voltage") * VOLTAGE_MULTIPLICATION_COEFF));
         }
 
         List<DataReport> result = new ArrayList<DataReport>(resultMap.values());

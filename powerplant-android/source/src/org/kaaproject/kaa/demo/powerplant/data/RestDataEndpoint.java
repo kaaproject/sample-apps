@@ -59,7 +59,7 @@ public class RestDataEndpoint extends AbstractDataEndpoint {
     private static final String TAG = RestDataEndpoint.class.getSimpleName();
 
     private static final int PANNELS_PER_ZONE = 1000;
-    private static final int VOLTAGE_MULTIPLICATION_COEFF = 1250;
+    private static final int VOLTAGE_MULTIPLICATION_COEFF = 1600; 
     
     private String baseURL;
     private String latestURL;
@@ -87,7 +87,7 @@ public class RestDataEndpoint extends AbstractDataEndpoint {
     
     @Override
     public List<DataReport> getHistoryData(long fromTime) {
-        try {
+    	try {
             HttpGet getRequest = new HttpGet(baseURL + "?from=" + fromTime);
             getRequest.addHeader("accept", "application/json");
             JSONArray jsonArray = fetchJson(getRequest);

@@ -37,7 +37,7 @@ KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-client*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
-KAA_ARCH=x86-64
+KAA_ARCH=cc32xx
 
 function select_arch {
     KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"

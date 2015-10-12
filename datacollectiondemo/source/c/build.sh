@@ -39,9 +39,10 @@ KAA_SDK_TAR="kaa-client*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
 KAA_ARCH=x86-64
 
-function select_arch {
+function select_arch {	
+    echo "Please enter architecture(default is x86-64):"
+    read arch
     KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
-    KAA_ARCH=$arch
     case "$arch" in
         edison)
           KAA_ARCH=x86-64
@@ -104,8 +105,8 @@ function run {
     ./$APP_NAME
 }
 
-cmd=$1
-arch=$2
+for cmd in $@
+do
 
 case "$cmd" in
     build)
@@ -135,3 +136,4 @@ case "$cmd" in
     ;;
 esac
 
+done

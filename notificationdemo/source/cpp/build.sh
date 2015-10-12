@@ -20,6 +20,7 @@ RUN_DIR=`pwd`
 
 function help {
     echo "Choose one of the following: {build|run|deploy|clean}"
+    echo "Supported platforms: x86-64, edison"
     exit 1
 }
 
@@ -39,6 +40,8 @@ KAA_SDK_TAR="kaa-client*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
 
 function select_arch {
+    echo "Please enter architecture(default is x86-64):"
+    read arch
     case "$arch" in
         edison)
 	  KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
@@ -105,8 +108,8 @@ function run {
     ./$APP_NAME
 }
 
-cmd=$1
-arch=$2
+for cmd in $@
+do
 
 case "$cmd" in
     build)
@@ -135,4 +138,6 @@ case "$cmd" in
         help
     ;;
 esac
+
+done
 

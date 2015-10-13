@@ -20,7 +20,7 @@ RUN_DIR=`pwd`
 
 function help {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported platforms: x86-64, cc32xx"
+    echo "Supported platforms: x86-64"
     exit 1
 }
 

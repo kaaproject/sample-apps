@@ -43,13 +43,16 @@ KAA_ARCH=cc32xx
 function select_arch {	
     echo "Please enter architecture(default is cc32xx):"
     read arch
-    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
     case "$arch" in
         edison)
           KAA_ARCH=x86-64
+          KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
         ;;
+	x86-64)
+	  KAA_ARCH=x86-64
+	;;
         *)
-          KAA_TOOLCHAIN_PATH_SDK=""
+          KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$KAA_ARCH.cmake"
         ;;
     esac
 }

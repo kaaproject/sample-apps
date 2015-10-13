@@ -20,6 +20,7 @@ RUN_DIR=`pwd`
 
 function help {
     echo "Choose one of the following: {build|run|deploy|clean}"
+    echo "Supported platforms: x86-64, cc32xx"
     exit 1
 }
 
@@ -36,6 +37,22 @@ KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-client*.tar.gz"
+KAA_TOOLCHAIN_PATH_SDK=""
+KAA_ARCH=cc32xx
+
+function select_arch {	
+    echo "Please enter architecture(default is cc32xx):"
+    read arch
+    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
+    case "$arch" in
+        edison)
+          KAA_ARCH=x86-64
+        ;;
+        *)
+          KAA_TOOLCHAIN_PATH_SDK=""
+        ;;
+    esac
+}
 
 function build_thirdparty {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
@@ -60,6 +77,8 @@ function build_thirdparty {
               -DKAA_WITHOUT_EVENTS=1 \
               -DKAA_WITHOUT_LOGGING=1 \
               -DKAA_MAX_LOG_LEVEL=3 \
+	      -DKAA_PLATFORM=$KAA_ARCH \
+               $KAA_TOOLCHAIN_PATH_SDK \
               ..
     fi
 
@@ -73,7 +92,7 @@ function build_app {
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
     cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
     cd $BUILD_DIR &&
-    cmake -DKAA_PLATFORM=$arch -DAPP_NAME=$APP_NAME ..
+    cmake -DAPP_NAME=$APP_NAME -DKAA_PLATFORM=$KAA_ARCH $KAA_TOOLCHAIN_PATH_SDK ..
     make
 }
 
@@ -87,14 +106,12 @@ function run {
     ./$APP_NAME
 }
 
-
-#for cmd in $1
-#do
-cmd=$1
-arch=$2
+for cmd in $@
+do
 
 case "$cmd" in
     build)
+        select_arch
         build_thirdparty &&
         build_app
     ;;
@@ -105,6 +122,7 @@ case "$cmd" in
 
     deploy)
         clean
+        select_arch
         build_thirdparty
         build_app
         run

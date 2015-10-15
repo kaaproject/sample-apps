@@ -60,11 +60,11 @@ set(APP_LIBS ${LIB_KAA} ${LIB_SIMPLELINK_NONOS} ${LIB_DRIVER} ${LIB_M} ${LIB_C} 
 
 set (SAMPLE_SOURCE_FILES
             src/kaa_demo.c           
-            platforms/${KAA_PLATFORM}/${KAA_PLATFORM}_support.c
+            platform/${KAA_PLATFORM}/${KAA_PLATFORM}_support.c
 	    ${CC32XX_SDK}/example/common/uart_if.c
 	    ${CC32XX_SDK}/example/common/udma_if.c
             ${CC32XX_SDK}/example/common/gpio_if.c
 	    ${CC32XX_SDK}/example/common/startup_gcc.c 
     )
 
-set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_LINKER} -T ${CMAKE_CURRENT_SOURCE_DIR}/../platforms/${KAA_PLATFORM}/app.ld --entry ResetISR --gc-sections -o ${APP_NAME}.afx <OBJECTS> <LINK_LIBRARIES>")
+set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_LINKER} -T ${CMAKE_CURRENT_SOURCE_DIR}/platform/${KAA_PLATFORM}/app.ld --entry ResetISR --gc-sections -o ${APP_NAME}.afx <OBJECTS> <LINK_LIBRARIES>")

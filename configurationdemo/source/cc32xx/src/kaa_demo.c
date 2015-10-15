@@ -26,7 +26,7 @@
 #include <kaa/kaa_configuration_manager.h>
 
 #ifdef CC32XX
-#include "../platforms/cc32xx/cc32xx_support.h"
+#include "../platform/cc32xx/cc32xx_support.h"
 
 #define KAA_DEMO_RETURN_IF_ERROR(error, message) \
     if ((error)) { \

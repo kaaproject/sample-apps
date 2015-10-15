@@ -102,7 +102,7 @@ LIBMAPLE_MODULES += $(SRCROOT)/libraries/Servo
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/LiquidCrystal
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/Wire
 # Experimental libraries:
-LIBMAPLE_MODULES += $(SRCROOT)/libraries/FreeRTOS
+#LIBMAPLE_MODULES += $(SRCROOT)/libraries/FreeRTOS
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/kaa
 #LIBMAPLE_MODULES += $(SRCROOT)/libraries/esp8266
 #LIBMAPLE_MODULES += $(SRCROOT)/libraries/cc3000

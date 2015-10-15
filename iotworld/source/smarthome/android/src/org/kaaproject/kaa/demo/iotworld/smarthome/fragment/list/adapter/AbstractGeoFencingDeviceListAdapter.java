@@ -50,8 +50,9 @@ public abstract class AbstractGeoFencingDeviceListAdapter<T extends AbstractGeoF
             if (mode == null) {
                 mode = OperationMode.OFF;
             } 
+            int pos = AbstractGeoFencingDevice.getOperationModePosition(mode);
             geoFencingStatusView.setText(
-                    geoFencingStatusView.getResources().getStringArray(R.array.geofencing_status)[mode.ordinal()]);
+                    geoFencingStatusView.getResources().getStringArray(R.array.geofencing_status)[pos]);
         }
 
     }

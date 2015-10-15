@@ -55,7 +55,7 @@ public abstract class AbstractGeoFencingDeviceFragment<D extends AbstractGeoFenc
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Object tag = mGeoFencingStatusSpinner.getTag();
         if (tag == null || ((Integer)tag).intValue() != position) {
-            OperationMode newOperationMode = OperationMode.values()[position];
+            OperationMode newOperationMode = AbstractGeoFencingDevice.getOperationMode(position);
             if (mDevice.getOperationMode() == null || mDevice.getOperationMode() != newOperationMode) {
                 mDevice.changeOperationMode(newOperationMode);
             }
@@ -121,9 +121,11 @@ public abstract class AbstractGeoFencingDeviceFragment<D extends AbstractGeoFenc
         if (mode == null) {
             mode = OperationMode.OFF;
         }
+        
+        int pos = AbstractGeoFencingDevice.getOperationModePosition(mode);
 
-        mGeoFencingStatusSpinner.setTag(mode.ordinal());
-        mGeoFencingStatusSpinner.setSelection(mode.ordinal());
+        mGeoFencingStatusSpinner.setTag(pos);
+        mGeoFencingStatusSpinner.setSelection(pos);
         
         setControlsEnabled(mode != OperationMode.OFF);
     }

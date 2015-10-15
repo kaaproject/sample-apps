@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class DashboardResource {
     private static final Logger LOG = LoggerFactory.getLogger(DashboardResource.class);
 
-    private static final int MAX_SAMPLES = 100;
+    private static final int MAX_SAMPLES = 300;
     private static final Map<Integer, SortedSet<DataPoint>> voltageSamplesMap = new HashMap<>();
     private static final Object updateLock = new Object();
 

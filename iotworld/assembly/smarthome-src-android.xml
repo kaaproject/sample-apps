@@ -44,12 +44,12 @@
             <outputDirectory>smarthome/android/qrcode-lib</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>${project.basedir}/../thirdparty/android/eventbus</directory>
+            <directory>${project.basedir}/../thirdparty/android/recyclerview</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>smarthome/android/SmartHome/libs</outputDirectory>
+            <outputDirectory>smarthome/android/recyclerview</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>${project.basedir}/../thirdparty/android/recyclerview</directory>
+            <directory>${project.basedir}/../thirdparty/android/eventbus</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>smarthome/android/SmartHome/libs</outputDirectory>
         </fileSet>

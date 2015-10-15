@@ -19,7 +19,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.demo.iotworld.PhotoEventClassFamily;
@@ -44,6 +46,26 @@ public class PhotoDevice extends AbstractGeoFencingDevice implements PhotoEventC
     private PhotoFrameStatusUpdate mPhotoFrameStatus;
     
     private final AlbumsComparator mAlbumsComparator = new AlbumsComparator();
+    
+    private static Map<Integer, SlideShowStatus> positionToSlideShowStatusMap = new HashMap<>();
+    static {
+    	positionToSlideShowStatusMap.put(0, SlideShowStatus.PAUSED);
+    	positionToSlideShowStatusMap.put(1, SlideShowStatus.PLAYING);
+    }
+    
+    private static Map<SlideShowStatus, Integer> slideShowStatusToPositionMap = new HashMap<>();
+    static {
+    	slideShowStatusToPositionMap.put(SlideShowStatus.PAUSED, 0);
+    	slideShowStatusToPositionMap.put(SlideShowStatus.PLAYING, 1);
+    }
+    
+    public static SlideShowStatus getSlideShowStatus(int position) {
+    	return positionToSlideShowStatusMap.get(position);
+    }
+    
+    public static int getSlideShowStatusPosition(SlideShowStatus status) {
+    	return slideShowStatusToPositionMap.get(status);
+    }
     
     public PhotoDevice(String endpointKey, DeviceStore deviceStore, KaaClient client, EventBus eventBus) {
         super(endpointKey, deviceStore, client, eventBus);

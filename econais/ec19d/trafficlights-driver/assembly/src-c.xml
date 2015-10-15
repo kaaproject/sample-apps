@@ -42,5 +42,11 @@
             <destName>generate_kaa_key.sh</destName>
             <fileMode>0777</fileMode>
        </file>
+       <file>
+            <source>${project.basedir}/dev.config</source>
+            <outputDirectory>TrafficLights</outputDirectory>
+            <destName>dev.config</destName>
+            <fileMode>0666</fileMode>
+       </file>
     </files>
 </assembly>

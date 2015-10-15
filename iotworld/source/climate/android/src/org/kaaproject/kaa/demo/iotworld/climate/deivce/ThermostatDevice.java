@@ -152,7 +152,7 @@ public class ThermostatDevice implements DeviceEventClassFamily.Listener,
         boolean operate = mClient.isAttachedToUser() && 
                 (mOperationMode == OperationMode.ON || 
                 (mOperationMode == OperationMode.GEOFENCING && 
-                 mPosition == GeoFencingPosition.HOME || mPosition == GeoFencingPosition.NEAR));
+                (mPosition == GeoFencingPosition.HOME || mPosition == GeoFencingPosition.NEAR)));
         if (operate) {
             mThermoSimulator.start();
         } else {
@@ -161,12 +161,14 @@ public class ThermostatDevice implements DeviceEventClassFamily.Listener,
     }
     
     private void startFanControls() {
+    	Log.i(TAG, "Starting fans!");
         for (FanControlDevice device : fanControlsMap.values()) {
             device.switchFunStatus(FanStatus.ON);
         }
     }
     
     private void stopFanControls() {
+    	Log.i(TAG, "Stopping fans!");
         for (FanControlDevice device : fanControlsMap.values()) {
             device.switchFunStatus(FanStatus.OFF);
         }
@@ -274,6 +276,7 @@ public class ThermostatDevice implements DeviceEventClassFamily.Listener,
 
     @Override
     public void onEvent(OperationModeUpdateRequest operationModeUpdateRequest, String sourceEndpoint) {
+    	Log.i(TAG, "Received new operation mode: " + operationModeUpdateRequest.getMode());
         changeOperationMode(operationModeUpdateRequest.getMode());
     }
 

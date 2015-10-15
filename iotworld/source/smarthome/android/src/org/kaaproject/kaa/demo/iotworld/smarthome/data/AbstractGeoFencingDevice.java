@@ -15,6 +15,9 @@
  */
 package org.kaaproject.kaa.demo.iotworld.smarthome.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.demo.iotworld.GeoFencingEventClassFamily;
 import org.kaaproject.kaa.demo.iotworld.geo.GeoFencingStatusRequest;
@@ -26,15 +29,40 @@ import org.kaaproject.kaa.demo.iotworld.smarthome.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import de.greenrobot.event.EventBus;
 
 public abstract class AbstractGeoFencingDevice extends AbstractDevice implements GeoFencingEventClassFamily.Listener {
 
+	private static final String TAG = AbstractGeoFencingDevice.class.getSimpleName();
+	
     private final GeoFencingEventClassFamily mGeoFencingEventClassFamily;
     
     private OperationMode mOperationMode;
+    
+    private static Map<Integer, OperationMode> positionToModeMap = new HashMap<>();
+    static {
+    	positionToModeMap.put(0, OperationMode.GEOFENCING);
+    	positionToModeMap.put(1, OperationMode.OFF);
+    	positionToModeMap.put(2, OperationMode.ON);
+    }
+    
+    private static Map<OperationMode, Integer> modeToPositionMap = new HashMap<>();
+    static {
+    	modeToPositionMap.put(OperationMode.GEOFENCING, 0);
+    	modeToPositionMap.put(OperationMode.OFF, 1);
+    	modeToPositionMap.put(OperationMode.ON, 2);
+    }
+    
+    public static OperationMode getOperationMode(int position) {
+    	return positionToModeMap.get(position);
+    }
+    
+    public static int getOperationModePosition(OperationMode mode) {
+    	return modeToPositionMap.get(mode);
+    }
     
     public AbstractGeoFencingDevice(String endpointKey,
                                     DeviceStore deviceStore, 
@@ -75,6 +103,7 @@ public abstract class AbstractGeoFencingDevice extends AbstractDevice implements
     }
     
     public void changeOperationMode(OperationMode newOperationMode) {
+    	Log.i(TAG, "Changing operation mode to: " + newOperationMode);
         mGeoFencingEventClassFamily.sendEvent(new OperationModeUpdateRequest(newOperationMode), mEndpointKey);
     }
 
@@ -88,12 +117,12 @@ public abstract class AbstractGeoFencingDevice extends AbstractDevice implements
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, values);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(spinnerArrayAdapter);
-            spinner.setSelection(mOperationMode.ordinal());
+            spinner.setSelection(getOperationModePosition(mOperationMode));
             builder.setView(spinner);
             builder.setPositiveButton(R.string.change_mode, new DialogInterface.OnClickListener() { 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    OperationMode newOperationMode = OperationMode.values()[spinner.getSelectedItemPosition()];
+                    OperationMode newOperationMode = getOperationMode(spinner.getSelectedItemPosition());
                     if (newOperationMode != prevOperationMode) {
                         changeOperationMode(newOperationMode);
                     }

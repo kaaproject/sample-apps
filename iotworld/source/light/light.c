@@ -77,19 +77,23 @@ static kaa_list_t *subscribers_list = NULL;
 void send_bulb_list_status_update(kaa_endpoint_id_p source, bool is_status_request);
 void persist_geofencing_state();
 
+#define log_info(...) \
+               printf(__VA_ARGS__); \
+               printf("\n"); \
+
 void log_operation_mode() {
        switch (operation_mode) {
             case ENUM_OPERATION_MODE_ON:
-                printf("Operation mode: ON\n");
+                log_info("Operation mode: ON");
                 break;
             case ENUM_OPERATION_MODE_OFF:
-                printf("Operation mode: OFF\n");
+                log_info("Operation mode: OFF");
                 break;
             case ENUM_OPERATION_MODE_GEOFENCING:
-                printf("Operation mode: GEOFENCING\n");
+                log_info("Operation mode: GEOFENCING");
                 break;
             default:
-                printf("Operation mode: UNKNOWN\n");
+                log_info("Operation mode: UNKNOWN");
                 break;
         }
 }
@@ -97,16 +101,16 @@ void log_operation_mode() {
 void log_position() {
        switch (last_position) {
             case ENUM_GEO_FENCING_POSITION_AWAY:
-                printf("Position: AWAY\n");
+                log_info("Position: AWAY");
                 break;
             case ENUM_GEO_FENCING_POSITION_HOME:
-                printf("Position: HOME\n");
+                log_info("Position: HOME");
                 break;
             case ENUM_GEO_FENCING_POSITION_NEAR:
-                printf("Position: NEAR\n");
+                log_info("Position: NEAR");
                 break;
             default:
-                printf("Position: UNKNOWN\n");
+                log_info("Position: UNKNOWN");
                 break;
         }
 }
@@ -135,7 +139,7 @@ void process_operation_mode(kaa_geo_fencing_event_class_family_geo_fencing_posit
         response->destroy(response);
     }
 
-    printf("Process operation mode:\n");
+    log_info("Process operation mode:");
     log_operation_mode();
     log_position();
 }
@@ -196,7 +200,7 @@ void persist_bulbs_state() {
         fwrite(bulbs_state, sizeof(char), gpios_count, f);
         pthread_mutex_unlock(&bulb_states_mutex);
         fclose(f);
-        printf("Brightness state persisted successfully\n");
+        log_info("Brightness state persisted successfully");
     }
 }
 
@@ -208,7 +212,7 @@ void persist_geofencing_state() {
         fwrite(&operation_mode, sizeof(operation_mode), 1, f);
         fclose(f);
     }
-    printf("Geofencing state persisted successfully\n");
+    log_info("Geofencing state persisted successfully");
 }
 
 void updateGpioValue(char *fileName, bool enable) {
@@ -224,10 +228,10 @@ void exportGpios(bool exportGpios)
     while (i--) {
         FILE *f;
         if (exportGpios) {
-            printf("Exporting gpio for bulb with id %d\n", i);
+            log_info("Exporting gpio for bulb with id %d", i);
             f = fopen("/sys/class/gpio/export", "w");
         } else {
-            printf("Unexporting gpio for bulb with id %d\n", i);
+            log_info("Unexporting gpio for bulb with id %d", i);
             f = fopen("/sys/class/gpio/unexport", "w");
         }
 
@@ -238,12 +242,12 @@ void exportGpios(bool exportGpios)
         fprintf(f, "%d", gpio_nums[i]);
 
         if (ferror(f)) {
-            printf("Error writing to gpio (un)export file\n");
+            log_info("Error writing to gpio (un)export file");
         }
 
         fclose(f);
 
-        printf("gpio for bulb with id %d successfully exported\n", i);
+        log_info("gpio for bulb with id %d successfully exported", i);
     }
 
 }
@@ -261,7 +265,7 @@ void set_direction(bool out) {
         out ? fprintf(f, "out") : fprintf(f, "in");
 
         if (ferror(f)) {
-            printf("Error writing to gpio direction file\n");
+            log_info("Error writing to gpio direction file");
         }
 
         fclose(f);
@@ -283,7 +287,7 @@ void set_brightness(int id, int32_t percent) {
     percent = percent > 100 ? 100 : percent;
     pthread_mutex_lock(&brightness_mutex);
     brightness[id] = percent;
-    printf("Brightness was set to %d for bulb with id %d\n", brightness[id], id);
+    log_info("Brightness was set to %d for bulb with id %d", brightness[id], id);
     pthread_mutex_unlock(&brightness_mutex);
 }
 
@@ -319,7 +323,7 @@ void *brightness_loop(void *id_ptr) {
     char value[FILE_NAME_SIZE];
     memset(value, 0, FILE_NAME_SIZE);
     sprintf(value, "/sys/class/gpio/gpio%d/value", gpio_nums[id]);
-    printf("Starting bulb controller for bulb with id %d\n", id);
+    log_info("Starting bulb controller for bulb with id %d", id);
     while (true) {
         int32_t shine_period = 0;
         int32_t percents = get_brightness(id);
@@ -355,17 +359,17 @@ void init_bulbs() {
 
     exportGpios(true);
 
-    printf("All bulb gpios exported successfully\n");
+    log_info("All bulb gpios exported successfully");
 
     sleep(1);
 
     set_direction(true);
 
-    printf("Out direction successfully set for all gpios\n");
+    log_info("Out direction successfully set for all gpios");
 
     int i = gpios_count;
 
-    printf("Starting bulb controller threads\n");
+    log_info("Starting bulb controller threads");
 
     while (i--) {
         set_brightness(i, 100);
@@ -376,13 +380,13 @@ void init_bulbs() {
         pthread_err = pthread_detach(pth[i]);
 
         if (!pthread_err) {
-            printf("Bulb controller thread started for bulb with id %d \n", i);
+            log_info("Bulb controller thread started for bulb with id %d ", i);
         } else {
-            printf("Bulb controller thread FAILED to start for bulb with id %d \n", i);
+            log_info("Bulb controller thread FAILED to start for bulb with id %d ", i);
         }
     }
 
-    printf("Bulb threads initialized\n");
+    log_info("Bulb threads initialized");
 }
 
 void deinit_bulbs() {
@@ -407,13 +411,13 @@ void send_device_info_response(kaa_endpoint_id_p source) {
     kaa_event_manager_send_kaa_device_event_class_family_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response,
             source);
 
-    printf("DeviceInfoResponse sent!\n");
+    log_info("DeviceInfoResponse sent!");
     response->destroy(response);
 }
 
 void kaa_on_device_info_request(void *context, kaa_device_event_class_family_device_info_request_t *event,
         kaa_endpoint_id_p source) {
-    printf("DeviceInfoRequest event received!\n");
+    log_info("DeviceInfoRequest event received!");
 
     send_device_info_response(source);
 
@@ -422,21 +426,21 @@ void kaa_on_device_info_request(void *context, kaa_device_event_class_family_dev
 
 void kaa_on_geo_fencing_position_update(void *context,
         kaa_geo_fencing_event_class_family_geo_fencing_position_update_t *event, kaa_endpoint_id_p source) {
-    printf("GeoFencingPositionUpdate event received!\n");
+    log_info("GeoFencingPositionUpdate event received!");
     process_operation_mode(event->position, operation_mode);
     event->destroy(event);
 }
 
 void kaa_on_geo_fencing_event_class_family_operation_mode_update_request(void *context,
         kaa_geo_fencing_event_class_family_operation_mode_update_request_t *event, kaa_endpoint_id_p source) {
-    printf("GeoFencingOperationModeUpdate event received!\n");
+    log_info("GeoFencingOperationModeUpdate event received!");
     process_operation_mode(last_position, event->mode);
     event->destroy(event);
 }
 
 void kaa_on_geo_fencing_event_class_family_geo_fencing_status_request(void *context,
         kaa_geo_fencing_event_class_family_geo_fencing_status_request_t *event, kaa_endpoint_id_p source) {
-    printf("GeoFencingStatusRequest event received!\n");
+    log_info("GeoFencingStatusRequest event received!");
     kaa_geo_fencing_event_class_family_geo_fencing_status_response_t *response =
             kaa_geo_fencing_event_class_family_geo_fencing_status_response_create();
     response->position = last_position;
@@ -446,14 +450,14 @@ void kaa_on_geo_fencing_event_class_family_geo_fencing_status_request(void *cont
             source);
     event->destroy(event);
     response->destroy(response);
-    printf("GeoFencingStatusResponse sent!\n");
+    log_info("GeoFencingStatusResponse sent!");
 }
 
 void kaa_on_bulb_brightness_request(void *context, kaa_light_event_class_family_change_bulb_brightness_request_t *event,
         kaa_endpoint_id_p source) {
-    printf("BulbChangeBrightnessRequest event received!\n");
-    printf("Sender id is %s \n", event->bulb_id->data);
-    printf("Received brightness is %d \n", event->brightness);
+    log_info("BulbChangeBrightnessRequest event received!");
+    log_info("Sender id is %s ", event->bulb_id->data);
+    log_info("Received brightness is %d ", event->brightness);
     char bulb_id = get_builb_index((const char*)event->bulb_id->data);
     set_brightness(bulb_id, event->brightness);
     persist_bulbs_state();
@@ -463,9 +467,9 @@ void kaa_on_bulb_brightness_request(void *context, kaa_light_event_class_family_
 
 void kaa_on_bulb_status_request(void *context, kaa_light_event_class_family_change_bulb_status_request_t *event,
         kaa_endpoint_id_p source) {
-    printf("BulbChangeStatusRequest event received!\n");
-    printf("Sender id is %s \n", event->bulb_id->data);
-    printf("Received status is %d \n", event->status);
+    log_info("BulbChangeStatusRequest event received!");
+    log_info("Sender id is %s ", event->bulb_id->data);
+    log_info("Received status is %d ", event->status);
     char bulb_id = get_builb_index((const char*)event->bulb_id->data);
     set_bulb_state(bulb_id, event->status);
     persist_bulbs_state();
@@ -494,7 +498,7 @@ void kaa_on_device_change_name_request(void *context, kaa_device_event_class_fam
     send_bulb_list_status_update(NULL, true);
     send_device_info_response(NULL);
     event->destroy(event);
-    printf("Name changed\n");
+    log_info("Name changed");
 }
 
 void kaa_on_device_status_subscription_request(void *context
@@ -565,13 +569,13 @@ void send_bulb_list_status_update(kaa_endpoint_id_p source, bool is_status_reque
                 NULL);
     }
 
-    printf("BulbListStatusUpdate sent!\n");
+    log_info("BulbListStatusUpdate sent!");
     response->destroy(response);
 }
 
 void kaa_on_bulb_list_request(void *context, kaa_light_event_class_family_bulb_list_request_t *event,
         kaa_endpoint_id_p source) {
-    printf("BulbListRequest event received!\n");
+    log_info("BulbListRequest event received!");
 
     send_bulb_list_status_update(source, true);
 
@@ -579,33 +583,33 @@ void kaa_on_bulb_list_request(void *context, kaa_light_event_class_family_bulb_l
 }
 
 kaa_error_t kaa_on_event_listeners(void *context, const kaa_endpoint_id listeners[], size_t listeners_count) {
-    printf("%zu event listeners received\n", listeners_count);
+    log_info("%zu event listeners received", listeners_count);
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_event_listeners_failed(void *context) {
-    printf("Kaa Demo event listeners not found\n");
+    log_info("Kaa Demo event listeners not found");
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_attached(void *context, const char *user_external_id, const char *endpoint_access_token) {
-    printf("Kaa Demo attached to user %s, access token %s\n", user_external_id, endpoint_access_token);
+    log_info("Kaa Demo attached to user %s, access token %s", user_external_id, endpoint_access_token);
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_detached(void *context, const char *endpoint_access_token) {
-    printf("Kaa Demo detached from user access token %s\n", endpoint_access_token);
+    log_info("Kaa Demo detached from user access token %s", endpoint_access_token);
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_attach_success(void *context) {
-    printf("Kaa Demo attach success\n");
+    log_info("Kaa Demo attach success");
     load_previous_state_if_any();
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_attach_failed(void *context, user_verifier_error_code_t error_code, const char *reason) {
-    printf("Kaa Demo attach failed\n");
+    log_info("Kaa Demo attach failed");
     kaa_client_stop(kaa_client);
     return KAA_ERR_NONE;
 }
@@ -618,7 +622,7 @@ kaa_error_t kaa_on_attach_failed(void *context, user_verifier_error_code_t error
 
 int main(/*int argc, char *argv[]*/)
 {
-    printf("Light control demo started\n");
+    log_info("Light control demo started");
 
     subscribers_list = kaa_list_create();
 
@@ -714,7 +718,7 @@ int main(/*int argc, char *argv[]*/)
     kaa_client_destroy(kaa_client);
     deinit_bulbs();
 
-    printf("Light control demo stopped\n");
+    log_info("Light control demo stopped");
 
     return error_code;
 }

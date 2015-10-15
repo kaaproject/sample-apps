@@ -18,6 +18,11 @@
 
 KAA_KEY_PATH="./cfg/key.txt"
 
+if [[ -f "$KAA_KEY_PATH" ]]
+then
+    rm $KAA_KEY_PATH
+fi
+
 openssl genrsa -out key.pem 2048
 openssl rsa -in key.pem -outform der -pubout > $KAA_KEY_PATH
 rm key.pem

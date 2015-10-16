@@ -1,0 +1,8 @@
+Gradual roll-out:
+    location.equals("UA") and (serialNumber % 100) == 77
+Rollback: 
+    (deinit configuration in certain group)
+A/B testing:
+    serialNumber==777
+Canary deployments:
+    !components.?[ model.equals("TI LM73") and type.toString().equals("TEMPERATURE")].isEmpty() and (firmwareVersion.get("magorVersion") == 1 and firmwareVersion.get("minorVersion") == 0)

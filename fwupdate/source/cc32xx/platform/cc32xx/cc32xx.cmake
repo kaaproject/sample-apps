@@ -19,7 +19,7 @@ if(NOT DEFINED KAA_TOOLCHAIN_PATH)
   set(CC32XX_SDK "/opt/kaa/cc3200-sdk")
 else()
   set(KAA_ARM_TOOLCHAIN "${KAA_TOOLCHAIN_PATH}/gcc-arm-none-eabi")
-  set(CC32XX_SDK "${KAA_TOOLCHAIN_PATH}/cc3200_sdk")
+  set(CC32XX_SDK "${KAA_TOOLCHAIN_PATH}/cc3200-sdk")
 endif()
 
 message("## Kaa arm toolchain path: " ${KAA_ARM_TOOLCHAIN})
@@ -47,24 +47,28 @@ include_directories(${CC32XX_SDK}/driverlib)
 include_directories(${CC32XX_SDK}/simplelink)
 include_directories(${CC32XX_SDK}/simplelink/include)
 include_directories(${CC32XX_SDK}/simplelink/source)
+#include_directories(${CC32XX_SDK}/simplelink_extlib/include)
 include_directories(${CC32XX_SDK}/example/common)
 
 set(LIB_KAA ${CMAKE_CURRENT_SOURCE_DIR}/build/libkaac_s.a)
 set(LIB_DRIVER ${CC32XX_SDK}/driverlib/gcc/exe/libdriver.a)
 set(LIB_SIMPLELINK_NONOS ${CC32XX_SDK}/simplelink/gcc/exe/libsimplelink_nonos.a)
+#set(LIB_OTA ${CC32XX_SDK}/simplelink_extlib/ota/gcc/exe/ota.a)
+#set(LIB_FLC ${CC32XX_SDK}/simplelink_extlib/flc/gcc/exe/flc.a)
 set(LIB_GCC ${KAA_ARM_TOOLCHAIN}/lib/gcc/arm-none-eabi/4.9.3/armv7e-m/libgcc.a)
 set(LIB_C ${KAA_ARM_TOOLCHAIN}/arm-none-eabi/lib/armv7e-m/libc.a)
 set(LIB_M ${KAA_ARM_TOOLCHAIN}/arm-none-eabi/lib/armv7e-m/libm.a)
 
-set(APP_LIBS ${LIB_KAA} ${LIB_SIMPLELINK_NONOS} ${LIB_DRIVER} ${LIB_M} ${LIB_C} ${LIB_GCC})
+set(APP_LIBS ${LIB_KAA} ${LIB_SIMPLELINK_NONOS} ${LIB_OTA} ${LIB_FLC} ${LIB_DRIVER} ${LIB_M} ${LIB_C} ${LIB_GCC})
 
 set (SAMPLE_SOURCE_FILES
-            src/kaa_demo.c           
-            platform/${KAA_PLATFORM}/${KAA_PLATFORM}_support.c
-	    ${CC32XX_SDK}/example/common/uart_if.c
-	    ${CC32XX_SDK}/example/common/udma_if.c
-            ${CC32XX_SDK}/example/common/gpio_if.c
-	    ${CC32XX_SDK}/example/common/startup_gcc.c 
+        src/kaa_demo.c           
+        ${KAA_PLATFORM}/${KAA_PLATFORM}_support.c
+	${CC32XX_SDK}/example/common/uart_if.c
+	${CC32XX_SDK}/example/common/udma_if.c
+        ${CC32XX_SDK}/example/common/gpio_if.c
+        ${CC32XX_SDK}/example/common/button_if.c
+	${CC32XX_SDK}/example/common/startup_gcc.c 
     )
 
-set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_LINKER} -T ${CMAKE_CURRENT_SOURCE_DIR}/platform/${KAA_PLATFORM}/app.ld --entry ResetISR --gc-sections -o ${APP_NAME}.afx <OBJECTS> <LINK_LIBRARIES>")
+set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_LINKER} -T ${CMAKE_CURRENT_SOURCE_DIR}/${KAA_PLATFORM}/app.ld --entry ResetISR --gc-sections -o ${APP_NAME}.afx <OBJECTS> <LINK_LIBRARIES>")

@@ -36,20 +36,32 @@
 #include "prcm.h"
 #include "common.h"
 #include "uart.h"
+#include "gpio.h"
+#include "gpio_if.h"
 #include "uart_if.h"
 #include "udma_if.h"
+#include "button_if.h"
 #include "pin.h"
 
 #include "common.h"
 
 #include "simplelink.h"
 
+typedef struct {
+    int major;
+    int minor;
+    int patch;
+} firmware_version_t;
+
 void BoardInit();
 
 void wlan_configure();
 void wlan_scan();
 int  wlan_connect(const char *ssid, const char *pass, unsigned char sec_type);
-
 void net_ping(const char *host);
+
+int update_sys_time(unsigned *t);
+int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, unsigned checksum, unsigned firmware_size);
+firmware_version_t get_firmware_version();
 
 #endif //CC32XX_SUPPORT_H_

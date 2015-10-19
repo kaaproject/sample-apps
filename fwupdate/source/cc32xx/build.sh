@@ -20,7 +20,6 @@ RUN_DIR=`pwd`
 
 function help {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported platforms: x86-64, cc32xx"
     exit 1
 }
 
@@ -37,25 +36,13 @@ KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-client*.tar.gz"
-KAA_TOOLCHAIN_PATH_SDK=""
-KAA_ARCH=cc32xx
 
-function select_arch {	
-    echo "Please enter architecture(default is cc32xx):"
-    read arch
-    case "$arch" in
-        edison)
-          KAA_ARCH=x86-64
-          KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
-        ;;
-	x86-64)
-	  KAA_ARCH=x86-64
-	;;
-        *)
-          KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$KAA_ARCH.cmake"
-        ;;
-    esac
-}
+#Wifi settings
+SSID="xxx"
+PASSWORD="xxxxxxxxx"
+#Firmware version
+MAJOR_VERSION=1
+MINOR_VERSION=0
 
 function build_thirdparty {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
@@ -75,27 +62,47 @@ function build_thirdparty {
     if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
     then
         cd $KAA_LIB_PATH &&
-        mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=1 \
-              -DKAA_WITHOUT_EVENTS=1 \
-              -DKAA_WITHOUT_LOGGING=1 \
-              -DKAA_MAX_LOG_LEVEL=3 \
-	      -DKAA_PLATFORM=$KAA_ARCH \
-               $KAA_TOOLCHAIN_PATH_SDK \
-              ..
-    fi
+        mkdir -p $BUILD_DIR && cd $BUILD_DIR
+		
+		ENV_VAR=" -DKAA_PLATFORM=cc32xx \
+			  -DCMAKE_TOOLCHAIN_FILE=../toolchains/cc32xx.cmake \
+              -DKAA_MAX_LOG_LEVEL=2"
+		
+		if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
+			ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin64/opt/kaa"
+		fi
 
+		echo $ENV_VAR
+		
+        cmake -G "Unix Makefiles" $ENV_VAR ..
+    fi
+	
     cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
     make -j4 &&
     cd $PROJECT_HOME
 }
 
 function build_app {
+    echo "Enter WiFi SSID:"
+    read SSID
+    echo "Enter WiFi Password:"
+    read PASSWORD
+    echo "Enter firmware major version:"
+    read MAJOR_VERSION
+    echo "Enter firmware minor version:"
+    read MINOR_VERSION
     cd $PROJECT_HOME &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
     cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
-    cd $BUILD_DIR &&
-    cmake -DAPP_NAME=$APP_NAME -DKAA_PLATFORM=$KAA_ARCH $KAA_TOOLCHAIN_PATH_SDK ..
+    cd $BUILD_DIR
+    ENV_VAR=" -DKAA_PLATFORM=cc32xx -DAPP_NAME=$APP_NAME"
+	if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
+		ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin64/opt/kaa"
+	fi
+	
+	#source PATH=$PATH:/opt/kaa/gcc-arm-none-eabi/bin
+#Cha5hk123
+    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD -DMAJOR_VERSION=$MAJOR_VERSION -DMINOR_VERSION=$MINOR_VERSION $ENV_VAR .. &&
     make
 }
 
@@ -109,13 +116,13 @@ function run {
     ./$APP_NAME
 }
 
-for cmd in $@
-do
+#for cmd in $@
+#do
+cmd=$1
 
 case "$cmd" in
     build)
-        select_arch
-        build_thirdparty &&
+        build_thirdparty  &&
         build_app
     ;;
 
@@ -125,7 +132,6 @@ case "$cmd" in
 
     deploy)
         clean
-        select_arch
         build_thirdparty
         build_app
         run
@@ -140,4 +146,3 @@ case "$cmd" in
     ;;
 esac
 
-done

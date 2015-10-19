@@ -34,7 +34,7 @@
 #include <kaa/platform-impl/cc32xx/cc32xx_file_utils.h>
 
 #ifdef CC32XX
-#include "../platform/cc32xx/cc32xx_support.h"
+#include "../cc32xx/cc32xx_support.h"
 
 #define KAA_DEMO_RETURN_IF_ERROR(error, message) \
     if ((error)) { \
@@ -59,23 +59,41 @@ static int led_number = sizeof (gpio_led) / sizeof (int);
 
 #define KAA_DEMO_UNUSED(x) (void)(x);
 
-int update = 0;
-void button_hdl()
-{
-    DEMO_LOG("push button\r\n");    
-    update = 1;
-    Button_IF_EnableInterrupt(SW3);
-}
-
 kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_device_configuration_t *configuration)
 {
-    //KAA_LOG_TRACE(kaa_client_get_context(kaa_client)->logger, KAA_ERR_NONE, "Received configuration data");
+    KAA_DEMO_UNUSED(context)
 
-    DEMO_LOG("\r\nNEW_CONFIG\r\n");
+    kaa_string_t *addr_str;
+    char *ip_str, *port_str, *firmware_file;
+    firmware_version_t version = get_firmware_version();
 
-    //configuration->firmware_update_configuration
+    DEMO_LOG("Received configuration data\r\n");
 
-    //update_firmware(configuration->server_address->data, configuration->firmware_file_path->data, configuration->firmware_checksum);
+    DEMO_LOG("version [%d.%d]\r\n firmware_url %s\r\n hash %d\r\n size %d\r\n",
+             configuration->firmware_update_configuration->major_version,
+             configuration->firmware_update_configuration->minor_version,
+             configuration->firmware_update_configuration->url->data,
+             configuration->firmware_update_configuration->check_sum,
+             configuration->firmware_update_configuration->size);
+
+    if (configuration->firmware_update_configuration->major_version != version.major ||
+        configuration->firmware_update_configuration->minor_version != version.minor) {
+
+        DEMO_LOG("Upgade firmware start\r\n");
+
+        addr_str = kaa_string_copy_create(configuration->firmware_update_configuration->url->data);
+        strtok(addr_str->data, "/:/");
+
+        ip_str        = strtok(NULL, "/:/");
+        port_str      = strtok(NULL, "/:/");
+        firmware_file = strtok(NULL, "/:/");
+
+        update_firmware(ip_str, (uint16_t)atoi(port_str), firmware_file,
+                        configuration->firmware_update_configuration->check_sum,
+                        configuration->firmware_update_configuration->size);
+
+        kaa_string_destroy(addr_str);
+    }
 
     return KAA_ERR_NONE;
 }
@@ -85,7 +103,7 @@ int main(/*int argc, char *argv[]*/)
 #ifdef CC32XX
     BoardInit();
 
-    DEMO_LOG("BUGSBUGSBUGS V=0.3\n");
+    DEMO_LOG("FIRMWARE VERSION=%d.%d\n", get_firmware_version().major, get_firmware_version().minor);
 
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
     MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);
@@ -95,35 +113,19 @@ int main(/*int argc, char *argv[]*/)
     MAP_PinTypeGPIO(PIN_02, PIN_MODE_0, false);
     MAP_GPIODirModeSet(GPIOA1_BASE, 0x8, GPIO_DIR_MODE_OUT);
     GPIO_IF_LedConfigure(LED1|LED2|LED3);
-    GPIO_IF_LedOff(MCU_ALL_LED_IND);
-
-    DEMO_LOG("Step1\n");
+    GPIO_IF_LedOff(MCU_ALL_LED_IND);    
 
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA2, PRCM_RUN_MODE_CLK);
     PinTypeGPIO(PIN_04, PIN_MODE_0, false);
     GPIODirModeSet(GPIOA2_BASE, 0x20, GPIO_DIR_MODE_IN);
 
-    DEMO_LOG("Step2\n");
+    DEMO_LOG("Connecting to wlan...\n");
 
     wlan_configure();
     sl_Start(0, 0, 0);
-//    //wlan_connect(SSID, PWD, SL_SEC_TYPE_WPA_WPA2);
-    wlan_connect("KaaIoT", "cybervision2015", SL_SEC_TYPE_WPA_WPA2);
-    //wlan_connect("cyber9", "Cha5hk123", SL_SEC_TYPE_WPA_WPA2);
+    wlan_connect(SSID, PWD, SL_SEC_TYPE_WPA_WPA2);
 
-
-    DEMO_LOG("Step3\n");
-
-    unsigned t = 0;
-    if (update_sys_time(&t) == 0) {
-        t += 3 * 60 * 60;//set timezone to +3
-        //set_sys_time(t);
-    }
-
-    DEMO_LOG("Step4\n");
-
-    cc32xx_binary_file_delete("kaa_status.bin");
-    cc32xx_binary_file_delete("kaa_configuration.bin");
+    DEMO_LOG("Connection established\n");
 
     //==================================================
     Button_IF_Init(button_hdl, button_hdl);
@@ -131,7 +133,7 @@ int main(/*int argc, char *argv[]*/)
     //==================================================
 
 #endif
-    DEMO_LOG("Event demo started\n");
+    DEMO_LOG("Firmware update demo started\n");
 
     /**
      * Initialize Kaa client.
@@ -145,15 +147,18 @@ int main(/*int argc, char *argv[]*/)
 
     kaa_profile_device_profile_t *profile = kaa_profile_device_profile_create();
     version = get_firmware_version();
-    profile->serial_number = 12345;
-    profile->model         = kaa_string_copy_create("CC3200");
-    profile->location      = kaa_string_copy_create("UK");
-    profile->sensors       = kaa_list_create();
+    profile->serial_number    = 12345;
+    profile->model            = kaa_string_move_create("CC3200", NULL);
+    profile->location         = kaa_string_move_create("UK", NULL);
+    profile->sensors          = kaa_list_create();
     profile->firmware_version = kaa_profile_firmware_version_create();
     profile->firmware_version->major_version = version.major;
     profile->firmware_version->major_version = version.minor;
-    profile->firmware_version->classifier = kaa_profile_union_string_or_null_branch_0_create();
+    profile->firmware_version->classifier    = kaa_profile_union_string_or_null_branch_1_create();
     error_code = kaa_profile_manager_update_profile(kaa_client_get_context(kaa_client)->profile_manager, profile);
+    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set profile");
+
+    profile->destroy(profile);
 
     kaa_configuration_root_receiver_t receiver = { NULL, &kaa_configuration_receiver };
     error_code = kaa_configuration_manager_set_root_receiver(kaa_client_get_context(kaa_client)->configuration_manager, &receiver);
@@ -168,22 +173,8 @@ int main(/*int argc, char *argv[]*/)
 
     /**
      * Destroy Kaa client.
-     */
-    //profile->destroy(profile);
+     */    
     kaa_client_destroy(kaa_client);
-
-//    DEMO_LOG("Event demo stopped\n");
-
-    while(1)
-    {
-        if(update)
-        {
-            update_firmware("10.2.2.203", 8080, "/demo_client"/*"/firmwares/CC32XX"*/, 2249941899, 113980);
-            update = 0;
-        }
-        _SlNonOsMainLoopTask();
-        MAP_UtilsDelay(1000);
-    }
 
     return error_code;
 }

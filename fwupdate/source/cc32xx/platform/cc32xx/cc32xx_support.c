@@ -85,7 +85,7 @@ typedef struct {
     unsigned int hash;
 } firmware_info_t;
 
-static firmware_version_t cur_version = { 1, 0, 0 };
+static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0 };
 
 extern void (* const g_pfnVectors[])(void);
 
@@ -570,7 +570,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     char *tmp_buffer = buffer;
     int len = 0;
 
-    UART_PRINT("FIRMWARE START LOAD\r\n", tmp_path);
+    UART_PRINT("FIRMWARE START LOADING\r\n", tmp_path);
 
     sl_NetAppDnsGetHostByName((_i8 *)server_name, strlen((const char *)server_name), &server_ip, SL_AF_INET);
 
@@ -591,105 +591,78 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     status = sl_Connect(sock, ( SlSockAddr_t *)&addr, (_u16)addr_size);
     RET_IF_ERR(status, "load_firmware_tcp: ERROR Socket Connect, status=%ld\r\n", status);
 
-//    offset = create_request(buffer, "GET", server_name, path);
-//    readed = sl_Send(sock, buffer, offset, 0);
-//    RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Send I, status=%ld\r\n", readed);
+    offset = create_request(buffer, "GET", server_name, port, info->filename);
+    readed = sl_Send(sock, buffer, offset, 0);
+    RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Send II, status=%ld\r\n", readed);
 
-//    readed = recv_eagain(sock, buffer, sizeof(buffer), 0, 10);
-//    RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv I, status=%ld\r\n", readed);
+    memset(buffer, 0, HTTP_BUF_LEN);
+    readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
 
-//    _SlNonOsMainLoopTask();
+    memset(tmp_path, 0, 255);
+    strcpy(tmp_path, "/tmp");
+    strcat(tmp_path, info->filename);
 
-    //if(!json_parse_metadata(sock, info, buffer, sizeof(buffer)))
+    UART_PRINT("filename %s\r\n", tmp_path);
+
+    status = sl_FsOpen(tmp_path, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT|_FS_FILE_PUBLIC_WRITE), &ulFirmwareToken, &lFirmwareFileHandle);
+    if(status < 0)
     {
-        offset = create_request(buffer, "GET", server_name, port, info->filename);
-        readed = sl_Send(sock, buffer, offset, 0);
-        RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Send II, status=%ld\r\n", readed);
+        sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
+        UART_PRINT("load_firmware_tcp: ERROR in sl_FsOpen, status=%ld\r\n", status);
+        return -1;
+    }
 
-        memset(buffer, 0, HTTP_BUF_LEN);
-        readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
-
-        memset(tmp_path, 0, 255);
-        strcpy(tmp_path, "/tmp");
-        strcat(tmp_path, info->filename);
-
-        UART_PRINT("filename %s\r\n", tmp_path);
-
-        status = sl_FsOpen(tmp_path, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT|_FS_FILE_PUBLIC_WRITE), &ulFirmwareToken, &lFirmwareFileHandle);
-        if(status < 0)
+    offset = 0;
+    tmp_buffer = strstr(buffer, "\r\n\r\n");
+    tmp_buffer += 4;
+    readed -= (int)tmp_buffer - (int)buffer;
+    while(info->file_size > offset)
+    {
+        if(!len)
         {
-            sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
-            UART_PRINT("load_firmware_tcp: ERROR in sl_FsOpen, status=%ld\r\n", status);
-            return -1;
-        }
+            char *tmp = strstr(tmp_buffer, "\r\n");
 
-        offset = 0;
-        //readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
-        //memset(tmp_buffer, 0, HTTP_BUF_LEN);
-        tmp_buffer = strstr(buffer, "\r\n\r\n");
-        tmp_buffer += 4;
-        readed -= (int)tmp_buffer - (int)buffer;
-//        UART_PRINT("find? %s\r\n", tmp_buffer);
-//        RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv II, status=%ld\r\n", readed);
-//        UART_PRINT("Start LOAD\r\n");
-        while(info->file_size > offset)
-        {
-            _SlNonOsMainLoopTask();
-            //UART_PRINT("offset => %d   len => %d\r\n", offset, len);
-            if(!len)
+            if(tmp)
             {
-                char *tmp = strstr(tmp_buffer, "\r\n");
-
-//                UART_PRINT("Load Chunck(CRC %08X) %d [total: %d | %d ] { ", crc, readed, /*info->file_size*/firmware_size, offset);
-//                for(int i = 0; i < 20; ++i)
-//                    UART_PRINT("%c ", tmp_buffer[i] >= 0x21 && tmp_buffer[i] <= 0x7E? tmp_buffer[i]: '.');
-//                UART_PRINT(" }\r\n");
-
-                if(tmp)
-                {
-                    *tmp = 0;
-                    len = (int)strtol(tmp_buffer, NULL, 16);
-                    readed -= (int)(tmp + 2) - (int)tmp_buffer;
-                    tmp_buffer = (tmp + 2);
-                    //UART_PRINT("len %d [readed %d]\r\n", len, readed);
-                }
-                else
-                {
-                    //UART_PRINT("READ NEXT CHUNK\r\n");
-                    readed = (int)tmp_buffer - (int)buffer;
-                    memmove(buffer, tmp_buffer, readed);
-                    readed = read_file_chunck(sock, buffer + readed, HTTP_BUF_LEN - readed);
-                    RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv II, status=%ld\r\n", readed);
-                    tmp_buffer = buffer;
-                    continue;
-                }
+                *tmp = 0;
+                len = (int)strtol(tmp_buffer, NULL, 16);
+                readed -= (int)(tmp + 2) - (int)tmp_buffer;
+                tmp_buffer = (tmp + 2);
             }
-
-            if(len && readed > len)
+            else
             {
-                crc = crc32(crc, tmp_buffer, len);
-                status = sl_FsWrite(lFirmwareFileHandle, offset, (_u8*)tmp_buffer, len);
-                tmp_buffer += len;
-                offset += len;
-                readed -= len;
-                //UART_PRINT("offset %d  readed %d\r\n", offset, readed);
-                len = 0;
-            }
-            else if(len)
-            {
-                len -= readed;
-
-                crc = crc32(crc, tmp_buffer, readed);
-                status = sl_FsWrite(lFirmwareFileHandle, offset, (_u8*)tmp_buffer, readed);
-                //UART_PRINT("READ offset %d  readed %d len %d\r\n", offset, readed, len);
-                offset += readed;
-                readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
+                readed = (int)tmp_buffer - (int)buffer;
+                memmove(buffer, tmp_buffer, readed);
+                readed = read_file_chunck(sock, buffer + readed, HTTP_BUF_LEN - readed);
                 RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv II, status=%ld\r\n", readed);
                 tmp_buffer = buffer;
+                continue;
             }
         }
-        UART_PRINT("CRC %08X\r\n", crc);
+
+        if(len && readed > len)
+        {
+            crc = crc32(crc, tmp_buffer, len);
+            status = sl_FsWrite(lFirmwareFileHandle, offset, (_u8*)tmp_buffer, len);
+            tmp_buffer += len;
+            offset += len;
+            readed -= len;
+            len = 0;
+        }
+        else if(len)
+        {
+            len -= readed;
+
+            crc = crc32(crc, tmp_buffer, readed);
+            status = sl_FsWrite(lFirmwareFileHandle, offset, (_u8*)tmp_buffer, readed);
+            offset += readed;
+            readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
+            RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv II, status=%ld\r\n", readed);
+            tmp_buffer = buffer;
+        }
     }
+    UART_PRINT("FIRMWARE LOADING FINISHED\r\n", crc);
+
 
     if(lFirmwareFileHandle)
         sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
@@ -729,9 +702,7 @@ int write_firmware(firmware_info_t *info)
         sl_FsClose(lReadFileHandle, 0, 0, 0);
         UART_PRINT("check_and_update_firmware I: ERROR in sl_FsOpen, [file %s] status=%ld\r\n", tmp_path, status);
         return ret;
-    }
-
-    UART_PRINT("Update firmware start1\r\n");
+    }    
 
     status = sl_FsOpen(FIRMWARE_FILE_PATH, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT|_FS_FILE_PUBLIC_WRITE), &ulFirmwareToken, &lFirmwareFileHandle);
     if(status < 0)
@@ -774,11 +745,11 @@ int write_firmware(firmware_info_t *info)
 int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, unsigned checksum, unsigned firmware_size)
 {
     firmware_info_t file_info;
-    strcpy(file_info.filename, file_path);
+    file_info.filename[0] = '/';
+    strcpy(file_info.filename+1, file_path);
     file_info.file_size = firmware_size;
     file_info.hash = checksum;
     if(load_firmware_http(&file_info, server_host, server_port) == 0);
-    //if(load_firmware_http(&file_info, "10.2.2.203", "/firmwares/CC32XX", 0) == 0);
         write_firmware(&file_info);
     return -1;
 }

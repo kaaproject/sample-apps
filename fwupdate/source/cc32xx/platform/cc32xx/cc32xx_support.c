@@ -570,7 +570,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     char *tmp_buffer = buffer;
     int len = 0;
 
-    UART_PRINT("FIRMWARE START LOADING\r\n", tmp_path);
+    UART_PRINT("Start firmware loading...\r\n", tmp_path);
 
     sl_NetAppDnsGetHostByName((_i8 *)server_name, strlen((const char *)server_name), &server_ip, SL_AF_INET);
 
@@ -661,7 +661,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
             tmp_buffer = buffer;
         }
     }
-    UART_PRINT("FIRMWARE LOADING FINISHED\r\n", crc);
+    UART_PRINT("Firmware loaded\r\n", crc);
 
 
     if(lFirmwareFileHandle)
@@ -687,7 +687,7 @@ int write_firmware(firmware_info_t *info)
     unsigned len_left = info->file_size;
     char tmp_path[255];
 
-    UART_PRINT("Update firmware start\r\n");
+    UART_PRINT("Start firmware updating... \r\n");
 
     memset(tmp_path, 0, 255);
     strcpy(tmp_path, "/tmp");
@@ -713,7 +713,6 @@ int write_firmware(firmware_info_t *info)
         return ret;
     }
 
-    UART_PRINT("Update firmware step 1\r\n");
     while(len_left > 0)
     {
         status = sl_FsRead(lReadFileHandle, info->file_size - len_left, (_u8 *)buffer, buf_len);
@@ -730,14 +729,13 @@ int write_firmware(firmware_info_t *info)
         }
 
         len_left -= status;
-    }
-    UART_PRINT("Update firmware step 2\r\n");
+    }    
 
     sl_FsClose(lReadFileHandle, 0, 0, 0);
     sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
     sl_FsDel((const _u8*)tmp_path, 0);
 
-    UART_PRINT("Update firmware finish\r\n");
+    UART_PRINT("Firmware updated\r\n");
 
     return ret;
 }

@@ -30,6 +30,7 @@
 #include <kaa/gen/kaa_configuration_gen.h>
 #include <kaa/kaa_profile.h>
 #include <kaa/platform/time.h>
+#include <kaa/platform/stdio.h>
 
 #include <kaa/platform-impl/cc32xx/cc32xx_file_utils.h>
 
@@ -93,6 +94,7 @@ kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_de
                         configuration->firmware_update_configuration->size);
 
         kaa_string_destroy(addr_str);
+        cc32xx_reboot();
     }
 
     return KAA_ERR_NONE;
@@ -144,6 +146,7 @@ int main(/*int argc, char *argv[]*/)
     error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
+    GPIO_IF_LedOn(LED1);
 
     kaa_profile_device_profile_t *profile = kaa_profile_device_profile_create();
     version = get_firmware_version();

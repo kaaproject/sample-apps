@@ -1,5 +1,5 @@
 /*****************************************************************************
-* blinky.ld
+* app.ld
 *
 * GCC Linker script for blinky application.
 *
@@ -41,9 +41,7 @@ HEAP_SIZE = 0x00010000;
 
 MEMORY
 {
-    /* SRAM size of 240KB for cc3200 ES 1.33 device onward */
-    /* SRAM (rwx) : ORIGIN = 0x20004000, LENGTH = 0x3C000 */
-        SRAM (rwx) : ORIGIN = 0x20004000, LENGTH = 0x3C000
+    SRAM (rwx) : ORIGIN = 0x20004000, LENGTH = 0x3C000
 }
 
 SECTIONS

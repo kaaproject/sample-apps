@@ -27,7 +27,16 @@ To read more about the profiling feature visit https://docs.kaaproject.org/displ
 INSTALLATION
 ************************************
 
-*TODO*
+To run the demo application, do the following:
+
+1. Install environment to build the Kaa C SDK.
+http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200
+2. Download and install the Kaa sandbox (https://docs.kaaproject.org/display/KAA/sandbox).
+3. Generate the C SDK using the Kaa sandbox. The Avro log schema required for the demo application is located in 
+the 'avro' directory. Put the SDK archive into the 'libs/kaa' directory.
+4. Use the build.sh script to build and run the demo application (the 'build' option).
+5. Follow the link bellow to find instructions hov to run app on a board.
+http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200
 
 ************************************
 ABOUT

@@ -28,23 +28,18 @@ unsigned char  g_ucConnectionStatus = 0;
 unsigned char  g_ucSimplelinkstarted = 0;
 unsigned long  g_ulIpAddr = 0;
 
-const char g_acSNTPserver[][30] =
-{
-    "dmz0.la-archdiocese.net"
-};
-
 static unsigned crc_32_tab[] = {
     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
-    0xe963a535, 0x9e6495a3,	0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
+    0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
     0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91, 0x1db71064, 0x6ab020f2,
-    0xf3b97148, 0x84be41de,	0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7,
-    0x136c9856, 0x646ba8c0, 0xfd62f97a, 0x8a65c9ec,	0x14015c4f, 0x63066cd9,
-    0xfa0f3d63, 0x8d080df5,	0x3b6e20c8, 0x4c69105e, 0xd56041e4, 0xa2677172,
-    0x3c03e4d1, 0x4b04d447, 0xd20d85fd, 0xa50ab56b,	0x35b5a8fa, 0x42b2986c,
-    0xdbbbc9d6, 0xacbcf940,	0x32d86ce3, 0x45df5c75, 0xdcd60dcf, 0xabd13d59,
+    0xf3b97148, 0x84be41de, 0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7,
+    0x136c9856, 0x646ba8c0, 0xfd62f97a, 0x8a65c9ec, 0x14015c4f, 0x63066cd9,
+    0xfa0f3d63, 0x8d080df5, 0x3b6e20c8, 0x4c69105e, 0xd56041e4, 0xa2677172,
+    0x3c03e4d1, 0x4b04d447, 0xd20d85fd, 0xa50ab56b, 0x35b5a8fa, 0x42b2986c,
+    0xdbbbc9d6, 0xacbcf940, 0x32d86ce3, 0x45df5c75, 0xdcd60dcf, 0xabd13d59,
     0x26d930ac, 0x51de003a, 0xc8d75180, 0xbfd06116, 0x21b4f4b5, 0x56b3c423,
     0xcfba9599, 0xb8bda50f, 0x2802b89e, 0x5f058808, 0xc60cd9b2, 0xb10be924,
-    0x2f6f7c87, 0x58684c11, 0xc1611dab, 0xb6662d3d,	0x76dc4190, 0x01db7106,
+    0x2f6f7c87, 0x58684c11, 0xc1611dab, 0xb6662d3d, 0x76dc4190, 0x01db7106,
     0x98d220bc, 0xefd5102a, 0x71b18589, 0x06b6b51f, 0x9fbfe4a5, 0xe8b8d433,
     0x7807c9a2, 0x0f00f934, 0x9609a88e, 0xe10e9818, 0x7f6a0dbb, 0x086d3d2d,
     0x91646c97, 0xe6635c01, 0x6b6b51f4, 0x1c6c6162, 0x856530d8, 0xf262004e,
@@ -365,54 +360,6 @@ void net_ping(const char *host)
         _SlNonOsMainLoopTask();
 }
 
-
-int update_sys_time(unsigned *t)
-{
-    char buffer[48];
-    int32_t ret = 0;
-    SlSockAddrIn_t s_addr;
-    uint32_t ntp_server_ip;
-    uint32_t ulElapsedSec;
-    struct SlTimeval_t time_val;
-    int32_t ntp_socket;
-
-    memset(buffer, 0, sizeof(buffer));
-    buffer[0] = '\x1b';
-
-    if(sl_NetAppDnsGetHostByName((signed char *) g_acSNTPserver[0], strlen(g_acSNTPserver[0]), &ntp_server_ip, SL_AF_INET) < 0)
-        return -1;
-
-    ntp_socket = sl_Socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
-    if(ntp_socket < 0)
-        return -1;
-
-    time_val.tv_sec =  20;
-    time_val.tv_usec = 0;
-    sl_SetSockOpt(ntp_socket,SOL_SOCKET,SL_SO_RCVTIMEO, &time_val, sizeof(time_val));
-
-    s_addr.sin_family = AF_INET;
-    s_addr.sin_port = htons(123);// UDP port number for NTP is 123
-    s_addr.sin_addr.s_addr = htonl(ntp_server_ip);
-
-    ret = sl_SendTo(ntp_socket, buffer, sizeof(buffer), 0, (SlSockAddr_t*)&s_addr, sizeof(SlSockAddr_t));
-
-    if(ret != sizeof(buffer))
-        return -1;
-
-    sl_Recv(ntp_socket, buffer, sizeof(buffer), 0);
-
-    if((buffer[0] & 0x7) != 4)
-         return -1;
-
-    ulElapsedSec = htonl( *(uint32_t*)(buffer+40) );
-    *t = ulElapsedSec - 0x83AA7E80; // the seconds from Jan 1, 1900 to Jan 1, 1970
-
-    sl_Close(ntp_socket);
-
-    return 0;
-}
-
 int recv_eagain(short sockId, void *pBuf, int Len, int flags, int max_eagain)
 {
     int len;
@@ -447,97 +394,7 @@ int create_request(char *request, const char *method, const char *host_name, uns
     }
     strcat(request, "\r\n\r\n");
 
-    //Report("pHttpReq => %s\r\n", request);
-
     return strlen(request);
-}
-
-
-int json_parse_metadata(short sockId, /*RsrcData_t *pRsrcData*/firmware_info_t *current_file, _u8 *read_buf, _i32 size)
-{
-//    firmware_info_t currentFile;
-    unsigned char *pBuf;
-    unsigned char *pRecord;
-    int len;
-    unsigned char fileNumber=0;
-    unsigned char size_str[64];
-
-    pBuf = read_buf;
-    pBuf = strstr(pBuf, "[");
-
-    Report("pBuf => %s\r\n", (char*)pBuf);
-
-    if( *(pBuf+1) == ']' )
-      return 0;
-
-    if (pBuf == NULL)
-        return -1;
-
-    while (1)
-    {
-        pBuf = strstr((const char *)pBuf, "{");
-        if (pBuf == NULL)
-            return -1;
-        if ((_u8 *)strstr((const char *)pBuf, "}") <= pBuf)
-        {
-            _i32 left_len = read_buf+size-pBuf;
-            if (left_len < 0)
-                return -1;
-
-            strncpy((char *)read_buf, (const char *)pBuf, left_len); /* copy current file to start of read buffer */
-            memset(&read_buf[left_len], 0, HTTP_BUF_LEN-left_len); /* copy current file to start of read buffer */
-            size = recv_eagain(sockId, &read_buf[left_len], HTTP_BUF_LEN-left_len, 0, 10); /*Get media link */
-            size += left_len;
-            pBuf = read_buf;
-            if ((_u8 *)strstr((const char *)read_buf, "}") <= pBuf) /* still not found, exit */
-            {
-                return 0;
-            }
-        }
-
-        pRecord = pBuf;
-
-        pBuf = (_u8 *)strstr((const char *)pRecord, "bytes"); /* start of directory files */
-        if (pBuf == NULL)
-            return -1;
-
-        pBuf += 8;
-        len = strstr((const char *)pBuf, ",") - (char *)pBuf; /* end of size */
-        if (len <= 0)
-            return -1;
-
-        strncpy ((char *)size_str, (const char *)pBuf, len);
-        size_str[len] = 0;
-        pBuf += len;
-
-        pBuf = (_u8 *)strstr((const char *)pRecord, "path"); /* start of directory files */
-        if (pBuf == NULL)
-            return -1;
-
-        pBuf += 8;
-        len = strstr((const char *)pBuf, "\"") - (char *)pBuf; /* end of size */
-        if (len <= 0)
-            return -1;
-
-        strncpy(current_file->filename, pBuf, len);
-        current_file->filename[len] = 0;
-        pBuf += len;
-
-        pBuf = (_u8 *)(1+strstr((const char *)pBuf, "}")); /* go to end of resource block */
-
-        current_file->file_size = atol((char const *)size_str);
-        //pRsrcData[fileNumber++] = currentFile;
-        UART_PRINT("    metadata file=%s, size=%ld\r\n", current_file->filename, current_file->file_size);
-
-        if (pBuf[0] != ',')
-            break;
-    }
-
-    if( strstr((const char *)pBuf, "}") == NULL )
-        len = sl_Recv(sockId, &read_buf[0], HTTP_BUF_LEN, 0);
-
-    //return fileNumber;
-    return 0;
 }
 
 int read_file_chunck(short sock, char *buffer, int len)

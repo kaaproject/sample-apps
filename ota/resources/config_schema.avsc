@@ -1,14 +1,14 @@
 {  
     "type":"record",
     "name":"DeviceConfiguration",
-    "namespace":"org.kaaproject.demo.fwupdate",
+    "namespace":"org.kaaproject.demo.ota",
     "fields":[  
         {  
             "name":"firmwareUpdateConfiguration",
             "type":{  
                 "type":"record",
                 "name":"FirmwareUpdateConfiguration",
-                "namespace":"org.kaaproject.demo.fwupdate",
+                "namespace":"org.kaaproject.demo.ota",
                 "fields":[  
                     { "name":"majorVersion", "type":"int"},
                     { "name":"minorVersion", "type":"int"},

@@ -63,7 +63,7 @@
         <module>powerplant-android</module>
         <module>powerplant-couchbase-proxy</module>
         <module>gpiocontrol</module>
-        <module>fwupdate</module>
+        <module>ota</module>
     </modules>
 
     <profiles>

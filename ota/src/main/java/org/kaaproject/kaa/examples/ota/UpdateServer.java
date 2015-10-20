@@ -1,4 +1,4 @@
-package org.kaaproject.kaa.examples.fwupdate;
+package org.kaaproject.kaa.examples.ota;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class UpdateServer {
             throw e;
         }
 
-        final List<FWUpdate> updates = new ArrayList<FWUpdate>();
+        final List<OTAUpdate> updates = new ArrayList<OTAUpdate>();
 
         System.out.println("Initializing server with host: " + serverHost + " and " + serverPort);
         System.out.println("Scanning updates directory: " + updatesDir);
@@ -52,7 +52,7 @@ public class UpdateServer {
             File[] files = f.listFiles();
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".bin")) {
-                    FWUpdate update = new FWUpdate(Paths.get(file.toURI()));
+                    OTAUpdate update = new OTAUpdate(Paths.get(file.toURI()));
                     updates.add(update);
                     System.out.println("Update file scanned: " + update);
                 }
@@ -63,20 +63,20 @@ public class UpdateServer {
         }
 
         HttpServer server = new HttpServer();
-        NetworkListener listener = new NetworkListener("fwupdate", serverHost, serverPort);
+        NetworkListener listener = new NetworkListener("ota", serverHost, serverPort);
         listener.setChunkingEnabled(true);
         server.addListener(listener);
 
         server.getServerConfiguration().addHttpHandler(new HttpHandler() {
             public void service(Request request, Response response) throws Exception {
-                for (final FWUpdate update : updates) {
+                for (final OTAUpdate update : updates) {
                     response.getWriter().write(update.toString());
                     response.getWriter().write(System.lineSeparator());
                 }
             }
         }, "/meta");
 
-        for (final FWUpdate update : updates) {
+        for (final OTAUpdate update : updates) {
             server.getServerConfiguration().addHttpHandler(new HttpHandler() {
                 public void service(Request request, Response response) throws Exception {
                     response.setContentType("application/octet-stream");
@@ -99,12 +99,12 @@ public class UpdateServer {
         }
     }
 
-    private static class FWUpdate {
+    private static class OTAUpdate {
         private final long size;
         private final long checksum;
         private final Path filePath;
 
-        public FWUpdate(Path filePath) throws IOException {
+        public OTAUpdate(Path filePath) throws IOException {
             this.filePath = filePath;
             byte[] fwBytes = Files.readAllBytes(filePath);
             CRC32 crc = new CRC32();
@@ -124,7 +124,7 @@ public class UpdateServer {
 
         @Override
         public String toString() {
-            return "FWUpdate [size=" + size + ", checksum=" + checksum + ", file=" + filePath.getFileName() + "]";
+            return "OTAUpdate [size=" + size + ", checksum=" + checksum + ", file=" + filePath.getFileName() + "]";
         }
 
     }

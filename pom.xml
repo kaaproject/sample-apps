@@ -36,6 +36,7 @@
         <mockito.version>1.9.5</mockito.version>
         <jetty.version>9.2.2.v20140723</jetty.version>
         <rat.version>0.10</rat.version>
+        <grizzly.version>2.3.22</grizzly.version>
     </properties>
 
     <modules>
@@ -61,7 +62,8 @@
         <module>connectedcar</module>
         <module>powerplant-android</module>
         <module>powerplant-couchbase-proxy</module>
-	<module>gpiocontrol</module>
+        <module>gpiocontrol</module>
+        <module>ota</module>
     </modules>
 
     <profiles>
@@ -138,13 +140,13 @@
                                         <ignore></ignore>
                                     </action>
                                 </pluginExecution>
-			    </pluginExecutions>                
-		        </lifecycleMappingMetadata>
-		    </configuration>
-		</plugin>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
-	<plugins>
+        <plugins>
             <plugin>
                 <groupId>org.apache.rat</groupId>
                 <artifactId>apache-rat-plugin</artifactId>
@@ -277,6 +279,11 @@
                 <artifactId>jetty-server</artifactId>
                 <version>${jetty.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.glassfish.grizzly</groupId>
+                <artifactId>grizzly-http-server</artifactId>
+                <version>${grizzly.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -294,7 +301,7 @@
             <id>central</id>
             <url>http://repo1.maven.org/maven2/</url>
         </repository>
-    	<repository>
+        <repository>
             <id>twitter-twttr</id>
             <url>http://maven.twttr.com/</url>
         </repository>

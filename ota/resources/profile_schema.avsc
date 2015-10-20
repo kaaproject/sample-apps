@@ -1,0 +1,40 @@
+{  
+    "type":"record",
+    "name":"DeviceProfile",
+    "namespace":"org.kaaproject.demo.ota",
+    "fields":[
+        { "name":"serialNumber", "type":"int"},
+        { "name":"model", "type":{ "type":"string", "avro.java.string":"String"}},
+        { "name":"location", "type":{ "type":"string", "avro.java.string":"String"}},
+        { "name":"sensors", "type": {  
+                "type":"array",
+                "items":{  
+                    "type":"record",
+                    "name":"Sensor",
+                    "namespace":"org.kaaproject.demo.ota",
+                    "fields":[  
+                        { "name":"type", "type": {  
+                                "type":"enum",
+                                "name":"SensorType",
+                                "namespace":"org.kaaproject.demo.ota",
+                                "symbols":[ "TEMPERATURE", "HUMIDITY", "LIGHT", "PRESSURE", "ACOUSTIC"]
+                            }
+                        },
+                        { "name":"model", "type": { "type":"string", "avro.java.string":"String"}}
+                    ]
+                }
+            }
+        },
+        { "name":"firmwareVersion", "type": {  
+                    "type":"record",
+                    "name":"FirmwareVersion",
+                    "namespace":"org.kaaproject.demo.ota",
+                    "fields":[ 
+                        { "name":"majorVersion", "type":"int"},
+                        { "name":"minorVersion", "type":"int"},
+                        { "name":"classifier", "type":[{ "type":"string", "avro.java.string":"String" }, "null"]}
+                    ]
+             }
+        }
+    ]
+}

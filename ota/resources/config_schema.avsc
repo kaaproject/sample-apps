@@ -1,0 +1,23 @@
+{  
+    "type":"record",
+    "name":"DeviceConfiguration",
+    "namespace":"org.kaaproject.demo.ota",
+    "fields":[  
+        {  
+            "name":"firmwareUpdateConfiguration",
+            "type":{  
+                "type":"record",
+                "name":"FirmwareUpdateConfiguration",
+                "namespace":"org.kaaproject.demo.ota",
+                "fields":[  
+                    { "name":"majorVersion", "type":"int"},
+                    { "name":"minorVersion", "type":"int"},
+                    { "name":"classifier", "type":[{ "type":"string", "avro.java.string":"String" }, "null"]},
+                    { "name":"url", "type":"string"},
+                    { "name":"checkSum", "type":"int"},
+                    { "name":"size", "type":"int"}
+                ]
+            }
+        }
+    ]
+}

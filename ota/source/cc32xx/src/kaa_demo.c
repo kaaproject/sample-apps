@@ -170,14 +170,24 @@ int main(/*int argc, char *argv[]*/)
 
     kaa_profile_device_profile_t *profile = kaa_profile_device_profile_create();
     version = get_firmware_version();
-    profile->serial_number    = 12345;
+    profile->serial_number    = 777;
     profile->model            = kaa_string_move_create("CC3200", NULL);
-    profile->location         = kaa_string_move_create("UK", NULL);
+    profile->location         = kaa_string_move_create("US", NULL);
     profile->sensors          = kaa_list_create();
     profile->firmware_version = kaa_profile_firmware_version_create();
     profile->firmware_version->major_version = version.major;
     profile->firmware_version->major_version = version.minor;
     profile->firmware_version->classifier    = kaa_profile_union_string_or_null_branch_1_create();
+
+    kaa_profile_sensor_t *sensor_1 = KAA_CALLOC(1, sizeof(kaa_profile_sensor_t));
+    kaa_profile_sensor_t *sensor_2 = KAA_CALLOC(1, sizeof(kaa_profile_sensor_t));
+    sensor_1->type = ENUM_SENSOR_TYPE_TEMPERATURE;
+    sensor_1->model = kaa_string_move_create("TI LM73", NULL);
+    kaa_list_push_back(profile->sensors, sensor_1);
+    sensor_2->type = ENUM_SENSOR_TYPE_LIGHT;
+    sensor_2->model = kaa_string_move_create(" OPT3001", NULL);
+    kaa_list_push_back(profile->sensors, sensor_2);
+
     error_code = kaa_profile_manager_update_profile(kaa_client_get_context(kaa_client)->profile_manager, profile);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set profile");
 

@@ -37,9 +37,11 @@
 #include "common.h"
 #include "uart.h"
 #include "gpio.h"
+#include "timer.h"
 #include "gpio_if.h"
 #include "uart_if.h"
 #include "udma_if.h"
+#include "timer_if.h"
 #include "button_if.h"
 #include "pin.h"
 

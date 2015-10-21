@@ -43,6 +43,7 @@ PASSWORD="xxxxxxxxx"
 #Firmware version
 MAJOR_VERSION=1
 MINOR_VERSION=0
+DEMO_LED=0
 
 function build_thirdparty {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
@@ -83,14 +84,17 @@ function build_thirdparty {
 }
 
 function build_app {
-    echo "Enter WiFi SSID:"
-    read SSID
-    echo "Enter WiFi Password:"
-    read PASSWORD
-    echo "Enter firmware major version:"
-    read MAJOR_VERSION
-    echo "Enter firmware minor version:"
-    read MINOR_VERSION
+    read -p "Enter WiFi SSID: " SSID
+    read -p "Enter WiFi Password: " PASSWORD
+    read -p "Enter firmware major version: " MAJOR_VERSION
+    read -p "Enter firmware minor version: " MINOR_VERSION
+    read -p "Enter flags of an active leds[ red=0x01 orange=0x02 green=0x04 ]: " DEMO_LED 
+
+    if [ -z $DEMO_LED ]
+    then
+        DEMO_LED=0
+    fi
+
     cd $PROJECT_HOME &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
     cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
@@ -102,7 +106,7 @@ function build_app {
 	
 	#source PATH=$PATH:/opt/kaa/gcc-arm-none-eabi/bin
 #Cha5hk123
-    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD -DMAJOR_VERSION=$MAJOR_VERSION -DMINOR_VERSION=$MINOR_VERSION $ENV_VAR .. &&
+    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD -DMAJOR_VERSION=$MAJOR_VERSION -DMINOR_VERSION=$MINOR_VERSION $ENV_VAR -DDEMO_LED=$DEMO_LED .. &&
     make
 }
 
@@ -112,8 +116,7 @@ function clean {
 }
 
 function run {
-    cd "$PROJECT_HOME/$BUILD_DIR"
-    ./$APP_NAME
+    	cp $PROJECT_HOME/$BUILD_DIR/demo_client.bin $PROJECT_HOME/../../fmw_bin/demo_client_0x0$DEMO_LED.bin
 }
 
 #for cmd in $@

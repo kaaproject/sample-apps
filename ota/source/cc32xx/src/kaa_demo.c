@@ -35,7 +35,7 @@
 #include <kaa/platform-impl/cc32xx/cc32xx_file_utils.h>
 
 #ifdef CC32XX
-#include "../cc32xx/cc32xx_support.h"
+#include "../platform/cc32xx/cc32xx_support.h"
 
 #define KAA_DEMO_RETURN_IF_ERROR(error, message) \
     if ((error)) { \
@@ -59,6 +59,16 @@ static int gpio_led[] = { 0, 0, 0 };
 static int led_number = sizeof (gpio_led) / sizeof (int);
 
 #define KAA_DEMO_UNUSED(x) (void)(x);
+
+void timerHandler()
+{
+    Timer_IF_InterruptClear(TIMERA0_BASE);
+#ifdef DEMO_LED
+    if(DEMO_LED & 0x01) GPIO_IF_LedToggle(MCU_RED_LED_GPIO);
+    if(DEMO_LED & 0x02) GPIO_IF_LedToggle(MCU_ORANGE_LED_GPIO);
+    if(DEMO_LED & 0x04) GPIO_IF_LedToggle(MCU_GREEN_LED_GPIO);
+#endif
+}
 
 kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_device_configuration_t *configuration)
 {
@@ -129,10 +139,9 @@ int main(/*int argc, char *argv[]*/)
 
     DEMO_LOG("Connection established\n");
 
-    //==================================================
-    Button_IF_Init(button_hdl, button_hdl);
-    Button_IF_EnableInterrupt(SW3);
-    //==================================================
+    Timer_IF_Init(PRCM_TIMERA0, TIMERA0_BASE, TIMER_CFG_PERIODIC, TIMER_A, 0);
+    Timer_IF_IntSetup(TIMERA0_BASE, TIMER_A, timerHandler);
+    Timer_IF_Start(TIMERA0_BASE, TIMER_A, 200);
 
 #endif
     DEMO_LOG("Firmware update demo started\n");
@@ -145,8 +154,6 @@ int main(/*int argc, char *argv[]*/)
 
     error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
-
-    GPIO_IF_LedOn(LED1);
 
     kaa_profile_device_profile_t *profile = kaa_profile_device_profile_create();
     version = get_firmware_version();

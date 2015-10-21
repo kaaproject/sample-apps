@@ -53,6 +53,7 @@ typedef struct {
     int major;
     int minor;
     int patch;
+    char classifier[255];
 } firmware_version_t;
 
 void BoardInit();

@@ -70,6 +70,20 @@ void timerHandler()
 #endif
 }
 
+bool is_new_version(kaa_configuration_firmware_update_configuration_t *conf)
+{
+    kaa_string_t *classifier;
+    firmware_version_t version = get_firmware_version();
+    if (conf->classifier->type == KAA_PROFILE_UNION_STRING_OR_NULL_BRANCH_0)
+        classifier = (kaa_string_t*)conf->classifier->data;
+
+    if (conf->major_version != version.major ||
+        conf->minor_version != version.minor ||
+        strcmp(version.classifier, classifier->data))
+        return true;
+    return false;
+}
+
 kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_device_configuration_t *configuration)
 {
     KAA_DEMO_UNUSED(context)
@@ -87,8 +101,7 @@ kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_de
              configuration->firmware_update_configuration->check_sum,
              configuration->firmware_update_configuration->size);
 
-    if (configuration->firmware_update_configuration->major_version != version.major ||
-        configuration->firmware_update_configuration->minor_version != version.minor) {
+    if (is_new_version(configuration->firmware_update_configuration)) {
 
         DEMO_LOG("Upgade firmware start\r\n");
 
@@ -115,7 +128,7 @@ int main(/*int argc, char *argv[]*/)
 #ifdef CC32XX
     BoardInit();
 
-    DEMO_LOG("FIRMWARE VERSION=%d.%d\n", get_firmware_version().major, get_firmware_version().minor);
+    DEMO_LOG("FIRMWARE VERSION=%d.%d[%s]\n", get_firmware_version().major, get_firmware_version().minor, get_firmware_version().classifier);
 
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
     MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);

@@ -80,7 +80,7 @@ typedef struct {
     unsigned int hash;
 } firmware_info_t;
 
-static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0 };
+static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0, CLASSIFIER_VERSION };
 
 extern void (* const g_pfnVectors[])(void);
 
@@ -514,7 +514,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
             status = sl_FsWrite(lFirmwareFileHandle, offset, (_u8*)tmp_buffer, readed);
             offset += readed;
             readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
-            RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv II, status=%ld\r\n", readed);
+            RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv III, status=%ld\r\n", readed);
             tmp_buffer = buffer;
         }
     }
@@ -604,7 +604,7 @@ int update_firmware(const char *server_host, unsigned short server_port, const c
     strcpy(file_info.filename+1, file_path);
     file_info.file_size = firmware_size;
     file_info.hash = checksum;
-    if(load_firmware_http(&file_info, server_host, server_port) == 0);
+    if(load_firmware_http(&file_info, server_host, server_port) == 0)
         write_firmware(&file_info);
     return -1;
 }

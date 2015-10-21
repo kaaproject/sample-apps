@@ -88,6 +88,7 @@ function build_app {
     read -p "Enter WiFi Password: " PASSWORD
     read -p "Enter firmware major version: " MAJOR_VERSION
     read -p "Enter firmware minor version: " MINOR_VERSION
+    read -p "Enter firmware classifier: " CLASSIFIER_VERSION
     read -p "Enter flags of an active leds[ red=0x01 orange=0x02 green=0x04 ]: " DEMO_LED 
 
     if [ -z $DEMO_LED ]
@@ -106,7 +107,7 @@ function build_app {
 	
 	#source PATH=$PATH:/opt/kaa/gcc-arm-none-eabi/bin
 #Cha5hk123
-    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD -DMAJOR_VERSION=$MAJOR_VERSION -DMINOR_VERSION=$MINOR_VERSION $ENV_VAR -DDEMO_LED=$DEMO_LED .. &&
+    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD -DMAJOR_VERSION=$MAJOR_VERSION -DMINOR_VERSION=$MINOR_VERSION $ENV_VAR -DCLASSIFIER_VERSION=$CLASSIFIER_VERSION -DDEMO_LED="$DEMO_LED" .. &&
     make
 }
 

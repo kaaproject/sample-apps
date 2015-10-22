@@ -117,7 +117,8 @@ function clean {
 }
 
 function run {
-    	cp $PROJECT_HOME/$BUILD_DIR/demo_client.bin $PROJECT_HOME/../../fmw_bin/demo_client_0x0$DEMO_LED.bin
+    mkdir -p $PROJECT_HOME/../../fmw_bin
+    cp $PROJECT_HOME/$BUILD_DIR/demo_client.bin $PROJECT_HOME/../../fmw_bin/demo_client_0x0$DEMO_LED.bin
 }
 
 #for cmd in $@

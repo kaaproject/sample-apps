@@ -5,4 +5,4 @@ Rollback:
 A/B testing:
     serialNumber==777
 Canary deployments:
-    !components.?[ model.equals("TI LM73") and type.toString().equals("TEMPERATURE")].isEmpty() and (firmwareVersion.get("magorVersion") == 1 and firmwareVersion.get("minorVersion") == 0)
+    !components.?[ model.equals("TI LM73") and type.toString().equals("TEMPERATURE")].isEmpty() and (firmwareVersion.get("majorVersion") == 1 and firmwareVersion.get("minorVersion") == 0)

@@ -94,14 +94,16 @@ kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_de
 
     DEMO_LOG("Received configuration data\r\n");
 
-    DEMO_LOG("version [%d.%d]\r\n firmware_url %s\r\n hash %d\r\n size %d\r\n",
+    DEMO_LOG("version [%d.%d]\r\n firmware_url %s\r\n hash %llu\r\n size %d\r\n",
              configuration->firmware_update_configuration->major_version,
              configuration->firmware_update_configuration->minor_version,
              configuration->firmware_update_configuration->url->data,
              configuration->firmware_update_configuration->check_sum,
              configuration->firmware_update_configuration->size);
 
-    if (is_new_version(configuration->firmware_update_configuration)) {
+    if (is_new_version(configuration->firmware_update_configuration) &&
+                  configuration->firmware_update_configuration->size &&
+                  configuration->firmware_update_configuration->url->data) {
 
         DEMO_LOG("Upgade firmware start\r\n");
 
@@ -128,7 +130,11 @@ int main(/*int argc, char *argv[]*/)
 #ifdef CC32XX
     BoardInit();
 
-    DEMO_LOG("FIRMWARE VERSION=%d.%d[%s]\n", get_firmware_version().major, get_firmware_version().minor, get_firmware_version().classifier);
+    if (strlen(get_firmware_version().classifier)) {
+        DEMO_LOG("FIRMWARE VERSION=%d.%d-%s\n", get_firmware_version().major, get_firmware_version().minor, get_firmware_version().classifier);
+    } else {
+        DEMO_LOG("FIRMWARE VERSION=%d.%d\n", get_firmware_version().major, get_firmware_version().minor);
+    }
 
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
     MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);
@@ -192,6 +198,10 @@ int main(/*int argc, char *argv[]*/)
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set profile");
 
     profile->destroy(profile);
+
+    kaa_configuration_device_configuration_t *config = kaa_configuration_manager_get_configuration(kaa_client_get_context(kaa_client)->configuration_manager);
+    if (config)
+        kaa_configuration_receiver(NULL, config);
 
     kaa_configuration_root_receiver_t receiver = { NULL, &kaa_configuration_receiver };
     error_code = kaa_configuration_manager_set_root_receiver(kaa_client_get_context(kaa_client)->configuration_manager, &receiver);

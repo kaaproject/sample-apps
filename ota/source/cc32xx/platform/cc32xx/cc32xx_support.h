@@ -63,7 +63,7 @@ void wlan_scan();
 int  wlan_connect(const char *ssid, const char *pass, unsigned char sec_type);
 void net_ping(const char *host);
 
-int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, unsigned checksum, unsigned firmware_size);
+int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, long long checksum, unsigned firmware_size);
 firmware_version_t get_firmware_version();
 
 #endif //CC32XX_SUPPORT_H_

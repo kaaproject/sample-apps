@@ -77,7 +77,7 @@ static unsigned crc_32_tab[] = {
 typedef struct {
     char filename[255];
     unsigned int file_size;
-    unsigned int hash;
+    long long hash;
 } firmware_info_t;
 
 static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0, CLASSIFIER_VERSION };
@@ -445,8 +445,10 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     status = sl_SetSockOpt(sock, SL_SOL_SOCKET, SL_SO_RCVTIMEO, &timeout, sizeof(SlTimeval_t));
     RET_IF_ERR(status, "load_firmware_tcp: ERROR sl_SetSockOpt, status=%d\r\n", status);
 
+    UART_PRINT("Connecting to server...\r\n");
     status = sl_Connect(sock, ( SlSockAddr_t *)&addr, (_u16)addr_size);
     RET_IF_ERR(status, "load_firmware_tcp: ERROR Socket Connect, status=%ld\r\n", status);
+    UART_PRINT("Connection established\r\n");
 
     offset = create_request(buffer, "GET", server_name, port, info->filename);
     readed = sl_Send(sock, buffer, offset, 0);
@@ -475,6 +477,10 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     readed -= (int)tmp_buffer - (int)buffer;
     while(info->file_size > offset)
     {
+        _SlNonOsMainLoopTask();
+
+        UART_PRINT("downloaded: %u/%u bytes\r", offset, info->file_size);
+
         if(!len)
         {
             char *tmp = strstr(tmp_buffer, "\r\n");
@@ -518,14 +524,15 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
             tmp_buffer = buffer;
         }
     }
-    UART_PRINT("Firmware loaded\r\n", crc);
+    UART_PRINT("downloaded: %u/%u bytes\r", offset, info->file_size);
+    UART_PRINT("\nFirmware loaded\r\n", crc);
 
 
     if(lFirmwareFileHandle)
         sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
     sl_Close(sock);
 
-    if(info->hash && info->hash != crc)
+    if(info->hash && info->hash != (long long)crc)
         return -1;
 
     return 0;
@@ -597,7 +604,7 @@ int write_firmware(firmware_info_t *info)
     return ret;
 }
 
-int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, unsigned checksum, unsigned firmware_size)
+int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, long long checksum, unsigned firmware_size)
 {
     firmware_info_t file_info;
     file_info.filename[0] = '/';

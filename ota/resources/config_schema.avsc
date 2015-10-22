@@ -14,7 +14,7 @@
                     { "name":"minorVersion", "type":"int"},
                     { "name":"classifier", "type":[{ "type":"string", "avro.java.string":"String" }, "null"]},
                     { "name":"url", "type":"string"},
-                    { "name":"checkSum", "type":"int"},
+                    { "name":"checkSum", "type":"long"},
                     { "name":"size", "type":"int"}
                 ]
             }

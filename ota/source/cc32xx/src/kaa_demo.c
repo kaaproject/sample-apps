@@ -90,7 +90,6 @@ kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_de
 
     kaa_string_t *addr_str;
     char *ip_str, *port_str, *firmware_file;
-    firmware_version_t version = get_firmware_version();
 
     DEMO_LOG("Received configuration data\r\n");
 
@@ -114,9 +113,12 @@ kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_de
         port_str      = strtok(NULL, "/:/");
         firmware_file = strtok(NULL, "/:/");
 
+        Timer_IF_Stop(TIMERA0_BASE, TIMER_A);
+
         update_firmware(ip_str, (uint16_t)atoi(port_str), firmware_file,
                         configuration->firmware_update_configuration->check_sum,
                         configuration->firmware_update_configuration->size);
+        GPIO_IF_LedToggle(MCU_GREEN_LED_GPIO);
 
         kaa_string_destroy(addr_str);
         cc32xx_reboot();
@@ -144,7 +146,7 @@ int main(/*int argc, char *argv[]*/)
     MAP_PinTypeGPIO(PIN_02, PIN_MODE_0, false);
     MAP_GPIODirModeSet(GPIOA1_BASE, 0x8, GPIO_DIR_MODE_OUT);
     GPIO_IF_LedConfigure(LED1|LED2|LED3);
-    GPIO_IF_LedOff(MCU_ALL_LED_IND);    
+    GPIO_IF_LedOff(MCU_ALL_LED_IND);
 
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA2, PRCM_RUN_MODE_CLK);
     PinTypeGPIO(PIN_04, PIN_MODE_0, false);
@@ -198,10 +200,6 @@ int main(/*int argc, char *argv[]*/)
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set profile");
 
     profile->destroy(profile);
-
-    kaa_configuration_device_configuration_t *config = kaa_configuration_manager_get_configuration(kaa_client_get_context(kaa_client)->configuration_manager);
-    if (config)
-        kaa_configuration_receiver(NULL, config);
 
     kaa_configuration_root_receiver_t receiver = { NULL, &kaa_configuration_receiver };
     error_code = kaa_configuration_manager_set_root_receiver(kaa_client_get_context(kaa_client)->configuration_manager, &receiver);

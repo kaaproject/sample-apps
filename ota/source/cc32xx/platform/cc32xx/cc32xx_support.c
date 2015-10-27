@@ -28,6 +28,7 @@ unsigned char  g_ucConnectionStatus = 0;
 unsigned char  g_ucSimplelinkstarted = 0;
 unsigned long  g_ulIpAddr = 0;
 
+
 static unsigned crc_32_tab[] = {
     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
     0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
@@ -80,7 +81,7 @@ typedef struct {
     long long hash;
 } firmware_info_t;
 
-static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0, CLASSIFIER_VERSION };
+static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0, "" };
 
 extern void (* const g_pfnVectors[])(void);
 
@@ -427,7 +428,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     char *tmp_buffer = buffer;
     int len = 0;
 
-    UART_PRINT("Start firmware loading...\r\n", tmp_path);
+    UART_PRINT("FIRMWARE START UPDATING...\r\n");
 
     sl_NetAppDnsGetHostByName((_i8 *)server_name, strlen((const char *)server_name), &server_ip, SL_AF_INET);
 
@@ -445,10 +446,8 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     status = sl_SetSockOpt(sock, SL_SOL_SOCKET, SL_SO_RCVTIMEO, &timeout, sizeof(SlTimeval_t));
     RET_IF_ERR(status, "load_firmware_tcp: ERROR sl_SetSockOpt, status=%d\r\n", status);
 
-    UART_PRINT("Connecting to server...\r\n");
     status = sl_Connect(sock, ( SlSockAddr_t *)&addr, (_u16)addr_size);
     RET_IF_ERR(status, "load_firmware_tcp: ERROR Socket Connect, status=%ld\r\n", status);
-    UART_PRINT("Connection established\r\n");
 
     offset = create_request(buffer, "GET", server_name, port, info->filename);
     readed = sl_Send(sock, buffer, offset, 0);
@@ -458,12 +457,13 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
 
     memset(tmp_path, 0, 255);
-    strcpy(tmp_path, "/tmp");
-    strcat(tmp_path, info->filename);
+    strcpy(tmp_path, FIRMWARE_FILE_PATH);
+    //        strcpy(tmp_path, "/tmp");
+    //        strcat(tmp_path, info->filename);
 
     UART_PRINT("filename %s\r\n", tmp_path);
 
-    status = sl_FsOpen(tmp_path, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT|_FS_FILE_PUBLIC_WRITE), &ulFirmwareToken, &lFirmwareFileHandle);
+    status = sl_FsOpen(tmp_path, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT), &ulFirmwareToken, &lFirmwareFileHandle);
     if(status < 0)
     {
         sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
@@ -477,18 +477,18 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     readed -= (int)tmp_buffer - (int)buffer;
     while(info->file_size > offset)
     {
-        _SlNonOsMainLoopTask();
-
-        UART_PRINT("downloaded: %u/%u bytes\r", offset, info->file_size);
+        UART_PRINT("loaded %d\r", offset);
 
         if(!len)
         {
             char *tmp = strstr(tmp_buffer, "\r\n");
 
+            len = info->file_size;
+
             if(tmp)
             {
                 *tmp = 0;
-                len = (int)strtol(tmp_buffer, NULL, 16);
+                //len = (int)strtol(tmp_buffer, NULL, 16);
                 readed -= (int)(tmp + 2) - (int)tmp_buffer;
                 tmp_buffer = (tmp + 2);
             }
@@ -524,9 +524,8 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
             tmp_buffer = buffer;
         }
     }
-    UART_PRINT("downloaded: %u/%u bytes\r", offset, info->file_size);
-    UART_PRINT("\nFirmware loaded\r\n", crc);
-
+    UART_PRINT("loaded %d\r\n", offset);
+    UART_PRINT("UPDATE FINISHED\r\n");
 
     if(lFirmwareFileHandle)
         sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
@@ -538,72 +537,6 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     return 0;
 }
 
-int write_firmware(firmware_info_t *info)
-{
-    unsigned long ulReadToken;
-    long lReadFileHandle;
-    unsigned long ulFirmwareToken;
-    long lFirmwareFileHandle;
-    long status;
-    int ret = -1;
-    unsigned char buffer[2 * 1024];
-    unsigned buf_len = sizeof(buffer);
-    unsigned len_left = info->file_size;
-    char tmp_path[255];
-
-    UART_PRINT("Start firmware updating... \r\n");
-
-    memset(tmp_path, 0, 255);
-    strcpy(tmp_path, "/tmp");
-    strcat(tmp_path, info->filename);
-
-    sl_FsDel(FIRMWARE_FILE_PATH, 0);
-
-    status = sl_FsOpen((unsigned char *)tmp_path, FS_MODE_OPEN_READ, &ulReadToken, &lReadFileHandle);
-
-    if(status < 0)
-    {
-        sl_FsClose(lReadFileHandle, 0, 0, 0);
-        UART_PRINT("check_and_update_firmware I: ERROR in sl_FsOpen, [file %s] status=%ld\r\n", tmp_path, status);
-        return ret;
-    }    
-
-    status = sl_FsOpen(FIRMWARE_FILE_PATH, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT|_FS_FILE_PUBLIC_WRITE), &ulFirmwareToken, &lFirmwareFileHandle);
-    if(status < 0)
-    {
-        sl_FsClose(lReadFileHandle, 0, 0, 0);
-        sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
-        UART_PRINT("check_and_update_firmware II: ERROR in sl_FsOpen, status=%ld\r\n", status);
-        return ret;
-    }
-
-    while(len_left > 0)
-    {
-        status = sl_FsRead(lReadFileHandle, info->file_size - len_left, (_u8 *)buffer, buf_len);
-
-        if(status > 0)
-            status = sl_FsWrite(lFirmwareFileHandle, info->file_size - len_left, (_u8 *)buffer, status);
-
-        if (status < 0)
-        {
-            sl_FsClose(lReadFileHandle, 0, 0, 0);
-            sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
-            UART_PRINT("_ReadStatFile: ERROR in sl_FsRead, status=%ld\r\n", status);
-            return -1;
-        }
-
-        len_left -= status;
-    }    
-
-    sl_FsClose(lReadFileHandle, 0, 0, 0);
-    sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
-    sl_FsDel((const _u8*)tmp_path, 0);
-
-    UART_PRINT("Firmware updated\r\n");
-
-    return ret;
-}
-
 int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, long long checksum, unsigned firmware_size)
 {
     firmware_info_t file_info;
@@ -611,9 +544,9 @@ int update_firmware(const char *server_host, unsigned short server_port, const c
     strcpy(file_info.filename+1, file_path);
     file_info.file_size = firmware_size;
     file_info.hash = checksum;
-    if(load_firmware_http(&file_info, server_host, server_port) == 0)
-        write_firmware(&file_info);
-    return -1;
+    while(load_firmware_http(&file_info, server_host, server_port))
+        UART_PRINT("UPDATING FAILED\r\n");;
+    return 0;
 }
 
 firmware_version_t get_firmware_version()

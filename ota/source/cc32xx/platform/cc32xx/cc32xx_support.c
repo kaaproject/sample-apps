@@ -28,7 +28,6 @@ unsigned char  g_ucConnectionStatus = 0;
 unsigned char  g_ucSimplelinkstarted = 0;
 unsigned long  g_ulIpAddr = 0;
 
-
 static unsigned crc_32_tab[] = {
     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
     0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
@@ -428,7 +427,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     char *tmp_buffer = buffer;
     int len = 0;
 
-    UART_PRINT("FIRMWARE START UPDATING...\r\n");
+    UART_PRINT("FIRMWARE START LOAD\r\n");
 
     sl_NetAppDnsGetHostByName((_i8 *)server_name, strlen((const char *)server_name), &server_ip, SL_AF_INET);
 
@@ -458,8 +457,6 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
 
     memset(tmp_path, 0, 255);
     strcpy(tmp_path, FIRMWARE_FILE_PATH);
-    //        strcpy(tmp_path, "/tmp");
-    //        strcat(tmp_path, info->filename);
 
     UART_PRINT("filename %s\r\n", tmp_path);
 
@@ -472,13 +469,16 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     }
 
     offset = 0;
+
     tmp_buffer = strstr(buffer, "\r\n\r\n");
     tmp_buffer += 4;
     readed -= (int)tmp_buffer - (int)buffer;
+
     while(info->file_size > offset)
     {
-        UART_PRINT("loaded %d\r", offset);
-
+        _SlNonOsMainLoopTask();
+        MAP_UtilsDelay(8000);
+        UART_PRINT("loaded: %d\r\n", offset);
         if(!len)
         {
             char *tmp = strstr(tmp_buffer, "\r\n");
@@ -491,6 +491,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
                 //len = (int)strtol(tmp_buffer, NULL, 16);
                 readed -= (int)(tmp + 2) - (int)tmp_buffer;
                 tmp_buffer = (tmp + 2);
+                UART_PRINT("len %d [readed %d]\r\n", len, readed);
             }
             else
             {
@@ -524,15 +525,14 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
             tmp_buffer = buffer;
         }
     }
-    UART_PRINT("loaded %d\r\n", offset);
-    UART_PRINT("UPDATE FINISHED\r\n");
+    UART_PRINT("CRC\r\n");
+
 
     if(lFirmwareFileHandle)
         sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
     sl_Close(sock);
 
-    if(info->hash && info->hash != (long long)crc)
-        return -1;
+    info->hash = crc;
 
     return 0;
 }
@@ -543,9 +543,13 @@ int update_firmware(const char *server_host, unsigned short server_port, const c
     file_info.filename[0] = '/';
     strcpy(file_info.filename+1, file_path);
     file_info.file_size = firmware_size;
-    file_info.hash = checksum;
-    while(load_firmware_http(&file_info, server_host, server_port))
-        UART_PRINT("UPDATING FAILED\r\n");;
+
+    do {
+        load_firmware_http(&file_info, server_host, server_port);
+        if(!checksum || checksum == file_info.hash)
+            break;
+    } while(1);
+
     return 0;
 }
 

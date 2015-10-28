@@ -35,7 +35,7 @@
 #include <kaa/platform-impl/cc32xx/cc32xx_file_utils.h>
 
 #ifdef CC32XX
-#include "../cc32xx/cc32xx_support.h"
+#include "../platform/cc32xx/cc32xx_support.h"
 
 #define KAA_DEMO_RETURN_IF_ERROR(error, message) \
     if ((error)) { \
@@ -60,25 +60,49 @@ static int led_number = sizeof (gpio_led) / sizeof (int);
 
 #define KAA_DEMO_UNUSED(x) (void)(x);
 
+void timerHandler()
+{
+    Timer_IF_InterruptClear(TIMERA0_BASE);
+#ifdef DEMO_LED
+    if(DEMO_LED & 0x01) GPIO_IF_LedToggle(MCU_RED_LED_GPIO);
+    if(DEMO_LED & 0x02) GPIO_IF_LedToggle(MCU_ORANGE_LED_GPIO);
+    if(DEMO_LED & 0x04) GPIO_IF_LedToggle(MCU_GREEN_LED_GPIO);
+#endif
+}
+
+bool is_new_version(kaa_configuration_firmware_update_configuration_t *conf)
+{
+    kaa_string_t *classifier;
+    firmware_version_t version = get_firmware_version();
+    if (conf->classifier->type == KAA_PROFILE_UNION_STRING_OR_NULL_BRANCH_0)
+        classifier = (kaa_string_t*)conf->classifier->data;
+
+    if (conf->major_version != version.major ||
+        conf->minor_version != version.minor ||
+        strcmp(version.classifier, classifier->data))
+        return true;
+    return false;
+}
+
 kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_device_configuration_t *configuration)
 {
     KAA_DEMO_UNUSED(context)
 
     kaa_string_t *addr_str;
     char *ip_str, *port_str, *firmware_file;
-    firmware_version_t version = get_firmware_version();
 
     DEMO_LOG("Received configuration data\r\n");
 
-    DEMO_LOG("version [%d.%d]\r\n firmware_url %s\r\n hash %d\r\n size %d\r\n",
+    DEMO_LOG("version [%d.%d]\r\n firmware_url %s\r\n hash %llu\r\n size %d\r\n",
              configuration->firmware_update_configuration->major_version,
              configuration->firmware_update_configuration->minor_version,
              configuration->firmware_update_configuration->url->data,
              configuration->firmware_update_configuration->check_sum,
              configuration->firmware_update_configuration->size);
 
-    if (configuration->firmware_update_configuration->major_version != version.major ||
-        configuration->firmware_update_configuration->minor_version != version.minor) {
+    if (is_new_version(configuration->firmware_update_configuration) &&
+                  configuration->firmware_update_configuration->size &&
+                  configuration->firmware_update_configuration->url->data) {
 
         DEMO_LOG("Upgade firmware start\r\n");
 
@@ -89,9 +113,12 @@ kaa_error_t kaa_configuration_receiver(void *context, const kaa_configuration_de
         port_str      = strtok(NULL, "/:/");
         firmware_file = strtok(NULL, "/:/");
 
+        Timer_IF_Stop(TIMERA0_BASE, TIMER_A);
+
         update_firmware(ip_str, (uint16_t)atoi(port_str), firmware_file,
                         configuration->firmware_update_configuration->check_sum,
                         configuration->firmware_update_configuration->size);
+        GPIO_IF_LedToggle(MCU_GREEN_LED_GPIO);
 
         kaa_string_destroy(addr_str);
         cc32xx_reboot();
@@ -105,7 +132,11 @@ int main(/*int argc, char *argv[]*/)
 #ifdef CC32XX
     BoardInit();
 
-    DEMO_LOG("FIRMWARE VERSION=%d.%d\n", get_firmware_version().major, get_firmware_version().minor);
+    if (strlen(get_firmware_version().classifier)) {
+        DEMO_LOG("FIRMWARE VERSION=%d.%d-%s\n", get_firmware_version().major, get_firmware_version().minor, get_firmware_version().classifier);
+    } else {
+        DEMO_LOG("FIRMWARE VERSION=%d.%d\n", get_firmware_version().major, get_firmware_version().minor);
+    }
 
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
     MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);
@@ -115,7 +146,7 @@ int main(/*int argc, char *argv[]*/)
     MAP_PinTypeGPIO(PIN_02, PIN_MODE_0, false);
     MAP_GPIODirModeSet(GPIOA1_BASE, 0x8, GPIO_DIR_MODE_OUT);
     GPIO_IF_LedConfigure(LED1|LED2|LED3);
-    GPIO_IF_LedOff(MCU_ALL_LED_IND);    
+    GPIO_IF_LedOff(MCU_ALL_LED_IND);
 
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA2, PRCM_RUN_MODE_CLK);
     PinTypeGPIO(PIN_04, PIN_MODE_0, false);
@@ -129,10 +160,9 @@ int main(/*int argc, char *argv[]*/)
 
     DEMO_LOG("Connection established\n");
 
-    //==================================================
-    Button_IF_Init(button_hdl, button_hdl);
-    Button_IF_EnableInterrupt(SW3);
-    //==================================================
+    Timer_IF_Init(PRCM_TIMERA0, TIMERA0_BASE, TIMER_CFG_PERIODIC, TIMER_A, 0);
+    Timer_IF_IntSetup(TIMERA0_BASE, TIMER_A, timerHandler);
+    Timer_IF_Start(TIMERA0_BASE, TIMER_A, 200);
 
 #endif
     DEMO_LOG("Firmware update demo started\n");
@@ -146,18 +176,26 @@ int main(/*int argc, char *argv[]*/)
     error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
-    GPIO_IF_LedOn(LED1);
-
     kaa_profile_device_profile_t *profile = kaa_profile_device_profile_create();
     version = get_firmware_version();
-    profile->serial_number    = 12345;
+    profile->serial_number    = 777;
     profile->model            = kaa_string_move_create("CC3200", NULL);
-    profile->location         = kaa_string_move_create("UK", NULL);
+    profile->location         = kaa_string_move_create("US", NULL);
     profile->sensors          = kaa_list_create();
     profile->firmware_version = kaa_profile_firmware_version_create();
     profile->firmware_version->major_version = version.major;
     profile->firmware_version->major_version = version.minor;
     profile->firmware_version->classifier    = kaa_profile_union_string_or_null_branch_1_create();
+
+    kaa_profile_sensor_t *sensor_1 = KAA_CALLOC(1, sizeof(kaa_profile_sensor_t));
+    kaa_profile_sensor_t *sensor_2 = KAA_CALLOC(1, sizeof(kaa_profile_sensor_t));
+    sensor_1->type = ENUM_SENSOR_TYPE_TEMPERATURE;
+    sensor_1->model = kaa_string_move_create("TI LM73", NULL);
+    kaa_list_push_back(profile->sensors, sensor_1);
+    sensor_2->type = ENUM_SENSOR_TYPE_LIGHT;
+    sensor_2->model = kaa_string_move_create(" OPT3001", NULL);
+    kaa_list_push_back(profile->sensors, sensor_2);
+
     error_code = kaa_profile_manager_update_profile(kaa_client_get_context(kaa_client)->profile_manager, profile);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set profile");
 

@@ -77,10 +77,10 @@ static unsigned crc_32_tab[] = {
 typedef struct {
     char filename[255];
     unsigned int file_size;
-    unsigned int hash;
+    long long hash;
 } firmware_info_t;
 
-static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0 };
+static firmware_version_t cur_version = { MAJOR_VERSION, MINOR_VERSION, 0, "" };
 
 extern void (* const g_pfnVectors[])(void);
 
@@ -427,7 +427,7 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     char *tmp_buffer = buffer;
     int len = 0;
 
-    UART_PRINT("Start firmware loading...\r\n", tmp_path);
+    UART_PRINT("FIRMWARE START LOAD\r\n");
 
     sl_NetAppDnsGetHostByName((_i8 *)server_name, strlen((const char *)server_name), &server_ip, SL_AF_INET);
 
@@ -456,12 +456,11 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
 
     memset(tmp_path, 0, 255);
-    strcpy(tmp_path, "/tmp");
-    strcat(tmp_path, info->filename);
+    strcpy(tmp_path, FIRMWARE_FILE_PATH);
 
     UART_PRINT("filename %s\r\n", tmp_path);
 
-    status = sl_FsOpen(tmp_path, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT|_FS_FILE_PUBLIC_WRITE), &ulFirmwareToken, &lFirmwareFileHandle);
+    status = sl_FsOpen(tmp_path, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT), &ulFirmwareToken, &lFirmwareFileHandle);
     if(status < 0)
     {
         sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
@@ -470,21 +469,29 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
     }
 
     offset = 0;
+
     tmp_buffer = strstr(buffer, "\r\n\r\n");
     tmp_buffer += 4;
     readed -= (int)tmp_buffer - (int)buffer;
+
     while(info->file_size > offset)
     {
+        _SlNonOsMainLoopTask();
+        MAP_UtilsDelay(8000);
+        UART_PRINT("loaded: %d\r\n", offset);
         if(!len)
         {
             char *tmp = strstr(tmp_buffer, "\r\n");
 
+            len = info->file_size;
+
             if(tmp)
             {
                 *tmp = 0;
-                len = (int)strtol(tmp_buffer, NULL, 16);
+                //len = (int)strtol(tmp_buffer, NULL, 16);
                 readed -= (int)(tmp + 2) - (int)tmp_buffer;
                 tmp_buffer = (tmp + 2);
+                UART_PRINT("len %d [readed %d]\r\n", len, readed);
             }
             else
             {
@@ -514,99 +521,36 @@ int load_firmware_http(firmware_info_t *info, const char *server_name, unsigned 
             status = sl_FsWrite(lFirmwareFileHandle, offset, (_u8*)tmp_buffer, readed);
             offset += readed;
             readed = read_file_chunck(sock, buffer, HTTP_BUF_LEN);
-            RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv II, status=%ld\r\n", readed);
+            RET_IF_ERR(readed, "load_firmware_tcp: ERROR Socket Recv III, status=%ld\r\n", readed);
             tmp_buffer = buffer;
         }
     }
-    UART_PRINT("Firmware loaded\r\n", crc);
+    UART_PRINT("CRC\r\n");
 
 
     if(lFirmwareFileHandle)
         sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
     sl_Close(sock);
 
-    if(info->hash && info->hash != crc)
-        return -1;
+    info->hash = crc;
 
     return 0;
 }
 
-int write_firmware(firmware_info_t *info)
-{
-    unsigned long ulReadToken;
-    long lReadFileHandle;
-    unsigned long ulFirmwareToken;
-    long lFirmwareFileHandle;
-    long status;
-    int ret = -1;
-    unsigned char buffer[2 * 1024];
-    unsigned buf_len = sizeof(buffer);
-    unsigned len_left = info->file_size;
-    char tmp_path[255];
-
-    UART_PRINT("Start firmware updating... \r\n");
-
-    memset(tmp_path, 0, 255);
-    strcpy(tmp_path, "/tmp");
-    strcat(tmp_path, info->filename);
-
-    sl_FsDel(FIRMWARE_FILE_PATH, 0);
-
-    status = sl_FsOpen((unsigned char *)tmp_path, FS_MODE_OPEN_READ, &ulReadToken, &lReadFileHandle);
-
-    if(status < 0)
-    {
-        sl_FsClose(lReadFileHandle, 0, 0, 0);
-        UART_PRINT("check_and_update_firmware I: ERROR in sl_FsOpen, [file %s] status=%ld\r\n", tmp_path, status);
-        return ret;
-    }    
-
-    status = sl_FsOpen(FIRMWARE_FILE_PATH, FS_MODE_OPEN_CREATE(info->file_size, _FS_FILE_OPEN_FLAG_COMMIT|_FS_FILE_PUBLIC_WRITE), &ulFirmwareToken, &lFirmwareFileHandle);
-    if(status < 0)
-    {
-        sl_FsClose(lReadFileHandle, 0, 0, 0);
-        sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
-        UART_PRINT("check_and_update_firmware II: ERROR in sl_FsOpen, status=%ld\r\n", status);
-        return ret;
-    }
-
-    while(len_left > 0)
-    {
-        status = sl_FsRead(lReadFileHandle, info->file_size - len_left, (_u8 *)buffer, buf_len);
-
-        if(status > 0)
-            status = sl_FsWrite(lFirmwareFileHandle, info->file_size - len_left, (_u8 *)buffer, status);
-
-        if (status < 0)
-        {
-            sl_FsClose(lReadFileHandle, 0, 0, 0);
-            sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
-            UART_PRINT("_ReadStatFile: ERROR in sl_FsRead, status=%ld\r\n", status);
-            return -1;
-        }
-
-        len_left -= status;
-    }    
-
-    sl_FsClose(lReadFileHandle, 0, 0, 0);
-    sl_FsClose(lFirmwareFileHandle, 0, 0, 0);
-    sl_FsDel((const _u8*)tmp_path, 0);
-
-    UART_PRINT("Firmware updated\r\n");
-
-    return ret;
-}
-
-int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, unsigned checksum, unsigned firmware_size)
+int update_firmware(const char *server_host, unsigned short server_port, const char *file_path, long long checksum, unsigned firmware_size)
 {
     firmware_info_t file_info;
     file_info.filename[0] = '/';
     strcpy(file_info.filename+1, file_path);
     file_info.file_size = firmware_size;
-    file_info.hash = checksum;
-    if(load_firmware_http(&file_info, server_host, server_port) == 0);
-        write_firmware(&file_info);
-    return -1;
+
+    do {
+        load_firmware_http(&file_info, server_host, server_port);
+        if(!checksum || checksum == file_info.hash)
+            break;
+    } while(1);
+
+    return 0;
 }
 
 firmware_version_t get_firmware_version()

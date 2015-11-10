@@ -66,11 +66,11 @@ public class ConfigurationDemoBuilder extends AbstractDemoBuilder{
         configurationApplication.setName("Configuration demo");
         configurationApplication = client.editApplication(configurationApplication);
 
-        sdkPropertiesDto.setApplicationId(configurationApplication.getId());
-        sdkPropertiesDto.setApplicationToken(configurationApplication.getApplicationToken());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(configurationApplication.getId());
+        sdkProfileDto.setApplicationToken(configurationApplication.getApplicationToken());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -81,7 +81,7 @@ public class ConfigurationDemoBuilder extends AbstractDemoBuilder{
         configurationSchema.setDescription("Default configuration schema for the configuration demo application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;

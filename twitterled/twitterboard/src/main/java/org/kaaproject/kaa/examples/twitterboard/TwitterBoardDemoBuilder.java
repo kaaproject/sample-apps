@@ -73,9 +73,9 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         twitterBoardApplication.setName("Twitter board");
         twitterBoardApplication = client.editApplication(twitterBoardApplication);
 
-        sdkPropertiesDto.setApplicationId(twitterBoardApplication.getId());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(twitterBoardApplication.getId());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -86,7 +86,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Default configuration schema for the twitter board application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created.");
 
         logger.info("Creating notification schema...");
@@ -95,7 +95,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setName("Twitter board notification schema");
         notificationSchemaDto.setDescription("Notification schema for Twitter board application");
         notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto, getResourcePath("notification_schema.avsc"));
-        sdkPropertiesDto.setNotificationSchemaVersion(notificationSchemaDto.getMajorVersion());
+        sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getMajorVersion());
         logger.info("Notification schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;

@@ -32,8 +32,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.KaaAuthorityDto;
-import org.kaaproject.kaa.common.dto.admin.SdkPropertiesDto;
-import org.kaaproject.kaa.common.dto.admin.SdkPlatform;
+import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
 import org.kaaproject.kaa.common.dto.admin.TenantUserDto;
 import org.kaaproject.kaa.common.dto.admin.UserDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
@@ -95,7 +94,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
     public static String tenantDeveloperPassword = DEFAULT_TENANT_DEVELOPER_PASSWORD;
     
     private final String resourcesPath;
-    protected final SdkPropertiesDto sdkPropertiesDto;
+    protected final SdkProfileDto sdkProfileDto;
     private List<Project> projectConfigs;
     
     public static void updateCredentialsFromArgs(String[] args) {
@@ -149,7 +148,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
 
     protected AbstractDemoBuilder(String resourcesPath) {
         this.resourcesPath = resourcesPath;
-        this.sdkPropertiesDto = new SdkPropertiesDto();
+        this.sdkProfileDto = new SdkProfileDto();
     }
     
     @Override
@@ -162,41 +161,22 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         for (Project projectConfig : projectConfigs) {
             String iconBase64 = loadIconBase64(projectConfig.getId());
             projectConfig.setIconBase64(iconBase64);
-            setProjectSdkKey(projectConfig);
+            setProjectSdkKey(projectConfig, client);
         }
     }
     
-    private void setProjectSdkKey(Project projectConfig) {
-        SdkPropertiesDto sdkPropertiesDto = null;
+    private void setProjectSdkKey(Project projectConfig, AdminClient client) throws Exception  {
+    	SdkProfileDto sdkProfileDto = null;
+    	loginTenantDeveloper(client);
         if (isMultiApplicationProject()) {
-            Map<String, SdkPropertiesDto> projectsSdkMap = getProjectsSdkMap();
-                sdkPropertiesDto = projectsSdkMap.get(projectConfig.getId());
+            Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
+            sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
         } else {
-            sdkPropertiesDto = this.sdkPropertiesDto;
+        	sdkProfileDto = this.sdkProfileDto;
         }
-
-        switch (projectConfig.getPlatform()) {
-            case ANDROID:
-                sdkPropertiesDto.setTargetPlatform(SdkPlatform.ANDROID);
-                break;
-            case C:
-                sdkPropertiesDto.setTargetPlatform(SdkPlatform.C);
-                break;
-            case CPP:
-                sdkPropertiesDto.setTargetPlatform(SdkPlatform.CPP);
-                break;
-            case JAVA:
-                sdkPropertiesDto.setTargetPlatform(SdkPlatform.JAVA);
-                break;
-            default:
-                break;
-        }
-        try {
-            projectConfig.setSdkKeyBase64(Base64.encodeObject(sdkPropertiesDto, Base64.URL_SAFE));
-            logger.info("Resulting sdk properties: {}", sdkPropertiesDto);
-        } catch (IOException e) {
-            logger.error("Unable to generate sdk properties", e);
-        }
+        sdkProfileDto = client.createSdkProfile(sdkProfileDto);
+        projectConfig.setSdkProfileId(sdkProfileDto.getId());
+        logger.info("Resulting sdk properties: {}", sdkProfileDto);
     }
 
     @Override
@@ -214,7 +194,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         return false;
     }
     
-    protected Map<String, SdkPropertiesDto> getProjectsSdkMap() {
+    protected Map<String, SdkProfileDto> getProjectsSdkMap() {
         return null;
     }
     

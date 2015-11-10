@@ -61,10 +61,10 @@ public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
         ApplicationDto cityLightsDemoApplication = new ApplicationDto();
         cityLightsDemoApplication.setName("City lights controller demo");
         cityLightsDemoApplication = client.editApplication(cityLightsDemoApplication);
-        sdkPropertiesDto.setApplicationId(cityLightsDemoApplication.getId());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(cityLightsDemoApplication.getId());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -75,7 +75,7 @@ public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Default configuration schema for the city lights controller application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;

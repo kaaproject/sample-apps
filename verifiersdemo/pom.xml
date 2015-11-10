@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.2.0-SNAPSHOT</version>
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
@@ -39,21 +39,18 @@
             <artifactId>common</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.kaaproject.kaa.server.verifiers.facebook</groupId>
-            <artifactId>config</artifactId>
-            <classifier>facebook</classifier>
+            <groupId>org.kaaproject.kaa.server.verifiers</groupId>
+            <artifactId>facebook-verifier</artifactId>
             <version>${kaa.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.kaaproject.kaa.server.verifiers.twitter</groupId>
-            <artifactId>config</artifactId>
-            <classifier>twitter</classifier>
+            <groupId>org.kaaproject.kaa.server.verifiers</groupId>
+            <artifactId>twitter-verifier</artifactId>
             <version>${kaa.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.kaaproject.kaa.server.verifiers.gplus</groupId>
-            <artifactId>config</artifactId>
-            <classifier>gplus</classifier>
+            <groupId>org.kaaproject.kaa.server.verifiers</groupId>
+            <artifactId>gplus-verifier</artifactId>
             <version>${kaa.version}</version>
         </dependency>                        
     </dependencies>

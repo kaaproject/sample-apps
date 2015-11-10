@@ -91,12 +91,12 @@ public class SmartHouseDemoBuilder extends AbstractDemoBuilder {
         smartHouseApplication.setName("Smart house");
         smartHouseApplication = client.editApplication(smartHouseApplication);
                
-        sdkPropertiesDto.setApplicationId(smartHouseApplication.getId());
-        sdkPropertiesDto.setApplicationToken(smartHouseApplication.getApplicationToken());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(smartHouseApplication.getId());
+        sdkProfileDto.setApplicationToken(smartHouseApplication.getApplicationToken());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setConfigurationSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
         
@@ -108,7 +108,7 @@ public class SmartHouseDemoBuilder extends AbstractDemoBuilder {
         aefMapIds.add(deviceAefMap.getId());
         aefMapIds.add(thermoAefMap.getId());
         aefMapIds.add(musicAefMap.getId());
-        sdkPropertiesDto.setAefMapIds(aefMapIds);
+        sdkProfileDto.setAefMapIds(aefMapIds);
         
         TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();        
         UserVerifierDto trustfulUserVerifier = new UserVerifierDto();
@@ -122,7 +122,7 @@ public class SmartHouseDemoBuilder extends AbstractDemoBuilder {
         RawData rawData = algotithm.getRootData();
         trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());        
         trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
-        sdkPropertiesDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
+        sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
         
         logger.info("Finished loading 'Smart House Demo Application' data.");
     }

@@ -88,11 +88,11 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         verifiersApplication.setName("User verifiers demo");
         verifiersApplication = client.editApplication(verifiersApplication);
 
-        sdkPropertiesDto.setApplicationId(verifiersApplication.getId());
-        sdkPropertiesDto.setApplicationToken(verifiersApplication.getApplicationToken());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(verifiersApplication.getId());
+        sdkProfileDto.setApplicationToken(verifiersApplication.getApplicationToken());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -100,7 +100,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
                 verifiersDemoEventClassFamily);
         List<String> aefMapIds = new ArrayList<>();
         aefMapIds.add(verifiersDemoAefMap.getId());
-        sdkPropertiesDto.setAefMapIds(aefMapIds);
+        sdkProfileDto.setAefMapIds(aefMapIds);
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
@@ -109,7 +109,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Configuration schema for the default Kaa verifiers tokens");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created.");
 
         TwitterVerifierConfig twitterVerifierConfig = new TwitterVerifierConfig();

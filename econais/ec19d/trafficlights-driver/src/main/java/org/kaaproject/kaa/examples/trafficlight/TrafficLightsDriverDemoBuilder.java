@@ -50,11 +50,11 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         trafficLightsApplication.setName("Traffic lights driver");
         trafficLightsApplication = client.editApplication(trafficLightsApplication);
 
-        sdkPropertiesDto.setApplicationId(trafficLightsApplication.getId());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
+        sdkProfileDto.setApplicationId(trafficLightsApplication.getId());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
+        sdkProfileDto.setConfigurationSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -65,7 +65,7 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setDescription("Traffic Lights driver log schema");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("log.avsc"));
         logger.info("Log schema version: {}", logSchemaDto.getMajorVersion());
-        sdkPropertiesDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
         logger.info("Log schema was created.");
 
         LogAppenderDto appenderDto = new LogAppenderDto();
@@ -91,7 +91,7 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Traffic Lights configuration schema");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created");
 
         logger.info("Finished loading 'Traffic lights driver application' data...");

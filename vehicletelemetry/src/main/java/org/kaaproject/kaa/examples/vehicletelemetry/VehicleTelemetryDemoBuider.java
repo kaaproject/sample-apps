@@ -67,9 +67,9 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
         vehicleTelemetryApplication.setName("Vehicle telemetry");
         vehicleTelemetryApplication = client.editApplication(vehicleTelemetryApplication);
 
-        sdkPropertiesDto.setApplicationId(vehicleTelemetryApplication.getId());
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setApplicationId(vehicleTelemetryApplication.getId());
+        sdkProfileDto.setConfigurationSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -78,14 +78,14 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
         profileSchema.setName("Vehicle telemetry profile schema");
         profileSchema.setDescription("Profile schema describing vehicle telemetry application profile");
         profileSchema = client.createProfileSchema(profileSchema, getResourcePath("profileSchema.json"));
-        sdkPropertiesDto.setProfileSchemaVersion(profileSchema.getMajorVersion());
+        sdkProfileDto.setProfileSchemaVersion(profileSchema.getMajorVersion());
 
         LogSchemaDto logSchemaDto = new LogSchemaDto();
         logSchemaDto.setApplicationId(vehicleTelemetryApplication.getId());
         logSchemaDto.setName("Vehicle telemetry log schema");
         logSchemaDto.setDescription("Log schema describing incoming logs");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
-        sdkPropertiesDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
 
         LogAppenderDto vehicleTelemetryLogAppender = new LogAppenderDto();
         vehicleTelemetryLogAppender.setName("Vehicle telemetry log appender");

@@ -65,7 +65,7 @@
     <xs:element name="projectFolder" type="xs:string"/>
     <xs:element name="sdkLibDir" type="xs:string"/>
     <xs:element name="destBinaryFile" type="xs:string"/>
-    <xs:element name="sdkKeyBase64" type="xs:string"/>
+    <xs:element name="sdkProfileId" type="xs:string"/>
   </xs:sequence>
   <xs:attribute name="id" type="xs:string" use="required"/>
 </xs:complexType>

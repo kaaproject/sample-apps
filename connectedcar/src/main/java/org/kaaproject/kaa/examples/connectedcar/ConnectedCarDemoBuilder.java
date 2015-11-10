@@ -85,9 +85,9 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         connectedCarApplication.setName("Connected Car demo");
         connectedCarApplication = client.editApplication(connectedCarApplication);
 
-        sdkPropertiesDto.setApplicationId(connectedCarApplication.getId());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setApplicationId(connectedCarApplication.getId());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -95,7 +95,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
 
         List<String> aefMapIds = new ArrayList<>();
         aefMapIds.add(thermoAefMap.getId());
-        sdkPropertiesDto.setAefMapIds(aefMapIds);
+        sdkProfileDto.setAefMapIds(aefMapIds);
 
         TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();
         UserVerifierDto trustfulUserVerifier = new UserVerifierDto();
@@ -109,7 +109,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         RawData rawData = algotithm.getRootData();
         trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());
         trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
-        sdkPropertiesDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
+        sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
 
         /*
          * Configure the logging feature.
@@ -120,7 +120,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setName("Connected Car log schema");
         logSchemaDto.setDescription("Log schema describes incoming RFID reports");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
-        sdkPropertiesDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
 
         LogAppenderDto connectedCarLogAppender = new LogAppenderDto();
         connectedCarLogAppender.setName("Connected Car log appender");
@@ -148,7 +148,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Default configuration schema for the connected car application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configurationSchema.json"));
 
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
 
         EndpointGroupDto baseEndpointGroup = null;
         List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(connectedCarApplication.getId());

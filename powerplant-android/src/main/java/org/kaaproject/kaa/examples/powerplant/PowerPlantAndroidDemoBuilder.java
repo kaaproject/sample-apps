@@ -32,16 +32,19 @@
 
 package org.kaaproject.kaa.examples.powerplant;
 
-import org.kaaproject.kaa.common.dto.*;
-import org.kaaproject.kaa.common.dto.admin.SdkPlatform;
+import java.util.List;
+
+import org.kaaproject.kaa.common.dto.ApplicationDto;
+import org.kaaproject.kaa.common.dto.ConfigurationDto;
+import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
+import org.kaaproject.kaa.common.dto.EndpointGroupDto;
+import org.kaaproject.kaa.common.dto.UpdateStatus;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @KaaDemoBuilder
 public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
@@ -62,11 +65,10 @@ public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
         powerPlantAndroidApplciation.setName("Power plant demo android");
         powerPlantAndroidApplciation = client.editApplication(powerPlantAndroidApplciation);
 
-        sdkPropertiesDto.setApplicationId(powerPlantAndroidApplciation.getId());
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setTargetPlatform(SdkPlatform.ANDROID);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(powerPlantAndroidApplciation.getId());
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -77,7 +79,7 @@ public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Default configuration schema for the powerplant android demo");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;

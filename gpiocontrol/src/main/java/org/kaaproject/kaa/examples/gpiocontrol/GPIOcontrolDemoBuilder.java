@@ -21,8 +21,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
-import org.kaaproject.kaa.common.dto.admin.SdkPropertiesDto;
-import org.kaaproject.kaa.common.dto.event.*;
+import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
+import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
+import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
+import org.kaaproject.kaa.common.dto.event.ApplicationEventMapDto;
+import org.kaaproject.kaa.common.dto.event.EventClassDto;
+import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
+import org.kaaproject.kaa.common.dto.event.EventClassType;
 import org.kaaproject.kaa.common.dto.user.UserVerifierDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
@@ -63,7 +68,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GpioToggleRequest", ApplicationEventAction.SINK);
     }
 
-    private Map<String, SdkPropertiesDto> projectsSdkMap = new HashMap<>();
+    private Map<String, SdkProfileDto> projectsSdkMap = new HashMap<>();
 
 
     public GPIOcontrolDemoBuilder() {
@@ -104,7 +109,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     private void configureMasterApp(AdminClient client,
                                          String applicationId,
                                          Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-        SdkPropertiesDto sdkProperties = createSdkProperties(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
 
         List<String> aefMapIds = new ArrayList<>();
 
@@ -113,15 +118,15 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
                 ecfMap.get(REMOTE_CONTROL_ECF_NAME),
                 defaultMasterAefMap));
 
-        sdkProperties.setAefMapIds(aefMapIds);
+        sdkProfile.setAefMapIds(aefMapIds);
 
-        projectsSdkMap.put(GPIO_MASTER_ID, sdkProperties);
+        projectsSdkMap.put(GPIO_MASTER_ID, sdkProfile);
     }
 
     private void configureSlaveApp(AdminClient client,
                                     String applicationId,
                                     Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-        SdkPropertiesDto sdkProperties = createSdkProperties(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
 
         List<String> aefMapIds = new ArrayList<>();
 
@@ -130,10 +135,10 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
                 ecfMap.get(REMOTE_CONTROL_ECF_NAME),
                 defaultSlaveAefMap));
 
-        sdkProperties.setAefMapIds(aefMapIds);
+        sdkProfile.setAefMapIds(aefMapIds);
 
-        projectsSdkMap.put(GPIO_CC32XX_ID, sdkProperties); //TODO maybe just duplicate this line with "ESP8266 slave id"?
-        projectsSdkMap.put(GPIO_ESP8266_ID, sdkProperties);
+        projectsSdkMap.put(GPIO_CC32XX_ID, sdkProfile); //TODO maybe just duplicate this line with "ESP8266 slave id"?
+        projectsSdkMap.put(GPIO_ESP8266_ID, sdkProfile);
     }
 
     private EventClassFamilyDto addEventClassFamily(AdminClient client,
@@ -147,10 +152,10 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         return eventClassFamily;
     }
 
-    private SdkPropertiesDto createSdkProperties(AdminClient client,
+    private SdkProfileDto createSdkProfile(AdminClient client,
                                                  String applicationId,
                                                  boolean createVerifier) throws Exception {
-        SdkPropertiesDto sdkKey = new SdkPropertiesDto();
+    	SdkProfileDto sdkKey = new SdkProfileDto();
         sdkKey.setApplicationId(applicationId);
         sdkKey.setProfileSchemaVersion(1);
         sdkKey.setConfigurationSchemaVersion(1);
@@ -212,7 +217,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     }
 
     @Override
-    protected Map<String, SdkPropertiesDto> getProjectsSdkMap() {
+    protected Map<String, SdkProfileDto> getProjectsSdkMap() {
         return projectsSdkMap;
     }
 

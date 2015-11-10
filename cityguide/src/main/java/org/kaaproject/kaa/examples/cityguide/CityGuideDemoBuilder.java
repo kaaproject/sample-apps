@@ -53,10 +53,10 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         cityGuideApplication.setName("City guide");
         cityGuideApplication = client.editApplication(cityGuideApplication);
         
-        sdkPropertiesDto.setApplicationId(cityGuideApplication.getId());
-        sdkPropertiesDto.setApplicationToken(cityGuideApplication.getApplicationToken());
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(cityGuideApplication.getId());
+        sdkProfileDto.setApplicationToken(cityGuideApplication.getApplicationToken());
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
         
@@ -65,14 +65,14 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("City guide configuration schema");
         configurationSchema.setDescription("Configuration schema describing cities and places used by city guide application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("city_guide.avsc"));
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         
         ProfileSchemaDto profileSchema = new ProfileSchemaDto();
         profileSchema.setApplicationId(cityGuideApplication.getId());
         profileSchema.setName("City guide profile schema");
         profileSchema.setDescription("Profile schema describing city guide application profile");
         profileSchema = client.createProfileSchema(profileSchema, getResourcePath("city_guide_profile.avsc"));
-        sdkPropertiesDto.setProfileSchemaVersion(profileSchema.getMajorVersion());
+        sdkProfileDto.setProfileSchemaVersion(profileSchema.getMajorVersion());
         
         EndpointGroupDto baseEndpointGroup = null;
         List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(cityGuideApplication.getId());

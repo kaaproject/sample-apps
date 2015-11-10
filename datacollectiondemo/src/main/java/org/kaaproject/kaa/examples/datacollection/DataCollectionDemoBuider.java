@@ -66,11 +66,11 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         dataCollectionApplication.setName("Data collection demo");
         dataCollectionApplication = client.editApplication(dataCollectionApplication);
 
-        sdkPropertiesDto.setApplicationId(dataCollectionApplication.getId());
-        sdkPropertiesDto.setApplicationToken(dataCollectionApplication.getApplicationToken());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setApplicationId(dataCollectionApplication.getId());
+        sdkProfileDto.setApplicationToken(dataCollectionApplication.getApplicationToken());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setConfigurationSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -79,7 +79,7 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         logSchemaDto.setName("Log schema");
         logSchemaDto.setDescription("Log schema describing incoming logs");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
-        sdkPropertiesDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
 
         LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();
         dataCollectionLogAppender.setName("Data collection log appender");

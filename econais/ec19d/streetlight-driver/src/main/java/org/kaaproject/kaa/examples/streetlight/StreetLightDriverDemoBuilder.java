@@ -54,11 +54,11 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         streetLightApplication.setName("Street light driver");
         streetLightApplication = client.editApplication(streetLightApplication);
 
-        sdkPropertiesDto.setApplicationId(streetLightApplication.getId());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
+        sdkProfileDto.setApplicationId(streetLightApplication.getId());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
+        sdkProfileDto.setConfigurationSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -69,7 +69,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         profileSchemaDto.setDescription("Street light driver profile schema");
         profileSchemaDto = client.createProfileSchema(profileSchemaDto, getResourcePath("profile.avsc"));
         logger.info("Profile schema version: {}", profileSchemaDto.getMajorVersion());
-        sdkPropertiesDto.setProfileSchemaVersion(profileSchemaDto.getMajorVersion());
+        sdkProfileDto.setProfileSchemaVersion(profileSchemaDto.getMajorVersion());
         logger.info("Profile schema was created.");
 
         logger.info("Creating configuration schema...");
@@ -79,7 +79,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Street Light configuration schema");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created");
 
         for (int i = 0; i < LIGHT_ZONE_COUNT; ++i) {

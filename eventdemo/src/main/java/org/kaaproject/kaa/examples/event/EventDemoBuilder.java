@@ -78,12 +78,12 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         eventApplication.setName("Event demo");
         eventApplication = client.editApplication(eventApplication);
 
-        sdkPropertiesDto.setApplicationId(eventApplication.getId());
-        sdkPropertiesDto.setApplicationToken(eventApplication.getApplicationToken());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(eventApplication.getId());
+        sdkProfileDto.setApplicationToken(eventApplication.getApplicationToken());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setConfigurationSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -91,7 +91,7 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
         List<String> aefMapIds = new ArrayList<>();
         aefMapIds.add(thermoAefMap.getId());
-        sdkPropertiesDto.setAefMapIds(aefMapIds);
+        sdkProfileDto.setAefMapIds(aefMapIds);
 
         TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();
         UserVerifierDto trustfulUserVerifier = new UserVerifierDto();
@@ -105,7 +105,7 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         RawData rawData = algotithm.getRootData();
         trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());
         trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
-        sdkPropertiesDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
+        sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
 
         logger.info("Finished loading 'Event Demo Application' data.");
     }

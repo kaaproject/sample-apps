@@ -77,12 +77,12 @@ public class PhotoFrameDemoBuilder extends AbstractDemoBuilder {
         photoFrameApplication.setName("Photo frame");
         photoFrameApplication = client.editApplication(photoFrameApplication);
 
-        sdkPropertiesDto.setApplicationId(photoFrameApplication.getId());
-        sdkPropertiesDto.setApplicationToken(photoFrameApplication.getApplicationToken());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setConfigurationSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(photoFrameApplication.getId());
+        sdkProfileDto.setApplicationToken(photoFrameApplication.getApplicationToken());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setConfigurationSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -90,7 +90,7 @@ public class PhotoFrameDemoBuilder extends AbstractDemoBuilder {
 
         List<String> aefMapIds = new ArrayList<>();
         aefMapIds.add(photoFrameAefMap.getId());
-        sdkPropertiesDto.setAefMapIds(aefMapIds);
+        sdkProfileDto.setAefMapIds(aefMapIds);
 
         TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();
         UserVerifierDto trustfulUserVerifier = new UserVerifierDto();
@@ -104,7 +104,7 @@ public class PhotoFrameDemoBuilder extends AbstractDemoBuilder {
         RawData rawData = algotithm.getRootData();
         trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());
         trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
-        sdkPropertiesDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
+        sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
 
         logger.info("Finished loading 'Photo Frame Demo Application' data.");
     }

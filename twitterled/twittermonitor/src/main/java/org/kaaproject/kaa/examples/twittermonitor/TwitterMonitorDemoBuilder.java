@@ -70,10 +70,10 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         twitterMonitorApplication.setName("Twitter monitor");
         twitterMonitorApplication = client.editApplication(twitterMonitorApplication);
 
-        sdkPropertiesDto.setApplicationId(twitterMonitorApplication.getId());
-        sdkPropertiesDto.setProfileSchemaVersion(1);
-        sdkPropertiesDto.setNotificationSchemaVersion(1);
-        sdkPropertiesDto.setLogSchemaVersion(1);
+        sdkProfileDto.setApplicationId(twitterMonitorApplication.getId());
+        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
@@ -84,7 +84,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Default configuration schema for the twitter monitor application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
         logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkPropertiesDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;

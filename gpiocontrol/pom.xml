@@ -61,6 +61,7 @@
                         <descriptor>${project.basedir}/assembly/src.xml</descriptor>
                         <descriptor>assembly/src-cc32xx.xml</descriptor>
                         <descriptor>assembly/src-esp.xml</descriptor>
+                        <descriptor>assembly/src-objc.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

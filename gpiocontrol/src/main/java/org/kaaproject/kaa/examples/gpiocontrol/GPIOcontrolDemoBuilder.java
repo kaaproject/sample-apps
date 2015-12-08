@@ -47,6 +47,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     private static final Logger logger = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
 
     private static final String GPIO_MASTER_ID = "gpio_master";
+    private static final String GPIO_MASTER_OBJC_ID = "gpio_master_objc";
     private static final String GPIO_CC32XX_ID = "gpio_slave_cc";
     private static final String GPIO_ESP8266_ID = "gpio_slave_esp";
 
@@ -122,6 +123,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         sdkProfile.setAefMapIds(aefMapIds);
 
         projectsSdkMap.put(GPIO_MASTER_ID, sdkProfile);
+        projectsSdkMap.put(GPIO_MASTER_OBJC_ID, sdkProfile);
     }
 
     private void configureSlaveApp(AdminClient client,

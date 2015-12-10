@@ -74,7 +74,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         twitterBoardApplication = client.editApplication(twitterBoardApplication);
 
         sdkProfileDto.setApplicationId(twitterBoardApplication.getId());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
@@ -85,8 +85,8 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("TwitterBoard schema");
         configurationSchema.setDescription("Default configuration schema for the twitter board application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");
 
         logger.info("Creating notification schema...");
@@ -95,7 +95,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setName("Twitter board notification schema");
         notificationSchemaDto.setDescription("Notification schema for Twitter board application");
         notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto, getResourcePath("notification_schema.avsc"));
-        sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getMajorVersion());
+        sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;
@@ -131,8 +131,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(twitterBoardApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base twitter board configuration");
         String body = FileUtils.readResource(getResourcePath("config_data.json"));
         logger.info("Configuration body: [{}]", body);

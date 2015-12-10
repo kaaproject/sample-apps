@@ -19,6 +19,7 @@ package org.kaaproject.kaa.examples.common;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.KaaAuthorityDto;
 import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
+import org.kaaproject.kaa.common.dto.admin.SdkTokenDto;
 import org.kaaproject.kaa.common.dto.admin.TenantUserDto;
 import org.kaaproject.kaa.common.dto.admin.UserDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
@@ -44,6 +46,7 @@ import org.kaaproject.kaa.common.dto.event.EventClassType;
 import org.kaaproject.kaa.examples.common.projects.Project;
 import org.kaaproject.kaa.examples.common.projects.ProjectsConfig;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
+import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,25 +161,27 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         buildDemoApplicationImpl(client);
         projectConfigs = loadProjectConfigs();
         logger.info("Demo application build finished.");
+        
+        Map<SdkTokenDto, String> sdkProfiles = new HashMap<>(); 
         for (Project projectConfig : projectConfigs) {
             String iconBase64 = loadIconBase64(projectConfig.getId());
             projectConfig.setIconBase64(iconBase64);
-            setProjectSdkKey(projectConfig, client);
+            SdkProfileDto sdkProfileDto = this.sdkProfileDto;
+            if (isMultiApplicationProject()) {
+            	Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
+            	sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
+            }
+            SdkTokenDto sdkProfileToken = sdkProfileDto.toSdkTokenDto();
+            String sdkProfileId = sdkProfiles.get(sdkProfileToken);
+            if (sdkProfileId == null) {
+            	loginTenantDeveloper(client);
+            	sdkProfileDto = client.createSdkProfile(sdkProfileDto);
+            	logger.info("Resulting sdk profile: {}", sdkProfileDto);
+            	sdkProfileId = sdkProfileDto.getId();
+            	sdkProfiles.put(sdkProfileToken, sdkProfileId);
+            }
+            projectConfig.setSdkProfileId(sdkProfileId);
         }
-    }
-    
-    private void setProjectSdkKey(Project projectConfig, AdminClient client) throws Exception  {
-    	SdkProfileDto sdkProfileDto = null;
-    	loginTenantDeveloper(client);
-        if (isMultiApplicationProject()) {
-            Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
-            sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
-        } else {
-        	sdkProfileDto = this.sdkProfileDto;
-        }
-        sdkProfileDto = client.createSdkProfile(sdkProfileDto);
-        projectConfig.setSdkProfileId(sdkProfileDto.getId());
-        logger.info("Resulting sdk properties: {}", sdkProfileDto);
     }
 
     @Override
@@ -188,6 +193,10 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
     
     protected String getResourcePath(String resource) {
         return resourcesPath + "/" + resource;
+    }
+    
+    protected String getResourceAsString(String resource) throws IOException {
+        return FileUtils.readResource(getResourcePath(resource));
     }
 
     protected boolean isMultiApplicationProject() {

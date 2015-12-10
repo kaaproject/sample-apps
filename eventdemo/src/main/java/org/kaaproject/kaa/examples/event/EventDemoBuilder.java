@@ -80,7 +80,7 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
         sdkProfileDto.setApplicationId(eventApplication.getId());
         sdkProfileDto.setApplicationToken(eventApplication.getApplicationToken());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setConfigurationSchemaVersion(1);
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);

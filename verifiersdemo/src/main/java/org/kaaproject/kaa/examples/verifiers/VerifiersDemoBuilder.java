@@ -90,7 +90,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
 
         sdkProfileDto.setApplicationId(verifiersApplication.getId());
         sdkProfileDto.setApplicationToken(verifiersApplication.getApplicationToken());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
 
@@ -108,8 +108,8 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("KaaVerifiersTokens schema");
         configurationSchema.setDescription("Configuration schema for the default Kaa verifiers tokens");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");
 
         TwitterVerifierConfig twitterVerifierConfig = new TwitterVerifierConfig();
@@ -174,8 +174,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(verifiersApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base verifiers demo configuration");
         String body = generateBody(twitterUserVerifier.getVerifierToken(),
                 facebookUserVerifier.getVerifierToken(), gplusUserVerifier.getVerifierToken());

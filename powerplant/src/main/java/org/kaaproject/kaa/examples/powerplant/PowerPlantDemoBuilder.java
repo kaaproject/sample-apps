@@ -74,7 +74,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         powerPlantApplication = client.editApplication(powerPlantApplication);
 
         sdkProfileDto.setApplicationId(powerPlantApplication.getId());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setNotificationSchemaVersion(1);
 
         loginTenantDeveloper(client);
@@ -88,7 +88,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setName("Power plant log schema");
         logSchemaDto.setDescription("Log schema describes incoming voltage reports");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
-        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto powerPlantLogAppender = new LogAppenderDto();
         powerPlantLogAppender.setName("Power plant log appender");
@@ -118,8 +118,8 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Default configuration schema for the power plant application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configSchema.json"));
 
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;
@@ -136,8 +136,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(powerPlantApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base power plant configuration");
         String body = FileUtils.readResource(getResourcePath("configData.json"));
         logger.info("Configuration body: [{}]", body);

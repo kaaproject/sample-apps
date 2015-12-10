@@ -54,7 +54,7 @@ public class CellMonitorDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setApplicationToken(cellMonitorApplication.getApplicationToken());
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setConfigurationSchemaVersion(1);
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
 
         loginTenantDeveloper(client);
         
@@ -63,7 +63,7 @@ public class CellMonitorDemoBuilder extends AbstractDemoBuilder {
         logSchema.setName("Cell monitor log schema");
         logSchema.setDescription("Log schema describing cell monitor record with information about current cell location, signal strength and phone gps location.");
         logSchema = client.createLogSchema(logSchema, getResourcePath("cell_monitor_log.avsc"));
-        sdkProfileDto.setLogSchemaVersion(logSchema.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchema.getVersion());
         
         LogAppenderDto cellMonitorLogAppender = new LogAppenderDto();
         cellMonitorLogAppender.setName("Cell monitor log appender");

@@ -71,7 +71,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
 
         sdkProfileDto.setApplicationId(notificationApplication.getId());
         sdkProfileDto.setApplicationToken(notificationApplication.getApplicationToken());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setConfigurationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
 
@@ -83,7 +83,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setName("Notification schema");
         notificationSchemaDto.setDescription("Notification schema of a sample notification");
         notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto, getResourcePath("notification_schema.avsc"));
-        sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getMajorVersion());
+        sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 
         logger.info("Getting base endpoint group");

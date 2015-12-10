@@ -25,6 +25,8 @@ import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.ProfileFilterDto;
 import org.kaaproject.kaa.common.dto.ProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
@@ -65,14 +67,18 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("City guide configuration schema");
         configurationSchema.setDescription("Configuration schema describing cities and places used by city guide application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("city_guide.avsc"));
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
+        
+        CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("city_guide_profile.avsc"), CTLSchemaScopeDto.PROFILE_SCHEMA, cityGuideApplication.getId());
         
         ProfileSchemaDto profileSchema = new ProfileSchemaDto();
         profileSchema.setApplicationId(cityGuideApplication.getId());
         profileSchema.setName("City guide profile schema");
         profileSchema.setDescription("Profile schema describing city guide application profile");
-        profileSchema = client.createProfileSchema(profileSchema, getResourcePath("city_guide_profile.avsc"));
-        sdkProfileDto.setProfileSchemaVersion(profileSchema.getMajorVersion());
+        profileSchema.setCtlSchemaId(profileCtlSchema.getId());
+        
+        profileSchema = client.saveProfileSchema(profileSchema);
+        sdkProfileDto.setProfileSchemaVersion(profileSchema.getVersion());
         
         EndpointGroupDto baseEndpointGroup = null;
         List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(cityGuideApplication.getId());
@@ -87,8 +93,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(cityGuideApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base city guide configuration");
         baseConfiguration.setBody(FileUtils.readResource(getResourcePath("city_guide_data_all.json")));
         baseConfiguration.setStatus(UpdateStatus.INACTIVE);
@@ -109,8 +114,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         atlantaConfiguration.setApplicationId(cityGuideApplication.getId());
         atlantaConfiguration.setEndpointGroupId(atlantaEndpointGroup.getId());
         atlantaConfiguration.setSchemaId(configurationSchema.getId());
-        atlantaConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        atlantaConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        atlantaConfiguration.setSchemaVersion(configurationSchema.getVersion());
         atlantaConfiguration.setDescription("City guide configuration for Atlanta city");
         atlantaConfiguration.setBody(FileUtils.readResource(getResourcePath("city_guide_data_atlanta.json")));
         atlantaConfiguration.setStatus(UpdateStatus.INACTIVE);
@@ -121,8 +125,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         atlantaProfileFilter.setApplicationId(cityGuideApplication.getId());
         atlantaProfileFilter.setEndpointGroupId(atlantaEndpointGroup.getId());
         atlantaProfileFilter.setSchemaId(profileSchema.getId());
-        atlantaProfileFilter.setMajorVersion(profileSchema.getMajorVersion());
-        atlantaProfileFilter.setMinorVersion(profileSchema.getMinorVersion());
+        atlantaProfileFilter.setSchemaVersion(profileSchema.getVersion());
         atlantaProfileFilter.setDescription("Profile filter for Atlanta city");
         atlantaProfileFilter.setBody(FileUtils.readResource(getResourcePath("city_guide_filter_atlanta.json")));
         atlantaProfileFilter.setStatus(UpdateStatus.INACTIVE);
@@ -143,8 +146,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         amsterdamConfiguration.setApplicationId(cityGuideApplication.getId());
         amsterdamConfiguration.setEndpointGroupId(amsterdamEndpointGroup.getId());
         amsterdamConfiguration.setSchemaId(configurationSchema.getId());
-        amsterdamConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        amsterdamConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        amsterdamConfiguration.setSchemaVersion(configurationSchema.getVersion());
         amsterdamConfiguration.setDescription("City guide configuration for Amsterdam city");
         amsterdamConfiguration.setBody(FileUtils.readResource(getResourcePath("city_guide_data_amsterdam.json")));
         amsterdamConfiguration.setStatus(UpdateStatus.INACTIVE);
@@ -155,8 +157,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         amsterdamProfileFilter.setApplicationId(cityGuideApplication.getId());
         amsterdamProfileFilter.setEndpointGroupId(amsterdamEndpointGroup.getId());
         amsterdamProfileFilter.setSchemaId(profileSchema.getId());
-        amsterdamProfileFilter.setMajorVersion(profileSchema.getMajorVersion());
-        amsterdamProfileFilter.setMinorVersion(profileSchema.getMinorVersion());
+        amsterdamProfileFilter.setSchemaVersion(profileSchema.getVersion());
         amsterdamProfileFilter.setDescription("Profile filter for Amsterdam city");
         amsterdamProfileFilter.setBody(FileUtils.readResource(getResourcePath("city_guide_filter_amsterdam.json")));
         amsterdamProfileFilter.setStatus(UpdateStatus.INACTIVE);

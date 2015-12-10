@@ -67,7 +67,7 @@ public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
 
         sdkProfileDto.setApplicationId(powerPlantAndroidApplciation.getId());
         sdkProfileDto.setNotificationSchemaVersion(1);
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
@@ -78,8 +78,8 @@ public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("Powerplant android demo schema");
         configurationSchema.setDescription("Default configuration schema for the powerplant android demo");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;
@@ -96,8 +96,7 @@ public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(powerPlantAndroidApplciation.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base powerplant android demo configuration");
         String body = FileUtils.readResource(getResourcePath("config_data.json"));
         logger.info("Configuration body: [{}]", body);

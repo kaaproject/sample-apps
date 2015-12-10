@@ -62,7 +62,7 @@ public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
         cityLightsDemoApplication.setName("City lights controller demo");
         cityLightsDemoApplication = client.editApplication(cityLightsDemoApplication);
         sdkProfileDto.setApplicationId(cityLightsDemoApplication.getId());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
 
@@ -74,8 +74,8 @@ public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("City lights controller schema");
         configurationSchema.setDescription("Default configuration schema for the city lights controller application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;
@@ -92,8 +92,7 @@ public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(cityLightsDemoApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base city lights controller configuration");
         String body = FileUtils.readResource(getResourcePath("config_data.json"));
         logger.info("Configuration body: [{}]", body);

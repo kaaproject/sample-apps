@@ -39,7 +39,6 @@ import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EndpointAccessToken;
 import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.registration.OnAttachEndpointOperationCallback;
-import org.kaaproject.kaa.client.profile.ProfileContainer;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.examples.gpiocontol.adapters.DevicesAdapter;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
@@ -50,7 +49,6 @@ import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse;
 import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
-import org.kaaproject.kaa.schema.base.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +64,6 @@ public class DevicesListActivity extends AppCompatActivity {
 
 
     private KaaClient kaaClient;
-    private final Profile profile = new Profile();
     private final Context context = this;
 
     private String endpointId;
@@ -121,12 +118,6 @@ public class DevicesListActivity extends AppCompatActivity {
             SnackbarsManager.makeSnackBarNoInet(this);
         }else {
             kaaClient = KaaProvider.getClient(this);
-            kaaClient.setProfileContainer(new ProfileContainer() {
-                @Override
-                public Profile getProfile() {
-                    return profile;
-                }
-            });
             kaaClient.start();
             if(isFirstLaunch()) {
                 initKaa();

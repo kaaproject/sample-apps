@@ -24,7 +24,10 @@
    "socketKeepalive":{
       "boolean":false
    },
-   "autoConnectRetry":{
-      "boolean":true
+   "includeClientProfile":{
+      "boolean":false
+   },
+   "includeServerProfile":{
+      "boolean":false
    }
 }

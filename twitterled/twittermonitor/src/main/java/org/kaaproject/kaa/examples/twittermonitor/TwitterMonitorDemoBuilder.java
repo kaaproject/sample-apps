@@ -71,7 +71,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         twitterMonitorApplication = client.editApplication(twitterMonitorApplication);
 
         sdkProfileDto.setApplicationId(twitterMonitorApplication.getId());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
 
@@ -83,8 +83,8 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("TwitterMonitor schema");
         configurationSchema.setDescription("Default configuration schema for the twitter monitor application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;
@@ -101,8 +101,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(twitterMonitorApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base twitter monitor configuration");
         String body = FileUtils.readResource(getResourcePath("config_data.json"));
         ObjectMapper objectMapper = new ObjectMapper();
@@ -124,7 +123,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         List<NotificationSchemaDto> notificationSchemas = client.getNotificationSchemas(twitterBoardApplication.getId());
         logger.info("All available notification schemas for twitter board application: [{}]", notificationSchemas);
         NotificationSchemaDto twitterBoardNotificationSchema = getTwitterBoardNotificationSchema(notificationSchemas);
-        Integer twitterBoardNfSchemaVersion = twitterBoardNotificationSchema.getMajorVersion();
+        Integer twitterBoardNfSchemaVersion = twitterBoardNotificationSchema.getVersion();
         logger.info("Twitter board schema version was gotten: {}", twitterBoardNfSchemaVersion);
         kaaClientConfig.put(APP_TOKEN, twitterBoardAppToken);
         kaaClientConfig.put(NF_SCHEMA_VERSION, twitterBoardNfSchemaVersion);

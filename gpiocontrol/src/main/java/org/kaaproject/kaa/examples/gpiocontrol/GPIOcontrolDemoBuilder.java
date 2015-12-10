@@ -100,16 +100,17 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        configureMasterApp(client, GPIOcontrolApplicationMaster.getId(), ecfMap);
-        configureSlaveApp(client, GPIOcontrolApplicationSlave.getId(), ecfMap);
+        configureMasterApp(client, GPIOcontrolApplicationMaster.getId(), GPIOcontrolApplicationMaster.getApplicationToken(), ecfMap);
+        configureSlaveApp(client, GPIOcontrolApplicationSlave.getId(), GPIOcontrolApplicationSlave.getApplicationToken(), ecfMap);
 
         logger.info("Finished loading 'GPIO control Demo Application' data.");
     }
 
     private void configureMasterApp(AdminClient client,
                                          String applicationId,
+                                         String applicationToken,
                                          Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
 
         List<String> aefMapIds = new ArrayList<>();
 
@@ -125,8 +126,9 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
     private void configureSlaveApp(AdminClient client,
                                     String applicationId,
+                                    String applicationToken,
                                     Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
 
         List<String> aefMapIds = new ArrayList<>();
 
@@ -154,10 +156,12 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
     private SdkProfileDto createSdkProfile(AdminClient client,
                                                  String applicationId,
+                                                 String applicationToken, 
                                                  boolean createVerifier) throws Exception {
     	SdkProfileDto sdkKey = new SdkProfileDto();
         sdkKey.setApplicationId(applicationId);
-        sdkKey.setProfileSchemaVersion(1);
+        sdkKey.setApplicationToken(applicationToken);
+        sdkKey.setProfileSchemaVersion(0);
         sdkKey.setConfigurationSchemaVersion(1);
         sdkKey.setNotificationSchemaVersion(1);
         sdkKey.setLogSchemaVersion(1);

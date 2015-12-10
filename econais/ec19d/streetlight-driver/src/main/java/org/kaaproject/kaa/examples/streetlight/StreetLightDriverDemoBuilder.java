@@ -23,14 +23,13 @@ import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.ProfileFilterDto;
 import org.kaaproject.kaa.common.dto.ProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
-import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @KaaDemoBuilder
 public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
@@ -55,7 +54,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         streetLightApplication = client.editApplication(streetLightApplication);
 
         sdkProfileDto.setApplicationId(streetLightApplication.getId());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
         sdkProfileDto.setConfigurationSchemaVersion(1);
@@ -63,13 +62,17 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         loginTenantDeveloper(client);
 
         logger.info("Creating profile schema...");
+        
+        CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profile.avsc"), CTLSchemaScopeDto.PROFILE_SCHEMA, streetLightApplication.getId());
+        
         ProfileSchemaDto profileSchemaDto = new ProfileSchemaDto();
         profileSchemaDto.setApplicationId(streetLightApplication.getId());
         profileSchemaDto.setName("StreetLightsDriverProfile schema");
         profileSchemaDto.setDescription("Street light driver profile schema");
-        profileSchemaDto = client.createProfileSchema(profileSchemaDto, getResourcePath("profile.avsc"));
-        logger.info("Profile schema version: {}", profileSchemaDto.getMajorVersion());
-        sdkProfileDto.setProfileSchemaVersion(profileSchemaDto.getMajorVersion());
+        profileSchemaDto.setCtlSchemaId(profileCtlSchema.getId());
+        profileSchemaDto = client.saveProfileSchema(profileSchemaDto);
+        logger.info("Profile schema version: {}", profileSchemaDto.getVersion());
+        sdkProfileDto.setProfileSchemaVersion(profileSchemaDto.getVersion());
         logger.info("Profile schema was created.");
 
         logger.info("Creating configuration schema...");
@@ -78,8 +81,8 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("StreetLightsConfiguration schema");
         configurationSchema.setDescription("Street Light configuration schema");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration.avsc"));
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created");
 
         for (int i = 0; i < LIGHT_ZONE_COUNT; ++i) {
@@ -95,7 +98,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
             filter.setApplicationId(streetLightApplication.getId());
             filter.setEndpointGroupId(group.getId());
             filter.setSchemaId(profileSchemaDto.getId());
-            filter.setMajorVersion(profileSchemaDto.getMajorVersion());
+            filter.setSchemaVersion(profileSchemaDto.getVersion());
             filter.setBody("lightZones.contains(new Integer(" + Integer.toString(i) + "))");
             filter.setStatus(UpdateStatus.INACTIVE);
             logger.info("Creating Profile filter for Light Zone {}", i);
@@ -108,7 +111,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
             baseGroupConfiguration.setApplicationId(streetLightApplication.getId());
             baseGroupConfiguration.setEndpointGroupId(group.getId());
             baseGroupConfiguration.setSchemaId(configurationSchema.getId());
-            baseGroupConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
+            baseGroupConfiguration.setSchemaVersion(configurationSchema.getVersion());
             baseGroupConfiguration.setDescription("Base street light driver configuration");
             String body = getConfigurationBodyForEndpointGroup(i);
             logger.info("Configuration body: [{}]", body);

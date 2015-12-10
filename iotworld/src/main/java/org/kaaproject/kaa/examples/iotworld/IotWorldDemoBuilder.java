@@ -185,21 +185,22 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
         
-        configureSmartHomeApp(client, smartHomeApplication.getId(),  ecfMap);
-        configureThermostatApp(client, thermostatApplication.getId(),  ecfMap);
-        configureFanControlApp(client, fanControlApplication.getId(),  ecfMap);
-        configureMusicPlayerApp(client, musicPlayerApplication.getId(),  ecfMap);
-        configurePhotoPlayerApp(client, photoPlayerApplication.getId(),  ecfMap);
-        configureLightControlApp(client, lightControlApplication.getId(),  ecfMap);
-        configureIrrigationSystemApp(client, irrigationSystemApplication.getId(),  ecfMap);
+        configureSmartHomeApp(client, smartHomeApplication.getId(), smartHomeApplication.getApplicationToken(), ecfMap);
+        configureThermostatApp(client, thermostatApplication.getId(), thermostatApplication.getApplicationToken(),  ecfMap);
+        configureFanControlApp(client, fanControlApplication.getId(), fanControlApplication.getApplicationToken(), ecfMap);
+        configureMusicPlayerApp(client, musicPlayerApplication.getId(), musicPlayerApplication.getApplicationToken(), ecfMap);
+        configurePhotoPlayerApp(client, photoPlayerApplication.getId(), photoPlayerApplication.getApplicationToken(), ecfMap);
+        configureLightControlApp(client, lightControlApplication.getId(), lightControlApplication.getApplicationToken(), ecfMap);
+        configureIrrigationSystemApp(client, irrigationSystemApplication.getId(), irrigationSystemApplication.getApplicationToken(), ecfMap);
         
         logger.info("Finished loading 'Iot World Demo' data.");
     }
     
     private void configureSmartHomeApp(AdminClient client, 
             String applicationId, 
+            String applicationToken,
             Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkKey = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkKey = createSdkProfile(client, applicationId, applicationToken, true);
         
         List<String> aefMapIds = new ArrayList<>();
         
@@ -294,8 +295,9 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
     
     private void configureThermostatApp(AdminClient client, 
             String applicationId, 
+            String applicationToken,
             Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
         
         List<String> aefMapIds = new ArrayList<>();
         
@@ -343,8 +345,9 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
     
     private void configureFanControlApp(AdminClient client, 
             String applicationId, 
+            String applicationToken,
             Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
         
         List<String> aefMapIds = new ArrayList<>();
 
@@ -371,8 +374,9 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
     
     private void configureMusicPlayerApp(AdminClient client, 
             String applicationId, 
+            String applicationToken,
             Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
         
         List<String> aefMapIds = new ArrayList<>();
 
@@ -411,8 +415,9 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
 
     private void configurePhotoPlayerApp(AdminClient client, 
             String applicationId, 
+            String applicationToken,
             Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
         
         List<String> aefMapIds = new ArrayList<>();
 
@@ -450,8 +455,9 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
     
     private void configureLightControlApp(AdminClient client, 
             String applicationId, 
+            String applicationToken,
             Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
         
         List<String> aefMapIds = new ArrayList<>();
 
@@ -485,8 +491,9 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
     
     private void configureIrrigationSystemApp(AdminClient client, 
             String applicationId, 
+            String applicationToken,
             Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, true);
+    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
         
         List<String> aefMapIds = new ArrayList<>();
 
@@ -526,10 +533,12 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
 
     private SdkProfileDto createSdkProfile(AdminClient client,
                                        String applicationId,
+                                       String applicationToken,
                                        boolean createVerifier) throws Exception {
     	SdkProfileDto sdkKey = new SdkProfileDto();
         sdkKey.setApplicationId(applicationId);
-        sdkKey.setProfileSchemaVersion(1);
+        sdkKey.setApplicationToken(applicationToken);
+        sdkKey.setProfileSchemaVersion(0);
         sdkKey.setConfigurationSchemaVersion(1);
         sdkKey.setNotificationSchemaVersion(1);
         sdkKey.setLogSchemaVersion(1);

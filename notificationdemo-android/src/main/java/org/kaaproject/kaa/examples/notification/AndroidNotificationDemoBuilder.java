@@ -57,7 +57,7 @@ public class AndroidNotificationDemoBuilder extends AbstractDemoBuilder {
 
         sdkProfileDto.setApplicationId(notificationApplication.getId());
         sdkProfileDto.setApplicationToken(notificationApplication.getApplicationToken());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setConfigurationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
         sdkProfileDto.setNotificationSchemaVersion(1);
@@ -70,7 +70,7 @@ public class AndroidNotificationDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setName("Notification schema");
         notificationSchemaDto.setDescription("Notification schema describing incoming notifications");
         notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto, getResourcePath("notificationSchema.json"));
-        sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getMajorVersion());
+        sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 
         TopicDto optionalTopic = new TopicDto();

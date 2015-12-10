@@ -36,6 +36,8 @@ import java.util.Arrays;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ProfileSchemaDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
@@ -73,19 +75,22 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
+        CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profileSchema.json"), CTLSchemaScopeDto.PROFILE_SCHEMA, vehicleTelemetryApplication.getId());
+
         ProfileSchemaDto profileSchema = new ProfileSchemaDto();
         profileSchema.setApplicationId(vehicleTelemetryApplication.getId());
         profileSchema.setName("Vehicle telemetry profile schema");
         profileSchema.setDescription("Profile schema describing vehicle telemetry application profile");
-        profileSchema = client.createProfileSchema(profileSchema, getResourcePath("profileSchema.json"));
-        sdkProfileDto.setProfileSchemaVersion(profileSchema.getMajorVersion());
+        profileSchema.setCtlSchemaId(profileCtlSchema.getId());
+        profileSchema = client.saveProfileSchema(profileSchema);
+        sdkProfileDto.setProfileSchemaVersion(profileSchema.getVersion());
 
         LogSchemaDto logSchemaDto = new LogSchemaDto();
         logSchemaDto.setApplicationId(vehicleTelemetryApplication.getId());
         logSchemaDto.setName("Vehicle telemetry log schema");
         logSchemaDto.setDescription("Log schema describing incoming logs");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
-        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto vehicleTelemetryLogAppender = new LogAppenderDto();
         vehicleTelemetryLogAppender.setName("Vehicle telemetry log appender");

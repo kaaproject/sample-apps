@@ -51,7 +51,7 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         trafficLightsApplication = client.editApplication(trafficLightsApplication);
 
         sdkProfileDto.setApplicationId(trafficLightsApplication.getId());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
         sdkProfileDto.setConfigurationSchemaVersion(1);
@@ -64,8 +64,8 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setName("TrafficLightsLog schema");
         logSchemaDto.setDescription("Traffic Lights driver log schema");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("log.avsc"));
-        logger.info("Log schema version: {}", logSchemaDto.getMajorVersion());
-        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        logger.info("Log schema version: {}", logSchemaDto.getVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
         logger.info("Log schema was created.");
 
         LogAppenderDto appenderDto = new LogAppenderDto();
@@ -90,8 +90,8 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setName("TrafficLightsConfiguration schema");
         configurationSchema.setDescription("Traffic Lights configuration schema");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration.avsc"));
-        logger.info("Configuration schema version: {}", configurationSchema.getMajorVersion());
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created");
 
         logger.info("Finished loading 'Traffic lights driver application' data...");

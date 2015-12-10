@@ -86,7 +86,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         connectedCarApplication = client.editApplication(connectedCarApplication);
 
         sdkProfileDto.setApplicationId(connectedCarApplication.getId());
-        sdkProfileDto.setProfileSchemaVersion(1);
+        sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setNotificationSchemaVersion(1);
 
         loginTenantDeveloper(client);
@@ -120,7 +120,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setName("Connected Car log schema");
         logSchemaDto.setDescription("Log schema describes incoming RFID reports");
         logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
-        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getMajorVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto connectedCarLogAppender = new LogAppenderDto();
         connectedCarLogAppender.setName("Connected Car log appender");
@@ -148,7 +148,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setDescription("Default configuration schema for the connected car application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configurationSchema.json"));
 
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getMajorVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 
         EndpointGroupDto baseEndpointGroup = null;
         List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(connectedCarApplication.getId());
@@ -164,8 +164,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         baseConfiguration.setApplicationId(connectedCarApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
-        baseConfiguration.setMajorVersion(configurationSchema.getMajorVersion());
-        baseConfiguration.setMinorVersion(configurationSchema.getMinorVersion());
+        baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base configuration for the connected car demo ");
         String body = FileUtils.readResource(getResourcePath("configurationBody.json"));
         baseConfiguration.setBody(body);

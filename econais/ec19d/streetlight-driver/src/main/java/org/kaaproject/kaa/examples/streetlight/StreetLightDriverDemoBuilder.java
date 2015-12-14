@@ -20,8 +20,8 @@ import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
+import org.kaaproject.kaa.common.dto.EndpointProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.ProfileFilterDto;
-import org.kaaproject.kaa.common.dto.ProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
@@ -65,7 +65,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         
         CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profile.avsc"), CTLSchemaScopeDto.PROFILE_SCHEMA, streetLightApplication.getId());
         
-        ProfileSchemaDto profileSchemaDto = new ProfileSchemaDto();
+        EndpointProfileSchemaDto profileSchemaDto = new EndpointProfileSchemaDto();
         profileSchemaDto.setApplicationId(streetLightApplication.getId());
         profileSchemaDto.setName("StreetLightsDriverProfile schema");
         profileSchemaDto.setDescription("Street light driver profile schema");
@@ -97,8 +97,8 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
             ProfileFilterDto filter = new ProfileFilterDto();
             filter.setApplicationId(streetLightApplication.getId());
             filter.setEndpointGroupId(group.getId());
-            filter.setSchemaId(profileSchemaDto.getId());
-            filter.setSchemaVersion(profileSchemaDto.getVersion());
+            filter.setEndpointProfileSchemaId(profileSchemaDto.getId());
+            filter.setEndpointProfileSchemaVersion(profileSchemaDto.getVersion());
             filter.setBody("lightZones.contains(new Integer(" + Integer.toString(i) + "))");
             filter.setStatus(UpdateStatus.INACTIVE);
             logger.info("Creating Profile filter for Light Zone {}", i);

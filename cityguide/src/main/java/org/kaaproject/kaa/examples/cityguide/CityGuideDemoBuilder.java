@@ -22,8 +22,8 @@ import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
+import org.kaaproject.kaa.common.dto.EndpointProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.ProfileFilterDto;
-import org.kaaproject.kaa.common.dto.ProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
@@ -71,7 +71,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         
         CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("city_guide_profile.avsc"), CTLSchemaScopeDto.PROFILE_SCHEMA, cityGuideApplication.getId());
         
-        ProfileSchemaDto profileSchema = new ProfileSchemaDto();
+        EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(cityGuideApplication.getId());
         profileSchema.setName("City guide profile schema");
         profileSchema.setDescription("Profile schema describing city guide application profile");
@@ -124,8 +124,8 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         ProfileFilterDto atlantaProfileFilter = new ProfileFilterDto();
         atlantaProfileFilter.setApplicationId(cityGuideApplication.getId());
         atlantaProfileFilter.setEndpointGroupId(atlantaEndpointGroup.getId());
-        atlantaProfileFilter.setSchemaId(profileSchema.getId());
-        atlantaProfileFilter.setSchemaVersion(profileSchema.getVersion());
+        atlantaProfileFilter.setEndpointProfileSchemaId(profileSchema.getId());
+        atlantaProfileFilter.setEndpointProfileSchemaVersion(profileSchema.getVersion());
         atlantaProfileFilter.setDescription("Profile filter for Atlanta city");
         atlantaProfileFilter.setBody(FileUtils.readResource(getResourcePath("city_guide_filter_atlanta.json")));
         atlantaProfileFilter.setStatus(UpdateStatus.INACTIVE);
@@ -156,8 +156,8 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         ProfileFilterDto amsterdamProfileFilter = new ProfileFilterDto();
         amsterdamProfileFilter.setApplicationId(cityGuideApplication.getId());
         amsterdamProfileFilter.setEndpointGroupId(amsterdamEndpointGroup.getId());
-        amsterdamProfileFilter.setSchemaId(profileSchema.getId());
-        amsterdamProfileFilter.setSchemaVersion(profileSchema.getVersion());
+        amsterdamProfileFilter.setEndpointProfileSchemaId(profileSchema.getId());
+        amsterdamProfileFilter.setEndpointProfileSchemaVersion(profileSchema.getVersion());
         amsterdamProfileFilter.setDescription("Profile filter for Amsterdam city");
         amsterdamProfileFilter.setBody(FileUtils.readResource(getResourcePath("city_guide_filter_amsterdam.json")));
         amsterdamProfileFilter.setStatus(UpdateStatus.INACTIVE);

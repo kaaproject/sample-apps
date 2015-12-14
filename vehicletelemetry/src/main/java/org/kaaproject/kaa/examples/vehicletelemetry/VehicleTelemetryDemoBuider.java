@@ -35,7 +35,7 @@ package org.kaaproject.kaa.examples.vehicletelemetry;
 import java.util.Arrays;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
-import org.kaaproject.kaa.common.dto.ProfileSchemaDto;
+import org.kaaproject.kaa.common.dto.EndpointProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
@@ -77,7 +77,7 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
 
         CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profileSchema.json"), CTLSchemaScopeDto.PROFILE_SCHEMA, vehicleTelemetryApplication.getId());
 
-        ProfileSchemaDto profileSchema = new ProfileSchemaDto();
+        EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(vehicleTelemetryApplication.getId());
         profileSchema.setName("Vehicle telemetry profile schema");
         profileSchema.setDescription("Profile schema describing vehicle telemetry application profile");

@@ -130,7 +130,7 @@ int main(/*int argc, char *argv[]*/)
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
-    error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager, "cc3200");
+    error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager, DEMO_ACCESS_TOKEN);
 
     KAA_RETURN_IF_ERR(error_code);
 

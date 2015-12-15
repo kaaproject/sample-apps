@@ -31,7 +31,7 @@ else()
   include(${CMAKE_CURRENT_SOURCE_DIR}/${KAA_PLATFORM}/${KAA_PLATFORM}.cmake)
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"'")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"' -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"' ")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
                     ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/src

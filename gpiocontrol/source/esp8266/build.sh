@@ -42,6 +42,13 @@ ESPTOOL="esptool.py"
 SSID="xxx"
 PASSWORD="xxxxxxxxx"
 
+if [ -z ${DEMO_ACCESS_TOKEN} ]; then
+    DEMO_ACCESS_TOKEN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)
+fi
+echo "==================================="
+echo " ACCESS TOKEN: " $DEMO_ACCESS_TOKEN
+echo "==================================="
+
 function build_thirdparty {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
     then
@@ -82,12 +89,14 @@ function build_app {
     read SSID
     echo "Enter WiFi Password:"
     read PASSWORD
+    echo "Enter Access token:"
+    read DEMO_ACCESS_TOKEN
     cd $PROJECT_HOME &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
     cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
     cd $BUILD_DIR &&
     cmake -DAPP_NAME=$APP_NAME -DCMAKE_TOOLCHAIN_FILE=esp8266.cmake \
-          -DSSID=$SSID -DPWD=$PASSWORD ..
+          -DSSID=$SSID -DPWD=$PASSWORD -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN ..
     make
 }
 

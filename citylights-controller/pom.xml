@@ -16,7 +16,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.1.1-SNAPSHOT</version>
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
@@ -198,7 +198,21 @@
 		            </configuration>            
 		          </execution>
 		        </executions>
-		    </plugin>                      
+		    </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>${rat.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/TrafficLightsLog.java</exclude>
+                        <exclude>**/EventType.java</exclude>
+                        <exclude>**/RfidLog.java</exclude>
+                        <exclude>**/*.json</exclude>
+                        <exclude>**/*.avsc</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
         	<plugins>

@@ -43,6 +43,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         </details>
         <platform>JAVA</platform>
         <features>EVENT</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>java/event_demo.tar.gz</sourceArchive>
         <projectFolder>JEventDemo</projectFolder>
         <sdkLibDir>JEventDemo/lib</sdkLibDir>
@@ -75,6 +76,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         </details>
         <platform>C</platform>
         <features>EVENT</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>c/event_demo.tar.gz</sourceArchive>
         <projectFolder>CEventDemo</projectFolder>
         <sdkLibDir>CEventDemo/libs/kaa</sdkLibDir>
@@ -107,6 +109,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         </details>
         <platform>CPP</platform>
         <features>EVENT</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>cpp/event_demo.tar.gz</sourceArchive>
         <projectFolder>CppEventDemo</projectFolder>
         <sdkLibDir>CppEventDemo/libs/kaa</sdkLibDir>

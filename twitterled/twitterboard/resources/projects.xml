@@ -38,6 +38,7 @@ Get the source code by clicking the "Source" button on the left and start hackin
 		</details>
         <platform>JAVA</platform>
         <features>CONFIGURATION NOTIFICATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>java/twitterboard.tar.gz</sourceArchive>
         <projectFolder>TwitterBoard</projectFolder>
         <sdkLibDir>TwitterBoard/lib</sdkLibDir>

@@ -33,6 +33,7 @@ For more background on user verification refer to the corresponding <a href="htt
         </details>
         <platform>ANDROID</platform>
         <features></features>
+        <complexity>BASIC</complexity>
         <sourceArchive>android/powerplant_android.tar.gz</sourceArchive>
         <projectFolder>powerplantandroid/PowerPlantAndroid</projectFolder>
         <sdkLibDir>powerplantandroid/PowerPlantAndroid/libs</sdkLibDir>

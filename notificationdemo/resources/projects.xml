@@ -43,6 +43,7 @@ For more background on the Kaa Notification subsystem please refer to the corres
         </details>
         <platform>JAVA</platform>
         <features>NOTIFICATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>java/notification_demo.tar.gz</sourceArchive>
         <projectFolder>JNotificationDemo</projectFolder>
         <sdkLibDir>JNotificationDemo/lib</sdkLibDir>
@@ -75,6 +76,7 @@ For more background on the Kaa Notification subsystem please refer to the corres
         </details>
         <platform>CPP</platform>
         <features>NOTIFICATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>cpp/notification_demo.tar.gz</sourceArchive>
         <projectFolder>CppNotificationDemo</projectFolder>
         <sdkLibDir>CppNotificationDemo/libs/kaa</sdkLibDir>
@@ -107,6 +109,7 @@ For more background on the Kaa Notification subsystem please refer to the corres
         </details>
         <platform>C</platform>
         <features>NOTIFICATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>c/notification_demo.tar.gz</sourceArchive>
         <projectFolder>CNotificationDemo</projectFolder>
         <sdkLibDir>CNotificationDemo/libs/kaa</sdkLibDir>

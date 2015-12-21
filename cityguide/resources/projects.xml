@@ -49,6 +49,7 @@ For more background on the Kaa Configuration subsystem, please refer to the corr
         </details>
         <platform>ANDROID</platform>
         <features>CONFIGURATION PROFILING</features>
+        <complexity>ADVANCED</complexity>
         <sourceArchive>android/cityguide_demo.tar.gz</sourceArchive>
         <projectFolder>cityguide_demo/CityGuide</projectFolder>
         <sdkLibDir>cityguide_demo/CityGuide/libs</sdkLibDir>

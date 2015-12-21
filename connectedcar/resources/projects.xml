@@ -27,6 +27,7 @@ TODO
         </details>
         <platform>C</platform>
         <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>c/connectedcar_demo.tar.gz</sourceArchive>
         <projectFolder>CConnectedCarDemo</projectFolder>
         <sdkLibDir>CConnectedCarDemo/libs/kaa</sdkLibDir>

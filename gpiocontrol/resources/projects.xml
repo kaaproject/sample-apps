@@ -36,7 +36,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         </details>
         <platform>ANDROID</platform>
         <features>EVENT USER_VERIFIER</features>
-        <complexity>ADVANCED</complexity>
+        <complexity>REGULAR</complexity>
         <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
         <projectFolder>gpiocontrol/gpiocontrol</projectFolder>
         <sdkLibDir>gpiocontrol/gpiocontrol/libs</sdkLibDir>
@@ -56,7 +56,7 @@ After you successfully installed this app on your CC32XX device, go to Android "
         </details>
         <platform>C</platform>
         <features>EVENT USER_VERIFIER</features>
-        <complexity>ADVANCED</complexity>
+        <complexity>REGULAR</complexity>
         <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
         <projectFolder>gpio-cc-client</projectFolder>
         <sdkLibDir>gpio-cc-client/libs/kaa</sdkLibDir>
@@ -75,7 +75,7 @@ After you successfully installed this app on your ESP8266 device, go to Android 
         </details>
         <platform>C</platform>
         <features>EVENT USER_VERIFIER</features>
-        <complexity>ADVANCED</complexity>
+        <complexity>REGULAR</complexity>
         <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
         <projectFolder>gpio-esp-client</projectFolder>
         <sdkLibDir>gpio-esp-client/libs/kaa</sdkLibDir>

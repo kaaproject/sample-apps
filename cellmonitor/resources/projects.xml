@@ -47,7 +47,7 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         </details>
         <platform>ANDROID</platform>
         <features>DATA_COLLECTION</features>
-        <complexity>BASIC</complexity>
+        <complexity>REGULAR</complexity>
         <sourceArchive>android/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>cellmonitor_demo/CellMonitor</projectFolder>
         <sdkLibDir>cellmonitor_demo/CellMonitor/libs</sdkLibDir>

@@ -28,5 +28,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>JDataCollectionDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/sample-app</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>JDataCollectionDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

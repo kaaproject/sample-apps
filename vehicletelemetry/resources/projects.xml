@@ -47,6 +47,7 @@ For more background on Kaa data collection subsystem please refer to the corresp
             ]]></details>
         <platform>CPP</platform>
         <features>DATA_COLLECTION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>cpp/vehicletelemetry_demo.tar.gz</sourceArchive>
         <projectFolder>CppVehicleTelemetry</projectFolder>
         <sdkLibDir>CppVehicleTelemetry/libs/kaa</sdkLibDir>

@@ -38,6 +38,7 @@ Get the source code by clicking the "Source" button on the left and start hackin
 		</details>
         <platform>JAVA</platform>
         <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>java/twittermonitor.tar.gz</sourceArchive>
         <projectFolder>TwitterMonitor</projectFolder>
         <sdkLibDir>TwitterMonitor/lib</sdkLibDir>

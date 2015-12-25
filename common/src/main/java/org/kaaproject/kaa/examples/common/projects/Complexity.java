@@ -13,40 +13,34 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for feature.
+ * <p>Java class for complexity.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="feature">
+ * &lt;simpleType name="complexity">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="CONFIGURATION"/>
- *     &lt;enumeration value="PROFILING"/>
- *     &lt;enumeration value="NOTIFICATION"/>
- *     &lt;enumeration value="EVENT"/>
- *     &lt;enumeration value="USER_VERIFIER"/>
- *     &lt;enumeration value="DATA_COLLECTION"/>
+ *     &lt;enumeration value="BASIC"/>
+ *     &lt;enumeration value="REGULAR"/>
+ *     &lt;enumeration value="ADVANCED"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "feature")
+@XmlType(name = "complexity")
 @XmlEnum
-public enum Feature {
+public enum Complexity {
 
-    CONFIGURATION,
-    PROFILING,
-    NOTIFICATION,
-    EVENT,
-    USER_VERIFIER,
-    DATA_COLLECTION;
+    BASIC,
+    REGULAR,
+    ADVANCED;
 
     public String value() {
         return name();
     }
 
-    public static Feature fromValue(String v) {
+    public static Complexity fromValue(String v) {
         return valueOf(v);
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2014 CyberVision, Inc.
+  Copyright 2014-2015 CyberVision, Inc.
  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -49,6 +49,14 @@
   </xs:restriction>
 </xs:simpleType>
 
+<xs:simpleType name="complexity">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="BASIC"/>
+    <xs:enumeration value="REGULAR"/>
+    <xs:enumeration value="ADVANCED"/>
+  </xs:restriction>
+</xs:simpleType>
+
 <xs:complexType name="project">
   <xs:sequence>
     <xs:element name="name" type="xs:string"/>
@@ -61,6 +69,7 @@
            <xs:list itemType="feature"/>
         </xs:simpleType>
     </xs:element>
+    <xs:element name="complexity" type="complexity"/>
     <xs:element name="sourceArchive" type="xs:string"/>
     <xs:element name="projectFolder" type="xs:string"/>
     <xs:element name="sdkLibDir" type="xs:string"/>

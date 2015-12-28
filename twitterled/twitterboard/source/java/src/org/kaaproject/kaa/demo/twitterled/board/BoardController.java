@@ -83,6 +83,7 @@ public class BoardController extends Thread implements NotificationListener, Con
                         display(CUSTOM_FILE_NAME);
                         drawFinishTime = System.currentTimeMillis() + width * configuration.getScrollSpeed()
                                 * (Math.max(MIN_REPEAT_COUNT, configuration.getRepeatCount()));
+                        redraw = false;
                     }
                     long timeout = drawFinishTime - System.currentTimeMillis();
                     if (timeout < 0) {

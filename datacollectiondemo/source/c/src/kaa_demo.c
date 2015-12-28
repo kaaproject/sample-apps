@@ -34,6 +34,10 @@
 #define KAA_DEMO_UPLOAD_COUNT_THRESHOLD      1 /* Count of collected logs needed to initiate log upload */
 #define KAA_DEMO_LOG_GENERATION_FREQUENCY    1 /* In seconds */
 #define KAA_DEMO_LOGS_TO_SEND                5
+#define KAA_DEMO_LOG_STORAGE_SIZE            10000 /* The amount of space allocated for a log storage, in bytes */
+#define KAA_DEMO_LOGS_TO_KEEP                50    /* The minimum amount of logs to be present in a log storage, in percents */
+#define KAA_DEMO_LOG_BUF_SZ                  32    /* Log buffer size in bytes */
+
 /*
  * Hard-coded Kaa log entry body.
  */
@@ -45,8 +49,10 @@
 /*
  * Forward declarations.
  */
-extern kaa_error_t ext_unlimited_log_storage_create(void **log_storage_context_p
-                                                  , kaa_logger_t *logger);
+extern kaa_error_t ext_limited_log_storage_create(void **log_storage_context_p
+						  , kaa_logger_t *logger
+						  , size_t size
+						  , size_t percent);
 
 
 static kaa_client_t *kaa_client = NULL;
@@ -81,8 +87,8 @@ static void kaa_demo_add_log_record(void *context)
     log_record->level = ENUM_LEVEL_KAA_INFO;
     log_record->tag = kaa_string_move_create(KAA_DEMO_LOG_TAG, NULL);
 
-    char log_message_buffer[32];
-    snprintf(log_message_buffer, 32, KAA_DEMO_LOG_MESSAGE"%zu", log_record_counter);
+    char log_message_buffer[KAA_DEMO_LOG_BUF_SZ];
+    snprintf(log_message_buffer, KAA_DEMO_LOG_BUF_SZ, KAA_DEMO_LOG_MESSAGE"%zu", log_record_counter);
 
     log_record->message = kaa_string_copy_create(log_message_buffer);
 
@@ -104,8 +110,8 @@ int main(/*int argc, char *argv[]*/)
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
-    error_code = ext_unlimited_log_storage_create(&log_storage_context, kaa_client_get_context(kaa_client)->logger);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create unlimited log storage");
+    error_code = ext_limited_log_storage_create(&log_storage_context, kaa_client_get_context(kaa_client)->logger, KAA_DEMO_LOG_STORAGE_SIZE, KAA_DEMO_LOGS_TO_KEEP);
+    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create limited log storage");
 
     error_code = ext_log_upload_strategy_create(kaa_client_get_context(kaa_client), &log_upload_strategy_context, KAA_LOG_UPLOAD_VOLUME_STRATEGY);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create log upload strategy");

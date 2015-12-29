@@ -13,23 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include <memory>
-#include <thread>
+
 #include <kaa/Kaa.hpp>
 #include <kaa/IKaaClient.hpp>
-
-#include <kaa/configuration/storage/IConfigurationPersistenceManager.hpp>
 #include <kaa/configuration/manager/IConfigurationReceiver.hpp>
 #include <kaa/configuration/storage/FileConfigurationStorage.hpp>
 
-#include <kaa/logging/Log.hpp>
-
-#include <stdio.h>
-
 using namespace kaa;
-
-using std::cout;
-using std::endl;
 
 const char savedConfig[] = "saved_config.cfg";
 
@@ -38,10 +30,10 @@ public:
     void displayConfiguration(const KaaRootConfiguration &configuration)
     {
         if (!configuration.AddressList.is_null()) {
-            cout << "Configuration body:" << endl;
+            std::cout << "Configuration body:" << std::endl;
             auto links = configuration.AddressList.get_array();
             for (auto& e : links) {
-                 cout << e.label << " - " << e.url << endl;
+                 std::cout << e.label << " - " << e.url << std::endl;
             }
         }
     }
@@ -53,19 +45,42 @@ public:
 
 int main()
 {
-    Kaa::init();
-    cout << "Configuration demo started" << endl;
-    cout << "--= Press Enter to exit =--" << endl;
-    IKaaClient& kaaClient = Kaa::getKaaClient();
-    // Set up a configuration subsystem.
+    std::cout << "Configuration demo started" << std::endl;
+    std::cout << "--= Press Enter to exit =--" << std::endl;
+
+    /*
+     * Initialize the Kaa endpoint.
+     */
+    auto kaaClient = Kaa::newClient();
+
+    /*
+     * Set up a configuration subsystem.
+     */
     IConfigurationStoragePtr storage(std::make_shared<FileConfigurationStorage>(savedConfig));
-    kaaClient.setConfigurationStorage(storage);
+    kaaClient->setConfigurationStorage(storage);
+
+    /*
+     * Set configuration update receiver.
+     */
     UserConfigurationReceiver receiver;
-    kaaClient.addConfigurationListener(receiver);
-    Kaa::start();
-    // Waiting for Enter key pressed before exiting.
+    kaaClient->addConfigurationListener(receiver);
+
+    /*
+     * Run the Kaa endpoint.
+     */
+    kaaClient->start();
+
+    /*
+     * Wait for the Enter key before exiting.
+     */
     std::cin.get();
-    Kaa::stop();
-    cout << "Configuration demo stopped" << endl;
+
+    /*
+     * Stop the Kaa endpoint.
+     */
+    kaaClient->stop();
+
+    std::cout << "Configuration demo stopped" << std::endl;
+
     return 0;
 }

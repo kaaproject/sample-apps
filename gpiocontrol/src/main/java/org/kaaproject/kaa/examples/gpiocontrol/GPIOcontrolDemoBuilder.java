@@ -38,12 +38,13 @@ import org.slf4j.LoggerFactory;
 
 @KaaDemoBuilder
 public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
 
     private static final String GPIO_MASTER_ID = "gpio_master";
     private static final String GPIO_CC32XX_ID = "gpio_slave_cc";
     private static final String GPIO_ESP8266_ID = "gpio_slave_esp";
+    private static final String GPIO_ARTIK5_ID = "gpio_slave_artik5";
 
     private static final String REMOTE_CONTROL_ECF_NAME = "Remote Control Event Class Family";
 
@@ -63,18 +64,18 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.GpioToggleRequest", ApplicationEventAction.SINK);
     }
 
-    private Map<String, SdkPropertiesDto> projectsSdkMap = new HashMap<>();
+    private final Map<String, SdkPropertiesDto> projectsSdkMap = new HashMap<>();
 
 
     public GPIOcontrolDemoBuilder() {
         super("demo/gpiocontrol");
     }
-    
+
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
-        
+
         logger.info("Loading 'GPIO control Demo Application' data...");
-        
+
         loginTenantAdmin(client);
 
         Map<String, EventClassFamilyDto> ecfMap = new HashMap<>();
@@ -134,6 +135,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
         projectsSdkMap.put(GPIO_CC32XX_ID, sdkProperties); //TODO maybe just duplicate this line with "ESP8266 slave id"?
         projectsSdkMap.put(GPIO_ESP8266_ID, sdkProperties);
+        projectsSdkMap.put(GPIO_ARTIK5_ID, sdkProperties);
     }
 
     private EventClassFamilyDto addEventClassFamily(AdminClient client,

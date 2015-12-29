@@ -16,14 +16,15 @@
 
 
 #include <memory>
-#include <thread>
+#include <string>
 #include <cstdint>
 #include <iostream>
 
 #include <kaa/Kaa.hpp>
 #include <kaa/event/registration/IUserAttachCallback.hpp>
 #include <kaa/event/IFetchEventListeners.hpp>
-#include <kaa/event/gen/ThermostatEventClassFamilyGen.hpp>
+#include <kaa/event/gen/EventFamilyFactory.hpp>
+#include <kaa/event/gen/ThermostatEventClassFamily.hpp>
 
 using namespace kaa;
 
@@ -136,33 +137,38 @@ private:
 
 int main()
 {
-    const char * const KAA_USER_ID = "user@email.com";
-    const char * const KAA_USER_ACCESS_TOKEN = "token";
+    std::cout << "Event demo started" << std::endl;
+    std::cout << "--= Press Enter to exit =--" << std::endl;
+
+    const std::string KAA_USER_ID("user@email.com");
+    const std::string  KAA_USER_ACCESS_TOKEN("token");
 
     /*
      * Initialize the Kaa endpoint.
      */
-    Kaa::init();
-    IKaaClient& kaaClient =  Kaa::getKaaClient();
-
+    auto kaaClient = Kaa::newClient();
 
     /*
      * Run the Kaa endpoint.
      */
-    Kaa::start();
+    kaaClient->start();
 
-    ThermoEventClassFamilyListener thermoListener(kaaClient.getEventFamilyFactory());
+    ThermoEventClassFamilyListener thermoListener(kaaClient->getEventFamilyFactory());
 
-    kaaClient.getEventFamilyFactory().getThermostatEventClassFamily().addEventFamilyListener(thermoListener);
-    kaaClient.attachUser(KAA_USER_ID, KAA_USER_ACCESS_TOKEN, std::make_shared<UserAttachCallback>(kaaClient));
+    kaaClient->getEventFamilyFactory().getThermostatEventClassFamily().addEventFamilyListener(thermoListener);
+    kaaClient->attachUser(KAA_USER_ID, KAA_USER_ACCESS_TOKEN, std::make_shared<UserAttachCallback>(*kaaClient));
 
-    while (1)
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+    /*
+     * Wait for the Enter key before exiting.
+     */
+    std::cin.get();
 
     /*
      * Stop the Kaa endpoint.
      */
-    Kaa::stop();
+    kaaClient->stop();
+
+    std::cout << "Event demo stopped" << std::endl;
 
     return 0;
 }

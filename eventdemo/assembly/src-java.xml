@@ -31,7 +31,7 @@
         <fileSet>
             <directory>${project.build.directory}/lib</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>JEventDemo</outputDirectory>
+            <outputDirectory>JEventDemo/lib</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

@@ -60,8 +60,9 @@
                 <configuration>
                     <descriptors>
                         <descriptor>${project.basedir}/assembly/src.xml</descriptor>
-                        <descriptor>assembly/src-cc32xx.xml</descriptor>
-                        <descriptor>assembly/src-esp.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-cc32xx.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-esp.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-artik5.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
@@ -74,26 +75,26 @@
                     </execution>
                 </executions>
             </plugin>
-		    <plugin>
-		        <artifactId>maven-resources-plugin</artifactId>
-		        <executions>
-		          <execution>
-		            <id>copy-resources</id>
-		            <phase>generate-resources</phase>
-		            <goals>
-		                <goal>copy-resources</goal>
-		            </goals>
-		            <configuration>
-		              <outputDirectory>${project.build.directory}/generated-resources/demo/gpiocontrol</outputDirectory>
-		              <resources>          
-		                <resource>
-		                  <directory>resources</directory>
-		                </resource>
-		              </resources>              
-		            </configuration>            
-		          </execution>
-		        </executions>
-		    </plugin>            
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>copy-resources</id>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                      <outputDirectory>${project.build.directory}/generated-resources/demo/gpiocontrol</outputDirectory>
+                      <resources>
+                        <resource>
+                          <directory>resources</directory>
+                        </resource>
+                      </resources>
+                    </configuration>
+                  </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

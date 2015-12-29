@@ -81,4 +81,23 @@ After you successfully installed this app on your ESP8266 device, go to Android 
         <sdkLibDir>gpio-esp-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <project id="gpio_slave_artik5">
+        <name>GPIO control Artik 5</name>
+        <description>GPIO control Artik 5 app that demonstrates capabilities of the Kaa Event subsystem</description>
+        <details>
+            <![CDATA[
+            <h2>Installation</h2>
+First, read our <a href="http://docs.kaaproject.org/display/KAA/Samsung+Artik+5">documentation article</a> on how to integrate Kaa with Artik 5.
+<h2>Playing around</h2>
+After you successfully installed this app on your Artik 5 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
+            ]]>
+        </details>
+        <platform>CPP</platform>
+        <features>EVENT USER_VERIFIER</features>
+        <complexity>REGULAR</complexity>
+        <sourceArchive>cpp/gpio-artik5-client.tar.gz</sourceArchive>
+        <projectFolder>gpio-artik5-client</projectFolder>
+        <sdkLibDir>gpio-artik5-client/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
 </projectsConfig>

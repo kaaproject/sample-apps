@@ -199,15 +199,14 @@
                         <exclude>**/*xcodeproj/**</exclude>
                         <exclude>**/*.plist</exclude>
                         <exclude>**/*.cproject</exclude>
-			<exclude>**/source/esp8266/ld/*.ld</exclude>
-			<exclude>**/source/esp8266/driver/gpio.c</exclude>
-			<exclude>**/source/esp8266/driver/uart.c</exclude>
-			<exclude>**/source/esp8266/include/gpio*.h</exclude>
-			<exclude>**/source/esp8266/include/driver/uart*.h</exclude>
-			<exclude>**/source/cc32xx/platform/cc32xx/app.ld</exclude>
-			<exclude>**/source/cc32xx/cc32xx/app.ld</exclude>
-			<exclude>**/source/cc32xx/libs/kaa/PUT_SDK_HERE</exclude>
-			<exclude>**/source/esp8266/libs/kaa/PUT_SDK_HERE</exclude>
+                        <exclude>**/source/esp8266/ld/*.ld</exclude>
+                        <exclude>**/source/esp8266/driver/gpio.c</exclude>
+                        <exclude>**/source/esp8266/driver/uart.c</exclude>
+                        <exclude>**/source/esp8266/include/gpio*.h</exclude>
+                        <exclude>**/source/esp8266/include/driver/uart*.h</exclude>
+                        <exclude>**/source/cc32xx/platform/cc32xx/app.ld</exclude>
+                        <exclude>**/source/cc32xx/cc32xx/app.ld</exclude>
+                        <exclude>**/PUT_SDK_HERE</exclude>
                     </excludes>
                 </configuration>
             </plugin>

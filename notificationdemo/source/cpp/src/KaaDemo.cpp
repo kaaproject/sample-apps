@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 #include <memory>
 
 #include <kaa/Kaa.hpp>
@@ -92,34 +91,53 @@ int main()
     std::cout << "Notification demo started" << std::endl;
     std::cout << "--= Press Enter to exit =--" << std::endl;
 
-    // Initialize the Kaa endpoint.
-    Kaa::init();
-    IKaaClient& kaaClient =  Kaa::getKaaClient();
+    /*
+     * Initialize the Kaa endpoint.
+     */
+    auto kaaClient = Kaa::newClient();
 
-    // Add the listener which receives the list of available topics.
-    std::unique_ptr<INotificationTopicListListener> topicListListener(new BasicNotificationTopicListListener(kaaClient));
-    kaaClient.addTopicListListener(*topicListListener);
+    /*
+     * Add the listener which receives the list of available topics.
+     */
+    std::unique_ptr<INotificationTopicListListener> topicListListener(new BasicNotificationTopicListListener(*kaaClient));
+    kaaClient->addTopicListListener(*topicListListener);
 
-    // Add the listener which receives notifications on all topics.
+    /*
+     * Add the listener which receives notifications on all topics.
+     */
     std::unique_ptr<INotificationListener> commonNotificationListener(new BasicNotificationListener);
-    kaaClient.addNotificationListener(*commonNotificationListener);
+    kaaClient->addNotificationListener(*commonNotificationListener);
 
-    // Start the Kaa client and connect it to the Kaa server.
-    Kaa::start();
+    /*
+     * Run the Kaa endpoint.
+     */
+    kaaClient->start();
 
-    // Get available notification topics.
-    auto availableTopics = kaaClient.getTopics();
+    /*
+     * Get available notification topics.
+     */
+    auto availableTopics = kaaClient->getTopics();
 
-    // List the obtained notification topics.
+    /*
+     * List the obtained notification topics.
+     */
     showTopicList(availableTopics);
 
+    /*
+     * Wait for the Enter key before exiting.
+     */
     std::cin.get();
 
-    // Remove the listener which receives the list of available topics.
-    kaaClient.removeTopicListListener(*topicListListener);
+    /*
+     * Remove the listener which receives the list of available topics.
+     */
+    kaaClient->removeTopicListListener(*topicListListener);
 
-    // Stop the Kaa client and release all the resources which were in use.
-    Kaa::stop();
+    /*
+     * Stop the Kaa endpoint.
+     */
+    kaaClient->stop();
+
     std::cout << "Notification demo stopped" << std::endl;
 
     return 0;

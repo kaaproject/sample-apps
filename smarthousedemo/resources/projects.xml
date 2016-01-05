@@ -42,6 +42,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         </details>
         <platform>ANDROID</platform>
         <features>EVENT USER_VERIFIER</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>android/smarthouse_demo.tar.gz</sourceArchive>
         <projectFolder>smarthouse_demo/SmartHouseDemo</projectFolder>
         <sdkLibDir>smarthouse_demo/SmartHouseDemo/libs</sdkLibDir>

@@ -41,6 +41,7 @@ For more background on Kaa Event subsystem please refer to the corresponding pro
         </details>
         <platform>ANDROID</platform>
         <features>EVENT USER_VERIFIER</features>
+        <complexity>ADVANCED</complexity>
         <sourceArchive>android/photoframe_demo.tar.gz</sourceArchive>
         <projectFolder>photoframe_demo/PhotoFrame</projectFolder>
         <sdkLibDir>photoframe_demo/PhotoFrame/libs</sdkLibDir>

@@ -32,6 +32,7 @@ For more background on Kaa data collection subsystem please refer to the corresp
             ]]></details>
         <platform>C</platform>
         <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>c/trafficlights.tar.gz</sourceArchive>
         <projectFolder>TrafficLights</projectFolder>
         <sdkLibDir>TrafficLights/libs/kaa</sdkLibDir>

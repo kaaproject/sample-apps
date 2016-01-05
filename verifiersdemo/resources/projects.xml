@@ -41,6 +41,7 @@ For more background on the user verification refer to the corresponding design r
         </details>
         <platform>ANDROID</platform>
         <features>EVENT USER_VERIFIER</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>android/verifiers_demo.tar.gz</sourceArchive>
         <projectFolder>verifiers_demo/VerifiersDemo</projectFolder>
         <sdkLibDir>verifiers_demo/VerifiersDemo/libs</sdkLibDir>

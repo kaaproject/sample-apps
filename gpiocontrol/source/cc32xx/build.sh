@@ -41,6 +41,13 @@ KAA_SDK_TAR="kaa-client*.tar.gz"
 SSID="xxx"
 PASSWORD="xxxxxxxxx"
 
+if [ -z ${DEMO_ACCESS_TOKEN} ]; then
+    DEMO_ACCESS_TOKEN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)
+fi
+echo "==================================="
+echo " ACCESS TOKEN: " $DEMO_ACCESS_TOKEN
+echo "==================================="
+
 function build_thirdparty {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
     then
@@ -91,7 +98,7 @@ function build_app {
                 ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin/opt/kaa"
         fi
 
-    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD $ENV_VAR .. &&
+    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN $ENV_VAR .. &&
     make
 }
 

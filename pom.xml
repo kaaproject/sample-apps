@@ -15,8 +15,8 @@
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <groupId>org.kaaproject.kaa</groupId>
     <artifactId>examples</artifactId>
     <version>1.2.0-SNAPSHOT</version>
@@ -76,8 +76,8 @@
             <id>repository</id>
             <distributionManagement>
                 <repository>
-                  <id>kaa.release</id>
-                  <url>http://repository.kaaproject.org/repository/internal/</url>
+                    <id>kaa.release</id>
+                    <url>http://repository.kaaproject.org/repository/internal/</url>
                 </repository>
                 <snapshotRepository>
                     <id>kaa.snapshots</id>
@@ -95,8 +95,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.5.1</version>
                     <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
+                        <source>1.8</source>
+                        <target>1.8</target>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -199,22 +199,23 @@
                         <exclude>**/*xcodeproj/**</exclude>
                         <exclude>**/*.plist</exclude>
                         <exclude>**/*.cproject</exclude>
-						<exclude>**/source/esp8266/ld/*.ld</exclude>
-						<exclude>**/source/esp8266/driver/gpio.c</exclude>
-						<exclude>**/source/esp8266/driver/uart.c</exclude>
-						<exclude>**/source/esp8266/include/gpio*.h</exclude>
-						<exclude>**/source/esp8266/include/driver/uart*.h</exclude>
-						<exclude>**/source/cc32xx/platform/cc32xx/app.ld</exclude>
-						<exclude>**/source/cc32xx/cc32xx/app.ld</exclude>
-						<exclude>**/source/cc32xx/libs/kaa/PUT_SDK_HERE</exclude>
-						<exclude>**/source/esp8266/libs/kaa/PUT_SDK_HERE</exclude>
-						<exclude>**/VoltageReport.java</exclude>
-						<exclude>**/VoltageSample.java</exclude>
-						<exclude>**/dev.config</exclude>
-						<exclude>**/iotworld/connectedcar/RfidLog.java</exclude>
-						<exclude>**/iotworld/lights/traffic/EventType.java</exclude>
-						<exclude>**/iotworld/lights/traffic/TrafficLightsLog.java</exclude>
-						<exclude>**/resources/profile_filters.txt</exclude>
+                        <exclude>**/source/esp8266/ld/*.ld</exclude>
+                        <exclude>**/source/esp8266/driver/gpio.c</exclude>
+                        <exclude>**/source/esp8266/driver/uart.c</exclude>
+                        <exclude>**/source/esp8266/include/gpio*.h</exclude>
+                        <exclude>**/source/esp8266/include/driver/uart*.h</exclude>
+                        <exclude>**/source/cc32xx/platform/cc32xx/app.ld</exclude>
+                        <exclude>**/source/cc32xx/cc32xx/app.ld</exclude>
+                        <exclude>**/source/cc32xx/libs/kaa/PUT_SDK_HERE</exclude>
+                        <exclude>**/source/esp8266/libs/kaa/PUT_SDK_HERE</exclude>
+                        <exclude>**/VoltageReport.java</exclude>
+                        <exclude>**/VoltageSample.java</exclude>
+                        <exclude>**/dev.config</exclude>
+                        <exclude>**/iotworld/connectedcar/RfidLog.java</exclude>
+                        <exclude>**/iotworld/lights/traffic/EventType.java</exclude>
+                        <exclude>**/iotworld/lights/traffic/TrafficLightsLog.java</exclude>
+                        <exclude>**/resources/profile_filters.txt</exclude>
+                        <exclude>**/PUT_SDK_HERE</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -224,9 +225,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-               <groupId>org.kaaproject.kaa.examples</groupId>
-               <artifactId>common</artifactId>
-               <version>${project.version}</version>
+                <groupId>org.kaaproject.kaa.examples</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kaaproject.kaa.server.common</groupId>

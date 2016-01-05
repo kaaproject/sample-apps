@@ -134,6 +134,11 @@ public class CellMonitorApplication extends Application {
             }
 
             @Override
+            public int getMaxParallelUploads() {
+                return 3;
+            }
+
+            @Override
             public int getTimeout() {
                 return 100;
             }

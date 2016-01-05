@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 CyberVision, Inc.
+ * Copyright 2014-2015 CyberVision, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,17 +43,19 @@ import org.slf4j.LoggerFactory;
 
 @KaaDemoBuilder
 public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
 
     private static final String GPIO_MASTER_ID = "gpio_master";
     private static final String GPIO_CC32XX_ID = "gpio_slave_cc";
     private static final String GPIO_ESP8266_ID = "gpio_slave_esp";
+    private static final String GPIO_ARTIK5_ID = "gpio_slave_artik5";
 
     private static final String REMOTE_CONTROL_ECF_NAME = "Remote Control Event Class Family";
 
     private static Map<String, ApplicationEventAction> defaultMasterAefMap =
             new HashMap<>();
+
     static {
         defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest", ApplicationEventAction.SOURCE);
         defaultMasterAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse", ApplicationEventAction.SINK);
@@ -62,6 +64,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
     private static Map<String, ApplicationEventAction> defaultSlaveAefMap =
             new HashMap<>();
+
     static {
         defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest", ApplicationEventAction.SINK);
         defaultSlaveAefMap.put("org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoResponse", ApplicationEventAction.SOURCE);
@@ -70,16 +73,15 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
     private Map<String, SdkProfileDto> projectsSdkMap = new HashMap<>();
 
-
     public GPIOcontrolDemoBuilder() {
         super("demo/gpiocontrol");
     }
-    
+
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
-        
+
         logger.info("Loading 'GPIO control Demo Application' data...");
-        
+
         loginTenantAdmin(client);
 
         Map<String, EventClassFamilyDto> ecfMap = new HashMap<>();
@@ -107,10 +109,10 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     }
 
     private void configureMasterApp(AdminClient client,
-                                         String applicationId,
-                                         String applicationToken,
-                                         Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
+                                    String applicationId,
+                                    String applicationToken,
+                                    Map<String, EventClassFamilyDto> ecfMap) throws Exception {
+        SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
 
         List<String> aefMapIds = new ArrayList<>();
 
@@ -125,10 +127,10 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     }
 
     private void configureSlaveApp(AdminClient client,
-                                    String applicationId,
-                                    String applicationToken,
-                                    Map<String, EventClassFamilyDto> ecfMap) throws Exception {
-    	SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
+                                   String applicationId,
+                                   String applicationToken,
+                                   Map<String, EventClassFamilyDto> ecfMap) throws Exception {
+        SdkProfileDto sdkProfile = createSdkProfile(client, applicationId, applicationToken, true);
 
         List<String> aefMapIds = new ArrayList<>();
 
@@ -141,6 +143,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
         projectsSdkMap.put(GPIO_CC32XX_ID, sdkProfile); //TODO maybe just duplicate this line with "ESP8266 slave id"?
         projectsSdkMap.put(GPIO_ESP8266_ID, sdkProfile);
+        projectsSdkMap.put(GPIO_ARTIK5_ID, sdkProfile);
     }
 
     private EventClassFamilyDto addEventClassFamily(AdminClient client,
@@ -155,10 +158,10 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     }
 
     private SdkProfileDto createSdkProfile(AdminClient client,
-                                                 String applicationId,
-                                                 String applicationToken, 
-                                                 boolean createVerifier) throws Exception {
-    	SdkProfileDto sdkKey = new SdkProfileDto();
+                                           String applicationId,
+                                           String applicationToken,
+                                           boolean createVerifier) throws Exception {
+        SdkProfileDto sdkKey = new SdkProfileDto();
         sdkKey.setApplicationId(applicationId);
         sdkKey.setApplicationToken(applicationToken);
         sdkKey.setProfileSchemaVersion(0);

@@ -20,6 +20,7 @@ RUN_DIR=`pwd`
 
 function help {
     echo "Choose one of the following: {build|run|deploy|clean}"
+    echo "Supported platforms: x86-64, edison"
     exit 1
 }
 
@@ -36,11 +37,7 @@ KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-client*.tar.gz"
-ESPTOOL="esptool.py"
-
-#Wifi settings
-SSID="xxx"
-PASSWORD="xxxxxxxxx"
+KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/artik.cmake"
 
 if [ -z ${DEMO_ACCESS_TOKEN} ]; then
     DEMO_ACCESS_TOKEN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)
@@ -67,36 +64,31 @@ function build_thirdparty {
     if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
     then
         cd $KAA_LIB_PATH &&
+        chmod 755 ./avrogen.sh &&
+        ./avrogen.sh && 
         mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=0 \
-              -DKAA_MAX_LOG_LEVEL=3 \
-              -DKAA_PLATFORM=esp8266 \
-              -DCMAKE_TOOLCHAIN_FILE=../toolchains/esp8266.cmake \
-              -DKAA_WITHOUT_NOTIFICATION=1 \
+        cmake -DKAA_DEBUG_ENABLED=1 \
               -DKAA_WITHOUT_LOGGING=1 \
               -DKAA_WITHOUT_CONFIGURATION=1 \
+              -DKAA_WITHOUT_NOTIFICATIONS=1 \
+              -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 \
+              -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 \
+              -DKAA_MAX_LOG_LEVEL=3 \
+               $KAA_TOOLCHAIN_PATH_SDK \
               ..
     fi
 
     cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    echo `ls`
     make -j4 &&
     cd $PROJECT_HOME
 }
 
 function build_app {
-    echo "Enter WiFi SSID:"
-    read SSID
-    echo "Enter WiFi Password:"
-    read PASSWORD
-    echo "Enter Access token:"
-    read DEMO_ACCESS_TOKEN
     cd $PROJECT_HOME &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
     cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
     cd $BUILD_DIR &&
-    cmake -DAPP_NAME=$APP_NAME -DCMAKE_TOOLCHAIN_FILE=esp8266.cmake \
-          -DSSID=$SSID -DPWD=$PASSWORD -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN ..
+    cmake -DAPP_NAME=$APP_NAME $KAA_TOOLCHAIN_PATH_SDK -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN ..
     make
 }
 
@@ -107,7 +99,7 @@ function clean {
 
 function run {
     cd "$PROJECT_HOME/$BUILD_DIR"
-    sudo $ESPTOOL write_flash 0x00000 0x00000.bin 0x40000 0x40000.bin
+    ./$APP_NAME
 }
 
 for cmd in $@
@@ -140,3 +132,4 @@ case "$cmd" in
 esac
 
 done
+

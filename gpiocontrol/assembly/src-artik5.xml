@@ -17,21 +17,16 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
-    <id>twitterboard-src-java</id>
+    <id>gpio-src-artik5</id>
     <formats>
         <format>tar.gz</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/source/java</directory>
+            <directory>${project.basedir}/source/artik5</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>TwitterBoard</outputDirectory>
-        </fileSet>
-        <fileSet>
-            <directory>${project.build.directory}/lib</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>TwitterBoard/lib</outputDirectory>
+            <outputDirectory>gpio-artik5-client</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

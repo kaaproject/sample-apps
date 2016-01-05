@@ -44,6 +44,7 @@ For more background on the Kaa Configuration subsystem please refer to the corre
 		</details>
         <platform>JAVA</platform>
         <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>java/configuration_demo.tar.gz</sourceArchive>
         <projectFolder>JConfigurationDemo</projectFolder>
         <sdkLibDir>JConfigurationDemo/lib</sdkLibDir>
@@ -76,6 +77,7 @@ For more background on the Kaa Configuration subsystem please refer to the corre
         </details>
         <platform>C</platform>
         <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>c/configuration_demo.tar.gz</sourceArchive>
         <projectFolder>CConfigurationDemo</projectFolder>
         <sdkLibDir>CConfigurationDemo/libs/kaa</sdkLibDir>
@@ -108,6 +110,7 @@ Please note that all the features of Administration UI are also supported by RES
         </details>
         <platform>CPP</platform>
         <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
         <sourceArchive>cpp/configuration_demo.tar.gz</sourceArchive>
         <projectFolder>CppConfigurationDemo</projectFolder>
         <sdkLibDir>CppConfigurationDemo/libs/kaa</sdkLibDir>

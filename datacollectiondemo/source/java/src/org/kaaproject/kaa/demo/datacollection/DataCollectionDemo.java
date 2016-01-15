@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 CyberVision, Inc.
+ * Copyright 2014-2016 CyberVision, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,19 @@
 
 package org.kaaproject.kaa.demo.datacollection;
 
-import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
-import org.kaaproject.kaa.client.logging.DefaultLogUploadStrategy;
-import org.kaaproject.kaa.client.logging.LogStorageStatus;
-import org.kaaproject.kaa.client.logging.LogUploadStrategyDecision;
-
-import static org.kaaproject.kaa.client.logging.LogUploadStrategyDecision.UPLOAD;
-import static org.kaaproject.kaa.client.logging.LogUploadStrategyDecision.NOOP;
-
+import org.kaaproject.kaa.client.logging.BucketInfo;
+import org.kaaproject.kaa.client.logging.RecordInfo;
+import org.kaaproject.kaa.client.logging.future.RecordFuture;
+import org.kaaproject.kaa.client.logging.strategies.RecordCountLogUploadStrategy;
 import org.kaaproject.kaa.schema.sample.logging.Level;
 import org.kaaproject.kaa.schema.sample.logging.LogData;
 import org.slf4j.Logger;
@@ -47,7 +45,6 @@ public class DataCollectionDemo {
 
     public static void main(String[] args) {
         LOG.info("Data collection demo started");
-        LOG.info("--= Press any key to exit =--");
         //Create a Kaa client with the Kaa desktop context.
         KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), new SimpleKaaClientStateListener() {
             @Override
@@ -61,33 +58,35 @@ public class DataCollectionDemo {
             }
         });
 
-        // Set a custom strategy for uploading logs.
+        // Set record count strategy for uploading logs with count threshold set to 1.
+        // Defined strategy configuration informs to upload every log record as soon as it is created.
         // The default strategy uploads logs after either a threshold logs count 
         // or a threshold logs size has been reached.
-        // The following custom strategy uploads every log record as soon as it is created.
-        kaaClient.setLogUploadStrategy(new DefaultLogUploadStrategy() {
-            @Override
-            public LogUploadStrategyDecision isUploadNeeded(LogStorageStatus status) {
-                return status.getRecordCount() >= 1 ? UPLOAD : NOOP;
-            }
-        });
+        kaaClient.setLogUploadStrategy(new RecordCountLogUploadStrategy(1));
         
         // Start the Kaa client and connect it to the Kaa server.
         kaaClient.start();
 
+        // Collect log record delivery futures.
+        Set<RecordFuture> futures = new HashSet<>();
+        
         // Send logs in a loop.
         for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
-            kaaClient.addLogRecord(log);
+        	futures.add(kaaClient.addLogRecord(log));
             LOG.info("Log record {} sent", log.toString());
         }
-
-        try {
-         // wait for some input before exiting
-            System.in.read();
-        } catch (IOException e) {
-            LOG.error("IOException was caught", e);
+        
+        // Iterate over log record delivery futures and wait for delivery acknowledgment for each record.
+        for (RecordFuture future : futures) {
+        	try {
+				RecordInfo recordInfo = future.get();
+				BucketInfo bucketInfo = recordInfo.getBucketInfo();
+				LOG.info("Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].", bucketInfo.getBucketId(), recordInfo.getRecordDeliveryTimeMs());
+			} catch (Exception e) {
+				LOG.error("Exception was caught while waiting for callback future", e);
+			}
         }
-
+        
         // Stop the Kaa client and release all the resources which were in use.
         kaaClient.stop();
         LOG.info("Data collection demo stopped");

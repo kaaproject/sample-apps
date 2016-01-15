@@ -72,19 +72,25 @@ public class DataCollectionDemo {
         
         // Send logs in a loop.
         for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
-        	futures.add(kaaClient.addLogRecord(log));
+            futures.add(kaaClient.addLogRecord(log));
             LOG.info("Log record {} sent", log.toString());
         }
         
-        // Iterate over log record delivery futures and wait for delivery acknowledgment for each record.
+        // Iterate over log record delivery futures and wait for delivery
+        // acknowledgment for each record.
         for (RecordFuture future : futures) {
-        	try {
-				RecordInfo recordInfo = future.get();
-				BucketInfo bucketInfo = recordInfo.getBucketInfo();
-				LOG.info("Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].", bucketInfo.getBucketId(), recordInfo.getRecordDeliveryTimeMs());
-			} catch (Exception e) {
-				LOG.error("Exception was caught while waiting for callback future", e);
-			}
+            try {
+                RecordInfo recordInfo = future.get();
+                BucketInfo bucketInfo = recordInfo.getBucketInfo();
+                LOG.info(
+                        "Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
+                        bucketInfo.getBucketId(),
+                        recordInfo.getRecordDeliveryTimeMs());
+            } catch (Exception e) {
+                LOG.error(
+                        "Exception was caught while waiting for callback future",
+                        e);
+            }
         }
         
         // Stop the Kaa client and release all the resources which were in use.

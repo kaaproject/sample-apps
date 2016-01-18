@@ -1,0 +1,513 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B87824D21C18900E00F12E02 /* libKaa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B87824BA1C18900100F12E02 /* libKaa.a */; };
+		E8290BB71C088CAA00AA184A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BA01C088CAA00AA184A /* AppDelegate.m */; };
+		E8290BB81C088CAA00AA184A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8290BA11C088CAA00AA184A /* Assets.xcassets */; };
+		E8290BB91C088CAA00AA184A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8290BA21C088CAA00AA184A /* LaunchScreen.storyboard */; };
+		E8290BBA1C088CAA00AA184A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8290BA41C088CAA00AA184A /* Main.storyboard */; };
+		E8290BBC1C088CAA00AA184A /* ConnectionAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BA81C088CAA00AA184A /* ConnectionAlert.m */; };
+		E8290BBD1C088CAA00AA184A /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BAA1C088CAA00AA184A /* Device.m */; };
+		E8290BBE1C088CAA00AA184A /* DevicesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BAC1C088CAA00AA184A /* DevicesTableViewController.m */; };
+		E8290BBF1C088CAA00AA184A /* GPIOTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BAE1C088CAA00AA184A /* GPIOTableViewController.m */; };
+		E8290BC11C088CAA00AA184A /* KaaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB11C088CAA00AA184A /* KaaProvider.m */; };
+		E8290BC21C088CAA00AA184A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB21C088CAA00AA184A /* main.m */; };
+		E8290BC31C088CAA00AA184A /* PreferencesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB41C088CAA00AA184A /* PreferencesManager.m */; };
+		E8290BC41C088CAA00AA184A /* StatusTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B87824B91C18900100F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824B41C18900100F12E02 /* Kaa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B824A1EB1B1452C50076C753;
+			remoteInfo = libKaa.a;
+		};
+		B87824BB1C18900100F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824B41C18900100F12E02 /* Kaa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B824A1F61B1452C50076C753;
+			remoteInfo = KaaTests;
+		};
+		B87824C61C18900600F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824BD1C18900600F12E02 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 74C25E449CA77F690678A98268EF0F05;
+			remoteInfo = AFNetworking;
+		};
+		B87824C81C18900600F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824BD1C18900600F12E02 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD8F96CFDAC080191AC129C1270F6024;
+			remoteInfo = CocoaLumberjack;
+		};
+		B87824CA1C18900600F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824BD1C18900600F12E02 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5B776255561688785542AEB02D6BB8C;
+			remoteInfo = OCHamcrest;
+		};
+		B87824CC1C18900600F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824BD1C18900600F12E02 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C12DB799CAB02340737B40B12729A6AC;
+			remoteInfo = OCMockito;
+		};
+		B87824CE1C18900600F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824BD1C18900600F12E02 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2F9F2BD61CE8A92314B98E03BBAE1DDD;
+			remoteInfo = "Pods-KaaTests";
+		};
+		B87824D01C18900600F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824BD1C18900600F12E02 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0F0FFBAFF4293D5A7F4C81464719D20A;
+			remoteInfo = "Pods-libKaa.a";
+		};
+		B87824D31C18901100F12E02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B87824B41C18900100F12E02 /* Kaa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B824A1EA1B1452C50076C753;
+			remoteInfo = libKaa.a;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B87824B41C18900100F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-client-sdk-p0-c1-n1-l1/Kaa.xcodeproj"; sourceTree = "<group>"; };
+		B87824BD1C18900600F12E02 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-client-sdk-p0-c1-n1-l1/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
+		B8B997501BE3FB9600C0ABCE /* GPIOControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPIOControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8290B9F1C088CAA00AA184A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E8290BA01C088CAA00AA184A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E8290BA11C088CAA00AA184A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E8290BA31C088CAA00AA184A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E8290BA51C088CAA00AA184A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E8290BA71C088CAA00AA184A /* ConnectionAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionAlert.h; sourceTree = "<group>"; };
+		E8290BA81C088CAA00AA184A /* ConnectionAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionAlert.m; sourceTree = "<group>"; };
+		E8290BA91C088CAA00AA184A /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		E8290BAA1C088CAA00AA184A /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+		E8290BAB1C088CAA00AA184A /* DevicesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicesTableViewController.h; sourceTree = "<group>"; };
+		E8290BAC1C088CAA00AA184A /* DevicesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicesTableViewController.m; sourceTree = "<group>"; };
+		E8290BAD1C088CAA00AA184A /* GPIOTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPIOTableViewController.h; sourceTree = "<group>"; };
+		E8290BAE1C088CAA00AA184A /* GPIOTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPIOTableViewController.m; sourceTree = "<group>"; };
+		E8290BAF1C088CAA00AA184A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8290BB01C088CAA00AA184A /* KaaProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KaaProvider.h; sourceTree = "<group>"; };
+		E8290BB11C088CAA00AA184A /* KaaProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KaaProvider.m; sourceTree = "<group>"; };
+		E8290BB21C088CAA00AA184A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E8290BB31C088CAA00AA184A /* PreferencesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesManager.h; sourceTree = "<group>"; };
+		E8290BB41C088CAA00AA184A /* PreferencesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesManager.m; sourceTree = "<group>"; };
+		E8290BB51C088CAA00AA184A /* StatusTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewCell.h; sourceTree = "<group>"; };
+		E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B8B9974D1BE3FB9600C0ABCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B87824D21C18900E00F12E02 /* libKaa.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B87824B51C18900100F12E02 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B87824BA1C18900100F12E02 /* libKaa.a */,
+				B87824BC1C18900100F12E02 /* KaaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B87824BE1C18900600F12E02 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B87824C71C18900600F12E02 /* libAFNetworking.a */,
+				B87824C91C18900600F12E02 /* libCocoaLumberjack.a */,
+				B87824CB1C18900600F12E02 /* libOCHamcrest.a */,
+				B87824CD1C18900600F12E02 /* libOCMockito.a */,
+				B87824CF1C18900600F12E02 /* libPods-KaaTests.a */,
+				B87824D11C18900600F12E02 /* libPods-libKaa.a.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B8B997471BE3FB9600C0ABCE = {
+			isa = PBXGroup;
+			children = (
+				B87824B41C18900100F12E02 /* Kaa.xcodeproj */,
+				B87824BD1C18900600F12E02 /* Pods.xcodeproj */,
+				E8290B9E1C088CAA00AA184A /* GPIOControlDemo */,
+				B8B997511BE3FB9600C0ABCE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B8B997511BE3FB9600C0ABCE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B8B997501BE3FB9600C0ABCE /* GPIOControlDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E8290B9E1C088CAA00AA184A /* GPIOControlDemo */ = {
+			isa = PBXGroup;
+			children = (
+				E8290B9F1C088CAA00AA184A /* AppDelegate.h */,
+				E8290BA01C088CAA00AA184A /* AppDelegate.m */,
+				E8290BA11C088CAA00AA184A /* Assets.xcassets */,
+				E8290BA21C088CAA00AA184A /* LaunchScreen.storyboard */,
+				E8290BA41C088CAA00AA184A /* Main.storyboard */,
+				E8290BA71C088CAA00AA184A /* ConnectionAlert.h */,
+				E8290BA81C088CAA00AA184A /* ConnectionAlert.m */,
+				E8290BA91C088CAA00AA184A /* Device.h */,
+				E8290BAA1C088CAA00AA184A /* Device.m */,
+				E8290BAB1C088CAA00AA184A /* DevicesTableViewController.h */,
+				E8290BAC1C088CAA00AA184A /* DevicesTableViewController.m */,
+				E8290BAD1C088CAA00AA184A /* GPIOTableViewController.h */,
+				E8290BAE1C088CAA00AA184A /* GPIOTableViewController.m */,
+				E8290BB01C088CAA00AA184A /* KaaProvider.h */,
+				E8290BB11C088CAA00AA184A /* KaaProvider.m */,
+				E8290BB21C088CAA00AA184A /* main.m */,
+				E8290BB31C088CAA00AA184A /* PreferencesManager.h */,
+				E8290BB41C088CAA00AA184A /* PreferencesManager.m */,
+				E8290BB51C088CAA00AA184A /* StatusTableViewCell.h */,
+				E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */,
+				E8290BAF1C088CAA00AA184A /* Info.plist */,
+			);
+			path = GPIOControlDemo;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B8B9974F1BE3FB9600C0ABCE /* GPIOControlDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B8B997671BE3FB9600C0ABCE /* Build configuration list for PBXNativeTarget "GPIOControlDemo" */;
+			buildPhases = (
+				B8B9974C1BE3FB9600C0ABCE /* Sources */,
+				B8B9974D1BE3FB9600C0ABCE /* Frameworks */,
+				B8B9974E1BE3FB9600C0ABCE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B87824D41C18901100F12E02 /* PBXTargetDependency */,
+			);
+			name = GPIOControlDemo;
+			productName = EventDemo;
+			productReference = B8B997501BE3FB9600C0ABCE /* GPIOControlDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B8B997481BE3FB9600C0ABCE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "CYBERVISION INC";
+				TargetAttributes = {
+					B8B9974F1BE3FB9600C0ABCE = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = G8JGASHVD4;
+					};
+				};
+			};
+			buildConfigurationList = B8B9974B1BE3FB9600C0ABCE /* Build configuration list for PBXProject "GPIOControlDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B8B997471BE3FB9600C0ABCE;
+			productRefGroup = B8B997511BE3FB9600C0ABCE /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B87824B51C18900100F12E02 /* Products */;
+					ProjectRef = B87824B41C18900100F12E02 /* Kaa.xcodeproj */;
+				},
+				{
+					ProductGroup = B87824BE1C18900600F12E02 /* Products */;
+					ProjectRef = B87824BD1C18900600F12E02 /* Pods.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				B8B9974F1BE3FB9600C0ABCE /* GPIOControlDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B87824BA1C18900100F12E02 /* libKaa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKaa.a;
+			remoteRef = B87824B91C18900100F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B87824BC1C18900100F12E02 /* KaaTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KaaTests.xctest;
+			remoteRef = B87824BB1C18900100F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B87824C71C18900600F12E02 /* libAFNetworking.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAFNetworking.a;
+			remoteRef = B87824C61C18900600F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B87824C91C18900600F12E02 /* libCocoaLumberjack.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaLumberjack.a;
+			remoteRef = B87824C81C18900600F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B87824CB1C18900600F12E02 /* libOCHamcrest.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOCHamcrest.a;
+			remoteRef = B87824CA1C18900600F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B87824CD1C18900600F12E02 /* libOCMockito.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOCMockito.a;
+			remoteRef = B87824CC1C18900600F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B87824CF1C18900600F12E02 /* libPods-KaaTests.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-KaaTests.a";
+			remoteRef = B87824CE1C18900600F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B87824D11C18900600F12E02 /* libPods-libKaa.a.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-libKaa.a.a";
+			remoteRef = B87824D01C18900600F12E02 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B8B9974E1BE3FB9600C0ABCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8290BBA1C088CAA00AA184A /* Main.storyboard in Resources */,
+				E8290BB81C088CAA00AA184A /* Assets.xcassets in Resources */,
+				E8290BB91C088CAA00AA184A /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B8B9974C1BE3FB9600C0ABCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8290BBD1C088CAA00AA184A /* Device.m in Sources */,
+				E8290BBE1C088CAA00AA184A /* DevicesTableViewController.m in Sources */,
+				E8290BBC1C088CAA00AA184A /* ConnectionAlert.m in Sources */,
+				E8290BB71C088CAA00AA184A /* AppDelegate.m in Sources */,
+				E8290BC31C088CAA00AA184A /* PreferencesManager.m in Sources */,
+				E8290BC11C088CAA00AA184A /* KaaProvider.m in Sources */,
+				E8290BC41C088CAA00AA184A /* StatusTableViewCell.m in Sources */,
+				E8290BC21C088CAA00AA184A /* main.m in Sources */,
+				E8290BBF1C088CAA00AA184A /* GPIOTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B87824D41C18901100F12E02 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libKaa.a;
+			targetProxy = B87824D31C18901100F12E02 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E8290BA21C088CAA00AA184A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E8290BA31C088CAA00AA184A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E8290BA41C088CAA00AA184A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E8290BA51C088CAA00AA184A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B8B997651BE3FB9600C0ABCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B8B997661BE3FB9600C0ABCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B8B997681BE3FB9600C0ABCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/GPIOControlDemo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EventDemo;
+				PRODUCT_NAME = GPIOControlDemo;
+				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
+			};
+			name = Debug;
+		};
+		B8B997691BE3FB9600C0ABCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/GPIOControlDemo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EventDemo;
+				PRODUCT_NAME = GPIOControlDemo;
+				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B8B9974B1BE3FB9600C0ABCE /* Build configuration list for PBXProject "GPIOControlDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8B997651BE3FB9600C0ABCE /* Debug */,
+				B8B997661BE3FB9600C0ABCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B8B997671BE3FB9600C0ABCE /* Build configuration list for PBXNativeTarget "GPIOControlDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8B997681BE3FB9600C0ABCE /* Debug */,
+				B8B997691BE3FB9600C0ABCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B8B997481BE3FB9600C0ABCE /* Project object */;
+}

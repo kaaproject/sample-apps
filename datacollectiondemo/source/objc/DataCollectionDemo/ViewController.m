@@ -1,0 +1,150 @@
+/*
+ * Copyright 2014-2015 CyberVision, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#import "ViewController.h"
+#import <Kaa/Kaa.h>
+#import "KaaClientState.h"
+#import "KaaClientStateDelegate.h"
+#import "DefaultLogUploadStrategy.h"
+#import "Kaa/AvroBytesConverter.h"
+
+#define LOGS_TO_SEND_COUNT 5
+
+#pragma mark - Custom LogUploadStrategy
+
+@interface DemoLogUploadStrategy : DefaultLogUploadStrategy
+
+@end
+
+@implementation DemoLogUploadStrategy
+
+- (LogUploadStrategyDecision)isUploadNeeded:(id<LogStorageStatus>)status {
+    return [status getRecordCount] >= 1 ? LOG_UPLOAD_STRATEGY_DECISION_UPLOAD : LOG_UPLOAD_STRATEGY_DECISION_NOOP;
+}
+
+@end
+
+#pragma mark - ViewController
+
+@interface ViewController () <KaaClientStateDelegate, ProfileContainer>
+
+@property (weak, nonatomic) IBOutlet UITextView *logTextView;
+
+@property (nonatomic,strong) id<KaaClient> kaaClient;
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self addLogWithText:@"DataCollectionDemo started"];
+    
+    //Create a Kaa client with the Kaa default context.
+    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] andStateDelegate:self];
+    
+    // Set a custom strategy for uploading logs.
+    // The default strategy uploads logs after either a threshold logs count
+    // or a threshold logs size has been reached.
+    // The following custom strategy uploads every log record as soon as it is created.
+    [self.kaaClient setLogUploadStrategy:[[DemoLogUploadStrategy alloc]initWithDefaults]];
+    [self.kaaClient setProfileContainer:self];
+    
+    // Start the Kaa client and connect it to the Kaa server.
+    [self.kaaClient start];
+    
+    // Send logs in a loop.
+    NSArray *logs = [self generateLogs:LOGS_TO_SEND_COUNT];
+    
+    [self addLogWithText:[NSString stringWithFormat:@"Record size: %ld", (long)[self getLogRecordSize:logs[0]]]];
+    
+    for (KAALogData *log in logs) {
+        [self.kaaClient addLogRecord:log];
+        [self addLogWithText:[NSString stringWithFormat:@"Log sent: loglevel - %u, tag - %@, message - %@", log.level, log.tag, log.message]];
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (NSInteger)getLogRecordSize:(KAALogData *) record {
+    AvroBytesConverter *converter = [[AvroBytesConverter alloc] init];
+    NSData *serializedLogRecod = [converter toBytes:record];
+    return serializedLogRecod.length;
+}
+
+- (NSArray *)generateLogs:(int)logCount {
+    NSMutableArray *logs = [NSMutableArray arrayWithCapacity:logCount];
+    for (int i=0; i < logCount; i++) {
+        KAALogData *log = [[KAALogData alloc] init];
+        log.level = LEVEL_KAA_INFO;
+        log.tag = @"iOSTAG";
+        log.message = [NSString stringWithFormat:@"MESSAGE_%d", i];
+        [logs addObject:log];
+    }
+    return logs;
+}
+
+
+#pragma mark - Delegate methods
+
+- (void)onStarted {
+    [self addLogWithText:@"Kaa client started"];
+}
+
+- (void)onStopped {
+    [self addLogWithText:@"Kaa client stopped"];
+}
+
+- (void)onStartFailure:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"START FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+- (void)onPaused {
+    [self addLogWithText:@"Client paused"];
+}
+- (void)onPauseFailure:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"PAUSE FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+- (void)onResume {
+    [self addLogWithText:@"Client resumed"];
+}
+- (void)onResumeFailure:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"RESUME FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+- (void)onStopFailure:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+
+- (KAAEmptyData *)getProfile {
+    return [[KAAEmptyData alloc] init];
+}
+
+- (void) addLogWithText:(NSString *) text {
+    NSLog(@"%@", text);
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if ([self.logTextView.text isEqualToString:@""]) {
+            self.logTextView.text = [NSString stringWithFormat:@"%@", text];
+        } else {
+            self.logTextView.text = [NSString stringWithFormat:@"%@\n%@", self.logTextView.text, text];
+        }
+    }];
+}
+
+
+@end

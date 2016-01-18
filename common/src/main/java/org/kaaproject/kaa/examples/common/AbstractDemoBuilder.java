@@ -98,7 +98,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
     
     private final String resourcesPath;
     protected final SdkProfileDto sdkProfileDto;
-    private List<Project> projectConfigs;
+    private ProjectsConfig projectConfigs;
     
     public static void updateCredentialsFromArgs(String[] args) {
         logger.info("Updating credentials information from arguments...");
@@ -163,7 +163,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         logger.info("Demo application build finished.");
         
         Map<SdkTokenDto, String> sdkProfiles = new HashMap<>(); 
-        for (Project projectConfig : projectConfigs) {
+        for (Project projectConfig : projectConfigs.getProjects()) {
             String iconBase64 = loadIconBase64(projectConfig.getId());
             projectConfig.setIconBase64(iconBase64);
             SdkProfileDto sdkProfileDto = this.sdkProfileDto;
@@ -185,7 +185,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
     }
 
     @Override
-    public List<Project> getProjectConfigs() {
+    public ProjectsConfig getProjectConfigs() {
         return projectConfigs;
     }
     
@@ -250,12 +250,11 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         }
     }
     
-    private List<Project> loadProjectConfigs() throws JAXBException {
+    private ProjectsConfig loadProjectConfigs() throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance("org.kaaproject.kaa.examples.common.projects");
         Unmarshaller unmarshaller = jc.createUnmarshaller();
         InputStream is = getClass().getClassLoader().getResourceAsStream(getResourcePath(PROJECTS_XML));
-        ProjectsConfig projectsConfig = (ProjectsConfig)unmarshaller.unmarshal(is);
-        return projectsConfig.getProjects();
+        return (ProjectsConfig)unmarshaller.unmarshal(is);
     }
     
     private String loadIconBase64(String projectId) throws IOException {

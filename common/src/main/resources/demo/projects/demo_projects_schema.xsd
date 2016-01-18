@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2014-2015 CyberVision, Inc.
+  Copyright 2014-2016 CyberVision, Inc.
  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -35,6 +35,9 @@
     <xs:enumeration value="JAVA"/>
     <xs:enumeration value="CPP"/>
     <xs:enumeration value="C"/>
+    <xs:enumeration value="ARTIK5"/>
+    <xs:enumeration value="ESP8266"/>
+    <xs:enumeration value="CC32XX"/>
   </xs:restriction>
 </xs:simpleType>
 
@@ -63,7 +66,11 @@
     <xs:element name="description" type="xs:string"/>
     <xs:element name="details" type="xs:string"/> 
     <xs:element name="iconBase64" type="xs:string"/>
-    <xs:element name="platform" type="platform"/>
+    <xs:element name="platforms">
+        <xs:simpleType>
+            <xs:list itemType="platform"/>
+        </xs:simpleType>
+    </xs:element>
     <xs:element name="features">
         <xs:simpleType>
            <xs:list itemType="feature"/>

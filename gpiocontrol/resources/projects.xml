@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!--
-Copyright 2014-2015 CyberVision, Inc.
+Copyright 2014-2016 CyberVision, Inc.
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -54,7 +54,7 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/Texas+Instrument
 After you successfully installed this app on your CC32XX device, go to Android "GPIO control" Sandbox app and follow the steps described there.
 ]]>
         </details>
-        <platform>C</platform>
+        <platform>C CC32XX</platform>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
@@ -73,7 +73,7 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/ESP8266">documen
 After you successfully installed this app on your ESP8266 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
             ]]>
         </details>
-        <platform>C</platform>
+        <platform>C ESP8266</platform>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
@@ -92,7 +92,7 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/Samsung+Artik+5"
 After you successfully installed this app on your Artik 5 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
             ]]>
         </details>
-        <platform>CPP</platform>
+        <platform>CPP ARTIK5</platform>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>cpp/gpio-artik5-client.tar.gz</sourceArchive>

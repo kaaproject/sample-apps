@@ -80,21 +80,15 @@
   <xs:attribute name="id" type="xs:string" use="required"/>
 </xs:complexType>
 
-    <xs:complexType name="bundle">
-        <xs:sequence>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="description" type="xs:string"/>
-            <xs:element name="details" type="xs:string"/>
-            <xs:element name="iconBase64" type="xs:string"/>
-            <xs:element name="projectsIds">
-                <xs:simpleType>
-                    <xs:list itemType="xs:string"/>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="complexity" type="complexity"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:string" use="required"/>
-    </xs:complexType>
+<xs:complexType name="bundle">
+    <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="details" type="xs:string"/>
+        <xs:element name="iconBase64" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+</xs:complexType>
  
 <xs:element name="projectsConfig">
     <xs:complexType>

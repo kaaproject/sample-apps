@@ -43,6 +43,7 @@ import org.kaaproject.kaa.common.dto.event.ApplicationEventMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
 import org.kaaproject.kaa.common.dto.event.EventClassType;
+import org.kaaproject.kaa.examples.common.projects.Bundle;
 import org.kaaproject.kaa.examples.common.projects.Project;
 import org.kaaproject.kaa.examples.common.projects.ProjectsConfig;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
@@ -181,6 +182,10 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
             	sdkProfiles.put(sdkProfileToken, sdkProfileId);
             }
             projectConfig.setSdkProfileId(sdkProfileId);
+        }
+        for (Bundle bundle : projectConfigs.getBundles()) {
+        	String iconBase64 = loadIconBase64(bundle.getId());
+        	bundle.setIconBase64(iconBase64);
         }
     }
 

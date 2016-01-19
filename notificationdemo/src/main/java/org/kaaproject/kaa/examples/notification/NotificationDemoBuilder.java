@@ -33,7 +33,9 @@
 package org.kaaproject.kaa.examples.notification;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
@@ -42,6 +44,7 @@ import org.kaaproject.kaa.common.dto.NotificationSchemaDto;
 import org.kaaproject.kaa.common.dto.NotificationTypeDto;
 import org.kaaproject.kaa.common.dto.TopicDto;
 import org.kaaproject.kaa.common.dto.TopicTypeDto;
+import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
@@ -50,23 +53,54 @@ import org.slf4j.LoggerFactory;
 
 @KaaDemoBuilder
 public class NotificationDemoBuilder extends AbstractDemoBuilder {
+	
     private static final Logger logger = LoggerFactory.getLogger(NotificationDemoBuilder.class);
+    
+    private static final String NOTIFICATION_DEMO_JAVA_ID = "notification_demo_java";
+    private static final String NOTIFICATION_DEMO_CPP_ID = "notification_demo_cpp";
+    private static final String NOTIFICATION_DEMO_C_ID = "notification_demo_c";
+    private static final String NOTIFICATION_DEMO_ANDROID_ID = "notification_demo_android";
+    
     private static final int NOTIFICATION_VERSION = 1;
     private static final Date NOTIFICATION_EXPIRE_DATE = new Date(1900000000000L);
 
+    private Map<String, SdkProfileDto> projectsSdkMap = new HashMap<>();
+    
     public NotificationDemoBuilder() {
         super("demo/notification");
     }
 
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
-
-        logger.info("Loading 'Notification demo application' data...");
+    	SdkProfileDto sdkProfile = createNotificationApplication(client, "Notification demo", 
+    			"notification_schema.avsc", "mandatory_notification.json", "optional_notification.json");
+    	
+    	projectsSdkMap.put(NOTIFICATION_DEMO_JAVA_ID, sdkProfile);
+    	projectsSdkMap.put(NOTIFICATION_DEMO_CPP_ID, sdkProfile);
+    	projectsSdkMap.put(NOTIFICATION_DEMO_C_ID, sdkProfile);
+    	
+    	sdkProfile = createNotificationApplication(client, "Android notification demo", 
+    			NOTIFICATION_DEMO_ANDROID_ID + "/notification_schema.avsc", 
+    			NOTIFICATION_DEMO_ANDROID_ID + "/mandatory_notification.json", 
+    			NOTIFICATION_DEMO_ANDROID_ID + "/optional_notification.json");
+    	
+    	projectsSdkMap.put(NOTIFICATION_DEMO_ANDROID_ID, sdkProfile);
+    }
+    
+    private SdkProfileDto createNotificationApplication(AdminClient client,
+    		String appName,
+    		String notificationSchemaRes, 
+    		String mandatoryNotificationRes,
+    		String optionalNotificationRes) throws Exception {
+    	
+    	
+    	SdkProfileDto sdkProfileDto = new SdkProfileDto();
+        logger.info("Loading '{} application' data...", appName);
 
         loginTenantAdmin(client);
 
         ApplicationDto notificationApplication = new ApplicationDto();
-        notificationApplication.setName("Notification demo");
+        notificationApplication.setName(appName);
         notificationApplication = client.editApplication(notificationApplication);
 
         sdkProfileDto.setApplicationId(notificationApplication.getId());
@@ -82,7 +116,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setApplicationId(notificationApplication.getId());
         notificationSchemaDto.setName("Notification schema");
         notificationSchemaDto.setDescription("Notification schema of a sample notification");
-        notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto, getResourcePath("notification_schema.avsc"));
+        notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto, getResourcePath(notificationSchemaRes));
         sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 
@@ -116,7 +150,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         mandatoryNotification.setType(NotificationTypeDto.USER);
         mandatoryNotification.setExpiredAt(NOTIFICATION_EXPIRE_DATE);
         mandatoryNotification.setTopicId(mandatoryTopic.getId());
-        client.sendNotification(mandatoryNotification, getResourcePath("mandatory_notification.json"));
+        client.sendNotification(mandatoryNotification, getResourcePath(mandatoryNotificationRes));
 
         TopicDto optionalTopic = new TopicDto();
         optionalTopic.setApplicationId(notificationApplication.getId());
@@ -136,9 +170,21 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         optionalTopicNotification.setExpiredAt(NOTIFICATION_EXPIRE_DATE);
         optionalTopicNotification.setTopicId(optionalTopic.getId());
         logger.info("Creating notification for optional topic: {}", optionalTopicNotification.toString());
-        client.sendNotification(optionalTopicNotification, getResourcePath("optional_notification.json"));
+        client.sendNotification(optionalTopicNotification, getResourcePath(optionalNotificationRes));
         logger.info("Notification for optional topic was created");
 
-        logger.info("Finished loading 'Notification demo application' data...");
+        logger.info("Finished loading '{} application' data...", appName);
+    	
+    	return sdkProfileDto;
+    }
+    
+    @Override
+    protected boolean isMultiApplicationProject() {
+        return true;
+    }
+
+    @Override
+    protected Map<String, SdkProfileDto> getProjectsSdkMap() {
+        return projectsSdkMap;
     }
 }

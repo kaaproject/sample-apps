@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!--
-Copyright 2014-2015 CyberVision, Inc.
+Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -42,7 +42,8 @@ Please note that all the features of Administration UI are also supported by RES
 For more background on the Kaa Configuration subsystem please refer to the corresponding programming guide and design reference sections..
         	]]>
 		</details>
-        <platform>JAVA</platform>
+        <sdkPlatform>JAVA</sdkPlatform>
+        <platforms>JAVA</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <sourceArchive>java/configuration_demo.tar.gz</sourceArchive>
@@ -75,7 +76,8 @@ Please note that all the features of Administration UI are also supported by RES
 For more background on the Kaa Configuration subsystem please refer to the corresponding programming guide and design reference sections.
         	]]>
         </details>
-        <platform>C</platform>
+        <sdkPlatform>C</sdkPlatform>
+        <platforms>C</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <sourceArchive>c/configuration_demo.tar.gz</sourceArchive>
@@ -108,7 +110,8 @@ Please note that all the features of Administration UI are also supported by RES
 Please note that all the features of Administration UI are also supported by REST API.
         	]]>
         </details>
-        <platform>CPP</platform>
+        <sdkPlatform>CPP</sdkPlatform>
+        <platforms>CPP</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <sourceArchive>cpp/configuration_demo.tar.gz</sourceArchive>

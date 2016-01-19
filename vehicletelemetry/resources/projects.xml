@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!--
-Copyright 2014-2015 CyberVision, Inc.
+Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -45,7 +45,8 @@ Get the source code by clicking the "Source" button on the left and start hackin
 
 For more background on Kaa data collection subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.
             ]]></details>
-        <platform>CPP</platform>
+        <sdkPlatform>CPP</sdkPlatform>
+        <platforms>CPP</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>BASIC</complexity>
         <sourceArchive>cpp/vehicletelemetry_demo.tar.gz</sourceArchive>

@@ -41,6 +41,15 @@
   </xs:restriction>
 </xs:simpleType>
 
+<xs:simpleType name="sdkPlatform">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="ANDROID"/>
+    <xs:enumeration value="JAVA"/>
+    <xs:enumeration value="CPP"/>
+    <xs:enumeration value="C"/>
+  </xs:restriction>
+</xs:simpleType>
+
 <xs:simpleType name="feature">
   <xs:restriction base="xs:string">
     <xs:enumeration value="CONFIGURATION"/>
@@ -66,6 +75,7 @@
     <xs:element name="description" type="xs:string"/>
     <xs:element name="details" type="xs:string"/> 
     <xs:element name="iconBase64" type="xs:string"/>
+    <xs:element name="sdkPlatform" type="sdkPlatform"/>
     <xs:element name="platforms">
         <xs:simpleType>
             <xs:list itemType="platform"/>

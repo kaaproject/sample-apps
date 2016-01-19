@@ -34,7 +34,8 @@ Please note that all the features of <a href="https://docs.kaaproject.org/displa
 For more background on the Kaa Event subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Messaging+across+endpoints">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Events">design reference</a> sections.
 ]]>
         </details>
-        <platform>ANDROID</platform>
+        <sdkPlatform>ANDROID</sdkPlatform>
+        <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
@@ -54,7 +55,8 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/Texas+Instrument
 After you successfully installed this app on your CC32XX device, go to Android "GPIO control" Sandbox app and follow the steps described there.
 ]]>
         </details>
-        <platform>C CC32XX</platform>
+        <sdkPlatform>C</sdkPlatform>
+        <platforms>C CC32XX</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
@@ -73,7 +75,8 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/ESP8266">documen
 After you successfully installed this app on your ESP8266 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
             ]]>
         </details>
-        <platform>C ESP8266</platform>
+        <sdkPlatform>C</sdkPlatform>
+        <platforms>C ESP8266</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
@@ -92,7 +95,8 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/Samsung+Artik+5"
 After you successfully installed this app on your Artik 5 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
             ]]>
         </details>
-        <platform>CPP ARTIK5</platform>
+        <sdkPlatform>CPP</sdkPlatform>
+        <platforms>CPP ARTIK5</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>cpp/gpio-artik5-client.tar.gz</sourceArchive>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!--
-Copyright 2014-2015 CyberVision, Inc.
+Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -45,7 +45,8 @@ Where $your_application_token$ is the application token you can copy from the ma
 For more background on the Kaa Logging subsystem please refer to the corresponding programming guide and design reference sections.
         	]]>
         </details>
-        <platform>ANDROID</platform>
+        <sdkPlatform>ANDROID</sdkPlatform>
+        <platforms>ANDROID</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
         <sourceArchive>android/cellmonitor_demo.tar.gz</sourceArchive>

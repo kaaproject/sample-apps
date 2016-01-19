@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!--
-Copyright 2014-2015 CyberVision, Inc.
+Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -39,7 +39,8 @@ Please note that all the features of Administration UI are also supported by RES
 For more background on the user verification refer to the corresponding design reference section. It is also possible to implement a custom user verifier using programming guide.
         	]]>
         </details>
-        <platform>ANDROID</platform>
+        <sdkPlatform>ANDROID</sdkPlatform>
+        <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>BASIC</complexity>
         <sourceArchive>android/verifiers_demo.tar.gz</sourceArchive>

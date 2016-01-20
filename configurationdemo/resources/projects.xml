@@ -45,6 +45,7 @@ For more background on the Kaa Configuration subsystem please refer to the corre
         <platform>JAVA</platform>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
+        <bundleId>configuration_demo_bundle</bundleId>
         <sourceArchive>java/configuration_demo.tar.gz</sourceArchive>
         <projectFolder>JConfigurationDemo</projectFolder>
         <sdkLibDir>JConfigurationDemo/lib</sdkLibDir>
@@ -78,6 +79,7 @@ For more background on the Kaa Configuration subsystem please refer to the corre
         <platform>C</platform>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
+        <bundleId>configuration_demo_bundle</bundleId>
         <sourceArchive>c/configuration_demo.tar.gz</sourceArchive>
         <projectFolder>CConfigurationDemo</projectFolder>
         <sdkLibDir>CConfigurationDemo/libs/kaa</sdkLibDir>
@@ -111,9 +113,24 @@ Please note that all the features of Administration UI are also supported by RES
         <platform>CPP</platform>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
+        <bundleId>configuration_demo_bundle</bundleId>
         <sourceArchive>cpp/configuration_demo.tar.gz</sourceArchive>
         <projectFolder>CppConfigurationDemo</projectFolder>
         <sdkLibDir>CppConfigurationDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <bundle id="configuration_demo_bundle">
+        <name>Configuration demo bundle</name>
+        <description>Kaa Configuration subsystem demo applications bundle</description>
+        <details>
+            <![CDATA[
+This bundle contains applications that demonstrates capabilities of the Kaa Configuration subsystem.
+
+Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+
+<h2>What's next?</h2>
+For more background on the Kaa Configuration subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Distributing+data+to+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Configuration">design reference</a> sections.
+]]>
+        </details>
+    </bundle>
 </projectsConfig>

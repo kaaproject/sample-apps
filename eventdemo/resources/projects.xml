@@ -118,6 +118,38 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <sdkLibDir>CppEventDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <project id="event_demo_objc">
+        <name>Event demo</name>
+        <description>Kaa Event subsystem demo app based on Objective-C SDK</description>
+        <details>
+            <![CDATA[
+This simple app demonstrates capabilities of the Kaa Event subsystem on the Objective-C SDK.
+
+<h2>Installation</h2>
+Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. After starting the "Event demo" app on one endpoint, it will send an event to another endpoint, thus demonstrating how devices can interoperate with each other.
+
+Now it's time to test things out: start two application instances. By default, the application stores the state information in the same folder where the application was started. Therefore, you should start a new application instance from a different folder in order to avoid conflicts between the instances. Once the application instances are started, you will see them exchanging events. You can also start the "Event demo" application on different platforms to verify that events are delivered across the platforms.<br/><br/>
+
+Please note that all the features of Administration UI are also supported by REST API.
+
+<h2>What's next?</h2>
+
+For more background on the Kaa Event subsystem please refer to the corresponding programming guide and design reference sections.
+        	]]>
+        </details>
+        <platform>OBJC</platform>
+        <features>EVENT</features>
+        <sourceArchive>objc/event_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCEventDemo</projectFolder>
+        <sdkLibDir>ObjCEventDemo/libs</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
     <bundle id="event_demo_bundle">
         <name>Event demo bundle</name>
         <description>Kaa Event subsystem demo applications bundle</description>

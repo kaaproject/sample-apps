@@ -42,7 +42,7 @@
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>${project.basedir}/source</directory>
+            <directory>${project.basedir}/source/android</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>cellmonitor_demo/CellMonitor</outputDirectory>
         </fileSet>

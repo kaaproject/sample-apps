@@ -87,6 +87,7 @@
         </xs:simpleType>
     </xs:element>
     <xs:element name="complexity" type="complexity"/>
+    <xs:element name="bundleId" minOccurs="0" type="xs:string"/>
     <xs:element name="sourceArchive" type="xs:string"/>
     <xs:element name="projectFolder" type="xs:string"/>
     <xs:element name="sdkLibDir" type="xs:string"/>
@@ -95,19 +96,36 @@
   </xs:sequence>
   <xs:attribute name="id" type="xs:string" use="required"/>
 </xs:complexType>
+
+<xs:complexType name="bundle">
+    <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="details" type="xs:string"/>
+        <xs:element name="iconBase64" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+</xs:complexType>
  
 <xs:element name="projectsConfig">
-   <xs:complexType>
-     <xs:sequence>
-       <xs:element name="project" type="project" minOccurs="1" maxOccurs="unbounded">
-	 <xs:annotation>
-           <xs:appinfo>
-              <jxb:property name="projects"/>
-           </xs:appinfo>
-         </xs:annotation>
-       </xs:element>
-     </xs:sequence>
-   </xs:complexType>
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="project" type="project" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:property name="projects"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="bundle" type="bundle" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:property name="bundles"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 </xs:element>
 
 <xs:element name="project" type="project"/>

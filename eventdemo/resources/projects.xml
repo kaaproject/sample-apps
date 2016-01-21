@@ -45,6 +45,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <platforms>JAVA</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
+        <bundleId>event_demo_bundle</bundleId>
         <sourceArchive>java/event_demo.tar.gz</sourceArchive>
         <projectFolder>JEventDemo</projectFolder>
         <sdkLibDir>JEventDemo/lib</sdkLibDir>
@@ -79,6 +80,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <platforms>C</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
+        <bundleId>event_demo_bundle</bundleId>
         <sourceArchive>c/event_demo.tar.gz</sourceArchive>
         <projectFolder>CEventDemo</projectFolder>
         <sdkLibDir>CEventDemo/libs/kaa</sdkLibDir>
@@ -113,9 +115,24 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <platforms>CPP</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
+        <bundleId>event_demo_bundle</bundleId>
         <sourceArchive>cpp/event_demo.tar.gz</sourceArchive>
         <projectFolder>CppEventDemo</projectFolder>
         <sdkLibDir>CppEventDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <bundle id="event_demo_bundle">
+        <name>Event demo bundle</name>
+        <description>Kaa Event subsystem demo applications bundle</description>
+        <details>
+            <![CDATA[
+This bundle contains applications that demonstrates capabilities of the Kaa Event subsystem.
+
+Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+
+<h2>What's next?</h2>
+For more background on the Kaa Event subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Messaging+across+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Events">design reference</a> sections.
+]]>
+        </details>
+    </bundle>
 </projectsConfig>

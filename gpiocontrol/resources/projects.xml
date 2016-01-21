@@ -38,6 +38,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
+        <bundleId>gpio_bundle</bundleId>
         <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
         <projectFolder>gpiocontrol/gpiocontrol</projectFolder>
         <sdkLibDir>gpiocontrol/gpiocontrol/libs</sdkLibDir>
@@ -59,6 +60,7 @@ After you successfully installed this app on your CC32XX device, go to Android "
         <platforms>C CC32XX</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
+        <bundleId>gpio_bundle</bundleId>
         <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
         <projectFolder>gpio-cc-client</projectFolder>
         <sdkLibDir>gpio-cc-client/libs/kaa</sdkLibDir>
@@ -79,6 +81,7 @@ After you successfully installed this app on your ESP8266 device, go to Android 
         <platforms>C ESP8266</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
+        <bundleId>gpio_bundle</bundleId>
         <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
         <projectFolder>gpio-esp-client</projectFolder>
         <sdkLibDir>gpio-esp-client/libs/kaa</sdkLibDir>
@@ -99,9 +102,24 @@ After you successfully installed this app on your Artik 5 device, go to Android 
         <platforms>CPP ARTIK5</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
+        <bundleId>gpio_bundle</bundleId>
         <sourceArchive>cpp/gpio-artik5-client.tar.gz</sourceArchive>
         <projectFolder>gpio-artik5-client</projectFolder>
         <sdkLibDir>gpio-artik5-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <bundle id="gpio_bundle">
+        <name>GPIO control bundle</name>
+        <description>GPIO control applications bundle</description>
+        <details>
+            <![CDATA[
+This bundle contains applications that demonstrates capabilities of the Kaa Event subsystem.
+
+Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+
+<h2>What's next?</h2>
+For more background on the Kaa Event subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Messaging+across+endpoints">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Events">design reference</a> sections.
+]]>
+        </details>
+    </bundle>
 </projectsConfig>

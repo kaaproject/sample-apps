@@ -143,12 +143,10 @@ public class CellMonitorApplication extends Application {
                 return 100;
             }
 
-            @Override
             public long getBatchSize() {
                 return 8 * 1024;
             }
 
-            @Override
             public int getBatchCount() {
                 return 20;
             }

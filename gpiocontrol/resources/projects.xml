@@ -15,7 +15,10 @@ Copyright 2014-2016 CyberVision, Inc.
   limitations under the License.
 -->
 
-<projectsConfig>
+<projectsConfig 
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="gpio_master">
         <name>GPIO control Android</name>
         <description>GPIO control Android app</description>
@@ -34,7 +37,18 @@ Please note that all the features of <a href="https://docs.kaaproject.org/displa
 For more background on the Kaa Event subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Messaging+across+endpoints">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Events">design reference</a> sections.
 ]]>
         </details>
-        <platform>ANDROID</platform>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_bundle</bundleId>
@@ -55,7 +69,18 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/Texas+Instrument
 After you successfully installed this app on your CC32XX device, go to Android "GPIO control" Sandbox app and follow the steps described there.
 ]]>
         </details>
-        <platform>C</platform>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>C</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>CC32XX</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_bundle</bundleId>
@@ -75,7 +100,18 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/ESP8266">documen
 After you successfully installed this app on your ESP8266 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
             ]]>
         </details>
-        <platform>C</platform>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>C</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>ESP8266</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_bundle</bundleId>
@@ -95,7 +131,17 @@ First, read our <a href="http://docs.kaaproject.org/display/KAA/Samsung+Artik+5"
 After you successfully installed this app on your Artik 5 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
             ]]>
         </details>
-        <platform>CPP</platform>
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>CPP</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>ARTIK5</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_bundle</bundleId>

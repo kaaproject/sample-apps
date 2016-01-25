@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2014-2015 CyberVision, Inc.
+  Copyright 2014-2016 CyberVision, Inc.
  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
   limitations under the License.
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-           xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-	   jxb:extensionBindingPrefixes="xjc"
-           jxb:version="2.0"
- elementFormDefault="qualified">
+        targetNamespace="http://www.kaaproject.org"
+        xmlns:kaa="http://www.kaaproject.org"
+        xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+        xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+        jxb:extensionBindingPrefixes="xjc"
+        jxb:version="2.0"
+        elementFormDefault="qualified">
 
 <xs:annotation>
    <xs:appinfo>
@@ -29,12 +31,26 @@
    </xs:appinfo>
 </xs:annotation>
 
-<xs:simpleType name="platform">
+<xs:simpleType name="sdkLanguage">
   <xs:restriction base="xs:string">
-    <xs:enumeration value="ANDROID"/>
     <xs:enumeration value="JAVA"/>
     <xs:enumeration value="CPP"/>
     <xs:enumeration value="C"/>
+    <xs:enumeration value="OBJC"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="platform">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="LINUX_X86"/>
+    <xs:enumeration value="WINDOWS_X86"/>
+    <xs:enumeration value="ANDROID"/>
+    <xs:enumeration value="IOS"/>
+    <xs:enumeration value="ARTIK5"/>
+    <xs:enumeration value="ESP8266"/>
+    <xs:enumeration value="CC32XX"/>
+    <xs:enumeration value="STM32"/>
+    <xs:enumeration value="ECONAIS"/>
   </xs:restriction>
 </xs:simpleType>
 
@@ -62,20 +78,32 @@
     <xs:element name="name" type="xs:string"/>
     <xs:element name="description" type="xs:string"/>
     <xs:element name="details" type="xs:string"/> 
-    <xs:element name="iconBase64" type="xs:string"/>
-    <xs:element name="platform" type="platform"/>
-    <xs:element name="features">
+    <xs:element name="iconBase64" minOccurs="0" type="xs:string"/>
+    <xs:element name="sdkLanguage" type="kaa:sdkLanguage">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Specifies the source code language of Kaa endpoint SDK which is used by this project</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="platforms">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Specifies the target runtime platforms according to the instructions from the project details section</xs:documentation>
+        </xs:annotation>
         <xs:simpleType>
-           <xs:list itemType="feature"/>
+            <xs:list itemType="kaa:platform"/>
         </xs:simpleType>
     </xs:element>
-    <xs:element name="complexity" type="complexity"/>
+    <xs:element name="features">
+        <xs:simpleType>
+           <xs:list itemType="kaa:feature"/>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="complexity" type="kaa:complexity"/>
     <xs:element name="bundleId" minOccurs="0" type="xs:string"/>
     <xs:element name="sourceArchive" type="xs:string"/>
     <xs:element name="projectFolder" type="xs:string"/>
     <xs:element name="sdkLibDir" type="xs:string"/>
     <xs:element name="destBinaryFile" type="xs:string"/>
-    <xs:element name="sdkProfileId" type="xs:string"/>
+    <xs:element name="sdkProfileId" minOccurs="0" type="xs:string"/>
   </xs:sequence>
   <xs:attribute name="id" type="xs:string" use="required"/>
 </xs:complexType>
@@ -85,7 +113,7 @@
         <xs:element name="name" type="xs:string"/>
         <xs:element name="description" type="xs:string"/>
         <xs:element name="details" type="xs:string"/>
-        <xs:element name="iconBase64" type="xs:string"/>
+        <xs:element name="iconBase64" minOccurs="0" type="xs:string"/>
     </xs:sequence>
     <xs:attribute name="id" type="xs:string" use="required"/>
 </xs:complexType>
@@ -93,14 +121,14 @@
 <xs:element name="projectsConfig">
     <xs:complexType>
         <xs:sequence>
-            <xs:element name="project" type="project" minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="project" type="kaa:project" minOccurs="1" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:appinfo>
                         <jxb:property name="projects"/>
                     </xs:appinfo>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="bundle" type="bundle" minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="bundle" type="kaa:bundle" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:appinfo>
                         <jxb:property name="bundles"/>
@@ -111,6 +139,6 @@
     </xs:complexType>
 </xs:element>
 
-<xs:element name="project" type="project"/>
- 
+<xs:element name="project" type="kaa:project"/>
+
 </xs:schema>

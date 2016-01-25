@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!--
-Copyright 2014-2015 CyberVision, Inc.
+Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,16 +16,30 @@ Copyright 2014-2015 CyberVision, Inc.
   limitations under the License.
 -->
 
-<projectsConfig>
+<projectsConfig 
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="smarthome_android">
         <name>Smart home</name>
-		<description>Smart home Android app demonstrates Kaa event subsystem capabilities</description>
-		<details>
+        <description>Smart home Android app demonstrates Kaa event subsystem capabilities</description>
+        <details>
             <![CDATA[
 This app demonstrates Kaa event subsystem capabilities on Android platform.
             ]]>
-		</details>
-        <platform>ANDROID</platform>
+        </details>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/smarthome/android/smarthome.tar.gz</sourceArchive>
@@ -35,13 +49,24 @@ This app demonstrates Kaa event subsystem capabilities on Android platform.
     </project>
     <project id="smarthome_ios">
         <name>Smart home</name>
-		<description>Smart home iOS app demonstrates Kaa event subsystem capabilities</description>
-		<details>
+        <description>Smart home iOS app demonstrates Kaa event subsystem capabilities</description>
+        <details>
             <![CDATA[
 This app demonstrates Kaa event subsystem capabilities on iOS platform.
             ]]>
-		</details>
-        <platform>C</platform>
+        </details>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>OBJC</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>IOS</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/smarthome/ios/smarthome.tar.gz</sourceArchive>
@@ -51,13 +76,24 @@ This app demonstrates Kaa event subsystem capabilities on iOS platform.
     </project>
     <project id="climate_android">
         <name>Climate control</name>
-		<description>Climate control Android app demonstrates Kaa event subsystem capabilities</description>
-		<details>
+        <description>Climate control Android app demonstrates Kaa event subsystem capabilities</description>
+        <details>
             <![CDATA[
 This app demonstrates Kaa event subsystem capabilities on Android platform.
             ]]>
-		</details>
-        <platform>ANDROID</platform>
+        </details>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/climate/android/climate.tar.gz</sourceArchive>
@@ -72,8 +108,19 @@ This app demonstrates Kaa event subsystem capabilities on Android platform.
             <![CDATA[
 This app demonstrates Kaa event subsystem capabilities on Java SDK.
             ]]>
-		</details>
-        <platform>JAVA</platform>
+        </details>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/photoplayer/photoplayer.tar.gz</sourceArchive>
@@ -88,8 +135,19 @@ This app demonstrates Kaa event subsystem capabilities on Java SDK.
             <![CDATA[
 This app demonstrates Kaa event subsystem capabilities on Java SDK.
             ]]>
-		</details>
-        <platform>JAVA</platform>
+        </details>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/musicplayer/musicplayer.tar.gz</sourceArchive>
@@ -104,8 +162,19 @@ This app demonstrates Kaa event subsystem capabilities on Java SDK.
             <![CDATA[
 This app demonstrates Kaa event subsystem capabilities on Java SDK.
             ]]>
-		</details>
-        <platform>JAVA</platform>
+        </details>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/irrigation/irrigation.tar.gz</sourceArchive>
@@ -121,7 +190,18 @@ This app demonstrates Kaa event subsystem capabilities on Java SDK.
 This app demonstrates Kaa event subsystem capabilities on Java SDK.
             ]]>
         </details>
-        <platform>C</platform>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>C</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>LINUX_X86</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/fan/fan.tar.gz</sourceArchive>
@@ -137,7 +217,18 @@ This app demonstrates Kaa event subsystem capabilities on Java SDK.
 This app demonstrates Kaa event subsystem capabilities on Java SDK.
             ]]>
         </details>
-        <platform>C</platform>
+        
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>C</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>LINUX_X86</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
         <sourceArchive>iotworld/light/light.tar.gz</sourceArchive>

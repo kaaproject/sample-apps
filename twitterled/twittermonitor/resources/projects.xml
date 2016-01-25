@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!--
-Copyright 2014-2015 CyberVision, Inc.
+Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,7 +16,10 @@ Copyright 2014-2015 CyberVision, Inc.
   limitations under the License.
 -->
 
-<projectsConfig>
+<projectsConfig 
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="twittermonitor">
         <name>Twitter monitor</name>
         <description>Twitter monitor demo application</description>
@@ -36,7 +39,18 @@ TODO
 Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
             ]]>
 		</details>
-        <platform>JAVA</platform>
+            
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+        
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <sourceArchive>java/twittermonitor.tar.gz</sourceArchive>

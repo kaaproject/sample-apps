@@ -16,7 +16,10 @@ Copyright 2014-2016 CyberVision, Inc.
   limitations under the License.
 -->
 
-<projectsConfig>
+<projectsConfig 
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="twitterboard">
         <name>Twitter board</name>
         <description>Twitter board demo application</description>
@@ -36,8 +39,18 @@ TODO
 Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
             ]]>
 		</details>
-        <sdkPlatform>JAVA</sdkPlatform>
-        <platforms>JAVA</platforms>
+            
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+        
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>CONFIGURATION NOTIFICATION</features>
         <complexity>BASIC</complexity>
         <sourceArchive>java/twitterboard.tar.gz</sourceArchive>

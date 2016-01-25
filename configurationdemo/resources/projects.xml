@@ -16,7 +16,10 @@ Copyright 2014-2016 CyberVision, Inc.
   limitations under the License.
 -->
 
-<projectsConfig>
+<projectsConfig 
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="configuration_demo_java">
         <name>Configuration demo</name>
         <description>Kaa Configuration subsystem demo app based on Java SDK</description>
@@ -41,9 +44,19 @@ Please note that all the features of Administration UI are also supported by RES
 
 For more background on the Kaa Configuration subsystem please refer to the corresponding programming guide and design reference sections..
         	]]>
-		</details>
-        <sdkPlatform>JAVA</sdkPlatform>
-        <platforms>JAVA</platforms>
+        </details>
+            
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+             
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>configuration_demo_bundle</bundleId>
@@ -77,8 +90,18 @@ Please note that all the features of Administration UI are also supported by RES
 For more background on the Kaa Configuration subsystem please refer to the corresponding programming guide and design reference sections.
         	]]>
         </details>
-        <sdkPlatform>C</sdkPlatform>
-        <platforms>C</platforms>
+            
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>C</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+            
+        <platforms>LINUX_X86</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>configuration_demo_bundle</bundleId>
@@ -112,8 +135,19 @@ Please note that all the features of Administration UI are also supported by RES
 Please note that all the features of Administration UI are also supported by REST API.
         	]]>
         </details>
-        <sdkPlatform>CPP</sdkPlatform>
-        <platforms>CPP</platforms>
+        
+            
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>CPP</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+            
+        <platforms>LINUX_X86</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>configuration_demo_bundle</bundleId>

@@ -144,16 +144,6 @@ public class CellMonitorApplication extends Application {
             }
 
             @Override
-            public long getBatchSize() {
-                return 8 * 1024;
-            }
-
-            @Override
-            public int getBatchCount() {
-                return 20;
-            }
-
-            @Override
             public int getUploadCheckPeriod() {
                 return 30;
             }

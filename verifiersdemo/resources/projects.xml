@@ -16,7 +16,10 @@ Copyright 2014-2016 CyberVision, Inc.
   limitations under the License.
 -->
 
-<projectsConfig>
+<projectsConfig 
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="verifiers_demo">
         <name>User verifiers demo</name>
         <description>Kaa user verifiers demo app for Android</description>
@@ -39,7 +42,17 @@ Please note that all the features of Administration UI are also supported by RES
 For more background on the user verification refer to the corresponding design reference section. It is also possible to implement a custom user verifier using programming guide.
         	]]>
         </details>
-        <sdkPlatform>ANDROID</sdkPlatform>
+            
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+             
+        <sdkLanguage>JAVA</sdkLanguage>
+        
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+        
         <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>BASIC</complexity>

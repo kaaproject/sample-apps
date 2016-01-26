@@ -26,7 +26,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] andStateDelegate:self];
+    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     [self.kaaClient setProfileContainer:self];
     return YES;
 }
@@ -50,33 +50,37 @@
     self.isClientStarted = YES;
 }
 
-- (void)onStartFailure:(NSException *)exception {
+-(void)onStartFailureWithException:(NSException *)exception {
     NSLog(@"START FAILURE %@", exception);
+
 }
 
 - (void)onPaused {
     NSLog(@"KaaClient paused");
 }
 
-- (void)onPauseFailure:(NSException *)exception {
+-(void)onPauseFailureWithException:(NSException *)exception {
     NSLog(@"PAUSE FAILURE %@", exception);
+
 }
 
 - (void)onResume {
     NSLog(@"KaaClient resumed");
 }
 
-- (void)onResumeFailure:(NSException *)exception {
+-(void)onResumeFailureWithException:(NSException *)exception {
     NSLog(@"RESUME FAILURE %@", exception);
+
 }
 
 - (void)onStopped {
     NSLog(@"KaaClient stopped");
 }
 
-- (void)onStopFailure:(NSException *)exception {
+-(void)onStopFailureWithException:(NSException *)exception {
     NSLog(@"STOP FAILURE %@", exception);
 }
+
 
 #pragma mark - ProfileContainer
 

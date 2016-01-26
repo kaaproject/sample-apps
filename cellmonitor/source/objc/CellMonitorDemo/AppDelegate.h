@@ -22,7 +22,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) id<KaaClient> kaaClient;
-@property (nonatomic)         BOOL isClientStarted;
+@property (nonatomic) BOOL isClientStarted;
 
 @end
 

@@ -22,6 +22,8 @@
 #import "DefaultKaaPlatformContext.h"
 #import "DefaultProfileManager.h"
 #import "DefaultProfileTransport.h"
+#import "DefaultLogUploadStrategy.h"
+#import "RecordCountLogUploadStrategy.h"
 
 @import CoreTelephony;
 
@@ -30,66 +32,28 @@ static dispatch_once_t locationManagerToken;
 
 #define UNDEFINED -1
 
-#pragma mark - LogUploadStrategy
 
-@interface CellMonitorLogUploadStrategy : NSObject <LogUploadStrategy>
-
-@end
-
-@implementation CellMonitorLogUploadStrategy
-
-- (LogUploadStrategyDecision)isUploadNeeded:(id<LogStorageStatus>)status {
-    return [status getRecordCount] > 0 ? LOG_UPLOAD_STRATEGY_DECISION_UPLOAD : LOG_UPLOAD_STRATEGY_DECISION_NOOP;
-}
-
-- (int64_t)getBatchSize {
-    return 8 * 1024;
-}
-
-- (int32_t)getBatchCount {
-    return 20;
-}
-
-- (int32_t)getTimeout {
-    return 100;
-}
-
-- (int32_t)getUploadCheckPeriod {
-    return 30;
-}
-
-- (void)onTimeout:(id<LogFailoverCommand>)controller {
-    NSLog(@"Unable to send logs within defined timeout!");
-}
-
-- (void)onFailure:(id<LogFailoverCommand>)controller errorCode:(LogDeliveryErrorCode)code {
-    NSLog(@"Unable to send logs, error code: %u", code);
-    [controller retryLogUpload:10];
-}
-
-@end
-
-#pragma mark - ViewController
-
-@interface ViewController () <CLLocationManagerDelegate> {
+@interface ViewController () <CLLocationManagerDelegate,LogDeliveryDelegate> {
     CLLocationManager *locationManager;
 }
 
-@property (weak, nonatomic) IBOutlet UILabel *operatorLabel;
-@property (weak, nonatomic) IBOutlet UILabel *operatorNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *mobileCountryCode;
-@property (weak, nonatomic) IBOutlet UILabel *isoCountryCode;
-@property (weak, nonatomic) IBOutlet UILabel *signalStreigthLabel;
-@property (weak, nonatomic) IBOutlet UILabel *longtitudeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *logTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *logCountLabel;
+@property (nonatomic, weak) IBOutlet UILabel *operatorLabel;
+@property (nonatomic, weak) IBOutlet UILabel *operatorNameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *mobileCountryCode;
+@property (nonatomic, weak) IBOutlet UILabel *isoCountryCode;
+@property (nonatomic, weak) IBOutlet UILabel *signalStreigthLabel;
+@property (nonatomic, weak) IBOutlet UILabel *longtitudeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *latitudeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *logTimeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *logCountLabel;
+@property (nonatomic, weak) IBOutlet UILabel *deliveredLogsLabel;
 
-@property (strong, nonatomic) AppDelegate *appDelegate;
-@property (strong, nonatomic) CTTelephonyNetworkInfo *telephoneNetworkManager;
-@property (strong, nonatomic) id<KaaClient> kaaClient;
-@property (nonatomic)         NSInteger sentLogCount;
-@property (nonatomic)         int64_t lastLogTime;
+@property (nonatomic, strong) AppDelegate *appDelegate;
+@property (nonatomic, strong) CTTelephonyNetworkInfo *telephoneNetworkManager;
+@property (nonatomic, strong) id<KaaClient> kaaClient;
+@property (nonatomic) NSInteger sentLogCount;
+@property (nonatomic) int64_t lastLogTime;
+@property (nonatomic) NSInteger deliveredLogsCount;
 
 @end
 
@@ -106,17 +70,32 @@ static dispatch_once_t locationManagerToken;
      */
     self.appDelegate = [[UIApplication sharedApplication] delegate];
     self.kaaClient = self.appDelegate.kaaClient;
-    [self.kaaClient setLogUploadStrategy:[[CellMonitorLogUploadStrategy alloc] init]];
+    [self.kaaClient setLogUploadStrategy:[[RecordCountLogUploadStrategy alloc] initWithCountThreshold:1]];
+    [self.kaaClient setLogDeliveryDelegate:self];
     [self.kaaClient start];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+#pragma mark - Log delivery delegate methods
+
+- (void)onLogDeliverySuccessWithBucketInfo:(BucketInfo *)bucketInfo {
+    NSLog(@"Bucket with id [%d] has been successfully delivered", bucketInfo.bucketId);
+    self.deliveredLogsCount += bucketInfo.logCount;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.deliveredLogsLabel.text = [NSString stringWithFormat:@"%ld", (long)self.deliveredLogsCount];
+    });
+}
+
+- (void)onLogDeliveryFailureWithBucketInfo:(BucketInfo *)bucketInfo {
+    NSLog(@"Bucket [%d] delivery failed", bucketInfo.bucketId);
+}
+
+-(void)onLogDeliveryTimeoutWithBucketInfo:(BucketInfo *)bucketInfo {
+    NSLog(@"Timeout on log delivery. Bucket [%d]", bucketInfo.bucketId);
 }
 
 #pragma mark - Apps methods
 
-- (void) sendLog {
+- (void)sendLog {
     if (self.appDelegate.isClientStarted) {
         self.sentLogCount++;
         double timestamp = [[NSDate date] timeIntervalSince1970];
@@ -219,29 +198,23 @@ static dispatch_once_t locationManagerToken;
 - (NSString *)carrierName {
     UIView* statusBar = [self statusBar];
     UIView* statusBarForegroundView = nil;
-    for (UIView* view in statusBar.subviews)
-    {
-        if ([view isKindOfClass:NSClassFromString(@"UIStatusBarForegroundView")])
-        {
+    for (UIView* view in statusBar.subviews) {
+        if ([view isKindOfClass:NSClassFromString(@"UIStatusBarForegroundView")]) {
             statusBarForegroundView = view;
             break;
         }
     }
     UIView* statusBarServiceItem = nil;
-    for (UIView* view in statusBarForegroundView.subviews)
-    {
-        if ([view isKindOfClass:NSClassFromString(@"UIStatusBarServiceItemView")])
-        {
+    for (UIView* view in statusBarForegroundView.subviews) {
+        if ([view isKindOfClass:NSClassFromString(@"UIStatusBarServiceItemView")]) {
             statusBarServiceItem = view;
             break;
         }
     }
-    if (statusBarServiceItem)
-    {
+    if (statusBarServiceItem) {
         id value = [statusBarServiceItem valueForKey:@"_serviceString"];
         
-        if ([value isKindOfClass:[NSString class]])
-        {
+        if ([value isKindOfClass:[NSString class]]) {
             return (NSString *)value;
         }
     }
@@ -253,15 +226,11 @@ static dispatch_once_t locationManagerToken;
     return [[UIApplication sharedApplication] valueForKey:statusBarString];
 }
 
-#pragma mark - Singletones
-
 + (CLLocationManager *)getLocationManager {
     dispatch_once(&locationManagerToken, ^{
         locationManager = [[CLLocationManager alloc] init];
     });
     return locationManager;
 }
-
-
 
 @end

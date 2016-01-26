@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 
 /**
  * The implementation of the {@link CityGuideFragment} class. 
@@ -85,8 +86,8 @@ public class AreasFragment extends CityGuideFragment {
 
     private void onAreaClicked(int position) {
         Area area = mAreasAdapter.getItem(position);
-        CitiesFragment citiesFragment = new CitiesFragment(area.getName());
-        mActivity.openFragment(citiesFragment);
+        CitiesFragment citiesFragment = CitiesFragment.createInstance(area.getName());
+        FragmentUtils.addBackStackFragment(mActivity, citiesFragment);
     }
 
     @Override

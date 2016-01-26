@@ -37,8 +37,7 @@ public class FileCache {
 
     public File getFile(ImageKey key) {
         String filename = String.valueOf(key.hashCode());
-        File f = new File(cacheDir, filename);
-        return f;
+        return new File(cacheDir, filename);
 
     }
 
@@ -46,8 +45,8 @@ public class FileCache {
         File[] files = cacheDir.listFiles();
         if (files == null)
             return;
-        for (File f : files)
-            f.delete();
+        for (File file : files)
+            file.delete();
     }
 
 }

@@ -23,6 +23,7 @@ import org.kaaproject.kaa.demo.cityguide.Place;
 import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.adapter.PlacesAdapter;
 import org.kaaproject.kaa.demo.cityguide.event.ConfigurationUpdated;
+import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 import org.kaaproject.kaa.demo.cityguide.util.Utils;
 
 import android.os.Bundle;
@@ -108,7 +109,7 @@ public class PlacesFragment extends CityGuideFragment {
         Place place = mPlacesAdapter.getItem(position);
         PlaceFragment placeFragment = new PlaceFragment(mAreaName, mCityName,
                 mPlaceCategory, place.getTitle());
-        mActivity.openFragment(placeFragment);
+        FragmentUtils.addBackStackFragment(mActivity, placeFragment);
     }
 
     public void onEventMainThread(ConfigurationUpdated configurationUpdated) {

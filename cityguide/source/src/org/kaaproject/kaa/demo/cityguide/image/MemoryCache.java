@@ -34,11 +34,13 @@ public class MemoryCache {
 
     private static final String TAG = MemoryCache.class.getSimpleName();
 
+    private static final int DEFAULT_LIMIT = 1000000;
+
     private Map<ImageKey, Bitmap> cache = Collections
             .synchronizedMap(new LinkedHashMap<ImageKey, Bitmap>(10, 1.5f, true));
 
+    private long mLimit = DEFAULT_LIMIT;
     private long mSize = 0;
-    private long mLimit = 1000000;
 
     public MemoryCache() {
         setLimit(Runtime.getRuntime().maxMemory() / 4);
@@ -51,15 +53,7 @@ public class MemoryCache {
     }
 
     public Bitmap get(ImageKey id) {
-        try {
-            if (!cache.containsKey(id)) {
-                return null;
-            } else {
-                return cache.get(id);
-            }
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return cache.containsKey(id) ? cache.get(id) : null;
     }
 
     public void put(ImageKey id, Bitmap bitmap) {
@@ -93,18 +87,11 @@ public class MemoryCache {
     }
 
     public void clear() {
-        try {
-            cache.clear();
-            mSize = 0;
-        } catch (NullPointerException ex) {
-        }
+        cache.clear();
+        mSize = 0;
     }
 
-    long getSizeInBytes(Bitmap bitmap) {
-        if (bitmap == null) {
-            return 0;
-        } else {
-            return bitmap.getRowBytes() * bitmap.getHeight();
-        }
+    private long getSizeInBytes(Bitmap bitmap) {
+        return bitmap != null ? bitmap.getRowBytes() * bitmap.getHeight() : 0;
     }
 }

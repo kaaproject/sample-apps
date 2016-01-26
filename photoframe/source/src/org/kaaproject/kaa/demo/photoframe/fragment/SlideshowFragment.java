@@ -33,6 +33,7 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import org.kaaproject.kaa.demo.photoframe.util.Utils;
 
 /**
  * The implementation of the {@link Fragment} class. 
@@ -62,7 +63,7 @@ public class SlideshowFragment extends Fragment {
         public void run() {
             int count = mSlideShowPagerAdapter.getCount();
             int position = mViewPager.getCurrentItem();
-            if (position == count-1) {
+            if (position == count - 1) {
                 position = 0;
             } else {
                 position++;
@@ -73,18 +74,26 @@ public class SlideshowFragment extends Fragment {
         
     };
     
-    public SlideshowFragment() {
-        super();
+    public static SlideshowFragment createInstance(String bucketId) {
+        SlideshowFragment fragment = new SlideshowFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(BUCKET_ID, bucketId);
+        fragment.setArguments(bundle);
+        return fragment;
     }
     
-    public SlideshowFragment(String bucketId) {
+    public SlideshowFragment() {
         super();
-        mBucketId = bucketId;
     }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mBucketId = arguments.getString(BUCKET_ID);
+        }
+
         if (mBucketId == null) {
             mBucketId = savedInstanceState.getString(BUCKET_ID);
         }
@@ -112,9 +121,7 @@ public class SlideshowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        
-        View rootView = inflater.inflate(R.layout.fragment_slideshow, container,
-                false);
+        View rootView = inflater.inflate(R.layout.fragment_slideshow, container, false);
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
         mSlideShowPagerAdapter = new SlideshowPageAdapter(mActivity, mApplication.getImageLoader(), mBucketId);
         mViewPager.setAdapter(mSlideShowPagerAdapter);
@@ -122,7 +129,7 @@ public class SlideshowFragment extends Fragment {
     }
     
     public void onEventMainThread(StopPlayEvent stopPlayEvent) {
-        mActivity.popBackStack();
+        Utils.popBackStack(mActivity);
     }
     
     public void updateBucketId(String bucketId) {

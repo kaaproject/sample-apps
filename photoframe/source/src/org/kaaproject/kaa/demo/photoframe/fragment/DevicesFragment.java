@@ -23,6 +23,7 @@ import org.kaaproject.kaa.demo.photoframe.event.PlayInfoEvent;
 
 import android.os.Bundle;
 import android.widget.BaseAdapter;
+import org.kaaproject.kaa.demo.photoframe.util.Utils;
 
 /**
  * The implementation of the {@link ListFragment} class. 
@@ -69,9 +70,9 @@ public class DevicesFragment extends ListFragment {
 
     @Override
     protected void onItemClicked(int position) {
-        String endpointKey = (String)mController.getRemoteDevicesMap().keySet().toArray()[position];
-        AlbumsFragment albumsFragment = new AlbumsFragment(endpointKey);
-        mActivity.addBackStackFragment(albumsFragment, albumsFragment.getFragmentTag());
+        String endpointKey = (String) mController.getRemoteDevicesMap().keySet().toArray()[position];
+        AlbumsFragment albumsFragment = AlbumsFragment.createInstance(endpointKey);
+        Utils.addBackStackFragment(mActivity, albumsFragment, albumsFragment.getFragmentTag());
     }
 
     @Override

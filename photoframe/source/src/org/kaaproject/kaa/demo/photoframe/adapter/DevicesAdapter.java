@@ -61,21 +61,21 @@ public class DevicesAdapter extends BaseAdapter {
     @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        View view = convertView;
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.device_list_item, null);
+            view = inflater.inflate(R.layout.device_list_item, null);
         }
-        TextView modelNameView = (TextView) v.findViewById(R.id.modelName);
-        DeviceInfo deviceInfo = (DeviceInfo)getItem(position);
+        TextView modelNameView = (TextView) view.findViewById(R.id.modelName);
+        DeviceInfo deviceInfo = (DeviceInfo) getItem(position);
         modelNameView.setText(deviceInfo.getModel());
         
-        TextView manufacturerNameView = (TextView) v.findViewById(R.id.manufacturerName);        
+        TextView manufacturerNameView = (TextView) view.findViewById(R.id.manufacturerName);
         String byManufacturer = mContext.getString(R.string.by_pattern, deviceInfo.getManufacturer());
         manufacturerNameView.setText(byManufacturer);
         
-        TextView playStatusView = (TextView) v.findViewById(R.id.playStatus);     
+        TextView playStatusView = (TextView) view.findViewById(R.id.playStatus);
         String endpointKey = (String) mController.getRemoteDevicesMap().keySet().toArray()[position];
         PlayInfo playInfo = mController.getRemoteDeviceStatus(endpointKey);
         if (playInfo != null) {
@@ -88,7 +88,7 @@ public class DevicesAdapter extends BaseAdapter {
             playStatusView.setText(R.string.unknown);
         }
         
-        return v;
+        return view;
     }
 
 }

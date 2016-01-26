@@ -43,14 +43,21 @@ public class AlbumsFragment extends ListFragment {
         super();
     }
     
-    public AlbumsFragment(String endpointKey) {
-        super();
-        mEndpointKey = endpointKey;
+    public static AlbumsFragment createInstance(String endpointKey) {
+        AlbumsFragment fragment = new AlbumsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ENDPOINT_KEY, endpointKey);
+        fragment.setArguments(bundle);
+        return fragment;
     }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mEndpointKey = arguments.getString(ENDPOINT_KEY);
+        }
         if (mEndpointKey == null) {
             mEndpointKey = savedInstanceState.getString(ENDPOINT_KEY);
         }

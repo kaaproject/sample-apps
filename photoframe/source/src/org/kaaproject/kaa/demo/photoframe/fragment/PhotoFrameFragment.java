@@ -40,10 +40,10 @@ public abstract class PhotoFrameFragment extends Fragment {
     protected PhotoFrameController mController;
     protected ActionBar mActionBar;
     
-    protected View mWaitLayout;
-    protected View mContentLayout;
-    protected View mErrorLayout;
-    protected TextView mErrorText;
+    private View mWaitLayout;
+    private View mContentLayout;
+    private View mErrorLayout;
+    private TextView mErrorText;
     
     public PhotoFrameFragment() {
         super();

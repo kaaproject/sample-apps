@@ -46,7 +46,6 @@ public class LoginFragment extends PhotoFrameFragment implements TextWatcher, On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        
         View rootView = inflater.inflate(R.layout.fragment_login, container,
                 false);
         setupView(rootView);
@@ -72,8 +71,7 @@ public class LoginFragment extends PhotoFrameFragment implements TextWatcher, On
     }
     
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count,
-            int after) {}
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {}

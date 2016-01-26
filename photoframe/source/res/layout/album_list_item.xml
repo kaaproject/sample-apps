@@ -21,26 +21,29 @@
     android:layout_height="match_parent"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:orientation="vertical" >
-    <TextView 
+    android:orientation="vertical">
+
+    <TextView
         android:id="@+id/albumTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="?android:attr/textColorPrimary"
-        android:singleLine="true"/>
-    <TextView 
+        android:singleLine="true" />
+
+    <TextView
         android:id="@+id/imageCount"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:singleLine="true"/>
-    <TextView 
+        android:singleLine="true" />
+
+    <TextView
         android:id="@+id/nowPlaying"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/now_playing"
         android:singleLine="true"
-        android:visibility="gone"/>    
+        android:visibility="gone" />
 </LinearLayout>

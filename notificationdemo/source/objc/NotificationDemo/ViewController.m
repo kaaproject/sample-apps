@@ -35,7 +35,7 @@
     [self addLogWithText:@"NotificationDemo started"];
     
     //Create a Kaa client with the Kaa default context.
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init]];
+    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     
     // A listener that listens to the notification topic list updates.
     [self.kaaClient addTopicListDelegate:self];
@@ -73,7 +73,7 @@
         for (NSString *optionalTopicId in optionalTopics) {
             [self addLogWithText:[NSString stringWithFormat:@"Subscribing to optional topic %@", optionalTopicId]];
         }
-        [self.kaaClient subscribeToTopics:optionalTopics forceSync:YES];
+        [self.kaaClient subscribeToTopicsWithIDs:optionalTopics forceSync:YES];
     }
     @catch (NSException *exception) {
         [self addLogWithText:@"Topic is unavaliable. Can't subscribe"];
@@ -93,7 +93,7 @@
     [self addLogWithText:@"Kaa client stopped"];
 }
 
-- (void)onStartFailure:(NSException *)exception {
+- (void)onStartFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"START FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
@@ -101,7 +101,7 @@
     [self addLogWithText:@"Client paused"];
 }
 
-- (void)onPauseFailure:(NSException *)exception {
+- (void)onPauseFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"PAUSE FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
@@ -109,11 +109,11 @@
     [self addLogWithText:@"Client resumed"];
 }
 
-- (void)onResumeFailure:(NSException *)exception {
+- (void)onResumeFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"RESUME FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
-- (void)onStopFailure:(NSException *)exception {
+- (void)onStopFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 

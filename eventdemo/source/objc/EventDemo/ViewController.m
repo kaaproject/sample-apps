@@ -40,14 +40,14 @@
     [self addLogWithText:@"Event demo started"];
     
     //Create a Kaa client with the Kaa default context.
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] andStateDelegate:self];
+    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     [self.kaaClient setProfileContainer:self];
     
     // Start the Kaa client and connect it to the Kaa server.
     [self.kaaClient start];
     
     //Attaching new user
-    [self.kaaClient attachUser:USER_EXTERNAL_ID token:USER_ACCESS_TOKEN delegate:self];
+    [self.kaaClient attachUserWithId:USER_EXTERNAL_ID accessToken:USER_ACCESS_TOKEN delegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,7 +76,7 @@
     [self addLogWithText:@"Kaa client stopped"];
 }
 
-- (void)onStartFailure:(NSException *)exception {
+- (void)onStartFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"START FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
@@ -84,7 +84,7 @@
     [self addLogWithText:@"Client paused"];
 }
 
-- (void)onPauseFailure:(NSException *)exception {
+- (void)onPauseFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"PAUSE FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
@@ -92,31 +92,35 @@
     [self addLogWithText:@"Client resumed"];
 }
 
-- (void)onResumeFailure:(NSException *)exception {
+- (void)onResumeFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"RESUME FAILURE: %@ : %@", exception.name, exception.reason]];
+
 }
 
-- (void)onStopFailure:(NSException *)exception {
+- (void)onStopFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
-- (void)onThermostatInfoRequest:(ThermostatInfoRequest *)event from:(NSString *)source {
+- (void)onThermostatInfoRequest:(ThermostatInfoRequest *)event fromSource:(NSString *)source {
     [self addLogWithText:[NSString stringWithFormat:@"onThermostatInfoRequest event received! Sender: %@", source]];
     
     ThermostatInfo *info = [[ThermostatInfo alloc] init];
-    info.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 andData:[NSNumber numberWithInt:-95]];
-    info.targetDegree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 andData:[NSNumber numberWithInt:-96]];
-    info.isSetManually = [KAAUnion unionWithBranch:KAA_UNION_BOOLEAN_OR_NULL_BRANCH_0 andData:[NSNumber numberWithBool:YES]];
+    info.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-95]];
+    info.targetDegree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-96]];
+    info.isSetManually = [KAAUnion unionWithBranch:KAA_UNION_BOOLEAN_OR_NULL_BRANCH_0 data:[NSNumber numberWithBool:YES]];
     
     ThermostatInfoResponse *response = [[ThermostatInfoResponse alloc] init];
-    response.thermostatInfo = [KAAUnion unionWithBranch:KAA_UNION_THERMOSTAT_INFO_OR_NULL_BRANCH_0 andData:info];
+    response.thermostatInfo = [KAAUnion unionWithBranch:KAA_UNION_THERMOSTAT_INFO_OR_NULL_BRANCH_0 data:info];
     
     [self.tecf sendThermostatInfoResponse:response to:source];
+
 }
-- (void)onThermostatInfoResponse:(ThermostatInfoResponse *)event from:(NSString *)source {
+
+- (void)onThermostatInfoResponse:(ThermostatInfoResponse *)event fromSource:(NSString *)source {
     [self addLogWithText:[NSString stringWithFormat:@"ThermostatInfoResponse event received! Thermostat info: %@, sender: %@", (ThermostatInfo *)event.thermostatInfo.data, source]];
 }
-- (void)onChangeDegreeRequest:(ChangeDegreeRequest *)event from:(NSString *)source {
+
+- (void)onChangeDegreeRequest:(ChangeDegreeRequest *)event fromSource:(NSString *)source {
     [self addLogWithText:[NSString stringWithFormat:@"ChangeDegreeRequest event received! change temperature by %@ degrees, sender: %@", ((NSNumber *)event.degree.data), source]];
 }
 
@@ -130,7 +134,7 @@
     
     // Broadcast the ChangeDegreeRequest event.
     ChangeDegreeRequest *changeDegree = [[ChangeDegreeRequest alloc] init];
-    changeDegree.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 andData:[NSNumber numberWithInt:-97]];
+    changeDegree.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-97]];
     [self.tecf sendChangeDegreeRequestToAll:changeDegree];
     [self addLogWithText:@"Broadcast ChangeDegreeRequest sent"];
     
@@ -138,7 +142,7 @@
     [self.tecf addDelegate:self];
     
     //Find all the listeners listening to the events from the FQNs list.
-    [self.kaaClient findEventListeners:listenerFQNs delegate:self];
+    [self.kaaClient findListenersForEventFQNs:listenerFQNs delegate:self];
 }
 
 - (void)onEventListenersReceived:(NSArray *)eventListeners {
@@ -146,13 +150,13 @@
     for (NSString *listener in eventListeners) {
         TransactionId *trxId = [self.eventFamilyFactory startEventsBlock];
         // Add a targeted events to the block.
-        [self.tecf addThermostatInfoRequestToBlock:[[ThermostatInfoRequest alloc] init] withTransactionId:trxId andTarget:listener];
+        [self.tecf addThermostatInfoRequestToBlock:[[ThermostatInfoRequest alloc] init] withTransactionId:trxId target:listener];
         ChangeDegreeRequest *request = [[ChangeDegreeRequest alloc] init];
-        request.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 andData:[NSNumber numberWithInt:-98]];
-        [self.tecf addChangeDegreeRequestToBlock:request withTransactionId:trxId andTarget:listener];
+        request.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-98]];
+        [self.tecf addChangeDegreeRequestToBlock:request withTransactionId:trxId target:listener];
         
         // Send the added events in a batch.
-        [self.eventFamilyFactory submitEventsBlock:trxId];
+        [self.eventFamilyFactory submitEventsBlockWithTransactionId:trxId];
         [self addLogWithText:[NSString stringWithFormat:@"ThermostatInfoRequest & ChangeDegreeRequest sent to endpoint with id [%@]", listener]];
         // Dismiss the event batch (if the batch was not submitted as shown in the previous line).
         //[self.eventFamilyFactory removeEventsBlock:trxId];

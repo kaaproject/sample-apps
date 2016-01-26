@@ -20,6 +20,7 @@
 #import "KaaClientStateDelegate.h"
 #import "DefaultLogUploadStrategy.h"
 #import "Kaa/AvroBytesConverter.h"
+#import "RecordCountLogUploadStrategy.h"
 
 #define LOGS_TO_SEND_COUNT 5
 
@@ -55,13 +56,13 @@
     [self addLogWithText:@"DataCollectionDemo started"];
     
     //Create a Kaa client with the Kaa default context.
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] andStateDelegate:self];
+    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     
     // Set a custom strategy for uploading logs.
     // The default strategy uploads logs after either a threshold logs count
     // or a threshold logs size has been reached.
     // The following custom strategy uploads every log record as soon as it is created.
-    [self.kaaClient setLogUploadStrategy:[[DemoLogUploadStrategy alloc]initWithDefaults]];
+    [self.kaaClient setLogUploadStrategy:[[RecordCountLogUploadStrategy alloc]initWithCountThreshold:1]];
     [self.kaaClient setProfileContainer:self];
     
     // Start the Kaa client and connect it to the Kaa server.
@@ -72,10 +73,26 @@
     
     [self addLogWithText:[NSString stringWithFormat:@"Record size: %ld", (long)[self getLogRecordSize:logs[0]]]];
     
+    // Collect log record delivery runners.
+    NSMutableSet *bucketRunners = [NSMutableSet set];
+    
     for (KAALogData *log in logs) {
-        [self.kaaClient addLogRecord:log];
+        [bucketRunners addObject:[self.kaaClient addLogRecord:log]];
         [self addLogWithText:[NSString stringWithFormat:@"Log sent: loglevel - %u, tag - %@, message - %@", log.level, log.tag, log.message]];
     }
+    
+    for (BucketRunner *runner in bucketRunners) {
+        @try {
+            [[[NSOperationQueue alloc]init] addOperationWithBlock:^{
+                BucketInfo *bucketInfo = [runner getValue];
+                NSLog(@"Received log record delivery info. Bucket Id [%d]. Record delivery time [%f ms]", bucketInfo.bucketId, bucketInfo.bucketDeliveryDuration);
+            }];
+        }
+        @catch (NSException *exception) {
+            [self addLogWithText:@"Exception was caught while waiting for callback future"];
+        }
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,22 +129,28 @@
     [self addLogWithText:@"Kaa client stopped"];
 }
 
-- (void)onStartFailure:(NSException *)exception {
+- (void)onStartFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"START FAILURE: %@ : %@", exception.name, exception.reason]];
 }
+
 - (void)onPaused {
     [self addLogWithText:@"Client paused"];
 }
-- (void)onPauseFailure:(NSException *)exception {
+
+-(void)onPauseFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"PAUSE FAILURE: %@ : %@", exception.name, exception.reason]];
+
 }
+
 - (void)onResume {
     [self addLogWithText:@"Client resumed"];
 }
-- (void)onResumeFailure:(NSException *)exception {
+
+-(void)onResumeFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"RESUME FAILURE: %@ : %@", exception.name, exception.reason]];
 }
-- (void)onStopFailure:(NSException *)exception {
+
+-(void)onStopFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 

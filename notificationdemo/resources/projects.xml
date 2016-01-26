@@ -196,6 +196,41 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <sdkLibDir>notification_demo/NotificationDemo/libs</sdkLibDir>
         <destBinaryFile>notification_demo/NotificationDemo/bin/KaaNotificationDemo-debug.apk</destBinaryFile>
     </project>
+    <project id="notification_demo_objc">
+        <name>Notification demo</name>
+        <description>Kaa Notification subsystem demo app based on Objective-C SDK</description>
+        <details>
+            <![CDATA[
+This simple app demonstrates capabilities of the Kaa Notification subsystem on the Objective-C SDK.
+
+<h2>Installation</h2>
+Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. After starting the "Notification demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
+
+You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
+
+Please note that all the features of Administration UI are also supported by REST API.
+
+<h2>What's next?</h2>
+
+For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+        	]]>
+        </details>
+        <sdkLanguage>OBJC</sdkLanguage>
+        <platforms>IOS</platforms>
+        <features>NOTIFICATION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>notification_demo_bundle</bundleId>
+        <sourceArchive>objc/notification_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCNotificationDemo</projectFolder>
+        <sdkLibDir>ObjCNotificationDemo/libs</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
     <bundle id="notification_demo_bundle">
         <name>Notification demo bundle</name>
         <description>Kaa Notification subsystem demo applications bundle</description>

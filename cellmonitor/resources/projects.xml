@@ -16,11 +16,11 @@ Copyright 2014-2016 CyberVision, Inc.
   limitations under the License.
 -->
 
-<projectsConfig 
+<projectsConfig
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="cellmonitor_demo">
+    <project id="cellmonitor_demo_android">
         <name>Cell monitor</name>
         <description>Cell monitor demo app for Android</description>
         <details>
@@ -66,5 +66,46 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <projectFolder>cellmonitor_demo/CellMonitor</projectFolder>
         <sdkLibDir>cellmonitor_demo/CellMonitor/libs</sdkLibDir>
         <destBinaryFile>cellmonitor_demo/CellMonitor/bin/CellMonitor-debug.apk</destBinaryFile>
+    </project>
+    <project id="cellmonitor_demo_objc">
+        <name>Cell monitor</name>
+        <description>Cell monitor demo app for iOS</description>
+        <details>
+            <![CDATA[
+This simple iOS app illustrates time-series data collection using cell tower parameters (operator code, name, signal strength, etc.), and the phone GPS location.
+
+<h2>Installation</h2>
+
+Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor demo", you will see the latest data that the application sends to the Kaa Sandbox server.<br/><br/>
+
+Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and go to the "Cell monitor" application, then select "Schemas", "Log". Choose the latest schema version to inspect the schema of the data collected from the app.<br/><br/>
+
+In this demo application, the data is collected into a MongoDB instance. To review the configuration of the active log appender, browse to the "Log appenders" section under the "Cell monitor" application, and choose "Cell monitor log appender" from the table. You can explore the collected data by querying the Sandbox MongoDB instance as follows:
+<pre>
+$ mongo kaa
+db.logs_$your_application_token$.find()
+</pre>
+
+Where $your_application_token$ is the application token you can copy from the main window of the application in the Administration UI.<br/><br/>
+
+<h2>What's next?</h2>
+
+For more background on the Kaa Logging subsystem please refer to the corresponding programming guide and design reference sections.
+        	]]>
+        </details>
+        <sdkLanguage>OBJC</sdkLanguage>
+        <platforms>IOS</platforms>
+        <features>DATA_COLLECTION</features>
+        <complexity>REGULAR</complexity>
+        <sourceArchive>objc/cellmonitor_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCCellMonitor</projectFolder>
+        <sdkLibDir>ObjCCellMonitor/libs</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
     </project>
 </projectsConfig>

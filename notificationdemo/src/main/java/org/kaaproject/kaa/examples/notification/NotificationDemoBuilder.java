@@ -60,6 +60,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
     private static final String NOTIFICATION_DEMO_CPP_ID = "notification_demo_cpp";
     private static final String NOTIFICATION_DEMO_C_ID = "notification_demo_c";
     private static final String NOTIFICATION_DEMO_ANDROID_ID = "notification_demo_android";
+    private static final String NOTIFICATION_DEMO_OBJC_ID = "notification_demo_objc";
     
     private static final int NOTIFICATION_VERSION = 1;
     private static final Date NOTIFICATION_EXPIRE_DATE = new Date(1900000000000L);
@@ -78,6 +79,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
     	projectsSdkMap.put(NOTIFICATION_DEMO_JAVA_ID, sdkProfile);
     	projectsSdkMap.put(NOTIFICATION_DEMO_CPP_ID, sdkProfile);
     	projectsSdkMap.put(NOTIFICATION_DEMO_C_ID, sdkProfile);
+        projectsSdkMap.put(NOTIFICATION_DEMO_OBJC_ID, sdkProfile);
     	
     	sdkProfile = createNotificationApplication(client, "Android notification demo", 
     			NOTIFICATION_DEMO_ANDROID_ID + "/notification_schema.avsc", 

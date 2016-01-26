@@ -37,12 +37,12 @@
     
     // Create a Kaa client and add a listener which displays the Kaa client configuration
     // as soon as the Kaa client is started.
-    self.kaaClient= [Kaa clientWithContext:defaultKaaPlatfromContext andStateDelegate:self];
+    self.kaaClient = [Kaa clientWithContext:defaultKaaPlatfromContext stateDelegate:self];
     
     // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    [self.kaaClient setConfigurationStorage:[[SimpleConfigurationStorage alloc] initWithPlatformContext:defaultKaaPlatfromContext andPath:[documentsDirectory stringByAppendingPathComponent:@"savedconfig.cfg"]]];
+    [self.kaaClient setConfigurationStorage:[[SimpleConfigurationStorage alloc] initWithPlatformContext:defaultKaaPlatfromContext path:[documentsDirectory stringByAppendingPathComponent:@"savedconfig.cfg"]]];
     
     // Add a listener which displays the Kaa client configuration each time it is updated.
     [self.kaaClient addConfigurationDelegate:self];
@@ -69,15 +69,16 @@
     [self addLogWithText:@"Kaa client stopped"];
 }
 
-- (void)onStartFailure:(NSException *)exception {
+- (void)onStartFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"START FAILURE: %@ : %@", exception.name, exception.reason]];
+
 }
 
 - (void)onPaused {
     [self addLogWithText:@"Client paused"];
 }
 
-- (void)onPauseFailure:(NSException *)exception {
+- (void)onPauseFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"PAUSE FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
@@ -85,11 +86,12 @@
     [self addLogWithText:@"Client resumed"];
 }
 
-- (void)onResumeFailure:(NSException *)exception {
+- (void)onResumeFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"RESUME FAILURE: %@ : %@", exception.name, exception.reason]];
+
 }
 
-- (void)onStopFailure:(NSException *)exception {
+- (void)onStopFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 

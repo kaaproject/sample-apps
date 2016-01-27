@@ -20,13 +20,13 @@
 #define USER_EXTERNAL_ID    @"user@email.com"
 #define USER_ACCESS_TOKEN   @"token"
 
-@interface ViewController () <KaaClientStateDelegate,UserAttachDelegate,ThermostatEventClassFamilyDelegate,FindEventListenersDelegate, ProfileContainer>
+@interface ViewController () <KaaClientStateDelegate, UserAttachDelegate, ThermostatEventClassFamilyDelegate, FindEventListenersDelegate, ProfileContainer>
 
-@property (weak, nonatomic) IBOutlet UITextView *logTextView;
+@property (nonatomic, weak) IBOutlet UITextView *logTextView;
 
-@property (nonatomic,strong) id<KaaClient> kaaClient;
-@property (nonatomic,strong) ThermostatEventClassFamily *tecf;
-@property (nonatomic,strong) EventFamilyFactory *eventFamilyFactory;
+@property (nonatomic, strong) id<KaaClient> kaaClient;
+@property (nonatomic, strong) ThermostatEventClassFamily *tecf;
+@property (nonatomic, strong) EventFamilyFactory *eventFamilyFactory;
 
 - (void)onUserAttached;
 
@@ -48,11 +48,6 @@
     
     //Attaching new user
     [self.kaaClient attachUserWithId:USER_EXTERNAL_ID accessToken:USER_ACCESS_TOKEN delegate:self];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Delegates methods
@@ -105,9 +100,9 @@
     [self addLogWithText:[NSString stringWithFormat:@"onThermostatInfoRequest event received! Sender: %@", source]];
     
     ThermostatInfo *info = [[ThermostatInfo alloc] init];
-    info.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-95]];
-    info.targetDegree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-96]];
-    info.isSetManually = [KAAUnion unionWithBranch:KAA_UNION_BOOLEAN_OR_NULL_BRANCH_0 data:[NSNumber numberWithBool:YES]];
+    info.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:@(-95)];
+    info.targetDegree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:@(-96)];
+    info.isSetManually = [KAAUnion unionWithBranch:KAA_UNION_BOOLEAN_OR_NULL_BRANCH_0 data:@(YES)];
     
     ThermostatInfoResponse *response = [[ThermostatInfoResponse alloc] init];
     response.thermostatInfo = [KAAUnion unionWithBranch:KAA_UNION_THERMOSTAT_INFO_OR_NULL_BRANCH_0 data:info];
@@ -121,7 +116,7 @@
 }
 
 - (void)onChangeDegreeRequest:(ChangeDegreeRequest *)event fromSource:(NSString *)source {
-    [self addLogWithText:[NSString stringWithFormat:@"ChangeDegreeRequest event received! change temperature by %@ degrees, sender: %@", ((NSNumber *)event.degree.data), source]];
+    [self addLogWithText:[NSString stringWithFormat:@"ChangeDegreeRequest event received! change temperature by %@ degrees, sender: %@", event.degree.data, source]];
 }
 
 - (void)onUserAttached {
@@ -134,7 +129,7 @@
     
     // Broadcast the ChangeDegreeRequest event.
     ChangeDegreeRequest *changeDegree = [[ChangeDegreeRequest alloc] init];
-    changeDegree.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-97]];
+    changeDegree.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:@(-97)];
     [self.tecf sendChangeDegreeRequestToAll:changeDegree];
     [self addLogWithText:@"Broadcast ChangeDegreeRequest sent"];
     
@@ -152,7 +147,7 @@
         // Add a targeted events to the block.
         [self.tecf addThermostatInfoRequestToBlock:[[ThermostatInfoRequest alloc] init] withTransactionId:trxId target:listener];
         ChangeDegreeRequest *request = [[ChangeDegreeRequest alloc] init];
-        request.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:[NSNumber numberWithInt:-98]];
+        request.degree = [KAAUnion unionWithBranch:KAA_UNION_INT_OR_NULL_BRANCH_0 data:@(-98)];
         [self.tecf addChangeDegreeRequestToBlock:request withTransactionId:trxId target:listener];
         
         // Send the added events in a batch.
@@ -173,14 +168,10 @@
     return [[KAAEmptyData alloc] init];
 }
 
-- (void) addLogWithText:(NSString *) text {
+- (void)addLogWithText:(NSString *)text {
     NSLog(@"%@", text);
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if ([self.logTextView.text isEqualToString:@""]) {
-            self.logTextView.text = [NSString stringWithFormat:@"%@", text];
-        } else {
-            self.logTextView.text = [NSString stringWithFormat:@"%@\n%@", self.logTextView.text, text];
-        }
+        self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];
     }];
 }
 

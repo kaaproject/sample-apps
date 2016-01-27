@@ -202,6 +202,7 @@ For more background on the Kaa Logging subsystem, please refer to the correspond
         <platforms>IOS</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>BASIC</complexity>
+        <bundleId>datacollection_demo_bundle</bundleId>
         <sourceArchive>objc/datacollection_demo.tar.gz</sourceArchive>
         <projectFolder>ObjCDataCollectionDemo</projectFolder>
         <sdkLibDir>ObjCDataCollectionDemo/libs</sdkLibDir>

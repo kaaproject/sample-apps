@@ -183,6 +183,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <platforms>IOS</platforms>
         <features>EVENT</features>
         <complexity>BASIC</complexity>
+        <bundleId>event_demo_bundle</bundleId>
         <sourceArchive>objc/event_demo.tar.gz</sourceArchive>
         <projectFolder>ObjCEventDemo</projectFolder>
         <sdkLibDir>ObjCEventDemo/libs</sdkLibDir>

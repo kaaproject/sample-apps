@@ -185,6 +185,7 @@ Please note that all the features of Administration UI are also supported by RES
         <platforms>IOS</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
+        <bundleId>configuration_demo_bundle</bundleId>
         <sourceArchive>objc/configuration_demo.tar.gz</sourceArchive>
         <projectFolder>ObjCConfigurationDemo</projectFolder>
         <sdkLibDir>ObjCConfigurationDemo/libs</sdkLibDir>

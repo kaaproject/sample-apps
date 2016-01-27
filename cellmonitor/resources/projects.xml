@@ -62,6 +62,7 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <platforms>ANDROID</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
+        <bundleId>cell_monitor_demo_bundle</bundleId>
         <sourceArchive>android/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>cellmonitor_demo/CellMonitor</projectFolder>
         <sdkLibDir>cellmonitor_demo/CellMonitor/libs</sdkLibDir>
@@ -103,9 +104,24 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <platforms>IOS</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
+        <bundleId>cell_monitor_demo_bundle</bundleId>
         <sourceArchive>objc/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>ObjCCellMonitor</projectFolder>
         <sdkLibDir>ObjCCellMonitor/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <bundle id="cell_monitor_demo_bundle">
+        <name>Cell Monitor demo bundle</name>
+        <description>Kaa Log collection subsystem demo applications bundle</description>
+        <details>
+            <![CDATA[
+This bundle contains applications that demonstrates capabilities of the Kaa Log collection subsystem.
+
+Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+
+<h2>What's next?</h2>
+For more background on the Kaa Logging subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.
+]]>
+        </details>
+    </bundle>
 </projectsConfig>

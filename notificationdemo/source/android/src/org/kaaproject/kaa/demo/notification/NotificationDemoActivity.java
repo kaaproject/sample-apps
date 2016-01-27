@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2016 CyberVision, Inc.
+ * Copyright 2014-2015 CyberVision, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,13 +28,8 @@ import android.support.v4.app.FragmentTransaction;
 
 public class NotificationDemoActivity extends FragmentActivity {
 
-    enum CurrentFragment {
-        TOPIC, NOTIFICATION
-    }
-
     public static final String TAG = KaaNotificationApp.class.getSimpleName();
     private Bundle fragmentData;
-    private CurrentFragment currentFragment;
 
     public void saveFragmentData(Bundle dataBundle) {
         this.fragmentData = dataBundle;
@@ -68,29 +63,47 @@ public class NotificationDemoActivity extends FragmentActivity {
         setContentView(R.layout.notification_demo);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        if (null == savedInstance) {
-            showTopics();
-        } else {
-            if (CurrentFragment.TOPIC == savedInstance.get("fragment")) {
-                showTopics();
-            } else {
-                showNotifications();
-            }
-        }
+
+        showTopics();
+
         ((KaaNotificationApp) getApplicationContext()).setDemoActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        /*
+         * Notify the application of the background state.
+         */
+
+        getNotificationApplication().pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /*
+         * Notify the application of the foreground state.
+         */
+
+        getNotificationApplication().resume();
+    }
+
+    public KaaNotificationApp getNotificationApplication() {
+        return (KaaNotificationApp) getApplication();
     }
 
     public void showNotifications() {
         NotificationFragment notificationFragment = new NotificationFragment();
         addBackStackFragment(notificationFragment, notificationFragment.getTag());
         replaceFragment(notificationFragment, notificationFragment.getFragmentTag());
-        this.currentFragment = CurrentFragment.NOTIFICATION;
     }
 
     public void showTopics() {
         TopicFragment topicFragment = new TopicFragment();
         replaceFragment(topicFragment, topicFragment.getFragmentTag());
-        this.currentFragment = CurrentFragment.TOPIC;
     }
 
     public void replaceFragment(Fragment fragment, String tag) {

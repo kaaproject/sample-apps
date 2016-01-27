@@ -42,9 +42,9 @@
 
 @interface ViewController () <KaaClientStateDelegate, ProfileContainer>
 
-@property (weak, nonatomic) IBOutlet UITextView *logTextView;
+@property (nonatomic, weak) IBOutlet UITextView *logTextView;
 
-@property (nonatomic,strong) id<KaaClient> kaaClient;
+@property (nonatomic, strong) id<KaaClient> kaaClient;
 
 @end
 
@@ -62,7 +62,7 @@
     // The default strategy uploads logs after either a threshold logs count
     // or a threshold logs size has been reached.
     // The following custom strategy uploads every log record as soon as it is created.
-    [self.kaaClient setLogUploadStrategy:[[RecordCountLogUploadStrategy alloc]initWithCountThreshold:1]];
+    [self.kaaClient setLogUploadStrategy:[[RecordCountLogUploadStrategy alloc] initWithCountThreshold:1]];
     [self.kaaClient setProfileContainer:self];
     
     // Start the Kaa client and connect it to the Kaa server.
@@ -83,9 +83,9 @@
     
     for (BucketRunner *runner in bucketRunners) {
         @try {
-            [[[NSOperationQueue alloc]init] addOperationWithBlock:^{
+            [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
                 BucketInfo *bucketInfo = [runner getValue];
-                NSLog(@"Received log record delivery info. Bucket Id [%d]. Record delivery time [%f ms]", bucketInfo.bucketId, bucketInfo.bucketDeliveryDuration);
+                [self addLogWithText:[NSString stringWithFormat:@"Received log record delivery info. Bucket Id [%d]. Record delivery time [%f ms]", bucketInfo.bucketId, bucketInfo.bucketDeliveryDuration]];
             }];
         }
         @catch (NSException *exception) {
@@ -108,7 +108,7 @@
 
 - (NSArray *)generateLogs:(int)logCount {
     NSMutableArray *logs = [NSMutableArray arrayWithCapacity:logCount];
-    for (int i=0; i < logCount; i++) {
+    for (int i = 0; i < logCount; i++) {
         KAALogData *log = [[KAALogData alloc] init];
         log.level = LEVEL_KAA_INFO;
         log.tag = @"iOSTAG";
@@ -139,7 +139,6 @@
 
 -(void)onPauseFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"PAUSE FAILURE: %@ : %@", exception.name, exception.reason]];
-
 }
 
 - (void)onResume {
@@ -161,11 +160,7 @@
 - (void) addLogWithText:(NSString *) text {
     NSLog(@"%@", text);
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if ([self.logTextView.text isEqualToString:@""]) {
-            self.logTextView.text = [NSString stringWithFormat:@"%@", text];
-        } else {
-            self.logTextView.text = [NSString stringWithFormat:@"%@\n%@", self.logTextView.text, text];
-        }
+        self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];
     }];
 }
 

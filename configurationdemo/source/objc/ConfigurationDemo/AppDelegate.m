@@ -15,9 +15,6 @@
  */
 
 #import "AppDelegate.h"
-#import <Kaa/Kaa.h>
-#import "Kaa/SimpleConfigurationStorage.h"
-#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -26,11 +23,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     return YES;
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
 }
 
 @end

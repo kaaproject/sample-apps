@@ -20,7 +20,7 @@
 
 @interface ViewController () <KaaClientStateDelegate, ConfigurationDelegate, ProfileContainer>
 
-@property (weak, nonatomic) IBOutlet UITextView *logTextView;
+@property (nonatomic, weak) IBOutlet UITextView *logTextView;
 
 @property (nonatomic, strong) id<KaaClient> kaaClient;
 
@@ -53,11 +53,6 @@
     [self.kaaClient start];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Delegate methods
 
 - (void)onStarted {
@@ -71,7 +66,6 @@
 
 - (void)onStartFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"START FAILURE: %@ : %@", exception.name, exception.reason]];
-
 }
 
 - (void)onPaused {
@@ -88,7 +82,6 @@
 
 - (void)onResumeFailureWithException:(NSException *)exception {
     [self addLogWithText:[NSString stringWithFormat:@"RESUME FAILURE: %@ : %@", exception.name, exception.reason]];
-
 }
 
 - (void)onStopFailureWithException:(NSException *)exception {
@@ -105,11 +98,11 @@
 }
 
 - (void)displayConfiguration {
-    KAASampleConfiguration *configration = [self.kaaClient getConfiguration];
-    NSArray *links = [configration AddressList].data;
-    NSMutableString *confBody = [NSMutableString stringWithFormat:@"Configuration body :"];
+    KAASampleConfiguration *configuration = [self.kaaClient getConfiguration];
+    NSArray *links = [configuration AddressList].data;
+    NSMutableString *confBody = [NSMutableString stringWithFormat:@"Configuration body :\n"];
     for (KAALink *link in links) {
-        [confBody appendString:[NSString stringWithFormat:@"\n%@ - %@", link.label, link.url]];
+        [confBody appendString:[NSString stringWithFormat:@"%@ - %@\n", link.label, link.url]];
     }
     [self addLogWithText:confBody];
 }
@@ -117,11 +110,7 @@
 - (void) addLogWithText:(NSString *) text {
     NSLog(@"%@", text);
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-    if ([self.logTextView.text isEqualToString:@""]) {
-        self.logTextView.text = [NSString stringWithFormat:@"%@", text];
-    } else {
-        self.logTextView.text = [NSString stringWithFormat:@"%@\n%@", self.logTextView.text, text];
-    }
+        self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];
     }];
 }
 

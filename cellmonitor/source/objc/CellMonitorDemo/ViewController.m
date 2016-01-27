@@ -28,14 +28,10 @@
 @import CoreTelephony;
 
 static CLLocationManager *locationManager;
-static dispatch_once_t locationManagerToken;
 
 #define UNDEFINED -1
 
-
-@interface ViewController () <CLLocationManagerDelegate,LogDeliveryDelegate> {
-    CLLocationManager *locationManager;
-}
+@interface ViewController () <CLLocationManagerDelegate,LogDeliveryDelegate>
 
 @property (nonatomic, weak) IBOutlet UILabel *operatorLabel;
 @property (nonatomic, weak) IBOutlet UILabel *operatorNameLabel;
@@ -48,9 +44,9 @@ static dispatch_once_t locationManagerToken;
 @property (nonatomic, weak) IBOutlet UILabel *logCountLabel;
 @property (nonatomic, weak) IBOutlet UILabel *deliveredLogsLabel;
 
-@property (nonatomic, strong) AppDelegate *appDelegate;
+@property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) CTTelephonyNetworkInfo *telephoneNetworkManager;
-@property (nonatomic, strong) id<KaaClient> kaaClient;
+@property (nonatomic, weak) id<KaaClient> kaaClient;
 @property (nonatomic) NSInteger sentLogCount;
 @property (nonatomic) int64_t lastLogTime;
 @property (nonatomic) NSInteger deliveredLogsCount;
@@ -147,14 +143,14 @@ static dispatch_once_t locationManagerToken;
 #pragma mark - LocationManager & delegate
 
 - (void) startUpdatingLocation {
-    locationManager = [ViewController getLocationManager];
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    CLLocationManager *manager = [ViewController getLocationManager];
+    manager.delegate = self;
+    manager.desiredAccuracy = kCLLocationAccuracyBest;
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-        [locationManager requestWhenInUseAuthorization];
+        [manager requestWhenInUseAuthorization];
     
-    [locationManager startUpdatingLocation];
+    [manager startUpdatingLocation];
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
@@ -227,6 +223,7 @@ static dispatch_once_t locationManagerToken;
 }
 
 + (CLLocationManager *)getLocationManager {
+    static dispatch_once_t locationManagerToken;
     dispatch_once(&locationManagerToken, ^{
         locationManager = [[CLLocationManager alloc] init];
     });

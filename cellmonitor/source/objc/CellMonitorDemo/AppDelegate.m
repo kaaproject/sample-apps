@@ -24,14 +24,13 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     [self.kaaClient setProfileContainer:self];
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
+- (void)applicationDidEnterBackground:(UIApplication *)application {
     self.isClientStarted = NO;
     [self.kaaClient pause];
     [[ViewController getLocationManager] stopUpdatingLocation];

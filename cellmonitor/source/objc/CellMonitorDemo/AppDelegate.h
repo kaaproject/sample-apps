@@ -20,8 +20,8 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) id<KaaClient> kaaClient;
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) id<KaaClient> kaaClient;
 @property (nonatomic) BOOL isClientStarted;
 
 @end

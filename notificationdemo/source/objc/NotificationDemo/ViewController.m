@@ -16,13 +16,12 @@
 
 #import "ViewController.h"
 #import <Kaa/Kaa.h>
-#import "Kaa/NotificationTopicListDelegate.h"
 
 @interface ViewController () <KaaClientStateDelegate, NotificationTopicListDelegate, NotificationDelegate, ProfileContainer>
 
-@property (weak, nonatomic) IBOutlet UITextView *logTextView;
+@property (nonatomic, weak) IBOutlet UITextView *logTextView;
 
-@property (nonatomic,strong) id<KaaClient> kaaClient;
+@property (nonatomic, strong) id<KaaClient> kaaClient;
 
 @end
 
@@ -135,22 +134,18 @@
 
 - (NSArray *)extractOptionalTopicIds:(NSArray *)topics {
     NSMutableArray *topicIds = [NSMutableArray array];
-    for (Topic *t in topics) {
-        if (t.subscriptionType == SUBSCRIPTION_TYPE_OPTIONAL_SUBSCRIPTION) {
-            [topicIds addObject:t.id];
+    for (Topic *topic in topics) {
+        if (topic.subscriptionType == SUBSCRIPTION_TYPE_OPTIONAL_SUBSCRIPTION) {
+            [topicIds addObject:topic.id];
         }
     }
     return topicIds;
 }
 
-- (void) addLogWithText:(NSString *) text {
+- (void)addLogWithText:(NSString *) text {
     NSLog(@"%@", text);
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if ([self.logTextView.text isEqualToString:@""]) {
-            self.logTextView.text = [NSString stringWithFormat:@"%@", text];
-        } else {
-            self.logTextView.text = [NSString stringWithFormat:@"%@\n%@", self.logTextView.text, text];
-        }
+        self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];
     }];
 }
 

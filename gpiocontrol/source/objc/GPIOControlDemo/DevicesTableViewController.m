@@ -133,7 +133,7 @@
                                                            [self presentViewController:[ConnectionAlert showAlertEmtpyEndpointId] animated:YES completion:nil];
                                                        } else {
                                                            self.endpointId = alert.textFields.lastObject.text;
-                                                           [self.kaaClient attachEndpoint:[[EndpointAccessToken alloc] initWithToken:self.endpointId] delegate:self];
+                                                           [self.kaaClient attachEndpointWithAccessToken:[[EndpointAccessToken alloc] initWithToken:self.endpointId] delegate:self];
                                                            [KaaProvider sendDeviceInfoRequestToAll];
                                                        }
                                                    }];
@@ -187,19 +187,19 @@
         NSLog(@"%@ Going to detach.", TAG);
         Device *currentDevice = self.devices[indexPath.row];
         self.deletingIndexPath = indexPath;
-        [kaaClient detachEndpoint:[[EndpointKeyHash alloc] initWithKeyHash:currentDevice.kaaEndpointId] delegate:self];
+        [kaaClient detachEndpointWithKeyHash:[[EndpointKeyHash alloc] initWithKeyHash:currentDevice.kaaEndpointId] delegate:self];
     }
 }
 
 #pragma mark - Delegates methods
 
-- (void)onDeviceInfoResponse:(DeviceInfoResponse *)event from:(NSString *)source {
+- (void)onDeviceInfoResponse:(DeviceInfoResponse *)event fromSource:(NSString *)source {
     NSLog(@"%@ Got DeviceInfoResponse", TAG);
     Device *device = [[Device alloc] initWithModel:event.model DeviceName:event.deviceName KaaEndpointId:source andGPIOStatuses:event.gpioStatus];
     [self addItem:device];
 }
 
-- (void)onDetach:(SyncResponseResultType)result {
+- (void)onDetachResult:(SyncResponseResultType)result {
     NSLog(@"%@ SyncresponseResultType: %u", TAG, result);
     if (result == SYNC_RESPONSE_RESULT_TYPE_SUCCESS) {
         [self.devices removeObjectAtIndex:self.deletingIndexPath.row];
@@ -207,10 +207,10 @@
     }
 }
 
-- (void)onAttach:(SyncResponseResultType)result resultContext:(EndpointKeyHash *)resultContext {
+- (void)onAttachResult:(SyncResponseResultType)result withEndpointKeyHash:(EndpointKeyHash *)endpointKeyHash {
     NSLog(@"%@ attachEndpoint result: %u", TAG, result);
-}
 
+}
 
 #pragma mark - Navigation
 

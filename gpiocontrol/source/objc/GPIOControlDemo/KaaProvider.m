@@ -22,25 +22,25 @@
 - (void)onStarted{
     NSLog(@"Kaa client started");
 }
-- (void)onStartFailure:(NSException *)exception {
+- (void)onStartFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client startup failure. %@", exception);
 }
 - (void)onPaused {
     NSLog(@"Kaa client paused");
 }
-- (void)onPauseFailure:(NSException *)exception {
+- (void)onPauseFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client pause failure. %@", exception);
 }
 - (void)onResume{
     NSLog(@"Kaa client resumed");
 }
-- (void)onResumeFailure:(NSException *)exception {
+- (void)onResumeFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client resume failure. %@", exception);
 }
 - (void)onStopped {
     NSLog(@"Kaa client stopped");
 }
-- (void)onStopFailure:(NSException *)exception {
+- (void)onStopFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client stop failure. %@", exception);
 }
 
@@ -56,14 +56,14 @@ static dispatch_once_t onceToken;
 + (id <KaaClient>)getClient {
     dispatch_once(&onceToken, ^{
         delegate = [[ConcreteStateDelegate alloc] init];
-        kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] andStateDelegate:delegate];
+        kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:delegate];
     });
     return kaaClient;
 }
 
 - (void)attachUser {
     id <KaaClient> client = [KaaProvider getClient];
-    [client attachUser:[PreferencesManager getUserExternalId] token:[PreferencesManager getUserAccessToken] delegate:self];
+    [client attachUserWithId:[PreferencesManager getUserExternalId] accessToken:[PreferencesManager getUserAccessToken] delegate:self];
 }
 
 + (void)setUpEventDelegate:(id <RemoteControlECFDelegate>)delegate {

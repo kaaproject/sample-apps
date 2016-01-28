@@ -44,19 +44,15 @@
     NSLog(@"Kaa client stop failure. %@", exception);
 }
 
-
 @end
-
-static id <KaaClient> kaaClient = nil;
-static ConcreteStateDelegate *delegate = nil;
-static dispatch_once_t onceToken;
 
 @implementation KaaProvider
 
 + (id <KaaClient>)getClient {
+    static id <KaaClient> kaaClient = nil;
+    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        delegate = [[ConcreteStateDelegate alloc] init];
-        kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:delegate];
+        kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:[[ConcreteStateDelegate alloc] init]];
     });
     return kaaClient;
 }
@@ -67,7 +63,7 @@ static dispatch_once_t onceToken;
 }
 
 + (void)setUpEventDelegate:(id <RemoteControlECFDelegate>)delegate {
-    id <KaaClient> client = [KaaProvider getClient];
+    id <KaaClient> client = [self getClient];
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     
@@ -76,7 +72,7 @@ static dispatch_once_t onceToken;
 }
 
 + (void)sendDeviceInfoRequestToAll {
-    id <KaaClient> client = [KaaProvider getClient];
+    id <KaaClient> client = [self getClient];
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     

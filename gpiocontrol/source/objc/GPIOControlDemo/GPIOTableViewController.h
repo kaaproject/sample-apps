@@ -20,7 +20,7 @@
 
 @interface GPIOTableViewController : UITableViewController <UITabBarDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) Device *device;
-@property (strong, nonatomic) NSArray *gpioStatusArray;
+@property (nonatomic, strong) Device *device;
+@property (nonatomic, strong) NSArray *gpioStatusArray;
 
 @end

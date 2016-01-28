@@ -35,14 +35,10 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void) sortGpioStatuses {
+- (void)sortGpioStatuses {
     NSArray *sorteadArray = [self.gpioStatusArray sortedArrayUsingComparator:^NSComparisonResult(GpioStatus *obj1, GpioStatus *obj2) {
-        NSNumber *id1 = [NSNumber numberWithInt:obj1.id];
-        NSNumber *id2 = [NSNumber numberWithInt:obj2.id];
+        NSNumber *id1 = @(obj1.id);
+        NSNumber *id2 = @(obj2.id);
         return [id1 compare:id2];
     }];
     self.gpioStatusArray = sorteadArray;
@@ -50,14 +46,9 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.gpioStatusArray.count ? self.gpioStatusArray.count : 0;
+    return self.gpioStatusArray.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cell";
@@ -69,17 +60,13 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 #pragma mark - Actions
 
 - (IBAction)statusSwitchChanged:(UISwitch *)sender {
     ConnectivityChecker *checker = [[ConnectivityChecker alloc] init];
     if ([checker isConnected]) {
         GpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
-        status.status = [sender isOn];
+        status.status = sender.on;
         id <KaaClient> client = [KaaProvider getClient];
         EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
         RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
@@ -96,7 +83,7 @@
                                                            [alertController dismissViewControllerAnimated:YES completion:nil];
                                                        }];
         [alertController addAction:cancel];
-        [sender setOn:![sender isOn]];
+        sender.on = !sender.on;
 
         [self presentViewController:alertController animated:YES completion:nil];
     }

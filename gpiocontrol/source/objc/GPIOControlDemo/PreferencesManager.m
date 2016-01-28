@@ -15,30 +15,23 @@
  */
 
 #import "PreferencesManager.h"
-#define USER_EXTERNAL_ID @"user_external_id"
-#define USER_ACCESS_TOKEN @"user_access_token"
-
+#define USER_EXTERNAL_ID_KEY @"user_external_id"
+#define USER_ACCESS_TOKEN_KEY @"user_access_token"
 
 @implementation PreferencesManager
 
-+ (void) setUserAccessToken:(NSString *)token {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:token forKey:USER_ACCESS_TOKEN];
++ (void)setUserAccessToken:(NSString *)token {
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:USER_ACCESS_TOKEN_KEY];
 }
 
 + (NSString *)getUserAccessToken {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *string = [userDefaults objectForKey:USER_ACCESS_TOKEN];
-    return string;
+    return [[NSUserDefaults standardUserDefaults] objectForKey:USER_ACCESS_TOKEN_KEY];
 }
-+ (void) setUserExternalId:(NSString *)extId {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:extId forKey:USER_EXTERNAL_ID];
++ (void)setUserExternalId:(NSString *)extId {
+    [[NSUserDefaults standardUserDefaults] setObject:extId forKey:USER_EXTERNAL_ID_KEY];
 }
-+ (NSString *) getUserExternalId {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *string = [userDefaults objectForKey:USER_EXTERNAL_ID];
-    return string;
++ (NSString *)getUserExternalId {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:USER_EXTERNAL_ID_KEY];
 }
 
 @end

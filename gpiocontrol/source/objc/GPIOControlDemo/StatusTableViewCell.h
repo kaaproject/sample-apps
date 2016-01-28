@@ -18,7 +18,7 @@
 
 @interface StatusTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UISwitch *statusSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *idLabel;
+@property (nonatomic, weak) IBOutlet UISwitch *statusSwitch;
+@property (nonatomic, weak) IBOutlet UILabel *idLabel;
 
 @end

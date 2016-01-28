@@ -23,7 +23,7 @@
 @property (nonatomic, strong) NSMutableDictionary *gpioStatuses;
 @property (nonatomic, strong) NSString *kaaEndpointId;
 
-- (instancetype)initWithModel:(NSString *)model DeviceName:(NSString *)deviceName KaaEndpointId:(NSString *)endpointId andGPIOStatuses:(NSArray *)gpioStatuses;
+- (instancetype)initWithModel:(NSString *)model deviceName:(NSString *)deviceName kaaEndpointId:(NSString *)endpointId GPIOStatuses:(NSArray *)gpioStatuses;
 - (NSArray *)getGpioStatuses;
 - (void)setGpioStatusesFromArray:(NSArray *)gpioStatusesArray;
 

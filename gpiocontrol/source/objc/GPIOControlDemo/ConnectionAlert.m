@@ -23,7 +23,7 @@
                                           alertControllerWithTitle:@"Connection status"
                                           message:@"No connection"
                                           preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
                                                        [alertController dismissViewControllerAnimated:YES completion:nil];
                                                    }];
@@ -36,7 +36,7 @@
                                           alertControllerWithTitle:@"Empty endpoint id"
                                           message:@"Endpoint id can't be empty"
                                           preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
                                                        [alertController dismissViewControllerAnimated:YES completion:nil];
                                                    }];

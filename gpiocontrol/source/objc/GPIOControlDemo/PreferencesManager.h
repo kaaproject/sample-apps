@@ -18,9 +18,9 @@
 
 @interface PreferencesManager : NSObject
 
-+ (void) setUserAccessToken:(NSString *)token;
++ (void)setUserAccessToken:(NSString *)token;
 + (NSString *)getUserAccessToken;
-+ (void) setUserExternalId:(NSString *)extId;
-+ (NSString *) getUserExternalId;
++ (void)setUserExternalId:(NSString *)extId;
++ (NSString *)getUserExternalId;
 
 @end

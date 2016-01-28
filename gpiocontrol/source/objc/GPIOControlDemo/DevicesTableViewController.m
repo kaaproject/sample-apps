@@ -37,14 +37,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.allowsMultipleSelectionDuringEditing = NO;
     
     //Starting Kaa client
     [self startKaa];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 - (void)startKaa {
@@ -80,8 +75,8 @@
     if ([checker isConnected]) {
         if (!self.kaaClient) {
             [self startKaa];
-    }
-    [KaaProvider setUpEventDelegate:self];
+        }
+        [KaaProvider setUpEventDelegate:self];
     } else {
         [self presentViewController:[ConnectionAlert showAlertNoConnection] animated:YES completion:nil];
     }
@@ -91,7 +86,7 @@
     if ([self.devices containsObject:device]) {
         NSInteger index = [self.devices indexOfObject:device];
         [self.devices replaceObjectAtIndex:index withObject:device];
-        [self.tableView reloadData];
+        [self reloadTable];
     } else {
         [self.devices addObject:device];
         [self reloadTable];
@@ -120,14 +115,14 @@
 
 - (IBAction)plusButtonPressed:(UIBarButtonItem *)sender {
     if ([[[ConnectivityChecker alloc] init] isConnected]) {
-        UIAlertController * alert=   [UIAlertController
-                                      alertControllerWithTitle:@"Access token"
-                                      message:@"Enter access token"
-                                      preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:@"Access token"
+                                    message:@"Enter access token"
+                                    preferredStyle:UIAlertControllerStyleAlert];
         [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = @"Access token";
         }];
-        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
                                                        if ([alert.textFields.lastObject.text isEqualToString:@""]) {
                                                            [self presentViewController:[ConnectionAlert showAlertEmtpyEndpointId] animated:YES completion:nil];
@@ -137,7 +132,7 @@
                                                            [KaaProvider sendDeviceInfoRequestToAll];
                                                        }
                                                    }];
-        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {
                                                            [alert dismissViewControllerAnimated:YES completion:nil];
                                                        }];
@@ -157,10 +152,6 @@
 
 #pragma mark - Table view data source and delegate
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.devices.count;
 }
@@ -171,10 +162,6 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%@, %luGPIO", device.model, (unsigned long)device.gpioStatuses.count];
     cell.detailTextLabel.text = device.deviceName;
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -195,7 +182,7 @@
 
 - (void)onDeviceInfoResponse:(DeviceInfoResponse *)event fromSource:(NSString *)source {
     NSLog(@"%@ Got DeviceInfoResponse", TAG);
-    Device *device = [[Device alloc] initWithModel:event.model DeviceName:event.deviceName KaaEndpointId:source andGPIOStatuses:event.gpioStatus];
+    Device *device = [[Device alloc] initWithModel:event.model deviceName:event.deviceName kaaEndpointId:source GPIOStatuses:event.gpioStatus];
     [self addItem:device];
 }
 
@@ -209,7 +196,6 @@
 
 - (void)onAttachResult:(SyncResponseResultType)result withEndpointKeyHash:(EndpointKeyHash *)endpointKeyHash {
     NSLog(@"%@ attachEndpoint result: %u", TAG, result);
-
 }
 
 #pragma mark - Navigation

@@ -32,7 +32,7 @@
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
+- (void)applicationDidEnterBackground:(UIApplication *)application {
     [[KaaProvider getClient] pause];
 }
 

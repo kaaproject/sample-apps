@@ -17,13 +17,9 @@
 #import "Device.h"
 #import "EventGen.h"
 
-@interface Device()
-
-@end
-
 @implementation Device
 
-- (instancetype)initWithModel:(NSString *)model DeviceName:(NSString *)deviceName KaaEndpointId:(NSString *)endpointId andGPIOStatuses:(NSArray *)gpioStatuses {
+- (instancetype)initWithModel:(NSString *)model deviceName:(NSString *)deviceName kaaEndpointId:(NSString *)endpointId GPIOStatuses:(NSArray *)gpioStatuses {
     self = [super init];
     if (self) {
         self.gpioStatuses = [NSMutableDictionary dictionary];
@@ -37,7 +33,7 @@
 
 - (void)setGpioStatusesFromArray:(NSArray *)gpioStatusesArray {
     for (GpioStatus *status in gpioStatusesArray) {
-        [self.gpioStatuses setObject:[NSNumber numberWithBool:status.status] forKey:[NSNumber numberWithInt:status.id]];
+        self.gpioStatuses[@(status.id)] = @(status.status);
     }
 }
 
@@ -46,7 +42,7 @@
     for (NSNumber *key in self.gpioStatuses.allKeys) {
         GpioStatus *status = [[GpioStatus alloc] init];
         status.id = key.intValue;
-        status.status = [[self.gpioStatuses objectForKey:key] boolValue];
+        status.status = [self.gpioStatuses[key] boolValue];
         [gpioStatuses addObject:status];
     }
     return gpioStatuses;
@@ -58,13 +54,13 @@
     }
     Device *device = object;
     if (self.model) {
-        return [self.model isEqualToString:device.model] ? YES : NO;
+        return [self.model isEqualToString:device.model];
     }
     if (self.deviceName) {
-        return [self.deviceName isEqualToString:device.deviceName] ? YES : NO;
+        return [self.deviceName isEqualToString:device.deviceName];
     }
     if (self.gpioStatuses) {
-        return [self.gpioStatuses isEqualToDictionary:device.gpioStatuses] ? YES : NO;
+        return [self.gpioStatuses isEqualToDictionary:device.gpioStatuses];
     }
     return !(self.kaaEndpointId ? ![self.kaaEndpointId isEqualToString:device.kaaEndpointId] : device.kaaEndpointId != nil);
 }

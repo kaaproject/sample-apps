@@ -31,37 +31,37 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true">
         
-	    <TextView
-	        android:id="@+id/networkOperatorLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/network_operator" />
+        <TextView
+            android:id="@+id/networkOperatorLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/network_operator" />
         
-	    <TextView
+        <TextView
             android:id="@+id/networkOperatorNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/network_operator_name" />
         
-	    <TextView
+        <TextView
             android:id="@+id/gsmCellIdLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gsm_cell_id" />
         
-	     <TextView
+         <TextView
             android:id="@+id/gsmLacLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gsm_lac" />
         
-	     <TextView
+         <TextView
             android:id="@+id/gsmSignalStrengthLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gsm_signal_strength" />
         
-	     <TextView
+         <TextView
             android:id="@+id/gpsLocationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,13 +142,13 @@
             android:layout_height="wrap_content"
             android:text="@string/last_log_time" />    
                            
-	    <TextView
+        <TextView
             android:id="@+id/logsSentLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logs_sent" />
-	    </LinearLayout>
-	    
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/logsValuesLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -165,13 +165,13 @@
                 android:textStyle="bold"
                 android:text="@string/unavailable" />    
             
-		    <TextView
+            <TextView
                 android:id="@+id/logsSentValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:textStyle="bold"
                 android:text="@string/unavailable"/>    
-	    </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

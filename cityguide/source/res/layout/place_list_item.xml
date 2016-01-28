@@ -29,25 +29,25 @@
         android:layout_alignParentLeft="true"
         android:layout_marginRight="8dp" />
 
-		<TextView
-		    android:id="@+id/placeName"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_alignTop="@id/placePhoto"
-		    android:layout_toRightOf="@id/placePhoto"
-		    android:textAppearance="?android:attr/textAppearanceMedium"
-		    android:textColor="?android:attr/textColorPrimary"
-			android:singleLine="true" />
+        <TextView
+            android:id="@+id/placeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/placePhoto"
+            android:layout_toRightOf="@id/placePhoto"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?android:attr/textColorPrimary"
+            android:singleLine="true" />
 
-		<TextView
-		    android:id="@+id/placeDesc"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_below="@id/placeName"
-		    android:layout_marginTop="1dip"
-		    android:layout_toRightOf="@id/placePhoto"
-		    android:textAppearance="?android:attr/textAppearanceSmall"
-			android:singleLine="false"
-			android:maxLines="3"
-			android:lines="3" />
+        <TextView
+            android:id="@+id/placeDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/placeName"
+            android:layout_marginTop="1dip"
+            android:layout_toRightOf="@id/placePhoto"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:singleLine="false"
+            android:maxLines="3"
+            android:lines="3" />
 </RelativeLayout>

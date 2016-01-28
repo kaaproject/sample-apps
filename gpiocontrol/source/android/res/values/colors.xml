@@ -20,4 +20,6 @@
     <color name="primary">#FFAB00</color>
     <color name="primary_pressed">#ffcb46</color>
     <color name="ripple">#FFFF</color>
+    <color name="tea_color">#009688</color>
+    <color name="gray_color">#b3b3b3</color>
 </resources>

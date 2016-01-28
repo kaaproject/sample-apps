@@ -28,12 +28,14 @@ import com.nispok.snackbar.listeners.ActionClickListener;
 import org.kaaproject.kaa.examples.gpiocontrol.R;
 
 public class SnackbarsManager {
-    public static void makeSnackBar(final Context context, String text){
+    public static void makeSnackBar(final Context context, String text) {
+
         SnackbarManager.show(
                 Snackbar.with(context)
                         .text(text));
     }
-    public static void makeSnackBarNoInet(final Context context){
+
+    public static void makeSnackBarNoInet(final Context context) {
         SnackbarManager.show(
                 Snackbar.with(context.getApplicationContext())
                         .text(context.getResources().getString(R.string.no_internet))

@@ -41,7 +41,7 @@ import java.util.List;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder>{
 
-    private static final String LOG_TAG = "DevicesAdapter";
+    private static final String TAG = DevicesAdapter.class.getSimpleName();
 
     private List<Device> devicesDataset;
 
@@ -51,9 +51,9 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         public TextView deviceName;
         public TextView gpioCount;
 
-        public ViewHolder(CardView v) {
-            super(v);
-            cardView = v;
+        public ViewHolder(CardView viewHolder) {
+            super(viewHolder);
+            cardView = viewHolder;
             modelName = (TextView)cardView.findViewById(R.id.model);
             deviceName = (TextView)cardView.findViewById(R.id.deviceName);
             gpioCount = (TextView)cardView.findViewById(R.id.gpioCount);
@@ -65,23 +65,22 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
     }
 
     @Override
-    public DevicesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                        int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+    public DevicesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.device_view, parent, false);
 
-        return new ViewHolder((CardView)v);
+        return new ViewHolder((CardView)view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.modelName.setText(devicesDataset.get(position).getModel());
         holder.deviceName.setText(devicesDataset.get(position).getDeviceName());
-        holder.gpioCount.setText(devicesDataset.get(position).getGpioStatuses().size()+" GPIO");
+        holder.gpioCount.setText(devicesDataset.get(position).getGpioStatuses().size() + " GPIO");
 
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public boolean onLongClick(View view) {
                 showDeleteEndpointDialog(holder.cardView, devicesDataset.get(position).getKaaEndpointId(), position);
                 return true;
             }
@@ -89,12 +88,12 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), GPIOStatusListActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), GPIOStatusListActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("device", devicesDataset.get(position));
                 intent.putExtras(bundle);
-                v.getContext().startActivity(intent);
+                view.getContext().startActivity(intent);
             }
         });
     }
@@ -111,14 +110,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         alertDialogBuilder.setView(promptView);
 
         alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         KaaClient kaaClient = KaaProvider.getClient(view.getContext());
-                        Log.d(LOG_TAG, "Going to detach....");
+                        Log.d(TAG, "Going to detach....");
                         kaaClient.detachEndpoint(new EndpointKeyHash(endpointKey), new OnDetachEndpointOperationCallback() {
                             @Override
                             public void onDetach(SyncResponseResultType syncResponseResultType) {
-                                Log.d(LOG_TAG, syncResponseResultType.name());
+                                Log.d(TAG, syncResponseResultType.name());
                                 if(syncResponseResultType == SyncResponseResultType.SUCCESS){
                                     devicesDataset.remove(position);
                                     notifyItemRemoved(position);
@@ -129,7 +128,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                         });
                     }
                 })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(android.R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

@@ -19,11 +19,12 @@ package org.kaaproject.kaa.examples.gpiocontol.utils;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-
-//need to avoid some render problems on Sony and Samsung devices
+/*
+    Used to avoid some rendering problems on Sony and Samsung devices
+ */
 public class CustomRecyclerView extends RecyclerView {
 
-    private static final String TAG = "CustomRecyclerView";
+    private static final String TAG = CustomRecyclerView.class.getSimpleName();
 
     public CustomRecyclerView(android.content.Context context) {
         super(context);
@@ -40,6 +41,6 @@ public class CustomRecyclerView extends RecyclerView {
     @Override
     public void scrollTo(int x, int y) {
         Log.e(TAG, "CustomRecyclerView does not support scrolling to an absolute position.");
-        // Either don't call super here or call just for some phones, or try catch it. From default implementation we have removed the Runtime Exception trown
+        // Either don't call super here or call just for some phones, or try catch it. From default implementation we have removed the Runtime Exception thrown
     }
 }

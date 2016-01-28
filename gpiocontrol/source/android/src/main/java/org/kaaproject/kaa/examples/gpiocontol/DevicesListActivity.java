@@ -54,33 +54,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DevicesListActivity extends AppCompatActivity {
-    private final String LOG_TAG = "DevicesListActivity";
+
+    private final String TAG = DevicesListActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private ProgressBar progressBar;
-
 
     private KaaClient kaaClient;
     private final Context context = this;
 
     private String endpointId;
-
-    List<Device> devices;
+    private List<Device> devices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices_list);
 
-        //look up for Views
-        initView();
+        initViews();
 
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devices = new ArrayList<>();
         mAdapter = new DevicesAdapter(devices);
@@ -94,72 +90,68 @@ public class DevicesListActivity extends AppCompatActivity {
         super.onRestart();
         refreshActivity();
     }
-    public void refreshActivity(){
-        devices.clear();
-        mAdapter.notifyDataSetChanged();
-        kaaClient.getEventFamilyFactory().getRemoteControlECF().sendEventToAll(new DeviceInfoRequest());
+
+    private void refreshActivity() {
+        if (isFirstLaunch()) {
+            devices.clear();
+            mAdapter.notifyDataSetChanged();
+            kaaClient.getEventFamilyFactory().getRemoteControlECF().sendEventToAll(new DeviceInfoRequest());
+        }
     }
 
-    protected void addItem(Device device){
-        if(devices.contains(device)){
+    private void addDevice(Device device) {
+        if (devices.contains(device)) {
             int index = devices.indexOf(device);
             devices.set(index, device);
             mAdapter.notifyItemChanged(index);
-        }else {
+        } else {
             devices.add(device);
             mAdapter.notifyItemInserted(devices.size() - 1);
         }
         findViewById(R.id.noEndpointsText).setVisibility(View.INVISIBLE);
     }
 
-    protected void startKaa(){
+    private void startKaa() {
         progressBar.setVisibility(View.VISIBLE);
-        if(!ConnectionsManager.haveConnection(this)){
+        if (!ConnectionsManager.checkConnection(this)) {
             SnackbarsManager.makeSnackBarNoInet(this);
         }else {
             kaaClient = KaaProvider.getClient(this);
             kaaClient.start();
-            if(isFirstLaunch()) {
-                initKaa();
+            if (isFirstLaunch()) {
+                PreferencesManager.setUserExternalId(this, "2");
+                Log.d(TAG, "Attaching user...");
+                KaaProvider.attachUser(context);
             }
             setUpEndpointListener();
         }
         progressBar.setVisibility(View.INVISIBLE);
     }
-    protected void initKaa(){
-        PreferencesManager.setUserExternalId(this, "2");
-        Log.d(LOG_TAG, "Attaching user...");
-        KaaProvider.attachUser(context);
 
-    }
-    protected void setUpEndpointListener(){
-        if(!ConnectionsManager.haveConnection(this)){
+    private void setUpEndpointListener(){
+        if (!ConnectionsManager.checkConnection(this)) {
             SnackbarsManager.makeSnackBarNoInet(this);
             return;
         }
-        if(kaaClient==null){
+        if (kaaClient == null) {
             startKaa();
         }
 
-
-
-
-
         KaaProvider.setUpEventListener(this, new RemoteControlECF.Listener() {
             @Override
-            public void onEvent(DeviceInfoResponse deviceInfoResponse, String s) {
-                Log.d(LOG_TAG, "Got DeviceInfoResponse");
+            public void onEvent(DeviceInfoResponse deviceInfoResponse, String endpointId) {
+                Log.d(TAG, "Got DeviceInfoResponse");
                 Device device = new Device(
                         deviceInfoResponse.getModel(),
                         deviceInfoResponse.getDeviceName(),
                         deviceInfoResponse.getGpioStatus(),
-                        s);
-                addItem(device);
+                        endpointId);
+                addDevice(device);
             }
         });
     }
 
-    private void showEndpointDialog(){
+    private void showEndpointDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(DevicesListActivity.this);
         View promptView = layoutInflater.inflate(R.layout.dialog_endpoint_id, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DevicesListActivity.this);
@@ -167,27 +159,30 @@ public class DevicesListActivity extends AppCompatActivity {
 
         final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
         alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        if (kaaClient == null) {
+                            startKaa();
+                        }
+
                         endpointId = editText.getText().toString();
                         progressBar.setVisibility(View.VISIBLE);
 
-
-                        if(endpointId == null || endpointId.isEmpty()) {
+                        if (endpointId == null || endpointId.isEmpty()) {
                             SnackbarsManager.makeSnackBar(context, "Endpoint ID can't be empty");
                             return;
                         }
                         kaaClient.attachEndpoint(new EndpointAccessToken(endpointId), new OnAttachEndpointOperationCallback() {
                             @Override
                             public void onAttach(SyncResponseResultType syncResponseResultType, EndpointKeyHash endpointKeyHash) {
-                                Log.d(LOG_TAG, "attachEndpoint result: " + syncResponseResultType.toString());
+                                Log.d(TAG, "attachEndpoint result: " + syncResponseResultType.toString());
                             }
                         });
                         KaaProvider.sendDeviceInfoRequestToAll(context);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(android.R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -202,15 +197,15 @@ public class DevicesListActivity extends AppCompatActivity {
         return PreferencesManager.getUserExternalId(this).isEmpty();
     }
 
-    protected void initView(){
+    private void initViews() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        ((TextView)findViewById(R.id.appName)).setText(getText(R.string.app_name));
+        ((TextView) findViewById(R.id.appName)).setText(getText(R.string.app_name));
         findViewById(R.id.reloadButton).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 refreshActivity();
             }
         });

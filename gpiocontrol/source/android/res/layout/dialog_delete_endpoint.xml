@@ -28,6 +28,4 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/endpoint_delete"
         android:id="@+id/textView" />
-
-
 </LinearLayout>

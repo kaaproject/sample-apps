@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.examples.gpiocontol.utils;
+package org.kaaproject.kaa.examples.gpiocontol;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.Application;
+import org.kaaproject.kaa.client.KaaClient;
+import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
 
-public class ConnectionsManager {
+public class GPIOApplication extends Application {
 
-    public static boolean checkConnection(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected() && networkInfo.isAvailable();
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+
+        /*
+         * Stop the Kaa client. Release all network connections and application
+         * resources. Shut down all the Kaa client tasks.
+         */
+        KaaClient mClient = KaaProvider.getClient(this);
+        mClient.stop();
     }
 }

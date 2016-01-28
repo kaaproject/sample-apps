@@ -16,7 +16,10 @@
 
 package org.kaaproject.kaa.examples.gpiocontol.adapters;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -41,10 +44,10 @@ import java.util.List;
 
 public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
-    private static final String LOG_TAG = "GPIOAdapter";
-
+    private List<GpioStatus> gpioStatusList;
     private Device device;
-    List<GpioStatus> gpioStatusList;
+
+    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -53,52 +56,47 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
         public TextView gpioId;
         public SwitchCompat switcher;
 
-        public ViewHolder(CardView v) {
-            super(v);
-            cardView = v;
+        public ViewHolder(CardView holderView) {
+            super(holderView);
+            cardView = holderView;
             gpioId = (TextView)cardView.findViewById(R.id.gpioId);
             switcher = (SwitchCompat)cardView.findViewById(R.id.switcher);
             state = false;
         }
     }
 
-    public GPIOAdapter(Device device) {
+    public GPIOAdapter(Context context, Device device) {
         this.device = device;
+        this.context = context;
         gpioStatusList = device.getGpioStatuses();
     }
 
     @Override
-    public GPIOAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+    public GPIOAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gpio_status, parent, false);
 
-        return new ViewHolder((CardView)v);
+        return new ViewHolder((CardView) view);
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
         holder.switcher.setChecked(gpioStatusList.get(position).getStatus());
-        holder.gpioId.setText(gpioStatusList.get(position).getId() + "");
+        holder.gpioId.setText(Integer.toString(gpioStatusList.get(position).getId()));
 
-        final int teaColor = Color.parseColor("#009688");
+        final int teaColor = context.getResources().getColor(R.color.tea_color);
+        holder.gpioId.setTextColor(holder.switcher.isChecked() ? teaColor : Color.RED);
 
-        if(holder.switcher.isChecked()){
-            holder.gpioId.setTextColor(teaColor);
-        }else{
-            holder.gpioId.setTextColor(Color.RED);
-        }
         holder.switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(!ConnectionsManager.haveConnection(holder.cardView.getContext())) {
+                if (!ConnectionsManager.checkConnection(holder.cardView.getContext())) {
                     SnackbarsManager.makeSnackBarNoInet(holder.cardView.getContext());
                     buttonView.setChecked(!isChecked);
                     return;
                 }
 
                 //Skips system recycler invoking
-                if(!buttonView.isPressed()) return;
+                if (!buttonView.isPressed()) return;
 
                 gpioStatusList.get(position).setStatus(isChecked);
 
@@ -106,11 +104,7 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
                 EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
                 final RemoteControlECF ecf = eventFamilyFactory.getRemoteControlECF();
-                if(buttonView.isChecked()){
-                    holder.gpioId.setTextColor(teaColor);
-                }else{
-                    holder.gpioId.setTextColor(Color.RED);
-                }
+                holder.gpioId.setTextColor(buttonView.isChecked() ? teaColor : Color.RED);
                 ecf.sendEvent(new GpioToggleRequest(gpioStatusList.get(position)), device.getKaaEndpointId());
             }
         });

@@ -19,11 +19,6 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "DefaultKaaPlatformContext.h"
-#import "DefaultProfileManager.h"
-#import "DefaultProfileTransport.h"
-#import "DefaultLogUploadStrategy.h"
-#import "RecordCountLogUploadStrategy.h"
 
 @import CoreTelephony;
 

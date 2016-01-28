@@ -16,7 +16,6 @@
 
 #import "ViewController.h"
 #import <Kaa/Kaa.h>
-#import "Kaa/SimpleConfigurationStorage.h"
 
 @interface ViewController () <KaaClientStateDelegate, ConfigurationDelegate, ProfileContainer>
 

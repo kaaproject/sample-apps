@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 #import <Kaa/Kaa.h>
-#import "KaaClientStateDelegate.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

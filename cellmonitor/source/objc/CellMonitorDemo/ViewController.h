@@ -16,8 +16,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Kaa/Kaa.h>
-#import "KaaClientStateDelegate.h"
-#import "ProfileCommon.h"
+
 @import CoreLocation;
 
 @interface ViewController : UIViewController 

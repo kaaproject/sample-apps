@@ -15,8 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "ProfileCommon.h"
-#import "EventGen.h"
+#import <Kaa/Kaa.h>
 
 @interface DevicesTableViewController : UITableViewController <ProfileContainer, RemoteControlECFDelegate, OnDetachEndpointOperationDelegate, OnAttachEndpointOperationDelegate>
 

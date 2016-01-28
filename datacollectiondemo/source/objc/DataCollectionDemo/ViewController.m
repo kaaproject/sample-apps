@@ -16,11 +16,6 @@
 
 #import "ViewController.h"
 #import <Kaa/Kaa.h>
-#import "KaaClientState.h"
-#import "KaaClientStateDelegate.h"
-#import "DefaultLogUploadStrategy.h"
-#import "Kaa/AvroBytesConverter.h"
-#import "RecordCountLogUploadStrategy.h"
 
 #define LOGS_TO_SEND_COUNT 5
 
@@ -95,12 +90,7 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (NSInteger)getLogRecordSize:(KAALogData *) record {
+- (NSInteger)getLogRecordSize:(KAALogData *)record {
     AvroBytesConverter *converter = [[AvroBytesConverter alloc] init];
     NSData *serializedLogRecod = [converter toBytes:record];
     return serializedLogRecod.length;

@@ -15,7 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "Kaa/Kaa.h"
+#import <Kaa/Kaa.h>
 
 @interface ConcreteStateDelegate : NSObject <KaaClientStateDelegate>
 

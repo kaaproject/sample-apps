@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Device.h"
-#import "EventGen.h"
 
 @interface GPIOTableViewController : UITableViewController <UITabBarDelegate, UITableViewDataSource>
 

@@ -15,7 +15,7 @@
  */
 
 #import "Device.h"
-#import "EventGen.h"
+#import <Kaa/Kaa.h>
 
 @implementation Device
 

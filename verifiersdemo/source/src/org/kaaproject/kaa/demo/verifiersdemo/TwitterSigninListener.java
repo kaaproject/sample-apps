@@ -25,19 +25,20 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 
 public class TwitterSigninListener extends Callback<TwitterSession> implements View.OnClickListener {
+
+    private static String TAG = TwitterSigninListener.class.getSimpleName();
+
     private LoginActivity parentActivity;
-    private static String TAG = "Example-Twitter";
-    private boolean isClicked;
+    private boolean mSignInClicked;
 
     public TwitterSigninListener(LoginActivity parentActivity) {
         this.parentActivity = parentActivity;
     }
 
-    // Is called after onClick().
     @Override
     public void success(Result<TwitterSession> twitterSessionResult) {
         Log.i(TAG, twitterSessionResult.toString());
-        if (isClicked) {
+        if (mSignInClicked) {
             String accessToken = twitterSessionResult.data.getAuthToken().token + " " +
                     twitterSessionResult.data.getAuthToken().secret;
             String userId = String.valueOf(twitterSessionResult.data.getUserId());
@@ -58,8 +59,8 @@ public class TwitterSigninListener extends Callback<TwitterSession> implements V
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         Log.i(TAG, "Twitter button clicked");
-        isClicked = true;
+        mSignInClicked = true;
     }
 }

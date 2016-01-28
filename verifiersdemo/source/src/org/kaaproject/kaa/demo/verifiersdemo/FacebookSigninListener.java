@@ -24,20 +24,25 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 
 public class FacebookSigninListener implements LoginButton.UserInfoChangedCallback, Session.StatusCallback {
+
+    private static final String TAG = FacebookSigninListener.class.getSimpleName();
+
     private LoginActivity parentActivity;
-    private static final String TAG = "Example-Facebook";
-    private boolean isClicked;
+    private boolean mSignInClicked;
 
     public FacebookSigninListener(LoginActivity parentActivity) {
         this.parentActivity = parentActivity;
     }
 
-    // Is called after call().
+    /*
+        Specifies a callback interface that will be called when the button's notion of the current user changes
+    */
     @Override
     public void onUserInfoFetched(GraphUser user) {
-        if (user != null && isClicked) {
-          
-            // Get the user's access token, id and user name.
+        if (user != null && mSignInClicked) {
+             /*
+                Getting the user's access token, id and user name.
+             */
             String accessToken = Session.getActiveSession().getAccessToken();
             String userId = user.getId();
             String userName = user.getFirstName();
@@ -48,18 +53,20 @@ public class FacebookSigninListener implements LoginButton.UserInfoChangedCallba
 
             parentActivity.updateUI(userName, userId, accessToken, LoginActivity.AccountType.FACEBOOK);
 
-            // Disconnect the user from Facebook (to make the Log out button disappear).
+            /*
+                Disconnect the user from Facebook(to make Log out button disappear)
+             */
             Session.getActiveSession().closeAndClearTokenInformation();
         }
 
-        isClicked = false;
+        mSignInClicked = false;
     }
 
     @Override
     public void call(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             Log.i(TAG, "Logged in...");
-            isClicked = true;
+            mSignInClicked = true;
         } else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
         }

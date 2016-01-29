@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 CyberVision, Inc.
+ * Copyright 2014-2016 CyberVision, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -169,23 +169,23 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
             projectConfig.setIconBase64(iconBase64);
             SdkProfileDto sdkProfileDto = this.sdkProfileDto;
             if (isMultiApplicationProject()) {
-            	Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
-            	sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
+                Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
+                sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
             }
             SdkTokenDto sdkProfileToken = sdkProfileDto.toSdkTokenDto();
             String sdkProfileId = sdkProfiles.get(sdkProfileToken);
             if (sdkProfileId == null) {
-            	loginTenantDeveloper(client);
-            	sdkProfileDto = client.createSdkProfile(sdkProfileDto);
-            	logger.info("Resulting sdk profile: {}", sdkProfileDto);
-            	sdkProfileId = sdkProfileDto.getId();
-            	sdkProfiles.put(sdkProfileToken, sdkProfileId);
+                loginTenantDeveloper(client);
+                sdkProfileDto = client.createSdkProfile(sdkProfileDto);
+                logger.info("Resulting sdk profile: {}", sdkProfileDto);
+                sdkProfileId = sdkProfileDto.getId();
+                sdkProfiles.put(sdkProfileToken, sdkProfileId);
             }
             projectConfig.setSdkProfileId(sdkProfileId);
         }
         for (Bundle bundle : projectConfigs.getBundles()) {
-        	String iconBase64 = loadIconBase64(bundle.getId());
-        	bundle.setIconBase64(iconBase64);
+            String iconBase64 = loadIconBase64(bundle.getId());
+            bundle.setIconBase64(iconBase64);
         }
     }
 

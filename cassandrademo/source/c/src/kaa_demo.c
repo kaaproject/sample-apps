@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 CyberVision, Inc.
+ * Copyright 2014-2016 CyberVision, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
 
 #include <kaa/kaa_error.h>
 #include <kaa/kaa_context.h>
@@ -26,42 +27,20 @@
 #include <kaa/kaa_logging.h>
 #include <kaa/platform-impl/common/ext_log_upload_strategies.h>
 
+#include <wiringPi.h>
 
+#include "dht11/dht11.h"
+
+#define MAX_LOG_BUCKET_SIZE     SIZE_MAX
+#define MAX_LOG_COUNT                 5
 
 /*
- * Strategy-specific configuration parameters used by Kaa log collection feature.
+ * Pin on Rasbery Pi 2 Model B
  */
+#define DHT11_PIN    7
+
 #define KAA_DEMO_UPLOAD_COUNT_THRESHOLD      1 /* Count of collected logs needed to initiate log upload */
 #define KAA_DEMO_LOG_GENERATION_FREQUENCY    1 /* In seconds */
-#define KAA_DEMO_LOGS_TO_SEND                5
-#define KAA_DEMO_LOG_STORAGE_SIZE            10000 /* The amount of space allocated for a log storage, in bytes */
-#define KAA_DEMO_LOGS_TO_KEEP                50    /* The minimum amount of logs to be present in a log storage, in percents */
-#define KAA_DEMO_LOG_BUF_SZ                  32    /* Log buffer size in bytes */
-
-/*
- * Hard-coded Kaa log entry body.
- */
-#define KAA_DEMO_LOG_TAG     "TAG"
-#define KAA_DEMO_LOG_MESSAGE "MESSAGE_"
-
-
-
-/*
- * Forward declarations.
- */
-extern kaa_error_t ext_limited_log_storage_create(void **log_storage_context_p
-                          , kaa_logger_t *logger
-                          , size_t size
-                          , size_t percent);
-
-
-static kaa_client_t *kaa_client = NULL;
-
-static void *log_storage_context         = NULL;
-static void *log_upload_strategy_context = NULL;
-static size_t log_record_counter = 0;
-
-
 
 #define KAA_DEMO_RETURN_IF_ERROR(error, message) \
     if ((error)) { \
@@ -69,30 +48,45 @@ static size_t log_record_counter = 0;
         return (error); \
     }
 
+
+
+/*
+ * Forward declarations.
+ */
+extern kaa_error_t ext_unlimited_log_storage_create(void **log_storage_context_p
+                                                  , kaa_logger_t *logger);
+
+
+
 static void kaa_demo_add_log_record(void *context)
 {
-    if (log_record_counter++ >= KAA_DEMO_LOGS_TO_SEND) {
-        kaa_client_stop((kaa_client_t *)context);
+    static size_t log_record_counter = 0;
+
+    float humidity = 0.0;
+    float temperature = 0.0;
+
+    if (dht11_read_val(DHT11_PIN, &humidity, &temperature) != 0) {
+        printf("Failed to read data from sensor\n");
         return;
     }
 
-    printf("Going to add %zuth log record\n", log_record_counter);
+    ++log_record_counter;
 
-    kaa_user_log_record_t *log_record = kaa_logging_log_data_create();
+    kaa_user_log_record_t *log_record = kaa_logging_sensor_data_create();
     if (!log_record) {
         printf("Failed to create log record, error code %d\n", KAA_ERR_NOMEM);
         return;
     }
 
-    log_record->level = ENUM_LEVEL_KAA_INFO;
-    log_record->tag = kaa_string_move_create(KAA_DEMO_LOG_TAG, NULL);
+    log_record->sensor_id = kaa_string_copy_create("Sensor 1");
+    log_record->region = kaa_string_copy_create("Region 1");
+    log_record->model = kaa_string_copy_create("DHT11");
+    log_record->value = temperature;
 
-    char log_message_buffer[KAA_DEMO_LOG_BUF_SZ];
-    snprintf(log_message_buffer, KAA_DEMO_LOG_BUF_SZ, KAA_DEMO_LOG_MESSAGE"%zu", log_record_counter);
+    printf("Going to add %zuth log record: { id: '%s', region: '%s', model: '%s', val: %g }\n"
+            , log_record_counter, log_record->sensor_id->data, log_record->region->data, log_record->model->data, log_record->value);
 
-    log_record->message = kaa_string_copy_create(log_message_buffer);
-
-    kaa_error_t error_code = kaa_logging_add_record(kaa_client_get_context(kaa_client)->log_collector, log_record);
+    kaa_error_t error_code = kaa_logging_add_record(kaa_client_get_context((kaa_client_t *)context)->log_collector, log_record, NULL);
     if (error_code) {
         printf("Failed to add log record, error code %d\n", error_code);
     }
@@ -102,7 +96,17 @@ static void kaa_demo_add_log_record(void *context)
 
 int main(/*int argc, char *argv[]*/)
 {
-    printf("Data collection demo started\n");
+    printf("Cassandra demo started\n");
+
+    if (wiringPiSetup() == -1) {
+        printf("Failed to initialize Pi wiring\n");
+        exit(1);
+    }
+
+    kaa_client_t *kaa_client = NULL;
+
+    void *log_storage_context         = NULL;
+    void *log_upload_strategy_context = NULL;
 
     /**
      * Initialize Kaa client.
@@ -110,8 +114,11 @@ int main(/*int argc, char *argv[]*/)
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
 
-    error_code = ext_limited_log_storage_create(&log_storage_context, kaa_client_get_context(kaa_client)->logger, KAA_DEMO_LOG_STORAGE_SIZE, KAA_DEMO_LOGS_TO_KEEP);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create limited log storage");
+    /**
+     * Configure Kaa data collection module.
+     */
+    error_code = ext_unlimited_log_storage_create(&log_storage_context, kaa_client_get_context(kaa_client)->logger);
+    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create unlimited log storage");
 
     error_code = ext_log_upload_strategy_create(kaa_client_get_context(kaa_client), &log_upload_strategy_context, KAA_LOG_UPLOAD_VOLUME_STRATEGY);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create log upload strategy");
@@ -119,9 +126,15 @@ int main(/*int argc, char *argv[]*/)
     error_code = ext_log_upload_strategy_set_threshold_count(log_upload_strategy_context, KAA_DEMO_UPLOAD_COUNT_THRESHOLD);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set threshold log record count");
 
+    kaa_log_bucket_constraints_t bucket_sizes = {
+        .max_bucket_size = MAX_LOG_BUCKET_SIZE,
+        .max_bucket_log_count = MAX_LOG_COUNT,
+    };
+
     error_code = kaa_logging_init(kaa_client_get_context(kaa_client)->log_collector
                                 , log_storage_context
-                                , log_upload_strategy_context);
+                                , log_upload_strategy_context
+                                , &bucket_sizes);
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to init Kaa log collector");
 
     /**
@@ -135,7 +148,7 @@ int main(/*int argc, char *argv[]*/)
      */
     kaa_client_destroy(kaa_client);
 
-    printf("Data collection demo stopped\n");
+    printf("Cassandra demo stopped\n");
 
     return error_code;
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+Copyright 2016 CyberVision, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<projectsConfig
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+    <project id="cassandra_demo_c">
+        <name>Cassandra demo</name>
+        <description>Kaa application based on Raspberry Pi and DHT11 sensor</description>
+        <details><![CDATA[
+This sample application based on Raspberry Pi and DHT11 collects temperature measurements from sensor and uploads it to Cassandra using Kaa.
+<iframe width="420" height="315" src="https://www.youtube.com/embed/VHwJLHQjl50" frameborder="0" allowfullscreen></iframe>
+<h2>Installation</h2>
+<iframe width="854" height="480" src="https://www.youtube.com/embed/VHwJLHQjl50" frameborder="0" allowfullscreen></iframe>
+1. Get <a href="https://en.wikipedia.org/wiki/Raspberry_Pi">Rasberry Pi 2 Model B</a>, <a href="http://www.dx.com/p/arduino-digital-temperature-humidity-sensor-module-121350#.Vp5Zoq996kB">DHT 11 sensor</a> and 3 Male-Male jumper wires.
+2. Install third-party components for C SDK using this <a href="http://docs.kaaproject.org/display/KAA/Raspberry+Pi#RaspberryPi-Installingthird-partycomponentsforCSDK">steps</a>.
+3. Install the <a href="http://wiringpi.com/">WiringPi</a> library.
+<pre>
+$ git clone git://git.drogon.net/wiringPi
+$ cd wiringPi
+$ ./build
+</pre>
+4. Connect wires using following schema.
+Connect DHT11 pin 1 (left) to Raspberry PI pin 7 (GPIO 4)
+Connect DHT11 pin 2 (middle) to Raspberry PI pin 1 (VCC)
+Connect DHT11 pin 3 (right) to Raspberry PI pin 14 (GND)
+
+<img src="schema.jpg" style="width:621px;height:338px;">
+
+5. Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh deploy
+</pre>
+6.  Observe console output.
+<pre>
+Data collection demo started
+Going to add 1th log record: { id: 'Sensor 1', region: 'Region 1', model: 'DHT11', val: 25 }
+Going to add 2th log record: { id: 'Sensor 1', region: 'Region 1', model: 'DHT11', val: 25 }
+Going to add 3th log record: { id: 'Sensor 1', region: 'Region 1', model: 'DHT11', val: 25 }
+Going to add 4th log record: { id: 'Sensor 1', region: 'Region 1', model: 'DHT11', val: 25 }
+Going to add 5th log record: { id: 'Sensor 1', region: 'Region 1', model: 'DHT11', val: 25 }
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. After starting the "Cassandra demo" application, you will receive log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox Cassandra database using a Cassandra appender. You can explore the collected data by querying the sandbox Cassandra instance as follows:
+<pre>
+$ cqlsh
+$ use kaa;
+</pre>
+To see data stored in sensor_per_row table, use select statement:
+<pre>
+$ SELECT * FROM sensor_per_row;
+</pre>
+To see data stored in sensor_per_date table, use select statement:
+<pre>
+$ SELECT * FROM sensor_per_date;
+</pre>
+To see data stored in sensor_per_region table, use select statement:
+<pre>
+$ SELECT * FROM sensor_per_region;
+</pre>
+<br/><br/>
+For more details, please refer to our webinar video: Time series IoT data ingestion into Cassandra using Kaa IoT.
+            ]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>C</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>Raspberry_Pi</platforms>
+        <features>DATA_COLLECTION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>datacollection_demo_bundle</bundleId>
+        <sourceArchive>c/cassandra_demo.tar.gz</sourceArchive>
+        <projectFolder>CCassandraDemo</projectFolder>
+        <sdkLibDir>CCassandraDemo/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+</projectsConfig>

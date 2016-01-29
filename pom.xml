@@ -151,6 +151,8 @@
                 <version>${rat.version}</version>
                 <configuration>
                     <excludes>
+                        <exclude>**/LaunchScreen.storyboard</exclude>
+                        <exclude>**/Main.storyboard</exclude>
                         <exclude>**/*.json</exclude>
                         <exclude>**/*.properties</exclude>
                         <exclude>**/tmp_deb_control/control</exclude>

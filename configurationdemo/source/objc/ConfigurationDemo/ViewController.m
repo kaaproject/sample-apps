@@ -31,17 +31,16 @@
     [super viewDidLoad];
 
     [self addLogWithText:@"ConfigurationDemo started"];
-    // Create the Kaa desktop context for the application.
-    DefaultKaaPlatformContext *defaultKaaPlatfromContext = [[DefaultKaaPlatformContext alloc] init];
-    
+
     // Create a Kaa client and add a listener which displays the Kaa client configuration
     // as soon as the Kaa client is started.
-    self.kaaClient = [Kaa clientWithContext:defaultKaaPlatfromContext stateDelegate:self];
+    self.kaaClient = [Kaa clientWithStateDelegate:self];
     
-    // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    [self.kaaClient setConfigurationStorage:[[SimpleConfigurationStorage alloc] initWithPlatformContext:defaultKaaPlatfromContext path:[documentsDirectory stringByAppendingPathComponent:@"savedconfig.cfg"]]];
+    NSString *configurationPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"savedconfig.cfg"];
+
+    // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
+    [self.kaaClient setConfigurationStorage:[SimpleConfigurationStorage storageWithPath:configurationPath];
     
     // Add a listener which displays the Kaa client configuration each time it is updated.
     [self.kaaClient addConfigurationDelegate:self];

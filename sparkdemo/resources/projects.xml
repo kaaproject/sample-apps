@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+Copyright 2016 CyberVision, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<projectsConfig
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+    <project id="spark_demo_cpp">
+        <name>Spark demo</name>
+        <description>IoT data ingestion in Spark Streaming using Kaa</description>
+        <details><![CDATA[
+This sample application collects data from Intel Edison device and uploads it to Spark using Kaa. <br /> <br />
+<iframe width="691" height="389" src="https://www.youtube.com/embed/a5Dw57Q-OIc" frameborder="0" allowfullscreen></iframe> <br />
+<h2>Installation</h2>
+1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
+2. Compress $NAME$ folder and push it to Intel Edison device. <br />
+3. Logit to Intel Edison Device and uncompress $NAME$ file. <br />
+4. Install third-party components for C++ SDK using this <a href="http://docs.kaaproject.org/display/KAA/Intel+Edison#IntelEdison-Installingthird-partycomponentsforC++SDK">guide</a>. <br />
+5. Go to the $OtherNAME$ folder and start the build by executing command:
+<pre>
+$ ./build.sh build
+</pre>
+6. On your host PC go to the server folder. Open spark.properties file and change
+flume.bind.host, spark.master.url and spark.home according to your spark cluster properties. <br />
+7. Run server side application by executin following command:
+<pre>
+$ java -jar SparkDemo.jar
+</pre>
+8. Change host in your flume appender configuration of Spark demo application via Administration UI from holcalhost to your host address. <br />
+9. After completing the buil at Intel Edisson device go to the build folder and start the demo client:
+<pre>
+$ ./demo_client
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. After starting the "Spark demo" application, you will receive statistics values from the endpoint in your server side application.
+<br /> <br />
+For more details, please refer to our webinar video: IoT data ingestion in Spark Streaming using Kaa.
+            ]]>
+        </details>
+
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>CPP</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>LINUX_X86</platforms>
+        <features>DATA_COLLECTION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>datacollection_demo_bundle</bundleId>
+        <sourceArchive>cpp/spark_demo.tar.gz</sourceArchive>
+        <projectFolder>CppSparkDemo</projectFolder>
+        <sdkLibDir>CppSparkDemo/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+</projectsConfig>

@@ -35,6 +35,8 @@
 #define KAA_DEMO_LOG_GENERATION_FREQUENCY    1 /* In seconds */
 #define KAA_DEMO_LOGS_TO_SEND                5
 #define KAA_DEMO_LOG_STORAGE_SIZE            10000 /* The amount of space allocated for a log storage, in bytes */
+#define KAA_DEMO_BUCKET_SIZE                 500   /* Size of single bucket, in bytes */
+#define KAA_DEMO_LOGS_IN_BUCKET              5     /* Amount of logs in single bucket */
 #define KAA_DEMO_LOGS_TO_KEEP                50    /* The minimum amount of logs to be present in a log storage, in percents */
 #define KAA_DEMO_LOG_BUF_SZ                  32    /* Log buffer size in bytes */
 
@@ -60,6 +62,7 @@ static kaa_client_t *kaa_client = NULL;
 static void *log_storage_context         = NULL;
 static void *log_upload_strategy_context = NULL;
 static size_t log_record_counter = 0;
+static size_t log_successfully_sent_counter = 0;
 
 
 
@@ -69,10 +72,47 @@ static size_t log_record_counter = 0;
         return (error); \
     }
 
+static void success_log_delivery(void *context, const kaa_log_bucket_info_t *bucket)
+{
+    (void) context;
+    printf("Bucket: %u is successfully delivered. Logs uploaded: %zu\n",
+           bucket->bucket_id,
+           bucket->log_count);
+
+    log_successfully_sent_counter++;
+}
+
+/* Under normal conditions this callback shouldn't be called */
+static void failed_log_delivery(void *context, const kaa_log_bucket_info_t *bucket)
+{
+    (void) context;
+    printf("Log delivery of the bucket: %u is failed!\n", bucket->bucket_id);
+}
+
+/* Under normal conditions this callback shouldn't be called */
+static void timeout_log_delivery(void *context, const kaa_log_bucket_info_t *bucket)
+{
+    (void) context;
+    printf("Timeout reached for log delivery of the bucket: %u!\n", bucket->bucket_id);
+}
+
+static kaa_log_delivery_listener_t log_listener = {
+    .on_success = success_log_delivery,
+    .on_failed  = failed_log_delivery,
+    .on_timeout = timeout_log_delivery,
+    .ctx        = NULL,
+};
+
 static void kaa_demo_add_log_record(void *context)
 {
-    if (log_record_counter++ >= KAA_DEMO_LOGS_TO_SEND) {
-        kaa_client_stop((kaa_client_t *)context);
+    (void) context;
+
+    if (log_record_counter >= KAA_DEMO_LOGS_TO_SEND) {
+        printf("All logs are sent, waiting for responce\n");
+        if (log_successfully_sent_counter == KAA_DEMO_LOGS_TO_SEND) {
+            printf("All logs successfully sent, stopping demo...\n");
+            kaa_client_stop(context);
+        }
         return;
     }
 
@@ -92,17 +132,25 @@ static void kaa_demo_add_log_record(void *context)
 
     log_record->message = kaa_string_copy_create(log_message_buffer);
 
-    kaa_error_t error_code = kaa_logging_add_record(kaa_client_get_context(kaa_client)->log_collector, log_record);
+    kaa_log_record_info_t log_info;
+    kaa_error_t error_code = kaa_logging_add_record(kaa_client_get_context(kaa_client)->log_collector, log_record, &log_info);
     if (error_code) {
         printf("Failed to add log record, error code %d\n", error_code);
+    } else {
+        printf("Log record: %u added to bucket %u\n", log_info.log_id, log_info.bucket_id);
     }
 
     log_record->destroy(log_record);
+    log_record_counter++;
 }
 
 int main(/*int argc, char *argv[]*/)
 {
     printf("Data collection demo started\n");
+    kaa_log_bucket_constraints_t bucket_sizes = {
+        .max_bucket_size       = KAA_DEMO_BUCKET_SIZE,
+        .max_bucket_log_count  = KAA_DEMO_LOGS_IN_BUCKET,
+    };
 
     /**
      * Initialize Kaa client.
@@ -121,8 +169,14 @@ int main(/*int argc, char *argv[]*/)
 
     error_code = kaa_logging_init(kaa_client_get_context(kaa_client)->log_collector
                                 , log_storage_context
-                                , log_upload_strategy_context);
+                                , log_upload_strategy_context
+                                , &bucket_sizes);
+
     KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to init Kaa log collector");
+
+    error_code = kaa_logging_set_listeners(kaa_client_get_context(kaa_client)->log_collector,
+                                           &log_listener);
+    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to add log listeners");
 
     /**
      * Start Kaa client main loop.

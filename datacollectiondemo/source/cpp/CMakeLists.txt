@@ -32,14 +32,14 @@ else()
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L/usr/lib/x86_64-linux-gnu -std=c++0x")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L/usr/lib/x86_64-linux-gnu -std=c++0x -Wno-type-limits -Wno-unused-parameter")
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L/usr/local/lib -std=gnu++11 -stdlib=libc++")
 endif()
 
-find_package (Boost 1.54 REQUIRED COMPONENTS log system)
+find_package (Boost 1.54 REQUIRED COMPONENTS log thread system)
 find_package (Avro REQUIRED)
 find_package (Botan REQUIRED)
 

@@ -84,6 +84,69 @@
                 </snapshotRepository>
             </distributionManagement>
         </profile>
+        <profile>
+            <id>license</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.mycila.maven-license-plugin</groupId>
+                        <artifactId>maven-license-plugin</artifactId>
+                        <version>1.8.0</version>
+                        <configuration>
+                            <header>copyright.txt</header>
+                            <strictCheck>true</strictCheck>
+                            <mapping>
+                                <cmake>SCRIPT_STYLE</cmake>
+                                <txt>SCRIPT_STYLE</txt>
+                                <md>SCRIPT_STYLE</md>
+                                <yaml>SCRIPT_STYLE</yaml>
+                                <properties>SCRIPT_STYLE</properties>
+                                <cfg>SCRIPT_STYLE</cfg>
+                                <config>SCRIPT_STYLE</config>
+                                <mak>SCRIPT_STYLE</mak>
+                                <m>JAVADOC_STYLE</m>
+                                <js>JAVADOC_STYLE</js>
+                                <hpp>JAVADOC_STYLE</hpp>
+                                <xib>XML_STYLE</xib>
+                            </mapping>
+                            <includes>
+                                <include>**/*.sh</include>
+                                <include>**/*.bat</include>
+                                <include>**/*.yaml</include>
+                                <include>**/*.md</include>
+                                <include>**/*.xml</include>
+                                <include>**/*.html</include>
+                                <include>**/*.txt</include>
+                                <include>**/*.cmake</include>
+                                <include>**/*.java</include>
+                                <include>**/*.cpp</include>
+                                <include>**/*.hpp</include>
+                                <include>**/*.c</include>
+                                <include>**/*.h</include>
+                                <include>**/*.m</include>
+                                <include>**/*.xib</include>
+                                <include>**/*.js</include>
+                                <include>**/*.cfg</include>
+                                <include>**/*.config</include>
+                                <include>**/*.mak</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/thirdparty/**</exclude>
+                                <exclude>README.md</exclude>
+                            </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>format</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>

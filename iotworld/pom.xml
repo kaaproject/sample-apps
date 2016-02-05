@@ -197,6 +197,29 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>license</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.mycila.maven-license-plugin</groupId>
+                        <artifactId>maven-license-plugin</artifactId>
+                        <version>1.8.0</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>source/smarthome/ios/**/include/**</exclude>
+                                <exclude>source/smarthome/ios/openssl.framework/**</exclude>
+                                <exclude>source/smarthome/ios/SmartHouse/SWRevealViewController.h</exclude>
+                                <exclude>source/smarthome/ios/SmartHouse/SWRevealViewController.m</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <repositories>
         <repository>
             <id>oss-snapshots-repo</id>

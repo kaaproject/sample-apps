@@ -252,4 +252,26 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>license</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.mycila.maven-license-plugin</groupId>
+                        <artifactId>maven-license-plugin</artifactId>
+                        <version>1.8.0</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>source/java/src/org/kaaproject/kaa/demo/iotworld/lights/traffic/EventType.java</exclude>
+                                <exclude>source/java/src/org/kaaproject/kaa/demo/iotworld/lights/traffic/TrafficLightsLog.java</exclude>
+                                <exclude>source/java/src/org/kaaproject/kaa/demo/iotworld/connectedcar/RfidLog.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

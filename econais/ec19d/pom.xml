@@ -52,4 +52,26 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>license</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.mycila.maven-license-plugin</groupId>
+                        <artifactId>maven-license-plugin</artifactId>
+                        <version>1.8.0</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>sdk_example_kaa_client/cfg/key.txt</exclude>
+                                <exclude>**/readme.txt</exclude>
+                                <exclude>**/dev.config</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

@@ -62,6 +62,7 @@
         <module>powerplant-couchbase-proxy</module>
         <module>gpiocontrol</module>
         <module>ota</module>
+        <module>stormdemo</module>
     </modules>
 
     <profiles>

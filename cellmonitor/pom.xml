@@ -1,5 +1,5 @@
 <!--
-  Copyright 2014-2015 CyberVision, Inc.
+  Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -52,7 +52,8 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>${project.basedir}/assembly/src.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-android.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

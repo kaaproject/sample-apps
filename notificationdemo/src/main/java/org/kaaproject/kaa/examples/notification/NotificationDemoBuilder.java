@@ -1,33 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2014-2015 CyberVision, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.examples.notification;
@@ -60,6 +44,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
     private static final String NOTIFICATION_DEMO_CPP_ID = "notification_demo_cpp";
     private static final String NOTIFICATION_DEMO_C_ID = "notification_demo_c";
     private static final String NOTIFICATION_DEMO_ANDROID_ID = "notification_demo_android";
+    private static final String NOTIFICATION_DEMO_OBJC_ID = "notification_demo_objc";
     
     private static final int NOTIFICATION_VERSION = 1;
     private static final Date NOTIFICATION_EXPIRE_DATE = new Date(1900000000000L);
@@ -78,6 +63,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
     	projectsSdkMap.put(NOTIFICATION_DEMO_JAVA_ID, sdkProfile);
     	projectsSdkMap.put(NOTIFICATION_DEMO_CPP_ID, sdkProfile);
     	projectsSdkMap.put(NOTIFICATION_DEMO_C_ID, sdkProfile);
+        projectsSdkMap.put(NOTIFICATION_DEMO_OBJC_ID, sdkProfile);
     	
     	sdkProfile = createNotificationApplication(client, "Android notification demo", 
     			NOTIFICATION_DEMO_ANDROID_ID + "/notification_schema.avsc", 

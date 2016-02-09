@@ -26,7 +26,7 @@
         <fileSet>
             <directory>${project.basedir}/source/c</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CStormAnalyticsDemo</outputDirectory>
+            <outputDirectory>CStormDataAnalyticsDemo</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>${project.basedir}/source/server</directory>

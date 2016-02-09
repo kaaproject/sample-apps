@@ -152,8 +152,8 @@ the endpoint in your server side application.
         <complexity>ADVANCED</complexity>
         <bundleId>storm_demo_bundle</bundleId>
         <sourceArchive>c/storm_data_analytics_demo.tar.gz</sourceArchive>
-        <projectFolder>CStormAnalyticsDemo</projectFolder>
-        <sdkLibDir>CStormAnalyticsDemo/libs/kaa</sdkLibDir>
+        <projectFolder>CStormDataAnalyticsDemo</projectFolder>
+        <sdkLibDir>CStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="storm_demo_cpp">
@@ -217,8 +217,8 @@ the endpoint in your server side application.
         <complexity>ADVANCED</complexity>
         <bundleId>storm_demo_bundle</bundleId>
         <sourceArchive>cpp/storm_data_analytics_demo.tar.gz</sourceArchive>
-        <projectFolder>CppStormAnalyticsDemo</projectFolder>
-        <sdkLibDir>CppStormAnalyticsDemo/libs/kaa</sdkLibDir>
+        <projectFolder>CppStormDataAnalyticsDemo</projectFolder>
+        <sdkLibDir>CppStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <bundle id="storm_demo_bundle">

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 CyberVision, Inc.
+ * Copyright 2014-2016 CyberVision, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import java.util.Arrays;
 @KaaDemoBuilder
 public class ZeppelinDemoBuider extends AbstractDemoBuilder {
 
-    private static final Logger logger = LoggerFactory.getLogger(ZeppelinDemoBuider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZeppelinDemoBuider.class);
 
     public ZeppelinDemoBuider() {
         super("demo/zeppelin");
@@ -41,12 +41,12 @@ public class ZeppelinDemoBuider extends AbstractDemoBuilder {
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
-        logger.info("Loading 'Zeppelin Demo Application' data...");
+        LOG.info("Loading 'Zeppelin data analytics demo application' data...");
 
         loginTenantAdmin(client);
 
         ApplicationDto sparkApplication = new ApplicationDto();
-        sparkApplication.setName("Zeppelin demo");
+        sparkApplication.setName("Zeppelin data analytics demo");
         sparkApplication = client.editApplication(sparkApplication);
 
         sdkProfileDto.setApplicationId(sparkApplication.getId());
@@ -60,7 +60,7 @@ public class ZeppelinDemoBuider extends AbstractDemoBuilder {
         LogSchemaDto powerReportLogSchemaDto = new LogSchemaDto();
         powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
-        powerReportLogSchemaDto.setDescription("Zeppelin demo Power report log schema");
+        powerReportLogSchemaDto.setDescription("Zeppelin data analytics demo Power report log schema");
         powerReportLogSchemaDto = client.createLogSchema(powerReportLogSchemaDto, getResourcePath("powerReportLogSchema.json"));
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());
 
@@ -94,7 +94,7 @@ public class ZeppelinDemoBuider extends AbstractDemoBuilder {
         zonePerRowCassandraLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("zone_per_row.json")));
         zonePerRowCassandraLogAppender = client.editLogAppenderDto(zonePerRowCassandraLogAppender);
 
-        logger.info("Finished loading 'Spark Demo Application' data.");
+        LOG.info("Finished loading 'Zeppelin data analytics demo application' data.");
     }
 
 }

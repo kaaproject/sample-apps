@@ -92,8 +92,8 @@ Cassandra using Kaa IoT"</a>.
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
         <sourceArchive>c/cassandra_data_analytics_demo.tar.gz</sourceArchive>
-        <projectFolder>CCassandraCassandraDataAnalyticsDemo</projectFolder>
-        <sdkLibDir>CCassandraCassandraDataAnalyticsDemo/libs/kaa</sdkLibDir>
+        <projectFolder>CCassandraDataAnalyticsDemo</projectFolder>
+        <sdkLibDir>CCassandraDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
 </projectsConfig>

@@ -109,8 +109,8 @@ visualization with Kaa, Apache Cassandra, and Apache Zeppelin"</a>.
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
         <sourceArchive>java/zeppelin_demo.tar.gz</sourceArchive>
-        <projectFolder>JZeppelinDemo</projectFolder>
-        <sdkLibDir>JZeppelinDemo/lib</sdkLibDir>
+        <projectFolder>JZeppelinDataAnalyticsDemo</projectFolder>
+        <sdkLibDir>JZeppelinDataAnalyticsDemo/lib</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
 </projectsConfig>

@@ -31,7 +31,7 @@
         <fileSet>
             <directory>${project.basedir}/source/server</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>ServerDemo</outputDirectory>
+            <outputDirectory>KaaSparkLauncher</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

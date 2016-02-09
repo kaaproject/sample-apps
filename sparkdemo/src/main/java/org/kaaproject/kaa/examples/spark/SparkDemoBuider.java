@@ -16,10 +16,8 @@
 
 package org.kaaproject.kaa.examples.spark;
 
-
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
-import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
@@ -28,13 +26,10 @@ import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-
 @KaaDemoBuilder
 public class SparkDemoBuider extends AbstractDemoBuilder {
 
-
-    private static final Logger logger = LoggerFactory.getLogger(SparkDemoBuider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SparkDemoBuider.class);
 
     public SparkDemoBuider() {
         super("demo/spark");
@@ -43,12 +38,12 @@ public class SparkDemoBuider extends AbstractDemoBuilder {
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
-        logger.info("Loading 'Spark Demo Application' data...");
+        LOG.info("Loading 'Spark data analytics demo application' data...");
 
         loginTenantAdmin(client);
 
         ApplicationDto sparkApplication = new ApplicationDto();
-        sparkApplication.setName("Spark demo");
+        sparkApplication.setName("Spark data analytics demo");
         sparkApplication = client.editApplication(sparkApplication);
 
         sdkProfileDto.setApplicationId(sparkApplication.getId());
@@ -58,13 +53,6 @@ public class SparkDemoBuider extends AbstractDemoBuilder {
         sdkProfileDto.setNotificationSchemaVersion(1);
 
         loginTenantDeveloper(client);
-
-        LogSchemaDto logSchemaDto = new LogSchemaDto();
-        logSchemaDto.setApplicationId(sparkApplication.getId());
-        logSchemaDto.setName("Log schema");
-        logSchemaDto.setDescription("Log schema describing incoming logs");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
-        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogSchemaDto powerReportLogSchemaDto = new LogSchemaDto();
         powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
@@ -82,14 +70,12 @@ public class SparkDemoBuider extends AbstractDemoBuilder {
         flumeLogAppender.setMinLogSchemaVersion(1);
         flumeLogAppender.setMaxLogSchemaVersion(Integer.MAX_VALUE);
         flumeLogAppender.setConfirmDelivery(true);
-        flumeLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.KEYHASH,
-                LogHeaderStructureDto.TIMESTAMP, LogHeaderStructureDto.TOKEN, LogHeaderStructureDto.VERSION));
         flumeLogAppender.setPluginTypeName("Flume");
         flumeLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.flume.appender.FlumeLogAppender");
         flumeLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("flume_appender.json")));
         flumeLogAppender = client.editLogAppenderDto(flumeLogAppender);
 
-        logger.info("Finished loading 'Spark Demo Application' data.");
+        LOG.info("Finished loading 'Spark data analytics demo application' data.");
     }
 
 }

@@ -96,7 +96,7 @@ static void kaa_demo_add_log_record(void *context)
 
 int main(/*int argc, char *argv[]*/)
 {
-    printf("Cassandra demo started\n");
+    printf("Cassandra data analytics demo started\n");
 
     if (wiringPiSetup() == -1) {
         printf("Failed to initialize Pi wiring\n");
@@ -148,7 +148,7 @@ int main(/*int argc, char *argv[]*/)
      */
     kaa_client_destroy(kaa_client);
 
-    printf("Cassandra demo stopped\n");
+    printf("Cassandra data analytics demo stopped\n");
 
     return error_code;
 }

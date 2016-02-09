@@ -14,23 +14,7 @@
  * limitations under the License.
  */
 
-/*
- * Copyright 2014 CyberVision, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.kaaproject.kaa.examples.cassandra;
-
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
@@ -49,7 +33,7 @@ import java.util.Arrays;
 public class CassandraDemoBuider extends AbstractDemoBuilder {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(CassandraDemoBuider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CassandraDemoBuider.class);
 
     public CassandraDemoBuider() {
         super("demo/cassandra");
@@ -58,12 +42,12 @@ public class CassandraDemoBuider extends AbstractDemoBuilder {
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
-        logger.info("Loading 'Cassandra Demo Application' data...");
+        LOG.info("Loading 'Cassandra data analytics demo application' data...");
 
         loginTenantAdmin(client);
 
         ApplicationDto cassandraApplication = new ApplicationDto();
-        cassandraApplication.setName("Cassandra demo");
+        cassandraApplication.setName("Cassandra data analytics demo");
         cassandraApplication = client.editApplication(cassandraApplication);
 
         sdkProfileDto.setApplicationId(cassandraApplication.getId());
@@ -126,7 +110,7 @@ public class CassandraDemoBuider extends AbstractDemoBuilder {
         sensorPerRegionCassandraLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("sensor_per_region_cassandra_appender.json")));
         sensorPerRegionCassandraLogAppender = client.editLogAppenderDto(sensorPerRegionCassandraLogAppender);
 
-        logger.info("Finished loading 'Cassandra Demo Application' data.");
+        LOG.info("Finished loading 'Cassandra data analytics demo application' data.");
     }
 
 }

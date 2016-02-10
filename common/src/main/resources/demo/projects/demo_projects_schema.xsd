@@ -51,7 +51,7 @@
     <xs:enumeration value="CC32XX"/>
     <xs:enumeration value="STM32"/>
     <xs:enumeration value="ECONAIS"/>
-    <xs:enumeration value="Raspberry_Pi"/>
+    <xs:enumeration value="RASPBERRY_PI"/>
   </xs:restriction>
 </xs:simpleType>
 

@@ -41,7 +41,7 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"' ")
 
-find_package (Boost 1.55 REQUIRED COMPONENTS log system)
+find_package (Boost 1.55 REQUIRED COMPONENTS log thread system)
 find_package (Avro REQUIRED)
 find_package (Botan REQUIRED)
 

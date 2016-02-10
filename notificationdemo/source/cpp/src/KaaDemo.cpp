@@ -37,8 +37,8 @@ static void showTopicList(const Topics& topics)
     }
 }
 
-static std::list<std::string> extractOptionalTopicIds(const Topics& topics) {
-    std::list<std::string> topicIds;
+static std::list<std::int64_t> extractOptionalTopicIds(const Topics& topics) {
+    std::list<std::int64_t> topicIds;
     for (const auto& topic : topics) {
         if (topic.subscriptionType == SubscriptionType::OPTIONAL_SUBSCRIPTION) {
             topicIds.push_back(topic.id);
@@ -51,7 +51,7 @@ static std::list<std::string> extractOptionalTopicIds(const Topics& topics) {
 // The listener which receives notifications on topics.
 class BasicNotificationListener : public INotificationListener {
 public:
-    virtual void onNotification(const std::string& topicId, const KaaNotification& notification)
+    virtual void onNotification(const std::int64_t topicId, const KaaNotification& notification)
     {
         std::cout << (boost::format("Notification for topic id '%1%' received") % topicId) << std::endl;
         std::cout << (boost::format("Notification body: '%1%'")

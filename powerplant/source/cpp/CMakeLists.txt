@@ -51,11 +51,11 @@ set (DEMO_SOURCE_FILES
 add_executable(${APP_NAME} ${DEMO_SOURCE_FILES})
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${APP_NAME} kaacpp_s botan-1.10 boost_log boost_system avrocpp pthread)
+    target_link_libraries(${APP_NAME} kaacpp_s botan-1.10 boost_log boost_thread boost_system avrocpp pthread)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    target_link_libraries(${APP_NAME} kaacpp_s botan-1.10 boost_log-mt boost_system-mt avrocpp)
+    target_link_libraries(${APP_NAME} kaacpp_s botan-1.10 boost_log-mt boost_thread-mt boost_system-mt avrocpp)
 endif()
 
 if (NOT POWER_PLANT_RANDOMIZER)

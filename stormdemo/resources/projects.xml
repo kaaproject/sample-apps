@@ -94,7 +94,7 @@ the endpoint in your server side application.
         <name>Storm data analytics demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
-This application demonstrates real-time data processing in Storm using Kaa on the Java SDK. <br /> <br />
+This application demonstrates real-time data processing in Storm using Kaa on the C SDK. <br /> <br />
 It will receive log data transferred by the Flume log appender as a Flume event from the Kaa clients and then it will print this data. <br />
 To learn more about Storm basics such as a spout, a bolt, etc., please refer to
 <a href="https://storm.apache.org/documentation/Tutorial.html">official Apache Storm tutorial</a>.
@@ -160,7 +160,7 @@ the endpoint in your server side application.
         <name>Storm data analytics demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
-This application demonstrates real-time data processing in Storm using Kaa on the Java SDK. <br /> <br />
+This application demonstrates real-time data processing in Storm using Kaa on the C++ SDK. <br /> <br />
 It will receive log data transferred by the Flume log appender as a Flume event from the Kaa clients and then it will print this data. <br />
 To learn more about Storm basics such as a spout, a bolt, etc., please refer to <a href="https://storm.apache.org/documentation/Tutorial.html">official Apache Storm tutorial</a>.
 

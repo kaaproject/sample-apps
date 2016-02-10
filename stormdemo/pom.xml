@@ -17,112 +17,112 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
-<parent>
-    <artifactId>examples</artifactId>
-    <groupId>org.kaaproject.kaa</groupId>
-    <version>1.2.0-SNAPSHOT</version>
-</parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>examples</artifactId>
+        <groupId>org.kaaproject.kaa</groupId>
+        <version>1.2.0-SNAPSHOT</version>
+    </parent>
 
-<groupId>org.kaaproject.kaa.examples</groupId>
-<artifactId>stormdemo</artifactId>
-<packaging>jar</packaging>
+    <groupId>org.kaaproject.kaa.examples</groupId>
+    <artifactId>stormdemo</artifactId>
+    <packaging>jar</packaging>
 
-<name>Kaa spark demo application</name>
-<url>http://kaaproject.org</url>
+    <name>Kaa spark demo application</name>
+    <url>http://kaaproject.org</url>
 
-<properties>
-    <main.dir>${basedir}/..</main.dir>
-</properties>
+    <properties>
+        <main.dir>${basedir}/..</main.dir>
+    </properties>
 
-<dependencies>
-    <dependency>
-        <groupId>org.kaaproject.kaa.examples</groupId>
-        <artifactId>common</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-core</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>log4j-over-slf4j</artifactId>
-    </dependency>
-</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.kaaproject.kaa.examples</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+    </dependencies>
 
-<build>
-    <resources>
-        <resource>
-            <directory>${project.build.directory}/generated-resources</directory>
-            <filtering>true</filtering>
-        </resource>
-    </resources>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-logging-dependencies</id>
-                    <phase>prepare-package</phase>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        <includeArtifactIds>logback-core,logback-classic,log4j-over-slf4j</includeArtifactIds>
-                        <overWriteReleases>false</overWriteReleases>
-                        <overWriteSnapshots>false</overWriteSnapshots>
-                        <overWriteIfNewer>true</overWriteIfNewer>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-        <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>
-                <descriptors>
-                    <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
-                    <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
-                    <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
-                </descriptors>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>make-assembly</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-        <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-resources</id>
-                    <phase>generate-resources</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${project.build.directory}/generated-resources/demo/storm
-                        </outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>resources</directory>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-logging-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeArtifactIds>logback-core,logback-classic,log4j-over-slf4j</includeArtifactIds>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-resources/demo/storm
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

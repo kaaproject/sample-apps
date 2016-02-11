@@ -100,22 +100,7 @@ public class LoginActivity extends FragmentActivity {
      */
     private KaaEventListener listener;
 
-    public enum AccountType {
-
-        GOOGLE("Google"),
-        FACEBOOK("Facebook"),
-        TWITTER("Twitter");
-
-        private String name;
-
-        AccountType(String name) {
-            this.name = name;
-        }
-
-        public String getAccountName() {
-            return name;
-        }
-    }
+    public enum AccountType {GOOGLE, FACEBOOK, TWITTER};
 
     /*
         Kaa verifiers tokens for Google, Facebook and Twitter
@@ -274,8 +259,8 @@ public class LoginActivity extends FragmentActivity {
     }
 
     public void updateUI(String userName, String userId, String token, AccountType type) {
-        currentUserName = type.getAccountName() + " user name: " + userName;
-        currentUserId = type.getAccountName() + " user id: " + userId;
+        currentUserName = type + " user name: " + userName;
+        currentUserId = type + " user id: " + userId;
         String kaaVerifierToken = null;
 
         switch (type) {

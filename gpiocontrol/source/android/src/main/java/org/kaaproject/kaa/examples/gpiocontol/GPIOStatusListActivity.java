@@ -23,11 +23,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import org.kaaproject.kaa.client.connectivity.AndroidConnectivityChecker;
 import org.kaaproject.kaa.examples.gpiocontrol.R;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
 import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
 import org.kaaproject.kaa.examples.gpiocontol.adapters.GPIOAdapter;
-import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
 
 public class GPIOStatusListActivity extends AppCompatActivity {
 
@@ -40,7 +40,8 @@ public class GPIOStatusListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gpio_list);
 
-        if (!ConnectionsManager.checkConnection(this)) {
+        AndroidConnectivityChecker connectivityChecker = new AndroidConnectivityChecker(this);
+        if (!connectivityChecker.checkConnectivity()) {
             SnackbarsManager.makeSnackBarNoInet(this);
         }
 

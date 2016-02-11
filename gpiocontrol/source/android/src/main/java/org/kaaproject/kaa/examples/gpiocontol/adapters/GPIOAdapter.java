@@ -17,9 +17,7 @@
 package org.kaaproject.kaa.examples.gpiocontol.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -29,10 +27,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import org.kaaproject.kaa.client.connectivity.AndroidConnectivityChecker;
 import org.kaaproject.kaa.examples.gpiocontrol.R;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
 import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
-import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
@@ -89,7 +87,8 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
         holder.switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!ConnectionsManager.checkConnection(holder.cardView.getContext())) {
+                AndroidConnectivityChecker connectivityChecker = new AndroidConnectivityChecker(context);
+                if (!connectivityChecker.checkConnectivity()) {
                     SnackbarsManager.makeSnackBarNoInet(holder.cardView.getContext());
                     buttonView.setChecked(!isChecked);
                     return;

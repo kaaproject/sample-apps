@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import org.kaaproject.kaa.client.connectivity.AndroidConnectivityChecker;
 import org.kaaproject.kaa.examples.gpiocontrol.R;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EndpointAccessToken;
@@ -42,7 +43,6 @@ import org.kaaproject.kaa.client.event.registration.OnAttachEndpointOperationCal
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.examples.gpiocontol.adapters.DevicesAdapter;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
-import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
 import org.kaaproject.kaa.examples.gpiocontol.utils.PreferencesManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
@@ -56,6 +56,8 @@ import java.util.List;
 public class DevicesListActivity extends AppCompatActivity {
 
     private final String TAG = DevicesListActivity.class.getSimpleName();
+
+    private AndroidConnectivityChecker connectivityChecker;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -82,6 +84,7 @@ public class DevicesListActivity extends AppCompatActivity {
         mAdapter = new DevicesAdapter(devices);
         mRecyclerView.setAdapter(mAdapter);
 
+        connectivityChecker = new AndroidConnectivityChecker(this);
         startKaa();
     }
 
@@ -113,7 +116,7 @@ public class DevicesListActivity extends AppCompatActivity {
 
     private void startKaa() {
         progressBar.setVisibility(View.VISIBLE);
-        if (!ConnectionsManager.checkConnection(this)) {
+        if (!connectivityChecker.checkConnectivity()) {
             SnackbarsManager.makeSnackBarNoInet(this);
         }else {
             kaaClient = KaaProvider.getClient(this);
@@ -129,7 +132,7 @@ public class DevicesListActivity extends AppCompatActivity {
     }
 
     private void setUpEndpointListener(){
-        if (!ConnectionsManager.checkConnection(this)) {
+        if (!connectivityChecker.checkConnectivity()) {
             SnackbarsManager.makeSnackBarNoInet(this);
             return;
         }

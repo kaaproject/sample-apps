@@ -44,10 +44,6 @@ public class CitiesFragment extends CityGuideFragment {
     private String mAreaName;
     private CitiesAdapter mCitiesAdapter;
 
-    public CitiesFragment() {
-        super();
-    }
-
     public static CitiesFragment createInstance(String areaName) {
         CitiesFragment fragment = new CitiesFragment();
         Bundle bundle = new Bundle();

@@ -42,10 +42,6 @@ public class AreasFragment extends CityGuideFragment {
     private ListView mAreasListView;
     private AreasAdapter mAreasAdapter;
 
-    public AreasFragment() {
-        super();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

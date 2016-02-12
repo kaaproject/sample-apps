@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 @KaaDemoBuilder
 public class NotificationDemoBuilder extends AbstractDemoBuilder {
-	
+
     private static final Logger logger = LoggerFactory.getLogger(NotificationDemoBuilder.class);
     
     private static final String NOTIFICATION_DEMO_JAVA_ID = "notification_demo_java";
@@ -46,7 +46,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
     private static final String NOTIFICATION_DEMO_ANDROID_ID = "notification_demo_android";
     private static final String NOTIFICATION_DEMO_OBJC_ID = "notification_demo_objc";
     
-    private static final int NOTIFICATION_VERSION = 1;
+    private static final Long NOTIFICATION_VERSION = 1L;
     private static final Date NOTIFICATION_EXPIRE_DATE = new Date(1900000000000L);
 
     private Map<String, SdkProfileDto> projectsSdkMap = new HashMap<>();
@@ -57,30 +57,30 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
 
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
-    	SdkProfileDto sdkProfile = createNotificationApplication(client, "Notification demo", 
-    			"notification_schema.avsc", "mandatory_notification.json", "optional_notification.json");
-    	
-    	projectsSdkMap.put(NOTIFICATION_DEMO_JAVA_ID, sdkProfile);
-    	projectsSdkMap.put(NOTIFICATION_DEMO_CPP_ID, sdkProfile);
-    	projectsSdkMap.put(NOTIFICATION_DEMO_C_ID, sdkProfile);
+        SdkProfileDto sdkProfile = createNotificationApplication(client, "Notification demo",
+                "notification_schema.avsc", "mandatory_notification.json", "optional_notification.json");
+
+        projectsSdkMap.put(NOTIFICATION_DEMO_JAVA_ID, sdkProfile);
+        projectsSdkMap.put(NOTIFICATION_DEMO_CPP_ID, sdkProfile);
+        projectsSdkMap.put(NOTIFICATION_DEMO_C_ID, sdkProfile);
         projectsSdkMap.put(NOTIFICATION_DEMO_OBJC_ID, sdkProfile);
-    	
-    	sdkProfile = createNotificationApplication(client, "Android notification demo", 
-    			NOTIFICATION_DEMO_ANDROID_ID + "/notification_schema.avsc", 
-    			NOTIFICATION_DEMO_ANDROID_ID + "/mandatory_notification.json", 
-    			NOTIFICATION_DEMO_ANDROID_ID + "/optional_notification.json");
-    	
-    	projectsSdkMap.put(NOTIFICATION_DEMO_ANDROID_ID, sdkProfile);
+
+        sdkProfile = createNotificationApplication(client, "Android notification demo",
+                NOTIFICATION_DEMO_ANDROID_ID + "/notification_schema.avsc",
+                NOTIFICATION_DEMO_ANDROID_ID + "/mandatory_notification.json",
+                NOTIFICATION_DEMO_ANDROID_ID + "/optional_notification.json");
+
+        projectsSdkMap.put(NOTIFICATION_DEMO_ANDROID_ID, sdkProfile);
     }
     
     private SdkProfileDto createNotificationApplication(AdminClient client,
-    		String appName,
-    		String notificationSchemaRes, 
-    		String mandatoryNotificationRes,
-    		String optionalNotificationRes) throws Exception {
-    	
-    	
-    	SdkProfileDto sdkProfileDto = new SdkProfileDto();
+            String appName,
+            String notificationSchemaRes,
+            String mandatoryNotificationRes,
+            String optionalNotificationRes) throws Exception {
+
+
+        SdkProfileDto sdkProfileDto = new SdkProfileDto();
         logger.info("Loading '{} application' data...", appName);
 
         loginTenantAdmin(client);
@@ -160,8 +160,8 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         logger.info("Notification for optional topic was created");
 
         logger.info("Finished loading '{} application' data...", appName);
-    	
-    	return sdkProfileDto;
+
+        return sdkProfileDto;
     }
     
     @Override

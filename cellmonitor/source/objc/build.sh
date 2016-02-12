@@ -15,10 +15,14 @@
 #  limitations under the License.
 #
 
+KAA_SDK_DIR="kaa-ep-sdk"
 
 cd libs
-mkdir kaa-client-sdk-p0-c1-n1-l2
-tar -zxvf kaa-client-sdk-p0-c1-n1-l2.tar.gz -C kaa-client-sdk-p0-c1-n1-l2
-cd kaa-client-sdk-p0-c1-n1-l2
+mkdir "$KAA_SDK_DIR"
+
+KAA_SDK_TAR=$(find . -name "kaa-*.tar.gz")
+
+tar -zxvf "$KAA_SDK_TAR" -C "$KAA_SDK_DIR"
+cd "$KAA_SDK_DIR"
 pod setup
 pod install

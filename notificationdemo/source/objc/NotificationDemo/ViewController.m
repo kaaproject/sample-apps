@@ -69,7 +69,7 @@
     @try {
         //Try to subscribe to all new optional topics, if any.
         NSArray *optionalTopics = [self extractOptionalTopicIds:list];
-        for (NSString *optionalTopicId in optionalTopics) {
+        for (NSNumber *optionalTopicId in optionalTopics) {
             [self addLogWithText:[NSString stringWithFormat:@"Subscribing to optional topic %@", optionalTopicId]];
         }
         [self.kaaClient subscribeToTopicsWithIDs:optionalTopics forceSync:YES];
@@ -79,8 +79,8 @@
     }
 }
 
-- (void)onNotification:(KAASampleNotification *)notification withTopicId:(NSString *)topicId {
-    [self addLogWithText:[NSString stringWithFormat:@"Notification for topicId %@ received", topicId]];
+- (void)onNotification:(KAASampleNotification *)notification withTopicId:(int64_t)topicId {
+    [self addLogWithText:[NSString stringWithFormat:@"Notification for topicId %lld received", topicId]];
     [self addLogWithText:[NSString stringWithFormat:@"Notification body: %@", notification.message.data]];
 }
 
@@ -127,7 +127,7 @@
         [self addLogWithText:@"Topic list is empty"];
     } else {
         for (Topic *topic in topics) {
-            [self addLogWithText:[NSString stringWithFormat:@"%@ %@ %u", topic.id, topic.name, topic.subscriptionType]];
+            [self addLogWithText:[NSString stringWithFormat:@"%lld %@ %u", topic.id, topic.name, topic.subscriptionType]];
         }
     }
 }
@@ -136,7 +136,7 @@
     NSMutableArray *topicIds = [NSMutableArray array];
     for (Topic *topic in topics) {
         if (topic.subscriptionType == SUBSCRIPTION_TYPE_OPTIONAL_SUBSCRIPTION) {
-            [topicIds addObject:topic.id];
+            [topicIds addObject:@(topic.id)];
         }
     }
     return topicIds;

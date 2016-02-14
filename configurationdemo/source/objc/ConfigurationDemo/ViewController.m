@@ -40,7 +40,7 @@
     NSString *configurationPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"savedconfig.cfg"];
 
     // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
-    [self.kaaClient setConfigurationStorage:[SimpleConfigurationStorage storageWithPath:configurationPath];
+    [self.kaaClient setConfigurationStorage:[SimpleConfigurationStorage storageWithPath:configurationPath]];
     
     // Add a listener which displays the Kaa client configuration each time it is updated.
     [self.kaaClient addConfigurationDelegate:self];

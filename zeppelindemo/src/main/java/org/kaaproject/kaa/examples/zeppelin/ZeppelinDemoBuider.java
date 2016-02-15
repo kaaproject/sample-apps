@@ -65,30 +65,28 @@ public class ZeppelinDemoBuider extends AbstractDemoBuilder {
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());
 
         LogAppenderDto panelPerRowCassandraLogAppender = new LogAppenderDto();
-        panelPerRowCassandraLogAppender.setName("sensor_per_row");
-        panelPerRowCassandraLogAppender.setDescription("Sensor per row Cassandra log appender.");
+        panelPerRowCassandraLogAppender.setName("Panel per row appender");
+        panelPerRowCassandraLogAppender.setDescription("Panel per row Cassandra log appender.");
         panelPerRowCassandraLogAppender.setApplicationId(sparkApplication.getId());
         panelPerRowCassandraLogAppender.setApplicationToken(sparkApplication.getApplicationToken());
         panelPerRowCassandraLogAppender.setTenantId(sparkApplication.getTenantId());
         panelPerRowCassandraLogAppender.setMinLogSchemaVersion(1);
         panelPerRowCassandraLogAppender.setMaxLogSchemaVersion(Integer.MAX_VALUE);
         panelPerRowCassandraLogAppender.setConfirmDelivery(true);
-        panelPerRowCassandraLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.TIMESTAMP));
         panelPerRowCassandraLogAppender.setPluginTypeName("Cassandra");
         panelPerRowCassandraLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.cassandra.appender.CassandraLogAppender");
         panelPerRowCassandraLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("panel_per_row.json")));
         panelPerRowCassandraLogAppender = client.editLogAppenderDto(panelPerRowCassandraLogAppender);
 
         LogAppenderDto zonePerRowCassandraLogAppender = new LogAppenderDto();
-        zonePerRowCassandraLogAppender.setName("sensor_per_date");
-        zonePerRowCassandraLogAppender.setDescription("Sensor per date Cassandra log appender.");
+        zonePerRowCassandraLogAppender.setName("Zone per row appender");
+        zonePerRowCassandraLogAppender.setDescription("Zone per row Cassandra log appender.");
         zonePerRowCassandraLogAppender.setApplicationId(sparkApplication.getId());
         zonePerRowCassandraLogAppender.setApplicationToken(sparkApplication.getApplicationToken());
         zonePerRowCassandraLogAppender.setTenantId(sparkApplication.getTenantId());
         zonePerRowCassandraLogAppender.setMinLogSchemaVersion(1);
         zonePerRowCassandraLogAppender.setMaxLogSchemaVersion(Integer.MAX_VALUE);
         zonePerRowCassandraLogAppender.setConfirmDelivery(true);
-        zonePerRowCassandraLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.TIMESTAMP));
         zonePerRowCassandraLogAppender.setPluginTypeName("Cassandra");
         zonePerRowCassandraLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.cassandra.appender.CassandraLogAppender");
         zonePerRowCassandraLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("zone_per_row.json")));

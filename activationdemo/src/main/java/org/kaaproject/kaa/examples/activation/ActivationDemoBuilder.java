@@ -45,7 +45,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
         loginTenantAdmin(client);
 
         ApplicationDto activationApplication = new ApplicationDto();
-        activationApplication.setName("Activation guide");
+        activationApplication.setName("Activation demo");
         activationApplication = client.editApplication(activationApplication);
 
         sdkProfileDto.setApplicationId(activationApplication.getId());

@@ -33,6 +33,7 @@ import org.kaaproject.kaa.demo.activation.utils.AdminClientManager;
 import org.kaaproject.kaa.demo.activation.utils.Utils;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -127,6 +128,10 @@ public class ActivationDemo {
 
     private static void useAdminClient() {
         Map<String, EndpointProfileDto> endpointProfiles = retrieveEndpointProfiles();
+        if (endpointProfiles .isEmpty()) {
+            LOG.info("There is no endpoint profiles");
+            return;
+        }
         printAllEndpointProfiles(endpointProfiles);
 
         for (;;) {
@@ -156,7 +161,7 @@ public class ActivationDemo {
     private static Map<String, EndpointProfileDto> retrieveEndpointProfiles() {
         AdminClientManager clientManager = AdminClientManager.instance();
         List<EndpointGroupDto> endpointGroups = clientManager.getEndpointGroupsByApplicationName(APPLICATION_NAME);
-        return clientManager.getEndpointProfiles(endpointGroups);
+        return endpointGroups != null ? clientManager.getEndpointProfiles(endpointGroups) : new HashMap<>();
     }
     
     /**

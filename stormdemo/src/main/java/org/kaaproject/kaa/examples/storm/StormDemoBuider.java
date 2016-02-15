@@ -44,12 +44,12 @@ public class StormDemoBuider extends AbstractDemoBuilder {
 
         loginTenantAdmin(client);
 
-        ApplicationDto sparkApplication = new ApplicationDto();
-        sparkApplication.setName("Storm data analytics demo");
-        sparkApplication = client.editApplication(sparkApplication);
+        ApplicationDto stormDataAnalyticsDemoApplication = new ApplicationDto();
+        stormDataAnalyticsDemoApplication.setName("Storm data analytics demo");
+        stormDataAnalyticsDemoApplication = client.editApplication(stormDataAnalyticsDemoApplication);
 
-        sdkProfileDto.setApplicationId(sparkApplication.getId());
-        sdkProfileDto.setApplicationToken(sparkApplication.getApplicationToken());
+        sdkProfileDto.setApplicationId(stormDataAnalyticsDemoApplication.getId());
+        sdkProfileDto.setApplicationToken(stormDataAnalyticsDemoApplication.getApplicationToken());
         sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setConfigurationSchemaVersion(1);
         sdkProfileDto.setNotificationSchemaVersion(1);
@@ -57,18 +57,18 @@ public class StormDemoBuider extends AbstractDemoBuilder {
         loginTenantDeveloper(client);
 
         LogSchemaDto powerReportLogSchemaDto = new LogSchemaDto();
-        powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
+        powerReportLogSchemaDto.setApplicationId(stormDataAnalyticsDemoApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
-        powerReportLogSchemaDto.setDescription("Spark demo log schema");
+        powerReportLogSchemaDto.setDescription("Storm demo log schema");
         powerReportLogSchemaDto = client.createLogSchema(powerReportLogSchemaDto, getResourcePath("powerReportLogSchema.json"));
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());
 
         LogAppenderDto flumeLogAppender = new LogAppenderDto();
         flumeLogAppender.setName("Storm data analytics demo log appender");
         flumeLogAppender.setDescription("Storm data analytics demo log appender");
-        flumeLogAppender.setApplicationId(sparkApplication.getId());
-        flumeLogAppender.setApplicationToken(sparkApplication.getApplicationToken());
-        flumeLogAppender.setTenantId(sparkApplication.getTenantId());
+        flumeLogAppender.setApplicationId(stormDataAnalyticsDemoApplication.getId());
+        flumeLogAppender.setApplicationToken(stormDataAnalyticsDemoApplication.getApplicationToken());
+        flumeLogAppender.setTenantId(stormDataAnalyticsDemoApplication.getTenantId());
         flumeLogAppender.setMinLogSchemaVersion(1);
         flumeLogAppender.setMaxLogSchemaVersion(Integer.MAX_VALUE);
         flumeLogAppender.setConfirmDelivery(true);
@@ -77,7 +77,7 @@ public class StormDemoBuider extends AbstractDemoBuilder {
         flumeLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("flume_appender.json")));
         flumeLogAppender = client.editLogAppenderDto(flumeLogAppender);
 
-        LOG.info("Finished loading 'Spark Demo Application' data.");
+        LOG.info("Finished loading 'Storm data analytics demo application' data.");
     }
 
 }

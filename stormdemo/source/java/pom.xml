@@ -52,7 +52,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.kaaproject.examples.storm.SparkDataAnalyticsDemo</mainClass>
+                                    <mainClass>org.kaaproject.examples.storm.StormDataAnalyticsDemo</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

@@ -28,7 +28,7 @@
     <artifactId>stormdemo</artifactId>
     <packaging>jar</packaging>
 
-    <name>Kaa spark demo application</name>
+    <name>Kaa storm data analytics demo application</name>
     <url>http://kaaproject.org</url>
 
     <properties>

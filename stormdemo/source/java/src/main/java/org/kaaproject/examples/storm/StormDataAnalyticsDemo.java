@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by dmitry-sergeev on 13.08.15.
  */
-public class SparkDataAnalyticsDemo {
+public class StormDataAnalyticsDemo {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemo.class);
     private static final int LOGS_TO_SEND_COUNT = 1000;

@@ -36,7 +36,7 @@ LIBS_PATH="libs"
 KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
-KAA_SDK_TAR="kaa-client*.tar.gz"
+KAA_SDK_TAR="kaa-c*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
 
 function select_arch {

@@ -43,7 +43,7 @@ public class TopicModel {
         return topic.getName();
     }
 
-    public String getTopicId() {
+    public Long getTopicId() {
         return topic.getId();
     }
 

@@ -1,0 +1,1 @@
+(#sp.get("active") == true)

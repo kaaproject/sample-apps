@@ -21,7 +21,6 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
@@ -48,12 +47,9 @@ public class ImageCache {
                 URL url = new URL(imageUrl);
                 bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 imageMap.put(imageUrl, bmp);
-            } catch (MalformedURLException e) {
-                bmp = imageMap.get(DEFAULT_IMAGE_KEY);
-                Log.e(TAG, e.getMessage());
             } catch (IOException e) {
                 bmp = imageMap.get(DEFAULT_IMAGE_KEY);
-                Log.e(TAG, e.getMessage());
+                Log.e(TAG, "Unable to get image by URL because of " + e.getClass().getSimpleName() + ":" + e.getMessage());
             }
         } else {
             return imageMap.get(imageUrl);

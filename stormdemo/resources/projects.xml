@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
 <!--
 Copyright 2014-2016 CyberVision, Inc.
 
@@ -31,7 +30,7 @@ Apache Storm tutorial</a>.
 
 <h2>Installation</h2>
 1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
-2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.7+ and Maven 3.0+ installed):
+2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.8 and Maven 3.0+ installed):
 <pre>
 $ mvn clean install
 </pre>
@@ -101,7 +100,7 @@ To learn more about Storm basics such as a spout, a bolt, etc., please refer to
 
 <h2>Installation</h2>
 1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
-2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.7+ and Maven 3.0+ installed):
+2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.8 and Maven 3.0+ installed):
 <pre>
 $ mvn clean install
 </pre>
@@ -166,7 +165,7 @@ To learn more about Storm basics such as a spout, a bolt, etc., please refer to 
 
 <h2>Installation</h2>
 1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
-2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.7+ and Maven 3.0+ installed):
+2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.8 and Maven 3.0+ installed):
 <pre>
 $ mvn clean install
 </pre>

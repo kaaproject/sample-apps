@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class DeviceState {
 
     private static final Logger LOG = LoggerFactory.getLogger(DeviceState.class);
-    
+
     @SerializedName("active")
     private ValueType state;
 
@@ -59,7 +59,7 @@ public class DeviceState {
         String jsonString = null;
         try {
             jsonString = new Gson().toJson(deviceState);
-        } catch(JsonSyntaxException e) {
+        } catch (JsonSyntaxException e) {
             LOG.error("Json parsing exception");
         }
 
@@ -75,11 +75,11 @@ public class DeviceState {
         DeviceState deviceState = null;
         try {
             deviceState = new Gson().fromJson(jsonString, DeviceState.class);
-        } catch(JsonSyntaxException e) {
+        } catch (JsonSyntaxException e) {
             LOG.error("Json parsing exception");
         }
 
         return deviceState != null && deviceState.getState().isActive();
     }
-    
+
 }

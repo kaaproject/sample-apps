@@ -1,1 +1,1 @@
-(#sp.get("active") == true)
+#sp.active != null and #sp.active == true

@@ -44,7 +44,6 @@ public class ActivationDemo {
     private static final Logger LOG = LoggerFactory.getLogger(ActivationDemo.class);
 
     private final static String APPLICATION_NAME = "Activation demo";
-    private final static int DEFAULT_SERVER_PROFILE_VERSION = 1;
 
     private static KaaClient kaaClient;
 
@@ -52,25 +51,33 @@ public class ActivationDemo {
         LOG.info("Activation demo started");
         if (args.length < 1) {
             LOG.info("Invalid parameters");
+            LOG.info("Possible options:");
+            LOG.info(" java -jar ActivationDemo.jar client");
+            LOG.info(" java -jar ActivationDemo.jar admin host [port]");
             return;
         }
 
         String mode = args[0];
         switch (mode) {
-            case "admin":
-                if (args.length < 2 || !Utils.checkIfIPAddress(args[1])) {
-                    LOG.info("Ip address is not specified or address is invalid");
-                    return;
-                }
+        case "admin":
+            if (args.length < 2) {
+            }
+            if (args.length == 2) {
                 AdminClientManager.init(args[1]);
-                useAdminClient();
-                break;
-            case "client":
-                useKaaClient();
-                break;
-            default:
-                LOG.info("Invalid parameters. Please specify 'client' or 'admin'");
-                
+            } else if (args.length == 3) {
+                AdminClientManager.init(args[1], Integer.valueOf(args[2]));
+            } else {
+                LOG.info("ip/host is not specified or address is invalid");
+                return;
+            }
+            useAdminClient();
+            break;
+        case "client":
+            useKaaClient();
+            break;
+        default:
+            LOG.info("Invalid parameters. Please specify 'client' or 'admin'");
+
         }
     }
 
@@ -79,47 +86,44 @@ public class ActivationDemo {
          * Create the Kaa desktop context for the application.
          */
         DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext();
-        
+
         /*
-         * Create a Kaa client and add a listener which displays the Kaa client configuration 
-         * as soon as the Kaa client is started. 
+         * Create a Kaa client and add a listener which displays the Kaa client
+         * configuration as soon as the Kaa client is started.
          */
         kaaClient = Kaa.newClient(desktopKaaPlatformContext, new SimpleKaaClientStateListener() {
             @Override
             public void onStarted() {
                 super.onStarted();
                 LOG.info("Kaa client started");
-                LOG.info("Configuration: " + (kaaClient.getConfiguration().getActive() ? "active" : "inactive"));
                 DeviceType config = kaaClient.getConfiguration();
-
-                AdminClientManager.init(getServerHost());
-                String endpointKeyHash = kaaClient.getEndpointKeyHash();
-                updateServerProfile(endpointKeyHash, DEFAULT_SERVER_PROFILE_VERSION, !config.getActive());
+                LOG.info("Device state: " + (config.getActive() ? "active" : "inactive"));
             }
         });
-                
+
         /*
-         * Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
+         * Persist configuration in a local storage to avoid downloading it each
+         * time the Kaa client is started.
          */
         kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));
 
         /*
-         * Add a listener which displays the Kaa client configuration each time it is updated.
+         * Add a listener which displays the Kaa client configuration each time
+         * it is updated.
          */
         kaaClient.addConfigurationListener(new ConfigurationListener() {
             public void onConfigurationUpdate(DeviceType deviceType) {
-                LOG.info("Configuration was updated. New device state: " +
-                        (deviceType.getActive() ? "active" : "inactive"));
+                LOG.info("Configuration was updated. New device state: " + (deviceType.getActive() ? "active" : "inactive"));
             }
         });
-        
+
         /*
          * Start the Kaa client and connect it to the Kaa server.
          */
         kaaClient.start();
 
         Utils.getUserInput();
-        
+
         /*
          * Stop the Kaa client and connect it to the Kaa server.
          */
@@ -128,15 +132,14 @@ public class ActivationDemo {
 
     private static void useAdminClient() {
         Map<String, EndpointProfileDto> endpointProfiles = retrieveEndpointProfiles();
-        if (endpointProfiles .isEmpty()) {
-            LOG.info("There is no endpoint profiles");
+        if (endpointProfiles.isEmpty()) {
+            LOG.info("There is no endpoints registered!");
             return;
         }
         printAllEndpointProfiles(endpointProfiles);
 
         for (;;) {
-            LOG.info("Specify endpoint profile id# you want to activate/deactivate or" +
-                    "print 'exit' to exit");
+            LOG.info("Specify endpoint profile id# you want to activate/deactivate or print 'exit' to exit");
             String userInput = Utils.getUserInput();
             if (userInput.equalsIgnoreCase("exit")) {
                 return;
@@ -152,20 +155,21 @@ public class ActivationDemo {
             printAllEndpointProfiles(endpointProfiles);
         }
     }
-    
+
     /**
-     *  Retrieve all endpoint profiles associated with activation application
+     * Retrieve all endpoint profiles associated with activation application
      *
-     *  @return endpoint profiles associated with activation application
+     * @return endpoint profiles associated with activation application
      */
     private static Map<String, EndpointProfileDto> retrieveEndpointProfiles() {
         AdminClientManager clientManager = AdminClientManager.instance();
         List<EndpointGroupDto> endpointGroups = clientManager.getEndpointGroupsByApplicationName(APPLICATION_NAME);
         return endpointGroups != null ? clientManager.getEndpointProfiles(endpointGroups) : new HashMap<>();
     }
-    
+
     /**
-     *  Output all available endpoint profiles associated to activation application
+     * Output all available endpoint profiles associated to activation
+     * application
      *
      * @param endpointProfiles
      *            endpoint profiles associated to activation application
@@ -176,13 +180,12 @@ public class ActivationDemo {
             EndpointProfileDto endpointProfile = entry.getValue();
             String endpointKeyHash = Base64.getEncoder().encodeToString(endpointProfile.getEndpointKeyHash());
             boolean isActive = DeviceState.parseJsonString(endpointProfile.getServerProfileBody());
-            LOG.info("Profile id: {} endpointHash: {} device state: {}", entry.getKey(), endpointKeyHash,
-                    isActive ? "active" : "inactive");
+            LOG.info("Profile id: {} endpointHash: {} device state: {}", entry.getKey(), endpointKeyHash, isActive ? "active" : "inactive");
         }
     }
 
     /**
-     *  Update the server profile object using REST API
+     * Update the server profile object using REST API
      *
      * @param endpointProfile
      *            the endpointProfileDto object
@@ -195,9 +198,9 @@ public class ActivationDemo {
         String endpointKeyHash = Base64.getEncoder().encodeToString(endpointProfile.getEndpointKeyHash());
         updateServerProfile(endpointKeyHash, version, !isActive);
     }
-    
+
     /**
-     *  Update the server profile object using REST API
+     * Update the server profile object using REST API
      *
      * @param endpointKeyHash
      *            the endpointKeyHash
@@ -211,7 +214,7 @@ public class ActivationDemo {
         AdminClientManager clientManager = AdminClientManager.instance();
         clientManager.updateServerProfile(endpointKeyHash, profileVersion, DeviceState.toJsonString(newState));
     }
-    
+
     private static String getServerHost() {
         IPTransportInfo transportInfo = (IPTransportInfo) kaaClient.getChannelManager().getActiveServer(TransportType.BOOTSTRAP);
         return transportInfo.getHost();

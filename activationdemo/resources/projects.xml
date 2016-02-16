@@ -32,12 +32,12 @@ This Activation app demonstrate server side profile feature usage. It allows to 
 Download the jar file to your desktop by clicking the "Binary" button on the left. Make sure that you have Java runtime installed. Application can run in two modes: client and admin. The mode is specified by command line arguments.<br/>
 To run in "admin" mode use the following command in the console:
 <pre>
-$ java -jar ConfigurationDemo.jar admin ipAddress
+$ java -jar ActivationDemo.jar admin ipAddress
 </pre>
 Where ipAddress is address of Kaa node, on which REST Admin API is deployed.
 To run in "client" mode use the following command in the console:
 <pre>
-$ java -jar ConfigurationDemo.jar client
+$ java -jar ActivationDemo.jar client
 </pre>
 <h2>Playing around</h2>
 Make sure that the Kaa Sandbox is up and running. When using the "Activation Demo" app in "admin" mode you will be able to to activate/deactivate any endoint associated with Activation app. Endpoint activation and deactivation are performed by updating server profile using REST API.<br/><br/>

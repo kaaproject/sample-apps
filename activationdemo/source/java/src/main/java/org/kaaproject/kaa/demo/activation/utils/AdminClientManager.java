@@ -27,7 +27,7 @@ import java.util.*;
 public class AdminClientManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(AdminClientManager.class);
-    
+
     private static final String TENANT_DEV_USERNAME = "devuser";
     private static final String TENANT_DEV_PASSWORD = "devuser123";
     private static final String DEFAULT_LIMIT = "20";
@@ -37,12 +37,16 @@ public class AdminClientManager {
     private AdminClient adminClient;
     private static AdminClientManager instance;
 
-    private AdminClientManager(String host) {
-        adminClient = new AdminClient(host, KAA_PORT);
+    private AdminClientManager(String host, int port) {
+        adminClient = new AdminClient(host, port);
     }
 
     public static void init(String host) {
-        instance = new AdminClientManager(host);
+        init(host, KAA_PORT);
+    }
+
+    public static void init(String host, int port) {
+        instance = new AdminClientManager(host, port);
     }
 
     public static AdminClientManager instance() {
@@ -53,7 +57,7 @@ public class AdminClientManager {
     }
 
     /**
-     *  Do authorization check
+     * Do authorization check
      *
      * @return true if user is authorized otherwise false
      */
@@ -68,7 +72,7 @@ public class AdminClientManager {
     }
 
     /**
-     *  Checks authorization and log in
+     * Checks authorization and log in
      */
     public void checkAuthorizationAndLogin() {
         if (!checkAuth()) {
@@ -77,14 +81,14 @@ public class AdminClientManager {
     }
 
     /**
-     *  Update server profile by endpoint profile key
+     * Update server profile by endpoint profile key
      *
      * @param endpointProfileKey
      *            the endpointProfileKey
      * @param serverProfileVersion
-     *            the server profile version  
+     *            the server profile version
      * @param serverProfileBody
-     *            the server profile body            
+     *            the server profile body
      * @return the endpoint profile object
      */
     public EndpointProfileDto updateServerProfile(String endpointProfileKey, int serverProfileVersion, String serverProfileBody) {
@@ -100,7 +104,7 @@ public class AdminClientManager {
     }
 
     /**
-     *  Get application object by specified application name
+     * Get application object by specified application name
      *
      * @param applicationName
      *            the application name
@@ -123,8 +127,8 @@ public class AdminClientManager {
     }
 
     /**
-     *  Get all endpoint groups associated with given application Id
-     *  
+     * Get all endpoint groups associated with given application Id
+     * 
      * @param applicationId
      *            the application Id
      * @return list of endpoint groups
@@ -142,7 +146,7 @@ public class AdminClientManager {
     }
 
     /**
-     *  Get all endpoint profiles associated with given endpoint group Id
+     * Get all endpoint profiles associated with given endpoint group Id
      *
      * @param endpointGroupId
      *            the endpoint group id
@@ -150,7 +154,7 @@ public class AdminClientManager {
      */
     public EndpointProfilesPageDto getEndpointProfileByEndpointGroupId(String endpointGroupId) {
         checkAuthorizationAndLogin();
-        
+
         PageLinkDto pageLink = new PageLinkDto(endpointGroupId, DEFAULT_LIMIT, DEFAULT_OFFSET);
         EndpointProfilesPageDto endpointProfile = null;
         try {
@@ -162,7 +166,7 @@ public class AdminClientManager {
     }
 
     /**
-     *  Get all endpoint groups associated with given application
+     * Get all endpoint groups associated with given application
      *
      * @param applicationName
      *            the application name
@@ -179,7 +183,7 @@ public class AdminClientManager {
     }
 
     /**
-     *  Get all endpoint profiles associated with list of endpoint groups
+     * Get all endpoint profiles associated with list of endpoint groups
      *
      * @param endpointGroups
      *            list of endpoint groups
@@ -198,8 +202,8 @@ public class AdminClientManager {
                 }
             }
         }
-        
+
         return endpointProfiles;
     }
-    
+
 }

@@ -70,7 +70,7 @@
         //Try to subscribe to all new optional topics, if any.
         NSArray *optionalTopics = [self extractOptionalTopicIds:list];
         for (NSNumber *optionalTopicId in optionalTopics) {
-            [self addLogWithText:[NSString stringWithFormat:@"Subscribing to optional topic %@", optionalTopicId]];
+            [self addLogWithText:[NSString stringWithFormat:@"Subscribing to optional topic with id %@", optionalTopicId]];
         }
         [self.kaaClient subscribeToTopicsWithIDs:optionalTopics forceSync:YES];
     }
@@ -127,7 +127,7 @@
         [self addLogWithText:@"Topic list is empty"];
     } else {
         for (Topic *topic in topics) {
-            [self addLogWithText:[NSString stringWithFormat:@"%lld %@ %u", topic.id, topic.name, topic.subscriptionType]];
+            [self addLogWithText:[NSString stringWithFormat:@"Topic id:%lld name:%@ type:%u", topic.id, topic.name, topic.subscriptionType]];
         }
     }
 }

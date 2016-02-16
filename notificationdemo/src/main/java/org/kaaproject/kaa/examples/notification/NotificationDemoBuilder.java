@@ -132,7 +132,6 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         NotificationDto mandatoryNotification = new NotificationDto();
         mandatoryNotification.setApplicationId(notificationApplication.getId());
         mandatoryNotification.setSchemaId(notificationSchemaDto.getId());
-        mandatoryNotification.setVersion(NOTIFICATION_VERSION);
         mandatoryNotification.setType(NotificationTypeDto.USER);
         mandatoryNotification.setExpiredAt(NOTIFICATION_EXPIRE_DATE);
         mandatoryNotification.setTopicId(mandatoryTopic.getId());
@@ -151,7 +150,6 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         NotificationDto optionalTopicNotification = new NotificationDto();
         optionalTopicNotification.setApplicationId(notificationApplication.getId());
         optionalTopicNotification.setSchemaId(notificationSchemaDto.getId());
-        optionalTopicNotification.setVersion(NOTIFICATION_VERSION);
         optionalTopicNotification.setType(NotificationTypeDto.USER);
         optionalTopicNotification.setExpiredAt(NOTIFICATION_EXPIRE_DATE);
         optionalTopicNotification.setTopicId(optionalTopic.getId());

@@ -51,7 +51,7 @@ public class NotificationDemo {
         // Add a notification listener that listens to all notifications.
         kaaClient.addNotificationListener(new NotificationListener() {
             @Override
-            public void onNotification(String id, SampleNotification sampleNotification) {
+            public void onNotification(long id, SampleNotification sampleNotification) {
                 LOG.info("Notification for topic id [{}] received.", id);
                 LOG.info("Notification body: {}", sampleNotification.getMessage());
             }
@@ -91,8 +91,8 @@ public class NotificationDemo {
             showTopicList(list);
             try {
                 //Try to subscribe to all new optional topics, if any.
-                List<String> optionalTopics = extractOptionalTopicIds(list);
-                for(String optionalTopicId : optionalTopics){
+                List<Long> optionalTopics = extractOptionalTopicIds(list);
+                for(Long optionalTopicId : optionalTopics){
                     LOG.info("Subscribing to optional topic {}", optionalTopicId);
                 }
                 kaaClient.subscribeToTopics(optionalTopics, true);
@@ -102,8 +102,8 @@ public class NotificationDemo {
         }
     }
 
-    private static List<String> extractOptionalTopicIds(List<Topic> list) {
-        List<String> topicIds = new ArrayList<>();
+    private static List<Long> extractOptionalTopicIds(List<Topic> list) {
+        List<Long> topicIds = new ArrayList<>();
         for (Topic t : list) {
             if (t.getSubscriptionType() == SubscriptionType.OPTIONAL_SUBSCRIPTION) {
                 topicIds.add(t.getId());

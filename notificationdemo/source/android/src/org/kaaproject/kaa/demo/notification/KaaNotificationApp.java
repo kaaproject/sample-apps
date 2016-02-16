@@ -116,7 +116,7 @@ public class KaaNotificationApp extends Application {
     /*
      * Subscribes the Kaa client to an optional notification topic.
      */
-    public void subscribeToTopic(String topicId) {
+    public void subscribeToTopic(Long topicId) {
         try {
             mClient.subscribeToTopic(topicId, true);
             Log.i(TAG, "Subscribing to topic with id: " + topicId);
@@ -128,7 +128,7 @@ public class KaaNotificationApp extends Application {
     /*
      * Unsubscribes the Kaa client from an optional notification topic.
      */
-    public void unsubscribeFromTopic(String topicId) {
+    public void unsubscribeFromTopic(Long topicId) {
         try {
             mClient.unsubscribeFromTopic(topicId, true);
             Log.i(TAG, "Unsubscribing from topic with id: " + topicId);
@@ -140,7 +140,7 @@ public class KaaNotificationApp extends Application {
     private PopupWindow popupWindow;
     private View popup;
 
-    public void showPopup(Activity context, String topicId, Notification notification) {
+    public void showPopup(Activity context, Long topicId, Notification notification) {
         ((TextView) popup.findViewById(R.id.popup_notification)).setText(notification.getMessage());
         ((TextView) popup.findViewById(R.id.popup_topic)).setText(TopicInfoHolder.holder.getTopicName(topicId));
         ((ImageView) popup.findViewById(R.id.popup_image)).setImageBitmap(ImageCache.cache.getImage(notification
@@ -169,7 +169,7 @@ public class KaaNotificationApp extends Application {
 
     public void initNotificationListener() {
         this.notificationListener = new NotificationListener() {
-            public void onNotification(final String topicId, final Notification notification) {
+            public void onNotification(final long topicId, final Notification notification) {
                 Log.i(TAG, "Notification received: " + notification.toString());
                 TopicInfoHolder.holder.addNotification(topicId, notification);
                 if (null != demoActivity) {

@@ -57,7 +57,7 @@ public class SparkDemoBuider extends AbstractDemoBuilder {
         LogSchemaDto powerReportLogSchemaDto = new LogSchemaDto();
         powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
-        powerReportLogSchemaDto.setDescription("Spark demo log schema");
+        powerReportLogSchemaDto.setDescription("Spark data analytics demo log schema");
         powerReportLogSchemaDto = client.createLogSchema(powerReportLogSchemaDto, getResourcePath("powerReportLogSchema.json"));
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());
 

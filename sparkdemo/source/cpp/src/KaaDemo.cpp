@@ -67,7 +67,7 @@ int main()
     const std::size_t PANEL_COUNT = 10;
     const std::size_t MAX_PANEL_POWER = 100;
 
-    std::cout << "Spark demo started" << std::endl;
+    std::cout << "Spark data analytics demo started" << std::endl;
     std::cout << "--= Press Enter to exit =--" << std::endl;
 
     //Create a Kaa client with the Kaa desktop context.
@@ -112,7 +112,7 @@ int main()
     // Stop the Kaa client and release all the resources which were in use.
     kaaClient->stop();
 
-    std::cout << "Spark demo stopped" << std::endl;
+    std::cout << "Spark data analytics demo stopped" << std::endl;
 
     return 0;
 }

@@ -54,7 +54,7 @@ $ mvn clean install
 </pre>
 6. Launch the Storm data analytics demo application using the following command:
 <pre>
-$ java – jar target/storm-client-example.jar
+$ java -jar target/storm-client-example.jar
 </pre>
 7. Now look at the Storm server output. You will see the following lines:
 <pre>

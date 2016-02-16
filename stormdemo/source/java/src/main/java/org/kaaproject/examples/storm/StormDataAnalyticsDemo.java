@@ -1,4 +1,3 @@
-package org.kaaproject.examples.storm;
 /*
  * Copyright 2014-2016 CyberVision, Inc.
  *
@@ -6,7 +5,7 @@ package org.kaaproject.examples.storm;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *	http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,6 +13,8 @@ package org.kaaproject.examples.storm;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.kaaproject.examples.storm;
 
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
@@ -37,7 +38,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class StormDataAnalyticsDemo {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemo.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StormDataAnalyticsDemo.class);
     private static final int LOGS_TO_SEND_COUNT = 1000;
     private static final int ZONE_COUNT = 10;
     private static final int PANEL_COUNT = 10;

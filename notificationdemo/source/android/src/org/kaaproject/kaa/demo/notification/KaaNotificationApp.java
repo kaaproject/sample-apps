@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2016 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.notification;
@@ -135,7 +135,7 @@ public class KaaNotificationApp extends Application {
     /*
      * Subscribes the Kaa client to an optional notification topic.
      */
-    public void subscribeToTopic(String topicId) {
+    public void subscribeToTopic(Long topicId) {
         try {
             mClient.subscribeToTopic(topicId, true);
             Log.i(TAG, "Subscribing to topic with id: " + topicId);
@@ -147,7 +147,7 @@ public class KaaNotificationApp extends Application {
     /*
      * Unsubscribes the Kaa client from an optional notification topic.
      */
-    public void unsubscribeFromTopic(String topicId) {
+    public void unsubscribeFromTopic(Long topicId) {
         try {
             mClient.unsubscribeFromTopic(topicId, true);
             Log.i(TAG, "Unsubscribing from topic with id: " + topicId);
@@ -156,7 +156,14 @@ public class KaaNotificationApp extends Application {
         }
     }
 
+<<<<<<< HEAD
     public void showPopup(Activity context, String topicId, Notification notification) {
+=======
+    private PopupWindow popupWindow;
+    private View popup;
+
+    public void showPopup(Activity context, Long topicId, Notification notification) {
+>>>>>>> master
         ((TextView) popup.findViewById(R.id.popup_notification)).setText(notification.getMessage());
         ((TextView) popup.findViewById(R.id.popup_topic)).setText(TopicInfoHolder.holder.getTopicName(topicId));
         ((ImageView) popup.findViewById(R.id.popup_image)).setImageBitmap(ImageCache.cache.getImage(notification
@@ -185,7 +192,7 @@ public class KaaNotificationApp extends Application {
 
     private void initNotificationListener() {
         this.notificationListener = new NotificationListener() {
-            public void onNotification(final String topicId, final Notification notification) {
+            public void onNotification(final long topicId, final Notification notification) {
                 Log.i(TAG, "Notification received: " + notification.toString());
                 TopicInfoHolder.holder.addNotification(topicId, notification);
                 if (demoActivity != null) {

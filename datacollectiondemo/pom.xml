@@ -1,5 +1,5 @@
 <!--
-  Copyright 2014-2015 CyberVision, Inc.
+  Copyright 2014-2016 CyberVision, Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -87,6 +87,7 @@
                         <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

@@ -91,6 +91,8 @@ public class KaaNotificationApp extends Application {
          * Start the Kaa client workflow.
          */
         mClient.start();
+
+        TopicInfoHolder.holder.updateTopics(mClient.getTopics());
     }
 
     public void setDemoActivity(NotificationDemoActivity demoActivity) {

@@ -53,7 +53,6 @@ public class TopicFragment extends ListFragment {
         demoActivity.showNotifications();
     }
 
-
     public String getFragmentTag() {
         return TopicFragment.class.getSimpleName();
     }

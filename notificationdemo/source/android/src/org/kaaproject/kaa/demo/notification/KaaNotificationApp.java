@@ -62,6 +62,9 @@ public class KaaNotificationApp extends Application {
     private NotificationListener notificationListener;
     private NotificationTopicListListener topicListListener;
 
+    private PopupWindow popupWindow;
+    private View popup;
+
     public void onCreate() {
         super.onCreate();
         mContext = this;
@@ -102,6 +105,22 @@ public class KaaNotificationApp extends Application {
         return mClient;
     }
 
+    public void pause() {
+        /*
+         * Suspend the Kaa client. Release all network connections and application
+         * resources. Suspend all the Kaa client tasks.
+         */
+        mClient.pause();
+    }
+
+    public void resume() {
+        /*
+         * Resume the Kaa client. Restore the Kaa client workflow. Resume all the Kaa client
+         * tasks.
+         */
+        mClient.resume();
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
@@ -137,16 +156,14 @@ public class KaaNotificationApp extends Application {
         }
     }
 
-    private PopupWindow popupWindow;
-    private View popup;
+    public void showPopup(Activity context, String topicId, Notification notification) {
 
-    public void showPopup(Activity context, Long topicId, Notification notification) {
         ((TextView) popup.findViewById(R.id.popup_notification)).setText(notification.getMessage());
         ((TextView) popup.findViewById(R.id.popup_topic)).setText(TopicInfoHolder.holder.getTopicName(topicId));
         ((ImageView) popup.findViewById(R.id.popup_image)).setImageBitmap(ImageCache.cache.getImage(notification
                 .getImage()));
         View view = context.getCurrentFocus();
-        if (null != view) {
+        if (view != null) {
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         }
     }
@@ -167,28 +184,27 @@ public class KaaNotificationApp extends Application {
         popupWindow.setContentView(popup);
     }
 
-    public void initNotificationListener() {
+    private void initNotificationListener() {
         this.notificationListener = new NotificationListener() {
             public void onNotification(final long topicId, final Notification notification) {
                 Log.i(TAG, "Notification received: " + notification.toString());
                 TopicInfoHolder.holder.addNotification(topicId, notification);
-                if (null != demoActivity) {
+                if (demoActivity != null) {
                     demoActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Fragment fragment;
-                            fragment = demoActivity.getSupportFragmentManager().findFragmentByTag(
+                            Fragment fragment = demoActivity.getSupportFragmentManager().findFragmentByTag(
                                     NotificationFragment.class.getSimpleName());
-                            if (null != fragment && fragment.isVisible()) {
-                                int pos = demoActivity.getFragmentData().getInt("position");
-                                List<Notification> list = TopicInfoHolder.holder.getTopicModelList().get(pos)
+                            if (fragment != null && fragment.isVisible()) {
+                                int position = demoActivity.getFragmentData().getInt("position");
+                                List<Notification> list = TopicInfoHolder.holder.getTopicModelList().get(position)
                                         .getNotifications();
                                 ((ListFragment) fragment).setListAdapter(new NotificationArrayAdapter(demoActivity
                                         .getLayoutInflater(), list));
                             } else {
                                 fragment = demoActivity.getSupportFragmentManager().findFragmentByTag(
                                         TopicFragment.class.getSimpleName());
-                                if (null != fragment && fragment.isVisible()) {
+                                if (fragment != null && fragment.isVisible()) {
                                     ((ListFragment) fragment).setListAdapter(new TopicArrayAdapter(demoActivity
                                             .getLayoutInflater(), TopicInfoHolder.holder.getTopicModelList()));
                                 }
@@ -201,7 +217,7 @@ public class KaaNotificationApp extends Application {
         };
     }
 
-    public void initNotificationTopicListListener() {
+    private void initNotificationTopicListListener() {
         this.topicListListener = new NotificationTopicListListener() {
             public void onListUpdated(List<Topic> topicList) {
                 Log.i(TAG, "Topic list updated with topics: ");
@@ -209,10 +225,10 @@ public class KaaNotificationApp extends Application {
                     Log.i(TAG, topic.toString());
                 }
                 TopicInfoHolder.holder.updateTopics(topicList);
-                if (null != demoActivity) {
+                if (demoActivity != null) {
                     final TopicFragment topicFragment = (TopicFragment) demoActivity.getSupportFragmentManager()
                             .findFragmentByTag(TopicFragment.class.getSimpleName());
-                    if (null != topicFragment && topicFragment.isVisible()) {
+                    if (topicFragment != null && topicFragment.isVisible()) {
                         demoActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

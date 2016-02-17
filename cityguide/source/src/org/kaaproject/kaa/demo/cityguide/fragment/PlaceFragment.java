@@ -22,6 +22,7 @@ import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.event.ConfigurationUpdated;
 import org.kaaproject.kaa.demo.cityguide.image.ImageLoader.ImageType;
 import org.kaaproject.kaa.demo.cityguide.image.LoadingImageView;
+import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 import org.kaaproject.kaa.demo.cityguide.util.Utils;
 
 import android.os.Bundle;
@@ -118,7 +119,7 @@ public class PlaceFragment extends CityGuideFragment {
                 }
             });
         } else {
-            mActivity.popBackStack();
+            FragmentUtils.popBackStack(mActivity);
         }
     }
 

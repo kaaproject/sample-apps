@@ -19,7 +19,6 @@ package org.kaaproject.kaa.examples.gpiocontol.model;
 import org.kaaproject.kaa.examples.gpiocontrol.GpioStatus;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +29,10 @@ public class Device implements Serializable {
     private String model;
     private String deviceName;
 
-    //Because GpioStatus isn't serializable we need HashMap to persist it
-    private HashMap<Integer, Boolean> gpioStatuses;
+    /*
+        Because GpioStatus isn't serializable we need HashMap to persist it
+     */
+    private Map<Integer, Boolean> gpioStatuses;
     private String kaaEndpointId;
 
     public Device(String model, String deviceName, List<GpioStatus> gpioStatusList, String kaaEndpointId) {
@@ -59,7 +60,7 @@ public class Device implements Serializable {
 
     public List<GpioStatus> getGpioStatuses() {
         List<GpioStatus> gpioStatusList = new LinkedList<>();
-        for(Map.Entry<Integer, Boolean> gpio : gpioStatuses.entrySet()){
+        for (Map.Entry<Integer, Boolean> gpio : gpioStatuses.entrySet()) {
             gpioStatusList.add(new GpioStatus(gpio.getKey(), gpio.getValue()));
         }
         return gpioStatusList;
@@ -87,7 +88,8 @@ public class Device implements Serializable {
 
         Device device = (Device) o;
 
-        if (model != null ? !model.equals(device.model) : device.model != null) return false;
+        if (model != null ? !model.equals(device.model) : device.model != null)
+            return false;
         if (deviceName != null ? !deviceName.equals(device.deviceName) : device.deviceName != null)
             return false;
         if (gpioStatuses != null ? !gpioStatuses.equals(device.gpioStatuses) : device.gpioStatuses != null)

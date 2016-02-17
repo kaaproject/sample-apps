@@ -23,6 +23,7 @@ import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.adapter.CitiesAdapter;
 import org.kaaproject.kaa.demo.cityguide.event.ConfigurationUpdated;
 import org.kaaproject.kaa.demo.cityguide.event.KaaStarted;
+import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 import org.kaaproject.kaa.demo.cityguide.util.Utils;
 
 import android.os.Bundle;
@@ -43,18 +44,21 @@ public class CitiesFragment extends CityGuideFragment {
     private String mAreaName;
     private CitiesAdapter mCitiesAdapter;
 
-    public CitiesFragment() {
-        super();
-    }
-
-    public CitiesFragment(String areaName) {
-        super();
-        mAreaName = areaName;
+    public static CitiesFragment createInstance(String areaName) {
+        CitiesFragment fragment = new CitiesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AREA_NAME, areaName);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mAreaName = arguments.getString(AREA_NAME);
+        }
         if (mAreaName == null) {
             mAreaName = savedInstanceState.getString(AREA_NAME);
         }
@@ -99,7 +103,7 @@ public class CitiesFragment extends CityGuideFragment {
             mCitiesListView.setVisibility(View.VISIBLE);
             mCitiesListView.setAdapter(mCitiesAdapter);
         } else {
-            mActivity.popBackStack();
+            FragmentUtils.popBackStack(mActivity);
         }
     }
 
@@ -113,8 +117,8 @@ public class CitiesFragment extends CityGuideFragment {
 
     private void onCityClicked(int position) {
         City city = mCitiesAdapter.getItem(position);
-        CityFragment cityFragment = new CityFragment(mAreaName, city.getName());
-        mActivity.openFragment(cityFragment);
+        CityFragment cityFragment = CityFragment.createInstance(mAreaName, city.getName());
+        FragmentUtils.addBackStackFragment(mActivity, cityFragment);
     }
 
     @Override

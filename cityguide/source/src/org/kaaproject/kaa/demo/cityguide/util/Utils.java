@@ -57,13 +57,13 @@ public class Utils {
             Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri))
                     .setComponent(compName);
             context.startActivity(mapsIntent);
-        } catch (ActivityNotFoundException e) {
+        } catch (ActivityNotFoundException exeption) {
             String url = formatLatitudeLongitude("geo:%f,%f", latitude,
                     longitude);
             Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             try {
                 context.startActivity(mapsIntent);
-            } catch (ActivityNotFoundException e2) {
+            } catch (ActivityNotFoundException notFoundException) {
                 mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 context.startActivity(mapsIntent);
             }

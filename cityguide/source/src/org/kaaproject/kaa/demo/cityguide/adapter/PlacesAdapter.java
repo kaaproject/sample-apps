@@ -56,10 +56,7 @@ public class PlacesAdapter extends BaseAdapter {
 
     @Override
     public Place getItem(int position) {
-        if (position < getCount()) {
-            return mPlaces.get(position);
-        }
-        return null;
+        return position < getCount() ? mPlaces.get(position) : null;
     }
 
     @Override
@@ -70,26 +67,26 @@ public class PlacesAdapter extends BaseAdapter {
     @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        View view = convertView;
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.place_list_item, null);
+            view = inflater.inflate(R.layout.place_list_item, null);
         }
         Place place = mPlaces.get(position);
 
-        LoadingImageView placePhotoView = (LoadingImageView) v
+        LoadingImageView placePhotoView = (LoadingImageView) view
                 .findViewById(R.id.placePhoto);
         mImageLoader.loadImage(place.getPhotoUrl(), placePhotoView,
                 ImageType.THUMBNAIL);
 
-        TextView placeNameView = (TextView) v.findViewById(R.id.placeName);
+        TextView placeNameView = (TextView) view.findViewById(R.id.placeName);
         placeNameView.setText(place.getTitle());
 
-        TextView placeDescView = (TextView) v.findViewById(R.id.placeDesc);
+        TextView placeDescView = (TextView) view.findViewById(R.id.placeDesc);
         placeDescView.setText(place.getDescription());
 
-        return v;
+        return view;
     }
 
 }

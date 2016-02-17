@@ -40,8 +40,6 @@ public class CityPagerAdapter extends FragmentStatePagerAdapter {
             R.string.shops, R.string.museums, R.string.restaurants };
 
     private Context mContext;
-    private String mAreaName;
-    private String mCityName;
 
     private List<Fragment> fragments;
 
@@ -49,11 +47,9 @@ public class CityPagerAdapter extends FragmentStatePagerAdapter {
             FragmentManager fragmentManager) {
         super(fragmentManager);
         mContext = context;
-        mAreaName = areaName;
-        mCityName = cityName;
         fragments = new ArrayList<>(Category.values().length);
         for (int i = 0; i < Category.values().length; i++) {
-            fragments.add(new PlacesFragment(mAreaName, mCityName, Category
+            fragments.add(new PlacesFragment(areaName, cityName, Category
                     .values()[i]));
         }
     }

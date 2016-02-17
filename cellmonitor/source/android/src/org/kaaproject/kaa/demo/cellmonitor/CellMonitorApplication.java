@@ -21,10 +21,7 @@ import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.KaaClientPlatformContext;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
-import org.kaaproject.kaa.client.logging.LogFailoverCommand;
-import org.kaaproject.kaa.client.logging.LogStorageStatus;
-import org.kaaproject.kaa.client.logging.LogUploadStrategy;
-import org.kaaproject.kaa.client.logging.LogUploadStrategyDecision;
+import org.kaaproject.kaa.client.logging.*;
 import org.kaaproject.kaa.common.endpoint.gen.LogDeliveryErrorCode;
 import org.kaaproject.kaa.demo.cellmonitor.event.CellLocationChanged;
 import org.kaaproject.kaa.demo.cellmonitor.event.GpsLocationChanged;
@@ -61,6 +58,9 @@ public class CellMonitorApplication extends Application {
     private static final Logger LOG = LoggerFactory
             .getLogger(CellMonitorApplication.class);
 
+    public static final int MAX_PARALLEL_UPLOADS = 10;
+    public static final int TIMEOUT_PERIOD = 100;
+    public static final int UPLOAD_CHECK_PERIOD = 30;
     public static final int UNDEFINED = -1;
 
     private EventBus mEventBus;
@@ -73,11 +73,11 @@ public class CellMonitorApplication extends Application {
     private GpsLocationListener mGpsLocationListener;
     private Location mGpsLocation;
 
-    private int mSentLogCount = 0;
-    private long mLastLogTime = 0;
+    private int mSentLogCount;
+    private long mLastLogTime;
 
     private KaaClient mClient;
-    private boolean mKaaStarted = false;
+    private boolean mKaaStarted;
 
     @Override
     public void onCreate() {
@@ -135,18 +135,38 @@ public class CellMonitorApplication extends Application {
 
             @Override
             public int getMaxParallelUploads() {
-                return 3;
+                return MAX_PARALLEL_UPLOADS;
             }
 
             @Override
             public int getTimeout() {
-                return 100;
+                return TIMEOUT_PERIOD;
             }
 
 
             @Override
             public int getUploadCheckPeriod() {
-                return 30;
+                return UPLOAD_CHECK_PERIOD;
+            }
+        });
+
+         /*
+         * Setting callback for logs delivery.
+         */
+        mClient.setLogDeliveryListener(new LogDeliveryListener() {
+            @Override
+            public void onLogDeliverySuccess(BucketInfo bucketInfo) {
+                LOG.trace("Log with bucketId: " + bucketInfo.getBucketId() + " was successfully uploaded");
+            }
+
+            @Override
+            public void onLogDeliveryFailure(BucketInfo bucketInfo) {
+                LOG.error("Unable to send log with bucketId " + bucketInfo.getBucketId() + " because failure");
+            }
+
+            @Override
+            public void onLogDeliveryTimeout(BucketInfo bucketInfo) {
+                LOG.error("Unable to send log with bucketId " + bucketInfo.getBucketId() + " within defined timeout");
             }
         });
         
@@ -299,7 +319,7 @@ public class CellMonitorApplication extends Application {
             mEventBus.post(new SignalStrengthChanged());
             LOG.info("Signal strength changed!");
         }
-    };
+    }
 
     private class GpsLocationListener implements LocationListener {
 

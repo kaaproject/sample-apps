@@ -16,13 +16,11 @@
 
 package org.kaaproject.kaa.examples.gpiocontol.utils;
 
-import org.apache.avro.specific.SpecificRecordBase;
 import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
-import org.kaaproject.kaa.client.event.FindEventListenersCallback;
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest;
@@ -30,18 +28,16 @@ import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.List;
-
 public class KaaProvider {
 
-    private static final String LOG_TAG = "KaaProvider";
+    private static final String LOG_TAG = KaaProvider.class.getSimpleName();
 
     private static volatile KaaClient kaaClient;
 
-    public static KaaClient getClient(Context context){
-        if(kaaClient == null){
-            synchronized (KaaProvider.class){
-                if(kaaClient == null){
+    public static KaaClient getClient(Context context) {
+        if (kaaClient == null) {
+            synchronized (KaaProvider.class) {
+                if (kaaClient == null) {
                     kaaClient = Kaa.newClient(new AndroidKaaPlatformContext(context), new SimpleKaaClientStateListener());
                 }
             }
@@ -49,7 +45,7 @@ public class KaaProvider {
         return kaaClient;
     }
 
-    public static void attachUser(Context context){
+    public static void attachUser(Context context) {
         final KaaClient client = getClient(context);
 
         client.attachUser(PreferencesManager.getUserExternalId(context), client.getEndpointAccessToken(), new UserAttachCallback() {
@@ -58,10 +54,9 @@ public class KaaProvider {
                 Log.d(LOG_TAG, "User attach result: " + response.toString());
             }
         });
-
     }
 
-    public static void setUpEventListener(Context context, RemoteControlECF.Listener callback){
+    public static void setUpEventListener(Context context, RemoteControlECF.Listener callback) {
         final KaaClient client = getClient(context);
         EventFamilyFactory eventFamilyFactory = client.getEventFamilyFactory();
         final RemoteControlECF ecf = eventFamilyFactory.getRemoteControlECF();
@@ -71,7 +66,7 @@ public class KaaProvider {
         ecf.sendEventToAll(new DeviceInfoRequest());
     }
 
-    public static void sendDeviceInfoRequestToAll(Context context){
+    public static void sendDeviceInfoRequestToAll(Context context) {
         final KaaClient client = getClient(context);
         EventFamilyFactory eventFamilyFactory = client.getEventFamilyFactory();
         final RemoteControlECF ecf = eventFamilyFactory.getRemoteControlECF();

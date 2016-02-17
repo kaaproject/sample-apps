@@ -23,7 +23,6 @@ import org.kaaproject.kaa.demo.cellmonitor.event.CellLocationChanged;
 import org.kaaproject.kaa.demo.cellmonitor.event.GpsLocationChanged;
 import org.kaaproject.kaa.demo.cellmonitor.event.LogSent;
 import org.kaaproject.kaa.demo.cellmonitor.event.SignalStrengthChanged;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
@@ -49,7 +48,6 @@ public class CellMonitorFragment extends Fragment {
     private CellMonitorApplication mApplication;
     private ActionBar mActionBar;
     
-    @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private Calendar mCalendar = Calendar.getInstance();
     
@@ -91,13 +89,12 @@ public class CellMonitorFragment extends Fragment {
         mLastLogTimeValue = (TextView) rootView.findViewById(R.id.lastLogTimeValue);
         mSentLogCountValue = (TextView) rootView.findViewById(R.id.logsSentValue);
         
-        updateAll();
+        updateAllView();
         
         return rootView;
     }
     
-    private void updateAll() {
-        
+    private void updateAllView() {
         String networkOperator = mApplication.getTelephonyManager().getNetworkOperator();
         if (networkOperator != null) {
             mNetworkOperatorValue.setText(networkOperator);
@@ -156,9 +153,7 @@ public class CellMonitorFragment extends Fragment {
         if (gpsLocation != null) {
             double latitude = gpsLocation.getLatitude();
             double longitude = gpsLocation.getLongitude();
-            StringBuilder sb = new StringBuilder();
-            sb.append(latitude).append(", ").append(longitude);
-            mGpsLocationValue.setText(sb.toString());
+            mGpsLocationValue.setText(String.valueOf(latitude) + ", " + longitude);
         } else {
             mGpsLocationValue.setText(R.string.unavailable);
         }
@@ -223,6 +218,5 @@ public class CellMonitorFragment extends Fragment {
             mApplication.getEventBus().unregister(this);
         }
     }
-
     
 }

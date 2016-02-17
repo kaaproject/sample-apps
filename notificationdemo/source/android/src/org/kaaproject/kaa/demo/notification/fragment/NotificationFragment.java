@@ -50,16 +50,12 @@ public class NotificationFragment extends ListFragment {
 
     private List<Notification> getNotificationList() {
         Bundle bundle = ((NotificationDemoActivity) getActivity()).getFragmentData();
-        if (null != bundle) {
+        if (bundle != null) {
             List<TopicModel> list = TopicInfoHolder.holder.getTopicModelList();
-            if (null != list) {
+            if (list != null) {
                 Integer position = bundle.getInt("position");
                 TopicModel model = list.get(position);
-                if (null != model) {
-                    return model.getNotifications();
-                } else {
-                    return new LinkedList<Notification>();
-                }
+                return model != null ? model.getNotifications() : new LinkedList<Notification>();
             }
         }
         return new LinkedList<Notification>();

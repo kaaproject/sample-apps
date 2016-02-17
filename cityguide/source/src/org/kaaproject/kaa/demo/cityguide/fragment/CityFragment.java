@@ -22,6 +22,7 @@ import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.adapter.CityPagerAdapter;
 import org.kaaproject.kaa.demo.cityguide.event.ConfigurationUpdated;
 import org.kaaproject.kaa.demo.cityguide.event.KaaStarted;
+import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 import org.kaaproject.kaa.demo.cityguide.util.Utils;
 
 import android.os.Bundle;
@@ -44,21 +45,24 @@ public class CityFragment extends CityGuideFragment {
     private ViewPager mCityPager;
     private String mAreaName;
     private String mCityName;
-    private CityPagerAdapter mCityPagerAdapter;
 
-    public CityFragment() {
-        super();
-    }
-
-    public CityFragment(String areaName, String cityName) {
-        super();
-        mAreaName = areaName;
-        mCityName = cityName;
+    public static CityFragment createInstance(String areaName, String cityName) {
+        CityFragment fragment = new CityFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AREA_NAME, areaName);
+        bundle.putString(CITY_NAME, cityName);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mAreaName = arguments.getString(AREA_NAME);
+            mCityName = arguments.getString(CITY_NAME);
+        }
         if (mAreaName == null) {
             mAreaName = savedInstanceState.getString(AREA_NAME);
             mCityName = savedInstanceState.getString(CITY_NAME);
@@ -95,13 +99,13 @@ public class CityFragment extends CityGuideFragment {
         City city = Utils.getCity(mApplication.getCityGuideConfiguration(),
                 mAreaName, mCityName);
         if (city != null) {
-            mCityPagerAdapter = new CityPagerAdapter(mActivity, mAreaName,
-                    mCityName, mActivity.getSupportFragmentManager());
+            CityPagerAdapter mCityPagerAdapter = new CityPagerAdapter(mActivity,
+                    mAreaName, mCityName, mActivity.getSupportFragmentManager());
             mCityPages.setVisibility(View.VISIBLE);
             mCityPager.setAdapter(mCityPagerAdapter);
             mCityPageIndicator.setViewPager(mCityPager);
         } else {
-            mActivity.popBackStack();
+            FragmentUtils.popBackStack(mActivity);
         }
     }
 
@@ -118,7 +122,7 @@ public class CityFragment extends CityGuideFragment {
         City city = Utils.getCity(mApplication.getCityGuideConfiguration(),
                 mAreaName, mCityName);
         if (city == null) {
-            mActivity.popBackStack();
+            FragmentUtils.popBackStack(mActivity);
         }
     }
 

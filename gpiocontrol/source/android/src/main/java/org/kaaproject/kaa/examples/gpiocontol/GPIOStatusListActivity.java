@@ -23,19 +23,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import org.kaaproject.kaa.client.connectivity.AndroidConnectivityChecker;
 import org.kaaproject.kaa.examples.gpiocontrol.R;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
 import org.kaaproject.kaa.examples.gpiocontol.utils.SnackbarsManager;
 import org.kaaproject.kaa.examples.gpiocontol.adapters.GPIOAdapter;
-import org.kaaproject.kaa.examples.gpiocontol.utils.ConnectionsManager;
 
 public class GPIOStatusListActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "GPIOStatusListActivity";
-
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private Device device;
 
@@ -44,30 +40,27 @@ public class GPIOStatusListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gpio_list);
 
-        if(!ConnectionsManager.haveConnection(this)){
+        AndroidConnectivityChecker connectivityChecker = new AndroidConnectivityChecker(this);
+        if (!connectivityChecker.checkConnectivity()) {
             SnackbarsManager.makeSnackBarNoInet(this);
         }
 
-        initView();
+        initViews();
 
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //Get intent data from DevicesAdapter
-        device = (Device)getIntent().getSerializableExtra("device");
+        device = (Device) getIntent().getSerializableExtra("device");
 
-
-        mAdapter = new GPIOAdapter(device);
+        RecyclerView.Adapter mAdapter = new GPIOAdapter(this, device);
         mRecyclerView.setAdapter(mAdapter);
-
     }
 
-    protected void initView(){
+    private void initViews() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        ((TextView)findViewById(R.id.appName)).setText(getText(R.string.app_name));
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        ((TextView) findViewById(R.id.appName)).setText(getText(R.string.app_name));
     }
 
     @Override

@@ -21,12 +21,10 @@ import org.kaaproject.kaa.demo.cityguide.dialog.SetLocationDialog.SetLocationCal
 import org.kaaproject.kaa.demo.cityguide.fragment.AreasFragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 
 /**
  * The implementation of the {@link ActionBarActivity} class. 
@@ -79,28 +77,13 @@ public class CityGuideActivity extends ActionBarActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            popBackStack();
+            FragmentUtils.popBackStack(this);
             return true;
         } else if (id == R.id.action_set_location) {
             setLocation();
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void openFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-
-    public void popBackStack() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        }
     }
 
     public CityGuideApplication getCityGuideApplication() {

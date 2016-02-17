@@ -50,10 +50,7 @@ public class CitiesAdapter extends BaseAdapter {
 
     @Override
     public City getItem(int position) {
-        if (position < getCount()) {
-            return mCities.get(position);
-        }
-        return null;
+        return position < getCount() ? mCities.get(position) : null;
     }
 
     @Override
@@ -64,16 +61,16 @@ public class CitiesAdapter extends BaseAdapter {
     @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        View view = convertView;
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.city_list_item, null);
+            view = inflater.inflate(R.layout.city_list_item, null);
         }
-        TextView cityNameView = (TextView) v.findViewById(R.id.cityName);
+        TextView cityNameView = (TextView) view.findViewById(R.id.cityName);
         City city = mCities.get(position);
         cityNameView.setText(city.getName());
-        return v;
+        return view;
     }
 
 }

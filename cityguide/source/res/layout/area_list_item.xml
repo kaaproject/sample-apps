@@ -25,5 +25,4 @@
     android:textColor="?android:attr/textColorPrimary"
 	android:paddingTop="10dp"
 	android:paddingBottom="10dp"
-	android:singleLine="true"/>
-    
+	android:singleLine="true" />

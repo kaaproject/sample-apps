@@ -18,36 +18,37 @@
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    		  android:layout_width="match_parent"
-    	      android:layout_height="wrap_content" 
-		      android:padding="8dp">
-		<org.kaaproject.kaa.demo.cityguide.image.LoadingImageView
-		    android:id="@+id/placePhoto"
-		    android:layout_width="80dp"
-		    android:layout_height="80dp"
-		    android:scaleType="centerCrop"
-		    android:layout_alignParentLeft="true"
-		    android:layout_marginRight="8dp"/>
-		<TextView
-		    android:id="@+id/placeName"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_alignTop="@id/placePhoto"
-		    android:layout_toRightOf="@id/placePhoto"
-		    android:textAppearance="?android:attr/textAppearanceMedium"
-		    android:textColor="?android:attr/textColorPrimary"
-			android:singleLine="true"/>
-		<TextView
-		    android:id="@+id/placeDesc"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_below="@id/placeName"
-		    android:layout_marginTop="1dip"
-		    android:layout_toRightOf="@id/placePhoto"
-		    android:textAppearance="?android:attr/textAppearanceSmall"
-			android:singleLine="false"
-			android:maxLines="3"
-			android:lines="3"/>
-</RelativeLayout>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:padding="8dp">
 
-    
+    <org.kaaproject.kaa.demo.cityguide.image.LoadingImageView
+        android:id="@+id/placePhoto"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="8dp" />
+
+        <TextView
+            android:id="@+id/placeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/placePhoto"
+            android:layout_toRightOf="@id/placePhoto"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?android:attr/textColorPrimary"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/placeDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/placeName"
+            android:layout_marginTop="1dip"
+            android:layout_toRightOf="@id/placePhoto"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:singleLine="false"
+            android:maxLines="3"
+            android:lines="3" />
+</RelativeLayout>

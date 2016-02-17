@@ -36,12 +36,13 @@ public class ImageCache {
 
     private ImageCache() {
         imageMap = Collections.synchronizedMap(new WeakHashMap<String, Bitmap>());
-        Bitmap bmp = BitmapFactory.decodeResource(KaaNotificationApp.getContext().getResources(), R.drawable.default_image);
-        imageMap.put(DEFAULT_IMAGE_KEY, bmp);
+        Bitmap bitmap = BitmapFactory.decodeResource(KaaNotificationApp.getContext().getResources(),
+                R.drawable.default_image);
+        imageMap.put(DEFAULT_IMAGE_KEY, bitmap);
     }
 
     public Bitmap getImage(String imageUrl) {
-        Bitmap bmp;
+        Bitmap bitmap;
         if (!imageMap.containsKey(imageUrl)) {
             try {
                 URL url = new URL(imageUrl);
@@ -54,6 +55,6 @@ public class ImageCache {
         } else {
             return imageMap.get(imageUrl);
         }
-        return bmp;
+        return bitmap;
     }
 }

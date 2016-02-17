@@ -63,32 +63,32 @@ public class AlbumsAdapter extends BaseAdapter {
     @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
+        View view = convertView;
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);            
-            v = inflater.inflate(R.layout.album_list_item, null);
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.album_list_item, null);
         }
-        TextView albumTitleView = (TextView) v.findViewById(R.id.albumTitle);
-        AlbumInfo albumInfo = (AlbumInfo)getItem(position);
+        TextView albumTitleView = (TextView) view.findViewById(R.id.albumTitle);
+        AlbumInfo albumInfo = (AlbumInfo) getItem(position);
         albumTitleView.setText(albumInfo.getTitle());
         
-        TextView imageCountView = (TextView) v.findViewById(R.id.imageCount);        
+        TextView imageCountView = (TextView) view.findViewById(R.id.imageCount);
         String imageCountText = mContext.getString(R.string.image_count_pattern, albumInfo.getImageCount());
         imageCountView.setText(imageCountText);
         
-        TextView nowPlayingView = (TextView) v.findViewById(R.id.nowPlaying);
-        PlayInfo playInfo = mController.getRemoteDeviceStatus(mEndpointKey); 
-        if (playInfo != null && playInfo.getCurrentAlbumInfo() != null && 
+        TextView nowPlayingView = (TextView) view.findViewById(R.id.nowPlaying);
+        PlayInfo playInfo = mController.getRemoteDeviceStatus(mEndpointKey);
+        if (playInfo != null && playInfo.getCurrentAlbumInfo() != null &&
                 playInfo.getCurrentAlbumInfo().getBucketId().equals(albumInfo.getBucketId())) {
             nowPlayingView.setVisibility(View.VISIBLE);
-            v.setBackgroundColor(mContext.getResources().getColor(R.color.highlighted_text_material_light));
+            view.setBackgroundColor(mContext.getResources().getColor(R.color.highlighted_text_material_light));
         } else {
             nowPlayingView.setVisibility(View.GONE);
-            v.setBackgroundColor(Color.TRANSPARENT);
+            view.setBackgroundColor(Color.TRANSPARENT);
         }
         
-        return v;
+        return view;
     }
 
 }

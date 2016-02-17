@@ -16,7 +16,6 @@
 
 package org.kaaproject.kaa.examples.gpiocontol.utils;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -24,18 +23,6 @@ import android.preference.PreferenceManager;
 public class PreferencesManager {
 
     private static final String USER_EXTERNAL_ID = "user_external_id";
-    private static final String USER_ACCESS_TOKEN = "user_access_token";
-
-
-
-    public static void setUserAccessToken(final Context context, String token){
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(USER_ACCESS_TOKEN, token).commit();
-    }
-
-    public static String getUserAccessToken(final Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(USER_ACCESS_TOKEN, "");
-    }
 
     public static void setUserExternalId(final Context context, String id){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);

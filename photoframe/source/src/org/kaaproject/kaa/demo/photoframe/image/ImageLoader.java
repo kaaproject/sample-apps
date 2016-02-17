@@ -43,9 +43,8 @@ public class ImageLoader {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
 
-    MemoryCache mMemoryCache = new MemoryCache();
-
-    FileCache mFileCache;
+    private MemoryCache mMemoryCache = new MemoryCache();
+    private FileCache mFileCache;
 
     private Map<LoadingImageView, ImageKey> imageViews = Collections
             .synchronizedMap(new WeakHashMap<LoadingImageView, ImageKey>());
@@ -81,7 +80,7 @@ public class ImageLoader {
             return b;
         }
         try {
-            Bitmap bitmap = null;
+            Bitmap bitmap;
             File imageFile = new File(key.path);
             bitmap = decodeFile(imageFile, key.type);
             FileOutputStream fos = new FileOutputStream(cacheFile);
@@ -106,10 +105,10 @@ public class ImageLoader {
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFileDescriptor(fd, null, options);
 
-            int w = options.outWidth;
-            int h = options.outHeight;
+            int width = options.outWidth;
+            int height = options.outHeight;
             
-            float scale = (float) type.targetSize / Math.max(w, h);
+            float scale = (float) type.targetSize / Math.max(width, height);
             
             if (type == ImageType.SCREENAIL) {
                 options.inSampleSize = computeSampleSizeLarger(scale);
@@ -120,11 +119,14 @@ public class ImageLoader {
 
             return BitmapFactory.decodeFileDescriptor(fd, null, options);
         } catch (Exception e) {
+            Log.e(TAG, "Unable to decode bitmap!", e);
         } finally {
             if (fis != null) {
                 try {
                     fis.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                    Log.e(TAG, "Unable to close stream!", e);
+                }
             }
         }
         return null;
@@ -196,10 +198,7 @@ public class ImageLoader {
 
     boolean imageViewReused(PhotoToLoad photoToLoad) {
         ImageKey key = imageViews.get(photoToLoad.imageView);
-        if (key == null || !key.equals(photoToLoad.key)) {
-            return true;
-        }
-        return false;
+        return key == null || !key.equals(photoToLoad.key);
     }
 
     class BitmapDisplayer implements Runnable {

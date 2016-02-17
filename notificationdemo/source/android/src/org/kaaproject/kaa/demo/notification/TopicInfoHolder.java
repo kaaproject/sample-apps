@@ -19,15 +19,7 @@ package org.kaaproject.kaa.demo.notification;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
 import org.kaaproject.kaa.schema.example.Notification;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
 
 public class TopicInfoHolder {
 
@@ -41,11 +33,7 @@ public class TopicInfoHolder {
 
     public String getTopicName(Long topicId) {
         TopicModel model = topicModelMap.get(topicId);
-        if (null != model) {
-            return model.getTopicName();
-        } else {
-            return "";
-        }
+        return model != null ? model.getTopicName() : "";
     }
 
     public List<TopicModel> getTopicModelList() {

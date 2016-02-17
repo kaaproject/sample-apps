@@ -28,7 +28,6 @@ import org.kaaproject.kaa.client.event.registration.OnDetachEndpointOperationCal
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
-import org.kaaproject.kaa.demo.photoframe.PhotoFrameEventClassFamily;
 import org.kaaproject.kaa.demo.photoframe.event.AlbumListEvent;
 import org.kaaproject.kaa.demo.photoframe.event.DeviceInfoEvent;
 import org.kaaproject.kaa.demo.photoframe.event.PlayAlbumEvent;
@@ -61,7 +60,7 @@ public class PhotoFrameController implements PhotoFrameEventClassFamily.Listener
     private final Map<String, AlbumInfo> mAlbumsMap = new HashMap<>();
 
     // Remote devices information 
-    private final LinkedHashMap<String, DeviceInfo> mRemoteDevicesMap = new LinkedHashMap<>();    
+    private final Map<String, DeviceInfo> mRemoteDevicesMap = new LinkedHashMap<>();
     private final Map<String, PlayInfo> mRemotePlayInfoMap = new HashMap<>();
     private final Map<String, List<AlbumInfo>> mRemoteAlbumsMap = new HashMap<>();
 
@@ -77,7 +76,7 @@ public class PhotoFrameController implements PhotoFrameEventClassFamily.Listener
          * which is responsible for sending/receiving the declared family events.
          */
         mPhotoFrameEventClassFamily = client.getEventFamilyFactory().
-                                                getPhotoFrameEventClassFamily();
+                getPhotoFrameEventClassFamily();
         
         /*
          * Register a listener to receive the photo frame family events.
@@ -141,7 +140,7 @@ public class PhotoFrameController implements PhotoFrameEventClassFamily.Listener
         return mUserAttached;
     }
     
-    public LinkedHashMap<String, DeviceInfo> getRemoteDevicesMap() {
+    public Map<String, DeviceInfo> getRemoteDevicesMap() {
         return mRemoteDevicesMap;
     }
     
@@ -283,9 +282,9 @@ public class PhotoFrameController implements PhotoFrameEventClassFamily.Listener
      */    
     @Override
     public void onEvent(DeviceInfoRequest deviceInfoRequest, String sourceEndpoint) {
-       DeviceInfoResponse deviceInfoResponse = new DeviceInfoResponse();
-       deviceInfoResponse.setDeviceInfo(mDeviceInfo);
-       mPhotoFrameEventClassFamily.sendEvent(deviceInfoResponse, sourceEndpoint);
+        DeviceInfoResponse deviceInfoResponse = new DeviceInfoResponse();
+        deviceInfoResponse.setDeviceInfo(mDeviceInfo);
+        mPhotoFrameEventClassFamily.sendEvent(deviceInfoResponse, sourceEndpoint);
     }
 
     /*
@@ -361,6 +360,5 @@ public class PhotoFrameController implements PhotoFrameEventClassFamily.Listener
         mRemotePlayInfoMap.put(sourceEndpoint, playInfoResponse.getPlayInfo());
         mEventBus.post(new PlayInfoEvent(sourceEndpoint));
     }
-
 
 }

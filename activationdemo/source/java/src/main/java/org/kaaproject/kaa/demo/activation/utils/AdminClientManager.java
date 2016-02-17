@@ -197,9 +197,7 @@ public class AdminClientManager {
                 continue;
             }
             for (EndpointProfileDto endpointProfile : endpointProfilesDto.getEndpointProfiles()) {
-                if (endpointProfile.getClientProfileVersion() != 0) {
-                    endpointProfiles.put(endpointProfile.getId(), endpointProfile);
-                }
+                endpointProfiles.put(endpointProfile.getId(), endpointProfile);
             }
         }
 

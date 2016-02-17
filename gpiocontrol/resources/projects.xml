@@ -32,7 +32,7 @@ Download the .apk to your Android device by clicking the "Binary" button on the 
 <h2>Playing around</h2>
 Make sure that the Kaa Sandbox is up and running. You will need to install this application on at least one Android-powered device and one ESP8266- or CC32XX-powered device.
 
-After you have configured and started the application on ESP8266 or CC32XX (You can read about its installation in “GPIO control CC3200” and “GPIO control CC3200” Kaa Sandbox apps), start the application on the Android device and press the "+" button on the right bottom of the screen. Enter the endpoint acess token (the default values are "cc3200" for CC3200 and "esp8266" for ESP8266). No other data is needed because <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
+After you have configured and started the application on ESP8266 or CC32XX (You can read about its installation in “GPIO control ESP8266” and “GPIO control CC32XX” Kaa Sandbox apps), start the application on the Android device and press the "+" button on the right bottom of the screen. Enter the endpoint acess token (the default values are "cc3200" for CC3200 and "esp8266" for ESP8266). No other data is needed because <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
 Then, click on the appeared device and try to toggle the switches.
 Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 <h2>What's next?</h2>
@@ -68,7 +68,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
 <h2>Installation</h2>
 First, read our <a href="http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200">documentation article</a> on how to integrate Kaa with CC3200.
 <h2>Playing around</h2>
-After you successfully installed this app on your CC32XX device, go to Android "GPIO control" Sandbox app and follow the steps described there.
+After you successfully installed this app on your CC32XX device, go to "GPIO control Android" Sandbox app and follow the steps described there.
 ]]>
         </details>
         
@@ -99,7 +99,7 @@ After you successfully installed this app on your CC32XX device, go to Android "
             <h2>Installation</h2>
 First, read our <a href="http://docs.kaaproject.org/display/KAA/ESP8266">documentation article</a> on how to integrate Kaa with ESP8266.
 <h2>Playing around</h2>
-After you successfully installed this app on your ESP8266 device, go to Android "GPIO control" Sandbox app and follow the steps described there.
+After you successfully installed this app on your ESP8266 device, go to "GPIO control Android" Sandbox app and follow the steps described there.
             ]]>
         </details>
         
@@ -130,7 +130,7 @@ After you successfully installed this app on your ESP8266 device, go to Android 
             <h2>Installation</h2>
 First, read our <a href="http://docs.kaaproject.org/display/KAA/Samsung+Artik+5">documentation article</a> on how to integrate Kaa with Artik 5.
 <h2>Playing around</h2>
-After you successfully installed this app on your Artik 5 device, go to Android or iOS "GPIO control" Sandbox app and follow the steps described there.
+After you successfully installed this app on your Artik 5 device, go to "GPIO control Android" or "GPIO control iOS" Sandbox app and follow the steps described there.
             ]]>
         </details>
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
@@ -168,7 +168,7 @@ $ ./build.sh
 <h2>Playing around</h2>
 Make sure that the Kaa Sandbox is up and running. You will need to install this application on at least one iOS device and one ESP8266- or CC32XX-powered device.
 
-After you have configured and started the application on ESP8266 or CC32XX (You can read about its installation in “GPIO control CC3200” and “GPIO control CC3200” Kaa Sandbox apps), start the application on the iOS device and press the "+" button on the right bottom of the screen. Enter the endpoint acess token (the default values are "cc3200" for CC3200 and "esp8266" for ESP8266). No other data is needed because <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
+After you have configured and started the application on ESP8266 or CC32XX (You can read about its installation in “GPIO control ESP8266” and “GPIO control CC32XX” Kaa Sandbox apps), start the application on the iOS device and press the "+" button on the right bottom of the screen. Enter the endpoint acess token (the default values are "cc3200" for CC3200 and "esp8266" for ESP8266). No other data is needed because <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
 Then, click on the appeared device and try to toggle the switches.
 Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 <h2>What's next?</h2>

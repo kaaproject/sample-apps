@@ -156,14 +156,8 @@ public class KaaNotificationApp extends Application {
         }
     }
 
-<<<<<<< HEAD
     public void showPopup(Activity context, String topicId, Notification notification) {
-=======
-    private PopupWindow popupWindow;
-    private View popup;
 
-    public void showPopup(Activity context, Long topicId, Notification notification) {
->>>>>>> master
         ((TextView) popup.findViewById(R.id.popup_notification)).setText(notification.getMessage());
         ((TextView) popup.findViewById(R.id.popup_topic)).setText(TopicInfoHolder.holder.getTopicName(topicId));
         ((ImageView) popup.findViewById(R.id.popup_image)).setImageBitmap(ImageCache.cache.getImage(notification

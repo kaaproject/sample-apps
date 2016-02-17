@@ -46,22 +46,11 @@ public class ImageCache {
         if (!imageMap.containsKey(imageUrl)) {
             try {
                 URL url = new URL(imageUrl);
-<<<<<<< HEAD
-                bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                imageMap.put(imageUrl, bitmap);
-            } catch (MalformedURLException e) {
-                bitmap = imageMap.get(DEFAULT_IMAGE_KEY);
-                Log.e(TAG, "MalformedURLException has occurred", e);
-            } catch (IOException e) {
-                bitmap = imageMap.get(DEFAULT_IMAGE_KEY);
-                Log.e(TAG, "IOException has occurred", e);
-=======
                 bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 imageMap.put(imageUrl, bmp);
             } catch (IOException e) {
                 bmp = imageMap.get(DEFAULT_IMAGE_KEY);
                 Log.e(TAG, "Unable to get image by URL because of " + e.getClass().getSimpleName() + ":" + e.getMessage());
->>>>>>> master
             }
         } else {
             return imageMap.get(imageUrl);

@@ -79,6 +79,9 @@ public class TopicModel {
     }
 
     public void setSubscribedTo(boolean subscribedTo) {
+        if (!subscribedTo) {
+            notifications.clear();
+        }
         this.subscribedTo = subscribedTo;
     }
 

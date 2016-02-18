@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.photoframe;
@@ -29,15 +29,13 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.BackStackEntry;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
+import org.kaaproject.kaa.demo.photoframe.util.Utils;
 
 /**
  * The implementation of the {@link ActionBarActivity} class. 
@@ -49,6 +47,7 @@ public class PhotoFrameActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_frame);
+
         if (savedInstanceState == null) {
             if (!getPhotoFrameApplication().isKaaStarted()) {
                 showWait();
@@ -92,27 +91,26 @@ public class PhotoFrameActivity extends ActionBarActivity {
     
     private void showWait() {
         WaitFragment waitFragment = new WaitFragment();
-        replaceFragment(waitFragment, waitFragment.getFragmentTag());
+        Utils.replaceFragment(this, waitFragment, waitFragment.getFragmentTag());
     }
     
     private void showLogin() {
         LoginFragment loginFragment = new LoginFragment();
-        replaceFragment(loginFragment, loginFragment.getFragmentTag());
+        Utils.replaceFragment(this, loginFragment, loginFragment.getFragmentTag());
     }
     
     private void showDevices() {
         DevicesFragment devicesFragment = new DevicesFragment();
-        replaceFragment(devicesFragment, devicesFragment.getFragmentTag());
+        Utils.replaceFragment(this, devicesFragment, devicesFragment.getFragmentTag());
     }
     
     public void onEventMainThread(PlayAlbumEvent playAlbumEvent) {
-        Fragment fragment = getTopFragment();
+        Fragment fragment = Utils.getTopFragment(this);
         if (fragment != null && fragment instanceof SlideshowFragment) {
-            ((SlideshowFragment)fragment).updateBucketId(playAlbumEvent.getBucketId());
-            
+            ((SlideshowFragment) fragment).updateBucketId(playAlbumEvent.getBucketId());
         } else {
-            SlideshowFragment slideshowFragment = new SlideshowFragment(playAlbumEvent.getBucketId());
-            addBackStackFragment(slideshowFragment, slideshowFragment.getFragmentTag());
+            SlideshowFragment slideshowFragment = SlideshowFragment.createInstance(playAlbumEvent.getBucketId());
+            Utils.addBackStackFragment(this, slideshowFragment, slideshowFragment.getFragmentTag());
         }
     }
     
@@ -141,15 +139,6 @@ public class PhotoFrameActivity extends ActionBarActivity {
         }
     }
     
-    private Fragment getTopFragment() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            BackStackEntry entry = getSupportFragmentManager().
-                    getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount()-1);
-            return getSupportFragmentManager().findFragmentByTag(entry.getName());
-        }
-        return null;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
@@ -165,30 +154,10 @@ public class PhotoFrameActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            popBackStack();
+            Utils.popBackStack(this);
             return true;
-        } 
-        return super.onOptionsItemSelected(item);
-    }
-    
-    public void replaceFragment(Fragment fragment, String tag) {
-        getSupportFragmentManager().beginTransaction().
-            replace(R.id.container, fragment, tag).commit();
-    }
-    
-    public void addBackStackFragment(Fragment fragment, String tag) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container, fragment, tag);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.addToBackStack(tag);
-        ft.commit();
-    }
-
-    public void popBackStack() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public PhotoFrameApplication getPhotoFrameApplication() {

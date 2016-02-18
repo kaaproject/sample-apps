@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.examples.gpiocontol.model;
@@ -19,7 +19,6 @@ package org.kaaproject.kaa.examples.gpiocontol.model;
 import org.kaaproject.kaa.examples.gpiocontrol.GpioStatus;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +29,10 @@ public class Device implements Serializable {
     private String model;
     private String deviceName;
 
-    //Because GpioStatus isn't serializable we need HashMap to persist it
-    private HashMap<Integer, Boolean> gpioStatuses;
+    /*
+        Because GpioStatus isn't serializable we need HashMap to persist it
+     */
+    private Map<Integer, Boolean> gpioStatuses;
     private String kaaEndpointId;
 
     public Device(String model, String deviceName, List<GpioStatus> gpioStatusList, String kaaEndpointId) {
@@ -59,7 +60,7 @@ public class Device implements Serializable {
 
     public List<GpioStatus> getGpioStatuses() {
         List<GpioStatus> gpioStatusList = new LinkedList<>();
-        for(Map.Entry<Integer, Boolean> gpio : gpioStatuses.entrySet()){
+        for (Map.Entry<Integer, Boolean> gpio : gpioStatuses.entrySet()) {
             gpioStatusList.add(new GpioStatus(gpio.getKey(), gpio.getValue()));
         }
         return gpioStatusList;
@@ -87,7 +88,8 @@ public class Device implements Serializable {
 
         Device device = (Device) o;
 
-        if (model != null ? !model.equals(device.model) : device.model != null) return false;
+        if (model != null ? !model.equals(device.model) : device.model != null)
+            return false;
         if (deviceName != null ? !deviceName.equals(device.deviceName) : device.deviceName != null)
             return false;
         if (gpioStatuses != null ? !gpioStatuses.equals(device.gpioStatuses) : device.gpioStatuses != null)

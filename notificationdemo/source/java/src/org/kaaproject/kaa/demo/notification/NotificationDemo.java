@@ -1,17 +1,17 @@
-/*
- * Copyright 2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.notification;
@@ -51,7 +51,7 @@ public class NotificationDemo {
         // Add a notification listener that listens to all notifications.
         kaaClient.addNotificationListener(new NotificationListener() {
             @Override
-            public void onNotification(String id, SampleNotification sampleNotification) {
+            public void onNotification(long id, SampleNotification sampleNotification) {
                 LOG.info("Notification for topic id [{}] received.", id);
                 LOG.info("Notification body: {}", sampleNotification.getMessage());
             }
@@ -91,8 +91,8 @@ public class NotificationDemo {
             showTopicList(list);
             try {
                 //Try to subscribe to all new optional topics, if any.
-                List<String> optionalTopics = extractOptionalTopicIds(list);
-                for(String optionalTopicId : optionalTopics){
+                List<Long> optionalTopics = extractOptionalTopicIds(list);
+                for(Long optionalTopicId : optionalTopics){
                     LOG.info("Subscribing to optional topic {}", optionalTopicId);
                 }
                 kaaClient.subscribeToTopics(optionalTopics, true);
@@ -102,8 +102,8 @@ public class NotificationDemo {
         }
     }
 
-    private static List<String> extractOptionalTopicIds(List<Topic> list) {
-        List<String> topicIds = new ArrayList<>();
+    private static List<Long> extractOptionalTopicIds(List<Topic> list) {
+        List<Long> topicIds = new ArrayList<>();
         for (Topic t : list) {
             if (t.getSubscriptionType() == SubscriptionType.OPTIONAL_SUBSCRIPTION) {
                 topicIds.add(t.getId());

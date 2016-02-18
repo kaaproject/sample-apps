@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.cityguide.image;
@@ -34,11 +34,13 @@ public class MemoryCache {
 
     private static final String TAG = MemoryCache.class.getSimpleName();
 
+    private static final int DEFAULT_LIMIT = 1000000;
+
     private Map<ImageKey, Bitmap> cache = Collections
             .synchronizedMap(new LinkedHashMap<ImageKey, Bitmap>(10, 1.5f, true));
 
+    private long mLimit = DEFAULT_LIMIT;
     private long mSize = 0;
-    private long mLimit = 1000000;
 
     public MemoryCache() {
         setLimit(Runtime.getRuntime().maxMemory() / 4);
@@ -51,15 +53,7 @@ public class MemoryCache {
     }
 
     public Bitmap get(ImageKey id) {
-        try {
-            if (!cache.containsKey(id)) {
-                return null;
-            } else {
-                return cache.get(id);
-            }
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return cache.containsKey(id) ? cache.get(id) : null;
     }
 
     public void put(ImageKey id, Bitmap bitmap) {
@@ -93,18 +87,11 @@ public class MemoryCache {
     }
 
     public void clear() {
-        try {
-            cache.clear();
-            mSize = 0;
-        } catch (NullPointerException ex) {
-        }
+        cache.clear();
+        mSize = 0;
     }
 
-    long getSizeInBytes(Bitmap bitmap) {
-        if (bitmap == null) {
-            return 0;
-        } else {
-            return bitmap.getRowBytes() * bitmap.getHeight();
-        }
+    private long getSizeInBytes(Bitmap bitmap) {
+        return bitmap != null ? bitmap.getRowBytes() * bitmap.getHeight() : 0;
     }
 }

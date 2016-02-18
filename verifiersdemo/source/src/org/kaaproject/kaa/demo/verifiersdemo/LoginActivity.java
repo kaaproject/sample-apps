@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.verifiersdemo;
@@ -41,135 +41,124 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
-import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
-import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
-import org.kaaproject.kaa.client.KaaClientPlatformContext;
-import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
-import org.kaaproject.kaa.client.event.EventListenersResolver;
 import org.kaaproject.kaa.client.event.FindEventListenersCallback;
-import org.kaaproject.kaa.client.event.registration.OnDetachEndpointOperationCallback;
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
-import org.kaaproject.kaa.demo.verifiersdemo.VerifiersDemoEventClassFamily;
 
 import io.fabric.sdk.android.Fabric;
 
 public class LoginActivity extends FragmentActivity {
-  
+
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "01Y9gbsMeGPetye1w9kkNvNMi";
     private static final String TWITTER_SECRET = "g4Pwh51o7SQlhd3RL6inNF3VxixBURAJDZc494uSISF7yOyJjc";
 
-    private static final String TAG = "Example-LoginsActivity";
     private static final String USER_NAME = "userName";
     private static final String USER_ID = "userId";
     private static final String USER_INFO = "userInfo";
     private static final String EVENT_MESSAGES = "eventMessages";
 
-    // These values are used to describe current connection status on UI.
-    private static CharSequence curUserName;
-    private static CharSequence curUserId;
-    private static CharSequence curUserInfo;
-    private static CharSequence eventMessagesText;
+    private CharSequence currentUserName;
+    private CharSequence currentUserId;
+    private CharSequence currentUserInfo;
+    private CharSequence eventMessagesText;
 
-    // Text view fields where a connection status is shown.
     private TextView greetingTextView;
     private TextView idTextView;
     private TextView infoTextView;
-
-    // A text edit field for the event message input.
-    private EditText msgEdit;
-
-    // A text edit field for all event messages.
+    private EditText messageEdit;
     private EditText eventMessagesEdit;
 
-    // Either an event is sent or received
-    public enum EventStatus {RCVD, SENT};
+    public enum EventStatus {
+        RECEIVED, SENT}
 
-    // Buttons used to connect to corresponding social networks.
-    private SignInButton googleButton;
-    private LoginButton facebookButton;
     private TwitterLoginButton twitterButton;
     private Button sendEventButton;
-    private boolean buttonEnabled;
+    private boolean sendingEventsEnabled;
 
-    // Classes which handle specific actions of each button.
     private GplusSigninListener gplusSigninListener;
-    private FacebookSigninListener facebookSigninListener;
-    private TwitterSigninListener twitterSigninListener;
 
-    // A Google API client which is used to establish a connection with Google
-    // and access its API.
-    private static GoogleApiClient mGoogleApiClient;
+    /*
+       Google API client used to establish connection with Google
+     */
+    private GoogleApiClient mGoogleApiClient;
 
-    // A Facebook UI helper class which is used for managing the login UI.
-    private static UiLifecycleHelper uiHelper;
+    /*
+        Facebook UI helper class used for managing the login UI.
+     */
+    private UiLifecycleHelper uiHelper;
 
-    // Is used to connect the Kaa client to the Kaa server, manage events and configurations.
-    private static KaaClient kaaClient;
+    private VerifiersDemoEventClassFamily vdecf;
 
-    private static VerifiersDemoEventClassFamily vdecf;
-
-    // An event listener.
-    private static KaaEventListener listener;
+    /*
+        Defines Kaa event listener
+     */
+    private KaaEventListener listener;
 
     public enum AccountType {GOOGLE, FACEBOOK, TWITTER};
 
-    // Configuration which consists of the three default Kaa verifiers tokens:
-    // for Google, Facebook and Twitter (Kaa Configuration is used).
-    private static KaaVerifiersTokens verifiersTokens;
+    /*
+        Kaa verifiers tokens for Google, Facebook and Twitter
+     */
+    private KaaVerifiersTokens verifiersTokens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate()");
         setContentView(R.layout.activity_logins);
+
         greetingTextView = (TextView) findViewById(R.id.greeting);
         idTextView = (TextView) findViewById(R.id.idText);
         infoTextView = (TextView) findViewById(R.id.infoText);
         sendEventButton = (Button) findViewById(R.id.sendEventButton);
-        sendEventButton.setEnabled(buttonEnabled);
-        msgEdit = (EditText) findViewById(R.id.msgBox);
+        sendEventButton.setEnabled(sendingEventsEnabled);
+        messageEdit = (EditText) findViewById(R.id.msgBox);
         eventMessagesEdit = (EditText) findViewById(R.id.eventMessages);
 
-        // Resume the saved state (for example, after the screen rotation), if any.
         if (savedInstanceState != null) {
-            curUserName = savedInstanceState.getCharSequence(USER_NAME);
-            curUserId = savedInstanceState.getCharSequence(USER_ID);
-            curUserInfo = savedInstanceState.getCharSequence(USER_INFO);
+            currentUserName = savedInstanceState.getCharSequence(USER_NAME);
+            currentUserId = savedInstanceState.getCharSequence(USER_ID);
+            currentUserInfo = savedInstanceState.getCharSequence(USER_INFO);
             eventMessagesText = savedInstanceState.getCharSequence(EVENT_MESSAGES);
             updateViews();
         }
-
-        // Create a Twitter authConfig for Twitter credentials verification.
+        
+        /*
+            Creating a Twitter authConfig for Twitter credentials verification.
+         */
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-
-        // Register the application with the help of Fabric plug-in for managing Twitter 
-        // apps (and library dependencies).
+        
+        /*
+             Register the application using Fabric plug-in for managing Twitter apps
+         */
         Fabric.with(this, new Twitter(authConfig));
 
-        // Create the Twitter button.
         twitterButton = (TwitterLoginButton) findViewById(R.id.twitter_sign_in_button);
 
-        // Enable the Twitter button, even if the user is signed in.
         twitterButton.setEnabled(true);
-        twitterSigninListener = new TwitterSigninListener(this);
+        TwitterSigninListener twitterSigninListener = new TwitterSigninListener(this);
 
-        // Attach listeners needed to keep track of the connection.
         twitterButton.setCallback(twitterSigninListener);
         twitterButton.setOnClickListener(twitterSigninListener);
-
-        // Create a listeners class for Google+.
+        twitterButton.setEnabled(true);
+        
+        /*
+            Creating a listeners class for Google+.
+         */
         gplusSigninListener = new GplusSigninListener(this);
 
-        googleButton = (SignInButton) findViewById(R.id.gplus_sign_in_button);
+        SignInButton googleButton = (SignInButton) findViewById(R.id.gplus_sign_in_button);
         googleButton.setSize(SignInButton.SIZE_WIDE);
         googleButton.setOnClickListener(gplusSigninListener);
-
-        // Create the Google API client which is capable of making requests for tokens, user info etc.
+        
+        /*
+            Creating the Google API client capable of making requests for tokens, user info etc.
+         */
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(gplusSigninListener)
                 .addOnConnectionFailedListener(gplusSigninListener)
@@ -177,23 +166,24 @@ public class LoginActivity extends FragmentActivity {
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
         gplusSigninListener.setClient(mGoogleApiClient);
-
-        // Create a listeners class for Facebook.
-        facebookSigninListener = new FacebookSigninListener(this);
-        facebookButton = (LoginButton) findViewById(R.id.facebook_sign_in_button);
+        
+        /*
+            Creates listener for Facebook.
+         */
+        FacebookSigninListener facebookSigninListener = new FacebookSigninListener(this);
+        LoginButton facebookButton = (LoginButton) findViewById(R.id.facebook_sign_in_button);
 
         facebookButton.setUserInfoChangedCallback(facebookSigninListener);
         
-        // Create the UI helper for managing the Facebook login UI.
+        /*
+            Creating the UI helper for managing the Facebook login UI.
+         */
         uiHelper = new UiLifecycleHelper(this, facebookSigninListener);
         uiHelper.onCreate(savedInstanceState);
 
         sendEventButton.setOnClickListener(new SendEventButtonClickListener());
 
-        KaaClientPlatformContext platformContext = new AndroidKaaPlatformContext(this);
-        kaaClient = Kaa.newClient(platformContext);
-        kaaClient.start();
-
+        KaaClient kaaClient = getVerifiersApplication().getKaaClient();
         verifiersTokens = kaaClient.getConfiguration();
         Log.i(TAG, "Verifiers tokens: " + verifiersTokens.toString());
     }
@@ -201,11 +191,16 @@ public class LoginActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       
-        // Call corresponding onActivityResult methods for Facebook, Twitter and Google.
+        /*
+            Call corresponding onActivityResult methods for Facebook, Twitter and Google.
+         */
         uiHelper.onActivityResult(requestCode, resultCode, data);
         twitterButton.onActivityResult(requestCode, resultCode, data);
-        gplusSigninListener.onActivityResult(requestCode, resultCode, data);
+        gplusSigninListener.onActivityResult(requestCode, resultCode);
+    }
+
+    public VerifiersApplication getVerifiersApplication() {
+        return (VerifiersApplication) getApplication();
     }
 
     @Override
@@ -213,12 +208,22 @@ public class LoginActivity extends FragmentActivity {
         super.onResume();
         uiHelper.onResume();
         updateViews();
+
+        /*
+            Notify the application of the foreground state.
+         */
+        getVerifiersApplication().resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         uiHelper.onPause();
+        
+        /*
+            Notify the application of the background state.
+         */
+        getVerifiersApplication().pause();
     }
 
     @Override
@@ -228,20 +233,21 @@ public class LoginActivity extends FragmentActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
         
-        // Save the current state of the UI (for Facebook).
-        uiHelper.onSaveInstanceState(outState);
-        outState.putCharSequence(USER_NAME, greetingTextView.getText());
-        outState.putCharSequence(USER_ID, idTextView.getText());
-        outState.putCharSequence(USER_INFO, infoTextView.getText());
-        outState.putCharSequence(EVENT_MESSAGES, eventMessagesEdit.getText().toString());
+        /*
+            Save the current state of the UI (for Facebook).
+         */
+        uiHelper.onSaveInstanceState(bundle);
+        bundle.putCharSequence(USER_NAME, greetingTextView.getText());
+        bundle.putCharSequence(USER_ID, idTextView.getText());
+        bundle.putCharSequence(USER_INFO, infoTextView.getText());
+        bundle.putCharSequence(EVENT_MESSAGES, eventMessagesEdit.getText().toString());
     }
 
     @Override
     protected void onStart() {
-        Log.i(TAG, "onStart()");
         super.onStart();
         mGoogleApiClient.connect();
     }
@@ -253,50 +259,39 @@ public class LoginActivity extends FragmentActivity {
     }
 
     public void updateUI(String userName, String userId, String token, AccountType type) {
+        currentUserName = type + " user name: " + userName;
+        currentUserId = type + " user id: " + userId;
         String kaaVerifierToken = null;
-        String userIdCopy = userId;
+
         switch (type) {
             case GOOGLE:
                 kaaVerifierToken = verifiersTokens.getGoogleKaaVerifierToken();
-                // Log out from Facebook (to make Log out button disappear)
                 Session.getActiveSession().closeAndClearTokenInformation();
-                userName = "Google user name: " + userName;
-                userId = "Google user id: " + userId;
                 break;
             case FACEBOOK:
                 kaaVerifierToken = verifiersTokens.getFacebookKaaVerifierToken();
-                userName = "Facebook user name: " + userName;
-                userId = "Facebook user id: " + userId;
                 break;
             case TWITTER:
                 kaaVerifierToken = verifiersTokens.getTwitterKaaVerifierToken();
-                // Log out from Facebook (to make Log out button disappear)
                 Session.getActiveSession().closeAndClearTokenInformation();
-                userName = "Twitter user name: " + userName;
-                userId = "Twitter user id: " + userId;
-                break;
-            default:
                 break;
         }
 
-        // Update userName and userId shown on UI.
-        curUserName = userName;
-        curUserId = userId;
-        curUserInfo = "Waiting for Kaa response...";
+        currentUserInfo = "Waiting for Kaa response...";
+        Log.i(TAG, currentUserInfo.toString());
         updateViews();
 
         Log.i(TAG, "Attaching user...");
-        kaaClient.attachUser(kaaVerifierToken, userIdCopy, token,
+        final KaaClient kaaClient = getVerifiersApplication().getKaaClient();
+        kaaClient.attachUser(kaaVerifierToken, userId, token,
                 new UserAttachCallback() {
                     @Override
                     public void onAttachResult(UserAttachResponse userAttachResponse) {
-                        Log.i(TAG, "User was attached... " + userAttachResponse.toString());
-
                         if (userAttachResponse.getResult() == SyncResponseResultType.SUCCESS) {
-                            Log.i(TAG, "Successful Kaa verification");
-                            Log.i(TAG, userAttachResponse.toString());
-                            curUserInfo = "Successful Kaa verification";
-                            buttonEnabled = true;
+                            currentUserInfo = "Successful Kaa verification";
+                            Log.i(TAG, "User was attached... " + userAttachResponse.toString());
+
+                            sendingEventsEnabled = true;
                             updateViews();
                             EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
                             vdecf = eventFamilyFactory.getVerifiersDemoEventClassFamily();
@@ -314,7 +309,9 @@ public class LoginActivity extends FragmentActivity {
                                     Log.i(TAG, "Event listeners received: " + eventListeners);
                                 }
                             });
-                            // Remove old listener to avoid duplication of messages.
+                            /*
+                                Remove old listener to avoid duplication of messages.
+                             */
                             if (listener != null) {
                                 vdecf.removeListener(listener);
                             }
@@ -323,78 +320,75 @@ public class LoginActivity extends FragmentActivity {
                         } else {
                             String failureString = userAttachResponse.getErrorReason() == null ?
                                     userAttachResponse.getErrorCode().toString() :
-                                    userAttachResponse.getErrorReason().toString();
-                            Log.i(TAG, "Kaa verification failure: " + failureString);
-                            curUserInfo = "Kaa verification failure: " + failureString;
-                            buttonEnabled = false;
+                                    userAttachResponse.getErrorReason();
+                            currentUserInfo = "Kaa verification failure: " + failureString;
+                            Log.i(TAG, currentUserInfo.toString());
+
+                            sendingEventsEnabled = false;
                             updateViews();
                         }
                     }
                 });
     }
 
-    // Update text view fields, text edit fields and the Send button state.
     private void updateViews() {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                greetingTextView.setText(curUserName);
-                idTextView.setText(curUserId);
-                infoTextView.setText(curUserInfo);
+                greetingTextView.setText(currentUserName);
+                idTextView.setText(currentUserId);
+                infoTextView.setText(currentUserInfo);
                 if (eventMessagesText != null) {
                     eventMessagesEdit.setText(eventMessagesText);
                 }
-                sendEventButton.setEnabled(buttonEnabled);
+                sendEventButton.setEnabled(sendingEventsEnabled);
             }
         });
     }
 
-    // When the Send button is clicked.
     private class SendEventButtonClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
-            String message = msgEdit.getText().toString();
-            prependToChatBox(EventStatus.SENT, message);
-            if (message != null && message.length() > 0) {
+            String message = messageEdit.getText().toString();
+            addNewEventToChatBox(EventStatus.SENT, message);
+            if (message.length() > 0) {
                 Log.i(TAG, "Sending event: " + message);
                 vdecf.sendEventToAll(new MessageEvent(message));
             }
         }
     }
 
-    private void prependToChatBox(final EventStatus status, final String message) {
+    private void addNewEventToChatBox(final EventStatus status, final String message) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm:ss] ");
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("[HH:mm:ss] ");
                 if (message != null && message.length() > 0) {
-                    eventMessagesEdit.setText(status + " " + sdf.format(cal.getTime()) +
+                    eventMessagesEdit.setText(status + " " + format.format(calendar.getTime()) +
                             ": " + message + "\n" + eventMessagesEdit.getText());
                     eventMessagesText = eventMessagesEdit.getText();
-                    msgEdit.setText(null);
+                    messageEdit.setText(null);
                 }
             }
         });
     }
 
-    // A class which is used to handle events.
+    /*
+        Class is used to handle events
+     */
     private class KaaEventListener implements VerifiersDemoEventClassFamily.Listener {
         @Override
         public void onEvent(MessageEvent messageEvent, String sourceEndpoint) {
             Log.i(TAG, "Event was received: " + messageEvent.getMessage());
-            prependToChatBox(EventStatus.RCVD, messageEvent.getMessage());
+            addNewEventToChatBox(EventStatus.RECEIVED, messageEvent.getMessage());
         }
     }
 
-    // Detach the endpoint from the user.
+    /*
+        Detach the endpoint from the user.
+     */
     private void logout() {
-        EndpointKeyHash endpointKey = new EndpointKeyHash(kaaClient.getEndpointKeyHash());
-        kaaClient.detachEndpoint(endpointKey, new OnDetachEndpointOperationCallback() {
-            @Override
-            public void onDetach(SyncResponseResultType arg0) {
-                Log.i(TAG, "User was detached");
-            }
-        });
+        getVerifiersApplication().detachEndpoint();
     }
 }

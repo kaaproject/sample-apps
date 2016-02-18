@@ -52,9 +52,9 @@
  * Forward declarations.
  */
 extern kaa_error_t ext_limited_log_storage_create(void **log_storage_context_p
-						  , kaa_logger_t *logger
-						  , size_t size
-						  , size_t percent);
+                          , kaa_logger_t *logger
+                          , size_t size
+                          , size_t percent);
 
 
 static kaa_client_t *kaa_client = NULL;

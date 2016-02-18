@@ -23,8 +23,7 @@ import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.EndpointProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.ProfileFilterDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
@@ -63,7 +62,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
 
         logger.info("Creating profile schema...");
         
-        CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profile.avsc"), CTLSchemaScopeDto.PROFILE_SCHEMA, streetLightApplication.getId());
+        CTLSchemaDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profile.avsc"), streetLightApplication.getTenantId(), streetLightApplication.getId());
         
         EndpointProfileSchemaDto profileSchemaDto = new EndpointProfileSchemaDto();
         profileSchemaDto.setApplicationId(streetLightApplication.getId());

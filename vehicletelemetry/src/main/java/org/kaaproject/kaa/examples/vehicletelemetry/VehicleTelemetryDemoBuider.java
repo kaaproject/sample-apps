@@ -21,8 +21,7 @@ import java.util.Arrays;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.EndpointProfileSchemaDto;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
@@ -60,7 +59,7 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profileSchema.json"), CTLSchemaScopeDto.PROFILE_SCHEMA, vehicleTelemetryApplication.getId());
+        CTLSchemaDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profileSchema.json"), vehicleTelemetryApplication.getTenantId(), vehicleTelemetryApplication.getId());
 
         EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(vehicleTelemetryApplication.getId());

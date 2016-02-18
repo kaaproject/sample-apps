@@ -18,9 +18,14 @@ package org.kaaproject.kaa.examples.activation;
 
 import java.util.List;
 
-import org.kaaproject.kaa.common.dto.*;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
+import org.kaaproject.kaa.common.dto.ApplicationDto;
+import org.kaaproject.kaa.common.dto.ConfigurationDto;
+import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
+import org.kaaproject.kaa.common.dto.EndpointGroupDto;
+import org.kaaproject.kaa.common.dto.ProfileFilterDto;
+import org.kaaproject.kaa.common.dto.ServerProfileSchemaDto;
+import org.kaaproject.kaa.common.dto.UpdateStatus;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
@@ -40,12 +45,12 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
-        logger.info("Loading 'Activation demo application' data...");
+        logger.info("Loading 'Endpoint activation demo application' data...");
 
         loginTenantAdmin(client);
 
         ApplicationDto activationApplication = new ApplicationDto();
-        activationApplication.setName("Activation demo");
+        activationApplication.setName("Endpoint activation demo");
         activationApplication = client.editApplication(activationApplication);
 
         sdkProfileDto.setApplicationId(activationApplication.getId());
@@ -58,7 +63,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(activationApplication.getId());
-        configurationSchema.setName("Activation configuration schema");
+        configurationSchema.setName("Endpoint activation configuration schema");
         configurationSchema.setDescription("Configuration schema describing active and inactive devices used by city guide application");
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration-schema.avsc"));
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
@@ -72,11 +77,11 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
             throw new RuntimeException("Can't get default endpoint group for activation application!");
         }
 
-        CTLSchemaInfoDto serverProfileCtlSchema = client.saveCTLSchema(getResourceAsString("server_profile_schema.avsc"), CTLSchemaScopeDto.SERVER_PROFILE_SCHEMA, activationApplication.getId());
+        CTLSchemaDto serverProfileCtlSchema = client.saveCTLSchema(getResourceAsString("server_profile_schema.avsc"), activationApplication.getTenantId(), activationApplication.getId());
 
         ServerProfileSchemaDto serverProfileSchema = new ServerProfileSchemaDto();
         serverProfileSchema.setApplicationId(activationApplication.getId());
-        serverProfileSchema.setName("Activation server profile schema");
+        serverProfileSchema.setName("Endpoint activation server profile schema");
         serverProfileSchema.setDescription("Server profile schema describing activation application profile");
         serverProfileSchema.setCtlSchemaId(serverProfileCtlSchema.getId());
         serverProfileSchema = client.saveServerProfileSchema(serverProfileSchema);
@@ -86,7 +91,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
         baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
-        baseConfiguration.setDescription("Base activation configuration");
+        baseConfiguration.setDescription("Base endpoint activation configuration");
         baseConfiguration.setBody(FileUtils.readResource(getResourcePath("all_devices_conf.json")));
         baseConfiguration.setStatus(UpdateStatus.INACTIVE);
         baseConfiguration = client.editConfiguration(baseConfiguration);
@@ -156,6 +161,6 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
         inactiveProfileFilter = client.editProfileFilter(inactiveProfileFilter);
         client.activateProfileFilter(inactiveProfileFilter.getId());
 
-        logger.info("Finished loading 'Activation demo application' data...");
+        logger.info("Finished loading 'Endpoint activation demo application' data...");
     }
 }

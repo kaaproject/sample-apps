@@ -22,11 +22,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="activation_demo">
-        <name>Activation demo</name>
-        <description>Activation application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
+        <name>Endpoint activation demo</name>
+        <description>Endpoint activation application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
         <details>
             <![CDATA[
-This Activation app demonstrate server side profile feature usage. It allows to activate/deactivate device based on key hash using Kaa REST API.
+This Endpoint activation app demonstrate server side profile feature usage. It allows to activate/deactivate device based on key hash using Kaa REST API.
 
 <h2>Installation</h2>
 Download the jar file to your desktop by clicking the "Binary" button on the left. Make sure that you have Java runtime installed. Application can run in two modes: client and admin. The mode is specified by command line arguments.<br/>

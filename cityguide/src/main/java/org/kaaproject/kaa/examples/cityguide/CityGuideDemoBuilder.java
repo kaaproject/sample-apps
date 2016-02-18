@@ -25,8 +25,7 @@ import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.EndpointProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.ProfileFilterDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaInfoDto;
-import org.kaaproject.kaa.common.dto.ctl.CTLSchemaScopeDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
@@ -69,7 +68,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("city_guide.avsc"));
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         
-        CTLSchemaInfoDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("city_guide_profile.avsc"), CTLSchemaScopeDto.PROFILE_SCHEMA, cityGuideApplication.getId());
+        CTLSchemaDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("city_guide_profile.avsc"), cityGuideApplication.getTenantId(), cityGuideApplication.getId());
         
         EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(cityGuideApplication.getId());

@@ -22,23 +22,21 @@ Copyright 2014-2016 CyberVision, Inc.
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="zeppelin_demo_java">
         <name>Zeppelin data analytics demo</name>
-        <description>Real-time IoT data analytics and visualization with Kaa, Apache Cassandra and Apache Zeppelin</description>
+        <description>Real-time IoT data analytics and visualization with Kaa, Apache Cassandra, and Apache Zeppelin</description>
         <details><![CDATA[
 
-This sample Kaa application generates power measurements and uploads it to Cassandra for further processing. It can be used as a prototype for
-building a production-grade IoT application that measures any kind of data on the endpoints and uploads that data into the selected analytics platform.
+This sample Kaa application generates power measurements and uploads them to Cassandra for further processing. In the next step, by using Zeppelin notebook integrated with Cassandra, the user will be able to execute analytics queries against the collected data and generate insightful charts and reports. <br /> <br />
+
+This application can be used as a prototype for building a production-grade Kaa-based IoT application that collects any kind of sensor data on endpoints and uploads it into the preferred analytics platform.
 <br /> <br />
 
-This sample application can be also used as a link in the end-to-end IoT solution for data collection and analytics, as will be illustrated
-further in the instruction. The Kaa application will be used for data collection across the endpoints and dispatching that data to Cassandra for further
-processing and storage. On the next link of the chain, using Zeppelin notebook integrated with Cassandra, the user will be able to execute analytics queries
-over collected data and generate insightful charts and reports. <br /> <br />
+Please review the webinar below for hands-on experience based on an earlier version of the Kaa platform. <br /> <br />
 
 <iframe width="691" height="389" src="https://www.youtube.com/embed/MFdQvlnptsM" frameborder="0" allowfullscreen></iframe> <br />
 
 <h2>About Kaa, Cassandra and Zeppelin</h2>
 
-Kaa is an open-source IoT middleware platform for building, managing, and integrating connected products with the Internet of Things.
+Kaa is open-source IoT middleware platform for building, managing, and integrating connected products with the Internet of Things.
 Kaa offers production-ready IoT features that allow developers to create IoT applications for smart products and connected devices in a very condensed
 timeframe. <br /> <br />
 

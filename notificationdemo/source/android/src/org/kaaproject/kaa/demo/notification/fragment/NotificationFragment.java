@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.notification.fragment;
@@ -50,16 +50,12 @@ public class NotificationFragment extends ListFragment {
 
     private List<Notification> getNotificationList() {
         Bundle bundle = ((NotificationDemoActivity) getActivity()).getFragmentData();
-        if (null != bundle) {
+        if (bundle != null) {
             List<TopicModel> list = TopicInfoHolder.holder.getTopicModelList();
-            if (null != list) {
+            if (list != null) {
                 Integer position = bundle.getInt("position");
                 TopicModel model = list.get(position);
-                if (null != model) {
-                    return model.getNotifications();
-                } else {
-                    return new LinkedList<Notification>();
-                }
+                return model != null ? model.getNotifications() : new LinkedList<Notification>();
             }
         }
         return new LinkedList<Notification>();

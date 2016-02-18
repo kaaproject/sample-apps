@@ -21,11 +21,11 @@ Copyright 2014-2016 CyberVision, Inc.
         xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="storm_demo_java">
         <name>Storm data analytics Java demo</name>
-        <description>IoT real-time data processing in Storm using Kaa</description>
+        <description>IoT real-time data processing in Apache Storm using Kaa</description>
         <details><![CDATA[
-This application demonstrates real-time data processing in Storm using Kaa on the Java SDK. <br /> <br />
-It will receive log data transferred by the Flume log appender as a Flume event from the Kaa clients and then it will print this data. <br />
-To learn more about Storm basics such as a spout, a bolt, etc., please refer to <a href="https://storm.apache.org/documentation/Tutorial.html">official
+This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa Java SDK-based client application. <br /> <br />
+Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
+To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
 Apache Storm tutorial</a>.
 
 <h2>Installation</h2>
@@ -43,9 +43,9 @@ Run:
 $ java -jar target/storm-server-example.jar
 </pre>
 If no errors occurred, you’ve successfully started the Storm topology. <br />
-4. Configure Flume log appender via
-<a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a> at sandbox.
-As a tenant admin, go to Storm data analytics demo >> Log Appenders >> Storm data analytics demo log appender and change host parameter from localhost
+4. Configure Flume log appender via the
+<a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a> of your Kaa Sandbox.
+As a tenant admin, go to the Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender and change host parameter from localhost
 to your host address. Click Save button. <br />
 5. Go to JStormDataAnalyticsDemo folder of your unpacked archive and execute command:
 <pre>
@@ -93,10 +93,10 @@ the endpoint in your server side application.
         <name>Storm data analytics C demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
-This application demonstrates real-time data processing in Storm using Kaa on the C SDK. <br /> <br />
-It will receive log data transferred by the Flume log appender as a Flume event from the Kaa clients and then it will print this data. <br />
-To learn more about Storm basics such as a spout, a bolt, etc., please refer to
-<a href="https://storm.apache.org/documentation/Tutorial.html">official Apache Storm tutorial</a>.
+This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С SDK-based client application. <br /> <br />
+Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
+To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
+Apache Storm tutorial</a>.
 
 <h2>Installation</h2>
 1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
@@ -113,8 +113,9 @@ Run:
 $ java -jar target/storm-server-example.jar
 </pre>
 If no errors occurred, you’ve successfully started the Storm topology. <br />
-4. Configure Flume log appender via <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console at sandbox</a>.
-As a tenant admin, go to Storm data analytics demo >> Log Appenders >> Storm data analytics demo log appender and change host parameter from localhost
+4. Configure Flume log appender via the
+<a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a> of your Kaa Sandbox.
+As a tenant admin, go to the Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender and change host parameter from localhost
 to your host address. Click Save button. <br />
 5. Go to CStormAnalyticsDemo folder of your unpacked archive and execute command:
 <pre>
@@ -159,9 +160,10 @@ the endpoint in your server side application.
         <name>Storm data analytics C++ demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
-This application demonstrates real-time data processing in Storm using Kaa on the C++ SDK. <br /> <br />
-It will receive log data transferred by the Flume log appender as a Flume event from the Kaa clients and then it will print this data. <br />
-To learn more about Storm basics such as a spout, a bolt, etc., please refer to <a href="https://storm.apache.org/documentation/Tutorial.html">official Apache Storm tutorial</a>.
+This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С++ SDK-based client application. <br /> <br />
+Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
+To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
+Apache Storm tutorial</a>.
 
 <h2>Installation</h2>
 1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
@@ -178,8 +180,9 @@ Run:
 $ java -jar target/storm-server-example.jar
 </pre>
 If no errors occurred, you’ve successfully started the Storm topology. <br />
-4. Configure Flume log appender via <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console at sandbox</a>.
-As a tenant admin, go to Storm data analytics demo >> Log Appenders >> Storm data analytics demo log appender and change host parameter from localhost
+4. Configure Flume log appender via the
+<a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a> of your Kaa Sandbox.
+As a tenant admin, go to the Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender and change host parameter from localhost
 to your host address. Click Save button. <br />
 5. Go to CppStormAnalyticsDemo folder of your unpacked archive and execute command:
 <pre>
@@ -225,9 +228,9 @@ the endpoint in your server side application.
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details>
             <![CDATA[
-This bundle contains applications that demonstrates real-time data processing in Storm using Kaa.
+This bundle contains applications that demonstrate real-time data processing in Apache Storm using Kaa platform.
 
-Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 
 <h2>What's next?</h2>
 For more background on the Kaa Logging subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.

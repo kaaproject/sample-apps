@@ -65,6 +65,7 @@
         <module>zeppelindemo</module>
         <module>cassandrademo</module>
         <module>activationdemo</module>
+        <module>stormdemo</module>
     </modules>
 
     <profiles>

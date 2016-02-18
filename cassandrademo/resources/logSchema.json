@@ -1,0 +1,23 @@
+{
+    "type":"record",
+    "name":"SensorData",
+    "namespace":"org.kaaproject.kaa.sample",
+    "fields":[
+        {
+            "name":"sensorId",
+            "type":"string"
+        },
+        {
+            "name":"model",
+            "type":"string"
+        },
+        {
+            "name":"region",
+            "type":"string"
+        },
+        {
+            "name":"value",
+            "type":"float"
+        }
+    ]
+}

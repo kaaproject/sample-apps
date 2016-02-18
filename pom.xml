@@ -63,7 +63,9 @@
         <module>gpiocontrol</module>
         <module>ota</module>
         <module>zeppelindemo</module>
+        <module>cassandrademo</module>
         <module>activationdemo</module>
+        <module>stormdemo</module>
     </modules>
 
     <profiles>

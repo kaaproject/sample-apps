@@ -3,28 +3,28 @@
   "name":"LogData",
   "namespace":"org.kaaproject.kaa.schema.sample.logging",
   "fields":[
-	{
-	  "name":"level",
-	  "type":{
-		"type":"enum",
-		"name":"Level",
-		"symbols":[
-		  "KAA_DEBUG",
-		  "KAA_ERROR",
-		  "KAA_FATAL",
-		  "KAA_INFO",
-		  "KAA_TRACE",
-		  "KAA_WARN"
-		]
-	  }
-	},
-	{
-	  "name":"tag",
-	  "type":"string"
-	},
-	{
-	  "name":"message",
-	  "type":"string"
-	}
+    {
+      "name":"level",
+      "type":{
+        "type":"enum",
+        "name":"Level",
+        "symbols":[
+          "KAA_DEBUG",
+          "KAA_ERROR",
+          "KAA_FATAL",
+          "KAA_INFO",
+          "KAA_TRACE",
+          "KAA_WARN"
+        ]
+      }
+    },
+    {
+      "name":"tag",
+      "type":"string"
+    },
+    {
+      "name":"message",
+      "type":"string"
+    }
   ]
 }

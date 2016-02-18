@@ -1,17 +1,17 @@
-/**
- *  Copyright 2014-2016 CyberVision, Inc.
+/*
+ * Copyright 2014-2016 CyberVision, Inc.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.examples.common;
@@ -169,23 +169,23 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
             projectConfig.setIconBase64(iconBase64);
             SdkProfileDto sdkProfileDto = this.sdkProfileDto;
             if (isMultiApplicationProject()) {
-            	Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
-            	sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
+                Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
+                sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
             }
             SdkTokenDto sdkProfileToken = sdkProfileDto.toSdkTokenDto();
             String sdkProfileId = sdkProfiles.get(sdkProfileToken);
             if (sdkProfileId == null) {
-            	loginTenantDeveloper(client);
-            	sdkProfileDto = client.createSdkProfile(sdkProfileDto);
-            	logger.info("Resulting sdk profile: {}", sdkProfileDto);
-            	sdkProfileId = sdkProfileDto.getId();
-            	sdkProfiles.put(sdkProfileToken, sdkProfileId);
+                loginTenantDeveloper(client);
+                sdkProfileDto = client.createSdkProfile(sdkProfileDto);
+                logger.info("Resulting sdk profile: {}", sdkProfileDto);
+                sdkProfileId = sdkProfileDto.getId();
+                sdkProfiles.put(sdkProfileToken, sdkProfileId);
             }
             projectConfig.setSdkProfileId(sdkProfileId);
         }
         for (Bundle bundle : projectConfigs.getBundles()) {
-        	String iconBase64 = loadIconBase64(bundle.getId());
-        	bundle.setIconBase64(iconBase64);
+            String iconBase64 = loadIconBase64(bundle.getId());
+            bundle.setIconBase64(iconBase64);
         }
     }
 

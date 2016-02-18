@@ -28,7 +28,7 @@
 <artifactId>zeppelindemo</artifactId>
 <packaging>jar</packaging>
 
-<name>Kaa zeppelin demo application</name>
+<name>Kaa zeppelin data analytics demo application</name>
 <url>http://kaaproject.org</url>
 
 <properties>

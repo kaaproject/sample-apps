@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.notification;
@@ -21,7 +21,6 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
@@ -37,27 +36,25 @@ public class ImageCache {
 
     private ImageCache() {
         imageMap = Collections.synchronizedMap(new WeakHashMap<String, Bitmap>());
-        Bitmap bmp = BitmapFactory.decodeResource(KaaNotificationApp.getContext().getResources(), R.drawable.default_image);
-        imageMap.put(DEFAULT_IMAGE_KEY, bmp);
+        Bitmap bitmap = BitmapFactory.decodeResource(KaaNotificationApp.getContext().getResources(),
+                R.drawable.default_image);
+        imageMap.put(DEFAULT_IMAGE_KEY, bitmap);
     }
 
     public Bitmap getImage(String imageUrl) {
-        Bitmap bmp;
+        Bitmap bitmap;
         if (!imageMap.containsKey(imageUrl)) {
             try {
                 URL url = new URL(imageUrl);
                 bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 imageMap.put(imageUrl, bmp);
-            } catch (MalformedURLException e) {
-                bmp = imageMap.get(DEFAULT_IMAGE_KEY);
-                Log.e(TAG, e.getMessage());
             } catch (IOException e) {
                 bmp = imageMap.get(DEFAULT_IMAGE_KEY);
-                Log.e(TAG, e.getMessage());
+                Log.e(TAG, "Unable to get image by URL because of " + e.getClass().getSimpleName() + ":" + e.getMessage());
             }
         } else {
             return imageMap.get(imageUrl);
         }
-        return bmp;
+        return bitmap;
     }
 }

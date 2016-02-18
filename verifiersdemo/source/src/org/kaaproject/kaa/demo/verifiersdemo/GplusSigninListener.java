@@ -1,23 +1,22 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.verifiersdemo;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,9 +33,11 @@ import java.io.IOException;
 
 public class GplusSigninListener implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
-    private static final int RC_SIGN_IN = 0;
-    private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/plus.login";
-    private static final String TAG = "Example-G+";
+
+    private static final String TAG = GplusSigninListener.class.getSimpleName();
+
+    private static final int SIGN_IN_SUCCESS_RESULT_CODE = 0;
+    private static final String GOOGLE_SCOPE = "oauth2:https://www.googleapis.com/auth/plus.login";
 
     private GoogleApiClient client;
     private LoginActivity parentActivity;
@@ -61,14 +62,14 @@ public class GplusSigninListener implements GoogleApiClient.ConnectionCallbacks,
         mSignInClicked = false;
     }
 
-
-
     @Override
     public void onConnectionSuspended(int i) {
         Log.i(TAG, "Connection was suspended");
     }
 
-    // When the Google+ sign-in button is clicked.
+    /*
+        Called when the Google+ sign-in button is clicked.
+     */
     @Override
     public void onClick(View v) {
         mSignInClicked = true;
@@ -86,23 +87,23 @@ public class GplusSigninListener implements GoogleApiClient.ConnectionCallbacks,
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(TAG, "Connection failed");
         if (!mIntentInProgress) {
-           
-            // Store ConnectionResult to use it later when the user clicks 'sign-in'.
+            /*
+                Stores ConnectionResult to use it later when the user clicks 'sign-in'.
+            */
             mConnectionResult = result;
 
             if (mSignInClicked) {
-                
-                // The user has already clicked 'sign-in'. 
-                // Attempt to resolve all errors until the user is signed in or the user cancels.
+                /*
+                    Attempts to resolve all errors until the user is signed in or the user cancels.
+                 */
                 mSignInClicked = false;
                 resolveSignInError();
             }
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        int RC_SIGN_IN = 0;
-        if (requestCode == RC_SIGN_IN && mSignInClicked) {
+    public void onActivityResult(int requestCode, int resultCode) {
+        if (requestCode == SIGN_IN_SUCCESS_RESULT_CODE && mSignInClicked) {
             if (resultCode != Activity.RESULT_OK) {
                 mSignInClicked = false;
             }
@@ -126,11 +127,12 @@ public class GplusSigninListener implements GoogleApiClient.ConnectionCallbacks,
             try {
                 mIntentInProgress = true;
                 parentActivity.startIntentSenderForResult(mConnectionResult.getResolution().getIntentSender(),
-                        RC_SIGN_IN, null, 0, 0, 0);
+                        SIGN_IN_SUCCESS_RESULT_CODE, null, 0, 0, 0);
             } catch (IntentSender.SendIntentException e) {
-               
-                // The intent was canceled before it was sent. Return to the default
-                // state and attempt to connect to get the updated ConnectionResult.
+                Log.i(TAG, "SendIntentException exception has occurred");
+                /*
+                    Switch to default state and attempts to connect using ConnectionResult
+                 */
                 mIntentInProgress = false;
                 client.connect();
             }
@@ -151,15 +153,13 @@ public class GplusSigninListener implements GoogleApiClient.ConnectionCallbacks,
 
         @Override
         protected Void doInBackground(Void... params) {
-                
-            // No need to invoke getTokenInBackground in onConnected().
             mSignInClicked = false;
             try {
-                // Get the user's email.
+                /*
+                    Getting the user's access token, id, name and email.
+                 */
                 String email = Plus.AccountApi.getAccountName(client);
-
-                // Get the user's access token, id and name.
-                String accessToken = GoogleAuthUtil.getToken(activity, email, SCOPE);
+                String accessToken = GoogleAuthUtil.getToken(activity, email, GOOGLE_SCOPE);
                 String userId = Plus.PeopleApi.getCurrentPerson(client).getId();
                 String userName = Plus.PeopleApi.getCurrentPerson(client).getName().getGivenName();
 
@@ -168,12 +168,10 @@ public class GplusSigninListener implements GoogleApiClient.ConnectionCallbacks,
                 Log.i(TAG, "User name: " + userName);
 
                 parentActivity.updateUI(userName, userId, accessToken, LoginActivity.AccountType.GOOGLE);
-
-                return null;
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.i(TAG, "IOException exception has occurred ", e);
             } catch (GoogleAuthException e) {
-                e.printStackTrace();
+                Log.i(TAG, "GoogleAuthException exception has occurred ", e);
             }
             return null;
         }

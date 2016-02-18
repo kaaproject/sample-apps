@@ -158,7 +158,7 @@ public class KaaNotificationApp extends Application {
         }
     }
 
-    public void showPopup(Activity context, String topicId, Notification notification) {
+    public void showPopup(Activity context, long topicId, Notification notification) {
 
         ((TextView) popup.findViewById(R.id.popup_notification)).setText(notification.getMessage());
         ((TextView) popup.findViewById(R.id.popup_topic)).setText(TopicInfoHolder.holder.getTopicName(topicId));

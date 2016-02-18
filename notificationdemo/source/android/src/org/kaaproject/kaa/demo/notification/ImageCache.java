@@ -46,10 +46,10 @@ public class ImageCache {
         if (!imageMap.containsKey(imageUrl)) {
             try {
                 URL url = new URL(imageUrl);
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                imageMap.put(imageUrl, bmp);
+                bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                imageMap.put(imageUrl, bitmap);
             } catch (IOException e) {
-                bmp = imageMap.get(DEFAULT_IMAGE_KEY);
+                bitmap = imageMap.get(DEFAULT_IMAGE_KEY);
                 Log.e(TAG, "Unable to get image by URL because of " + e.getClass().getSimpleName() + ":" + e.getMessage());
             }
         } else {

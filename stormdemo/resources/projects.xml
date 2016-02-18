@@ -20,7 +20,7 @@ Copyright 2014-2016 CyberVision, Inc.
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="storm_demo_java">
-        <name>Storm data analytics demo</name>
+        <name>Storm data analytics Java demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
 This application demonstrates real-time data processing in Storm using Kaa on the Java SDK. <br /> <br />
@@ -83,14 +83,14 @@ the endpoint in your server side application.
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
-        <bundleId>storm_demo_bundle</bundleId>
+        <bundleId>storm_demos</bundleId>
         <sourceArchive>java/storm_data_analytics_demo.tar.gz</sourceArchive>
         <projectFolder>JStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>JStormDataAnalyticsDemo/lib</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="storm_demo_c">
-        <name>Storm data analytics demo</name>
+        <name>Storm data analytics C demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
 This application demonstrates real-time data processing in Storm using Kaa on the C SDK. <br /> <br />
@@ -149,14 +149,14 @@ the endpoint in your server side application.
         <platforms>LINUX_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
-        <bundleId>storm_demo_bundle</bundleId>
+        <bundleId>storm_demos</bundleId>
         <sourceArchive>c/storm_data_analytics_demo.tar.gz</sourceArchive>
         <projectFolder>CStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="storm_demo_cpp">
-        <name>Storm data analytics demo</name>
+        <name>Storm data analytics C++ demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
 This application demonstrates real-time data processing in Storm using Kaa on the C++ SDK. <br /> <br />
@@ -214,14 +214,14 @@ the endpoint in your server side application.
         <platforms>LINUX_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
-        <bundleId>storm_demo_bundle</bundleId>
+        <bundleId>storm_demos</bundleId>
         <sourceArchive>cpp/storm_data_analytics_demo.tar.gz</sourceArchive>
         <projectFolder>CppStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CppStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <bundle id="storm_demo_bundle">
-        <name>Storm data analytics demo bundle</name>
+    <bundle id="storm_demos">
+        <name>Storm data analytics demos</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details>
             <![CDATA[

@@ -22,7 +22,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="cellmonitor_demo_android">
-        <name>Cell monitor</name>
+        <name>Cell monitor Android</name>
         <description>Cell monitor demo app for Android</description>
         <details>
             <![CDATA[
@@ -32,7 +32,7 @@ This simple Android app illustrates time-series data collection using cell tower
 Download the .apk to your Android device by clicking the "Binary" button on the left. Make sure that the device permits installing apps from "Unknown sources". Open the downloaded apk and follow the on-screen instructions.
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor demo", you will see the latest data that the application sends to the Kaa Sandbox server.<br/><br/>
+Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor Android" demo, you will see the latest data that the application sends to the Kaa Sandbox server.<br/><br/>
 
 Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and go to the "Cell monitor" application, then select "Schemas", "Log". Choose the latest schema version to inspect the schema of the data collected from the app.<br/><br/>
 
@@ -47,7 +47,7 @@ Where $your_application_token$ is the application token you can copy from the ma
 <h2>What's next?</h2>
 
 For more background on the Kaa Logging subsystem please refer to the corresponding programming guide and design reference sections.
-        	]]>
+            ]]>
         </details>
         
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
@@ -63,14 +63,14 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <platforms>ANDROID</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
-        <bundleId>cell_monitor_demo_bundle</bundleId>
+        <bundleId>cell_monitor_demos</bundleId>
         <sourceArchive>android/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>cellmonitor_demo/CellMonitor</projectFolder>
         <sdkLibDir>cellmonitor_demo/CellMonitor/libs</sdkLibDir>
         <destBinaryFile>cellmonitor_demo/CellMonitor/bin/CellMonitor-debug.apk</destBinaryFile>
     </project>
     <project id="cellmonitor_demo_objc">
-        <name>Cell monitor</name>
+        <name>Cell monitor iOS</name>
         <description>Cell monitor demo app for iOS</description>
         <details>
             <![CDATA[
@@ -84,7 +84,7 @@ $ ./build.sh
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor demo", you will see the latest data that the application sends to the Kaa Sandbox server.<br/><br/>
+Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor iOS" demo, you will see the latest data that the application sends to the Kaa Sandbox server.<br/><br/>
 
 Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and go to the "Cell monitor" application, then select "Schemas", "Log". Choose the latest schema version to inspect the schema of the data collected from the app.<br/><br/>
 
@@ -99,20 +99,20 @@ Where $your_application_token$ is the application token you can copy from the ma
 <h2>What's next?</h2>
 
 For more background on the Kaa Logging subsystem please refer to the corresponding programming guide and design reference sections.
-        	]]>
+            ]]>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
         <platforms>IOS</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
-        <bundleId>cell_monitor_demo_bundle</bundleId>
+        <bundleId>cell_monitor_demos</bundleId>
         <sourceArchive>objc/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>ObjCCellMonitor</projectFolder>
         <sdkLibDir>ObjCCellMonitor/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <bundle id="cell_monitor_demo_bundle">
-        <name>Cell Monitor demo bundle</name>
+    <bundle id="cell_monitor_demos">
+        <name>Cell Monitor demos</name>
         <description>Kaa Log collection subsystem demo applications bundle</description>
         <details>
             <![CDATA[

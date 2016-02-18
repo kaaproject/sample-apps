@@ -24,18 +24,19 @@ Copyright 2014-2016 CyberVision, Inc.
         <name>Spark data analytics demo</name>
         <description>IoT data ingestion in Spark Streaming using Kaa</description>
         <details><![CDATA[
-This sample application collects real-time data from endpoint into Apache Spark for stream processing using Kaa. <br /> <br />
+This sample application collects real-time data from Kaa endpoints into Apache Spark for stream processing using Kaa. <br /> <br />
+Please review the webinar below for hands-on experience based on an earlier version of the Kaa platform. <br /> <br />
 <iframe width="691" height="389" src="https://www.youtube.com/embed/a5Dw57Q-OIc" frameborder="0" allowfullscreen></iframe> <br />
 <h2>Installation</h2>
-1. Install Apache Spark to your host PC.
+1. Install Apache Spark on your host PC.
 <div onclick="elm = document.getElementById('box'); if(elm.style.display == 'none') elm.style.display = 'block'; else elm.style.display = 'none';">
 <u>Click here to show Apache Spark installation instructions</u></div>
 <div style="display:none;" id="box">
 
-We assumed you that you have installed java on your PC. <br />
+We assume that you that you have installed java on your PC. <br />
 First, install ntp and python-software-properties: <br />
 
-Login as a user with sudo:
+Log in as a user with sudo:
 <pre>
 $ sudo apt-get update
 $ sudo ntpdate pool.ntp.org
@@ -58,7 +59,7 @@ $ cd /usr/local/
 $ sudo ln -s spark-1.6.0 spark
 </pre>
 
-Third, create a spark user with proper privileges and ssh keys.
+Third, create a Spark user with proper privileges and ssh keys.
 <pre>
 $ sudo addgroup spark
 $ sudo useradd -g spark spark
@@ -79,7 +80,7 @@ $ ssh localhost
 $ exit
 </pre>
 
-Fourth, setup some Apache Spark working directories with proper user permissions
+Next, setup some Apache Spark working directories with proper user permissions
 <pre>
 $ sudo mkdir -p /srv/spark/{logs,work,tmp,pids}
 $ mkdir /tmp/spark-events
@@ -87,7 +88,7 @@ $ sudo chown -R spark:spark /srv/spark
 $ sudo chmod 4755 /srv/spark/tmp
 </pre>
 
-Fifth, let's adjust some Spark configuration files
+Finally, let's adjust some Spark configuration files
 <pre>
 $ cd /usr/local/spark/conf/
 $ cp -p spark-env.sh.template spark-env.sh
@@ -132,7 +133,7 @@ spark.eventLog.enabled  true
 spark.serializer        org.apache.spark.serializer.KryoSerializer
 </pre>
 
-Time to start Apache Spark up
+Time to start up Apache Spark
 <pre>
 $ cd /usr/local/spark/sbin
 
@@ -140,7 +141,7 @@ $ sudo ./start-master.sh -h hostnamepub
 $ sudo ./start-slave.sh spark://hostnamepub:7077
 </pre>
 
-Note to stop processes do:
+To stop the processes, use:
 <pre>
 $ sudo ./stop-slave.sh
 $ sudo ./stop-master.sh
@@ -150,11 +151,11 @@ $ sudo ./stop-master.sh
 2. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
 3. Go to the KaaSparkLauncher folder. Open spark.properties file and change flume.bind.host, spark.master.url and spark.home according to your spark cluster
 properties. <br />
-4. Run server side application by executin following command:
+4. Run server side application by executing the following command:
 <pre>
 $ java -jar KaaSparkLauncher.jar
 </pre>
-5. Change host in your flume appender configuration of Spark data analytics demo application via Administration UI from holcalhost to your host address. <br />
+5. Change the host in your flume appender configuration of Spark data analytics demo application via Administration UI from holcalhost to your host address. <br />
 6. Go to the CppSparkDataAnalyticsDemo folder and run the client application using the following command in the console:
 <pre>
 $ ./build.sh deploy

@@ -1,0 +1,29 @@
+{
+    "executorThreadPoolSize":1,
+    "callbackThreadPoolSize":2,
+    "clientsThreadPoolSize":2,
+    "includeClientProfile":{
+        "boolean":false
+    },
+    "includeServerProfile":{
+        "boolean":false
+    },
+    "flumeEventFormat":"RECORDS_CONTAINER",
+    "hostsBalancing":{
+        "org.kaaproject.kaa.server.appenders.flume.config.gen.PrioritizedFlumeNodes":{
+            "flumeNodes":[
+                {
+                    "host":"localhost",
+                    "port":7070,
+                    "priority":1
+                }
+            ]
+        }
+    },
+    "minLogSchemaVersion":1,
+    "maxLogSchemaVersion":2147483647,
+    "pluginTypeName":"Flume",
+    "pluginClassName":"org.kaaproject.kaa.server.appenders.flume.appender.FlumeLogAppender",
+    "headerStructure":[
+    ]
+}

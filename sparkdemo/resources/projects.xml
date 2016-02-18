@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+Copyright 2014-2016 CyberVision, Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<projectsConfig
+    xmlns="http://www.kaaproject.org"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+    <project id="spark_demo_cpp">
+        <name>Spark data analytics demo</name>
+        <description>IoT data ingestion in Spark Streaming using Kaa</description>
+        <details><![CDATA[
+This sample application collects real-time data from endpoint into Apache Spark for stream processing using Kaa. <br /> <br />
+<iframe width="691" height="389" src="https://www.youtube.com/embed/a5Dw57Q-OIc" frameborder="0" allowfullscreen></iframe> <br />
+<h2>Installation</h2>
+1. Install Apache Spark to your host PC.
+<div onclick="elm = document.getElementById('box'); if(elm.style.display == 'none') elm.style.display = 'block'; else elm.style.display = 'none';">
+<u>Click here to show Apache Spark installation instructions</u></div>
+<div style="display:none;" id="box">
+
+We assumed you that you have installed java on your PC. <br />
+First, install ntp and python-software-properties: <br />
+
+Login as a user with sudo:
+<pre>
+$ sudo apt-get update
+$ sudo ntpdate pool.ntp.org
+$ sudo apt-get install ntp
+$ sudo apt-get install python-software-properties
+</pre>
+
+Second, download and install Apache Spark
+<pre>
+$ cd ~
+$ mkdir spark
+$ cd spark/
+$ wget http://mirror.tcpdiag.net/apache/spark/spark-1.6.0/spark-1.6.0.tgz
+$ gunzip -c spark-1.6.0.tgz | tar -xvf -
+$ cd spark-1.6.0/
+$ sudo sbt/sbt assembly
+$ cd ..
+$ sudo cp -Rp spark-1.6.0 /usr/local/
+$ cd /usr/local/
+$ sudo ln -s spark-1.6.0 spark
+</pre>
+
+Third, create a spark user with proper privileges and ssh keys.
+<pre>
+$ sudo addgroup spark
+$ sudo useradd -g spark spark
+$ sudo adduser spark sudo
+$ sudo mkdir /home/spark
+$ sudo chown spark:spark /home/spark
+</pre>
+Add to /etc/sudoers file:
+<pre>
+spark ALL=(ALL) NOPASSWD:ALL
+</pre>
+<pre>
+$ sudo chown -R spark:spark /usr/local/spark/
+$ sudo su spark
+$ ssh-keygen -t rsa -P ""
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+$ ssh localhost
+$ exit
+</pre>
+
+Fourth, setup some Apache Spark working directories with proper user permissions
+<pre>
+$ sudo mkdir -p /srv/spark/{logs,work,tmp,pids}
+$ mkdir /tmp/spark-events
+$ sudo chown -R spark:spark /srv/spark
+$ sudo chmod 4755 /srv/spark/tmp
+</pre>
+
+Fifth, let's adjust some Spark configuration files
+<pre>
+$ cd /usr/local/spark/conf/
+$ cp -p spark-env.sh.template spark-env.sh
+$ vim spark-env.sh
+
+SPARK-ENV.SH (ADD BELOW)
+#Make sure to put your change SPARK_PUBLIC_DNS=“PUBLIC IP“ to your Public IP
+
+export SPARK_WORKER_CORES="2"
+export SPARK_WORKER_MEMORY="1g"
+export SPARK_DRIVER_MEMORY="1g"
+export SPARK_REPL_MEM="2g"
+export SPARK_WORKER_PORT=9000
+export SPARK_CONF_DIR="/usr/local/spark/conf"
+export SPARK_TMP_DIR="/srv/spark/tmp"
+export SPARK_PID_DIR="/srv/spark/pids"
+export SPARK_LOG_DIR="/srv/spark/logs"
+export SPARK_WORKER_DIR="/srv/spark/work"
+export SPARK_LOCAL_DIRS="/srv/spark/tmp"
+export SPARK_COMMON_OPTS="$SPARK_COMMON_OPTS -Dspark.kryoserializer.buffer.mb=32 "
+LOG4J="-Dlog4j.configuration=file://$SPARK_CONF_DIR/log4j.properties"
+export SPARK_MASTER_OPTS=" $LOG4J -Dspark.log.file=/srv/spark/logs/master.log "
+export SPARK_WORKER_OPTS=" $LOG4J -Dspark.log.file=/srv/spark/logs/worker.log "
+export SPARK_EXECUTOR_OPTS=" $LOG4J -Djava.io.tmpdir=/srv/spark/tmp/executor "
+export SPARK_REPL_OPTS=" -Djava.io.tmpdir=/srv/spark/tmp/repl/\$USER "
+export SPARK_APP_OPTS=" -Djava.io.tmpdir=/srv/spark/tmp/app/\$USER "
+export PYSPARK_PYTHON="/usr/bin/python"
+SPARK_PUBLIC_DNS="PUBLIC IP"
+export SPARK_WORKER_INSTANCES=1
+
+
+$ cp -p spark-defaults.conf.template spark-defaults.conf
+$ vim spark-defaults.conf
+
+
+SPARK-DEFAULTS (ADD BELOW)
+#Make sure to put your change hostnamepub to your Public IP
+
+spark.master            spark://hostnamepub:7077
+spark.executor.memory   512m
+spark.eventLog.enabled  true
+spark.serializer        org.apache.spark.serializer.KryoSerializer
+</pre>
+
+Time to start Apache Spark up
+<pre>
+$ cd /usr/local/spark/sbin
+
+$ sudo ./start-master.sh -h hostnamepub
+$ sudo ./start-slave.sh spark://hostnamepub:7077
+</pre>
+
+Note to stop processes do:
+<pre>
+$ sudo ./stop-slave.sh
+$ sudo ./stop-master.sh
+</pre>
+</div>
+
+2. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
+3. Go to the KaaSparkLauncher folder. Open spark.properties file and change flume.bind.host, spark.master.url and spark.home according to your spark cluster
+properties. <br />
+4. Run server side application by executin following command:
+<pre>
+$ java -jar KaaSparkLauncher.jar
+</pre>
+5. Change host in your flume appender configuration of Spark data analytics demo application via Administration UI from holcalhost to your host address. <br />
+6. Go to the CppSparkDataAnalyticsDemo folder and run the client application using the following command in the console:
+<pre>
+$ ./build.sh deploy
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. After starting the "Spark data analytics demo" application, you will receive statistics values from
+the endpoint in your server side application.
+<br /> <br />
+For more details, please refer to our webinar video embeded above <a href="https://www.youtube.com/watch?v=a5Dw57Q-OIc">"IoT data ingestion in Spark Streaming
+using Kaa"</a>.
+            ]]>
+        </details>
+
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>CPP</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>LINUX_X86 INTEL_EDISON</platforms>
+        <features>DATA_COLLECTION</features>
+        <complexity>ADVANCED</complexity>
+        <sourceArchive>cpp/spark_data_analytics_demo.tar.gz</sourceArchive>
+        <projectFolder>CppSparkDataAnalyticsDemo</projectFolder>
+        <sdkLibDir>CppSparkDataAnalyticsDemo/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+</projectsConfig>

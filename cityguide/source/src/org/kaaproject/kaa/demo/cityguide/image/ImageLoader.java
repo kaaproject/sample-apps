@@ -1,17 +1,17 @@
-/*
- * Copyright 2014-2015 CyberVision, Inc.
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.cityguide.image;
@@ -47,9 +47,11 @@ public class ImageLoader {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
 
-    MemoryCache mMemoryCache = new MemoryCache();
+    private final static int CONNECTION_TIMEOUT = 30000;
+    private final static int READ_TIMEOUT = 30000;
 
-    FileCache mFileCache;
+    private MemoryCache mMemoryCache = new MemoryCache();
+    private FileCache mFileCache;
 
     private Map<LoadingImageView, ImageKey> imageViews = Collections
             .synchronizedMap(new WeakHashMap<LoadingImageView, ImageKey>());
@@ -79,24 +81,24 @@ public class ImageLoader {
     }
 
     private Bitmap getBitmap(ImageKey key) {
-        File f = mFileCache.getFile(key);
-        Bitmap b = decodeFile(f, key.type.targetSize);
+        File file = mFileCache.getFile(key);
+        Bitmap b = decodeFile(file, key.type.targetSize);
         if (b != null) {
             return b;
         }
         try {
-            Bitmap bitmap = null;
+            Bitmap bitmap;
             URL imageUrl = new URL(key.url);
             HttpURLConnection conn = (HttpURLConnection) imageUrl
                     .openConnection();
-            conn.setConnectTimeout(30000);
-            conn.setReadTimeout(30000);
+            conn.setConnectTimeout(CONNECTION_TIMEOUT);
+            conn.setReadTimeout(READ_TIMEOUT);
             conn.setInstanceFollowRedirects(true);
             InputStream is = conn.getInputStream();
-            OutputStream os = new FileOutputStream(f);
+            OutputStream os = new FileOutputStream(file);
             Utils.copyStream(is, os);
             os.close();
-            bitmap = decodeFile(f, key.type.targetSize);
+            bitmap = decodeFile(file, key.type.targetSize);
             return bitmap;
         } catch (Throwable ex) {
             Log.e(TAG, "Unable to load bitmap!", ex);
@@ -107,11 +109,11 @@ public class ImageLoader {
         }
     }
 
-    private Bitmap decodeFile(File f, int targetSize) {
+    private Bitmap decodeFile(File file, int targetSize) {
         try {
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+            BitmapFactory.decodeStream(new FileInputStream(file), null, o);
             int width_tmp = o.outWidth, height_tmp = o.outHeight;
             int scale = 1;
             while (true) {
@@ -125,8 +127,9 @@ public class ImageLoader {
 
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+            return BitmapFactory.decodeStream(new FileInputStream(file), null, o2);
         } catch (FileNotFoundException e) {
+            Log.e(TAG, "Unable to decode bitmap! File was not found", e);
         }
         return null;
     }
@@ -158,18 +161,15 @@ public class ImageLoader {
             if (imageViewReused(photoToLoad)) {
                 return;
             }
-            BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);
-            Activity a = (Activity) photoToLoad.imageView.getContext();
-            a.runOnUiThread(bd);
+            BitmapDisplayer bmpDisplayer = new BitmapDisplayer(bmp, photoToLoad);
+            Activity activity = (Activity) photoToLoad.imageView.getContext();
+            activity.runOnUiThread(bmpDisplayer);
         }
     }
 
     boolean imageViewReused(PhotoToLoad photoToLoad) {
         ImageKey key = imageViews.get(photoToLoad.imageView);
-        if (key == null || !key.equals(photoToLoad.key)) {
-            return true;
-        }
-        return false;
+        return key == null || !key.equals(photoToLoad.key);
     }
 
     class BitmapDisplayer implements Runnable {

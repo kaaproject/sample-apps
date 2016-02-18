@@ -1,0 +1,29 @@
+{
+    "type":"record",
+    "name":"PowerReport",
+    "namespace":"org.kaaproject.kaa.sample",
+    "fields":[
+        {
+            "name":"timestamp",
+            "type":"long"
+        },
+        {
+            "name":"zoneId",
+            "type":{
+                "type":"string",
+                "avro.java.string":"String"
+            }
+        },
+        {
+            "name":"panelId",
+            "type":{
+                "type":"string",
+                "avro.java.string":"String"
+            }
+        },
+        {
+            "name":"power",
+            "type":"double"
+        }
+    ]
+}

@@ -22,7 +22,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="datacollection_demo_java">
-        <name>Data collection demo</name>
+        <name>Data collection Java demo</name>
         <description>Kaa Logging subsystem demo app based on Java SDK</description>
         <details><![CDATA[
 This simple app demonstrates capabilities of the Kaa Logging subsystem on the Java SDK.
@@ -34,7 +34,7 @@ $ java -jar DataCollectionDemo.jar
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By starting the "Data collection demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
+Make sure that the Kaa Sandbox is up and running. By starting the "Data collection Java demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
 <pre>
 $ mongo kaa
 db.logs_$your_application_token$.find()
@@ -63,14 +63,14 @@ For more background on the Kaa Logging subsystem, please refer to the correspond
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>BASIC</complexity>
-        <bundleId>datacollection_demo_bundle</bundleId>
+        <bundleId>datacollection_demos</bundleId>
         <sourceArchive>java/datacollection_demo.tar.gz</sourceArchive>
         <projectFolder>JDataCollectionDemo</projectFolder>
         <sdkLibDir>JDataCollectionDemo/lib</sdkLibDir>
         <destBinaryFile>JDataCollectionDemo/build/jar/DataCollectionDemo.jar</destBinaryFile>
     </project>
     <project id="datacollection_demo_c">
-        <name>Data collection demo</name>
+        <name>Data collection C demo</name>
         <description>Kaa Logging subsystem demo app based on C SDK</description>
         <details><![CDATA[
 This simple app demonstrates capabilities of the Kaa Logging subsystem on the C SDK.
@@ -82,7 +82,7 @@ $ ./build.sh deploy
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By starting the "Data collection demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
+Make sure that the Kaa Sandbox is up and running. By starting the "Data collection C demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
 <pre>
 $ mongo kaa
 db.logs_$your_application_token$.find()
@@ -113,14 +113,14 @@ For more background on the Kaa Logging subsystem, please refer to the correspond
         <platforms>LINUX_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>BASIC</complexity>
-        <bundleId>datacollection_demo_bundle</bundleId>
+        <bundleId>datacollection_demos</bundleId>
         <sourceArchive>c/datacollection_demo.tar.gz</sourceArchive>
         <projectFolder>CDataCollectionDemo</projectFolder>
         <sdkLibDir>CDataCollectionDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="datacollection_demo_cpp">
-        <name>Data collection demo</name>
+        <name>Data collection C++ demo</name>
         <description>Kaa Logging subsystem demo app based on C++ SDK</description>
         <details><![CDATA[
 This simple app demonstrates capabilities of the Kaa Logging subsystem on the C++ SDK.
@@ -132,7 +132,7 @@ $ ./build.sh deploy
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By starting the "Data collection demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
+Make sure that the Kaa Sandbox is up and running. By starting the "Data collection C++ demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
 <pre>
 $ mongo kaa
 db.logs_$your_application_token$.find()
@@ -163,14 +163,14 @@ For more background on the Kaa Logging subsystem, please refer to the correspond
         <platforms>LINUX_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>BASIC</complexity>
-        <bundleId>datacollection_demo_bundle</bundleId>
+        <bundleId>datacollection_demos</bundleId>
         <sourceArchive>cpp/datacollection_demo.tar.gz</sourceArchive>
         <projectFolder>CppDataCollectionDemo</projectFolder>
         <sdkLibDir>CppDataCollectionDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="datacollection_demo_objc">
-        <name>Data collection demo</name>
+        <name>Data collection Objective-C demo</name>
         <description>Kaa Logging subsystem demo app based on Objective-C SDK</description>
         <details><![CDATA[
 This simple app demonstrates capabilities of the Kaa Logging subsystem on the Objective-C SDK.
@@ -182,7 +182,7 @@ $ ./build.sh
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By starting the "Data collection demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
+Make sure that the Kaa Sandbox is up and running. By starting the "Data collection Objective-C demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
 <pre>
 $ mongo kaa
 db.logs_$your_application_token$.find()
@@ -197,20 +197,20 @@ Please note that all the features of Administration UI are also supported by RES
 <h2>What's next?</h2>
 
 For more background on the Kaa Logging subsystem, please refer to the corresponding programming guide and design reference sections.
-        	]]>
+            ]]>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
         <platforms>IOS</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>BASIC</complexity>
-        <bundleId>datacollection_demo_bundle</bundleId>
+        <bundleId>datacollection_demos</bundleId>
         <sourceArchive>objc/datacollection_demo.tar.gz</sourceArchive>
         <projectFolder>ObjCDataCollectionDemo</projectFolder>
         <sdkLibDir>ObjCDataCollectionDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <bundle id="datacollection_demo_bundle">
-        <name>Data collection demo bundle</name>
+    <bundle id="datacollection_demos">
+        <name>Data collection demos</name>
         <description>Kaa Logging subsystem demo applications bundle</description>
         <details>
             <![CDATA[

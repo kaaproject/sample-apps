@@ -53,7 +53,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
-        <bundleId>gpio_bundle</bundleId>
+        <bundleId>gpio_control</bundleId>
         <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
         <projectFolder>gpiocontrol/gpiocontrol</projectFolder>
         <sdkLibDir>gpiocontrol/gpiocontrol/libs</sdkLibDir>
@@ -85,7 +85,7 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
         <platforms>CC32XX</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
-        <bundleId>gpio_bundle</bundleId>
+        <bundleId>gpio_control</bundleId>
         <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
         <projectFolder>gpio-cc-client</projectFolder>
         <sdkLibDir>gpio-cc-client/libs/kaa</sdkLibDir>
@@ -116,7 +116,7 @@ After you successfully installed this app on your ESP8266 device, go to "GPIO co
         <platforms>ESP8266</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
-        <bundleId>gpio_bundle</bundleId>
+        <bundleId>gpio_control</bundleId>
         <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
         <projectFolder>gpio-esp-client</projectFolder>
         <sdkLibDir>gpio-esp-client/libs/kaa</sdkLibDir>
@@ -146,7 +146,7 @@ After you successfully installed this app on your Artik 5 device, go to "GPIO co
         <platforms>ARTIK5</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
-        <bundleId>gpio_bundle</bundleId>
+        <bundleId>gpio_control</bundleId>
         <sourceArchive>cpp/gpio-artik5-client.tar.gz</sourceArchive>
         <projectFolder>gpio-artik5-client</projectFolder>
         <sdkLibDir>gpio-artik5-client/libs/kaa</sdkLibDir>
@@ -179,14 +179,14 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <platforms>IOS</platforms>
         <features>USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
-        <bundleId>gpio_bundle</bundleId>
+        <bundleId>gpio_control</bundleId>
         <sourceArchive>objc/gpiocontrol.tar.gz</sourceArchive>
         <projectFolder>gpiocontrol</projectFolder>
         <sdkLibDir>gpiocontrol/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <bundle id="gpio_bundle">
-        <name>GPIO control bundle</name>
+    <bundle id="gpio_control">
+        <name>GPIO control</name>
         <description>GPIO control applications bundle</description>
         <details>
             <![CDATA[

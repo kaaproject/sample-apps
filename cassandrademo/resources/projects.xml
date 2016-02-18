@@ -22,9 +22,10 @@ Copyright 2014-2016 CyberVision, Inc.
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="cassandra_demo_c">
         <name>Cassandra data analytics demo</name>
-        <description>Time series IoT data ingestion into Cassandra using Kaa IoT</description>
+        <description>Time series IoT data ingestion into Cassandra using the Kaa platform</description>
         <details><![CDATA[
-This sample application based on Raspberry Pi and DHT11 collects temperature measurements from sensor and uploads it to Cassandra using Kaa. <br /> <br />
+This sample application based on Raspberry Pi and DHT11 collects temperature measurements from a sensor and uploads it to Cassandra DB using Kaa. <br />
+Please review the webinar below for hands-on experience based on an earlier version of the Kaa platform. <br /> <br />
 <iframe width="691" height="389" src="https://www.youtube.com/embed/VHwJLHQjl50" frameborder="0" allowfullscreen></iframe> <br />
 <h2>Installation</h2>
 1. Get <a href="https://en.wikipedia.org/wiki/Raspberry_Pi">Rasberry Pi 2 Model B</a>, <a href="http://www.dx.com/p/arduino-digital-temperature-humidity-sensor-module-121350#.Vp5Zoq996kB">DHT 11 sensor</a> and 3 Male-Male jumper wires. <br />
@@ -35,7 +36,7 @@ $ git clone git://git.drogon.net/wiringPi
 $ cd wiringPi
 $ ./build
 </pre>
-4. Connect wires using following schema: <br />
+4. Connect wires using the following schema: <br />
 Connect DHT11 pin 1 (left) to Raspberry PI pin 7 (GPIO 4)   <br />
 Connect DHT11 pin 2 (middle) to Raspberry PI pin 1 (VCC)    <br />
 Connect DHT11 pin 3 (right) to Raspberry PI pin 14 (GND)    <br /> <br />
@@ -55,7 +56,7 @@ Going to add 5th log record: { id: 'Sensor 1', region: 'Region 1', model: 'DHT11
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Cassandra data analytics demo" application, you will receive log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox Cassandra database using a Cassandra appender. You can explore the collected data by querying the sandbox Cassandra instance as follows:
+Make sure that the Kaa Sandbox is up and running. After starting the "Cassandra data analytics demo" application, you will receive log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox Cassandra database using a Cassandra log appender. You can explore the collected data by querying the sandbox Cassandra instance as follows:
 <pre>
 $ cqlsh
 $ use kaa;
@@ -74,7 +75,7 @@ $ SELECT * FROM sensor_per_region;
 </pre>
 <br />
 For more details, please refer to our webinar video embeded above <a href="https://www.youtube.com/watch?v=VHwJLHQjl50">"Time series IoT data ingestion into
-Cassandra using Kaa IoT"</a>.
+Cassandra using Kaa IoT platform"</a>.
             ]]>
         </details>
 

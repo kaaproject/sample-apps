@@ -19,20 +19,6 @@
 
 #define LOGS_TO_SEND_COUNT 5
 
-#pragma mark - Custom LogUploadStrategy
-
-@interface DemoLogUploadStrategy : DefaultLogUploadStrategy
-
-@end
-
-@implementation DemoLogUploadStrategy
-
-- (LogUploadStrategyDecision)isUploadNeeded:(id<LogStorageStatus>)status {
-    return [status getRecordCount] >= 1 ? LOG_UPLOAD_STRATEGY_DECISION_UPLOAD : LOG_UPLOAD_STRATEGY_DECISION_NOOP;
-}
-
-@end
-
 #pragma mark - ViewController
 
 @interface ViewController () <KaaClientStateDelegate, ProfileContainer>

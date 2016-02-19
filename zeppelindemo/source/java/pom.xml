@@ -53,7 +53,7 @@
             <artifactId>client-sdk</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/kaa-client-sdk-p0-c1-n1-l2.jar</systemPath>
+            <systemPath>${basedir}/lib/kaa-java-ep-sdk.jar</systemPath>
         </dependency>
 
     </dependencies>

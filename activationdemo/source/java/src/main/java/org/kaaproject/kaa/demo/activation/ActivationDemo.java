@@ -43,7 +43,7 @@ import java.util.Map;
 public class ActivationDemo {
     private static final Logger LOG = LoggerFactory.getLogger(ActivationDemo.class);
 
-    private final static String APPLICATION_NAME = "Activation demo";
+    private final static String APPLICATION_NAME = "Endpoint activation demo";
 
     private static KaaClient kaaClient;
 

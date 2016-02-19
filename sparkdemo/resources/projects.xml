@@ -33,7 +33,7 @@ Please review the webinar below for hands-on experience based on an earlier vers
 <u>Click here to show Apache Spark installation instructions</u></div>
 <div style="display:none;" id="box">
 
-We assume that you that you have installed java on your PC. <br />
+We assume that you have installed java on your PC. <br />
 First, install ntp and python-software-properties: <br />
 
 Log in as a user with sudo:

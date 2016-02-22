@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa.examples.econais</groupId>
-        <version>1.2.0</version>
+        <version>1.2.1-SNAPSHOT</version>
         <artifactId>ec19d</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples.econais.ec19d</groupId>

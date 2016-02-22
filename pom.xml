@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.kaaproject.kaa</groupId>
     <artifactId>examples</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sample applications for Kaa Sandbox</name>
@@ -27,7 +27,7 @@
 
     <properties>
         <main.dir>${basedir}</main.dir>
-        <kaa.version>0.8.0</kaa.version>
+        <kaa.version>0.8.1-SNAPSHOT</kaa.version>
         <jackson.version>2.4.1</jackson.version>
         <avro.version>1.7.5</avro.version>
         <junit.version>4.11</junit.version>

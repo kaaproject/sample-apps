@@ -15,9 +15,33 @@
  */
 
 #include <time.h>
-#include "cc32xx_support.h"
+#include "target.h"
 
-#define DEMO_UNUSED(x) if(x){}
+/* Avoid redefined warnings */
+#undef FD_SETSIZE
+#undef FD_SET
+#undef FD_CLR
+#undef FD_ISSET
+#undef FD_ZERO
+#undef fd_set
+
+#include "hw_types.h"
+#include "hw_ints.h"
+#include "hw_memmap.h"
+#include "hw_common_reg.h"
+#include "rom.h"
+#include "rom_map.h"
+#include "interrupt.h"
+#include "hw_apps_rcm.h"
+#include "prcm.h"
+#include "common.h"
+#include "uart.h"
+#include "uart_if.h"
+#include "udma_if.h"
+#include "pin.h"
+#include "common.h"
+#include "simplelink.h"
+
 
 
 unsigned long  g_ulStatus = 0;//SimpleLink Status
@@ -123,30 +147,33 @@ void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent)
 void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pHttpEvent,
                                   SlHttpServerResponse_t *pHttpResponse)
 {
-    DEMO_UNUSED(pHttpEvent)
-    DEMO_UNUSED(pHttpResponse)
+    (void) pHttpEvent;
+    (void) pHttpResponse;
     // Unused in this application
+    // TODO: well, what is about other applications?
 }
 
 void SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent)
 {
-    DEMO_UNUSED(pDevEvent)
+    (void) pDevEvent;
     // Unused in this application
+    // TODO: well, what is about other applications?
 }
 
 void SimpleLinkSockEventHandler(SlSockEvent_t *pSock)
 {
-    DEMO_UNUSED(pSock)
+    (void) pSock;
     // Unused in this application
+    // TODO: well, what is about other applications?
 }
 
-void SimpleLinkPingReport(SlPingReport_t *report)
+static void SimpleLinkPingReport(SlPingReport_t *report)
 {
     SET_STATUS_BIT(g_ulStatus, STATUS_BIT_PING_DONE);
     UART_PRINT("ping %d\r\n", report->AvgRoundTime);
 }
 
-void BoardInit()
+static void BoardInit()
 {
     MAP_IntVTableBaseSet((unsigned long)&g_pfnVectors[0]);
 
@@ -165,7 +192,7 @@ void BoardInit()
 }
 
 
-void wlan_configure()
+static void wlan_configure()
 {
     sl_Start(NULL, NULL, NULL);
 
@@ -211,7 +238,7 @@ void wlan_configure()
     sl_Stop(SL_STOP_TIMEOUT);
 }
 
-void wlan_scan()
+static void wlan_scan()
 {
     unsigned char ucpolicyOpt;
     union {
@@ -232,7 +259,7 @@ void wlan_scan()
         UART_PRINT("ssid: %s\trssi: %d\tsec-t: %u\r\n",netEntries[i].ssid, netEntries[i].rssi, netEntries[i].sec_type);
 }
 
-int wlan_connect(const char *ssid, const char *pass, unsigned char sec_type)
+static int wlan_connect(const char *ssid, const char *pass, unsigned char sec_type)
 {
     SlSecParams_t secParams = {0};
     long lRetVal = 0;
@@ -249,8 +276,8 @@ int wlan_connect(const char *ssid, const char *pass, unsigned char sec_type)
 
     SlDateTime_t dateTime= {0};
     dateTime.sl_tm_day =   1;          // Day of month (DD format) range 1-13
-    dateTime.sl_tm_mon =   1;           // Month (MM format) in the range of 1-12
-    dateTime.sl_tm_year =  1970;        // Year (YYYY format)
+    dateTime.sl_tm_mon =   1;          // Month (MM format) in the range of 1-12
+    dateTime.sl_tm_year =  1970;       // Year (YYYY format)
     dateTime.sl_tm_hour =  0;          // Hours in the range of 0-23
     dateTime.sl_tm_min =   0;          // Minutes in the range of 0-59
     dateTime.sl_tm_sec =   1;          // Seconds in the range of  0-59
@@ -262,7 +289,7 @@ int wlan_connect(const char *ssid, const char *pass, unsigned char sec_type)
     return 0;
 }
 
-void net_ping(const char *host)
+static void net_ping(const char *host)
 {
     SlPingStartCommand_t pingParams = {0};
     SlPingReport_t pingReport = {0};
@@ -287,3 +314,15 @@ void net_ping(const char *host)
     while (!IS_PING_DONE(g_ulStatus))
         _SlNonOsMainLoopTask();
 }
+
+/*----------------------------------------------------------------------------*/
+
+int target_initialise(void)
+{
+    BoardInit();
+    wlan_configure();
+    sl_Start(0, 0, 0);
+    // Both SSID and PASSWORD must be defined externally.
+    wlan_connect(WIFI_SSID, WIFI_PASSWORD, SL_SEC_TYPE_WPA_WPA2);
+}
+

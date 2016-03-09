@@ -14,42 +14,28 @@
  *  limitations under the License.
  */
 
+/*
+ * This header provides several bindings for TI's cc32xx target that abstracts
+ * an implementation of its features. Right now it contains only
+ * console and target initialisation routines, but it must be extended
+ * if required.
+ *
+ */
+
 #ifndef CC32XX_SUPPORT_H_
 #define CC32XX_SUPPORT_H_
 
-/* Avoid redifined warning */
-#undef FD_SETSIZE
-#undef FD_SET
-#undef FD_CLR
-#undef FD_ISSET
-#undef FD_ZERO
-#undef fd_set
-
 #include "hw_types.h"
-#include "hw_ints.h"
-#include "hw_memmap.h"
-#include "hw_common_reg.h"
-#include "rom.h"
-#include "rom_map.h"
-#include "interrupt.h"
-#include "hw_apps_rcm.h"
-#include "prcm.h"
-#include "common.h"
-#include "uart.h"
 #include "uart_if.h"
-#include "udma_if.h"
-#include "pin.h"
-
 #include "common.h"
 
-#include "simplelink.h"
+#define demo_printf(msg, ...)   UART_PRINT((msg), ##__VA_ARGS__)
 
-void BoardInit();
-
-void wlan_configure();
-void wlan_scan();
-int  wlan_connect(const char *ssid, const char *pass, unsigned char sec_type);
-
-void net_ping(const char *host);
+/* Initialises a target. Zero value means success, negative - errors.
+ *
+ * For this particular target this will eventually try to connect to
+ * the WiFi spot using SSID and password supplied during build.
+ */
+int target_initialise(void);
 
 #endif //CC32XX_SUPPORT_H_

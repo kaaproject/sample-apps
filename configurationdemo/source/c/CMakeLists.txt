@@ -16,22 +16,32 @@
 
 cmake_minimum_required(VERSION 2.8.8)
 
-project (C-SDK-sample)
+project(C-SDK-sample)
 enable_language(C)
 
-find_package (OpenSSL REQUIRED)
+# Our application name.
+set(APP_NAME demo_client)
 
+# List of additional libraries depends on target chosen.
+set(ADDITIONAL_LIBS)
+
+# Target-independent flags.
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
-                    ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/src
-                   )
+# Path to the Kaa SDK.
+add_subdirectory(libs/kaa)
+# Directory containing target support library.
+add_subdirectory(targets/${KAA_TARGET})
 
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
+# Demo executable.
+add_executable(${APP_NAME} src/kaa_demo.c)
 
-set (SAMPLE_SOURCE_FILES
-            src/kaa_demo.c
-)
+# All libraries that demo app depends on.
+target_link_libraries(${APP_NAME} kaac_s target_support ${APP_LIBS})
 
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} kaac crypto)
+# For most embedded targets binary stripping is required.
+if (${KAA_PRODUCE_BINARY})
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD
+            COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
+endif ()
+

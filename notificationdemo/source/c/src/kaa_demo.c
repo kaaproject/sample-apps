@@ -44,14 +44,10 @@ static kaa_client_t *kaa_client = NULL;
 void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *notification)
 {
     KAA_DEMO_UNUSED(context);
-    static short notifications_received = 2;
     if (notification->message->type == KAA_NOTIFICATION_UNION_STRING_OR_NULL_BRANCH_0) {
         kaa_string_t *message = (kaa_string_t *)notification->message->data;
         printf("Notification for topic id '%llu' received\n", *topic_id);
         printf("Notification body: %s\n", message->data);
-        if (!--notifications_received) {
-            kaa_client_stop(kaa_client);
-        }
     } else {
         printf("Error:Received notification's body is null\n");
     }

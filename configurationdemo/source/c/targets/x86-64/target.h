@@ -25,8 +25,8 @@
  *
  * TODO: rename it to something like 'linux' or 'host' ?
  */
-#ifndef KAA_DEMO_CONSOLE_H_
-#define KAA_DEMO_CONSOLE_H_
+#ifndef X86_64_SUPPORT_H
+#define X86_64_SUPPORT_H
 
 #include <stdint.h>
 #include <stdio.h>
@@ -43,5 +43,5 @@ static inline int target_initialise(void)
     return 0;
 }
 
-#endif // KAA_DEMO_CONSOLE_H_
+#endif // X86_64_SUPPORT_H
 

@@ -27,7 +27,7 @@ static kaa_client_t *kaa_client = NULL;
 void kaa_demo_print_configuration_message(
         const kaa_root_configuration_t *configuration) {
     if (configuration->address_list->type ==
-        KAA_CONFIGURATION_UNION_ARRAY_LINK_OR_NULL_BRANCH_0) {
+            KAA_CONFIGURATION_UNION_ARRAY_LINK_OR_NULL_BRANCH_0) {
         demo_printf("Configuration body:\n");
 
         kaa_list_node_t *it = kaa_list_begin(
@@ -60,7 +60,7 @@ int main(/*int argc, char *argv[]*/) {
     if (ret < 0) {
         /* If console is failed to initialise, you will not see this message */
         demo_printf("Failed to initialise a target\n");
-        return ret;
+        return 1;
     }
 
     demo_printf("Configuration demo started\n");
@@ -71,7 +71,7 @@ int main(/*int argc, char *argv[]*/) {
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     if (error_code) {
         demo_printf("Failed create Kaa client\n");
-        return -1;
+        return 2;
     }
 
     kaa_configuration_root_receiver_t receiver = {
@@ -85,7 +85,7 @@ int main(/*int argc, char *argv[]*/) {
 
     if (error_code) {
         demo_printf("Failed to add configuration receiver\n");
-        return -2;
+        return 3;
     }
 
     kaa_demo_print_configuration_message(
@@ -98,7 +98,7 @@ int main(/*int argc, char *argv[]*/) {
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
     if(error_code) {
         demo_printf("Failed to start Kaa main loop\n");
-        return -3;
+        return 4;
     }
 
     /**

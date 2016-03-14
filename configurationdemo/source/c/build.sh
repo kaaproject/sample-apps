@@ -15,18 +15,20 @@
 #  limitations under the License.
 #
 
+# Exit immediately if error occurs
+set -e
 
 RUN_DIR=`pwd`
 
-function help {
+function help_message {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported platforms: x86-64"
+    echo "Supported targets: x86-64, edison, cc32xx" # TODO: extend these
     exit 1
 }
 
 if [ $# -eq 0 ]
 then
-    help
+    help_message
 fi
 
 APP_NAME="demo_client"
@@ -38,23 +40,40 @@ KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-c*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
-KAA_ARCH=x86-64
+# TODO: comment about inconvenience between KAA_TARGET and KAA_PLATFORM
+KAA_TARGET=
+KAA_PRODUCE_BINARY=
+KAA_REQUIRE_CREDENTIALS=
 
 function select_arch {	
-    echo "Please enter architecture(default is x86-64):"
-    read arch
-    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
-    case "$arch" in
-        edison)
-          KAA_ARCH=x86-64
+    echo "Please enter a target (default is x86-64):"
+    read target
+
+    # TODO: better case handling
+    case "$target" in
+    edison)
+        KAA_TARGET=x86-64
+        KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$target.cmake"
         ;;
-        *)
-          KAA_TOOLCHAIN_PATH_SDK=""
+    x86-64)
+        KAA_TARGET=x86-64
+        ;;
+
+    "")
+        # Do nothing if string is empty - x86 is requested
+        KAA_TARGET=x86-64
+        ;;
+    *)
+        # Interpret custom string as target name
+        KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$target.cmake"
+        KAA_TARGET=${target}
+        KAA_PRODUCE_BINARY=true
+        KAA_REQUIRE_CREDENTIALS=true
         ;;
     esac
 }
 
-function build_thirdparty {
+function unpack_sdk {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
     then
         KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
@@ -65,34 +84,38 @@ function build_thirdparty {
             exit 1
         fi
 
-        mkdir -p $KAA_LIB_PATH &&
+        mkdir -p $KAA_LIB_PATH
         tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
     fi
-
-    if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
-    then
-        cd $KAA_LIB_PATH &&
-        mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=1 \
-              -DKAA_WITHOUT_EVENTS=1 \
-              -DKAA_WITHOUT_LOGGING=1 \
-              -DKAA_MAX_LOG_LEVEL=3 \
-	      -DKAA_PLATFORM=$KAA_ARCH \
-               $KAA_TOOLCHAIN_PATH_SDK \
-              ..
-    fi
-
-    cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    make -j4 &&
-    cd $PROJECT_HOME
 }
 
 function build_app {
-    cd $PROJECT_HOME &&
-    mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
-    cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
-    cd $BUILD_DIR &&
-    cmake -DAPP_NAME=$APP_NAME -DKAA_PLATFORM=$KAA_ARCH $KAA_TOOLCHAIN_PATH_SDK ..
+    SSID=
+    PASSWORD=
+
+    cd $PROJECT_HOME
+    mkdir -p "$PROJECT_HOME/$BUILD_DIR"
+    cd $BUILD_DIR
+
+    if [[ $KAA_REQUIRE_CREDENTIALS = true ]]
+    then
+        echo "Enter WiFi SSID:"
+        read SSID
+        echo "Enter WiFi Password:"
+        read PASSWORD
+    fi
+
+    # TODO: comments about KAA_PLATFORM and KAA_TARGET
+    cmake -DKAA_PLATFORM=$KAA_TARGET \
+          -DKAA_TARGET=$KAA_TARGET \
+          -DKAA_PRODUCE_BINARY=$KAA_PRODUCE_BINARY \
+          -DWIFI_SSID=$SSID \
+          -DWIFI_PASSWORD=$PASSWORD \
+          -DKAA_DEBUG_ENABLED=1 \
+          -DKAA_WITHOUT_EVENTS=1 \
+          -DKAA_WITHOUT_LOGGING=1 \
+          -DKAA_MAX_LOG_LEVEL=3 \
+          ${KAA_TOOLCHAIN_PATH_SDK} ..
     make
 }
 
@@ -112,7 +135,7 @@ do
 case "$cmd" in
     build)
         select_arch
-        build_thirdparty &&
+        unpack_sdk
         build_app
     ;;
 
@@ -123,7 +146,7 @@ case "$cmd" in
     deploy)
         clean
         select_arch
-        build_thirdparty
+        unpack_sdk
         build_app
         run
         ;;
@@ -133,7 +156,7 @@ case "$cmd" in
     ;;
     
     *)
-        help
+        help_message
     ;;
 esac
 

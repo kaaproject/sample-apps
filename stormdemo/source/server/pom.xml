@@ -26,7 +26,7 @@
     <properties>
         <flume.version>1.5.0</flume.version>
         <hadoop.version>2.4.0</hadoop.version>
-        <kaa.version>0.8.1-SNAPSHOT</kaa.version>
+        <kaa.version>0.8.1</kaa.version>
         <storm.version>0.10.0-beta1</storm.version>
     </properties>
 

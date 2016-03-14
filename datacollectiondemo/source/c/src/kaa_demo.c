@@ -79,7 +79,7 @@ static void success_log_delivery(void *context, const kaa_log_bucket_info_t *buc
            bucket->bucket_id,
            bucket->log_count);
 
-    log_successfully_sent_counter++;
+    log_successfully_sent_counter+=bucket->log_count;
 }
 
 /* Under normal conditions this callback shouldn't be called */

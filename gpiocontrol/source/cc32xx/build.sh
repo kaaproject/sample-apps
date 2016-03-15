@@ -108,15 +108,10 @@ function clean {
 }
 
 function run {
-    cd "$PROJECT_HOME/$BUILD_DIR"
-    ./$APP_NAME
+    echo "To run demo, please have a look at http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200#TexasInstrumentsCC3200-Example"
 }
 
-#for cmd in $@
-#do
-cmd=$1
-
-case "$cmd" in
+case "$1" in
     build)
         build_thirdparty &&
         build_app
@@ -141,5 +136,3 @@ case "$cmd" in
         help
     ;;
 esac
-
-done

@@ -18,7 +18,7 @@
 
 KAA_LIB_PATH="libs/kaa"
 KAA_C_SOURCES_PATH="$KAA_LIB_PATH/src"
-KAA_SDK_TAR="kaa-client*.tar.gz"
+KAA_SDK_TAR="kaa-c*.tar.gz"
 
 
 function unpackSources {

@@ -18,13 +18,13 @@
 
 KAA_LIB_PATH="libs/kaa"
 KAA_C_SOURCES_PATH="$KAA_LIB_PATH/src"
-KAA_SDK_TAR="kaa-client*.tar.gz"
+KAA_SDK_TAR="kaa-c*.tar.gz"
 
 
 function unpackSources {
     if [[ ! -d "$KAA_C_SOURCES_PATH" ]]
     then
-        cd $KAA_LIB_PATH && 
+        cd $KAA_LIB_PATH &&
         KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
 
         if [ -z "$KAA_SDK_TAR_NAME" ]
@@ -38,7 +38,6 @@ function unpackSources {
 }
 
 function copySources {
-    
     current_folder_name=${PWD##*/}
     if [ ! -d "$ECONAIS_HOME_VAR/applications" ]
     then
@@ -48,7 +47,6 @@ function copySources {
     mkdir -p "$ECONAIS_HOME_VAR/applications/$current_folder_name"
     cp -r ./src "$ECONAIS_HOME_VAR/applications/$current_folder_name"
     cp -r ./cfg "$ECONAIS_HOME_VAR/applications/$current_folder_name"
-    
 }
 
 function generateKey {

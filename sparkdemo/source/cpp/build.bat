@@ -30,7 +30,7 @@ set LIBS_PATH=libs
 set KAA_LIB_PATH=%LIBS_PATH%\kaa
 set KAA_C_LIB_HEADER_PATH=%KAA_LIB_PATH%\src
 set KAA_CPP_LIB_HEADER_PATH=%KAA_LIB_PATH%\kaa
-set KAA_SDK_TAR="kaa-client*.tar.gz"
+set KAA_SDK_TAR="kaa-c*.tar.gz"
 
 set KAA_SDK_TAR_NAME=
 

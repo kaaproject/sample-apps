@@ -18,25 +18,10 @@
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/gplus_sign_in_button"
-        android:layout_width="230dp"
-        android:layout_height="50dp"
-        android:layout_alignLeft="@+id/facebook_sign_in_button"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp" >
-    </com.google.android.gms.common.SignInButton>
-
-    <com.twitter.sdk.android.core.identity.TwitterLoginButton
-        android:id="@+id/twitter_sign_in_button"
-        android:layout_width="230dp"
-        android:layout_height="46dp"
-        android:layout_below="@+id/facebook_sign_in_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/infoText"
@@ -44,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/twitter_sign_in_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
+        android:text="Authorize to send event"
         android:textColor="#333"
         android:textSize="18sp" />
 
@@ -54,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/infoText"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="FACEBOOK user name: Andrey"
         android:textColor="#333"
         android:textSize="14sp" />
 
@@ -63,16 +51,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/greeting"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="50dp"
+        android:text="FACEBOOK user id: 232"
         android:textColor="#333"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/eventMessages"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/msgBox"
+        android:layout_height="300dp"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/greeting"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:autoLink="all"
+        android:background="@color/tw__transparent"
         android:clickable="false"
         android:cursorVisible="false"
         android:editable="false"
@@ -82,34 +78,90 @@
         android:longClickable="false"
         android:scrollbars="vertical" />
 
-    <Button
-        android:id="@+id/sendEventButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/msgBox"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/send_btn_label" />
+        android:layout_above="@+id/linearLayout"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <EditText
+            android:id="@+id/msgBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/msg_hint"
+            android:longClickable="false"
+            android:maxLength="20" />
+
+        <Button
+            android:id="@+id/sendEventButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_btn_label" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/mockFbButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/tw__transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/auth_fb" />
+
+        <ImageButton
+            android:id="@+id/mockGplusButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_weight="2"
+            android:background="@color/tw__transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/auth_gplus" />
+
+        <ImageButton
+            android:id="@+id/mockTwitterButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/tw__transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/auth_twitter" />
+
+    </LinearLayout>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/gplus_sign_in_button"
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:visibility="invisible" />
 
     <com.facebook.widget.LoginButton
         android:id="@+id/facebook_sign_in_button"
-        android:layout_width="230dp"
-        android:layout_height="46dp"
-        android:layout_alignLeft="@+id/twitter_sign_in_button"
-        android:layout_below="@+id/gplus_sign_in_button"
-        android:layout_marginTop="10dp" />
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/msgBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/idText"
-        android:layout_toLeftOf="@+id/sendEventButton"
-        android:ems="10"
-        android:hint="@string/msg_hint"
-        android:longClickable="false"
-        android:layout_marginTop="20dp"
-        android:maxLength="20" />
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/twitter_sign_in_button"
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:visibility="invisible" />
 
 </RelativeLayout>

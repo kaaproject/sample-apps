@@ -78,7 +78,12 @@ public class LoginActivity extends FragmentActivity {
         RECEIVED, SENT}
 
     private TwitterLoginButton twitterButton;
+    private SignInButton googleButton;
+    private LoginButton facebookButton;
     private Button sendEventButton;
+    private ImageButton mockFbButton;
+    private ImageButton mockGplusButton;
+    private ImageButton mockTwitterButton;
     private boolean sendingEventsEnabled;
 
     private GplusSigninListener gplusSigninListener;
@@ -116,9 +121,16 @@ public class LoginActivity extends FragmentActivity {
         idTextView = (TextView) findViewById(R.id.idText);
         infoTextView = (TextView) findViewById(R.id.infoText);
         sendEventButton = (Button) findViewById(R.id.sendEventButton);
-        sendEventButton.setEnabled(sendingEventsEnabled);
+        mockFbButton = (ImageButton) findViewById(R.id.mockFbButton);
+        mockGplusButton = (ImageButton) findViewById(R.id.mockGplusButton);
+        mockTwitterButton = (ImageButton) findViewById(R.id.mockTwitterButton);
         messageEdit = (EditText) findViewById(R.id.msgBox);
         eventMessagesEdit = (EditText) findViewById(R.id.eventMessages);
+
+        sendEventButton.setEnabled(sendingEventsEnabled);
+        mockTwitterButton.setOnClickListener(mClickListener);
+        mockGplusButton.setOnClickListener(mClickListener);
+        mockFbButton.setOnClickListener(mClickListener);
 
         if (savedInstanceState != null) {
             currentUserName = savedInstanceState.getCharSequence(USER_NAME);
@@ -127,12 +139,12 @@ public class LoginActivity extends FragmentActivity {
             eventMessagesText = savedInstanceState.getCharSequence(EVENT_MESSAGES);
             updateViews();
         }
-        
+
         /*
             Creating a Twitter authConfig for Twitter credentials verification.
          */
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        
+
         /*
              Register the application using Fabric plug-in for managing Twitter apps
          */
@@ -146,16 +158,16 @@ public class LoginActivity extends FragmentActivity {
         twitterButton.setCallback(twitterSigninListener);
         twitterButton.setOnClickListener(twitterSigninListener);
         twitterButton.setEnabled(true);
-        
+
         /*
             Creating a listeners class for Google+.
          */
         gplusSigninListener = new GplusSigninListener(this);
 
-        SignInButton googleButton = (SignInButton) findViewById(R.id.gplus_sign_in_button);
+        googleButton = (SignInButton) findViewById(R.id.gplus_sign_in_button);
         googleButton.setSize(SignInButton.SIZE_WIDE);
         googleButton.setOnClickListener(gplusSigninListener);
-        
+
         /*
             Creating the Google API client capable of making requests for tokens, user info etc.
          */
@@ -166,15 +178,15 @@ public class LoginActivity extends FragmentActivity {
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
         gplusSigninListener.setClient(mGoogleApiClient);
-        
+
         /*
             Creates listener for Facebook.
          */
         FacebookSigninListener facebookSigninListener = new FacebookSigninListener(this);
-        LoginButton facebookButton = (LoginButton) findViewById(R.id.facebook_sign_in_button);
+        facebookButton = (LoginButton) findViewById(R.id.facebook_sign_in_button);
 
         facebookButton.setUserInfoChangedCallback(facebookSigninListener);
-        
+
         /*
             Creating the UI helper for managing the Facebook login UI.
          */
@@ -219,7 +231,7 @@ public class LoginActivity extends FragmentActivity {
     protected void onPause() {
         super.onPause();
         uiHelper.onPause();
-        
+
         /*
             Notify the application of the background state.
          */
@@ -235,7 +247,7 @@ public class LoginActivity extends FragmentActivity {
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        
+
         /*
             Save the current state of the UI (for Facebook).
          */
@@ -359,6 +371,25 @@ public class LoginActivity extends FragmentActivity {
         }
     }
 
+    OnClickListener mClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.mockFbButton:
+                    facebookButton.callOnClick();
+                    break;
+
+                case R.id.mockTwitterButton:
+                    twitterButton.callOnClick();
+                    break;
+
+                case R.id.mockGplusButton:
+                    gplusSigninListener.onClick(v);
+                    break;
+            }
+        }
+    };
+
     private void addNewEventToChatBox(final EventStatus status, final String message) {
         this.runOnUiThread(new Runnable() {
             @Override
@@ -366,7 +397,7 @@ public class LoginActivity extends FragmentActivity {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("[HH:mm:ss] ");
                 if (message != null && message.length() > 0) {
-                    eventMessagesEdit.setText(status + " " + format.format(calendar.getTime()) +
+                    eventMessagesEdit.setText(format.format(calendar.getTime()) + " " + status +
                             ": " + message + "\n" + eventMessagesEdit.getText());
                     eventMessagesText = eventMessagesEdit.getText();
                     messageEdit.setText(null);

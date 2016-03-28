@@ -274,6 +274,7 @@ public class LoginActivity extends FragmentActivity {
             case TWITTER:
                 kaaVerifierToken = verifiersTokens.getTwitterKaaVerifierToken();
                 Session.getActiveSession().closeAndClearTokenInformation();
+                getVerifiersApplication().resume();
                 break;
         }
 

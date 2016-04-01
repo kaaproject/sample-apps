@@ -28,31 +28,15 @@
 #include <kaa/gen/kaa_remote_control_ecf.h>
 #include <kaa/kaa_profile.h>
 
-#ifdef CC32XX
-#include "../cc32xx/cc32xx_support.h"
+#include "target.h"
 
-#define KAA_DEMO_RETURN_IF_ERROR(error, message) \
-    if ((error)) { \
-        UART_PRINT(message ", error code %d\r\n", (error)); \
-        return (error); \
-    }
-#define DEMO_LOG(msg, ...) UART_PRINT(msg "\r", ##__VA_ARGS__);
-#else
-#define KAA_DEMO_RETURN_IF_ERROR(error, message) \
-    if ((error)) { \
-        printf(message ", error code %d\n", (error)); \
-        return (error); \
-    }
-#define DEMO_LOG(msg, ...) printf(msg, ##__VA_ARGS__);
-#endif
+// TODO APP-63: abstract gpio functions into separate target driver
 
 static kaa_client_t *kaa_client = NULL;
 static bool is_shutdown = false;
 
 static int gpio_led[] = { 0, 0, 0 };
 static int led_number = sizeof (gpio_led) / sizeof (int);
-
-#define KAA_DEMO_UNUSED(x) (void)(x);
 
 /*
  * Event callback-s.
@@ -62,8 +46,8 @@ void kaa_device_info_request(void *context
                            , kaa_remote_control_ecf_device_info_request_t *event
                            , kaa_endpoint_id_p source)
 {
-    KAA_DEMO_UNUSED(context);
-    KAA_DEMO_UNUSED(source);
+    (void)context;
+    (void)source;
 
     kaa_remote_control_ecf_device_info_response_t *response = kaa_remote_control_ecf_device_info_response_create();
 
@@ -89,8 +73,8 @@ void kaa_GPIOToggle_info_request(void *context
                               , kaa_remote_control_ecf_gpio_toggle_request_t *event
                               , kaa_endpoint_id_p source)
 {
-    KAA_DEMO_UNUSED(context);
-    KAA_DEMO_UNUSED(source);
+    (void)context;
+    (void)source;
 
     if (event->gpio->status) {
         GPIO_IF_LedOn(MCU_RED_LED_GPIO + event->gpio->id);
@@ -103,60 +87,55 @@ void kaa_GPIOToggle_info_request(void *context
     event->destroy(event);
 }
 
-int main(/*int argc, char *argv[]*/)
+int main(void)
 {
-#ifdef CC32XX
-    BoardInit();
 
-    MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
-    MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);
-    MAP_GPIODirModeSet(GPIOA1_BASE, 0x2, GPIO_DIR_MODE_OUT);
-    MAP_PinTypeGPIO(PIN_01, PIN_MODE_0, false);
-    MAP_GPIODirModeSet(GPIOA1_BASE, 0x4, GPIO_DIR_MODE_OUT);
-    MAP_PinTypeGPIO(PIN_02, PIN_MODE_0, false);
-    MAP_GPIODirModeSet(GPIOA1_BASE, 0x8, GPIO_DIR_MODE_OUT);
-    GPIO_IF_LedConfigure(LED1|LED2|LED3);
-    GPIO_IF_LedOff(MCU_ALL_LED_IND);
+    int rc = target_initialise();
+    if (rc < 0) {
+        return 1;
+    }
 
-    wlan_configure();
-    sl_Start(0, 0, 0);
-    wlan_connect(SSID, PWD, SL_SEC_TYPE_WPA_WPA2);
-#endif
-    DEMO_LOG("Event demo started\n");
+    demo_printf("GPIO demo started\n");
 
     /**
      * Initialize Kaa client.
      */
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
+    if (error_code) {
+        demo_printf("Failed to create client context: %i\n", error_code);
+        return 2;
+    }
 
     error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager, DEMO_ACCESS_TOKEN);
-
-    KAA_RETURN_IF_ERR(error_code);
+    if (error_code) {
+        demo_printf("Failed to set access token: %i\n", error_code);
+        return 3;
+    }
 
 
     error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager
                                                                                          , &kaa_device_info_request
                                                                                          , NULL);
-    KAA_RETURN_IF_ERR(error_code);
-
-    error_code = kaa_event_manager_set_kaa_remote_control_ecf_gpio_toggle_request_listener(kaa_client_get_context(kaa_client)->event_manager
-                                                                                         , &kaa_GPIOToggle_info_request
-                                                                                         , NULL);
-    KAA_RETURN_IF_ERR(error_code);
+    if (error_code) {
+        demo_printf("Unable to set remote control listener: %i\n", error_code);
+        return 4;
+    }
 
     /**
      * Start Kaa client main loop.
      */
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to start Kaa main loop");
+    if (error_code) {
+        demo_printf("Unable to start Kaa client: %i\n", error_code);
+        return 5;
+    }
 
     /**
      * Destroy Kaa client.
      */
     kaa_client_destroy(kaa_client);
 
-    DEMO_LOG("Event demo stopped\n");
+    demo_printf("GPIO demo stopped\n");
 
     return error_code;
 }

@@ -14,8 +14,40 @@
  *  limitations under the License.
  */
 
+// TODO APP-63: this file must be reviewed
+
 #include <time.h>
-#include "cc32xx_support.h"
+#include "target.h"
+
+
+/* Avoid redifined warning */
+#undef FD_SETSIZE
+#undef FD_SET
+#undef FD_CLR
+#undef FD_ISSET
+#undef FD_ZERO
+#undef fd_set
+
+#include "hw_types.h"
+#include "hw_ints.h"
+#include "hw_memmap.h"
+#include "hw_common_reg.h"
+#include "rom.h"
+#include "rom_map.h"
+#include "interrupt.h"
+#include "hw_apps_rcm.h"
+#include "prcm.h"
+#include "common.h"
+#include "uart.h"
+#include "gpio.h"
+#include "gpio_if.h"
+#include "uart_if.h"
+#include "udma_if.h"
+#include "pin.h"
+
+#include "common.h"
+
+#include "simplelink.h"
 
 #define DEMO_UNUSED(x) if(x){}
 
@@ -290,4 +322,22 @@ void net_ping(const char *host)
 
     while(!IS_PING_DONE(g_ulStatus))
         _SlNonOsMainLoopTask();
+}
+
+int target_initialise()
+{
+    BoardInit();
+    MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
+    MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);
+    MAP_GPIODirModeSet(GPIOA1_BASE, 0x2, GPIO_DIR_MODE_OUT);
+    MAP_PinTypeGPIO(PIN_01, PIN_MODE_0, false);
+    MAP_GPIODirModeSet(GPIOA1_BASE, 0x4, GPIO_DIR_MODE_OUT);
+    MAP_PinTypeGPIO(PIN_02, PIN_MODE_0, false);
+    MAP_GPIODirModeSet(GPIOA1_BASE, 0x8, GPIO_DIR_MODE_OUT);
+    GPIO_IF_LedConfigure(LED1|LED2|LED3);
+    GPIO_IF_LedOff(MCU_ALL_LED_IND);
+
+    wlan_configure();
+    //sl_Start(0, 0, 0);
+    wlan_connect(WIFI_SSID, WIFI_PASSWORD, SL_SEC_TYPE_WPA_WPA2);
 }

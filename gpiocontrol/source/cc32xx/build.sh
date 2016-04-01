@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 #  Copyright 2014-2016 CyberVision, Inc.
 #
@@ -15,17 +15,23 @@
 #  limitations under the License.
 #
 
+# TODO APP-63: this file must be reviewed and moved to common build script dir
+
+
+# Exit immediately if error occurs
+set -e
 
 RUN_DIR=`pwd`
 
-function help {
+help_message() {
     echo "Choose one of the following: {build|run|deploy|clean}"
+    echo "Supported targets: cc32xx" # TODO APP-63: extend these
     exit 1
 }
 
 if [ $# -eq 0 ]
 then
-    help
+    help_message
 fi
 
 APP_NAME="demo_client"
@@ -36,10 +42,12 @@ KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-c*.tar.gz"
+KAA_TOOLCHAIN_PATH_SDK=""
+# TODO APP-63: comment about inconvenience between KAA_TARGET and KAA_PLATFORM
+KAA_TARGET=cc32xx
+KAA_PRODUCE_BINARY=1
+DEMO_ACCESS_TOKEN=
 
-#Wifi settings
-SSID="xxx"
-PASSWORD="xxxxxxxxx"
 
 if [ -z ${DEMO_ACCESS_TOKEN} ]; then
     DEMO_ACCESS_TOKEN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)
@@ -48,8 +56,9 @@ echo "==================================="
 echo " ACCESS TOKEN: " $DEMO_ACCESS_TOKEN
 echo "==================================="
 
-function build_thirdparty {
-    if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
+
+unpack_sdk() {
+    if [ ! -d "$KAA_C_LIB_HEADER_PATH"  -a ! -d "$KAA_CPP_LIB_HEADER_PATH" ]
     then
         KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
 
@@ -59,61 +68,57 @@ function build_thirdparty {
             exit 1
         fi
 
-        mkdir -p $KAA_LIB_PATH &&
+        mkdir -p $KAA_LIB_PATH
         tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
     fi
-
-    if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
-    then
-        cd $KAA_LIB_PATH &&
-        mkdir -p $BUILD_DIR && cd $BUILD_DIR
-
-        ENV_VAR=" -DKAA_PLATFORM=cc32xx \
-        -DCMAKE_TOOLCHAIN_FILE=../toolchains/cc32xx.cmake \
-        -DKAA_MAX_LOG_LEVEL=3"
-
-        if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
-            ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin/opt/kaa"
-        fi
-
-        cmake -G "Unix Makefiles" $ENV_VAR ..
-    fi
-
-    cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    make -j4 &&
-    cd $PROJECT_HOME
 }
 
-function build_app {
-    echo "Enter WiFi SSID:"
-    read SSID
-    echo "Enter WiFi Password:"
-    read PASSWORD
-    cd $PROJECT_HOME &&
-    mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
-    cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
-    cd $BUILD_DIR
+build_app() {
+    # Wifi settings
+    SSID=
+    PASSWORD=
+
     ENV_VAR=" -DKAA_PLATFORM=cc32xx -DAPP_NAME=$APP_NAME"
         if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
                 ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin/opt/kaa"
         fi
 
-    cmake -G "Unix Makefiles" -DSSID=$SSID -DPWD=$PASSWORD -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN $ENV_VAR .. &&
+    cd $PROJECT_HOME
+    mkdir -p "$PROJECT_HOME/$BUILD_DIR"
+    cd $BUILD_DIR
+
+    echo "Enter WiFi SSID:"
+    read SSID
+    echo "Enter WiFi Password:"
+    read PASSWORD
+
+    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$KAA_LIB_PATH/toolchains/cc32xx.cmake"
+
+    # TODO: comments about KAA_PLATFORM and KAA_TARGET
+    cmake -DKAA_PLATFORM=$KAA_TARGET \
+          -DKAA_TARGET=$KAA_TARGET \
+          -DKAA_PRODUCE_BINARY=$KAA_PRODUCE_BINARY \
+          -DWIFI_SSID=$SSID \
+          -DWIFI_PASSWORD=$PASSWORD \
+          -DKAA_MAX_LOG_LEVEL=3 \
+          -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN \
+          -DKAA_DEBUG_ENABLED=true \
+          ${KAA_TOOLCHAIN_PATH_SDK} ..
     make
 }
 
-function clean {
+clean() {
     rm -rf "$KAA_LIB_PATH/$BUILD_DIR"
     rm -rf "$PROJECT_HOME/$BUILD_DIR"
 }
 
-function run {
+run() {
     echo "To run demo, please have a look at http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200#TexasInstrumentsCC3200-Example"
 }
 
 case "$1" in
     build)
-        build_thirdparty &&
+        unpack_sdk
         build_app
     ;;
 
@@ -123,7 +128,7 @@ case "$1" in
 
     deploy)
         clean
-        build_thirdparty
+        unpack_sdk
         build_app
         run
         ;;
@@ -133,6 +138,6 @@ case "$1" in
     ;;
 
     *)
-        help
+        help_message
     ;;
 esac

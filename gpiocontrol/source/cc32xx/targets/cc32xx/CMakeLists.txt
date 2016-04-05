@@ -34,6 +34,8 @@ target_include_directories(target_support
         ${CC32XX_SDK}/example/common)
 
 # Find and use ARM GCC libraries, provided that CMAKE_FIND_ROOT_PATH is properly set
+# TODO KAA-994: Use gcc as a linker, rather than listing versions dirs in PATH_SUFFIXES variables
+# and trying to link/find libraries. See related issue for further details.
 
 find_library(LIB_C_PATH
         NAMES c libc
@@ -45,24 +47,28 @@ find_library(LIB_M_PATH
         PATHS /lib/armv7e-m/
         NO_DEFAULT_PATH)
 
-# TODO: find more elegant solution to support different versions of the gcc library
-# Rather than listing versions dirs in PATH_SUFFIXES variables
+# Required for few stubs when in debug mode
+find_library(LIB_NOSYS_PATH
+        NAMES nosys
+        PATHS /lib/armv7e-m/
+        NO_DEFAULT_PATH)
+
 find_library(LIB_GCC_PATH
         NAMES gcc
         PATHS "${TOOLCHAIN_PATH}/lib/gcc/arm-none-eabi/"
-        PATH_SUFFIXES 5.3.0/armv7e-m/ 4.9.3/armv7e-m/
+        PATH_SUFFIXES 5.3.0/armv7e-m/ 4.9.3/armv7e-m/ 4.7.4/armv7e-m/
         NO_DEFAULT_PATH
         NO_CMAKE_FIND_ROOT_PATH)
 
 # GCC dependencies
-target_link_libraries(target_support PUBLIC ${LIB_C_PATH} ${LIB_M_PATH} ${LIB_GCC_PATH})
+target_link_libraries(target_support PUBLIC ${LIB_C_PATH} ${LIB_M_PATH} ${LIB_GCC_PATH} ${LIB_NOSYS_PATH})
 # CC32XX dependencies
 target_link_libraries(target_support PUBLIC ${CC32XX_SDK_LIBS})
-# Propagate linker script
+## Propagate linker script
 target_link_libraries(target_support PUBLIC -T${CMAKE_CURRENT_LIST_DIR}/app.ld)
 
-message("WiFi AP: ${WIFI_SSID}")
-message("WiFi Pass: ${WIFI_PASSWORD}")
+message(STATUS "WiFi AP: ${WIFI_SSID}")
+message(STATUS "WiFi Pass: ${WIFI_PASSWORD}")
 
 # Expose WiFi credentials
 target_compile_definitions(target_support

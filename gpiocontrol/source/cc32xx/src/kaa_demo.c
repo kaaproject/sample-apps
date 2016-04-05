@@ -33,7 +33,6 @@
 // TODO APP-63: abstract gpio functions into separate target driver
 
 static kaa_client_t *kaa_client = NULL;
-static bool is_shutdown = false;
 
 static int gpio_led[] = { 0, 0, 0 };
 static int led_number = sizeof (gpio_led) / sizeof (int);
@@ -95,29 +94,31 @@ int main(void)
         return 1;
     }
 
-    demo_printf("GPIO demo started\n");
+    demo_printf("GPIO demo started\r\n");
 
     /**
      * Initialize Kaa client.
      */
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     if (error_code) {
-        demo_printf("Failed to create client context: %i\n", error_code);
+        demo_printf("Failed to create client context: %i\r\n", error_code);
         return 2;
     }
 
-    error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager, DEMO_ACCESS_TOKEN);
+    error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager,
+            DEMO_ACCESS_TOKEN);
+
     if (error_code) {
-        demo_printf("Failed to set access token: %i\n", error_code);
+        demo_printf("Failed to set access token: %i\r\n", error_code);
         return 3;
     }
 
 
-    error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager
-                                                                                         , &kaa_device_info_request
-                                                                                         , NULL);
+    error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager,
+                                                                                          &kaa_device_info_request,
+                                                                                          NULL);
     if (error_code) {
-        demo_printf("Unable to set remote control listener: %i\n", error_code);
+        demo_printf("Unable to set remote control listener: %i\r\n", error_code);
         return 4;
     }
 
@@ -126,7 +127,7 @@ int main(void)
      */
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
     if (error_code) {
-        demo_printf("Unable to start Kaa client: %i\n", error_code);
+        demo_printf("Unable to start Kaa client: %i\r\n", error_code);
         return 5;
     }
 
@@ -135,7 +136,7 @@ int main(void)
      */
     kaa_client_destroy(kaa_client);
 
-    demo_printf("GPIO demo stopped\n");
+    demo_printf("GPIO demo stopped\r\n");
 
     return error_code;
 }

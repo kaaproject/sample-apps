@@ -230,7 +230,7 @@ the endpoint in your server side application.
             <![CDATA[
 This bundle contains applications that demonstrate real-time data processing in Apache Storm using Kaa platform.
 
-Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 
 <h2>What's next?</h2>
 For more background on the Kaa Logging subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.

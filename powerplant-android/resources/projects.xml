@@ -32,7 +32,7 @@ Download the .apk to your Android device by clicking the "Binary" button on the 
 <h2>What's next?</h2>
 Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
 
-For more background on user verification refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Userverifiers">design reference</a> section. It is also possible to implement custom user verifier using <a href="https://docs.kaaproject.org/display/KAA/Creating+custom+user+verifier">programming guide</a>.
+For more background on user verification refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Userverifiers">design reference</a> section. It is also possible to implement custom user verifier using <a href="http://docs.kaaproject.org/display/KAA/Creating+custom+user+verifier">programming guide</a>.
             ]]>
         </details>
         

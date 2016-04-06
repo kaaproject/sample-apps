@@ -19,7 +19,7 @@ PREFACE
 ************************************
 
 This demo application illustrates the Kaa event feature using the Kaa C SDK.
-To read more about the logging feature, visit https://docs.kaaproject.org/display/KAA/Events.
+To read more about the logging feature, visit http://docs.kaaproject.org/display/KAA/Events.
 
 ************************************
 INSTALLATION
@@ -28,9 +28,9 @@ INSTALLATION
 To run the demo application, do the following:
 
 1. Install third-party libraries to build the Kaa C SDK.
-Follow https://docs.kaaproject.org/display/KAA/Third-party+components#Third-partycomponents-Kaaendpoint to see the full
+Follow http://docs.kaaproject.org/display/KAA/Third-party+components#Third-partycomponents-Kaaendpoint to see the full
 list of third-party dependencies for the Kaa C SDK.
-2. Download and install the Kaa sandbox (https://docs.kaaproject.org/display/KAA/sandbox).
+2. Download and install the Kaa sandbox (http://docs.kaaproject.org/display/KAA/sandbox).
 3. Before generating the C SDK, make sure that you provided the SDK with a user verifier and the following fields for the event class family were specified as follows:
  Name: Remote Control Event Class Family
  Namespace: org.kaaproject.kaa.examples.gpiocontrol
@@ -44,5 +44,5 @@ ABOUT
 ************************************
 
 If you are interested in the Kaa IoT framework and want to read more about it, visit our official site
-http://www.kaaproject.org/. The documentation can be found at https://docs.kaaproject.org/display/KAA/Kaa+IoT+Platform+Home.
+http://www.kaaproject.org/. The documentation can be found at http://docs.kaaproject.org/display/KAA/Kaa+IoT+Platform+Home.
 

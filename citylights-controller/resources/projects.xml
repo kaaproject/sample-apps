@@ -40,7 +40,7 @@ TODO
 <h2>What's next?</h2>
 Get the source code by clicking the "Source" button on the left and start hacking!<br/><br/>
 
-For more background on Kaa data collection subsystem please refer to the corresponding <a href="https://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="https://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.
+For more background on Kaa data collection subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.
             ]]></details>
             
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 

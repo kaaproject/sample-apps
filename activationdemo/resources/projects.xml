@@ -52,7 +52,7 @@ Finally, it's time to see what determines the configuration data. Go to the "End
 
 The endpoints are put into either "Active device group" or "Inactive device group" depending on the "active" variable value in the server profile. See the corresponding profile filters in the group details window. Each endpoint group defines its own configuration (active or inactive) - and when the server-side profile for some EP is changed, the EP is moved from one group to another and this results in updated configuration being pushed by the server to the corresponding EP.<br/><br/>
 
-Please note that all features of the <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all features of the <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 
 <h2>What's next?</h2>
 

@@ -41,12 +41,14 @@ static int led_number = sizeof (gpio_led) / sizeof (int);
  * Event callback-s.
  */
 
-void kaa_device_info_request(void *context
+static void kaa_device_info_request(void *context
                            , kaa_remote_control_ecf_device_info_request_t *event
                            , kaa_endpoint_id_p source)
 {
     (void)context;
     (void)source;
+
+    demo_printf("Device info request received\r\n");
 
     kaa_remote_control_ecf_device_info_response_t *response = kaa_remote_control_ecf_device_info_response_create();
 
@@ -68,12 +70,14 @@ void kaa_device_info_request(void *context
     event->destroy(event);
 }
 
-void kaa_GPIOToggle_info_request(void *context
+static void kaa_GPIOToggle_info_request(void *context
                               , kaa_remote_control_ecf_gpio_toggle_request_t *event
                               , kaa_endpoint_id_p source)
 {
     (void)context;
     (void)source;
+
+    demo_printf("Toggling GPIO...\r\n");
 
     if (event->gpio->status) {
         GPIO_IF_LedOn(MCU_RED_LED_GPIO + event->gpio->id);
@@ -88,7 +92,6 @@ void kaa_GPIOToggle_info_request(void *context
 
 int main(void)
 {
-
     int rc = target_initialise();
     if (rc < 0) {
         return 1;
@@ -115,11 +118,21 @@ int main(void)
 
 
     error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager,
-                                                                                          &kaa_device_info_request,
-                                                                                          NULL);
+            kaa_device_info_request,
+            NULL);
+
     if (error_code) {
         demo_printf("Unable to set remote control listener: %i\r\n", error_code);
         return 4;
+    }
+
+    error_code = kaa_event_manager_set_kaa_remote_control_ecf_gpio_toggle_request_listener(kaa_client_get_context(kaa_client)->event_manager,
+            kaa_GPIOToggle_info_request,
+            NULL);
+
+    if (error_code) {
+        demo_printf("Unable to set GPIO listener: %i\r\n", error_code);
+        return 5;
     }
 
     /**
@@ -128,7 +141,7 @@ int main(void)
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
     if (error_code) {
         demo_printf("Unable to start Kaa client: %i\r\n", error_code);
-        return 5;
+        return 6;
     }
 
     /**

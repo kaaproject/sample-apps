@@ -21,31 +21,19 @@ enable_language(C)
 # Target-independent flags.
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Wall -Wextra")
 
-# TODO: (KAA-858) Remove it after issue will be resolved
-if(KAA_DEBUG_ENABLED)
-    set(CMAKE_BUILD_TYPE "Debug")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
-else()
-    set(CMAKE_BUILD_TYPE "MinSizeRel")
-endif()
-
 # Our application name.
 set(APP_NAME demo_client)
 
-# List of additional libraries depends on target chosen.
-set(ADDITIONAL_LIBS)
-
+# Demo executable.
+add_executable(${APP_NAME} src/kaa_demo.c)
 
 # Path to the Kaa SDK.
 add_subdirectory(libs/kaa)
 # Directory containing target support library.
 add_subdirectory(targets/${KAA_TARGET})
 
-# Demo executable.
-add_executable(${APP_NAME} src/kaa_demo.c)
-
 # All libraries that demo app depends on.
-target_link_libraries(${APP_NAME} kaac_s target_support ${APP_LIBS})
+target_link_libraries(${APP_NAME} kaac_s target_support)
 
 # For most embedded targets binary stripping is required.
 if(${KAA_PRODUCE_BINARY})

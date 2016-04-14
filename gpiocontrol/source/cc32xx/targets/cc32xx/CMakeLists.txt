@@ -12,9 +12,15 @@ add_library(target_support
         ${CC32XX_SDK}/example/common/uart_if.c
         ${CC32XX_SDK}/example/common/udma_if.c
         ${CC32XX_SDK}/example/common/gpio_if.c
+        ${CC32XX_SDK}/example/common/utils_if.c
         ${CC32XX_SDK}/example/common/startup_gcc.c
         cc32xx_support.c
         )
+
+# Addtional library required for nonos library
+add_library(cc32xx_common
+        STATIC
+        ${CC32XX_SDK}/example/common/network_common.c)
 
 target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -63,7 +69,7 @@ find_library(LIB_GCC_PATH
 # GCC dependencies
 target_link_libraries(target_support PUBLIC ${LIB_C_PATH} ${LIB_M_PATH} ${LIB_GCC_PATH} ${LIB_NOSYS_PATH})
 # CC32XX dependencies
-target_link_libraries(target_support PUBLIC ${CC32XX_SDK_LIBS})
+target_link_libraries(target_support PUBLIC ${CC32XX_SDK_LIBS} cc32xx_common)
 ## Propagate linker script
 target_link_libraries(target_support PUBLIC -T${CMAKE_CURRENT_LIST_DIR}/app.ld)
 
@@ -76,3 +82,4 @@ target_compile_definitions(target_support
         -DWIFI_SSID="${WIFI_SSID}"
         -DWIFI_PASSWORD="${WIFI_PASSWORD}"
         -DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
+

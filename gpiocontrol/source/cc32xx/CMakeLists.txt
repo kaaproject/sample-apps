@@ -12,32 +12,44 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-#
 
 cmake_minimum_required(VERSION 2.8.8)
 
-project (C-SDK-sample)
+project(C-SDK-sample)
 enable_language(C)
 
-if(KAA_PLATFORM STREQUAL "" OR KAA_PLATFORM STREQUAL "x86-64")
-  set(KAA_PLATFORM "x86-64")
-  find_package (OpenSSL REQUIRED)
-  set(APP_LIBS kaac_s crypto)
-  set(SAMPLE_SOURCE_FILES
-            src/kaa_demo.c 
-     )
-  link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
+# Target-independent flags.
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Wall -Wextra")
+
+# TODO: (KAA-858) Remove it after issue will be resolved
+if(KAA_DEBUG_ENABLED)
+    set(CMAKE_BUILD_TYPE "Debug")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
 else()
-  include(${CMAKE_CURRENT_SOURCE_DIR}/${KAA_PLATFORM}/${KAA_PLATFORM}.cmake)
+    set(CMAKE_BUILD_TYPE "MinSizeRel")
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"' -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"' ")
+# Our application name.
+set(APP_NAME demo_client)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
-                    ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/src
-                   )
+# List of additional libraries depends on target chosen.
+set(ADDITIONAL_LIBS)
 
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} ${APP_LIBS})
 
-add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME}.afx ${APP_NAME}.bin)
+# Path to the Kaa SDK.
+add_subdirectory(libs/kaa)
+# Directory containing target support library.
+add_subdirectory(targets/${KAA_TARGET})
+
+# Demo executable.
+add_executable(${APP_NAME} src/kaa_demo.c)
+
+# All libraries that demo app depends on.
+target_link_libraries(${APP_NAME} kaac_s target_support ${APP_LIBS})
+
+# For most embedded targets binary stripping is required.
+if(${KAA_PRODUCE_BINARY})
+  add_custom_command(TARGET ${APP_NAME} POST_BUILD
+          COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
+endif()
+

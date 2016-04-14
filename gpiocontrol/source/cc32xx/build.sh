@@ -94,7 +94,7 @@ build_app() {
 
     KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$KAA_LIB_PATH/toolchains/cc32xx.cmake"
 
-    # TODO: comments about KAA_PLATFORM and KAA_TARGET
+    # TODO: APP-63 comments about KAA_PLATFORM and KAA_TARGET
     cmake -DKAA_PLATFORM=$KAA_TARGET \
           -DKAA_TARGET=$KAA_TARGET \
           -DKAA_PRODUCE_BINARY=$KAA_PRODUCE_BINARY \

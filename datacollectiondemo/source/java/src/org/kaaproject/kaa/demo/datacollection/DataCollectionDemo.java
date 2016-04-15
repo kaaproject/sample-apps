@@ -67,32 +67,37 @@ public class DataCollectionDemo {
         // Start the Kaa client and connect it to the Kaa server.
         kaaClient.start();
 
-        // Collect log record delivery futures.
-        Set<RecordFuture> futures = new HashSet<>();
-        
+        // Collect log record delivery futures and corresponding log record creation timestamps.
+        Map<RecordFuture, Long> futuresMap = new HashMap<>();
+
         // Send logs in a loop.
         for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
-            futures.add(kaaClient.addLogRecord(log));
+            futuresMap.put(kaaClient.addLogRecord(log), log.getTimeStamp());
             LOG.info("Log record {} sent", log.toString());
         }
-        
+
         // Iterate over log record delivery futures and wait for delivery
         // acknowledgment for each record.
-        for (RecordFuture future : futures) {
+        Iterator<RecordFuture> iterator = futuresMap.keySet().iterator();
+        RecordFuture future = null;
+        while (iterator.hasNext()) {
+            future = iterator.next();
             try {
                 RecordInfo recordInfo = future.get();
                 BucketInfo bucketInfo = recordInfo.getBucketInfo();
+                Long timeSpent = (recordInfo.getRecordAddedTimestampMs() - futuresMap.get(future))
+                        + recordInfo.getRecordDeliveryTimeMs();
                 LOG.info(
                         "Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
-                        bucketInfo.getBucketId(),
-                        recordInfo.getRecordDeliveryTimeMs());
+                        bucketInfo.getBucketId(), timeSpent);
+                iterator.remove();
             } catch (Exception e) {
                 LOG.error(
                         "Exception was caught while waiting for callback future",
                         e);
             }
         }
-        
+
         // Stop the Kaa client and release all the resources which were in use.
         kaaClient.stop();
         LOG.info("Data collection demo stopped");

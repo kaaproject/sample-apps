@@ -1,3 +1,19 @@
+#
+#  Copyright 2014-2016 CyberVision, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
 # TODO APP-63: this file must be reviewed and moved to common targets dir
 
 # Before this module is added, SDK path must be provided
@@ -17,7 +33,7 @@ add_library(target_support
         cc32xx_support.c
         )
 
-# Addtional library required for nonos library
+# Additional library required for nonos library
 add_library(cc32xx_common
         STATIC
         ${CC32XX_SDK}/example/common/network_common.c)
@@ -70,8 +86,8 @@ find_library(LIB_GCC_PATH
 target_link_libraries(target_support PUBLIC ${LIB_C_PATH} ${LIB_M_PATH} ${LIB_GCC_PATH} ${LIB_NOSYS_PATH})
 # CC32XX dependencies
 target_link_libraries(target_support PUBLIC ${CC32XX_SDK_LIBS} cc32xx_common)
-## Propagate linker script
-target_link_libraries(target_support PUBLIC -T${CMAKE_CURRENT_LIST_DIR}/app.ld)
+# Propagate linker script
+target_link_libraries(target_support PUBLIC -T${CMAKE_CURRENT_SOURCE_DIR}/app.ld)
 
 message(STATUS "WiFi AP: ${WIFI_SSID}")
 message(STATUS "WiFi Pass: ${WIFI_PASSWORD}")

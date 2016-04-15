@@ -16,10 +16,10 @@
 
 package org.kaaproject.kaa.demo.datacollection;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A demo application that shows how to use the Kaa logging API. 
+ * A demo application that shows how to use the Kaa logging API.
  */
 public class DataCollectionDemo {
 
@@ -60,10 +60,10 @@ public class DataCollectionDemo {
 
         // Set record count strategy for uploading logs with count threshold set to 1.
         // Defined strategy configuration informs to upload every log record as soon as it is created.
-        // The default strategy uploads logs after either a threshold logs count 
+        // The default strategy uploads logs after either a threshold logs count
         // or a threshold logs size has been reached.
         kaaClient.setLogUploadStrategy(new RecordCountLogUploadStrategy(1));
-        
+
         // Start the Kaa client and connect it to the Kaa server.
         kaaClient.start();
 
@@ -78,10 +78,7 @@ public class DataCollectionDemo {
 
         // Iterate over log record delivery futures and wait for delivery
         // acknowledgment for each record.
-        Iterator<RecordFuture> iterator = futuresMap.keySet().iterator();
-        RecordFuture future = null;
-        while (iterator.hasNext()) {
-            future = iterator.next();
+        for (RecordFuture future : futuresMap.keySet()) {
             try {
                 RecordInfo recordInfo = future.get();
                 BucketInfo bucketInfo = recordInfo.getBucketInfo();
@@ -90,7 +87,6 @@ public class DataCollectionDemo {
                 LOG.info(
                         "Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
                         bucketInfo.getBucketId(), timeSpent);
-                iterator.remove();
             } catch (Exception e) {
                 LOG.error(
                         "Exception was caught while waiting for callback future",
@@ -106,7 +102,7 @@ public class DataCollectionDemo {
     public static List<LogData> generateLogs(int logCount) {
         List<LogData> logs = new LinkedList<LogData>();
         for (int i = 0; i < logCount; i++) {
-            logs.add(new LogData(Level.KAA_INFO, "TAG", "MESSAGE_" + i));
+            logs.add(new LogData(Level.KAA_INFO, "TAG", "MESSAGE_" + i, System.currentTimeMillis()));
         }
         return logs;
     }

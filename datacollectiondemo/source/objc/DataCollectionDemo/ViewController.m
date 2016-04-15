@@ -46,11 +46,13 @@
 
     // Start the Kaa client and connect it to the Kaa server.
     [self.kaaClient start];
+}
+
+- (void)onStarted {
+    [self addLogWithText:@"Kaa client started"];
 
     // Send logs in a loop.
     NSArray *logs = [self generateLogs:LOGS_TO_SEND_COUNT];
-
-    [self addLogWithText:[NSString stringWithFormat:@"Record size: %ld", (long)[self getLogRecordSize:logs[0]]]];
 
     // Collect log record delivery runners.
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -61,9 +63,11 @@
                               log.level, log.tag, log.message, log.timeStamp]];
     }
 
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+
     for (NSNumber *timeKey in dictionary.allKeys) {
         @try {
-            [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
+            [queue addOperationWithBlock:^{
                 BucketRunner *runner = dictionary[timeKey];
                 BucketInfo *bucketInfo = [runner getValue];
                 int64_t timeSpent = bucketInfo.scheduledBucketTimestamp - [timeKey longLongValue] + bucketInfo.bucketDeliveryDuration;
@@ -76,10 +80,8 @@
     }
 }
 
-- (NSInteger)getLogRecordSize:(KAALogData *)record {
-    AvroBytesConverter *converter = [[AvroBytesConverter alloc] init];
-    NSData *serializedLogRecod = [converter toBytes:record];
-    return serializedLogRecod.length;
+- (KAAEmptyData *)getProfile {
+    return [[KAAEmptyData alloc] init];
 }
 
 - (NSArray *)generateLogs:(int)logCount {
@@ -93,17 +95,6 @@
         [logs addObject:log];
     }
     return logs;
-}
-
-
-#pragma mark - Delegate methods
-
-- (void)onStarted {
-    [self addLogWithText:@"Kaa client started"];
-}
-
-- (KAAEmptyData *)getProfile {
-    return [[KAAEmptyData alloc] init];
 }
 
 - (void)addLogWithText:(NSString *) text {

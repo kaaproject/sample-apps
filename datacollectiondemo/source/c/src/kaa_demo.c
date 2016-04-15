@@ -127,6 +127,8 @@ static void kaa_demo_add_log_record(void *context)
     log_record->level = ENUM_LEVEL_KAA_INFO;
     log_record->tag = kaa_string_move_create(KAA_DEMO_LOG_TAG, NULL);
 
+    log_record->time_stamp = KAA_TIME() * 1000;
+
     char log_message_buffer[KAA_DEMO_LOG_BUF_SZ];
     snprintf(log_message_buffer, KAA_DEMO_LOG_BUF_SZ, KAA_DEMO_LOG_MESSAGE"%zu", log_record_counter);
 

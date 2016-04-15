@@ -49,7 +49,7 @@ int main()
      */
     kaaClient->start();
 
-    std::list<std::pair<RecordFuture, std::size_t>> futuresMap;
+    std::list<std::pair<RecordFuture, std::size_t>> futurePairs;
 
     // Send LOGS_TO_SEND_COUNT logs in a loop.
     std::size_t logNumber = 0;
@@ -60,17 +60,16 @@ int main()
         logRecord.message = "MESSAGE_" + std::to_string(logNumber);
         logRecord.timeStamp = TimeUtils::getCurrentTimeInMs();
 
-        futuresMap.push_back(std::pair<RecordFuture, std::size_t>(
-                             std::move(kaaClient->addLogRecord(logRecord)), logRecord.timeStamp));
+        futurePairs.push_back(std::make_pair(std::move(kaaClient->addLogRecord(logRecord)), logRecord.timeStamp));
         std::cout << "Sent " << logNumber << "th record" << std::endl;
     }
 
-    for (auto& pair : futuresMap) {
+    for (auto it = futurePairs.begin(); it != futurePairs.end(); ++it) {
         try {
-            RecordInfo recordInfo = pair.first.get();
+            RecordInfo recordInfo = it->first.get();
             BucketInfo bucketInfo = recordInfo.getBucketInfo();
 
-            std::size_t timeSpent = (recordInfo.getRecordAddedTimestampMs() - pair.second)
+            std::size_t timeSpent = (recordInfo.getRecordAddedTimestampMs() - it->second)
                                         + recordInfo.getRecordDeliveryTimeMs();
 
             std::cout << "Received log record delivery info. Bucket Id [" <<  bucketInfo.getBucketId() << "]. "

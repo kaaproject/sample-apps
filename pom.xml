@@ -176,7 +176,7 @@
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.2.1</version>
                 </plugin>
-                <!--This plugin's configuration is used to store Eclipse 
+                <!--This plugin's configuration is used to store Eclipse
                     m2e settings only. It has no influence on the Maven build itself. -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
@@ -275,6 +275,7 @@
                         <exclude>**/source/esp8266/include/driver/uart*.h</exclude>
                         <exclude>**/source/cc32xx/platform/cc32xx/app.ld</exclude>
                         <exclude>**/source/cc32xx/cc32xx/app.ld</exclude>
+                        <exclude>**/targets/cc32xx/app.ld</exclude>
                         <exclude>**/source/cc32xx/libs/kaa/PUT_SDK_HERE</exclude>
                         <exclude>**/source/esp8266/libs/kaa/PUT_SDK_HERE</exclude>
                         <exclude>**/VoltageReport.java</exclude>

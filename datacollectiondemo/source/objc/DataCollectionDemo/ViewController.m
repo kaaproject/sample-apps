@@ -15,7 +15,8 @@
  */
 
 #import "ViewController.h"
-#import <Kaa/Kaa.h>
+
+@import Kaa;
 
 #define LOGS_TO_SEND_COUNT 5
 
@@ -37,7 +38,7 @@
     [self addLogWithText:@"DataCollectionDemo started"];
     
     //Create a Kaa client with the Kaa default context.
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
+    self.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     
     // Set a custom strategy for uploading logs.
     // The default strategy uploads logs after either a threshold logs count

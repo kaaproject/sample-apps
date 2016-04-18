@@ -17,6 +17,8 @@
 #import "KaaProvider.h"
 #import "PreferencesManager.h"
 
+@import Kaa;
+
 @implementation ConcreteStateDelegate
 
 - (void)onStarted{
@@ -48,22 +50,22 @@
 
 @implementation KaaProvider
 
-+ (id <KaaClient>)getClient {
-    static id <KaaClient> kaaClient = nil;
++ (id<KaaClient>)getClient {
+    static id<KaaClient> kaaClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:[[ConcreteStateDelegate alloc] init]];
+        kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:[[ConcreteStateDelegate alloc] init]];
     });
     return kaaClient;
 }
 
 - (void)attachUser {
-    id <KaaClient> client = [KaaProvider getClient];
+    id<KaaClient> client = [KaaProvider getClient];
     [client attachUserWithId:[PreferencesManager getUserExternalId] accessToken:[PreferencesManager getUserAccessToken] delegate:self];
 }
 
 + (void)setUpEventDelegate:(id <RemoteControlECFDelegate>)delegate {
-    id <KaaClient> client = [self getClient];
+    id<KaaClient> client = [self getClient];
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     
@@ -72,7 +74,7 @@
 }
 
 + (void)sendDeviceInfoRequestToAll {
-    id <KaaClient> client = [self getClient];
+    id<KaaClient> client = [self getClient];
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     

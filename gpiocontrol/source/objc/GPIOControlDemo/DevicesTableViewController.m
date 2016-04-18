@@ -21,6 +21,8 @@
 #import "ConnectionAlert.h"
 #import "GPIOTableViewController.h"
 
+@import Kaa;
+
 #define TAG @"DevicesTableViewController"
 
 @interface DevicesTableViewController ()
@@ -170,7 +172,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        id <KaaClient> kaaClient = [KaaProvider getClient];
+        id<KaaClient> kaaClient = [KaaProvider getClient];
         NSLog(@"%@ Going to detach.", TAG);
         Device *currentDevice = self.devices[indexPath.row];
         self.deletingIndexPath = indexPath;

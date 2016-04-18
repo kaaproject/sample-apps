@@ -16,7 +16,9 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "ProfileCommon.h"
+
+@import CoreLocation;
+@import Kaa;
 
 @interface AppDelegate () <KaaClientStateDelegate, ProfileContainer>
 
@@ -25,7 +27,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
+    self.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     [self.kaaClient setProfileContainer:self];
     return YES;
 }

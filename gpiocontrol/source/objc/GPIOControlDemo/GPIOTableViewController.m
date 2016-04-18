@@ -18,6 +18,9 @@
 #import "StatusTableViewCell.h"
 #import "KaaProvider.h"
 #import "ConnectionAlert.h"
+#import "Device.h"
+
+@import Kaa;
 
 @interface GPIOTableViewController ()
 

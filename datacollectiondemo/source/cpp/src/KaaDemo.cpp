@@ -64,12 +64,12 @@ int main()
         std::cout << "Sent " << logNumber << "th record" << std::endl;
     }
 
-    for (auto it = futurePairs.begin(); it != futurePairs.end(); ++it) {
+    for (auto& pair : futurePairs) {
         try {
-            RecordInfo recordInfo = it->first.get();
+            RecordInfo recordInfo = pair.first.get();
             BucketInfo bucketInfo = recordInfo.getBucketInfo();
 
-            std::size_t timeSpent = (recordInfo.getRecordAddedTimestampMs() - it->second)
+            std::size_t timeSpent = (recordInfo.getRecordAddedTimestampMs() - pair.second)
                                         + recordInfo.getRecordDeliveryTimeMs();
 
             std::cout << "Received log record delivery info. Bucket Id [" <<  bucketInfo.getBucketId() << "]. "

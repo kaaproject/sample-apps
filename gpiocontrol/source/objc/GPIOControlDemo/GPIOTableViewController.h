@@ -15,7 +15,8 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "Device.h"
+
+@class Device;
 
 @interface GPIOTableViewController : UITableViewController <UITabBarDelegate, UITableViewDataSource>
 

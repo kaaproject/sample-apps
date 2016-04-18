@@ -15,7 +15,8 @@
  */
 
 #import "ViewController.h"
-#import <Kaa/Kaa.h>
+
+@import Kaa;
 
 @interface ViewController () <KaaClientStateDelegate, NotificationTopicListDelegate, NotificationDelegate, ProfileContainer>
 
@@ -34,7 +35,7 @@
     [self addLogWithText:@"NotificationDemo started"];
     
     //Create a Kaa client with the Kaa default context.
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
+    self.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     
     // A listener that listens to the notification topic list updates.
     [self.kaaClient addTopicListDelegate:self];

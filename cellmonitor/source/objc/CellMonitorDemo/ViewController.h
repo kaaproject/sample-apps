@@ -15,9 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <Kaa/Kaa.h>
-
-@import CoreLocation;
+@class  CLLocationManager;
 
 @interface ViewController : UIViewController 
 

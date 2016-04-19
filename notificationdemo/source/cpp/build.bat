@@ -60,7 +60,7 @@ goto help
 :build_thirdparty
  IF NOT EXIST %KAA_C_LIB_HEADER_PATH%\NUL (
 	IF NOT EXIST %KAA_CPP_LIB_HEADER_PATH%\NUL (
-		for /R %PROJECT_HOME% %%f in (kaa-client*.tar.gz) do (
+		for /R %PROJECT_HOME% %%f in (kaa-c*.tar.gz) do (
                         set val=%%f
                         set KAA_SDK_TAR_NAME=!val:\=/!
 		)

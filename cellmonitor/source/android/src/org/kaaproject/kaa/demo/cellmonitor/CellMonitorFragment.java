@@ -1,28 +1,21 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.cellmonitor;
 
-import static org.kaaproject.kaa.demo.cellmonitor.CellMonitorApplication.UNDEFINED;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import org.kaaproject.kaa.demo.cellmonitor.event.CellLocationChanged;
-import org.kaaproject.kaa.demo.cellmonitor.event.GpsLocationChanged;
-import org.kaaproject.kaa.demo.cellmonitor.event.LogSent;
-import org.kaaproject.kaa.demo.cellmonitor.event.SignalStrengthChanged;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
@@ -31,26 +24,40 @@ import android.support.v7.app.ActionBar;
 import android.telephony.CellLocation;
 import android.telephony.SignalStrength;
 import android.telephony.gsm.GsmCellLocation;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.kaaproject.kaa.demo.cellmonitor.event.CellLocationChanged;
+import org.kaaproject.kaa.demo.cellmonitor.event.GpsLocationChanged;
+import org.kaaproject.kaa.demo.cellmonitor.event.LogSent;
+import org.kaaproject.kaa.demo.cellmonitor.event.SignalStrengthChanged;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
+import static org.kaaproject.kaa.demo.cellmonitor.CellMonitorApplication.UNDEFINED;
 
 /**
  * The implementation of the {@link Fragment} class.
  * Implements common fragment lifecycle functions. Stores references to common application resources.
  * Provides a view with the information about current GSM cell location, signal strength and phone GPS location.
- * Displays current statistics about logs sent to the Kaa cluster.   
+ * Displays current statistics about logs sent to the Kaa cluster.
  */
 public class CellMonitorFragment extends Fragment {
 
+    private static final String TAG = CellMonitorFragment.class.getSimpleName();
     private CellMonitorActivity mActivity;
     private CellMonitorApplication mApplication;
     private ActionBar mActionBar;
-    
-    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
     private Calendar mCalendar = Calendar.getInstance();
-    
+
     private TextView mNetworkOperatorValue;
     private TextView mNetworkOperatorNameValue;
     private TextView mGsmCellIdValue;
@@ -59,27 +66,15 @@ public class CellMonitorFragment extends Fragment {
     private TextView mGpsLocationValue;
     private TextView mLastLogTimeValue;
     private TextView mSentLogCountValue;
-    
-    public CellMonitorFragment() {
-        super();
-    }
-    
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-    
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-    
+    private TextView mCollectedLogCountValue;
+    private LinearLayout mNoInternetConnection;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cell_monitor, container,
                 false);
-        
+
         mNetworkOperatorValue = (TextView) rootView.findViewById(R.id.networkOperatorValue);
         mNetworkOperatorNameValue = (TextView) rootView.findViewById(R.id.networkOperatorNameValue);
         mGsmCellIdValue = (TextView) rootView.findViewById(R.id.gsmCellIdValue);
@@ -87,39 +82,41 @@ public class CellMonitorFragment extends Fragment {
         mGsmSignalStrengthValue = (TextView) rootView.findViewById(R.id.gsmSignalStrengthValue);
         mGpsLocationValue = (TextView) rootView.findViewById(R.id.gpsLocationValue);
         mLastLogTimeValue = (TextView) rootView.findViewById(R.id.lastLogTimeValue);
+        mCollectedLogCountValue = (TextView) rootView.findViewById(R.id.logsCollectedValue);
         mSentLogCountValue = (TextView) rootView.findViewById(R.id.logsSentValue);
-        
+        mNoInternetConnection = (LinearLayout) rootView.findViewById(R.id.noInternetConnection);
+
         updateAllView();
-        
+
         return rootView;
     }
-    
+
     private void updateAllView() {
         String networkOperator = mApplication.getTelephonyManager().getNetworkOperator();
-        if (networkOperator != null) {
+        if (!TextUtils.isEmpty(networkOperator)) {
             mNetworkOperatorValue.setText(networkOperator);
         } else {
             mNetworkOperatorValue.setText(R.string.unavailable);
         }
         String networkOperatorName = mApplication.getTelephonyManager().getNetworkOperatorName();
-        if (networkOperatorName != null) {
+        if (!TextUtils.isEmpty(networkOperatorName)) {
             mNetworkOperatorNameValue.setText(networkOperatorName);
         } else {
             mNetworkOperatorNameValue.setText(R.string.unavailable);
         }
-        
+
         updateGsmCellLocation();
         updateGsmSignalStrength();
         updateGpsLocation();
         updateSentLogs();
     }
-    
+
     private void updateGsmCellLocation() {
         int cid = UNDEFINED;
         int lac = UNDEFINED;
         CellLocation cellLocation = mApplication.getCellLocation();
         if (cellLocation != null && cellLocation instanceof GsmCellLocation) {
-            GsmCellLocation gsmCellLocation = (GsmCellLocation)cellLocation;
+            GsmCellLocation gsmCellLocation = (GsmCellLocation) cellLocation;
             cid = gsmCellLocation.getCid();
             lac = gsmCellLocation.getLac();
         }
@@ -134,7 +131,7 @@ public class CellMonitorFragment extends Fragment {
             mGsmLacValue.setText(R.string.unavailable);
         }
     }
-    
+
     private void updateGsmSignalStrength() {
         int gsmSignalStrength = UNDEFINED;
         SignalStrength signalStrength = mApplication.getSignalStrength();
@@ -147,18 +144,18 @@ public class CellMonitorFragment extends Fragment {
             mGsmSignalStrengthValue.setText(R.string.unavailable);
         }
     }
-    
+
     private void updateGpsLocation() {
         Location gpsLocation = mApplication.getGpsLocation();
         if (gpsLocation != null) {
             double latitude = gpsLocation.getLatitude();
             double longitude = gpsLocation.getLongitude();
-            mGpsLocationValue.setText(String.valueOf(latitude) + ", " + longitude);
+            mGpsLocationValue.setText(String.format(getString(R.string.location_value), String.valueOf(latitude), String.valueOf(longitude)));
         } else {
             mGpsLocationValue.setText(R.string.unavailable);
         }
     }
-    
+
     private void updateSentLogs() {
         long lastLogTime = mApplication.getLastLogTime();
         if (lastLogTime > 0) {
@@ -167,25 +164,26 @@ public class CellMonitorFragment extends Fragment {
         } else {
             mLastLogTimeValue.setText(R.string.unavailable);
         }
+        mCollectedLogCountValue.setText(String.valueOf(mApplication.getCollectedLogCount()));
         mSentLogCountValue.setText(String.valueOf(mApplication.getSentLogCount()));
     }
-    
+
     public void onEventMainThread(CellLocationChanged cellLocationChanged) {
         updateGsmCellLocation();
     }
-    
+
     public void onEventMainThread(SignalStrengthChanged signalStrengthChanged) {
         updateGsmSignalStrength();
     }
-    
+
     public void onEventMainThread(GpsLocationChanged gpsLocationChanged) {
         updateGpsLocation();
     }
-    
+
     public void onEventMainThread(LogSent logSent) {
         updateSentLogs();
     }
-    
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -195,7 +193,7 @@ public class CellMonitorFragment extends Fragment {
             mApplication = mActivity.getCellMonitorApplication();
         }
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
@@ -209,8 +207,14 @@ public class CellMonitorFragment extends Fragment {
         if (!mApplication.getEventBus().isRegistered(this)) {
             mApplication.getEventBus().register(this);
         }
+
+        getWarningForNoInternet();
+
+        if (!Utils.isLocationEnabled(getActivity())) {
+            Utils.getLocationDialog(getActivity()).show();
+        }
     }
-    
+
     @Override
     public void onPause() {
         super.onPause();
@@ -218,5 +222,13 @@ public class CellMonitorFragment extends Fragment {
             mApplication.getEventBus().unregister(this);
         }
     }
-    
+
+    private void getWarningForNoInternet() {
+        if (!Utils.isOnline(getActivity())) {
+            mNoInternetConnection.setVisibility(View.VISIBLE);
+        } else {
+            mNoInternetConnection.setVisibility(View.GONE);
+        }
+    }
+
 }

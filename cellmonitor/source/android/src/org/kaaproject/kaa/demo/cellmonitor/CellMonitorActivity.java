@@ -29,8 +29,10 @@ public class CellMonitorActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cell_monitor);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new CellMonitorFragment()).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, new CellMonitorFragment())
+                    .commit();
         }
     }
     

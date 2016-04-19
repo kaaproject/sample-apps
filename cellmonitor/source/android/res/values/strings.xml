@@ -31,5 +31,12 @@
     <string name="last_log_time">Last log time:</string>
     <string name="logs_sent">Sent log count:</string>
     <string name="unavailable">Unavailable</string>
+    <string name="you_have_no_internet_connection">You have no internet connection</string>
+    <string name="location_value">%1$s, %2$s</string>
+    <string name="logs_collected">Collected log count</string>
+    <string name="enable_gps">Enable GPS</string>
+    <string name="turn_on_location_text">Turn on location services to allow to determine your location</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings">Settings</string>
 
 </resources>

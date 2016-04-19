@@ -1,34 +1,20 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.cellmonitor;
-
-import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
-import org.kaaproject.kaa.client.Kaa;
-import org.kaaproject.kaa.client.KaaClient;
-import org.kaaproject.kaa.client.KaaClientPlatformContext;
-import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
-import org.kaaproject.kaa.client.logging.*;
-import org.kaaproject.kaa.common.endpoint.gen.LogDeliveryErrorCode;
-import org.kaaproject.kaa.demo.cellmonitor.event.CellLocationChanged;
-import org.kaaproject.kaa.demo.cellmonitor.event.GpsLocationChanged;
-import org.kaaproject.kaa.demo.cellmonitor.event.LogSent;
-import org.kaaproject.kaa.demo.cellmonitor.event.SignalStrengthChanged;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.app.Application;
 import android.content.Context;
@@ -42,9 +28,27 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
-import de.greenrobot.event.EventBus;
 
-import java.lang.Override;
+import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
+import org.kaaproject.kaa.client.Kaa;
+import org.kaaproject.kaa.client.KaaClient;
+import org.kaaproject.kaa.client.KaaClientPlatformContext;
+import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
+import org.kaaproject.kaa.client.logging.BucketInfo;
+import org.kaaproject.kaa.client.logging.LogDeliveryListener;
+import org.kaaproject.kaa.client.logging.LogFailoverCommand;
+import org.kaaproject.kaa.client.logging.LogStorageStatus;
+import org.kaaproject.kaa.client.logging.LogUploadStrategy;
+import org.kaaproject.kaa.client.logging.LogUploadStrategyDecision;
+import org.kaaproject.kaa.common.endpoint.gen.LogDeliveryErrorCode;
+import org.kaaproject.kaa.demo.cellmonitor.event.CellLocationChanged;
+import org.kaaproject.kaa.demo.cellmonitor.event.GpsLocationChanged;
+import org.kaaproject.kaa.demo.cellmonitor.event.LogSent;
+import org.kaaproject.kaa.demo.cellmonitor.event.SignalStrengthChanged;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * The implementation of the base {@link Application} class. Performs initialization of the
@@ -62,6 +66,7 @@ public class CellMonitorApplication extends Application {
     public static final int TIMEOUT_PERIOD = 100;
     public static final int UPLOAD_CHECK_PERIOD = 30;
     public static final int UNDEFINED = -1;
+    private static final String TAG = CellMonitorApplication.class.getSimpleName();
 
     private EventBus mEventBus;
     private TelephonyManager mTelephonyManager;
@@ -74,6 +79,7 @@ public class CellMonitorApplication extends Application {
     private Location mGpsLocation;
 
     private int mSentLogCount;
+    private int mCollectedLogCount = 1;
     private long mLastLogTime;
 
     private KaaClient mClient;
@@ -86,12 +92,9 @@ public class CellMonitorApplication extends Application {
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mCellMonitorPhoneStateListener = new CellMonitorPhoneStateListener();
 
-        mLocationManager = (LocationManager)  getSystemService(LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String bestProvider = mLocationManager.getBestProvider(criteria, false);
-        mGpsLocation = mLocationManager.getLastKnownLocation(bestProvider);
         mGpsLocationListener = new GpsLocationListener();
-        
+        mGpsLocation = getLocation();
+
         /*
          * Initialize the Kaa client using the Android context.
          */
@@ -110,7 +113,7 @@ public class CellMonitorApplication extends Application {
                         LOG.info("Kaa client started");
                     }
                 });
-        
+
         /*
          * Define a log upload strategy used by the Kaa client for logs delivery.
          */
@@ -143,7 +146,6 @@ public class CellMonitorApplication extends Application {
                 return TIMEOUT_PERIOD;
             }
 
-
             @Override
             public int getUploadCheckPeriod() {
                 return UPLOAD_CHECK_PERIOD;
@@ -156,7 +158,8 @@ public class CellMonitorApplication extends Application {
         mClient.setLogDeliveryListener(new LogDeliveryListener() {
             @Override
             public void onLogDeliverySuccess(BucketInfo bucketInfo) {
-                LOG.trace("Log with bucketId: " + bucketInfo.getBucketId() + " was successfully uploaded");
+                LOG.error("Log with bucketId: " + bucketInfo.getBucketId() + " was successfully uploaded");
+                mSentLogCount = bucketInfo.getBucketId() + 1;
             }
 
             @Override
@@ -175,6 +178,27 @@ public class CellMonitorApplication extends Application {
          */
         mClient.start();
 
+    }
+
+    public Location getLocation() {
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Location bestLocation = null;
+        Location lastKnownLocation = null;
+
+        for (String provider : mLocationManager.getAllProviders()) {
+            Location location = mLocationManager.getLastKnownLocation(provider);
+            if (location == null) {
+                continue;
+            }
+            if (bestLocation == null || location.getAccuracy() < bestLocation.getAccuracy()) {
+                bestLocation = location;
+            }
+        }
+
+        if (bestLocation != null)
+            lastKnownLocation = bestLocation;
+
+        return lastKnownLocation;
     }
 
     public void pause() {
@@ -219,7 +243,7 @@ public class CellMonitorApplication extends Application {
     private void sendLog() {
         if (mKaaStarted) {
 
-            mSentLogCount++;
+            mCollectedLogCount++;
             mLastLogTime = System.currentTimeMillis();
 
             /*
@@ -239,7 +263,7 @@ public class CellMonitorApplication extends Application {
             int lac = UNDEFINED;
 
             if (mCellLocation != null && mCellLocation instanceof GsmCellLocation) {
-                GsmCellLocation gsmCellLocation = (GsmCellLocation)mCellLocation;
+                GsmCellLocation gsmCellLocation = (GsmCellLocation) mCellLocation;
                 cid = gsmCellLocation.getCid();
                 lac = gsmCellLocation.getLac();
             }
@@ -300,11 +324,14 @@ public class CellMonitorApplication extends Application {
         return mLastLogTime;
     }
 
+    public int getCollectedLogCount() {
+        return mCollectedLogCount;
+    }
+
     private class CellMonitorPhoneStateListener extends PhoneStateListener {
 
         @Override
         public void onCellLocationChanged(CellLocation location) {
-            super.onCellLocationChanged(location);
             mCellLocation = location;
             sendLog();
             mEventBus.post(new CellLocationChanged());
@@ -313,7 +340,6 @@ public class CellMonitorApplication extends Application {
 
         @Override
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            super.onSignalStrengthsChanged(signalStrength);
             mSignalStrength = signalStrength;
             sendLog();
             mEventBus.post(new SignalStrengthChanged());
@@ -332,13 +358,15 @@ public class CellMonitorApplication extends Application {
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
 
         @Override
-        public void onProviderEnabled(String provider) {}
+        public void onProviderEnabled(String provider) {
+        }
 
         @Override
-        public void onProviderDisabled(String provider) {}
-
+        public void onProviderDisabled(String provider) {
+        }
     }
 }

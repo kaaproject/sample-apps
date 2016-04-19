@@ -15,7 +15,8 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <Kaa/Kaa.h>
+
+@protocol KaaClient;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

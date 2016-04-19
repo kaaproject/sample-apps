@@ -15,7 +15,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <Kaa/Kaa.h>
+
+@protocol KaaClientStateDelegate;
+@protocol UserAttachDelegate;
+@protocol KaaClient;
+@protocol RemoteControlECFDelegate;
 
 @interface ConcreteStateDelegate : NSObject <KaaClientStateDelegate>
 
@@ -27,7 +31,7 @@
 
 + (id<KaaClient>)getClient;
 - (void)attachUser;
-+ (void)setUpEventDelegate:(id <RemoteControlECFDelegate>)delegate;
++ (void)setUpEventDelegate:(id<RemoteControlECFDelegate>)delegate;
 + (void)sendDeviceInfoRequestToAll;
 
 @end

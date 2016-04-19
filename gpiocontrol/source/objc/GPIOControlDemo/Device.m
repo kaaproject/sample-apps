@@ -15,7 +15,8 @@
  */
 
 #import "Device.h"
-#import <Kaa/Kaa.h>
+
+@import Kaa;
 
 @implementation Device
 

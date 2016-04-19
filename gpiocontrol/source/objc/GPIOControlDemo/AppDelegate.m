@@ -17,6 +17,8 @@
 #import "AppDelegate.h"
 #import "KaaProvider.h"
 
+@import Kaa;
+
 @interface AppDelegate ()
 
 @end

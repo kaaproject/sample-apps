@@ -68,7 +68,8 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("city_guide.avsc"));
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         
-        CTLSchemaDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("city_guide_profile.avsc"), cityGuideApplication.getTenantId(), cityGuideApplication.getId());
+        CTLSchemaDto profileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("city_guide_profile.avsc"), cityGuideApplication.getTenantId(),
+                cityGuideApplication.getApplicationToken());
         
         EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(cityGuideApplication.getId());
@@ -80,7 +81,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setProfileSchemaVersion(profileSchema.getVersion());
         
         EndpointGroupDto baseEndpointGroup = null;
-        List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(cityGuideApplication.getId());
+        List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(cityGuideApplication.getApplicationToken());
         if (endpointGroups.size() == 1 && endpointGroups.get(0).getWeight() == 0) {
             baseEndpointGroup = endpointGroups.get(0);
         }

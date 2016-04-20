@@ -195,7 +195,7 @@ public class TwitterMonitor implements ConfigurationListener {
     private static NotificationSchemaDto fetchNotificationSchema(AdminClient adminClient, ApplicationDto appDto,
             KaaClientConfiguration kaaClientConfiguration) throws Exception {
         int schemaVersion = kaaClientConfiguration.getNfSchemaVersion();
-        for (NotificationSchemaDto schemaDto : adminClient.getNotificationSchemas(appDto.getId())) {
+        for (NotificationSchemaDto schemaDto : adminClient.getNotificationSchemasByAppToken(appDto.getApplicationToken())) {
             if (schemaDto.getMajorVersion() == schemaVersion) {
                 return schemaDto;
             }
@@ -206,7 +206,7 @@ public class TwitterMonitor implements ConfigurationListener {
     private static TopicDto fetchNotificationTopic(AdminClient adminClient, ApplicationDto appDto,
             KaaClientConfiguration kaaClientConfiguration) throws Exception {
         String topicName = kaaClientConfiguration.getTopicName();
-        for (TopicDto topicDto : adminClient.getTopics(appDto.getId())) {
+        for (TopicDto topicDto : adminClient.getTopicsByApplicationToken(appDto.getApplicationToken())) {
             if (topicDto.getName().equalsIgnoreCase(topicName)) {
                 return topicDto;
             }

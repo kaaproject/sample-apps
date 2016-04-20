@@ -136,7 +136,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 
         EndpointGroupDto baseEndpointGroup = null;
-        List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(connectedCarApplication.getId());
+        List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(connectedCarApplication.getApplicationToken());
         if (endpointGroups.size() == 1 && endpointGroups.get(0).getWeight() == 0) {
             baseEndpointGroup = endpointGroups.get(0);
         }

@@ -72,7 +72,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;
-        List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(twitterMonitorApplication.getId());
+        List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(twitterMonitorApplication.getApplicationToken());
         if (endpointGroups.size() == 1 && endpointGroups.get(0).getWeight() == 0) {
             baseEndpointGroup = endpointGroups.get(0);
         }
@@ -104,7 +104,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         String twitterBoardAppToken = twitterBoardApplication.getApplicationToken();
         logger.info("Twitter board app token was gotten: [{}]", twitterBoardAppToken);
         logger.info("Getting twitter board notification...");
-        List<NotificationSchemaDto> notificationSchemas = client.getNotificationSchemas(twitterBoardApplication.getId());
+        List<NotificationSchemaDto> notificationSchemas = client.getNotificationSchemasByAppToken(twitterBoardApplication.getApplicationToken());
         logger.info("All available notification schemas for twitter board application: [{}]", notificationSchemas);
         NotificationSchemaDto twitterBoardNotificationSchema = getTwitterBoardNotificationSchema(notificationSchemas);
         Integer twitterBoardNfSchemaVersion = twitterBoardNotificationSchema.getVersion();

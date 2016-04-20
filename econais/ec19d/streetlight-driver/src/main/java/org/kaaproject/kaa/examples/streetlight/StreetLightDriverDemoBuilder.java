@@ -62,7 +62,8 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
 
         logger.info("Creating profile schema...");
         
-        CTLSchemaDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profile.avsc"), streetLightApplication.getTenantId(), streetLightApplication.getId());
+        CTLSchemaDto profileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("profile.avsc"), streetLightApplication.getTenantId(),
+                streetLightApplication.getApplicationToken());
         
         EndpointProfileSchemaDto profileSchemaDto = new EndpointProfileSchemaDto();
         profileSchemaDto.setApplicationId(streetLightApplication.getId());

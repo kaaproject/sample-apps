@@ -127,18 +127,18 @@ public class AdminClientManager {
     }
 
     /**
-     * Get all endpoint groups associated with given application Id
+     * Get all endpoint groups associated with given application Token
      * 
-     * @param applicationId
-     *            the application Id
+     * @param applicationToken
+     *            the application Token
      * @return list of endpoint groups
      */
-    public List<EndpointGroupDto> getEndpointGroups(String applicationId) {
+    public List<EndpointGroupDto> getEndpointGroups(String applicationToken) {
         checkAuthorizationAndLogin();
 
         List<EndpointGroupDto> endpointGroups = null;
         try {
-            endpointGroups = adminClient.getEndpointGroups(applicationId);
+            endpointGroups = adminClient.getEndpointGroupsByAppToken(applicationToken);
         } catch (Exception e) {
             LOG.error("Exception has occurred: " + e.getMessage());
         }
@@ -179,7 +179,7 @@ public class AdminClientManager {
             return null;
         }
 
-        return getEndpointGroups(applicationDto.getId());
+        return getEndpointGroups(applicationDto.getApplicationToken());
     }
 
     /**

@@ -67,7 +67,7 @@ public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
         logger.info("Configuration schema was created.");
 
         EndpointGroupDto baseEndpointGroup = null;
-        List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(powerPlantAndroidApplciation.getId());
+        List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(powerPlantAndroidApplciation.getApplicationToken());
         if (endpointGroups.size() == 1 && endpointGroups.get(0).getWeight() == 0) {
             baseEndpointGroup = endpointGroups.get(0);
         }

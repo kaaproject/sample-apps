@@ -25,6 +25,10 @@
     {
       "name":"message",
       "type":"string"
+    },
+    {
+      "name" : "timeStamp",
+      "type" : "long"
     }
   ]
 }

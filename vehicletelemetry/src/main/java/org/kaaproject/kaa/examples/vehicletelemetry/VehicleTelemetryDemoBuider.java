@@ -59,7 +59,8 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        CTLSchemaDto profileCtlSchema = client.saveCTLSchema(getResourceAsString("profileSchema.json"), vehicleTelemetryApplication.getTenantId(), vehicleTelemetryApplication.getId());
+        CTLSchemaDto profileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("profileSchema.json"), vehicleTelemetryApplication.getTenantId(),
+                vehicleTelemetryApplication.getApplicationToken());
 
         EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(vehicleTelemetryApplication.getId());

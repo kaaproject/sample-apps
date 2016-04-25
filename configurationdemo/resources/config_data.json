@@ -13,12 +13,12 @@
       },
       {
         "label":"Kaa docs",
-        "url":"https://docs.kaaproject.org/display/KAA/Kaa+IoT+Platform+Home",
+        "url":"http://docs.kaaproject.org/display/KAA/Kaa+IoT+Platform+Home",
         "__uuid":null
       },
       {
         "label":"Kaa configuration design reference",
-        "url":"https://docs.kaaproject.org/display/KAA/Configuration",
+        "url":"http://docs.kaaproject.org/display/KAA/Configuration",
         "__uuid":null
       }
     ]

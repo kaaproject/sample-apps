@@ -96,6 +96,6 @@ message(STATUS "WiFi Pass: ${WIFI_PASSWORD}")
 target_compile_definitions(target_support
         PUBLIC
         -DWIFI_SSID="${WIFI_SSID}"
-        -DWIFI_PASSWORD="${WIFI_PASSWORD}")
-
+        -DWIFI_PASSWORD="${WIFI_PASSWORD}"
+        -DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
 

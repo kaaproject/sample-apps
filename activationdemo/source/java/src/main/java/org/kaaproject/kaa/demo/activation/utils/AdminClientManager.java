@@ -90,12 +90,12 @@ public class AdminClientManager {
                 publicKey);
         adminClient.provisionRegistration(getApplicationByName(applicationName).getApplicationToken(), credentialsDto
                 .getId(), 1, DeviceState.toJsonString(true));
-        LOG.info("APP TOKEN: {}", getApplicationByName(applicationName).getApplicationToken());
+        LOG.debug("APP TOKEN: {}", getApplicationByName(applicationName).getApplicationToken());
         LOG.info("Credentials with ID={} are now in status: {}", credentialsDto.getId(), credentialsDto.getStatus());
     }
 
     public void revokeCredentials(String applicationName, String credentialsId){
-        LOG.info("APP TOKEN: {}", getApplicationByName(applicationName).getApplicationToken());
+        LOG.debug("APP TOKEN: {}", getApplicationByName(applicationName).getApplicationToken());
         adminClient.revokeCredentials(getApplicationByName(applicationName).getApplicationToken(), credentialsId);
         LOG.info("Credentials revoked.");
     }

@@ -16,21 +16,20 @@
 
 package org.kaaproject.kaa.demo.activation;
 
-import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
-import org.kaaproject.kaa.client.Kaa;
-import org.kaaproject.kaa.client.KaaClient;
-import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
+import org.kaaproject.kaa.client.*;
 import org.kaaproject.kaa.client.channel.IPTransportInfo;
 import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
 import org.kaaproject.kaa.client.configuration.base.SimpleConfigurationStorage;
+import org.kaaproject.kaa.client.profile.ProfileContainer;
 import org.kaaproject.kaa.common.TransportType;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.EndpointProfileDto;
 import org.kaaproject.kaa.demo.activation.model.DeviceState;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.kaaproject.kaa.demo.activation.utils.AdminClientManager;
 import org.kaaproject.kaa.demo.activation.utils.Utils;
+import org.kaaproject.kaa.schema.system.EmptyData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Base64;
 import java.util.HashMap;
@@ -54,29 +53,42 @@ public class ActivationDemo {
             LOG.info("Possible options:");
             LOG.info(" java -jar ActivationDemo.jar client");
             LOG.info(" java -jar ActivationDemo.jar admin host [port]");
+            LOG.info(" java -jar ActivationDemo.jar developer host [port]");
             return;
         }
 
         String mode = args[0];
         switch (mode) {
-        case "admin":
-            if (args.length < 2) {
-            }
-            if (args.length == 2) {
-                AdminClientManager.init(args[1]);
-            } else if (args.length == 3) {
-                AdminClientManager.init(args[1], Integer.valueOf(args[2]));
-            } else {
-                LOG.info("ip/host is not specified or address is invalid");
-                return;
-            }
-            useAdminClient();
-            break;
-        case "client":
-            useKaaClient();
-            break;
-        default:
-            LOG.info("Invalid parameters. Please specify 'client' or 'admin'");
+            case "developer":
+                if (args.length < 2) {
+                }
+                if (args.length == 2) {
+                    AdminClientManager.init(args[1]);
+                } else if (args.length == 3) {
+                    AdminClientManager.init(args[1], Integer.valueOf(args[2]));
+                } else {
+                    LOG.info("ip/host is not specified or address is invalid");
+                    return;
+                }
+                useDeveloperClient();
+                break;
+            case "admin":
+                if (args.length < 2) {
+                }
+                if (args.length == 2) {
+                    AdminClientManager.init(args[1], AdminClientManager.UserType.TENANT_ADMIN);
+                } else if (args.length == 3) {
+                    AdminClientManager.init(args[1], Integer.valueOf(args[2]), AdminClientManager.UserType.TENANT_ADMIN);
+                } else {
+                    LOG.info("ip/host is not specified or address is invalid");
+                    return;
+                }
+                useAdminClient();
+            case "client":
+                useKaaClient();
+                break;
+            default:
+                LOG.info("Invalid parameters. Please specify 'client' or 'admin' or 'developer'");
 
         }
     }
@@ -100,7 +112,12 @@ public class ActivationDemo {
                 LOG.info("Device state: " + (config.getActive() ? "active" : "inactive"));
             }
         });
-
+        kaaClient.setProfileContainer(new ProfileContainer() {
+                        @Override
+                        public EmptyData getProfile() {
+                                return new EmptyData();
+                            }
+                    });
         /*
          * Persist configuration in a local storage to avoid downloading it each
          * time the Kaa client is started.
@@ -112,6 +129,7 @@ public class ActivationDemo {
          * it is updated.
          */
         kaaClient.addConfigurationListener(new ConfigurationListener() {
+            @Override
             public void onConfigurationUpdate(DeviceType deviceType) {
                 LOG.info("Configuration was updated. New device state: " + (deviceType.getActive() ? "active" : "inactive"));
             }
@@ -130,13 +148,34 @@ public class ActivationDemo {
         kaaClient.stop();
     }
 
-    private static void useAdminClient() {
+    private static void useAdminClient(){
+        LOG.info("Choose action by entering corresponding number:");
+        while (true){
+            LOG.info("\n1. Generate and provision endpoint credentials.\n2. Revoke endpoint " +
+                    "credentials\n3. Exit");
+            switch(Utils.getUserInput()){
+                case "1":
+                    generateAndProvisionKeys();
+                    break;
+                case "2":
+                    revokeCredentials();
+                    break;
+                default:
+                    System.exit(0);
+            }
+        }
+    }
+
+    private static void useDeveloperClient() {
+
         Map<String, EndpointProfileDto> endpointProfiles = retrieveEndpointProfiles();
         if (endpointProfiles.isEmpty()) {
             LOG.info("There is no endpoints registered!");
             return;
         }
         printAllEndpointProfiles(endpointProfiles);
+
+
 
         for (;;) {
             LOG.info("Specify endpoint profile id# you want to activate/deactivate or print 'exit' to exit");
@@ -154,6 +193,20 @@ public class ActivationDemo {
             endpointProfiles = retrieveEndpointProfiles();
             printAllEndpointProfiles(endpointProfiles);
         }
+    }
+
+    private static void generateAndProvisionKeys(){
+        AdminClientManager clientManager = AdminClientManager.instance();
+        LOG.info("Going to generate and provision credentials");
+        clientManager.provideCredentials(APPLICATION_NAME, clientManager.generateKeyPair().getPublic().getEncoded());
+    }
+
+    private static void revokeCredentials(){
+        AdminClientManager clientManager = AdminClientManager.instance();
+        LOG.info("Enter ID of credentials that needs to be revoked:");
+        String credentialsId = Utils.getUserInput();
+        LOG.info("Going to revoke credentials");
+        clientManager.revokeCredentials(APPLICATION_NAME, credentialsId);
     }
 
     /**

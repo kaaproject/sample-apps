@@ -26,23 +26,43 @@
         <description>Endpoint activation application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
         <details>
             <![CDATA[
-This Endpoint activation app demonstrates the use of server-side endpoint profile feature. It allows to activate/deactivate device based on the endpoint ID using Kaa REST API.
+This Endpoint activation app demonstrates the use of server-side endpoint profile and device management features. It allows to activate/deactivate device based on the endpoint ID and work with endpoint credentials using Kaa REST API.
 
 <h2>Installation</h2>
-Download the jar file to your desktop by clicking the "Binary" button on the left. Make sure that you have Java runtime installed. Application can run in two modes: client and admin. The mode is specified by command line arguments.<br/>
+Download the jar file to your desktop by clicking the "Binary" button on the left. Make sure that you have Java runtime installed. Application can run in three modes: client, admin and developer. The mode is specified by command line arguments.<br/>
 To run in the "admin" mode, use the following command in the console:
 <pre>
-$ java -jar ActivationDemo.jar admin ipAddress
+$ java -jar ActivationDemo.jar admin [ipAddress] [port]
+Example:
+$ java -jar ActivationDemo.jar admin localhost 8080
 </pre>
 Where ipAddress is the address of the Kaa node, where the administrative REST API is deployed.<br/><br/>
 To run in the "client" mode, use the following command in the console:
 <pre>
 $ java -jar ActivationDemo.jar client
 </pre>
+To run in the "developer" mode, use the following command in the console:
+<pre>
+$ java -jar ActivationDemo.jar developer [ipAddress] [port]
+</pre>
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. When using the "Activation Demo" app in "admin" mode you will be able
-to activate/deactivate any endoint associated with Activation app. Endpoint activation and deactivation are performed by updating server profile using REST API.<br/><br/>
-"Activation Demo" app in "client" mode creates and registers one Kaa endpoint (per application instance). In this mode app displays the current state of the endpoint (active or inactive). Once the activation/deactivation is performed via the "admin" application, your endpoint will be served with the new configuration data according to the server-side endpoint profile change.<br/><br/>
+Make sure that the Kaa Sandbox is up and running.
+"Activation Demo" consists of the next modes:
+
+1) In "admin" mode you will be able to do credentials provisioning (Device Management feature), revocation and registration. Before using "developer" or "client" mode, you need to create and register endpoint credentials via Kaa REST API.
+Run app with the next command:
+<pre>
+$ java -jar ActivationDemo.jar admin [kaa_hostname] 8080
+</pre>
+Then choose the first menu item by typing "1" and pressing "Enter".
+Exit from application by typing "3" and pressing "Enter".
+Now credentials was created and registered in Kaa. Corresponding "key.private" and "key.public" files are created.
+Starting from now, you can use other modes.
+2) In "developer" mode you will be able
+to activate/deactivate any endpoint associated with Activation app. Endpoint activation and deactivation are performed by updating server profile using REST API.<br/><br/>
+"Activation Demo" app in "client" mode creates and registers one Kaa endpoint (per application instance). In this mode app displays the current state of the endpoint (active or inactive). Once the activation/deactivation is performed via the "developer" application, your endpoint will be served with the new configuration data according to the server-side endpoint profile change.<br/>
+
+<br/>
 
 To understand better how this app works, you should navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of your Sandbox window. Log in as a tenant developer (devuser / devuser123 by default), and go to the "Activation demo" application. Select "Schemas"->"Server-side EP profile". The app uses one schema version, which contains one value: "active" (boolean). The Kaa server uses this value to filter endpoints by their profile contents. Server-side endpoint profiles can be updated either via Admin Console, or via the REST API (which is done by the "Activation app" in the "admin" mode)<br/><br/>
 

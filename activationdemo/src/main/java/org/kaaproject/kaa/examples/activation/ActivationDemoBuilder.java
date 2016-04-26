@@ -51,8 +51,9 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
 
         ApplicationDto activationApplication = new ApplicationDto();
         activationApplication.setName("Endpoint activation demo");
-        activationApplication = client.editApplication(activationApplication);
         activationApplication.setCredentialsServiceName("Internal");
+        activationApplication = client.editApplication(activationApplication);
+
 
         sdkProfileDto.setApplicationId(activationApplication.getId());
         sdkProfileDto.setApplicationToken(activationApplication.getApplicationToken());

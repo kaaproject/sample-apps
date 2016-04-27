@@ -19,10 +19,10 @@ project(C-SDK-sample)
 enable_language(C)
 
 # Target-independent flags.
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Wall -Wextra")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Wall -Wextra -g")
 
 # Our application name.
-set(APP_NAME demo_client)
+set(APP_NAME demo_client.afx)
 
 # Demo executable.
 add_executable(${APP_NAME} src/kaa_demo.c)

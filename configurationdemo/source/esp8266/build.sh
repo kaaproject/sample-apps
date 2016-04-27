@@ -61,7 +61,7 @@ function build_thirdparty {
     then
         cd $KAA_LIB_PATH &&
         mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=0 \
+        cmake -DCMAKE_BUILD_TYPE=MinSizeRel \
               -DKAA_MAX_LOG_LEVEL=4 \
               -DKAA_PLATFORM=esp8266 \
               -DCMAKE_TOOLCHAIN_FILE=../toolchains/esp8266.cmake \

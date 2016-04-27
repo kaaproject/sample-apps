@@ -111,7 +111,7 @@ function build_app {
           -DKAA_PRODUCE_BINARY=$KAA_PRODUCE_BINARY \
           -DWIFI_SSID=$SSID \
           -DWIFI_PASSWORD=$PASSWORD \
-          -DKAA_DEBUG_ENABLED=1 \
+          -DCMAKE_BUILD_TYPE=Debug \
           -DKAA_WITHOUT_EVENTS=1 \
           -DKAA_WITHOUT_LOGGING=1 \
           -DKAA_MAX_LOG_LEVEL=3 \

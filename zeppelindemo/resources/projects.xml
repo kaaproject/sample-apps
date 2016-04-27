@@ -73,12 +73,12 @@ into the zeppelin-env.sh file. <br />
 <pre>
 $ sudo /opt/zeppelin/bin/zeppelin-daemon.sh start
 </pre>
-6. Configure Cassandra log appenders.
+6. Configure Cassandra log appenders.<br />
 Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window.
 Log in as a tenant developer (devuser / devuser123), and navigate to the "Zeppelin data analytics demo" application, then select "Log appenders".
 From here you can manage two log appenders "Panel per row appender" and "Zone per row appender". Update appenders according to your
 Cassandra cluster configuration. Make sure that version of your Cassandra cluster is not higher than 2.2 which Cassandra Zeppelin interpreter
-currently supports.
+currently supports.<br />
 7. On your host PC go to the JZeppelinDataAnalyticsDemo/lib folder and rename kaa-java-ep-sdk-<SDK token>.jar to the kaa-java-ep-sdk.jar. <br />
 8. Go to the JZeppelinDataAnalyticsDemo folder and start Zeppelin data analytics demo by executing command:
 <pre>

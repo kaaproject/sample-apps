@@ -20,7 +20,9 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 
+@import CoreLocation;
 @import CoreTelephony;
+@import Kaa;
 
 static CLLocationManager *locationManager;
 
@@ -55,6 +57,8 @@ static CLLocationManager *locationManager;
     
     [self startUpdatingLocation];
     self.telephoneNetworkManager = [[CTTelephonyNetworkInfo alloc] init];
+
+    NSLog(@"Current thread %@", [[NSThread currentThread] debugDescription]);
     
     /*
      * Initialize the Kaa client using the Platform context.

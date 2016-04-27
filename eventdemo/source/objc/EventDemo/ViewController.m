@@ -15,7 +15,8 @@
  */
 
 #import "ViewController.h"
-#import <Kaa/Kaa.h>
+
+@import Kaa;
 
 #define USER_EXTERNAL_ID    @"user@email.com"
 #define USER_ACCESS_TOKEN   @"token"
@@ -40,7 +41,7 @@
     [self addLogWithText:@"Event demo started"];
     
     //Create a Kaa client with the Kaa default context.
-    self.kaaClient = [Kaa clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
+    self.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     [self.kaaClient setProfileContainer:self];
     
     // Start the Kaa client and connect it to the Kaa server.

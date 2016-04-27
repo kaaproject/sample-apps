@@ -30,7 +30,7 @@ set LIBS_PATH=libs
 set KAA_LIB_PATH=%LIBS_PATH%\kaa
 set KAA_C_LIB_HEADER_PATH=%KAA_LIB_PATH%\src
 set KAA_CPP_LIB_HEADER_PATH=%KAA_LIB_PATH%\kaa
-set KAA_SDK_TAR="kaa-client*.tar.gz"
+set KAA_SDK_TAR="kaa-c*.tar.gz"
 
 set KAA_SDK_TAR_NAME=
 
@@ -60,7 +60,7 @@ goto help
 :build_thirdparty
  IF NOT EXIST %KAA_C_LIB_HEADER_PATH%\NUL (
     IF NOT EXIST %KAA_CPP_LIB_HEADER_PATH%\NUL (
-        for /R %PROJECT_HOME% %%f in (kaa-client*.tar.gz) do (
+        for /R %PROJECT_HOME% %%f in (kaa-c*.tar.gz) do (
                         set val=%%f
                         set KAA_SDK_TAR_NAME=!val:\=/!
         )
@@ -76,7 +76,7 @@ goto help
         md %BUILD_DIR%
         cd %BUILD_DIR%
         cmake -G "NMake Makefiles" ^
-          -DKAA_DEBUG_ENABLED=1 ^
+          -DCMAKE_BUILD_TYPE=Debug ^
               -DKAA_WITHOUT_EVENTS=1 ^
               -DKAA_WITHOUT_CONFIGURATION=1 ^
               -DKAA_WITHOUT_NOTIFICATIONS=1 ^

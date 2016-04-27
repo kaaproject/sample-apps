@@ -51,7 +51,9 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
 
         ApplicationDto activationApplication = new ApplicationDto();
         activationApplication.setName("Endpoint activation demo");
+        activationApplication.setCredentialsServiceName("Internal");
         activationApplication = client.editApplication(activationApplication);
+
 
         sdkProfileDto.setApplicationId(activationApplication.getId());
         sdkProfileDto.setApplicationToken(activationApplication.getApplicationToken());
@@ -69,7 +71,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 
         EndpointGroupDto baseEndpointGroup = null;
-        List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(activationApplication.getId());
+        List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(activationApplication.getApplicationToken());
         if (endpointGroups.size() == 1 && endpointGroups.get(0).getWeight() == 0) {
             baseEndpointGroup = endpointGroups.get(0);
         }
@@ -77,7 +79,8 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
             throw new RuntimeException("Can't get default endpoint group for activation application!");
         }
 
-        CTLSchemaDto serverProfileCtlSchema = client.saveCTLSchema(getResourceAsString("server_profile_schema.avsc"), activationApplication.getTenantId(), activationApplication.getId());
+        CTLSchemaDto serverProfileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("server_profile_schema.avsc"),
+                activationApplication.getTenantId(), activationApplication.getApplicationToken());
 
         ServerProfileSchemaDto serverProfileSchema = new ServerProfileSchemaDto();
         serverProfileSchema.setApplicationId(activationApplication.getId());

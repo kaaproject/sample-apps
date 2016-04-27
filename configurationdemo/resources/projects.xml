@@ -199,7 +199,7 @@ Please note that all the features of Administration UI are also supported by RES
             <![CDATA[
 This bundle contains applications that demonstrates capabilities of the Kaa Configuration subsystem.
 
-Please note that all the features of <a href="https://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="https://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
 
 <h2>What's next?</h2>
 For more background on the Kaa Configuration subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Distributing+data+to+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Configuration">design reference</a> sections.

@@ -36,7 +36,7 @@ using namespace kaa;
 // The following custom strategy uploads every log record as soon as it is created.
 class LogUploadStrategy : public DefaultLogUploadStrategy {
 public:
-    LogUploadStrategy() : DefaultLogUploadStrategy() {}
+    LogUploadStrategy(IKaaClientContext &context) : DefaultLogUploadStrategy(context) {}
 
     virtual LogUploadStrategyDecision isUploadNeeded(ILogStorageStatus& status)
     {
@@ -74,7 +74,7 @@ int main()
     auto kaaClient =  Kaa::newClient();
 
     // Set a custom strategy for uploading logs.
-    kaaClient->setLogUploadStrategy(std::make_shared<LogUploadStrategy>());
+    kaaClient->setLogUploadStrategy(std::make_shared<LogUploadStrategy>(kaaClient->getKaaClientContext()));
 
     // Start the Kaa client and connect it to the Kaa server.
     kaaClient->start();

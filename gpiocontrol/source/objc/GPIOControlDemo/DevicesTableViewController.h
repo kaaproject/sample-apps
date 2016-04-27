@@ -15,7 +15,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <Kaa/Kaa.h>
+
+@protocol ProfileContainer;
+@protocol RemoteControlECFDelegate;
+@protocol OnDetachEndpointOperationDelegate;
+@protocol OnAttachEndpointOperationDelegate;
 
 @interface DevicesTableViewController : UITableViewController <ProfileContainer, RemoteControlECFDelegate, OnDetachEndpointOperationDelegate, OnAttachEndpointOperationDelegate>
 

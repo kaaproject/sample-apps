@@ -36,7 +36,7 @@ LIBS_PATH="libs"
 KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
-KAA_SDK_TAR="kaa-client*.tar.gz"
+KAA_SDK_TAR="kaa-c*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
 
 function select_arch {
@@ -73,7 +73,7 @@ function build_thirdparty {
         chmod 755 ./avrogen.sh &&
         ./avrogen.sh && 
         mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=1 \
+        cmake -DCMAKE_BUILD_TYPE=Debug \
               -DKAA_WITHOUT_EVENTS=1 \
               -DKAA_WITHOUT_CONFIGURATION=1 \
               -DKAA_WITHOUT_NOTIFICATIONS=1 \

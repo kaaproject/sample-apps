@@ -108,7 +108,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
 
         logger.info("Getting base endpoint group");
         EndpointGroupDto baseEndpointGroup = null;
-        List<EndpointGroupDto> endpointGroups = client.getEndpointGroups(notificationApplication.getId());
+        List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(notificationApplication.getApplicationToken());
         if (endpointGroups.size() == 1 && endpointGroups.get(0).getWeight() == 0) {
             baseEndpointGroup = endpointGroups.get(0);
         }

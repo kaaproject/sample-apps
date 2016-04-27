@@ -20,6 +20,7 @@ project (C-SDK-sample)
 enable_language(C)
 
 find_package (OpenSSL REQUIRED)
+find_package (Threads REQUIRED)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
 
@@ -35,4 +36,4 @@ set (SAMPLE_SOURCE_FILES
 )
 
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} kaac crypto wiringPi)
+target_link_libraries(${APP_NAME} kaac crypto wiringPi ${CMAKE_THREAD_LIBS_INIT})

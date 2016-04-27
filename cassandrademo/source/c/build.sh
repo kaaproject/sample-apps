@@ -35,7 +35,7 @@ LIBS_PATH="libs"
 KAA_LIB_PATH="$LIBS_PATH/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
-KAA_SDK_TAR="kaa-client*.tar.gz"
+KAA_SDK_TAR="kaa-c*.tar.gz"
 
 function build_thirdparty {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
@@ -56,7 +56,7 @@ function build_thirdparty {
     then
         cd $KAA_LIB_PATH &&
         mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=1 \
+        cmake -DCMAKE_BUILD_TYPE=Debug \
               -DKAA_WITHOUT_EVENTS=1 \
               -DKAA_WITHOUT_CONFIGURATION=1 \
               -DKAA_WITHOUT_NOTIFICATION=1 \

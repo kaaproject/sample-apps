@@ -14,17 +14,11 @@
 		39B345BD1C11986D00184BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B345B41C11986D00184BE0 /* Main.storyboard */; };
 		39B345BF1C11986D00184BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B345B71C11986D00184BE0 /* main.m */; };
 		39B345C01C11986D00184BE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B345B91C11986D00184BE0 /* ViewController.m */; };
-		B82B6CDA1C1885E600B71A74 /* libKaa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B82B6CC21C18839600B71A74 /* libKaa.a */; };
+		C5E6A6071CC0F0190030707A /* Kaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C51867DA1CBE86A6005165FE /* Kaa.framework */; };
+		C5E6A6161CC101D50030707A /* Kaa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C51867DA1CBE86A6005165FE /* Kaa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B82B6CC11C18839600B71A74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B824A1EB1B1452C50076C753;
-			remoteInfo = libKaa.a;
-		};
 		B82B6CC31C18839600B71A74 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */;
@@ -67,14 +61,41 @@
 			remoteGlobalIDString = 2F9F2BD61CE8A92314B98E03BBAE1DDD;
 			remoteInfo = "Pods-KaaTests";
 		};
-		B82B6CD81C18839F00B71A74 /* PBXContainerItemProxy */ = {
+		C51867D91CBE86A6005165FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5AAD8891CB7DC710046AA91;
+			remoteInfo = Kaa;
+		};
+		C51867E21CBE86A6005165FE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 0F0FFBAFF4293D5A7F4C81464719D20A;
-			remoteInfo = "Pods-libKaa.a";
+			remoteGlobalIDString = 0B2AEF7928285B60CFB19219147BC376;
+			remoteInfo = "Pods-Kaa";
+		};
+		C51867E41CBE86A6005165FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A055D00B899A2917E39015C988A19A2C;
+			remoteInfo = sqlite3;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C51867E91CBE86BA005165FE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C5E6A6161CC101D50030707A /* Kaa.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		39796BF81C157D4E00BF91B2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -97,8 +118,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B82B6CDA1C1885E600B71A74 /* libKaa.a in Frameworks */,
 				39796BF91C157D4E00BF91B2 /* CoreTelephony.framework in Frameworks */,
+				C5E6A6071CC0F0190030707A /* Kaa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +145,7 @@
 		B82B6CBD1C18839600B71A74 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B82B6CC21C18839600B71A74 /* libKaa.a */,
+				C51867DA1CBE86A6005165FE /* Kaa.framework */,
 				B82B6CC41C18839600B71A74 /* KaaTests.xctest */,
 			);
 			name = Products;
@@ -137,8 +158,9 @@
 				B82B6CD11C18839F00B71A74 /* libCocoaLumberjack.a */,
 				B82B6CD31C18839F00B71A74 /* libOCHamcrest.a */,
 				B82B6CD51C18839F00B71A74 /* libOCMockito.a */,
+				C51867E31CBE86A6005165FE /* libPods-Kaa.a */,
 				B82B6CD71C18839F00B71A74 /* libPods-KaaTests.a */,
-				B82B6CD91C18839F00B71A74 /* libPods-libKaa.a.a */,
+				C51867E51CBE86A6005165FE /* libsqlite3.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,6 +194,7 @@
 				B8B9974C1BE3FB9600C0ABCE /* Sources */,
 				B8B9974D1BE3FB9600C0ABCE /* Frameworks */,
 				B8B9974E1BE3FB9600C0ABCE /* Resources */,
+				C51867E91CBE86BA005165FE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -188,12 +211,11 @@
 		B8B997481BE3FB9600C0ABCE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "CYBERVISION INC";
 				TargetAttributes = {
 					B8B9974F1BE3FB9600C0ABCE = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = G8JGASHVD4;
 					};
 				};
 			};
@@ -226,13 +248,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		B82B6CC21C18839600B71A74 /* libKaa.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libKaa.a;
-			remoteRef = B82B6CC11C18839600B71A74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B82B6CC41C18839600B71A74 /* KaaTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -275,11 +290,25 @@
 			remoteRef = B82B6CD61C18839F00B71A74 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B82B6CD91C18839F00B71A74 /* libPods-libKaa.a.a */ = {
+		C51867DA1CBE86A6005165FE /* Kaa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Kaa.framework;
+			remoteRef = C51867D91CBE86A6005165FE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C51867E31CBE86A6005165FE /* libPods-Kaa.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libPods-libKaa.a.a";
-			remoteRef = B82B6CD81C18839F00B71A74 /* PBXContainerItemProxy */;
+			path = "libPods-Kaa.a";
+			remoteRef = C51867E21CBE86A6005165FE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C51867E51CBE86A6005165FE /* libsqlite3.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsqlite3.a;
+			remoteRef = C51867E41CBE86A6005165FE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -334,6 +363,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -377,6 +407,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -415,12 +446,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CellMonitorDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EventDemo;
 				PRODUCT_NAME = CellMonitorDemo;
-				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 			};
 			name = Debug;
 		};
@@ -429,12 +460,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CellMonitorDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EventDemo;
 				PRODUCT_NAME = CellMonitorDemo;
-				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 			};
 			name = Release;
 		};

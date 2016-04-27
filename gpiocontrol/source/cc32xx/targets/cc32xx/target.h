@@ -14,11 +14,24 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.cellmonitor.event;
+// TODO APP-63: this file will be moved to 'common' dir and likely that it will be reviewed
+#ifndef CC32XX_SUPPORT_H_
+#define CC32XX_SUPPORT_H_
 
-/**
- * An event class that is used to notify UI components after a phone GPS location was changed.
+#include "hw_types.h"
+#include "uart_if.h"
+#include "common.h"
+#include "gpio.h"
+#include "gpio_if.h"
+#include "pin.h"
+
+#define demo_printf(msg, ...)   UART_PRINT((msg), ##__VA_ARGS__)
+
+/* Initialises a target. Zero value means success, negative - errors.
+ *
+ * For this particular target this will eventually try to connect to
+ * the WiFi spot using SSID and password supplied during build.
  */
-public class GpsLocationChanged {
+int target_initialise(void);
 
-}
+#endif //CC32XX_SUPPORT_H_

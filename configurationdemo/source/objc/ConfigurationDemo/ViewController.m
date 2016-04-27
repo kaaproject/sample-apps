@@ -15,7 +15,8 @@
  */
 
 #import "ViewController.h"
-#import <Kaa/Kaa.h>
+
+@import Kaa;
 
 @interface ViewController () <KaaClientStateDelegate, ConfigurationDelegate, ProfileContainer>
 
@@ -34,7 +35,7 @@
 
     // Create a Kaa client and add a listener which displays the Kaa client configuration
     // as soon as the Kaa client is started.
-    self.kaaClient = [Kaa clientWithStateDelegate:self];
+    self.kaaClient = [KaaClientFactory clientWithStateDelegate:self];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *configurationPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"savedconfig.cfg"];

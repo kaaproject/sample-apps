@@ -37,7 +37,7 @@ public class KaaRestController {
         AdminClient client = new AdminClient(configuration.getHost(), configuration.getPort());
         client.login(configuration.getLogin(), configuration.getPassword());
         ApplicationDto application = getApplication(client, configuration.getTrafficLightsAppToken());
-        EndpointGroupDto groupAll = getGroupAll(client, application.getId());
+        EndpointGroupDto groupAll = getGroupAll(client, application.getApplicationToken());
         ConfigurationRecordDto currentConfiguration = getConfiguration(client, groupAll.getId(),
                 configuration.getTrafficLightsCfSchemaVersion());
         ConfigurationDto activeConfiguration = currentConfiguration.getActiveConfiguration();
@@ -56,7 +56,7 @@ public class KaaRestController {
         AdminClient client = new AdminClient(configuration.getHost(), configuration.getPort());
         client.login(configuration.getLogin(), configuration.getPassword());
         ApplicationDto application = getApplication(client, configuration.getStreetLightsAppToken());
-        EndpointGroupDto group = getGroupByName(client, application.getId(), "Zone " + zoneId);
+        EndpointGroupDto group = getGroupByName(client, application.getApplicationToken(), "Zone " + zoneId);
         ConfigurationRecordDto currentConfiguration = getConfiguration(client, group.getId(),
                 configuration.getStreetLightsCfSchemaVersion());
         ConfigurationDto activeConfiguration = currentConfiguration.getActiveConfiguration();
@@ -91,8 +91,8 @@ public class KaaRestController {
         throw new IllegalStateException("Application with token " + trafficLightsAppToken + " not found!");
     }
 
-    private EndpointGroupDto getGroupAll(AdminClient client, String applicationId) throws Exception {
-        List<EndpointGroupDto> groups = client.getEndpointGroups(applicationId);
+    private EndpointGroupDto getGroupAll(AdminClient client, String applicationToken) throws Exception {
+        List<EndpointGroupDto> groups = client.getEndpointGroupsByAppToken(applicationToken);
         for (EndpointGroupDto dto : groups) {
             if (dto.getWeight() == 0) {
                 return dto;
@@ -101,8 +101,8 @@ public class KaaRestController {
         throw new IllegalStateException("Endpoint group with weight 0 not found!");
     }
 
-    private EndpointGroupDto getGroupByName(AdminClient client, String applicationId, String name) throws Exception {
-        List<EndpointGroupDto> groups = client.getEndpointGroups(applicationId);
+    private EndpointGroupDto getGroupByName(AdminClient client, String applicationToken, String name) throws Exception {
+        List<EndpointGroupDto> groups = client.getEndpointGroupsByAppToken(applicationToken);
         for (EndpointGroupDto dto : groups) {
             if (dto.getName().equals(name)) {
                 return dto;

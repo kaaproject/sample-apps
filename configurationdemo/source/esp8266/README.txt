@@ -19,9 +19,9 @@ PREFACE
 ************************************
 
 This demo application illustrates configuration feature using the Kaa C SDK.
-To read more about the logging feature visit https://docs.kaaproject.org/display/KAA/Logging.
-To read more about the configuration feature visit https://docs.kaaproject.org/display/KAA/Configuration.
-To read more about the profiling feature visit https://docs.kaaproject.org/display/KAA/Endpoint+profiling.
+To read more about the logging feature visit http://docs.kaaproject.org/display/KAA/Logging.
+To read more about the configuration feature visit http://docs.kaaproject.org/display/KAA/Configuration.
+To read more about the profiling feature visit http://docs.kaaproject.org/display/KAA/Endpoint+profiling.
 
 ************************************
 INSTALLATION
@@ -34,5 +34,5 @@ ABOUT
 ************************************
 
 If you are interested in the Kaa IoT framework and want to read more about it, visit our official site
-http://www.kaaproject.org/. The documentation can be found at https://docs.kaaproject.org/display/KAA/Kaa+IoT+Platform+Home.
+http://www.kaaproject.org/. The documentation can be found at http://docs.kaaproject.org/display/KAA/Kaa+IoT+Platform+Home.
 

@@ -49,7 +49,7 @@ int main()
      */
     kaaClient->start();
 
-    std::list<RecordFuture> futures;
+    std::list<std::pair<RecordFuture, std::size_t>> futurePairs;
 
     // Send LOGS_TO_SEND_COUNT logs in a loop.
     std::size_t logNumber = 0;
@@ -58,18 +58,22 @@ int main()
         logRecord.level = kaa_log::Level::KAA_INFO;
         logRecord.tag = "TAG";
         logRecord.message = "MESSAGE_" + std::to_string(logNumber);
+        logRecord.timeStamp = TimeUtils::getCurrentTimeInMs();
 
-        futures.push_back(std::move(kaaClient->addLogRecord(logRecord)));
+        futurePairs.push_back(std::make_pair(std::move(kaaClient->addLogRecord(logRecord)), logRecord.timeStamp));
         std::cout << "Sent " << logNumber << "th record" << std::endl;
     }
 
-    for (auto& future : futures) {
+    for (auto& pair : futurePairs) {
         try {
-            RecordInfo recordInfo = future.get();
+            RecordInfo recordInfo = pair.first.get();
             BucketInfo bucketInfo = recordInfo.getBucketInfo();
 
+            std::size_t timeSpent = (recordInfo.getRecordAddedTimestampMs() - pair.second)
+                                        + recordInfo.getRecordDeliveryTimeMs();
+
             std::cout << "Received log record delivery info. Bucket Id [" <<  bucketInfo.getBucketId() << "]. "
-                      << "Record delivery time [" << recordInfo.getRecordDeliveryTimeMs() << " ms]." << std::endl;
+                      << "Record delivery time [" << timeSpent << " ms]." << std::endl;
         } catch (std::exception& e) {
             std::cout << "Exception was caught while waiting for callback future" << e.what();
         }

@@ -25,30 +25,10 @@
 
 #include <kaa/Kaa.hpp>
 #include <kaa/log/DefaultLogUploadStrategy.hpp>
+#include <kaa/log/strategies/RecordCountLogUploadStrategy.hpp>
 #include <kaa/log/ILogStorageStatus.hpp>
 
 using namespace kaa;
-
-
-
-// The default strategy uploads logs after either a threshold logs count
-// or a threshold logs size has been reached.
-// The following custom strategy uploads every log record as soon as it is created.
-// Set a custom strategy for uploading logs.
-class LogUploadStrategy : public DefaultLogUploadStrategy {
-public:
-    LogUploadStrategy() : DefaultLogUploadStrategy() {}
-
-    virtual LogUploadStrategyDecision isUploadNeeded(ILogStorageStatus& status)
-    {
-         if (status.getRecordsCount() >= 1) {
-            return LogUploadStrategyDecision::UPLOAD;
-        }
-        return LogUploadStrategyDecision::NOOP;
-    }
-};
-
-
 
 double getRandomDouble(int max) {
     double r = (double) rand() / RAND_MAX;
@@ -72,7 +52,7 @@ int main()
     auto kaaClient =  Kaa::newClient();
 
     // Set a custom strategy for uploading logs.
-    kaaClient->setLogUploadStrategy(std::make_shared<LogUploadStrategy>());
+    kaaClient->setLogUploadStrategy(std::make_shared<RecordCountLogUploadStrategy>(1, kaaClient->getKaaClientContext()));
 
     // Start the Kaa client and connect it to the Kaa server.
     kaaClient->start();

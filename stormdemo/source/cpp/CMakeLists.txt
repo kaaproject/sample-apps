@@ -39,7 +39,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L/usr/local/lib -std=gnu++11 -stdlib=libc++")
 endif()
 
-find_package (Boost 1.54 REQUIRED COMPONENTS log system)
+find_package (Boost 1.54 REQUIRED COMPONENTS log system thread)
 find_package (Avro REQUIRED)
 find_package (Botan REQUIRED)
 

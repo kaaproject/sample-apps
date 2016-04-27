@@ -75,6 +75,7 @@ function build_thirdparty {
               -DKAA_WITHOUT_NOTIFICATION=1 \
               -DKAA_WITHOUT_LOGGING=1 \
               -DKAA_WITHOUT_CONFIGURATION=1 \
+              -DCMAKE_C_FLAGS='-mlongcalls' \
               ..
     fi
 

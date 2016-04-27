@@ -56,7 +56,7 @@ function build_thirdparty {
     then
         cd $KAA_LIB_PATH &&
         mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=1 \
+        cmake -DCMAKE_BUILD_TYPE=Debug \
               -DKAA_WITHOUT_EVENTS=1 \
               -DKAA_WITHOUT_CONFIGURATION=1 \
               -DKAA_WITHOUT_NOTIFICATION=1 \

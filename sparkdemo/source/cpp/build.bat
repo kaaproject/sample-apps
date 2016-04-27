@@ -76,7 +76,7 @@ goto help
         md %BUILD_DIR%
         cd %BUILD_DIR%
         cmake -G "NMake Makefiles" ^
-          -DKAA_DEBUG_ENABLED=1 ^
+          -DCMAKE_BUILD_TYPE=Debug ^
               -DKAA_WITHOUT_EVENTS=1 ^
               -DKAA_WITHOUT_CONFIGURATION=1 ^
               -DKAA_WITHOUT_NOTIFICATIONS=1 ^

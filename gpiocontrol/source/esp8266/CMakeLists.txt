@@ -21,6 +21,18 @@ enable_language(C)
 
 find_package (OpenSSL REQUIRED)
 
+## where is the target environment
+set(CMAKE_FIND_ROOT_PATH /usr/arm-none-eabi)
+
+# search for programs in the build host directories
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+# for libraries and headers in the target directories
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+
+# avoid using any additional flags when linking with shared libraries
+set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
+
 set(KAA_SDK_ROOT libs/kaa/src/)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Os -Wall -Wextra")
@@ -45,45 +57,39 @@ set(ESP8266_LIBDIR "-L${CMAKE_CURRENT_SOURCE_DIR}/build -L${ESP_TOOLCHAIN_DIR}/.
                     
 set(ESP8266_LIBDIR "${ESP8266_LIBDIR} -L${ESP_SDK_BASE}/lib -L${CMAKE-CMAKE_CURRENT_SOURCE_DIR} -L${ESP_TOOLCHAIN_DIR}/ld")
 
-set(ESP8266_LDFLAGS "${ESP8266_LIBDIR} -T${ESP8266_LINKSCRIPT} -nostdlib -u call_user_start -static --start-group ${ESP8266_LIBS} -lesp-platform -lkaac_s -l${APP_NAME}_s --end-group --gc-sections -Map map")
+set(ESP8266_LDFLAGS "${ESP8266_LIBDIR} -T${ESP8266_LINKSCRIPT} -nostdlib -u call_user_start -static --start-group ${ESP8266_LIBS} -lesp-platform -lkaac_s --end-group --gc-sections -Map map")
 
 set(CMAKE_AR ${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ar)
 
 set(CMAKE_RANLIB ${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ranlib)
 
-set(CMAKE_C_LINK_EXECUTABLE "${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ld <LINK_FLAGS> <OBJECTS>")
-
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DESP8266_PLATFORM -Os -Wpointer-arith -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -D__ets__ -DICACHE_FLASH")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"' -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"'")
+
+set(CMAKE_C_LINK_FLAGS "${ESP8266_LDFLAGS}")
+set(CMAKE_C_LINKER "${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ld")
+set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_C_LINKER} <OBJECTS> <CMAKE_C_LINK_FLAGS> <LINK_LIBRARIES> -o <TARGET>")
 
 #WiFi SSID and PASSWORD
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"' -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"'")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
                     ${CMAKE_CURRENT_SOURCE_DIR}/include
                     ${KAA_SDK_ROOT}
                     ${ESP8266_INCDIRS}
                    )
-
-link_directories(
-                 ${ESP_SDK_BASE}/lib
-                 ${CMAKE_CURRENT_SOURCE_DIR}/ld
-                
-                )
-
 set (SRC
     src/kaa_demo.c
     driver/gpio.c
     )
 
 add_library(esp-platform STATIC ${ESP8266_SRC})
-add_executable(${APP_NAME} blank.c)
-add_dependencies(${APP_NAME} esp-platform ${APP_NAME}_s kaac_s)
-add_library(${APP_NAME}_s STATIC ${SRC})
+add_executable(${APP_NAME} src/kaa_demo.c driver/gpio.c)
+target_link_libraries(${APP_NAME} PUBLIC esp-platform kaac_s)
 
 add_custom_command(TARGET ${APP_NAME}
                    POST_BUILD
                    COMMAND esptool.py elf2image -o ./ ${APP_NAME}
                    & echo "Making firmware image"
                   )
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ESP8266_LDFLAGS} -o ${APP_NAME}")
+
 

@@ -21,9 +21,6 @@ enable_language(C)
 
 find_package (OpenSSL REQUIRED)
 
-## where is the target environment
-set(CMAKE_FIND_ROOT_PATH /usr/arm-none-eabi)
-
 # search for programs in the build host directories
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 # for libraries and headers in the target directories
@@ -64,13 +61,14 @@ set(CMAKE_AR ${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ar)
 set(CMAKE_RANLIB ${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ranlib)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DESP8266_PLATFORM -Os -Wpointer-arith -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -D__ets__ -DICACHE_FLASH")
+
+#WiFi SSID and PASSWORD
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"' -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"'")
 
+#TODO APP-88
 set(CMAKE_C_LINK_FLAGS "${ESP8266_LDFLAGS}")
 set(CMAKE_C_LINKER "${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ld")
 set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_C_LINKER} <OBJECTS> <CMAKE_C_LINK_FLAGS> <LINK_LIBRARIES> -o <TARGET>")
-
-#WiFi SSID and PASSWORD
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
                     ${CMAKE_CURRENT_SOURCE_DIR}/include

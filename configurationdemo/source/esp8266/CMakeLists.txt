@@ -63,9 +63,9 @@ set(CMAKE_RANLIB ${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ranlib)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DESP8266_PLATFORM -Os -Wpointer-arith -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -D__ets__ -DICACHE_FLASH")
 
 #WiFi SSID and PASSWORD
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"' -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"'")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"'")
 
-#TODO APP-88
+#TODO(APP-63): Merge configuration demos into single one
 set(CMAKE_C_LINK_FLAGS "${ESP8266_LDFLAGS}")
 set(CMAKE_C_LINKER "${ESP_TOOLCHAIN_DIR}/xtensa-lx106-elf-ld")
 set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_C_LINKER} <OBJECTS> <CMAKE_C_LINK_FLAGS> <LINK_LIBRARIES> -o <TARGET>")

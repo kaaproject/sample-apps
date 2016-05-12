@@ -9,7 +9,7 @@
 #include "freertos/task.h"
 #include "freertos/queue.h"
 
-#include "driver/uart.h"
+#include "uart.h"
 
 enum {
     UART_EVENT_RX_CHAR,

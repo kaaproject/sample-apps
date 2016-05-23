@@ -78,12 +78,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
 
 add_library(esp-platform STATIC ${ESP8266_SRC})
 add_executable(${APP_NAME} src/kaa_demo.c)
-target_link_libraries(${APP_NAME} PUBLIC esp-platform kaac_s)
+target_link_libraries(${APP_NAME} PRIVATE esp-platform kaac_s)
 
 add_custom_command(TARGET ${APP_NAME}
                    POST_BUILD
                    COMMAND esptool.py elf2image -o ./ ${APP_NAME}
                    & echo "Making firmware image"
                   )
-
 

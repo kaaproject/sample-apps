@@ -28,6 +28,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 # avoid using any additional flags when linking with shared libraries
+# without this line, we get an rpath error
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 
 set(KAA_SDK_ROOT libs/kaa/src/)

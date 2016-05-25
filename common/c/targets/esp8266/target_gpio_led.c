@@ -22,27 +22,28 @@
  *
  */
 
-#ifndef CC32XX_SUPPORT_H_
-#define CC32XX_SUPPORT_H_
+#include <stdint.h>
 
-#include "hw_types.h"
-#include "uart_if.h"
-#include "common.h"
+#include "target.h"
+#include "target_gpio_led.h"
 
-#include <stdlib.h>
+#include "gpio.h"
 
-#define demo_printf(msg, ...) UART_PRINT((msg), ##__VA_ARGS__)
+#define HIGH 1
+#define LOW 0
 
-#define NUM_GPIO_LEDS 3
+void target_gpio_led_init(void) {
+    GPIO_OUTPUT_SET(0, LOW);
+    GPIO_OUTPUT_SET(2, LOW);
+}
 
-#define TARGET_DEVICE_NAME "CC3200"
-#define TARGET_MODEL_NAME "LaunchPad"
-
-/* Initialises a target. Zero value means success, negative - errors.
- *
- * For this particular target this will eventually try to connect to
- * the WiFi spot using SSID and password supplied during build.
- */
-int target_initialize(void);
-
-#endif //CC32XX_SUPPORT_H_
+void target_gpio_led_toggle(int id, int status) {
+    if(id >= NUM_GPIO_LEDS || id < 0) {
+        return;
+    }
+    if(status) {
+        GPIO_OUTPUT_SET(id, HIGH);
+    } else {
+        GPIO_OUTPUT_SET(id, LOW);
+    }
+}

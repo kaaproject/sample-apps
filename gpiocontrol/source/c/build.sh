@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 #  Copyright 2014-2016 CyberVision, Inc.
 #
@@ -15,17 +15,14 @@
 #  limitations under the License.
 #
 
-# TODO APP-63: this file must be reviewed and moved to common build script dir
-
-
 # Exit immediately if error occurs
 set -e
 
 RUN_DIR=`pwd`
 
-help_message() {
+function help_message {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported targets: cc32xx" # TODO APP-63: extend these
+    echo "Supported targets: cc32xx, esp8266"
     exit 1
 }
 
@@ -43,11 +40,11 @@ KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-c*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
-# TODO APP-63: comment about inconvenience between KAA_TARGET and KAA_PLATFORM
-KAA_TARGET=cc32xx
-KAA_PRODUCE_BINARY=1
+# TODO: comment about inconvenience between KAA_TARGET and KAA_PLATFORM
+KAA_TARGET=
+KAA_PRODUCE_BINARY=
+KAA_REQUIRE_CREDENTIALS=
 DEMO_ACCESS_TOKEN=
-
 
 if [ -z ${DEMO_ACCESS_TOKEN} ]; then
     DEMO_ACCESS_TOKEN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)
@@ -57,8 +54,29 @@ echo " ACCESS TOKEN: " $DEMO_ACCESS_TOKEN
 echo "==================================="
 
 
-unpack_sdk() {
-    if [ ! -d "$KAA_C_LIB_HEADER_PATH"  -a ! -d "$KAA_CPP_LIB_HEADER_PATH" ]
+function select_arch {
+    echo "Please enter a target (default is x86-64):"
+    read target
+
+    # TODO: better case handling
+    case "$target" in
+    x86-64)
+        echo "x86-64 platform is not supported by this demo"
+        exit 0
+        ;;
+
+    *)
+        # Interpret custom string as target name
+        KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$target.cmake"
+        KAA_TARGET=${target}
+        KAA_PRODUCE_BINARY=true
+        KAA_REQUIRE_CREDENTIALS=true
+        ;;
+    esac
+}
+
+function unpack_sdk {
+    if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
     then
         KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
 
@@ -73,26 +91,21 @@ unpack_sdk() {
     fi
 }
 
-build_app() {
-    # Wifi settings
+function build_app {
     SSID=
     PASSWORD=
-
-    ENV_VAR=" -DKAA_PLATFORM=cc32xx -DAPP_NAME=$APP_NAME"
-        if [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
-                ENV_VAR=$ENV_VAR" -DKAA_TOOLCHAIN_PATH=c:/cygwin/opt/kaa"
-        fi
 
     cd $PROJECT_HOME
     mkdir -p "$PROJECT_HOME/$BUILD_DIR"
     cd $BUILD_DIR
 
-    echo "Enter WiFi SSID:"
-    read SSID
-    echo "Enter WiFi Password:"
-    read PASSWORD
-
-    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$KAA_LIB_PATH/toolchains/cc32xx.cmake"
+    if [[ $KAA_REQUIRE_CREDENTIALS = true ]]
+    then
+        echo "Enter WiFi SSID:"
+        read SSID
+        echo "Enter WiFi Password:"
+        read PASSWORD
+    fi
 
     # TODO: APP-63 comments about KAA_PLATFORM and KAA_TARGET
     cmake -DCMAKE_BUILD_TYPE=MinSizeRel \
@@ -101,24 +114,31 @@ build_app() {
           -DKAA_PRODUCE_BINARY=$KAA_PRODUCE_BINARY \
           -DWIFI_SSID=$SSID \
           -DWIFI_PASSWORD=$PASSWORD \
-          -DKAA_MAX_LOG_LEVEL=3 \
+          -DCMAKE_BUILD_TYPE=MinSizeRel \
+          -DKAA_WITHOUT_CONFIGURATION=1 \
+          -DKAA_WITHOUT_NOTIFICATION=1 \
           -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN \
-          -DKAA_DEBUG_ENABLED=true \
+          -DKAA_MAX_LOG_LEVEL=3 \
           ${KAA_TOOLCHAIN_PATH_SDK} ..
     make
 }
 
-clean() {
+function clean {
     rm -rf "$KAA_LIB_PATH/$BUILD_DIR"
     rm -rf "$PROJECT_HOME/$BUILD_DIR"
 }
 
-run() {
-    echo "To run demo, please have a look at http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200#TexasInstrumentsCC3200-Example"
+function run {
+    cd "$PROJECT_HOME/$BUILD_DIR"
+    ./$APP_NAME
 }
 
-case "$1" in
+for cmd in $@
+do
+
+case "$cmd" in
     build)
+        select_arch
         unpack_sdk
         build_app
     ;;
@@ -129,6 +149,7 @@ case "$1" in
 
     deploy)
         clean
+        select_arch
         unpack_sdk
         build_app
         run
@@ -142,3 +163,5 @@ case "$1" in
         help_message
     ;;
 esac
+
+done

@@ -31,6 +31,7 @@ add_library(target_support
         ${CC32XX_SDK}/example/common/utils_if.c
         ${CC32XX_SDK}/example/common/startup_gcc.c
         target.c
+        target_gpio_led.c
         )
 
 # Additional library required for nonos library
@@ -39,6 +40,7 @@ add_library(cc32xx_common
         ${CC32XX_SDK}/example/common/network_common.c)
 
 target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../common)
 
 # CC32XX SDK libraries
 
@@ -96,5 +98,6 @@ message(STATUS "WiFi Pass: ${WIFI_PASSWORD}")
 target_compile_definitions(target_support
         PUBLIC
         -DWIFI_SSID="${WIFI_SSID}"
-        -DWIFI_PASSWORD="${WIFI_PASSWORD}")
+        -DWIFI_PASSWORD="${WIFI_PASSWORD}"
+        -DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
 

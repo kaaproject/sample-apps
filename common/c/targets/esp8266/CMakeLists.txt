@@ -28,10 +28,16 @@ exec_program(xtensa-lx106-elf-gcc .
 add_library(target_support
             STATIC
             target.c
+            target_gpio_led.c
             driver/uart.c
             driver/gpio.c
             )
 
+<<<<<<< HEAD
+=======
+
+        target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../common)
+>>>>>>> d403bd1... APP-88: Merge gpiocontrol demos for different platforms
 target_include_directories(target_support PUBLIC driver)
 target_include_directories(target_support PUBLIC .)
 target_include_directories(target_support PUBLIC
@@ -67,5 +73,6 @@ message(STATUS "WiFi Pass: ${WIFI_PASSWORD}")
 target_compile_definitions(target_support
         PUBLIC
         -DWIFI_SSID="${WIFI_SSID}"
-        -DWIFI_PASSWORD="${WIFI_PASSWORD}")
+        -DWIFI_PASSWORD="${WIFI_PASSWORD}"
+        -DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
 

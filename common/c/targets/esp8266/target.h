@@ -31,6 +31,11 @@
 /* Demo print routine. printf implementation is available on this platform. */
 #define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
 
+#define  NUM_GPIO_LEDS 2
+
+#define TARGET_DEVICE_NAME "ESP8266"
+#define TARGET_MODEL_NAME "01"
+
 /* Initialises a target. Zero value means success, negative - errors.
  *
  * For this particular target this will eventually try to connect to

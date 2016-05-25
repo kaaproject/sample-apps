@@ -18,19 +18,25 @@ cmake_minimum_required(VERSION 2.8.8)
 project(C-SDK-sample)
 enable_language(C)
 
-# Target-independent flags.
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Wall -Wextra -g")
-
 # Our application name.
-set(APP_NAME demo_client.afx)
+set(APP_NAME demo_client)
 
-# Demo executable.
-add_executable(${APP_NAME} src/kaa_demo.c)
+# Target-independent flags.
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
 
 # Path to the Kaa SDK.
 add_subdirectory(libs/kaa)
 # Directory containing target support library.
+if("${KAA_TARGET}" STREQUAL "x86-64")
+    message("This demo suports only hardware platforms and makes no sense for desktop")
+    return()
+endif()
+
 add_subdirectory(targets/${KAA_TARGET})
+add_subdirectory(targets/common)
+
+# Demo executable.
+add_executable(${APP_NAME} src/kaa_demo.c)
 
 # All libraries that demo app depends on.
 target_link_libraries(${APP_NAME} kaac target_support)

@@ -14,10 +14,8 @@
  *  limitations under the License.
  */
 
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
+#include <target.h>
+#include <target_gpio_led.h>
 
 #include <kaa_error.h>
 #include <kaa_context.h>
@@ -28,14 +26,11 @@
 #include <gen/kaa_remote_control_ecf.h>
 #include <kaa_profile.h>
 
-#include "target.h"
-
 // TODO APP-63: abstract gpio functions into separate target driver
 
 static kaa_client_t *kaa_client = NULL;
 
-static int gpio_led[] = { 0, 0, 0 };
-static int led_number = sizeof (gpio_led) / sizeof (int);
+static int gpio_led[NUM_GPIO_LEDS];
 
 /*
  * Event callback-s.
@@ -52,12 +47,12 @@ static void kaa_device_info_request(void *context
 
     kaa_remote_control_ecf_device_info_response_t *response = kaa_remote_control_ecf_device_info_response_create();
 
-    response->device_name = kaa_string_copy_create("CC3200");
-    response->model       = kaa_string_copy_create("LaunchPad");
+    response->device_name = kaa_string_copy_create(TARGET_DEVICE_NAME);
+    response->model       = kaa_string_copy_create(TARGET_MODEL_NAME);
     response->gpio_status = kaa_list_create();
 
     int i = 0;
-    for (i = 0; i < led_number; ++i) {
+    for (i = 0; i < NUM_GPIO_LEDS; ++i) {
         kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
         gio_status->id = i;
         gio_status->status = gpio_led[i];
@@ -79,23 +74,24 @@ static void kaa_GPIOToggle_info_request(void *context
 
     demo_printf("Toggling GPIO...\r\n");
 
-    if (event->gpio->status) {
-        GPIO_IF_LedOn(MCU_RED_LED_GPIO + event->gpio->id);
-        gpio_led[event->gpio->id] = 1;
-    } else {
-        GPIO_IF_LedOff(MCU_RED_LED_GPIO + event->gpio->id);
-        gpio_led[event->gpio->id] = 0;
-    }
+    gpio_led[event->gpio->id] = event->gpio->status;
+
+    int gpio_id = event->gpio->id >= NUM_GPIO_LEDS?NUM_GPIO_LEDS:event->gpio->id;
+
+    target_gpio_led_toggle(gpio_id, event->gpio->status);
+    gpio_led[gpio_id] = event->gpio->status;
 
     event->destroy(event);
 }
 
 int main(void)
 {
-    int rc = target_initialise();
+    int rc = target_initialize();
     if (rc < 0) {
         return 1;
     }
+
+    target_gpio_led_init();
 
     demo_printf("GPIO demo started\r\n");
 

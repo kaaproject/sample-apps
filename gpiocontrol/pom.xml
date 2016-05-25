@@ -62,11 +62,10 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>${project.basedir}/assembly/src.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-cc32xx.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-esp.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-artik5.xml</descriptor>			
-			<descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-android.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-artik5.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

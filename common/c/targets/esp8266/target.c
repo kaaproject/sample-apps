@@ -107,8 +107,8 @@ static int wifi_connect(const char *ssid, const char *pwd) {
         return false;
     }
 
-    uint8 status = wifi_station_get_connect_status();
-    while (status==STATION_CONNECTING) {
+    uint8 status;
+    do {
         status = wifi_station_get_connect_status();
         switch (status) {
             case STATION_WRONG_PASSWORD:
@@ -132,7 +132,7 @@ static int wifi_connect(const char *ssid, const char *pwd) {
                 printf ("Connection status: %d\r\n", status);
                 return true;
         }
-    }
+    } while (status == STATION_CONNECTING);
     conn_error:
         wifi_station_disconnect();
         return false;

@@ -27,14 +27,14 @@ set(ESP_SDK_HOME ${ESPRESSIF_HOME}/esp-rtos-sdk)
 if(DEFINED ENV{ESP8266_TOOLCHAIN_PATH})
   set(TOOLCHAIN_PATH "$ENV{ESP8266_TOOLCHAIN_PATH}")
   message(STATUS "Toolchain path is provided: ${TOOLCHAIN_PATH}")
-else ()
+else()
 
-  if (NOT TOOLCHAIN_PATH)
+  if(NOT TOOLCHAIN_PATH)
     # Set default path.
     set(TOOLCHAIN_PATH /opt/Espressif/crosstool-NG/builds/xtensa-lx106-elf)
     message(STATUS "Default toolchain path will be used")
-  endif ()
-endif ()
+  endif()
+endif()
 
 set(ESP_TOOLCHAIN_LIBS_HOME ${TOOLCHAIN_PATH}/lib/gcc/xtensa-lx106-elf/4.8.2)
 

@@ -268,13 +268,16 @@
                         <exclude>**/*xcodeproj/**</exclude>
                         <exclude>**/*.plist</exclude>
                         <exclude>**/*.cproject</exclude>
-                        <exclude>common/c/targets/esp8266/ld/eagle.app.v6.ld</exclude>
-                        <exclude>common/c/targets/esp8266/ld/eagle.rom.addr.v6.ld</exclude>
-                        <exclude>common/c/targets/esp8266/driver/uart.c</exclude>
-                        <exclude>common/c/targets/esp8266/driver/uart.h</exclude>
-                        <exclude>common/c/targets/esp8266/driver/uart_register.h</exclude>
-                        <exclude>common/c/targets/esp8266/driver/gpio.c</exclude>
-                        <exclude>common/c/targets/esp8266/driver/gpio.h</exclude>
+                        <exclude>**/source/esp8266/ld/*.ld</exclude>
+                        <exclude>**/source/esp8266/driver/gpio.c</exclude>
+                        <exclude>**/source/esp8266/driver/uart.c</exclude>
+                        <exclude>**/source/esp8266/include/gpio*.h</exclude>
+                        <exclude>**/source/esp8266/include/driver/uart*.h</exclude>
+                        <exclude>**/source/cc32xx/platform/cc32xx/app.ld</exclude>
+                        <exclude>**/source/cc32xx/cc32xx/app.ld</exclude>
+                        <exclude>**/targets/cc32xx/app.ld</exclude>
+                        <exclude>**/source/cc32xx/libs/kaa/PUT_SDK_HERE</exclude>
+                        <exclude>**/source/esp8266/libs/kaa/PUT_SDK_HERE</exclude>
                         <exclude>**/VoltageReport.java</exclude>
                         <exclude>**/VoltageSample.java</exclude>
                         <exclude>**/dev.config</exclude>

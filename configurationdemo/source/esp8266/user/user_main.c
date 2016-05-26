@@ -24,61 +24,46 @@
 #include <espressif/esp_wifi.h>
 #include <espressif/esp_sta.h>
 
-#include "uart.h"
+#include "driver/uart.h"
+#include "esp_platform.h"
 
 #define MAIN_STACK_SIZE 512
 
 extern int main(void);
 
-static void main_task(void *pvParameters);
-
-static int wifi_init(void);
-static int wifi_connect(const char *ssid, const char *pwd);
-static void wifi_print_opmode(void);
-static void wifi_print_station_config(void);
-
-static void uart_init(void);
-
-int target_initialize(void) {
-    if (wifi_init()) {
-        printf("Error initialising wifi!\r\n");
-        return 1;
+void main_task(void *pvParameters) {
+    (void)pvParameters;
+    printf("main_task() started\r\n");
+    if (!wifi_connect(SSID,PWD)) {
+        printf("Couldn't connect to \"%s\" with password \"%s\"\r\n2",
+               SSID, PWD);
+        goto loop;
     }
-
-    if (wifi_connect(WIFI_SSID,WIFI_PASSWORD)) {
-        printf("Couldn't connect to \"%s\" with password \"%s\"\r\n",WIFI_SSID, WIFI_PASSWORD);
-        return 1;
-    }
-
-    return 0;
+        int ret = main();
+        printf("main() exited, returned %d\r\n", ret);
+        loop:
+            while(1);
 }
 
 void ICACHE_FLASH_ATTR user_init() {
     uart_init();
-
-    portBASE_TYPE error = xTaskCreate(main_task, (const signed char *)"main_task",
-                                      MAIN_STACK_SIZE, NULL, 2, NULL );
-    if (error<0) {
-        printf("Error creating main_task! Error code: %ld\r\n", error);
+    if (!wifi_init()) {
+        printf("Error initialising wifi!\r\n");
+        while(1);
     }
+        portBASE_TYPE error = xTaskCreate(main_task, (const signed char *)"main_task",
+                                          MAIN_STACK_SIZE, NULL, 2, NULL );
+        if (error<0)
+            printf("Error creating main_task! Error code: %ld\r\n", error);
 }
 
-static void main_task(void *pvParameters) {
-    (void)pvParameters;
-    printf("main_task() started\r\n");
-    int ret = main();
-    printf("main() exited with %d\r\n", ret);
-    for(;;);
-}
-
-
-static void uart_init(void) {
+void uart_init() {
     uart_init_new();
     UART_SetBaudrate(UART0, 115200);
     UART_SetPrintPort(UART0);
 }
 
-static int wifi_init(void) {
+bool wifi_init() {
     printf("\r\nInitialising wifi station\r\n");
     wifi_print_opmode();
 
@@ -90,7 +75,7 @@ static int wifi_init(void) {
         return true;
 }
 
-static int wifi_connect(const char *ssid, const char *pwd) {
+bool wifi_connect(const char *ssid, const char *pwd) {
     struct station_config sta_cfg;
     memset(&sta_cfg, 0, sizeof(sta_cfg));
     strcpy((char *)sta_cfg.ssid, ssid);
@@ -99,46 +84,44 @@ static int wifi_connect(const char *ssid, const char *pwd) {
         printf("Error setting wifi station config!\r\n");
         return false;
     }
-
-    wifi_print_station_config();
-    printf("Connecting to %s...\r\n ", ssid);
-    if (!wifi_station_connect()) {
-        printf("FAIL!\r\n");
-        return false;
-    }
-
-    uint8 status;
-    do {
-        status = wifi_station_get_connect_status();
-        switch (status) {
-            case STATION_WRONG_PASSWORD:
-                printf("Error connecting to \"%s\": wrong password!\r\n", ssid);
-                goto conn_error;
-            case STATION_NO_AP_FOUND:
-                printf("Error connecting to \"%s\": no AP found with this ssid\r\n", ssid);
-                goto conn_error;
-            case STATION_CONNECT_FAIL:
-                printf("Failed to connect\r\n");
-                goto conn_error;
-            case STATION_GOT_IP:
-                printf("OK\r\n");
-                return true;
-            case STATION_IDLE:
-                printf("OK\r\n");
-                return true;
-            case STATION_CONNECTING:
-                break;
-            default:
-                printf ("Connection status: %d\r\n", status);
-                return true;
+        wifi_print_station_config();
+        printf("Connecting to %s...\r\n ", ssid);
+        if (!wifi_station_connect()) {
+            printf("FAIL!\r\n");
+            return false;
         }
-    } while (status == STATION_CONNECTING);
-    conn_error:
-        wifi_station_disconnect();
-        return false;
+            uint8 status = wifi_station_get_connect_status();
+            while (status==STATION_CONNECTING) {
+                status = wifi_station_get_connect_status();
+                switch (status) {
+                    case STATION_WRONG_PASSWORD:
+                        printf("Error connecting to \"%s\": wrong password!\r\n", ssid);
+                        goto conn_error;
+                    case STATION_NO_AP_FOUND:
+                        printf("Error connecting to \"%s\": no AP found with this ssid\r\n", ssid);
+                        goto conn_error;
+                    case STATION_CONNECT_FAIL:
+                        printf("Failed to connect\r\n");
+                        goto conn_error;
+                    case STATION_GOT_IP:
+                        printf("OK\r\n");
+                        return true;
+                    case STATION_IDLE:
+                        printf("OK\r\n");
+                        return true;
+                    case STATION_CONNECTING:
+                        break;
+                    default:
+                        printf ("Connection status: %d\r\n", status);
+                        return true;
+                }
+            }
+            conn_error:
+                wifi_station_disconnect();
+                return false;
 }
 
-static void wifi_print_opmode(void) {
+void wifi_print_opmode() {
     uint8 opmode = wifi_get_opmode();
     switch (opmode) {
         case 0x01: /* Station mode */
@@ -155,7 +138,7 @@ static void wifi_print_opmode(void) {
     }
 }
 
-static void wifi_print_station_config(void) {
+void wifi_print_station_config() {
     struct station_config sta_cfg;
     if (!wifi_station_get_config(&sta_cfg)) {
         printf("Error getting current wifi station config!\r\n");

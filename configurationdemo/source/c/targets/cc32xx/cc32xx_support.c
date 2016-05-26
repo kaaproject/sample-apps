@@ -317,7 +317,7 @@ static void net_ping(const char *host)
 
 /*----------------------------------------------------------------------------*/
 
-int target_initialize(void)
+int target_initialise(void)
 {
     BoardInit();
     wlan_configure();

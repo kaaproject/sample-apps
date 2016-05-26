@@ -30,7 +30,7 @@ add_library(target_support
         ${CC32XX_SDK}/example/common/gpio_if.c
         ${CC32XX_SDK}/example/common/utils_if.c
         ${CC32XX_SDK}/example/common/startup_gcc.c
-        target.c
+        cc32xx_support.c
         )
 
 # Additional library required for nonos library
@@ -97,4 +97,5 @@ target_compile_definitions(target_support
         PUBLIC
         -DWIFI_SSID="${WIFI_SSID}"
         -DWIFI_PASSWORD="${WIFI_PASSWORD}")
+
 

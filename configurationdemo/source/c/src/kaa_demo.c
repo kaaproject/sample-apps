@@ -56,7 +56,7 @@ int main(/*int argc, char *argv[]*/) {
     /**
      * Initialise a board
      */
-    int ret = target_initialize();
+    int ret = target_initialise();
     if (ret < 0) {
         /* If console is failed to initialise, you will not see this message */
         demo_printf("Failed to initialise a target\n");

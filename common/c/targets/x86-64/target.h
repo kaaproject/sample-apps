@@ -15,27 +15,30 @@
  */
 
 /*
- * This header provides several bindings for TI's cc32xx target that abstracts
+ * This header provides several bindings for x86_64 target that abstracts
  * an implementation of its features. Right now it contains only
  * console and target initialisation routines, but it must be extended
  * if required.
  *
- */
-
-#ifndef CC32XX_SUPPORT_H_
-#define CC32XX_SUPPORT_H_
-
-#include "hw_types.h"
-#include "uart_if.h"
-#include "common.h"
-
-#define demo_printf(msg, ...)   UART_PRINT((msg), ##__VA_ARGS__)
-
-/* Initialises a target. Zero value means success, negative - errors.
+ * Note that by x86 target is understood a system with support of
+ * stdc library and most likely running full-featured OS.
  *
- * For this particular target this will eventually try to connect to
- * the WiFi spot using SSID and password supplied during build.
+ * TODO: rename it to something like 'linux' or 'host' ?
  */
-int target_initialise(void);
+#ifndef X86_64_SUPPORT_H
+#define X86_64_SUPPORT_H
 
-#endif //CC32XX_SUPPORT_H_
+#include <stdio.h>
+
+/* Demo print routine. Default printf exists for x86_64 target. */
+#define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
+
+/* Initialises a target. Zero value means success, negative - errors. */
+static inline int target_initialize(void)
+{
+    /* This target do not require special initialisation. */
+    return 0;
+}
+
+#endif // X86_64_SUPPORT_H
+

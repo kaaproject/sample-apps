@@ -33,11 +33,7 @@ add_library(target_support
             driver/gpio.c
             )
 
-<<<<<<< HEAD
-=======
-
-        target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../common)
->>>>>>> d403bd1... APP-88: Merge gpiocontrol demos for different platforms
+target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../common)
 target_include_directories(target_support PUBLIC driver)
 target_include_directories(target_support PUBLIC .)
 target_include_directories(target_support PUBLIC
@@ -53,16 +49,16 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.app.v6.ld ${CMAKE_BINARY_DIR
 
 # ESP8266 RTOS SDK dependencies
 target_link_libraries(target_support PUBLIC
-                      ${ESP_RTOS_SDK}/lib/libfreertos.a
-                      ${ESP_RTOS_SDK}/lib/libhal.a
-                      ${ESP_RTOS_SDK}/lib/libpp.a
-                      ${ESP_RTOS_SDK}/lib/libphy.a
-                      ${ESP_RTOS_SDK}/lib/libnet80211.a
-                      ${ESP_RTOS_SDK}/lib/libwpa.a
-                      ${ESP_RTOS_SDK}/lib/liblwip.a
-                      ${ESP_RTOS_SDK}/lib/libmain.a
-                      ${ESP_RTOS_SDK}/lib/libhal.a
-                      ${ESP8266_LIBGCC}
+                      ${ESP_SDK_HOME}/lib/libfreertos.a
+                      ${ESP_SDK_HOME}/lib/libhal.a
+                      ${ESP_SDK_HOME}/lib/libpp.a
+                      ${ESP_SDK_HOME}/lib/libphy.a
+                      ${ESP_SDK_HOME}/lib/libnet80211.a
+                      ${ESP_SDK_HOME}/lib/libwpa.a
+                      ${ESP_SDK_HOME}/lib/liblwip.a
+                      ${ESP_SDK_HOME}/lib/libmain.a
+                      ${ESP_SDK_HOME}/lib/libssl.a
+                      ${ESP_TOOLCHAIN_LIBS_HOME}/libgcc.a
                       -T${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.app.v6.ld
                       )
 

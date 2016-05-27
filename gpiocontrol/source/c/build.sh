@@ -55,13 +55,13 @@ echo "==================================="
 
 
 function select_arch {
-    echo "Please enter a target (default is x86-64):"
+    echo "Please enter a target:"
     read target
 
     # TODO: better case handling
     case "$target" in
-    x86-64)
-        echo "x86-64 platform is not supported by this demo"
+    posix)
+        echo "posix platform is not supported by this demo"
         exit 0
         ;;
 

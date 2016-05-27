@@ -96,12 +96,12 @@ typedef struct {
 
 #define GPIO_OUTPUT_SET(gpio_no, bit_value) do { \
     gpio_output_conf((bit_value)<<(gpio_no), ((~(bit_value))&0x01)<<(gpio_no), 1<<(gpio_no), 0) \
-    while(0);
+    } while(0);
 
 #define GPIO_OUTPUT(gpio_bits, bit_value) do {\
     if(bit_value) gpio_output_conf((gpio_bits), 0, (gpio_bits), 0);\
     else gpio_output_conf(0, (gpio_bits), (gpio_bits), 0) \
-    while(0);
+    } while(0);
 
 #define GPIO_DIS_OUTPUT(gpio_no)    gpio_output_conf(0, 0, 0, 1<<(gpio_no))
 #define GPIO_AS_INPUT(gpio_bits)    gpio_output_conf(0, 0, 0, gpio_bits)

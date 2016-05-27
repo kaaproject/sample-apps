@@ -12,6 +12,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+#
 
 cmake_minimum_required(VERSION 2.8.8)
 
@@ -27,24 +28,25 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
 # Path to the Kaa SDK.
 add_subdirectory(libs/kaa)
 # Directory containing target support library.
-if("${KAA_TARGET}" STREQUAL "x86-64")
-    message("This demo suports only hardware platforms and makes no sense for desktop")
-    return()
-endif()
-
 add_subdirectory(targets/${KAA_TARGET})
 add_subdirectory(targets/common)
 
 # Demo executable.
-add_executable(${APP_NAME} src/kaa_demo.c)
-
-# All libraries that demo app depends on.
-target_link_libraries(${APP_NAME} kaac target_support)
+if("${KAA_TARGET}" STREQUAL "esp8266")
+    add_library(${APP_NAME}_s STATIC src/kaa_demo.c)
+    file(WRITE ${CMAKE_BINARY_DIR}/blank.c "")
+    add_executable(${APP_NAME} ${CMAKE_BINARY_DIR}/blank.c)
+    target_link_libraries(${APP_NAME} ${APP_NAME}_s)
+    target_link_libraries(${APP_NAME}_s target_support kaac_s)
+else()
+    add_executable(${APP_NAME} src/kaa_demo.c)
+    target_link_libraries(${APP_NAME} kaac_s target_support)
+endif()
 
 # For most embedded targets binary stripping is required.
-if(${KAA_PRODUCE_BINARY})
-  add_custom_command(TARGET ${APP_NAME} POST_BUILD
-          COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
-endif()
+if (${KAA_PRODUCE_BINARY})
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD
+            COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
+endif ()
 
 install(TARGETS ${APP_NAME} DESTINATION bin)

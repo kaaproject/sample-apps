@@ -15,23 +15,29 @@
 #
 
 cmake_minimum_required(VERSION 2.8.8)
-
-project (C-SDK-sample)
-enable_language(C)
+project (C-SDK-sample LANGUAGES C)
 
 find_package (OpenSSL REQUIRED)
+
+set(APP_NAME "demo_client")
+set(KAA_SDK_DIR "client-c")
+
+execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${KAA_SDK_DIR}
+                COMMAND sh -c "tar -zxf kaa-c*.tar.gz -C ${KAA_SDK_DIR}"
+                WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa"
+                )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
-                    ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/src
+                    ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/${KAA_SDK_DIR}/src
                    )
 
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
 
-set (SAMPLE_SOURCE_FILES
-            src/kaa_demo.c
-)
+set(SAMPLE_SOURCE_FILES src/kaa_demo.c)
+
+add_subdirectory(libs/kaa/${KAA_SDK_DIR})
 
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
 target_link_libraries(${APP_NAME} kaac crypto)

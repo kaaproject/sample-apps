@@ -58,8 +58,9 @@ build_app() {
     cmake -DKAA_PLATFORM=$KAA_ARCH \
           -DWITH_EXTENSION_EVENT=0 \
           -DWITH_EXTENSION_CONFIGURATION=0 \
+          -DWITH_EXTENSION_NOTIFICATION=0 \
           -DKAA_MAX_LOG_LEVEL=3 \
-          -DKAA_PLATFORM=$KAA_ARCH $KAA_TOOLCHAIN_PATH_SDK ..
+          $KAA_TOOLCHAIN_PATH_SDK ..
     make
 }
 

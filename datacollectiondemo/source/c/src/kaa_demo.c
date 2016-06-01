@@ -23,7 +23,7 @@
 #include <kaa/kaa_context.h>
 #include <kaa/platform/kaa_client.h>
 #include <kaa/utilities/kaa_log.h>
-#include <kaa/kaa_logging.h>
+#include <extensions/logging/kaa_logging.h>
 #include <kaa/platform-impl/common/ext_log_upload_strategies.h>
 
 

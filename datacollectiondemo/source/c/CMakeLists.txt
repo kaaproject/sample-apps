@@ -23,9 +23,11 @@ set(APP_NAME "demo_client")
 set(KAA_SDK_DIR "client-c")
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${KAA_SDK_DIR}
-                COMMAND sh -c "tar -zxf kaa-c*.tar.gz -C ${KAA_SDK_DIR}"
                 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa"
-                )
+               )
+execute_process(COMMAND sh -c "tar -zxf kaa-c*.tar.gz -C ${KAA_SDK_DIR}"
+                WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa"
+               )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
 

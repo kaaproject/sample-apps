@@ -27,11 +27,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
                     ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/src
                    )
 
+add_subdirectory(libs/kaa)
+
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 set (SAMPLE_SOURCE_FILES
             src/kaa_demo.c
 )
 
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} kaac crypto)
+add_executable(demo_client ${SAMPLE_SOURCE_FILES})
+target_link_libraries(demo_client kaac crypto)

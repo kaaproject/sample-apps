@@ -54,7 +54,7 @@ function select_arch {
     esac
 }
 
-function build_thirdparty {
+function unpack_sdk {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
     then
         KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
@@ -68,32 +68,20 @@ function build_thirdparty {
         mkdir -p $KAA_LIB_PATH &&
         tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
     fi
-
-    if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
-    then
-        cd $KAA_LIB_PATH &&
-        mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DCMAKE_BUILD_TYPE=Debug \
-              -DKAA_WITHOUT_CONFIGURATION=1 \
-              -DKAA_WITHOUT_EVENTS=1 \
-              -DKAA_WITHOUT_LOGGING=1 \
-              -DKAA_MAX_LOG_LEVEL=3 \
-	      -DKAA_PLATFORM=$KAA_ARCH \
-               $KAA_TOOLCHAIN_PATH_SDK \
-              ..
-    fi
-
-    cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    make -j4 &&
-    cd $PROJECT_HOME
 }
 
 function build_app {
-    cd $PROJECT_HOME &&
-    mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
-    cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
-    cd $BUILD_DIR &&
-    cmake -DAPP_NAME=$APP_NAME -DKAA_PLATFORM=$KAA_ARCH $KAA_TOOLCHAIN_PATH_SDK ..
+    cd $PROJECT_HOME
+    mkdir -p "$PROJECT_HOME/$BUILD_DIR"
+    cd $BUILD_DIR
+    cmake -DCMAKE_BUILD_TYPE=Debug \
+          -DKAA_WITHOUT_CONFIGURATION=1 \
+          -DKAA_WITHOUT_EVENTS=1 \
+          -DKAA_WITHOUT_LOGGING=1 \
+          -DKAA_MAX_LOG_LEVEL=3 \
+          -DAPP_NAME=$APP_NAME \
+	      -DKAA_PLATFORM=$KAA_ARCH \
+          $KAA_TOOLCHAIN_PATH_SDK ..
     make
 }
 
@@ -113,7 +101,7 @@ do
 case "$cmd" in
     build)
         select_arch
-        build_thirdparty &&
+        unpack_sdk
         build_app
     ;;
 
@@ -124,7 +112,7 @@ case "$cmd" in
     deploy)
         clean
         select_arch
-        build_thirdparty
+        unpack_sdk
         build_app
         run
         ;;

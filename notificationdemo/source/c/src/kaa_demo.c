@@ -23,7 +23,7 @@
 #include <kaa/kaa_error.h>
 #include <kaa/platform/kaa_client.h>
 #include <kaa/utilities/kaa_log.h>
-#include <extensions/notification/kaa_notification_manager.h>
+#include <kaa_notification_manager.h>
 
 
 

@@ -56,9 +56,9 @@ build_app() {
     mkdir -p "$PROJECT_HOME/$BUILD_DIR"
     cd $BUILD_DIR
     cmake -DKAA_PLATFORM=$KAA_ARCH \
-          -DWITH_EXTENSION_EVENT=0 \
-          -DWITH_EXTENSION_CONFIGURATION=0 \
-          -DWITH_EXTENSION_LOGGING=0 \
+          -DWITH_EXTENSION_EVENT=OFF \
+          -DWITH_EXTENSION_CONFIGURATION=OFF \
+          -DWITH_EXTENSION_LOGGING=OFF \
           -DKAA_MAX_LOG_LEVEL=3 \
           $KAA_TOOLCHAIN_PATH_SDK ..
     make

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.entity;
+package org.kaaproject.kaa.demo.notification.entity;
 
 import org.kaaproject.kaa.common.endpoint.gen.SubscriptionType;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
@@ -45,7 +45,11 @@ public class TopicPojo {
     }
 
     public String getTopicName() {
-        return serverTopic.getName();
+        if (serverTopic != null)
+            return serverTopic.getName();
+        else {
+            return null;
+        }
     }
 
     public Long getTopicId() {
@@ -61,6 +65,9 @@ public class TopicPojo {
     }
 
     public boolean isMandatoryTopic() {
+        if(serverTopic == null) {
+            return false;
+        }
         return serverTopic.getSubscriptionType() == SubscriptionType.MANDATORY_SUBSCRIPTION;
     }
 

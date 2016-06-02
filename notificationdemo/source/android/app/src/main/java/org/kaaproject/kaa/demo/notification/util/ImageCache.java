@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.util;
+package org.kaaproject.kaa.demo.notification.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import org.kaaproject.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.R;
 
 import java.io.IOException;
 import java.net.URL;

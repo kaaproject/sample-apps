@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.adapter;
+package org.kaaproject.kaa.demo.notification.adapter;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import org.kaaproject.demo.notification.R;
-import org.kaaproject.demo.notification.entity.TopicPojo;
+import org.kaaproject.kaa.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 
 public class TopicAdapter extends ArrayAdapter<TopicPojo> {
 

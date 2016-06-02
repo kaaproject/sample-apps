@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.fragment;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.kaaproject.demo.notification.KaaNotificationApp;
-import org.kaaproject.demo.notification.R;
-import org.kaaproject.demo.notification.util.NotificationConstants;
-import org.kaaproject.demo.notification.util.TopicHelper;
-import org.kaaproject.demo.notification.entity.TopicPojo;
-import org.kaaproject.demo.notification.adapter.NotificationAdapter;
-import org.kaaproject.kaa.schema.example.Notification;
+package org.kaaproject.kaa.demo.notification.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import org.kaaproject.kaa.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.adapter.NotificationAdapter;
+import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
+import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
+import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
+import org.kaaproject.kaa.schema.example.Notification;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class NotificationFragment extends ListFragment {
 
@@ -49,16 +46,20 @@ public class NotificationFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().getActionBar().setTitle(R.string.notification_title);
         setListAdapter(new NotificationAdapter(getActivity(), getNotificationList()));
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     private List<Notification> getNotificationList() {
-        List<TopicPojo> list = TopicHelper.getTopicModelList(getTopics());
         int topicPosition = getArguments().getInt(NotificationConstants.BUNDLE_TOPIC_ID);
 
-        TopicPojo model = list.get(topicPosition);
+        TopicPojo model = TopicStorage.get()
+                .load(getContext())
+                .getTopics()
+                .get(topicPosition);
+
         if (model != null) {
             if (!model.getNotifications().isEmpty()) {
                 return model.getNotifications();
@@ -67,14 +68,6 @@ public class NotificationFragment extends ListFragment {
             }
         }
         return new LinkedList<>();
-//        {{
-//            add(new Notification(getString(R.string.no_notifications), ""));
-//        }};
-    }
-
-    private Map<Long, TopicPojo> getTopics() {
-        return ((KaaNotificationApp) getActivity().getApplication()).getTopics();
-
     }
 
 }

@@ -1,4 +1,4 @@
-package org.kaaproject.demo.notification.fragment;
+package org.kaaproject.kaa.demo.notification.fragment;
 
 
 import android.app.Dialog;
@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.kaaproject.demo.notification.R;
-import org.kaaproject.demo.notification.util.ImageCache;
+import org.kaaproject.kaa.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.util.ImageCache;
 
 /**
  */

@@ -1,16 +1,4 @@
-package org.kaaproject.demo.notification.service;
-
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-
-import org.kaaproject.demo.notification.R;
-import org.kaaproject.demo.notification.activity.MainActivity;
+package org.kaaproject.kaa.demo.notification.service;
 
 /**
  * Created by user083255 on 01.06.16.

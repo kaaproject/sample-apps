@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.util;
+package org.kaaproject.kaa.demo.notification.util;
 
-import org.kaaproject.demo.notification.entity.TopicPojo;
+import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
 import org.kaaproject.kaa.schema.example.Notification;
 

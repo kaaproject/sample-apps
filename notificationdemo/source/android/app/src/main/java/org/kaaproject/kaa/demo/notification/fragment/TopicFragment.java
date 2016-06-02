@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.fragment;
+package org.kaaproject.kaa.demo.notification.fragment;
 
-import org.kaaproject.demo.notification.KaaNotificationApp;
-import org.kaaproject.demo.notification.R;
-import org.kaaproject.demo.notification.activity.MainActivity;
-import org.kaaproject.demo.notification.entity.TopicPojo;
-import org.kaaproject.demo.notification.util.TopicHelper;
-import org.kaaproject.demo.notification.adapter.TopicAdapter;
+import org.kaaproject.kaa.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.activity.MainActivity;
+import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
+import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
+import org.kaaproject.kaa.demo.notification.adapter.TopicAdapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,11 +30,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * https://developer.android.com/training/basics/fragments/communicating.html
@@ -43,6 +42,7 @@ import java.util.Map;
 public class TopicFragment extends ListFragment {
 
     private OnTopicClickedListener mCallback;
+    private Timer timer;
 
     public TopicFragment() {
         super();
@@ -54,10 +54,37 @@ public class TopicFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setListAdapter(new TopicAdapter(getActivity(), getTopics(), (MainActivity) getActivity()));
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().getActionBar().setTitle(R.string.topic_title);
+
+        initTopicViews();
+
+        timer = new Timer(true);
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initTopicViews();
+                        Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }, 5000, 10000);
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    private void initTopicViews() {
+        List<TopicPojo> topics = TopicStorage.get().load(getActivity()).getTopics();
+
+        if (topics.isEmpty()) {
+            Toast.makeText(getContext(), R.string.no_topics, Toast.LENGTH_SHORT).show();
+        }
+
+        setListAdapter(new TopicAdapter(getActivity(), topics, (MainActivity) getActivity()));
     }
 
     @Override
@@ -88,19 +115,16 @@ public class TopicFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        mCallback.onTopicClicked(position);
+    public void onDetach() {
+        super.onDetach();
+        timer.cancel();
     }
 
-    private List<TopicPojo> getTopics() {
-        Map<Long, TopicPojo> topicMap = ((KaaNotificationApp) getActivity().getApplication()).getTopics();
-        List<TopicPojo> topics = TopicHelper.getTopicModelList(topicMap);
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        mCallback.onTopicClicked(position);
 
-        if (topics.isEmpty()) {
-            Toast.makeText(getContext(), R.string.no_topics, Toast.LENGTH_SHORT).show();
-        }
-
-        return topics;
+        timer.cancel();
     }
 
     public interface OnTopicClickedListener {

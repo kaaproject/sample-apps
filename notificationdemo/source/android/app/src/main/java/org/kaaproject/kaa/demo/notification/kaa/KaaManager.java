@@ -1,9 +1,9 @@
-package org.kaaproject.demo.notification.kaa;
+package org.kaaproject.kaa.demo.notification.kaa;
 
 import android.app.Activity;
 import android.util.Log;
 
-import org.kaaproject.demo.notification.util.NotificationConstants;
+import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
 import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
@@ -75,7 +75,8 @@ public class KaaManager {
      * resources. Suspend all the Kaa client tasks.
      */
     public void onPause() {
-        mClient.pause();
+        if (mClient != null)
+            mClient.pause();
     }
 
     /**
@@ -83,7 +84,8 @@ public class KaaManager {
      * tasks.
      */
     public void onResume() {
-        mClient.resume();
+        if (mClient != null)
+            mClient.resume();
     }
 
     /**
@@ -91,7 +93,8 @@ public class KaaManager {
      * resources. Shut down all the Kaa client tasks.
      */
     public void onTerminate() {
-        mClient.stop();
+        if (mClient != null)
+            mClient.stop();
     }
 
 }

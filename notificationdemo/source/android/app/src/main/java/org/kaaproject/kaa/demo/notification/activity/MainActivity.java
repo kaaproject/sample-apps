@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.activity;
+package org.kaaproject.kaa.demo.notification.activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.Window;
+import android.view.View;
 import android.widget.ArrayAdapter;
 
-import org.kaaproject.demo.notification.KaaNotificationApp;
-import org.kaaproject.demo.notification.R;
-import org.kaaproject.demo.notification.adapter.TopicAdapter;
-import org.kaaproject.demo.notification.entity.TopicPojo;
-import org.kaaproject.demo.notification.fragment.NotificationDialogFragment;
-import org.kaaproject.demo.notification.fragment.NotificationFragment;
-import org.kaaproject.demo.notification.fragment.TopicFragment;
-import org.kaaproject.demo.notification.kaa.KaaManager;
-import org.kaaproject.demo.notification.util.NotificationConstants;
-import org.kaaproject.demo.notification.util.TopicHelper;
+import org.kaaproject.kaa.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.adapter.TopicAdapter;
+import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
+import org.kaaproject.kaa.demo.notification.fragment.NotificationDialogFragment;
+import org.kaaproject.kaa.demo.notification.fragment.NotificationFragment;
+import org.kaaproject.kaa.demo.notification.fragment.TopicFragment;
+import org.kaaproject.kaa.demo.notification.kaa.KaaManager;
+import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
+import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
+import org.kaaproject.kaa.demo.notification.util.TopicHelper;
 import org.kaaproject.kaa.client.notification.NotificationListener;
 import org.kaaproject.kaa.client.notification.NotificationTopicListListener;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
@@ -50,28 +51,16 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
 
     @Override
     public void onCreate(Bundle savedInstance) {
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
 
+        kaaTask.execute();
+        permitPolicy();
+    }
+
+    private void permitPolicy() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        // Initialize a notification listener and add it to the Kaa client.
-        initNotificationListener();
-
-        // Initialize a topicList listener and add it to the Kaa client.
-        initTopicListener();
-
-        manager = new KaaManager(this);
-        manager.start(notificationListener, topicListener);
-
-        Map<Long, TopicPojo> buff = TopicHelper.initTopics(getTopics(), manager.getTopics());
-        getKaaApplication().setTopics(buff);
-
-        showTopicsFragment();
     }
 
     @Override
@@ -92,12 +81,13 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         super.onResume();
 
         // Notify the application of the foreground state.
-        manager.onResume();
+        if (manager != null)
+            manager.onResume();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
 
         manager.onTerminate();
     }
@@ -105,7 +95,9 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentByTag(NotificationConstants.NOTIFICATION_FRAGMENT_TAG) != null) {
+            showProgress();
             showTopicsFragment();
+            hideProgress();
         } else {
             super.onBackPressed();
         }
@@ -123,21 +115,13 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     }
 
 
-    private KaaNotificationApp getKaaApplication() {
-        return (KaaNotificationApp) getApplication();
-    }
-
-    private Map<Long, TopicPojo> getTopics() {
-        return getKaaApplication().getTopics();
-    }
-
     private void initNotificationListener() {
         notificationListener = new NotificationListener() {
             public void onNotification(final long topicId, final Notification notification) {
                 Log.i(NotificationConstants.TAG, "Notification received: " + notification.toString());
 
-                TopicHelper.addNotification(getKaaApplication().getTopics(), topicId, notification);
-                TopicHelper.getTopicModelList(getKaaApplication().getTopics());
+                TopicHelper.addNotification(TopicStorage.get().getTopicMap(), topicId, notification);
+                TopicStorage.get().save(MainActivity.this);
 
                 ListFragment fragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(NotificationConstants.NOTIFICATION_FRAGMENT_TAG);
                 if (fragment != null && fragment.isVisible()) {
@@ -181,7 +165,7 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
 
     private void showNotificationDialog(long topicId, Notification notification) {
 
-        NotificationDialogFragment dialog = NotificationDialogFragment.newInstance(TopicHelper.getTopicName(getTopics(), topicId),
+        NotificationDialogFragment dialog = NotificationDialogFragment.newInstance(TopicHelper.getTopicName(TopicStorage.get().getTopicMap(), topicId),
                 notification.getMessage(), notification.getImage());
         dialog.show(getSupportFragmentManager(), "fragment_alert");
     }
@@ -204,4 +188,44 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
                 NotificationConstants.TOPIC_FRAGMENT_TAG).commit();
     }
 
+    private void showProgress() {
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+        findViewById(R.id.container).setVisibility(View.GONE);
+    }
+
+    private void hideProgress() {
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+        findViewById(R.id.container).setVisibility(View.VISIBLE);
+    }
+
+
+    private AsyncTask<Void, Void, Void> kaaTask = new AsyncTask<Void, Void, Void>() {
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Initialize a notification listener and add it to the Kaa client.
+            initNotificationListener();
+
+            // Initialize a topicList listener and add it to the Kaa client.
+            initTopicListener();
+
+            manager = new KaaManager(MainActivity.this);
+            manager.start(notificationListener, topicListener);
+
+            Map<Long, TopicPojo> buff = TopicHelper.initTopics(TopicStorage.get().getTopicMap(), manager.getTopics());
+
+            TopicStorage.get()
+                    .setTopics(buff)
+                    .save(MainActivity.this);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            hideProgress();
+            showTopicsFragment();
+        }
+    };
 }

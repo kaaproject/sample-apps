@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="@+id/label"
+            android:text="@string/no_text"
             android:textSize="20sp" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/check"
-            android:text="@+id/notifications"
+            android:text="@string/no_text"
             android:textSize="20sp" />
 
         <CheckBox

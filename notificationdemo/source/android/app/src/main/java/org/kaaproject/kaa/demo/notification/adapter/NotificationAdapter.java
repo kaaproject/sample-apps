@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.demo.notification.adapter;
+package org.kaaproject.kaa.demo.notification.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,8 +25,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.kaaproject.demo.notification.R;
-import org.kaaproject.demo.notification.util.ImageCache;
+import org.kaaproject.kaa.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.util.ImageCache;
 import org.kaaproject.kaa.schema.example.Notification;
 
 import java.util.List;

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.4.0_be75f726bdfdf035ad5cb5baf56334bd21f952ef/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_5b2083d4e6ece80c6dcc2f542a57e571d43ace98/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.4.0_8fa61afb110788c51583610ba14ee5e5fe478745/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.4.0_3d0732af53eb9b2eecfd05e1cb9ff1ab847e73c4/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/libs/kaa-android-ep-sdk-zGynEctvWnZhhuWD02rnAhikz5Y.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="685dea0ce600885ed27e4dd0f8f0c0f190ae4ead">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/2/kaa-android-ep-sdk-zGynEctvWnZhhuWD02rnAhikz5Y_788387d0bd1f86e914c49010b559200de6b25bab/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/.gradle/caches/modules-2/files-2.1/org.greenrobot/eventbus/3.0.0/ddd99896e9569eaababbe81b35d80e1b91c4ad85/eventbus-3.0.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ddd99896e9569eaababbe81b35d80e1b91c4ad85">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/eventbus-3.0.0_7fee62d86e9215c131ac61aa19dd237e787f1580/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.4.0_a96fa3ee705f9056ba63395c3ee61474f69f2afb/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_48f3215c583033ad3ce003c86ad785f1832ce2cf/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0ce2f0092e0d21b8bbfbbd0b20abd4b9f6e2cb8d">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_17d245f095af63af5ebbf1c84d427821b97fa226/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a293feb1b666c5507a1af46abc91c45134e1ed76">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_3b41ee273bafee95dfcf7e54c1db32a8b4080562/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_08d4670543cb2c27e15a3b3cfe5a6ed16962a39c/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.4.0_c22e818367da18832a35855e43eb6db7335c5be7/classes.dex" />
+    </item>
+
+</items>

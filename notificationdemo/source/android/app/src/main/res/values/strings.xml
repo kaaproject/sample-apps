@@ -21,6 +21,10 @@
     <string name="app_name"> Kaa Notification Demo</string>
     <string name="notification_topics">Notification topics:</string>
     <string name="action_settings">Settings</string>
+
+    <string name="topic_title">Topics</string>
+    <string name="notification_title">Notification</string>
+
     <string name="no_text">No text</string>
     <string name="no_notifications">No notifications on this serverTopic.</string>
     <string name="no_topics">No topics now.</string>

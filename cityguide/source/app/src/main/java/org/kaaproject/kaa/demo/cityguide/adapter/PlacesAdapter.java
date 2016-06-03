@@ -42,7 +42,8 @@ public class PlacesAdapter extends ArrayAdapter<Place> {
     private Context mContext;
     private ImageLoader mImageLoader;
 
-    public PlacesAdapter(Context context, ImageLoader imageLoader, List<Place> places) {
+    // TODO: move out imageLoader
+    public PlacesAdapter(Context context, List<Place> places, ImageLoader imageLoader) {
         super(context, R.layout.place_list_item, places);
 
         mContext = context;

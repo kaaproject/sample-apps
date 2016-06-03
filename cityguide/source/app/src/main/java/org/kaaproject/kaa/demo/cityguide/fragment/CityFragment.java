@@ -23,6 +23,7 @@ import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.adapter.CityPagerAdapter;
 import org.kaaproject.kaa.demo.cityguide.event.Events;
 import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
+import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
 import org.kaaproject.kaa.demo.cityguide.util.Utils;
 
 import android.os.Bundle;
@@ -30,14 +31,15 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.viewpagerindicator.TabPageIndicator;
 
 /**
- * The implementation of the {@link CityGuideFragment} class. 
+ * The implementation of the {@link BaseFragment} class.
  * Represents tabs with list views of city places separated by the place {@link Category}.
  */
-public class CityFragment extends CityGuideFragment {
+public class CityFragment extends BaseFragment {
 
     private View mWaitView;
     private View mCityPages;
@@ -47,11 +49,13 @@ public class CityFragment extends CityGuideFragment {
     private String mAreaName;
     private String mCityName;
 
-    public static CityFragment createInstance(String areaName, String cityName) {
+    public static CityFragment newInstance(String areaName, String cityName) {
         CityFragment fragment = new CityFragment();
+
         Bundle bundle = new Bundle();
-        bundle.putString(AREA_NAME, areaName);
-        bundle.putString(CITY_NAME, cityName);
+        bundle.putString(GuideConstants.AREA_NAME, areaName);
+        bundle.putString(GuideConstants.CITY_NAME, cityName);
+
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -59,54 +63,44 @@ public class CityFragment extends CityGuideFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mAreaName = arguments.getString(AREA_NAME);
-            mCityName = arguments.getString(CITY_NAME);
-        }
-        if (mAreaName == null) {
-            mAreaName = savedInstanceState.getString(AREA_NAME);
-            mCityName = savedInstanceState.getString(CITY_NAME);
+        if (getArguments() != null) {
+            mAreaName = getArguments().getString(GuideConstants.AREA_NAME);
+            mCityName = getArguments().getString(GuideConstants.CITY_NAME);
         }
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mAreaName != null) {
-            outState.putString(AREA_NAME, mAreaName);
-            outState.putString(CITY_NAME, mCityName);
-        }
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_city, container,
-                false);
+        View rootView = inflater.inflate(R.layout.fragment_city, container, false);
+
         mWaitView = rootView.findViewById(R.id.waitProgress);
         mCityPages = rootView.findViewById(R.id.cityPages);
-        mCityPageIndicator = (TabPageIndicator) rootView
-                .findViewById(R.id.cityPageIndicator);
+
+        mCityPageIndicator = (TabPageIndicator) rootView.findViewById(R.id.cityPageIndicator);
         mCityPager = (ViewPager) rootView.findViewById(R.id.cityPager);
-        if (mApplication.isKaaStarted()) {
+
+        if (manager.isKaaStarted()) {
             showCity();
+        } else {
+            Toast.makeText(getContext(), R.string.no_city, Toast.LENGTH_SHORT).show();
         }
+
         return rootView;
     }
 
     private void showCity() {
         mWaitView.setVisibility(View.GONE);
-        City city = Utils.getCity(mApplication.getCityGuideConfiguration(),
-                mAreaName, mCityName);
+        City city = Utils.getCity(manager.getAreas(), mAreaName, mCityName);
+
         if (city != null) {
-            CityPagerAdapter mCityPagerAdapter = new CityPagerAdapter(mActivity,
-                    mAreaName, mCityName, mActivity.getSupportFragmentManager());
+            CityPagerAdapter mCityPagerAdapter = new CityPagerAdapter(getActivity(), mAreaName, mCityName);
+
             mCityPages.setVisibility(View.VISIBLE);
             mCityPager.setAdapter(mCityPagerAdapter);
             mCityPageIndicator.setViewPager(mCityPager);
         } else {
-            FragmentUtils.popBackStack(mActivity);
+            FragmentUtils.popBackStack(getActivity());
         }
     }
 
@@ -122,16 +116,21 @@ public class CityFragment extends CityGuideFragment {
 
     @Subscribe
     public void onEventMainThread(Events.ConfigurationUpdated configurationUpdated) {
-        City city = Utils.getCity(mApplication.getCityGuideConfiguration(),
-                mAreaName, mCityName);
+        City city = Utils.getCity(manager.getAreas(), mAreaName, mCityName);
+
         if (city == null) {
-            FragmentUtils.popBackStack(mActivity);
+            FragmentUtils.popBackStack(getActivity());
         }
     }
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return mCityName;
+    }
+
+    @Override
+    protected boolean saveInfo() {
+        return false;
     }
 
     @Override

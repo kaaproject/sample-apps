@@ -16,17 +16,6 @@
 
 package org.kaaproject.kaa.demo.cityguide.fragment;
 
-import java.util.List;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.demo.cityguide.Category;
-import org.kaaproject.kaa.demo.cityguide.Place;
-import org.kaaproject.kaa.demo.cityguide.R;
-import org.kaaproject.kaa.demo.cityguide.adapter.PlacesAdapter;
-import org.kaaproject.kaa.demo.cityguide.event.Events;
-import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
-import org.kaaproject.kaa.demo.cityguide.util.Utils;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -35,18 +24,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.greenrobot.eventbus.Subscribe;
+import org.kaaproject.kaa.demo.cityguide.Category;
+import org.kaaproject.kaa.demo.cityguide.CityGuideApplication;
+import org.kaaproject.kaa.demo.cityguide.MainActivity;
+import org.kaaproject.kaa.demo.cityguide.Place;
+import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.adapter.PlacesAdapter;
+import org.kaaproject.kaa.demo.cityguide.event.Events;
+import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
+import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
+import org.kaaproject.kaa.demo.cityguide.util.Utils;
+
+import java.util.List;
 
 /**
- * The implementation of the {@link CityGuideFragment} class.
+ * The implementation of the {@link BaseFragment} class.
  * Represents a view with a list of places.
  */
-public class PlacesFragment extends CityGuideFragment {
-
-    private static final String ARG_AREA_NAME = "arg-area";
-    private static final String ARG_CITY_NAME = "arg-city";
-    private static final String ARG_CATEGORY_JSON = "arg-category";
+public class PlacesFragment extends BaseFragment {
 
     private String mAreaName;
     private String mCityName;
@@ -63,9 +59,9 @@ public class PlacesFragment extends CityGuideFragment {
         PlacesFragment fragment = new PlacesFragment();
 
         Bundle args = new Bundle();
-        args.putString(ARG_AREA_NAME, areaName);
-        args.putString(ARG_CITY_NAME, cityName);
-        args.putString(ARG_CATEGORY_JSON, new Gson().toJson(placeCategory));
+        args.putString(GuideConstants.AREA_NAME, areaName);
+        args.putString(GuideConstants.CITY_NAME, cityName);
+        args.putInt(GuideConstants.PLACE_CATEGORY, placeCategory.ordinal());
 
         fragment.setArguments(args);
         return fragment;
@@ -76,9 +72,9 @@ public class PlacesFragment extends CityGuideFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mAreaName = getArguments().getString(ARG_AREA_NAME);
-            mCityName = getArguments().getString(ARG_CITY_NAME);
-            mPlaceCategory = new Gson().fromJson(getArguments().getString(ARG_CATEGORY_JSON), Category.class);
+            mAreaName = getArguments().getString(GuideConstants.AREA_NAME);
+            mCityName = getArguments().getString(GuideConstants.CITY_NAME);
+            mPlaceCategory = Category.values()[getArguments().getInt(GuideConstants.PLACE_CATEGORY)];
         }
     }
 
@@ -97,11 +93,11 @@ public class PlacesFragment extends CityGuideFragment {
             }
         });
 
-        List<Place> places = Utils.getPlaces(mApplication.getCityGuideConfiguration(), mAreaName,
-                mCityName, mPlaceCategory);
+        List<Place> places = Utils.getPlaces(manager.getAreas(), mAreaName, mCityName, mPlaceCategory);
 
         if (places != null) {
-            mPlacesAdapter = new PlacesAdapter(mActivity, mApplication.getImageLoader(), places);
+            mPlacesAdapter = new PlacesAdapter(getActivity(), places,
+                    ((CityGuideApplication) ((MainActivity) getActivity()).getApplication()).getImageLoader());
             mPlacesListView.setAdapter(mPlacesAdapter);
         }
         return rootView;
@@ -109,32 +105,31 @@ public class PlacesFragment extends CityGuideFragment {
 
     private void onPlaceClicked(int position) {
         Place place = mPlacesAdapter.getItem(position);
-        PlaceFragment placeFragment = new PlaceFragment(mAreaName, mCityName,
+        PlaceFragment placeFragment = PlaceFragment.newInstance(mAreaName, mCityName,
                 mPlaceCategory, place.getTitle());
 
-        FragmentUtils.addBackStackFragment(mActivity, placeFragment);
+        FragmentUtils.addBackStackFragment(getActivity(), placeFragment, getTitle());
     }
 
     @Subscribe
     public void onEventMainThread(Events.ConfigurationUpdated configurationUpdated) {
-        List<Place> places = Utils.getPlaces(
-                mApplication.getCityGuideConfiguration(), mAreaName, mCityName,
-                mPlaceCategory);
+        List<Place> places = Utils.getPlaces(manager.getAreas(), mAreaName, mCityName, mPlaceCategory);
+
         if (places != null) {
-            mPlacesAdapter = new PlacesAdapter(mActivity,
-                    mApplication.getImageLoader(), places);
+            mPlacesAdapter = new PlacesAdapter(getContext(), places,
+                    ((CityGuideApplication) ((MainActivity) getActivity()).getApplication()).getImageLoader());
             mPlacesListView.setAdapter(mPlacesAdapter);
         }
     }
 
     @Override
-    protected boolean updateActionBar() {
-        return false;
+    public String getTitle() {
+        return mAreaName + "_" + mCityName;
     }
 
     @Override
-    protected boolean useEventBus() {
-        return true;
+    protected boolean saveInfo() {
+        return false;
     }
 
     @Override

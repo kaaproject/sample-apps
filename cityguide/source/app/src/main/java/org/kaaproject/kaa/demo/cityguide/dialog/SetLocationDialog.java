@@ -17,13 +17,19 @@
 package org.kaaproject.kaa.demo.cityguide.dialog;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
+import org.kaaproject.kaa.demo.cityguide.Area;
 import org.kaaproject.kaa.demo.cityguide.AvailableArea;
+import org.kaaproject.kaa.demo.cityguide.City;
 import org.kaaproject.kaa.demo.cityguide.CityGuideApplication;
 import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.adapter.AreasAdapter;
+import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -36,29 +42,30 @@ import android.widget.Spinner;
  */
 public class SetLocationDialog extends Dialog {
 
-    private CityGuideApplication mApplication;
+    private KaaManager manager;
+    private SetLocationCallback callback;
 
-    private ArrayAdapter<String> mAreasAdapter;
-    private ArrayAdapter<String> mCitiesAdapter;
-
-    private Spinner mSelectAreaSpinner;
-    private Spinner mSelectCitySpinner;
-
-    public SetLocationDialog(Context context, CityGuideApplication application,
-                             final SetLocationCallback callback) {
+    public SetLocationDialog(KaaManager manager, Context context, SetLocationCallback callback) {
         super(context);
-        mApplication = application;
 
+        this.manager = manager;
+        this.callback = callback;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_set_location);
+
         setTitle(R.string.action_set_location);
 
-        mSelectAreaSpinner = (Spinner) findViewById(R.id.selectAreaSpinner);
-        mAreasAdapter = new ArrayAdapter<>(context,
+        final Spinner mSelectAreaSpinner = (Spinner) findViewById(R.id.selectAreaSpinner);
+        final ArrayAdapter<String> mAreasAdapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item);
         mSelectAreaSpinner.setAdapter(mAreasAdapter);
 
-        mSelectCitySpinner = (Spinner) findViewById(R.id.selectCitySpinner);
-        mCitiesAdapter = new ArrayAdapter<>(context,
+        final Spinner mSelectCitySpinner = (Spinner) findViewById(R.id.selectCitySpinner);
+        final ArrayAdapter<String> mCitiesAdapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item);
         mSelectCitySpinner.setAdapter(mCitiesAdapter);
 
@@ -87,52 +94,49 @@ public class SetLocationDialog extends Dialog {
             }
         });
 
-        updateAreasSpinner();
-
+        // update areas
+        updateAreasSpinner(mAreasAdapter);
         int position = 0;
-        String currentArea = mApplication.getCityGuideProfile().getArea();
+        String currentArea = manager.getArea();
         if (currentArea != null) {
             position = mAreasAdapter.getPosition(currentArea);
         }
         mSelectAreaSpinner.setSelection(position);
 
-        updateCitiesSpinner();
-
+        // update cities
+        updateCitiesSpinner(mSelectAreaSpinner, mCitiesAdapter);
         position = 0;
-        String currentCity = mApplication.getCityGuideProfile().getCity();
+        String currentCity = manager.getCity();
         if (currentCity != null) {
             position = mCitiesAdapter.getPosition(currentCity);
         }
 
         mSelectCitySpinner.setSelection(position);
+        mSelectAreaSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent,
+                                       View view, int position, long id) {
+                updateCitiesSpinner(mSelectAreaSpinner, mCitiesAdapter);
+            }
 
-        mSelectAreaSpinner
-                .setOnItemSelectedListener(new OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent,
-                                               View view, int position, long id) {
-                        updateCitiesSpinner();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        updateCitiesSpinner();
-                    }
-                });
-
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                updateCitiesSpinner(mSelectAreaSpinner, mCitiesAdapter);
+            }
+        });
     }
 
-    private void updateAreasSpinner() {
+    private void updateAreasSpinner(ArrayAdapter<String> mAreasAdapter) {
         mAreasAdapter.clear();
         mAreasAdapter.add("");
 
-        List<AvailableArea> availableAreas = mApplication.getCityGuideConfiguration().getAvailableAreas();
+        List<AvailableArea> availableAreas = manager.getAvailableAreas();
         for (AvailableArea area : availableAreas) {
             mAreasAdapter.add(area.getName());
         }
     }
 
-    private void updateCitiesSpinner() {
+    private void updateCitiesSpinner(Spinner mSelectAreaSpinner, ArrayAdapter<String> mCitiesAdapter) {
         mCitiesAdapter.clear();
         mCitiesAdapter.add("");
 
@@ -141,7 +145,7 @@ public class SetLocationDialog extends Dialog {
             return;
         }
 
-        List<AvailableArea> availableAreas = mApplication.getCityGuideConfiguration().getAvailableAreas();
+        List<AvailableArea> availableAreas = manager.getAvailableAreas();
         for (AvailableArea area : availableAreas) {
             if (area.getName().equals(areaName)) {
                 mCitiesAdapter.addAll(area.getAvailableCities());

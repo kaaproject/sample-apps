@@ -1,17 +1,17 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.cityguide.util;
@@ -40,14 +40,14 @@ import android.util.Log;
  * copy streams and query data from the city guide configuration object.
  */
 public class Utils {
-    
+
     private static final String TAG = Utils.class.getSimpleName();
-    
+
     private static final String MAPS_PACKAGE_NAME = "com.google.android.apps.maps";
     private static final String MAPS_CLASS_NAME = "com.google.android.maps.MapsActivity";
 
     public static void showOnMap(Context context, double latitude,
-            double longitude) {
+                                 double longitude) {
         String uri = formatLatitudeLongitude(
                 "http://maps.google.com/maps?f=q&q=(%f,%f)", latitude,
                 longitude);
@@ -71,7 +71,7 @@ public class Utils {
     }
 
     public static String formatLatitudeLongitude(String format,
-            double latitude, double longitude) {
+                                                 double latitude, double longitude) {
         return String.format(Locale.ENGLISH, format, latitude, longitude);
     }
 
@@ -79,7 +79,7 @@ public class Utils {
         final int buffer_size = 1024;
         try {
             byte[] bytes = new byte[buffer_size];
-            for (;;) {
+            for (; ; ) {
                 int count = is.read(bytes, 0, buffer_size);
                 if (count == -1)
                     break;
@@ -90,18 +90,18 @@ public class Utils {
         }
     }
 
-    public static List<City> getCities(CityGuideConfig config, String areaName) {
-        for (Area area : config.getAreas()) {
+    // TODO: rewrite
+    public static List<City> getCities(List<Area> areas, String areaName) {
+        for (Area area : areas) {
             if (area.getName().equals(areaName)) {
                 return area.getCities();
             }
         }
-        return null;
+        return new ArrayList<>();
     }
 
-    public static City getCity(CityGuideConfig config, String areaName,
-            String cityName) {
-        List<City> cities = getCities(config, areaName);
+    public static City getCity(List<Area> areas, String areaName, String cityName) {
+        List<City> cities = getCities(areas, areaName);
         if (cities != null) {
             for (City city : cities) {
                 if (city.getName().equals(cityName)) {
@@ -112,9 +112,10 @@ public class Utils {
         return null;
     }
 
-    public static List<Place> getPlaces(CityGuideConfig config,
-            String areaName, String cityName, Category placeCategory) {
-        List<City> cities = getCities(config, areaName);
+    public static List<Place> getPlaces(List<Area> areas, String areaName, String cityName,
+                                        Category placeCategory) {
+
+        List<City> cities = getCities(areas, areaName);
         if (cities != null) {
             for (City city : cities) {
                 if (city.getName().equals(cityName)) {
@@ -131,10 +132,10 @@ public class Utils {
         return null;
     }
 
-    public static Place getPlace(CityGuideConfig config, String areaName,
-            String cityName, Category placeCategory, String placeName) {
-        List<Place> places = getPlaces(config, areaName, cityName,
-                placeCategory);
+    public static Place getPlace(List<Area> areas, String areaName, String cityName,
+                                 Category placeCategory, String placeName) {
+
+        List<Place> places = getPlaces(areas, areaName, cityName, placeCategory);
         if (places != null) {
             for (Place place : places) {
                 if (place.getTitle().equals(placeName)) {

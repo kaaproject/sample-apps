@@ -19,12 +19,18 @@
 <resources>
 
     <string name="app_name">City Guide Demo</string>
+
     <string name="action_set_location">Set location</string>
     <string name="select_area">Select area:</string>
     <string name="select_city">Select city:</string>
     <string name="areas_title">Areas</string>
     <string name="please_wait">Please wait...</string>
     <string name="show_on_map">Show on map</string>
+
+    <string name="no_areas">Kaa client is not started. Wait for it! We show your areas!</string>
+    <string name="no_cities">Kaa client is not started. Wait for it! We show your cities!</string>
+    <string name="no_city">Kaa client is not started. Wait for it! We show your city!</string>
+
     <string name="hotels">HOTELS</string>
     <string name="shops">SHOPS</string>
     <string name="museums">MUSEUMS</string>

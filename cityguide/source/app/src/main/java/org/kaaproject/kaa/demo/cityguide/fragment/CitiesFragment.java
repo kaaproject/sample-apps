@@ -1,17 +1,17 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.cityguide.fragment;
@@ -24,6 +24,7 @@ import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.adapter.CitiesAdapter;
 import org.kaaproject.kaa.demo.cityguide.event.Events;
 import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
+import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
 import org.kaaproject.kaa.demo.cityguide.util.Utils;
 
 import android.os.Bundle;
@@ -32,22 +33,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
- * The implementation of the {@link CityGuideFragment} class. 
+ * The implementation of the {@link BaseFragment} class.
  * Represents a view with a list of cities.
  */
-public class CitiesFragment extends CityGuideFragment {
+public class CitiesFragment extends BaseFragment {
 
     private View mWaitView;
     private ListView mCitiesListView;
     private String mAreaName;
     private CitiesAdapter mCitiesAdapter;
 
-    public static CitiesFragment createInstance(String areaName) {
+    public static CitiesFragment newInstance(String areaName) {
         CitiesFragment fragment = new CitiesFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(AREA_NAME, areaName);
+        bundle.putString(GuideConstants.AREA_NAME, areaName);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -55,55 +57,47 @@ public class CitiesFragment extends CityGuideFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mAreaName = arguments.getString(AREA_NAME);
-        }
-        if (mAreaName == null) {
-            mAreaName = savedInstanceState.getString(AREA_NAME);
-        }
-    }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mAreaName != null) {
-            outState.putString(AREA_NAME, mAreaName);
+        if (getArguments() != null) {
+            mAreaName = getArguments().getString(GuideConstants.AREA_NAME);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_cities, container,
-                false);
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_cities, container, false);
 
         mWaitView = rootView.findViewById(R.id.waitProgress);
         mCitiesListView = (ListView) rootView.findViewById(R.id.citiesList);
-        mCitiesListView
-                .setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                            int position, long id) {
-                        onCityClicked(position);
-                    }
-                });
-        if (mApplication.isKaaStarted()) {
+
+        mCitiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                onCityClicked(position);
+            }
+        });
+
+        if (manager.isKaaStarted()) {
             showCities();
+        } else {
+            Toast.makeText(getContext(), R.string.no_cities, Toast.LENGTH_SHORT).show();
         }
+
         return rootView;
     }
 
     private void showCities() {
         mWaitView.setVisibility(View.GONE);
-        List<City> cities = Utils.getCities(
-                mApplication.getCityGuideConfiguration(), mAreaName);
-        if (cities != null) {
-            mCitiesAdapter = new CitiesAdapter(mActivity, cities);
+        List<City> cities = Utils.getCities(manager.getAreas(), mAreaName);
+
+        if (cities.isEmpty()) {
+            mCitiesAdapter = new CitiesAdapter(getContext(), cities);
             mCitiesListView.setVisibility(View.VISIBLE);
             mCitiesListView.setAdapter(mCitiesAdapter);
         } else {
-            FragmentUtils.popBackStack(mActivity);
+            FragmentUtils.popBackStack(getActivity());
         }
     }
 
@@ -119,13 +113,19 @@ public class CitiesFragment extends CityGuideFragment {
 
     private void onCityClicked(int position) {
         City city = mCitiesAdapter.getItem(position);
-        CityFragment cityFragment = CityFragment.createInstance(mAreaName, city.getName());
-        FragmentUtils.addBackStackFragment(mActivity, cityFragment);
+        CityFragment cityFragment = CityFragment.newInstance(mAreaName, city.getName());
+
+        FragmentUtils.addBackStackFragment(getActivity(), cityFragment, getTitle());
     }
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return mAreaName;
+    }
+
+    @Override
+    protected boolean saveInfo() {
+        return false;
     }
 
     @Override

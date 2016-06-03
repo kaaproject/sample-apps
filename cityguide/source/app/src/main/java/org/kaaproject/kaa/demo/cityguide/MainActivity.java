@@ -26,46 +26,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
 import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 
 /**
  * The implementation of the {@link AppCompatActivity} class.
  * Notifies the application of the activity lifecycle changes.
- * Implements the 'Set location' menu command to display {@link SetLocationDialog} and notify the application 
- * of the new location.    
+ * Implements the 'Set location' menu command to display {@link SetLocationDialog} and notify the
+ * application of the new location.
  */
 public class MainActivity extends AppCompatActivity implements SetLocationCallback {
+
+    /*
+     * Create wrapper on Kaa functionality.
+     * In different cases you can create manager in one activity or create it in Application class
+     * for accessing in different activities.
+     */
+    private KaaManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_guide);
+
+        manager = new KaaManager();
+        manager.start(this);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new AreasFragment()).commit();
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        /*
-         * Notify the application of the background state.
-         */
-
-        getCityGuideApplication().pause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        /*
-         * Notify the application of the foreground state.
-         */
-
-        getCityGuideApplication().resume();
+    public KaaManager getManager() {
+        return manager;
     }
 
     @Override
@@ -76,30 +70,51 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            FragmentUtils.popBackStack(this);
-            return true;
-        } else if (id == R.id.action_set_location) {
-            setLocation();
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                FragmentUtils.popBackStack(this);
+                break;
+            case R.id.action_set_location:
+                setLocation();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public CityGuideApplication getCityGuideApplication() {
-        return (CityGuideApplication) getApplication();
-    }
-
     private void setLocation() {
-        SetLocationDialog dialog = new SetLocationDialog(this,
-                getCityGuideApplication(), this);
+        SetLocationDialog dialog = new SetLocationDialog(manager, this, this);
         dialog.show();
     }
 
     @Override
     public void onLocationSelected(String area, String city) {
-        getCityGuideApplication().updateLocation(area, city);
+        manager.updateLocation(area, city);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        /*
+         * Notify the application of the background state.
+         */
+        manager.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /*
+         * Notify the application of the foreground state.
+         */
+        manager.resume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        manager.stop();
+    }
 }

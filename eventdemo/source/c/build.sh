@@ -18,7 +18,6 @@
 # Exits immediately if error occurs
 set -e
 
-RUN_DIR=`pwd`
 
 help() {
     echo "Choose one of the following: {build|run|deploy|clean}"
@@ -40,7 +39,7 @@ KAA_ARCH=x86-64
 select_arch() {
     echo "Please enter architecture(default is x86-64):"
     read arch
-    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
+    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$PROJECT_HOME/libs/kaa/toolchains/$arch.cmake"
     case "$arch" in
         edison)
           KAA_ARCH=x86-64

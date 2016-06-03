@@ -18,15 +18,13 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdint.h>
-//#include <string.h>
-//#include <time.h>
 
-#include <kaa/kaa_error.h>
-#include <kaa/kaa_context.h>
-#include <kaa/platform/kaa_client.h>
-#include <kaa/kaa_logging.h>
-#include <kaa/utilities/kaa_log.h>
-#include <kaa/platform-impl/common/ext_log_upload_strategies.h>
+#include <kaa_error.h>
+#include <kaa_context.h>
+#include <platform/kaa_client.h>
+#include <kaa_logging.h>
+#include <utilities/kaa_log.h>
+#include <platform-impl/common/ext_log_upload_strategies.h>
 
 
 

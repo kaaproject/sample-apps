@@ -15,10 +15,10 @@
 #
 
 cmake_minimum_required(VERSION 2.8.8)
-project (C-SDK-sample C)
+project(C-SDK-sample C)
 
-find_package (OpenSSL REQUIRED)
-find_package (Threads REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(Threads REQUIRED)
 
 set(APP_NAME "demo_client")
 set(KAA_SDK_DIR "client-c")
@@ -28,7 +28,7 @@ execute_process(COMMAND sh -c "tar -zxf ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/kaa
 
 set(CMAKE_C_FLAGS "${CMAKE_CFLAGS} -std=c99 -g -Wall -Wextra")
 
-set (SAMPLE_SOURCE_FILES src/kaa_demo.c src/dht11/dht11.c)
+set(SAMPLE_SOURCE_FILES src/kaa_demo.c src/dht11/dht11.c)
 
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
                  ${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}/build)

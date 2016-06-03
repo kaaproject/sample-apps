@@ -24,7 +24,7 @@
 #include <kaa/platform/kaa_client.h>
 #include <kaa/utilities/kaa_log.h>
 #include <kaa/utilities/kaa_mem.h>
-#include <kaa/kaa_user.h>
+#include <kaa_user.h>
 #include <kaa/gen/kaa_thermostat_event_class_family.h>
 
 

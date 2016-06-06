@@ -16,18 +16,22 @@
 
 package org.kaaproject.kaa.demo.cityguide;
 
-import org.kaaproject.kaa.demo.cityguide.dialog.SetLocationDialog;
-import org.kaaproject.kaa.demo.cityguide.dialog.SetLocationDialog.SetLocationCallback;
-import org.kaaproject.kaa.demo.cityguide.fragment.AreasFragment;
-
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import org.kaaproject.kaa.demo.cityguide.fragment.AreasFragment;
+import org.kaaproject.kaa.demo.cityguide.fragment.BaseFragment;
 import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
-import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
+import org.kaaproject.kaa.demo.cityguide.ui.SetLocationDialog;
+import org.kaaproject.kaa.demo.cityguide.ui.SetLocationDialog.SetLocationCallback;
+
+import java.util.List;
 
 /**
  * The implementation of the {@link AppCompatActivity} class.
@@ -48,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_guide);
+
+        // Create global configuration and initialize ImageLoader with this config
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
 
         manager = new KaaManager();
         manager.start(this);
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                FragmentUtils.popBackStack(this);
+                getCurrentFragment().popBackStack(this);
                 break;
             case R.id.action_set_location:
                 setLocation();
@@ -84,6 +92,17 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
     private void setLocation() {
         SetLocationDialog dialog = new SetLocationDialog(manager, this, this);
         dialog.show();
+    }
+
+    private BaseFragment getCurrentFragment() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null || !fragments.isEmpty()) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isVisible())
+                    return (BaseFragment) fragment;
+            }
+        }
+        return null;
     }
 
     @Override

@@ -16,15 +16,6 @@
 
 package org.kaaproject.kaa.demo.cityguide.adapter;
 
-import java.util.List;
-
-import org.kaaproject.kaa.demo.cityguide.Place;
-import org.kaaproject.kaa.demo.cityguide.R;
-import org.kaaproject.kaa.demo.cityguide.image.ImageLoader;
-import org.kaaproject.kaa.demo.cityguide.image.ImageLoader.ImageType;
-import org.kaaproject.kaa.demo.cityguide.image.LoadingImageView;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +24,12 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.kaaproject.kaa.demo.cityguide.Place;
+import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.ui.ProgressImageView;
+
+import java.util.List;
+
 /**
  * The implementation of the {@link BaseAdapter} class. Used as an adapter class for the places list view.
  * Provides list item views containing a photo, name and description of each place.
@@ -40,14 +37,11 @@ import android.widget.TextView;
 public class PlacesAdapter extends ArrayAdapter<Place> {
 
     private Context mContext;
-    private ImageLoader mImageLoader;
 
-    // TODO: move out imageLoader
-    public PlacesAdapter(Context context, List<Place> places, ImageLoader imageLoader) {
+    public PlacesAdapter(Context context, List<Place> places) {
         super(context, R.layout.place_list_item, places);
 
         mContext = context;
-        mImageLoader = imageLoader;
     }
 
     @Override
@@ -61,7 +55,7 @@ public class PlacesAdapter extends ArrayAdapter<Place> {
             convertView = inflater.inflate(R.layout.place_list_item, null);
 
             holder = new ViewHolder();
-            holder.photo = (LoadingImageView) convertView.findViewById(R.id.placePhoto);
+            holder.photo = (ProgressImageView) convertView.findViewById(R.id.placePhoto);
             holder.name = (TextView) convertView.findViewById(R.id.placeName);
             holder.description = (TextView) convertView.findViewById(R.id.placeDesc);
 
@@ -71,7 +65,8 @@ public class PlacesAdapter extends ArrayAdapter<Place> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        mImageLoader.loadImage(place.getPhotoUrl(), holder.photo, ImageType.THUMBNAIL);
+//        mImageLoader.loadImage(place.getPhotoUrl(), holder.photo, ImageType.THUMBNAIL);
+        holder.photo.setImage(place.getPhotoUrl());
         holder.name.setText(place.getTitle());
         holder.description.setText(place.getDescription());
 
@@ -81,6 +76,6 @@ public class PlacesAdapter extends ArrayAdapter<Place> {
     class ViewHolder {
         TextView name;
         TextView description;
-        LoadingImageView photo;
+        ProgressImageView photo;
     }
 }

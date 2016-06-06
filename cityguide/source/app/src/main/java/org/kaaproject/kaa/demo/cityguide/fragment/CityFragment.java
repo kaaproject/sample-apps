@@ -16,16 +16,6 @@
 
 package org.kaaproject.kaa.demo.cityguide.fragment;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.demo.cityguide.Category;
-import org.kaaproject.kaa.demo.cityguide.City;
-import org.kaaproject.kaa.demo.cityguide.R;
-import org.kaaproject.kaa.demo.cityguide.adapter.CityPagerAdapter;
-import org.kaaproject.kaa.demo.cityguide.event.Events;
-import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
-import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
-import org.kaaproject.kaa.demo.cityguide.util.Utils;
-
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -33,7 +23,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.viewpagerindicator.TabPageIndicator;
+import org.greenrobot.eventbus.Subscribe;
+import org.kaaproject.kaa.demo.cityguide.Category;
+import org.kaaproject.kaa.demo.cityguide.City;
+import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.adapter.CityPagerAdapter;
+import org.kaaproject.kaa.demo.cityguide.event.Events;
+import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
+import org.kaaproject.kaa.demo.cityguide.util.KaaUtils;
 
 /**
  * The implementation of the {@link BaseFragment} class.
@@ -44,7 +41,7 @@ public class CityFragment extends BaseFragment {
     private View mWaitView;
     private View mCityPages;
     // TODO: move out
-    private TabPageIndicator mCityPageIndicator;
+//    private TabPageIndicator mCityPageIndicator;
     private ViewPager mCityPager;
     private String mAreaName;
     private String mCityName;
@@ -77,7 +74,7 @@ public class CityFragment extends BaseFragment {
         mWaitView = rootView.findViewById(R.id.waitProgress);
         mCityPages = rootView.findViewById(R.id.cityPages);
 
-        mCityPageIndicator = (TabPageIndicator) rootView.findViewById(R.id.cityPageIndicator);
+//        mCityPageIndicator = (TabPageIndicator) rootView.findViewById(R.id.cityPageIndicator);
         mCityPager = (ViewPager) rootView.findViewById(R.id.cityPager);
 
         if (manager.isKaaStarted()) {
@@ -91,16 +88,16 @@ public class CityFragment extends BaseFragment {
 
     private void showCity() {
         mWaitView.setVisibility(View.GONE);
-        City city = Utils.getCity(manager.getAreas(), mAreaName, mCityName);
+        City city = KaaUtils.getCity(manager.getAreas(), mAreaName, mCityName);
 
         if (city != null) {
             CityPagerAdapter mCityPagerAdapter = new CityPagerAdapter(getActivity(), mAreaName, mCityName);
 
             mCityPages.setVisibility(View.VISIBLE);
             mCityPager.setAdapter(mCityPagerAdapter);
-            mCityPageIndicator.setViewPager(mCityPager);
+//            mCityPageIndicator.setViewPager(mCityPager);
         } else {
-            FragmentUtils.popBackStack(getActivity());
+            popBackStack(getActivity());
         }
     }
 
@@ -110,16 +107,16 @@ public class CityFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onEventMainThread(Events.KaaStarted kaaStarted) {
+    public void onEvent(Events.KaaStarted kaaStarted) {
         showCity();
     }
 
     @Subscribe
-    public void onEventMainThread(Events.ConfigurationUpdated configurationUpdated) {
-        City city = Utils.getCity(manager.getAreas(), mAreaName, mCityName);
+    public void onEvent(Events.ConfigurationUpdated configurationUpdated) {
+        City city = KaaUtils.getCity(manager.getAreas(), mAreaName, mCityName);
 
         if (city == null) {
-            FragmentUtils.popBackStack(getActivity());
+            popBackStack(getActivity());
         }
     }
 

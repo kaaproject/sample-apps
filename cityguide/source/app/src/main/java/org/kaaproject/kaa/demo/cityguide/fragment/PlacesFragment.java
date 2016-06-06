@@ -26,15 +26,12 @@ import android.widget.ListView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.kaaproject.kaa.demo.cityguide.Category;
-import org.kaaproject.kaa.demo.cityguide.CityGuideApplication;
-import org.kaaproject.kaa.demo.cityguide.MainActivity;
 import org.kaaproject.kaa.demo.cityguide.Place;
 import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.adapter.PlacesAdapter;
 import org.kaaproject.kaa.demo.cityguide.event.Events;
-import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
 import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
-import org.kaaproject.kaa.demo.cityguide.util.Utils;
+import org.kaaproject.kaa.demo.cityguide.util.KaaUtils;
 
 import java.util.List;
 
@@ -93,11 +90,10 @@ public class PlacesFragment extends BaseFragment {
             }
         });
 
-        List<Place> places = Utils.getPlaces(manager.getAreas(), mAreaName, mCityName, mPlaceCategory);
+        List<Place> places = KaaUtils.getPlaces(manager.getAreas(), mAreaName, mCityName, mPlaceCategory);
 
         if (places != null) {
-            mPlacesAdapter = new PlacesAdapter(getActivity(), places,
-                    ((CityGuideApplication) ((MainActivity) getActivity()).getApplication()).getImageLoader());
+            mPlacesAdapter = new PlacesAdapter(getActivity(), places);
             mPlacesListView.setAdapter(mPlacesAdapter);
         }
         return rootView;
@@ -105,19 +101,18 @@ public class PlacesFragment extends BaseFragment {
 
     private void onPlaceClicked(int position) {
         Place place = mPlacesAdapter.getItem(position);
-        PlaceFragment placeFragment = PlaceFragment.newInstance(mAreaName, mCityName,
+        PlaceDetailFragment placeDetailFragment = PlaceDetailFragment.newInstance(mAreaName, mCityName,
                 mPlaceCategory, place.getTitle());
 
-        FragmentUtils.addBackStackFragment(getActivity(), placeFragment, getTitle());
+        move(getActivity(), placeDetailFragment, placeDetailFragment.getTitle());
     }
 
     @Subscribe
-    public void onEventMainThread(Events.ConfigurationUpdated configurationUpdated) {
-        List<Place> places = Utils.getPlaces(manager.getAreas(), mAreaName, mCityName, mPlaceCategory);
+    public void onEvent(Events.ConfigurationUpdated configurationUpdated) {
+        List<Place> places = KaaUtils.getPlaces(manager.getAreas(), mAreaName, mCityName, mPlaceCategory);
 
         if (places != null) {
-            mPlacesAdapter = new PlacesAdapter(getContext(), places,
-                    ((CityGuideApplication) ((MainActivity) getActivity()).getApplication()).getImageLoader());
+            mPlacesAdapter = new PlacesAdapter(getContext(), places);
             mPlacesListView.setAdapter(mPlacesAdapter);
         }
     }

@@ -16,12 +16,17 @@
 
 package org.kaaproject.kaa.demo.cityguide.fragment;
 
-import org.kaaproject.kaa.demo.cityguide.MainActivity;
-import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
-
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+
+import org.kaaproject.kaa.demo.cityguide.MainActivity;
+import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
+import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
 
 /**
  * The implementation of the {@link Fragment} class. Used as a superclass for all the application fragments.
@@ -64,6 +69,42 @@ public abstract class BaseFragment extends Fragment {
 
         manager.unregisterEventBus(this);
     }
+
+    public void move(FragmentActivity activity, Fragment fragment, String tag) {
+        if (activity == null) {
+            GuideConstants.LOGGER.error("Unable pop fragment. Invalid args.");
+            return;
+        }
+
+        activity.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment, tag)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(tag)
+                .commit();
+    }
+
+    public String getFragmentTag(FragmentActivity activity) {
+        if (activity.getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            return null;
+        }
+        return activity.getSupportFragmentManager().getBackStackEntryAt(
+                activity.getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
+
+//        return (BaseFragment) activity.getSupportFragmentManager().findFragmentByTag(tag);
+    }
+
+    public void popBackStack(FragmentActivity activity) {
+        if (activity == null) {
+            GuideConstants.LOGGER.error("Unable pop fragment. Invalid args.");
+            return;
+        }
+
+        FragmentManager fm = activity.getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack(getFragmentTag(activity), 0);
+        }
+    }
+
 
     public abstract String getTitle();
 

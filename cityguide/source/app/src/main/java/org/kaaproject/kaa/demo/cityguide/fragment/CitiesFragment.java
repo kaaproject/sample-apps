@@ -16,17 +16,6 @@
 
 package org.kaaproject.kaa.demo.cityguide.fragment;
 
-import java.util.List;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.demo.cityguide.City;
-import org.kaaproject.kaa.demo.cityguide.R;
-import org.kaaproject.kaa.demo.cityguide.adapter.CitiesAdapter;
-import org.kaaproject.kaa.demo.cityguide.event.Events;
-import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
-import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
-import org.kaaproject.kaa.demo.cityguide.util.Utils;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +23,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.kaaproject.kaa.demo.cityguide.City;
+import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.adapter.CitiesAdapter;
+import org.kaaproject.kaa.demo.cityguide.event.Events;
+import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
+import org.kaaproject.kaa.demo.cityguide.util.KaaUtils;
+
+import java.util.List;
 
 /**
  * The implementation of the {@link BaseFragment} class.
@@ -90,24 +89,24 @@ public class CitiesFragment extends BaseFragment {
 
     private void showCities() {
         mWaitView.setVisibility(View.GONE);
-        List<City> cities = Utils.getCities(manager.getAreas(), mAreaName);
+        List<City> cities = KaaUtils.getCities(manager.getAreas(), mAreaName);
 
-        if (cities.isEmpty()) {
+        if (!cities.isEmpty()) {
             mCitiesAdapter = new CitiesAdapter(getContext(), cities);
             mCitiesListView.setVisibility(View.VISIBLE);
             mCitiesListView.setAdapter(mCitiesAdapter);
         } else {
-            FragmentUtils.popBackStack(getActivity());
+            popBackStack(getActivity());
         }
     }
 
     @Subscribe
-    public void onEventMainThread(Events.KaaStarted kaaStarted) {
+    public void onEvent(Events.KaaStarted kaaStarted) {
         showCities();
     }
 
     @Subscribe
-    public void onEventMainThread(Events.ConfigurationUpdated configurationUpdated) {
+    public void onEvent(Events.ConfigurationUpdated configurationUpdated) {
         showCities();
     }
 
@@ -115,7 +114,7 @@ public class CitiesFragment extends BaseFragment {
         City city = mCitiesAdapter.getItem(position);
         CityFragment cityFragment = CityFragment.newInstance(mAreaName, city.getName());
 
-        FragmentUtils.addBackStackFragment(getActivity(), cityFragment, getTitle());
+        move(getActivity(), cityFragment, cityFragment.getTitle());
     }
 
     @Override

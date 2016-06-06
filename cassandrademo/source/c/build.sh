@@ -50,7 +50,7 @@ clean() {
 
 run() {
     cd "$PROJECT_HOME/$BUILD_DIR"
-    sudo ./$APP_NAME
+    ./$APP_NAME
 }
 
 for cmd in $@

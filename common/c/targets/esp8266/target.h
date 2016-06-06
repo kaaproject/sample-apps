@@ -15,7 +15,7 @@
  */
 
 /*
- * This header provides several bindings for TI's cc32xx target that abstracts
+ * This header provides several bindings for ESP8266 target that abstracts
  * an implementation of its features. Right now it contains only
  * console and target initialisation routines, but it must be extended
  * if required.
@@ -28,7 +28,7 @@
 #include <stdio.h>
 
 /* Demo print routine. printf implementation is available on this platform. */
-#define demo_printf(msg, ...)   printf((msg), ##__VA_ARGS__)
+#define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
 
 /* Initialises a target. Zero value means success, negative - errors.
  *

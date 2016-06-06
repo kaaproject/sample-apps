@@ -16,27 +16,14 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-if(DEFINED $ENV{ESPRESSIF_HOME})
-    set(ESPRESSIF_HOME $ENV{ESPRESSIF_HOME})
-else()
-    set(ESPRESSIF_HOME /opt/Espressif)
+if(NOT DEFINED ESP_RTOS_SDK)
+    set(ESP_RTOS_SDK /opt/Espressif/esp-rtos-sdk)
 endif()
 
-set(ESP_SDK_HOME ${ESPRESSIF_HOME}/esp-rtos-sdk)
-
-if(DEFINED ENV{ESP8266_TOOLCHAIN_PATH})
-  set(TOOLCHAIN_PATH "$ENV{ESP8266_TOOLCHAIN_PATH}")
-  message(STATUS "Toolchain path is provided: ${TOOLCHAIN_PATH}")
-else()
-
-  if(NOT TOOLCHAIN_PATH)
-    # Set default path.
-    set(TOOLCHAIN_PATH /opt/Espressif/crosstool-NG/builds/xtensa-lx106-elf)
-    message(STATUS "Default toolchain path will be used")
-  endif()
-endif()
-
-set(ESP_TOOLCHAIN_LIBS_HOME ${TOOLCHAIN_PATH}/lib/gcc/xtensa-lx106-elf/4.8.2)
+exec_program(xtensa-lx106-elf-gcc .
+            ARGS -print-libgcc-file-name
+            OUTPUT_VARIABLE ESP8266_LIBGCC
+            )
 
 add_library(target_support
             STATIC
@@ -45,33 +32,32 @@ add_library(target_support
             driver/gpio.c
             )
 
-
 target_include_directories(target_support PUBLIC driver)
 target_include_directories(target_support PUBLIC .)
 target_include_directories(target_support PUBLIC
-                           ${ESP_SDK_HOME}/extra_include
-                           ${ESP_SDK_HOME}/include
-                           ${ESP_SDK_HOME}/include/lwip
-                           ${ESP_SDK_HOME}/include/lwip/ipv4
-                           ${ESP_SDK_HOME}/include/lwip/ipv6
-                           ${ESP_SDK_HOME}/include/espressif/)
+                           ${ESP_RTOS_SDK}/extra_include
+                           ${ESP_RTOS_SDK}/include
+                           ${ESP_RTOS_SDK}/include/lwip
+                           ${ESP_RTOS_SDK}/include/lwip/ipv4
+                           ${ESP_RTOS_SDK}/include/lwip/ipv6
+                           ${ESP_RTOS_SDK}/include/espressif/)
 # specify linker script
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.rom.addr.v6.ld ${CMAKE_BINARY_DIR})
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.app.v6.ld ${CMAKE_BINARY_DIR})
 
 # ESP8266 RTOS SDK dependencies
 target_link_libraries(target_support PUBLIC
-                      ${ESP_SDK_HOME}/lib/libfreertos.a
-                      ${ESP_SDK_HOME}/lib/libhal.a
-                      ${ESP_SDK_HOME}/lib/libpp.a
-                      ${ESP_SDK_HOME}/lib/libphy.a
-                      ${ESP_SDK_HOME}/lib/libnet80211.a
-                      ${ESP_SDK_HOME}/lib/libwpa.a
-                      ${ESP_SDK_HOME}/lib/liblwip.a
-                      ${ESP_SDK_HOME}/lib/libmain.a
-                      ${ESP_SDK_HOME}/lib/libssl.a
-                      ${ESP_SDK_HOME}/lib/libhal.a
-                      ${ESP_TOOLCHAIN_LIBS_HOME}/libgcc.a
+                      ${ESP_RTOS_SDK}/lib/libfreertos.a
+                      ${ESP_RTOS_SDK}/lib/libhal.a
+                      ${ESP_RTOS_SDK}/lib/libpp.a
+                      ${ESP_RTOS_SDK}/lib/libphy.a
+                      ${ESP_RTOS_SDK}/lib/libnet80211.a
+                      ${ESP_RTOS_SDK}/lib/libwpa.a
+                      ${ESP_RTOS_SDK}/lib/liblwip.a
+                      ${ESP_RTOS_SDK}/lib/libmain.a
+                      ${ESP_RTOS_SDK}/lib/libssl.a
+                      ${ESP_RTOS_SDK}/lib/libhal.a
+                      ${ESP8266_LIBGCC}
                       -T${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.app.v6.ld
                       )
 

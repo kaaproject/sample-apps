@@ -20,7 +20,7 @@
 #include <kaa/kaa_context.h>
 #include <kaa/platform/kaa_client.h>
 #include <kaa/utilities/kaa_log.h>
-#include <kaa/kaa_configuration_manager.h>
+#include <kaa_configuration_manager.h>
 
 static kaa_client_t *kaa_client = NULL;
 

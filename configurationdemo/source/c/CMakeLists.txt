@@ -23,24 +23,27 @@ enable_language(C)
 set(APP_NAME demo_client)
 
 # Target-independent flags.
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -Wextra")
 
 # Path to the Kaa SDK.
 add_subdirectory(libs/kaa)
 # Directory containing target support library.
 add_subdirectory(targets/${KAA_TARGET})
 
-# Demo executable.
 # This is required for ESP8266 platform
+# due to it's specific requirements regarding linked executable.
+# The blank.c file is a placeholder for CMake's add_executable()
+# All the code (Kaa SDK, ESP8266 SDK and demo) is compiled as static libraries
+# and linked into that executable.
 if("${KAA_TARGET}" STREQUAL "esp8266")
     add_library(${APP_NAME}_s STATIC src/kaa_demo.c)
     file(WRITE ${CMAKE_BINARY_DIR}/blank.c "")
     add_executable(${APP_NAME} ${CMAKE_BINARY_DIR}/blank.c)
     target_link_libraries(${APP_NAME} ${APP_NAME}_s)
-    target_link_libraries(${APP_NAME}_s target_support kaac_s)
+    target_link_libraries(${APP_NAME}_s target_support kaac)
 else()
     add_executable(${APP_NAME} src/kaa_demo.c)
-    target_link_libraries(${APP_NAME} kaac_s target_support)
+    target_link_libraries(${APP_NAME} kaac target_support)
 endif()
 
 # For most embedded targets binary stripping is required.

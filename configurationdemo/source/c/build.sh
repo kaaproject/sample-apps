@@ -22,7 +22,7 @@ RUN_DIR=`pwd`
 
 function help_message {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported targets: x86-64, edison, cc32xx, esp8266" # TODO: extend these
+    echo "Supported targets: x86-64, edison, cc32xx, esp8266"
     exit 1
 }
 
@@ -112,8 +112,9 @@ function build_app {
           -DWIFI_SSID=$SSID \
           -DWIFI_PASSWORD=$PASSWORD \
           -DCMAKE_BUILD_TYPE=MinSizeRel \
-          -DKAA_WITHOUT_EVENTS=1 \
-          -DKAA_WITHOUT_LOGGING=1 \
+          -DWITH_EXTENSION_EVENT=OFF \
+          -DWITH_EXTENSION_LOGGING=OFF \
+          -DWITH_EXTENSION_NOTIFICATION=OFF \
           -DKAA_MAX_LOG_LEVEL=3 \
           ${KAA_TOOLCHAIN_PATH_SDK} ..
     make

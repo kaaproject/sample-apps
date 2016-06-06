@@ -16,19 +16,17 @@
 
 package org.kaaproject.kaa.demo.cityguide.adapter;
 
-import java.util.List;
-
-import org.kaaproject.kaa.demo.cityguide.Area;
-import org.kaaproject.kaa.demo.cityguide.R;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import org.kaaproject.kaa.demo.cityguide.Area;
+import org.kaaproject.kaa.demo.cityguide.R;
+
+import java.util.List;
 
 /**
  * The implementation of the {@link ArrayAdapter} class. Used as an adapter class for the areas list view.

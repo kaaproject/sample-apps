@@ -16,12 +16,6 @@
 
 package org.kaaproject.kaa.demo.cityguide.adapter;
 
-import java.util.List;
-
-import org.kaaproject.kaa.demo.cityguide.City;
-import org.kaaproject.kaa.demo.cityguide.R;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +23,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import org.kaaproject.kaa.demo.cityguide.City;
+import org.kaaproject.kaa.demo.cityguide.R;
+
+import java.util.List;
 
 /**
  * The implementation of the {@link BaseAdapter} class. Used as an adapter class for the cities list view.

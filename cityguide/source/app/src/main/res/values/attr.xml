@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ImageViewProgress">
+        <attr name="uri" format="string" />
+        <attr name="defaultImage" format="integer"/>
+        <attr name="android:scaleType" />
+    </declare-styleable>
+</resources>

@@ -22,7 +22,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.kaaproject.kaa.demo.cityguide.Category;
-import org.kaaproject.kaa.demo.cityguide.MainActivity;
 import org.kaaproject.kaa.demo.cityguide.R;
 import org.kaaproject.kaa.demo.cityguide.fragment.PlacesFragment;
 

@@ -14,18 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.cityguide.dialog;
-
-import java.util.List;
-import java.util.StringTokenizer;
-
-import org.kaaproject.kaa.demo.cityguide.Area;
-import org.kaaproject.kaa.demo.cityguide.AvailableArea;
-import org.kaaproject.kaa.demo.cityguide.City;
-import org.kaaproject.kaa.demo.cityguide.CityGuideApplication;
-import org.kaaproject.kaa.demo.cityguide.R;
-import org.kaaproject.kaa.demo.cityguide.adapter.AreasAdapter;
-import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
+package org.kaaproject.kaa.demo.cityguide.ui;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -36,6 +25,12 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import org.kaaproject.kaa.demo.cityguide.AvailableArea;
+import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
+
+import java.util.List;
 
 /**
  * The implementation of the {@link Dialog} class. Used to display a view with the current location input.

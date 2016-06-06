@@ -16,13 +16,6 @@
 
 package org.kaaproject.kaa.demo.cityguide.fragment;
 
-import java.util.List;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.demo.cityguide.Area;
-import org.kaaproject.kaa.demo.cityguide.R;
-import org.kaaproject.kaa.demo.cityguide.adapter.AreasAdapter;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +24,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.kaaproject.kaa.demo.cityguide.Area;
+import org.kaaproject.kaa.demo.cityguide.R;
+import org.kaaproject.kaa.demo.cityguide.adapter.AreasAdapter;
 import org.kaaproject.kaa.demo.cityguide.event.Events;
-import org.kaaproject.kaa.demo.cityguide.util.FragmentUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The implementation of the {@link BaseFragment} class.
@@ -42,15 +41,19 @@ public class AreasFragment extends BaseFragment {
 
     private View mWaitView;
     private ListView mAreasListView;
+
+    private List<Area> areas = new ArrayList<>();
     private AreasAdapter mAreasAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_areas, container, false);
 
         mWaitView = rootView.findViewById(R.id.waitProgress);
         mAreasListView = (ListView) rootView.findViewById(R.id.areasList);
+
+        mAreasAdapter = new AreasAdapter(getActivity(), areas);
+        mAreasListView.setAdapter(mAreasAdapter);
 
         mAreasListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,7 +64,7 @@ public class AreasFragment extends BaseFragment {
         });
 
         if (manager.isKaaStarted()) {
-            showAreas();
+            updateAreas();
         } else {
             Toast.makeText(getContext(), R.string.no_areas, Toast.LENGTH_SHORT).show();
         }
@@ -69,31 +72,37 @@ public class AreasFragment extends BaseFragment {
         return rootView;
     }
 
-    private void showAreas() {
-        mWaitView.setVisibility(View.GONE);
+    private void updateAreas() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mWaitView.setVisibility(View.GONE);
+                mAreasListView.setVisibility(View.VISIBLE);
 
-        List<Area> areas = manager.getAreas();
-        mAreasAdapter = new AreasAdapter(getContext(), areas);
-        mAreasListView.setVisibility(View.VISIBLE);
-        mAreasListView.setAdapter(mAreasAdapter);
+                areas.clear();
+                areas.addAll(manager.getAreas());
+
+                mAreasAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void onAreaClicked(int position) {
         Area area = mAreasAdapter.getItem(position);
 
         CitiesFragment citiesFragment = CitiesFragment.newInstance(area.getName());
-        FragmentUtils.addBackStackFragment(getActivity(), citiesFragment, getTitle());
+        move(getActivity(), citiesFragment, citiesFragment.getTitle());
     }
 
 
     @Subscribe
-    public void onEventMainThread(Events.KaaStarted kaaStarted) {
-        showAreas();
+    public void onEvent(Events.KaaStarted kaaStarted) {
+        updateAreas();
     }
 
     @Subscribe
-    public void onEventMainThread(Events.ConfigurationUpdated configurationUpdated) {
-        showAreas();
+    public void onEvent(Events.ConfigurationUpdated configurationUpdated) {
+        updateAreas();
     }
 
     @Override

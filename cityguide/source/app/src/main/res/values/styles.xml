@@ -18,26 +18,16 @@
 
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    </style>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="actionBarWidgetTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
-        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
     </style>
-    
-    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
-             <item name="android:divider">@drawable/custom_tab_indicator_divider</item>
-             <item name="android:showDividers">middle</item>
-             <item name="android:gravity">center</item>
-             <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
-    </style>    
-    
+
     <style name="CustomTabPageIndicator.Text" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">@color/abc_primary_text_material_light</item>
         <item name="android:typeface">sans</item>
     </style>
-    
 
 </resources>

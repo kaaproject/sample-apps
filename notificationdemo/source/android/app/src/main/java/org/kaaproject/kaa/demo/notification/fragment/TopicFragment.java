@@ -19,8 +19,10 @@ package org.kaaproject.kaa.demo.notification.fragment;
 import org.kaaproject.kaa.demo.notification.R;
 import org.kaaproject.kaa.demo.notification.activity.MainActivity;
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
+import org.kaaproject.kaa.demo.notification.kaa.KaaManager;
 import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
 import org.kaaproject.kaa.demo.notification.adapter.TopicAdapter;
+import org.kaaproject.kaa.demo.notification.util.TopicHelper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -78,7 +80,11 @@ public class TopicFragment extends ListFragment {
     }
 
     private void initTopicViews() {
+        KaaManager manager = ((MainActivity) getActivity()).getManager();
+        List<TopicPojo> buff = TopicHelper.getTopicModelList(TopicHelper.initTopics(TopicStorage.get().getTopicMap(), manager.getTopics()));
         List<TopicPojo> topics = TopicStorage.get().load(getActivity()).getTopics();
+
+        topics.addAll(buff);
 
         if (topics.isEmpty()) {
             Toast.makeText(getContext(), R.string.no_topics, Toast.LENGTH_SHORT).show();

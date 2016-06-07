@@ -114,6 +114,9 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         manager.unsubscribeTopic(topicId);
     }
 
+    public KaaManager getManager() {
+        return manager;
+    }
 
     private void initNotificationListener() {
         notificationListener = new NotificationListener() {

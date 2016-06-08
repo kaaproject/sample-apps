@@ -1,0 +1,87 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:19:1-51:12
+	package
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:20:5-49
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:22:5-30
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+	android:versionCode
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:21:5-28
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:19:11-69
+uses-sdk
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:24:5-26:41
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:26:9-38
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:25:9-34
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+		INJECTED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:28:5-67
+	android:name
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:28:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:29:5-79
+	android:name
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:29:22-76
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:30:5-80
+	android:name
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:30:22-77
+application
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:32:5-49:19
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:36:9-41
+	android:allowBackup
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:34:9-35
+	android:icon
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:35:9-45
+	android:theme
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:37:9-40
+	android:name
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:33:9-80
+activity#org.kaaproject.kaa.demo.photoframe.MainActivity
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:38:9-48:20
+	android:screenOrientation
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:42:13-49
+	android:label
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:41:13-45
+	android:configChanges
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:40:13-74
+	android:name
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:39:13-41
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:43:13-47:29
+action#android.intent.action.MAIN
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:44:17-69
+	android:name
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:44:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:46:17-77
+	android:name
+		ADDED from /home/user083255/projects/kaa/code/android/PhotoFrame/app/src/main/AndroidManifest.xml:46:27-74

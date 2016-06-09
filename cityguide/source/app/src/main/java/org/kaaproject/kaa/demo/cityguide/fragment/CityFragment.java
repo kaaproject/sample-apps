@@ -40,8 +40,6 @@ public class CityFragment extends BaseFragment {
 
     private View mWaitView;
     private View mCityPages;
-    // TODO: move out
-//    private TabPageIndicator mCityPageIndicator;
     private ViewPager mCityPager;
     private String mAreaName;
     private String mCityName;
@@ -74,7 +72,6 @@ public class CityFragment extends BaseFragment {
         mWaitView = rootView.findViewById(R.id.waitProgress);
         mCityPages = rootView.findViewById(R.id.cityPages);
 
-//        mCityPageIndicator = (TabPageIndicator) rootView.findViewById(R.id.cityPageIndicator);
         mCityPager = (ViewPager) rootView.findViewById(R.id.cityPager);
 
         if (manager.isKaaStarted()) {
@@ -95,7 +92,6 @@ public class CityFragment extends BaseFragment {
 
             mCityPages.setVisibility(View.VISIBLE);
             mCityPager.setAdapter(mCityPagerAdapter);
-//            mCityPageIndicator.setViewPager(mCityPager);
         } else {
             popBackStack(getActivity());
         }

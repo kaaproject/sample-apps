@@ -22,7 +22,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile files('libs/kaa-android-ep-sdk-zGynEctvWnZhhuWD02rnAhikz5Y.jar')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:support-v4:23.4.0'

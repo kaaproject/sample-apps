@@ -16,6 +16,7 @@
 
 package org.kaaproject.kaa.demo.cityguide.adapter;
 
+import android.app.Activity;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -31,15 +32,17 @@ import java.util.List;
 /**
  * The implementation of the {@link FragmentStatePagerAdapter} class.
  * Used as an adapter class for the city view pager.
- * Provides fragments with places separated by the place {@link Category}.
+ * Provides fragments with places separated by the place and {@link Category}.
  */
 public class CityPagerAdapter extends FragmentStatePagerAdapter {
 
-    // TODO: from server
-    private static final int[] pageTitles = new int[]{R.string.hotels,
+    /**
+     *  Titles for pages. See {@link Category}
+     */
+    private int[] pageTitles = new int[]{R.string.hotels,
             R.string.shops, R.string.museums, R.string.restaurants};
 
-    private FragmentActivity activity;
+    private Activity activity;
     private List<Fragment> fragments;
 
     public CityPagerAdapter(FragmentActivity activity, String areaName, String cityName) {

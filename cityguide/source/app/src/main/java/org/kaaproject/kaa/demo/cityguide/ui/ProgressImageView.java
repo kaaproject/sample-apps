@@ -18,6 +18,12 @@ import org.kaaproject.kaa.demo.cityguide.R;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * In this view user see progress bar, until imge is downloading
+ * Use Universal Image Loader
+ *
+ * @see <a href="https://github.com/nostra13/Android-Universal-Image-Loader">Universal Image Loader</a>
+ */
 public class ProgressImageView extends FrameLayout {
 
     private ImageView image;

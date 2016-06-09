@@ -89,8 +89,6 @@ public abstract class BaseFragment extends Fragment {
         }
         return activity.getSupportFragmentManager().getBackStackEntryAt(
                 activity.getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
-
-//        return (BaseFragment) activity.getSupportFragmentManager().findFragmentByTag(tag);
     }
 
     public void popBackStack(FragmentActivity activity) {
@@ -105,11 +103,27 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-
+    /**
+     * All fragments must have titles, because user can understand where he is
+     *
+     * @return title for fragment
+     */
     public abstract String getTitle();
 
+    /**
+     * Can be used for saving information, when
+     * 1) rotating screen
+     * 2) user load app from app back stack
+     *
+     * @return result of saving process
+     */
     protected abstract boolean saveInfo();
 
+    /**
+     * Used for showing back button in actionbar
+     *
+     * @return result of showing
+     */
     protected abstract boolean displayHomeAsUp();
 
 

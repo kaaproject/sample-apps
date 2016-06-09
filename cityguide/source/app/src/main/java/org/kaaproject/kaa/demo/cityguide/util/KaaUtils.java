@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A utility class that provides static functions to query data from the city guide configuration object.
+ * A utility class that provides static functions to query data from the Kaa
+ * city guide configuration object.
  */
 public class KaaUtils {
 

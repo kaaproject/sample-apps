@@ -9,6 +9,11 @@ import org.kaaproject.kaa.demo.cityguide.CityGuideConfig;
 
 import java.util.List;
 
+/**
+ * Save user configuration information
+ *
+ * @see <a href="http://docs.kaaproject.org/display/KAA/Configuration">Kaa Configuration Docs</a>
+ */
 public class KaaConfigurationSlave {
 
     private static final String CONFIG_FILE_NAME = "cityGuideConfig.data";

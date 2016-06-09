@@ -23,14 +23,16 @@ import org.kaaproject.kaa.demo.cityguide.util.GuideConstants;
 import java.util.List;
 
 /**
- * Performs initialization of the application resources including initialization of the Kaa client.
+ * <p>Performs initialization of the application resources including initialization of the Kaa client.
  * Handles the Kaa client lifecycle.
  * Stores a reference to the actual endpoint configuration.
  * Receives configuration updates from the Kaa cluster.
  * Manages the endpoint profile object, notifies the Kaa cluster of the profile updates.
- * <p/>
- * Implements interface {@link KaaClientStateListener}. For simpler and faster use you can
+ * </p>
+ * <p>Implements interface {@link KaaClientStateListener}. For simpler and faster use you can
  * get {@link SimpleKaaClientStateListener}
+ * </p>
+ * Tip: In production app you must implement delivering errors to user, on activities
  */
 public class KaaManager implements KaaClientStateListener, ProfileContainer, ConfigurationListener {
 
@@ -49,32 +51,24 @@ public class KaaManager implements KaaClientStateListener, ProfileContainer, Con
         mEventBus = EventBus.getDefault();
     }
 
+    /**
+     * Initialize the Kaa client using the Android context.
+     * Set a configuration listener to get notified about configuration
+     * updates from the Kaa cluster. Update configuration object and notify UI
+     * components to start using the updated configuration.
+     * Set a profile container used by the Kaa client to obtain the actual profile object.
+     * Start the Kaa client workflow.
+     */
     public void start(Context context) {
-
-        /*
-         * Initialize the Kaa client using the Android context.
-         */
         KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
         mClient = Kaa.newClient(kaaClientContext, this);
 
         configurationSlave.createConfigurationStorage(kaaClientContext, mClient);
 
-        /*
-         * Set a configuration listener to get notified about configuration
-         * updates from the Kaa cluster. Update configuration object and notify UI
-         * components to start using the updated configuration.
-         */
         mClient.addConfigurationListener(this);
 
-        /*
-         * Set a profile container used by the Kaa client to obtain the actual profile
-         * object.
-         */
         mClient.setProfileContainer(this);
 
-        /*
-         * Start the Kaa client workflow.
-         */
         mClient.start();
     }
 
@@ -98,17 +92,17 @@ public class KaaManager implements KaaClientStateListener, ProfileContainer, Con
     }
 
     public String getArea() {
-        // there can be some checks
+        // Tip: there can be some checks
         return profilingSlave.getArea();
     }
 
     public String getCity() {
-        // there can be some checks
+        // Tip: there can be some checks
         return profilingSlave.getCity();
     }
 
     public List<AvailableArea> getAvailableAreas() {
-        // there can be some checks
+        // Tip: there can be some checks
         return configurationSlave.getAvailableAreas();
     }
 
@@ -170,48 +164,39 @@ public class KaaManager implements KaaClientStateListener, ProfileContainer, Con
         mEventBus.post(new Events.ConfigurationUpdated());
     }
 
-
-    // TODO: on error
     @Override
     public void onStartFailure(KaaException e) {
         GuideConstants.LOGGER.info("Kaa client startup failure", e);
-
     }
 
     @Override
     public void onPaused() {
         GuideConstants.LOGGER.info("Kaa client paused");
-
     }
 
     @Override
     public void onPauseFailure(KaaException e) {
         GuideConstants.LOGGER.info("Kaa client pause failure", e);
-
     }
 
     @Override
     public void onResume() {
         GuideConstants.LOGGER.info("Kaa client resumed");
-
     }
 
     @Override
     public void onResumeFailure(KaaException e) {
         GuideConstants.LOGGER.info("Kaa client resume failure", e);
-
     }
 
     @Override
     public void onStopped() {
         GuideConstants.LOGGER.info("Kaa client stopped");
-
     }
 
     @Override
     public void onStopFailure(KaaException e) {
         GuideConstants.LOGGER.info("Kaa client stop failure", e);
-
     }
 
 }

@@ -29,7 +29,8 @@ import org.kaaproject.kaa.demo.cityguide.R;
 import java.util.List;
 
 /**
- * The implementation of the {@link ArrayAdapter} class. Used as an adapter class for the areas list view.
+ * The implementation of the {@link ArrayAdapter} class.
+ * Used as an adapter class for the areas list view.
  * Provides list item views containing name of each area.
  */
 public class AreasAdapter extends ArrayAdapter<Area> {

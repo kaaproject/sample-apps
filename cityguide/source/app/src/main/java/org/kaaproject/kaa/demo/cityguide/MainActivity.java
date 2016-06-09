@@ -30,6 +30,7 @@ import org.kaaproject.kaa.demo.cityguide.fragment.BaseFragment;
 import org.kaaproject.kaa.demo.cityguide.kaa.KaaManager;
 import org.kaaproject.kaa.demo.cityguide.ui.SetLocationDialog;
 import org.kaaproject.kaa.demo.cityguide.ui.SetLocationDialog.SetLocationCallback;
+import org.kaaproject.kaa.demo.cityguide.ui.UILConfiguration;
 
 import java.util.List;
 
@@ -41,9 +42,9 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements SetLocationCallback {
 
-    /*
+    /**
      * Create wrapper on Kaa functionality.
-     * In different cases you can create manager in one activity or create it in Application class
+     * Tip: In different cases you can create manager in one activity or create it in Application class
      * for accessing in different activities.
      */
     private KaaManager manager;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
         setContentView(R.layout.activity_city_guide);
 
         // Create global configuration and initialize ImageLoader with this config
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoaderConfiguration config = UILConfiguration.getConfiguration(this);
         ImageLoader.getInstance().init(config);
 
         manager = new KaaManager();
@@ -134,6 +135,9 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
     protected void onStop() {
         super.onStop();
 
+        /*
+         * Stop current Kaa client.
+         */
         manager.stop();
     }
 }

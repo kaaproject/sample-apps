@@ -1,8 +1,5 @@
 package org.kaaproject.kaa.demo.cityguide.event;
 
-/**
- * Created by user083255 on 02.06.16.
- */
 public class Events {
 
     /**

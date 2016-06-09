@@ -65,7 +65,6 @@ public class PlacesAdapter extends ArrayAdapter<Place> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        mImageLoader.loadImage(place.getPhotoUrl(), holder.photo, ImageType.THUMBNAIL);
         holder.photo.setImage(place.getPhotoUrl());
         holder.name.setText(place.getTitle());
         holder.description.setText(place.getDescription());

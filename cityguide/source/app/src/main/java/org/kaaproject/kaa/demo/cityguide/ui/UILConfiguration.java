@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * Created by user083255 on 06.06.16.
+ * Universal Image Loader need to be configurated.
  */
 public class UILConfiguration {
 

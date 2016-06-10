@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.4.0_aa7776144a34e72858efea7475148e4fe6beb4fb/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.4.0_fde77791571522ef9d8f0971ecdbdfcaa64f4625/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.5/442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375/universal-image-loader-1.9.5.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/universal-image-loader-1.9.5_a7e9d3d09a55755bd7cc538a05d905cb29b18b88/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.4.0_15258a09aab658e3a9f3eda6c0a36fdfcc98b200/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.4.0_3fe5bd353bc8cf7001b71cde176dc4b5866cc2bc/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_48f3215c583033ad3ce003c86ad785f1832ce2cf/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="eabc879754437299a610fda622d8863120e4ca92">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e2aec01ffbb5e816aa04a13e3f235b601486cd06/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/libs/kaa-android-ep-sdk-FGMjC8ayctXgea_Fy75BVWuphaI.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="00bc086020b77b193f6dcb98e534cfd94f5711e2">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/2/kaa-android-ep-sdk-FGMjC8ayctXgea_Fy75BVWuphaI_e07ca1b864d1e8a8743dbe52265ddb9fec0569ab/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.2/f1bc476cc167b18e66c297df599b2377131a8947/gson-2.6.2.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f1bc476cc167b18e66c297df599b2377131a8947">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.6.2_bc786f00b3282dea15a9be027b5042c212fe58cb/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_549bb0ce9a0695922b7bce675d64c56774fbe72a/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="856d5298c2c663fd7c3fe11bc78c288020e82856">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_45bbf996c668cd63d60d4e630bf27e330c08a786/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_f470697960d53a0b79c9ba9d272d118e47031fed/classes.dex" />
+    </item>
+
+</items>

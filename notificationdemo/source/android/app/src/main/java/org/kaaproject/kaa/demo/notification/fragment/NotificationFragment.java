@@ -1,12 +1,12 @@
 /**
  * Copyright 2014-2016 CyberVision, Inc.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p/>
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.kaaproject.kaa.demo.notification.MainActivity;
 import org.kaaproject.kaa.demo.notification.R;
 import org.kaaproject.kaa.demo.notification.adapter.NotificationAdapter;
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
@@ -33,7 +34,11 @@ import org.kaaproject.kaa.schema.example.Notification;
 import java.util.LinkedList;
 import java.util.List;
 
-public class NotificationFragment extends ListFragment {
+/**
+ * The implementation of the {@link ListFragment} class.
+ * Show notification list.
+ */
+public class NotificationFragment extends ListFragment implements OnFragmentUpdateEvent {
 
     public NotificationFragment() {
         super();
@@ -47,9 +52,18 @@ public class NotificationFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().getActionBar().setTitle(R.string.notification_title);
-        setListAdapter(new NotificationAdapter(getActivity(), getNotificationList()));
+        updateAdapter();
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    private void updateAdapter() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setListAdapter(new NotificationAdapter(getActivity(), getNotificationList()));
+            }
+        });
     }
 
     private List<Notification> getNotificationList() {
@@ -70,4 +84,8 @@ public class NotificationFragment extends ListFragment {
         return new LinkedList<>();
     }
 
+    @Override
+    public void onRefresh() {
+        updateAdapter();
+    }
 }

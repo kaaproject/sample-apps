@@ -1,3 +1,19 @@
+/**
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.kaaproject.kaa.demo.notification.kaa;
 
 import android.app.Activity;
@@ -15,9 +31,10 @@ import org.kaaproject.kaa.common.endpoint.gen.Topic;
 import java.util.List;
 
 /**
- * Performs initialization of
- * application resources including initialization of the Kaa client.
+ * Performs initialization of application resources including initialization of the Kaa client.
  * Handles the Kaa client lifecycle.
+ *
+ * @see <a href="http://docs.kaaproject.org/display/KAA/Using+notifications">Programming guide</a>
  */
 public class KaaManager {
 
@@ -30,15 +47,14 @@ public class KaaManager {
 
     /**
      * Initialise the Kaa client with all needed information.
+     * Start the Kaa client workflow.
      */
     public void start(NotificationListener notificationListener, NotificationTopicListListener topicListListener) {
-        // Initialize the Kaa client using the Android context.
         mClient = Kaa.newClient(new AndroidKaaPlatformContext(activity));
 
         mClient.addNotificationListener(notificationListener);
         mClient.addTopicListListener(topicListListener);
 
-        // Start the Kaa client workflow.
         mClient.start();
     }
 
@@ -51,20 +67,22 @@ public class KaaManager {
      */
     public void subscribeTopic(long topicId) {
         try {
-            mClient.subscribeToTopic(topicId, true);
             Log.i(NotificationConstants.TAG, "Subscribing to topic with id: " + topicId);
+
+            mClient.subscribeToTopic(topicId, true);
         } catch (UnavailableTopicException e) {
             Log.e(NotificationConstants.TAG, e.getMessage());
         }
     }
 
     /**
-     * Unsubscribes the Kaa client from an optional notification topic.
+     * Unsubscribe the Kaa client from an optional notification topic.
      */
     public void unsubscribeTopic(long topicId) {
         try {
-            mClient.unsubscribeFromTopic(topicId, true);
             Log.i(NotificationConstants.TAG, "Unsubscribing from topic with id: " + topicId);
+
+            mClient.unsubscribeFromTopic(topicId, true);
         } catch (UnavailableTopicException e) {
             Log.e(NotificationConstants.TAG, e.getMessage());
         }

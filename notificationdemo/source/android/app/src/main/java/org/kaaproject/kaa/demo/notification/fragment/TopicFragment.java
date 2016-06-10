@@ -1,12 +1,12 @@
 /**
  * Copyright 2014-2016 CyberVision, Inc.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p/>
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,7 @@
 package org.kaaproject.kaa.demo.notification.fragment;
 
 import org.kaaproject.kaa.demo.notification.R;
-import org.kaaproject.kaa.demo.notification.activity.MainActivity;
+import org.kaaproject.kaa.demo.notification.MainActivity;
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.demo.notification.kaa.KaaManager;
 import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
@@ -34,14 +34,18 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * Show all topics. You can subscribe on topic and click to see notifications.
+ * Provide timer for updating fragment.
  * https://developer.android.com/training/basics/fragments/communicating.html
  */
-public class TopicFragment extends ListFragment {
+public class TopicFragment extends ListFragment implements OnFragmentUpdateEvent,
+        TopicAdapter.OnSubscribeCallback {
 
     private OnTopicClickedListener mCallback;
     private Timer timer;
@@ -59,7 +63,7 @@ public class TopicFragment extends ListFragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().getActionBar().setTitle(R.string.topic_title);
 
-        initTopicViews();
+        updateAdapter();
 
         timer = new Timer(true);
         timer.schedule(new TimerTask() {
@@ -69,28 +73,52 @@ public class TopicFragment extends ListFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        initTopicViews();
-                        Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT).show();
+                        updateAdapter();
                     }
                 });
             }
-        }, 5000, 10000);
+        }, 5000, 20000);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    private void initTopicViews() {
+    private void updateAdapter() {
         KaaManager manager = ((MainActivity) getActivity()).getManager();
-        List<TopicPojo> buff = TopicHelper.getTopicModelList(TopicHelper.initTopics(TopicStorage.get().getTopicMap(), manager.getTopics()));
-        List<TopicPojo> topics = TopicStorage.get().load(getActivity()).getTopics();
+        TopicStorage.get().load(getActivity());
 
-        topics.addAll(buff);
+        final List<TopicPojo> updateTopics = TopicHelper.sync(TopicStorage.get().getTopics(), manager.getTopics());
+        TopicStorage.get().setTopics(updateTopics).save(getActivity());
 
-        if (topics.isEmpty()) {
+        if (updateTopics.isEmpty()) {
             Toast.makeText(getContext(), R.string.no_topics, Toast.LENGTH_SHORT).show();
         }
 
-        setListAdapter(new TopicAdapter(getActivity(), topics, (MainActivity) getActivity()));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setListAdapter(new TopicAdapter(getActivity(), updateTopics, TopicFragment.this));
+            }
+        });
+    }
+
+
+    @Override
+    public void onSubscribe(long topicId) {
+        ((MainActivity) getActivity()).getManager().subscribeTopic(topicId);
+
+        TopicStorage.get().subsccribe(topicId).save(getActivity());
+
+        updateAdapter();
+    }
+
+    @Override
+    public void onUnsubscribe(long topicId) {
+        ((MainActivity) getActivity()).getManager().unsubscribeTopic(topicId);
+
+        TopicStorage.get().unsubsccribe(topicId).save(getActivity());
+
+        updateAdapter();
     }
 
     @Override
@@ -107,11 +135,11 @@ public class TopicFragment extends ListFragment {
         }
     }
 
+    // http://stackoverflow.com/questions/32083053/android-fragment-onattach-deprecated
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        // http://stackoverflow.com/questions/32083053/android-fragment-onattach-deprecated
         try {
             mCallback = (OnTopicClickedListener) context;
         } catch (ClassCastException e) {
@@ -131,6 +159,11 @@ public class TopicFragment extends ListFragment {
         mCallback.onTopicClicked(position);
 
         timer.cancel();
+    }
+
+    @Override
+    public void onRefresh() {
+        updateAdapter();
     }
 
     public interface OnTopicClickedListener {

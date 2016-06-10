@@ -16,9 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.notification.R;
-import org.kaaproject.kaa.demo.notification.util.ImageCache;
+import org.kaaproject.kaa.demo.notification.util.ImageLoaderWrapper;
 
 /**
+ * Extends {@link DialogFragment} and show new notification, that sent from server.
+ * Can be shown for multiply notification
+ * Show notification message and image
  */
 public class NotificationDialogFragment extends DialogFragment {
 
@@ -67,10 +70,7 @@ public class NotificationDialogFragment extends DialogFragment {
         mNotificationMessage.setText(notificationMessage);
         mTopicName.setText(topicName);
 
-        Bitmap bitmap = ImageCache.loadBitmap(view.getContext(), notificationImageUrl);
-        if (bitmap != null)
-            mNotificationLogo.setImageBitmap(bitmap);
-
+        ImageLoaderWrapper.loadBitmap(view.getContext(), mNotificationLogo, notificationImageUrl);
     }
 
     @NonNull

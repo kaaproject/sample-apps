@@ -15,27 +15,26 @@
  */
 
 /*
- * This header provides several bindings for TI's cc32xx target that abstracts
+ * This header provides several bindings for ESP8266 target that abstracts
  * an implementation of its features. Right now it contains only
  * console and target initialisation routines, but it must be extended
  * if required.
  *
  */
 
-#ifndef CC32XX_SUPPORT_H_
-#define CC32XX_SUPPORT_H_
+#ifndef ESP8266_SUPPORT_H_
+#define ESP8266_SUPPORT_H_
 
-#include "hw_types.h"
-#include "uart_if.h"
-#include "common.h"
+#include <stdio.h>
 
-#define demo_printf(msg, ...)   UART_PRINT((msg), ##__VA_ARGS__)
+/* Demo print routine. printf implementation is available on this platform. */
+#define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
 
 /* Initialises a target. Zero value means success, negative - errors.
  *
  * For this particular target this will eventually try to connect to
  * the WiFi spot using SSID and password supplied during build.
  */
-int target_initialise(void);
+int target_initialize(void);
 
-#endif //CC32XX_SUPPORT_H_
+#endif //ESP8266_SUPPORT_H_

@@ -9,7 +9,7 @@
 #include "freertos/task.h"
 #include "freertos/queue.h"
 
-#include "driver/uart.h"
+#include "uart.h"
 
 enum {
     UART_EVENT_RX_CHAR,
@@ -175,11 +175,11 @@ UART_ParamConfig(UART_Port uart_no,  UART_ConfigTypeDef *pUARTConfig)
     UART_SetBaudrate(uart_no, pUARTConfig->baud_rate);
 
     WRITE_PERI_REG(UART_CONF0(uart_no),
-                   ((pUARTConfig->parity == USART_Parity_None) ? 0x0 : (UART_PARITY_EN | pUARTConfig->parity))
-                   | (pUARTConfig->stop_bits << UART_STOP_BIT_NUM_S)
-                   | (pUARTConfig->data_bits << UART_BIT_NUM_S)
-                   | ((pUARTConfig->flow_ctrl & USART_HardwareFlowControl_CTS) ? UART_TX_FLOW_EN : 0x0)
-                   | pUARTConfig->UART_InverseMask);
+            ((pUARTConfig->parity == USART_Parity_None) ? 0x0 : (UART_PARITY_EN | pUARTConfig->parity))
+            | (pUARTConfig->stop_bits << UART_STOP_BIT_NUM_S)
+            | (pUARTConfig->data_bits << UART_BIT_NUM_S)
+            | ((pUARTConfig->flow_ctrl & USART_HardwareFlowControl_CTS) ? UART_TX_FLOW_EN : 0x0)
+            | pUARTConfig->UART_InverseMask);
 
     UART_ResetFifo(uart_no);
 }
@@ -193,13 +193,13 @@ UART_IntrConfig(UART_Port uart_no,  UART_IntrConfTypeDef *pUARTIntrConf)
     reg_val = READ_PERI_REG(UART_CONF1(uart_no)) & ~((UART_RX_FLOW_THRHD << UART_RX_FLOW_THRHD_S) | UART_RX_FLOW_EN) ;
 
     reg_val |= ((pUARTIntrConf->UART_IntrEnMask & UART_RXFIFO_TOUT_INT_ENA) ?
-                ((((pUARTIntrConf->UART_RX_TimeOutIntrThresh)&UART_RX_TOUT_THRHD) << UART_RX_TOUT_THRHD_S) | UART_RX_TOUT_EN) : 0);
+            ((((pUARTIntrConf->UART_RX_TimeOutIntrThresh)&UART_RX_TOUT_THRHD) << UART_RX_TOUT_THRHD_S) | UART_RX_TOUT_EN) : 0);
 
     reg_val |= ((pUARTIntrConf->UART_IntrEnMask & UART_RXFIFO_FULL_INT_ENA) ?
-                (((pUARTIntrConf->UART_RX_FifoFullIntrThresh)&UART_RXFIFO_FULL_THRHD) << UART_RXFIFO_FULL_THRHD_S) : 0);
+            (((pUARTIntrConf->UART_RX_FifoFullIntrThresh)&UART_RXFIFO_FULL_THRHD) << UART_RXFIFO_FULL_THRHD_S) : 0);
 
     reg_val |= ((pUARTIntrConf->UART_IntrEnMask & UART_TXFIFO_EMPTY_INT_ENA) ?
-                (((pUARTIntrConf->UART_TX_FifoEmptyIntrThresh)&UART_TXFIFO_EMPTY_THRHD) << UART_TXFIFO_EMPTY_THRHD_S) : 0);
+            (((pUARTIntrConf->UART_TX_FifoEmptyIntrThresh)&UART_TXFIFO_EMPTY_THRHD) << UART_TXFIFO_EMPTY_THRHD_S) : 0);
 
     WRITE_PERI_REG(UART_CONF1(uart_no), reg_val);
     CLEAR_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_INTR_MASK);

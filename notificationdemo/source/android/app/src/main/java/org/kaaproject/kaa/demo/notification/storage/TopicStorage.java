@@ -1,3 +1,19 @@
+/**
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.kaaproject.kaa.demo.notification.storage;
 
 import android.content.Context;
@@ -9,25 +25,31 @@ import com.google.gson.reflect.TypeToken;
 
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
+import org.kaaproject.kaa.demo.notification.util.TopicHelper;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * Only for example
+ * Save and load topic list from {@link android.content.SharedPreferences}.
+ * Use {@link Gson} for format topic list as json string.
+ * Change topics for subscribing/unsubscribing events.
+ * For more information use {@see <a href="https://github.com/google/gson/blob/master/GsonDesignDocument.md">Gson docs</a>}
+ * <p>
+ * Tip: don't use Shared Preferences for storing such information. This class used only for example
  */
 public class TopicStorage {
 
-    private Map<Long, TopicPojo> topics;
+    private Set<TopicPojo> topics = new HashSet<>();
 
     private Gson gson;
     private static TopicStorage instance;
 
     private TopicStorage() {
-        topics = new HashMap<>();
         gson = new GsonBuilder().enableComplexMapKeySerialization()
                 .setPrettyPrinting().create();
     }
@@ -39,18 +61,27 @@ public class TopicStorage {
         return instance;
     }
 
+    public TopicStorage subsccribe(long topicId) {
+        for (TopicPojo t : topics) {
+            if (t.getTopicId() == topicId) {
+                t.setSelected(true);
+            }
+        }
+        return this;
+    }
+
+    public TopicStorage unsubsccribe(long topicId) {
+        for (TopicPojo t : topics) {
+            if (t.getTopicId() == topicId) {
+                t.setSelected(false);
+            }
+        }
+        return this;
+    }
+
     public TopicStorage save(Context context) {
-        Map<Long, TopicPojo> buffMap = new HashMap<>();
-        buffMap.putAll(topics);
-
-        load(context);
-
-        if (topics == null)
-            topics = new HashMap<>();
-        topics.putAll(buffMap);
-
-        String buff = gson.toJson(topics);
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(NotificationConstants.PREFERENCES_TOPICS, buff).apply();
+        String buffStr = gson.toJson(topics);
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(NotificationConstants.PREFERENCES_TOPICS, buffStr).apply();
 
         // FOR TEST
         // Toast.makeText(context, buff, Toast.LENGTH_SHORT).show();
@@ -59,7 +90,7 @@ public class TopicStorage {
     }
 
     public TopicStorage load(Context context) {
-        Type typeOfHashMap = new TypeToken<Map<Long, TopicPojo>>() {
+        Type typeOfHashMap = new TypeToken<Set<TopicPojo>>() {
         }.getType();
 
         String json = PreferenceManager.getDefaultSharedPreferences(context).getString(NotificationConstants.PREFERENCES_TOPICS, "");
@@ -71,16 +102,15 @@ public class TopicStorage {
         return this;
     }
 
-    public Map<Long, TopicPojo> getTopicMap() {
-        return topics;
-    }
-
     public List<TopicPojo> getTopics() {
-        return new ArrayList<>(topics.values());
+        return new ArrayList<TopicPojo>() {{
+            addAll(topics);
+        }};
     }
 
-    public TopicStorage setTopics(Map<Long, TopicPojo> topics) {
-        this.topics = topics;
+    public TopicStorage setTopics(List<TopicPojo> newTopics) {
+        topics.clear();
+        topics.addAll(newTopics);
 
         return this;
     }

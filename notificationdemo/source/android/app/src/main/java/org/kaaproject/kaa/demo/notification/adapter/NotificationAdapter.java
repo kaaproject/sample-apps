@@ -26,11 +26,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.notification.R;
-import org.kaaproject.kaa.demo.notification.util.ImageCache;
+import org.kaaproject.kaa.demo.notification.util.ImageLoaderWrapper;
 import org.kaaproject.kaa.schema.example.Notification;
 
 import java.util.List;
 
+
+/**
+ * The implementation of the {@link ArrayAdapter} class.
+ * Used as an adapter class for the notification list view.
+ * Provides list item views containing message and image of each notification.
+ */
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
     private Context context;
@@ -43,7 +49,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         Notification notification = getItem(position);
 
         if (convertView == null) {
@@ -60,7 +66,8 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         }
 
         viewHolder.message.setText(notification.getMessage());
-        viewHolder.image.setImageBitmap(ImageCache.loadBitmap(context, notification.getImage()));
+
+        ImageLoaderWrapper.loadBitmap(context, viewHolder.image, notification.getImage());
 
         return convertView;
     }
@@ -69,6 +76,4 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         private TextView message;
         private ImageView image;
     }
-
-
 }

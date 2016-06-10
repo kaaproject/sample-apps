@@ -1,0 +1,4 @@
+CHANGED,/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/notification/entity/TopicPojo$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
+CHANGED,/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/notification/kaa/KaaManager$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/Notification/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/notification/fragment/NotificationFragment$override.class

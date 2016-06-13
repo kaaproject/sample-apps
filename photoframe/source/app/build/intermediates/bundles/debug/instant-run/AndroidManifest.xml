@@ -16,6 +16,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.kaaproject.kaa.demo.photoframe"
+    android:installLocation="auto"
     android:versionCode="1"
     android:versionName="1.0" >
 

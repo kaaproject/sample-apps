@@ -1,2 +1,0 @@
-CHANGED,/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
-CHANGED,/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/photoframe/fragment/LoginFragment$override.class

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="armeabi-v7a,armeabi"
-    api-level="21"
+    abi="x86,armeabi-v7a,armeabi"
+    api-level="22"
     density="xhdpi"
     format="7"
-    timestamp="92962223327557" >
+    timestamp="8573256144345" >
 
     <task
         name="javac"
-        duration="306" />
+        duration="106" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="47" />
+        duration="68" />
     <task
         name="verifier"
-        duration="27" />
+        duration="6" />
 
     <artifact
         location="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/outputs/apk/app-debug.apk"
         type="MAIN" />
 
-    <build timestamp="92962223327557" >
+    <build timestamp="8573256144345" >
         <artifact
             location="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />

@@ -210,6 +210,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
     @Override
     public void onEvent(PlayInfoResponse playInfoResponse, String sourceEndpoint) {
         infoSlave.getRemotePlayInfoMap().put(sourceEndpoint, playInfoResponse.getPlayInfo());
+//        infoSlave.getRemoteDeviceStatus(sourceEndpoint).setStatus(PlayStatus.PLAYING);
         mEventBus.post(new Events.PlayInfoEvent(sourceEndpoint));
     }
 

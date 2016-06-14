@@ -31,7 +31,7 @@ import org.kaaproject.kaa.demo.photoframe.MainActivity;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
 import org.kaaproject.kaa.demo.photoframe.R;
 import org.kaaproject.kaa.demo.photoframe.adapter.SlideshowPageAdapter;
-import org.kaaproject.kaa.demo.photoframe.app.Events;
+import org.kaaproject.kaa.demo.photoframe.communication.Events;
 
 /**
  * The implementation of the {@link Fragment} class.

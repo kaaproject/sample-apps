@@ -25,6 +25,6 @@ import org.slf4j.LoggerFactory;
 public class PhotoFrameConstants {
 
     public static final String LOG_TAG = PhotoFrameConstants.class.getSimpleName();
-    public static final Logger LOGGER = LoggerFactory.getLogger(PhotoFrameConstants.class);
+    public static final Logger LOG = LoggerFactory.getLogger(PhotoFrameConstants.class);
 
 }

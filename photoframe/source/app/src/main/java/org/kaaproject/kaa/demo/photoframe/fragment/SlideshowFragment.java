@@ -25,6 +25,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.nostra13.universalimageloader.utils.L;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.kaaproject.kaa.demo.photoframe.MainActivity;
@@ -76,13 +79,15 @@ public class SlideshowFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_slideshow, container, false);
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
         mSlideShowPagerAdapter = new SlideshowPageAdapter(getActivity(), mBucketId);
         mViewPager.setAdapter(mSlideShowPagerAdapter);
+
+        Toast.makeText(getActivity(), 1 + "/" + mSlideShowPagerAdapter.getCount(), Toast.LENGTH_SHORT).show();
+
         return rootView;
     }
 
@@ -134,7 +139,7 @@ public class SlideshowFragment extends BaseFragment {
         super.onPause();
 
         if (mActivity.getSupportActionBar() != null) {
-            mActivity.getSupportActionBar().hide();
+            mActivity.getSupportActionBar().show();
         }
 
         mActivity.setLightsOutMode(false);
@@ -168,6 +173,8 @@ public class SlideshowFragment extends BaseFragment {
                 position++;
             }
             mViewPager.setCurrentItem(position, true);
+
+            Toast.makeText(getActivity(), (position + 1) + "/" + count, Toast.LENGTH_SHORT).show();
             mSlideshowHandler.postDelayed(this, SLIDESHOW_INTERVAL_MS);
         }
 

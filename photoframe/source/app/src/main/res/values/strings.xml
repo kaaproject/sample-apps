@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 
      Copyright 2014-2016 CyberVision, Inc.
 
@@ -40,5 +39,5 @@
     <string name="unknown">Unknown</string>
     <string name="stopPlay">Stop play</string>
     <string name="logOut">Log out</string>
-    
+    <string name="logout_interaction_event">Another device want to interact with you. Login, please!</string>
 </resources>

@@ -19,24 +19,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/item_stop"
+        android:title="@string/stopPlay"
+        android:visible="false"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/item_refresh"
-        app:showAsAction="ifRoom"
         android:title="@string/refresh"
-        android:visible="true"/>
-    
-    <item
-        android:id="@+id/item_stop_play"
-        app:showAsAction="ifRoom"
-        android:title="@string/stopPlay"
-        android:visible="false"/>
-    
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/item_logout"
-        app:showAsAction="ifRoom"
         android:title="@string/logOut"
-        android:visible="true"/>
+        android:visible="true"
+        app:showAsAction="ifRoom" />
 
 </menu>

@@ -26,16 +26,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.common.endpoint.gen.Topic;
 import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
 import org.kaaproject.kaa.demo.photoframe.R;
 import org.kaaproject.kaa.demo.photoframe.adapter.AlbumsAdapter;
-import org.kaaproject.kaa.demo.photoframe.app.Events;
+import org.kaaproject.kaa.demo.photoframe.communication.Events;
 
 import java.util.ArrayList;
 import java.util.List;

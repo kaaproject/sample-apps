@@ -1,6 +1,5 @@
 package org.kaaproject.kaa.demo.photoframe.kaa;
 
-import org.kaaproject.kaa.client.channel.impl.transports.DefaultUserTransport;
 import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.registration.OnDetachEndpointOperationCallback;
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;

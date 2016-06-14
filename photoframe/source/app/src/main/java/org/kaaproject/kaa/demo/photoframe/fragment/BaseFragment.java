@@ -162,7 +162,12 @@ public abstract class BaseFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                loadSlideshow(playAlbumEvent, fragment);
+
+                if (manager.isUserAttached()) {
+                    loadSlideshow(playAlbumEvent, fragment);
+                } else {
+                    Toast.makeText(getActivity(), R.string.logout_interaction_event, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

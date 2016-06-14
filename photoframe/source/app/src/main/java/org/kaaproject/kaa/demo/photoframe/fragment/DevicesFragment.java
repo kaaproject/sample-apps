@@ -81,7 +81,7 @@ public class DevicesFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 mSwipeRefresh.setRefreshing(true);
-                updateAdapter();
+                updateInfo();
 
                 mSwipeRefresh.setRefreshing(false);
             }
@@ -97,7 +97,7 @@ public class DevicesFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        updateAdapter();
+        updateInfo();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class DevicesFragment extends BaseFragment {
 
         switch (id) {
             case R.id.item_refresh:
-                updateAdapter();
+                updateInfo();
                 break;
             case R.id.item_logout:
                 manager.logout();
@@ -120,6 +120,13 @@ public class DevicesFragment extends BaseFragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        updateInfo();
     }
 
     @Subscribe
@@ -157,10 +164,7 @@ public class DevicesFragment extends BaseFragment {
         }
     }
 
-    private void updateAdapter() {
-        devices.clear();
-        devices.addAll(manager.getRemoteDevicesMap().values());
-
+    private void updateInfo() {
         manager.discoverRemoteDevices();
     }
 

@@ -54,6 +54,8 @@ public class AlbumsFragment extends BaseFragment {
     private List<AlbumInfo> albums = new ArrayList<>();
     private String mEndpointKey;
 
+    private boolean isPlaying;
+
     public AlbumsFragment() {
         super();
 
@@ -79,7 +81,6 @@ public class AlbumsFragment extends BaseFragment {
         requestInfo();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_albums, container, false);
@@ -99,10 +100,13 @@ public class AlbumsFragment extends BaseFragment {
         mAlbums.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showWaitView();
-
                 AlbumInfo album = manager.getRemoteDeviceAlbums(mEndpointKey).get(position);
                 manager.playRemoteDeviceAlbum(mEndpointKey, album.getBucketId());
+
+                isPlaying = true;
+                getActivity().invalidateOptionsMenu();
+
+                updateAdapter();
             }
         });
 
@@ -119,17 +123,17 @@ public class AlbumsFragment extends BaseFragment {
         updateAdapter();
         showContentView();
 
+        isPlaying = manager.getRemoteDeviceStatus(mEndpointKey).getStatus() == PlayStatus.PLAYING;
+
         return rootView;
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        PlayInfo playInfo = manager.getRemoteDeviceStatus(mEndpointKey);
+        menu.clear();
 
         getActivity().getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
-        menu.findItem(R.id.item_stop_play).setVisible(playInfo != null &&
-                playInfo.getStatus() == PlayStatus.PLAYING);
-        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.item_stop).setVisible(isPlaying);
     }
 
     @Override
@@ -138,8 +142,11 @@ public class AlbumsFragment extends BaseFragment {
             case android.R.id.home:
                 popBackStack(getActivity());
                 break;
-            case R.id.item_stop_play:
+            case R.id.item_stop:
+                isPlaying = false;
+
                 manager.stopPlayRemoteDeviceAlbum(mEndpointKey);
+                item.setVisible(isPlaying);
                 break;
             case R.id.item_refresh:
                 requestInfo();
@@ -166,26 +173,13 @@ public class AlbumsFragment extends BaseFragment {
         }
     }
 
+    // TODO: in main thread
     @Subscribe
     public void onEvent(Events.PlayInfoEvent playInfoEvent) {
         if (playInfoEvent.getEndpointKey().equals(mEndpointKey)) {
             updateAdapter();
         }
     }
-//
-//    //TODO: in main thread
-//    @Subscribe
-//    public void onEvent(final Events.PlayAlbumEvent playAlbumEvent) {
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Toast.makeText(getActivity(), "Play", Toast.LENGTH_SHORT).show();
-//
-//                SlideshowFragment fragment = SlideshowFragment.newInstance(playAlbumEvent.getBucketId());
-//                fragment.move(getActivity());
-//            }
-//        });
-//    }
 
     @Override
     public String getTitle() {
@@ -229,7 +223,5 @@ public class AlbumsFragment extends BaseFragment {
                 notifyView();
             }
         });
-
     }
-
 }

@@ -2,6 +2,7 @@ package org.kaaproject.kaa.demo.photoframe.image;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.kaaproject.kaa.demo.photoframe.R;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,21 +45,11 @@ public class ProgressImageView extends FrameLayout {
         setDefaultImage();
     }
 
-    public void setImage(int res) {
-        image.setImageResource(res);
-    }
-
     public void setImage(String uriStr) {
-        try {
-            URI uri = new URI(uriStr);
-            setImage(uri);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            setDefaultImage();
-        }
+        setImage(Uri.fromFile(new File(uriStr)));
     }
 
-    public void setImage(URI uri) {
+    public void setImage(Uri uri) {
         if (isInEditMode()) return;
         ImageLoader.getInstance().displayImage(uri.toString(), image, UILConfiguration.getOptions(), new ImageLoadingListener() {
             @Override

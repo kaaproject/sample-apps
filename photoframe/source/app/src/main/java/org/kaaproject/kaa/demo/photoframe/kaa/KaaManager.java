@@ -1,3 +1,18 @@
+/**
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.kaaproject.kaa.demo.photoframe.kaa;
 
 import android.content.Context;
@@ -12,7 +27,7 @@ import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
 import org.kaaproject.kaa.demo.photoframe.DeviceInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
-import org.kaaproject.kaa.demo.photoframe.app.Events;
+import org.kaaproject.kaa.demo.photoframe.communication.Events;
 import org.kaaproject.kaa.demo.photoframe.fragment.BaseFragment;
 import org.kaaproject.kaa.demo.photoframe.util.PhotoFrameConstants;
 
@@ -20,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Performs initialization of the application resources including initialization of the Kaa client.
@@ -28,7 +42,7 @@ import java.util.concurrent.TimeUnit;
  * Stores a reference to the actual endpoint configuration.
  * Receives configuration updates from the Kaa cluster.
  * Manages the endpoint profile object, notifies the Kaa cluster of the profile updates.
- * <p/>
+ * <p>
  * Implements {@link SimpleKaaClientStateListener}
  */
 public class KaaManager extends SimpleKaaClientStateListener {
@@ -49,11 +63,14 @@ public class KaaManager extends SimpleKaaClientStateListener {
         eventsSlave = new KaaEventsSlave(infoSlave);
     }
 
+    /**
+     * Initialize the Kaa client using the Android context.
+     * Start the Kaa client workflow.
+     *
+     * @param context
+     */
     public void start(Context context) {
 
-        /*
-         * Initialize the Kaa client using the Android context.
-         */
         KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
         mClient = Kaa.newClient(kaaClientContext, this);
 
@@ -61,23 +78,27 @@ public class KaaManager extends SimpleKaaClientStateListener {
         eventsSlave.init(mClient);
         userVerifierSlave = new KaaUserVerifierSlave(this);
 
-         /*
-          * Start the Kaa client workflow.
-          */
         mClient.start();
-
-
     }
 
+    /**
+     * User Verifier part
+     */
     public void login(String userExternalId, String userAccessToken) {
         userVerifierSlave.login(userExternalId, userAccessToken);
     }
 
-    public void logout() {
-        userVerifierSlave.logout();
+    public boolean isUserAttached() {
+        return userVerifierSlave.isUserAttached();
     }
 
+    public void logout() {
+        userVerifierSlave.logout();
+    }//end user verifier part
 
+    /**
+     * Events part
+     */
     public void updateStatus(PlayStatus playing, String mBucketId) {
         eventsSlave.updateStatus(playing, mBucketId);
     }
@@ -97,8 +118,11 @@ public class KaaManager extends SimpleKaaClientStateListener {
 
     public void playRemoteDeviceAlbum(String mEndpointKey, String bucketId) {
         eventsSlave.playRemoteDeviceAlbum(mEndpointKey, bucketId);
-    }
+    } // end event slave part
 
+    /**
+     * Information part
+     */
     public String getRemoteDeviceEndpoint(int position) {
         //DevicesMap().values().toArray()[position];
         if (infoSlave.getRemoteDevicesMap().keySet().toArray().length > position)
@@ -118,10 +142,17 @@ public class KaaManager extends SimpleKaaClientStateListener {
         return infoSlave.getRemoteDevicesMap();
     }
 
-    public List<AlbumInfo> getRemoteDeviceAlbums(String mEndpointKey) {
-        return infoSlave.getRemoteDeviceAlbums(mEndpointKey);
+    public String getRemoteDeviceModel(String mEndpointKey) {
+        return infoSlave.getRemoteDevicesMap().get(mEndpointKey).getModel();
     }
 
+    public List<AlbumInfo> getRemoteDeviceAlbums(String mEndpointKey) {
+        return infoSlave.getRemoteDeviceAlbums(mEndpointKey);
+    } // end information part
+
+    /**
+     * EventBus part
+     */
     public void registerEventBus(BaseFragment fragment) {
         if (!mEventBus.isRegistered(fragment))
             mEventBus.register(fragment);
@@ -130,11 +161,7 @@ public class KaaManager extends SimpleKaaClientStateListener {
     public void unregisterEventBus(BaseFragment fragment) {
         if (mEventBus.isRegistered(fragment))
             mEventBus.unregister(fragment);
-    }
-
-    public boolean isUserAttached() {
-        return userVerifierSlave.isUserAttached();
-    }
+    } // end Eventbus part
 
     /**
      * Resume the Kaa client. Restore the Kaa client workflow.
@@ -162,17 +189,13 @@ public class KaaManager extends SimpleKaaClientStateListener {
         mKaaStarted = false;
     }
 
-    public String getRemoteDeviceModel(String mEndpointKey) {
-        return infoSlave.getRemoteDevicesMap().get(mEndpointKey).getModel();
-    }
-
     public boolean isKaaStarted() {
         return mKaaStarted;
     }
 
     @Override
     public void onStarted() {
-        PhotoFrameConstants.LOGGER.info("Kaa client started");
+        PhotoFrameConstants.LOG.info("Kaa client started");
 
         /*
          *  For showing WaitFragment
@@ -189,7 +212,7 @@ public class KaaManager extends SimpleKaaClientStateListener {
 
     @Override
     public void onResume() {
-        PhotoFrameConstants.LOGGER.info("Kaa client resumed");
+        PhotoFrameConstants.LOG.info("Kaa client resumed");
 
         if (userVerifierSlave.isUserAttached()) {
             eventsSlave.notifyRemoteDevices();

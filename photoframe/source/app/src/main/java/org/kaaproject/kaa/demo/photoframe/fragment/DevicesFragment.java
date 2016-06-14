@@ -31,7 +31,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.kaaproject.kaa.demo.photoframe.DeviceInfo;
 import org.kaaproject.kaa.demo.photoframe.R;
 import org.kaaproject.kaa.demo.photoframe.adapter.DevicesAdapter;
-import org.kaaproject.kaa.demo.photoframe.app.Events;
+import org.kaaproject.kaa.demo.photoframe.communication.Events;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -21,14 +21,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.demo.photoframe.app.Events;
+import org.kaaproject.kaa.demo.photoframe.communication.Events;
 import org.kaaproject.kaa.demo.photoframe.fragment.BaseFragment;
 import org.kaaproject.kaa.demo.photoframe.fragment.DevicesFragment;
 import org.kaaproject.kaa.demo.photoframe.fragment.LoginFragment;
@@ -104,47 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showDevices() {
         new DevicesFragment().move(this);
-    }
-
-    @Subscribe
-    public void onEvent(Events.PlayAlbumEvent playAlbumEvent) {
-        Fragment fragment = BaseFragment.getCurrentFragment(this);
-
-        if (fragment != null && fragment instanceof SlideshowFragment) {
-            ((SlideshowFragment) fragment).updateBucketId(playAlbumEvent.getBucketId());
-        } else {
-            SlideshowFragment.newInstance(playAlbumEvent.getBucketId()).move(this);
-        }
-    }
-
-    @Subscribe
-    public void onEvent(Events.KaaStartedEvent kaaStarted) {
-        if (kaaStarted.getErrorMessage() != null) {
-            return;
-        }
-
-        if (!manager.isUserAttached()) {
-            showLogin();
-        } else {
-            showDevices();
-        }
-    }
-
-    @Subscribe
-    public void onEvent(Events.UserDetachEvent userDetachEvent) {
-        if (userDetachEvent.getErrorMessage() != null) {
-            Toast.makeText(this, userDetachEvent.getErrorMessage(), Toast.LENGTH_LONG).show();
-        }
-        showLogin();
-    }
-
-    @Subscribe
-    public void onEvent(Events.UserAttachEvent userAttachEvent) {
-        if (userAttachEvent.getErrorMessage() != null) {
-            Toast.makeText(this, userAttachEvent.getErrorMessage(), Toast.LENGTH_LONG).show();
-        } else {
-            showDevices();
-        }
     }
 
 //    @Override

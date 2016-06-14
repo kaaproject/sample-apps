@@ -26,11 +26,12 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.kaaproject.kaa.client.channel.impl.DefaultChannelManager;
+import org.greenrobot.eventbus.Subscribe;
 import org.kaaproject.kaa.demo.photoframe.MainActivity;
 import org.kaaproject.kaa.demo.photoframe.R;
-import org.kaaproject.kaa.demo.photoframe.app.Events;
+import org.kaaproject.kaa.demo.photoframe.communication.Events;
 import org.kaaproject.kaa.demo.photoframe.kaa.KaaManager;
 import org.kaaproject.kaa.demo.photoframe.util.PhotoFrameConstants;
 
@@ -151,6 +152,36 @@ public abstract class BaseFragment extends Fragment {
         super.onPause();
 
         manager.unregisterEventBus(this);
+    }
+
+
+    @Subscribe
+    public void onEvent(final Events.PlayAlbumEvent playAlbumEvent) {
+        final Fragment fragment = BaseFragment.getCurrentFragment((MainActivity) getActivity());
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadSlideshow(playAlbumEvent, fragment);
+            }
+        });
+    }
+
+    private void loadSlideshow(Events.PlayAlbumEvent playAlbumEvent, Fragment fragment) {
+        if (fragment != null && fragment instanceof SlideshowFragment) {
+            ((SlideshowFragment) fragment).updateBucketId(playAlbumEvent.getBucketId());
+        } else {
+            SlideshowFragment.newInstance(playAlbumEvent.getBucketId()).move(getActivity());
+        }
+    }
+
+    @Subscribe
+    public void onEvent(Events.UserDetachEvent userDetachEvent) {
+        if (userDetachEvent.getErrorMessage() != null) {
+            Toast.makeText(getActivity(), userDetachEvent.getErrorMessage(), Toast.LENGTH_LONG).show();
+            return;
+        }
+        new LoginFragment().move(getActivity());
     }
 
     protected void setupBaseViews(View rootView) {

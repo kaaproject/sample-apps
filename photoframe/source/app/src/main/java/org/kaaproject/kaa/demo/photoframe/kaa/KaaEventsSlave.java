@@ -13,7 +13,7 @@ import org.kaaproject.kaa.demo.photoframe.PlayInfoRequest;
 import org.kaaproject.kaa.demo.photoframe.PlayInfoResponse;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
 import org.kaaproject.kaa.demo.photoframe.StopRequest;
-import org.kaaproject.kaa.demo.photoframe.app.Events;
+import org.kaaproject.kaa.demo.photoframe.communication.Events;
 
 import java.util.ArrayList;
 import java.util.List;

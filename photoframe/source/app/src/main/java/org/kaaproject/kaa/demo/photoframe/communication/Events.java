@@ -1,4 +1,4 @@
-package org.kaaproject.kaa.demo.photoframe.app;
+package org.kaaproject.kaa.demo.photoframe.communication;
 
 import org.greenrobot.eventbus.EventBus;
 

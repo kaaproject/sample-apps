@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86"
+    api-level="22"
+    density="xhdpi"
+    format="7"
+    timestamp="29101580472083" >
+
+    <task
+        name="javac"
+        duration="91" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="32" />
+    <task
+        name="verifier"
+        duration="4" />
+
+    <artifact
+        location="/home/user083255/projects/kaa/code/android/Notification/app/build/outputs/apk/app-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="29101580472083" >
+        <artifact
+            location="/home/user083255/projects/kaa/code/android/Notification/app/build/outputs/apk/app-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>

@@ -99,6 +99,34 @@
                   </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>${rat.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>source/cc32xx/targets/cc32xx/app.ld</exclude>
+                        <exclude>source/cc32xx/libs/kaa/PUT_SDK_HERE</exclude>
+                        <exclude>source/esp8266/libs/kaa/PUT_SDK_HERE</exclude>
+                        <exclude>source/esp8266/driver/</exclude>
+                        <exclude>source/esp8266/include/</exclude>
+                        <exclude>source/esp8266/ld/</exclude>
+
+                        <exclude>source/artik5/libs/kaa/PUT_SDK_HERE</exclude>
+
+                        <exclude>resources/remoteControlECF.json</exclude>
+
+                        <exclude>source/android/project.properties</exclude>
+
+                        <exclude>source/objc/GPIOControlDemo/Info.plist</exclude>
+                        <exclude>source/objc/GPIOControlDemo/Base.lproj/LaunchScreen.storyboard</exclude>
+                        <exclude>source/objc/GPIOControlDemo/Base.lproj/Main.storyboard</exclude>
+                        <exclude>source/objc/GPIOControlDemo/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
+                        <exclude>source/objc/GPIOControlDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/GPIOControlDemo.xcodeproj/project.pbxproj</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

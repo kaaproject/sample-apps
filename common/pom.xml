@@ -153,6 +153,18 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>${rat.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>c/targets/cc32xx/app.ld</exclude>
+                        <exclude>c/targets/esp8266/driver/</exclude>
+                        <exclude>c/targets/esp8266/ld/</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

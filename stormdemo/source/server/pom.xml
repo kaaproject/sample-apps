@@ -21,12 +21,12 @@
 
     <groupId>org.kaaproject.examples.storm</groupId>
     <artifactId>server</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.0-SNAPSHOT</version>
 
     <properties>
         <flume.version>1.5.0</flume.version>
         <hadoop.version>2.4.0</hadoop.version>
-        <kaa.version>0.10.0</kaa.version>
+        <kaa.version>0.10.0-SNAPSHOT</kaa.version>
         <storm.version>0.10.0-beta1</storm.version>
     </properties>
 

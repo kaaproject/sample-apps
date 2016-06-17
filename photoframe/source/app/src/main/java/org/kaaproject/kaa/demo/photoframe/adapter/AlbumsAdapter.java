@@ -16,56 +16,35 @@
 
 package org.kaaproject.kaa.demo.photoframe.adapter;
 
-import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
-import org.kaaproject.kaa.demo.photoframe.PlayInfo;
-import org.kaaproject.kaa.demo.photoframe.R;
-import org.kaaproject.kaa.demo.photoframe.kaa.KaaManager;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
+import org.kaaproject.kaa.demo.photoframe.PlayInfo;
+import org.kaaproject.kaa.demo.photoframe.R;
+
 import java.util.List;
 
 /**
- * The implementation of the {@link BaseAdapter} class. Used as an adapter class for the albums list view.
+ * The implementation of the {@link ArrayAdapter} class. Used as an adapter class for the albums list view.
  * Provides list item views with the information about remote device albums.
  */
 public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
 
     private Context mContext;
-    //    private final KaaManager manager;
-    private String mEndpointKey;
     private PlayInfo playInfo;
 
-    public AlbumsAdapter(Context context, PlayInfo playInfo, String endpointKey, List<AlbumInfo> albums) {
+    public AlbumsAdapter(Context context, PlayInfo playInfo, List<AlbumInfo> albums) {
         super(context, R.layout.album_list_item, albums);
 
         mContext = context;
-        mEndpointKey = endpointKey;
         this.playInfo = playInfo;
     }
-
-//    @Override
-//    public int getCount() {
-//        return manager.getRemoteDeviceAlbums(mEndpointKey).size();
-//    }
-//
-//    @Override
-//    public Object getItem(int position) {
-//        return manager.getRemoteDeviceAlbums(mEndpointKey).get(position);
-//    }
-//
-//    @Override
-//    public long getItemId(int position) {
-//        return position;
-//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

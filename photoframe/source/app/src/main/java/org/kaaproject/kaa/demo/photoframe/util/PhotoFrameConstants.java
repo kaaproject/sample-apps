@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A simple utility class which provides static functions for managing fragments
+ * A simple utility class which provides static constants
  */
 public class PhotoFrameConstants {
 

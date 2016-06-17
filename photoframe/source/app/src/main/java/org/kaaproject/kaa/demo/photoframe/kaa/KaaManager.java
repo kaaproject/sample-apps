@@ -72,7 +72,7 @@ public class KaaManager extends SimpleKaaClientStateListener {
     public void start(Context context) {
 
         KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
-        mClient = Kaa.newClient(kaaClientContext, this);
+        mClient = Kaa.newClient(kaaClientContext, this, true);
 
         infoSlave.initDeviceInfo(context);
         eventsSlave.init(mClient);

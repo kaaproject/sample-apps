@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The implementation of the {@link AbstractListFragment} class.
+ * The implementation of the {@link BaseFragment} class.
  * Represents a view with a list of remote device albums.
  */
 public class AlbumsFragment extends BaseFragment {
@@ -64,8 +64,10 @@ public class AlbumsFragment extends BaseFragment {
 
     public static AlbumsFragment newInstance(String endpointKey) {
         AlbumsFragment fragment = new AlbumsFragment();
+
         Bundle bundle = new Bundle();
         bundle.putString(ENDPOINT_KEY, endpointKey);
+
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -93,7 +95,7 @@ public class AlbumsFragment extends BaseFragment {
         mNoData.setText(getString(R.string.no_albums));
 
         PlayInfo playInfo = manager.getRemoteDeviceStatus(mEndpointKey);
-        adapter = new AlbumsAdapter(getActivity(), playInfo, mEndpointKey, albums);
+        adapter = new AlbumsAdapter(getActivity(), playInfo, albums);
 
         mAlbums.setAdapter(adapter);
 
@@ -158,14 +160,6 @@ public class AlbumsFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mEndpointKey != null) {
-            outState.putString(ENDPOINT_KEY, mEndpointKey);
-        }
-    }
-
     @Subscribe
     public void onEvent(Events.AlbumListEvent albumListEvent) {
         if (albumListEvent.getEndpointKey().equals(mEndpointKey)) {
@@ -173,7 +167,6 @@ public class AlbumsFragment extends BaseFragment {
         }
     }
 
-    // TODO: in main thread
     @Subscribe
     public void onEvent(Events.PlayInfoEvent playInfoEvent) {
         if (playInfoEvent.getEndpointKey().equals(mEndpointKey)) {

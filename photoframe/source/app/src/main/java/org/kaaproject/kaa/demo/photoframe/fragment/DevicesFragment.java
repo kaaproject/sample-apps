@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The implementation of the {@link AbstractListFragment} class.
+ * The implementation of the {@link BaseFragment} class.
  * Represents a view with a list of remote devices.
  */
 public class DevicesFragment extends BaseFragment {

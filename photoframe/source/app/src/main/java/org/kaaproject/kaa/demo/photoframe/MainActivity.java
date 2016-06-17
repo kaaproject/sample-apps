@@ -19,22 +19,17 @@ package org.kaaproject.kaa.demo.photoframe;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.demo.photoframe.communication.Events;
-import org.kaaproject.kaa.demo.photoframe.fragment.BaseFragment;
 import org.kaaproject.kaa.demo.photoframe.fragment.DevicesFragment;
 import org.kaaproject.kaa.demo.photoframe.fragment.LoginFragment;
-import org.kaaproject.kaa.demo.photoframe.fragment.SlideshowFragment;
 import org.kaaproject.kaa.demo.photoframe.fragment.WaitFragment;
 import org.kaaproject.kaa.demo.photoframe.kaa.KaaManager;
 
 /**
+ * The implementation of the {@link AppCompatActivity} class.
  * Manages fragments transition depending on the current application state.
  */
 public class MainActivity extends AppCompatActivity {
@@ -49,15 +44,12 @@ public class MainActivity extends AppCompatActivity {
         manager = new KaaManager();
         manager.start(this);
 
-        //TODO: find use of savedInstanceState
-        if (savedInstanceState == null) {
-            if (!manager.isKaaStarted()) {
-                new WaitFragment().move(this);
-            } else if (!manager.isUserAttached()) {
-                new LoginFragment().move(this);
-            } else {
-                new DevicesFragment().move(this);
-            }
+        if (!manager.isKaaStarted()) {
+            new WaitFragment().move(this);
+        } else if (!manager.isUserAttached()) {
+            new LoginFragment().move(this);
+        } else {
+            new DevicesFragment().move(this);
         }
     }
 
@@ -91,39 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         manager.stop();
     }
-
-    private void showWait() {
-        new WaitFragment().move(this);
-    }
-
-    private void showLogin() {
-        new LoginFragment().move(this);
-    }
-
-    private void showDevices() {
-        new DevicesFragment().move(this);
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        return super.onPrepareOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == android.R.id.home) {
-//            BaseFragment.popBackStack(this);
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void setLightsOutMode(boolean enabled) {

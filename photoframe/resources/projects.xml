@@ -17,10 +17,10 @@
 
 -->
 
-<projectsConfig 
-    xmlns="http://www.kaaproject.org"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+<projectsConfig
+        xmlns="http://www.kaaproject.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="photoframe_demo">
         <name>Photo frame</name>
         <description>Photo frame demo app for Android</description>
@@ -43,23 +43,23 @@ Please note that all the features of Administration UI are also supported by RES
 For more background on Kaa Event subsystem please refer to the corresponding programming guide and design reference sections.
         	]]>
         </details>
-        
+
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
              (ex. JAVA, CPP, etc., to get list of all possible options
              see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-             
+
         <sdkLanguage>JAVA</sdkLanguage>
-        
+
         <!-- Specifies the target runtime platforms according to the instructions from the project details section
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
-             
+
         <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>ADVANCED</complexity>
         <sourceArchive>android/photoframe_demo.tar.gz</sourceArchive>
         <projectFolder>photoframe_demo/PhotoFrame</projectFolder>
-        <sdkLibDir>photoframe_demo/PhotoFrame/libs</sdkLibDir>
-        <destBinaryFile>photoframe_demo/PhotoFrame/bin/PhotoFrame-debug.apk</destBinaryFile>
+        <sdkLibDir>photoframe_demo/PhotoFrame/app/libs</sdkLibDir>
+        <destBinaryFile>photoframe_demo/PhotoFrame/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
 </projectsConfig>

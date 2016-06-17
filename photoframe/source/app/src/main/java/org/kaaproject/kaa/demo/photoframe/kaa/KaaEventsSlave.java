@@ -1,3 +1,19 @@
+/**
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.kaaproject.kaa.demo.photoframe.kaa;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class, that control only user event feature.
+ * More you can see at @see <a href="http://docs.kaaproject.org/display/KAA/Events">Events</a>
  */
 public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
 
@@ -31,16 +49,13 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
         this.mEventBus = EventBus.getDefault();
     }
 
+    /**
+     * Obtain a reference to the Photo frame event class family class
+     * which is responsible for sending/receiving the declared family events.
+     * Register a listener to receive the photo frame family events.
+     */
     public void init(KaaClient client) {
-        /*
-         * Obtain a reference to the Photo frame event class family class
-         * which is responsible for sending/receiving the declared family events.
-         */
         mPhotoFrameEventClassFamily = client.getEventFamilyFactory().getPhotoFrameEventClassFamily();
-
-        /*
-         * Register a listener to receive the photo frame family events.
-         */
         mPhotoFrameEventClassFamily.addListener(this);
     }
 
@@ -210,7 +225,6 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
     @Override
     public void onEvent(PlayInfoResponse playInfoResponse, String sourceEndpoint) {
         infoSlave.getRemotePlayInfoMap().put(sourceEndpoint, playInfoResponse.getPlayInfo());
-//        infoSlave.getRemoteDeviceStatus(sourceEndpoint).setStatus(PlayStatus.PLAYING);
         mEventBus.post(new Events.PlayInfoEvent(sourceEndpoint));
     }
 

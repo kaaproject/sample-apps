@@ -27,8 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.utils.L;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.kaaproject.kaa.demo.photoframe.MainActivity;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;

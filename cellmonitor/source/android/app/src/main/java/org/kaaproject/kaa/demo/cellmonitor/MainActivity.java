@@ -24,13 +24,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.CellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.cellmonitor.kaa.KaaManager;
 import org.kaaproject.kaa.demo.cellmonitor.manager.CellManager;
-import org.kaaproject.kaa.demo.cellmonitor.manager.LocationManager;
+import org.kaaproject.kaa.demo.cellmonitor.manager.LocationManagerWrapper;
 import org.kaaproject.kaa.demo.cellmonitor.util.CellMonitorConstants;
 import org.kaaproject.kaa.demo.cellmonitor.util.LocationUtil;
 import org.kaaproject.kaa.demo.cellmonitor.util.NetworkUtil;
@@ -40,7 +39,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * The implementation of {@link AppCompatActivity} class. Notifies the application of the activity lifecycle changes.
+ * The implementation of {@link AppCompatActivity} class.
+ * Notifies the application of the activity lifecycle changes.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private KaaManager kaaManager;
     private CellManager cellManager;
-    private LocationManager locationManager;
+    private LocationManagerWrapper locationManagerWrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         kaaManager = new KaaManager(cellCallback);
         cellManager = new CellManager(this, cellCallback);
-        locationManager = new LocationManager(this, cellCallback);
+        locationManagerWrapper = new LocationManagerWrapper(this, cellCallback);
 
         kaaManager.start(this);
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
          * Notify the application of the background state.
          */
         kaaManager.pause();
-        locationManager.pause();
+        locationManagerWrapper.pause();
         cellManager.pause();
     }
 
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
          * Notify the application of the foreground state.
          */
         kaaManager.resume();
-        locationManager.resume();
+        locationManagerWrapper.resume();
         cellManager.resume();
     }
 
@@ -180,9 +180,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateGpsLocation() {
-        if (locationManager.getGpsLocation() != null) {
-            double latitude = locationManager.getGpsLocation().getLatitude();
-            double longitude = locationManager.getGpsLocation().getLongitude();
+        if (locationManagerWrapper.getGpsLocation() != null) {
+            double latitude = locationManagerWrapper.getGpsLocation().getLatitude();
+            double longitude = locationManagerWrapper.getGpsLocation().getLongitude();
 
             mGpsLocationValue.setText(String.format(getString(R.string.location_value), String.valueOf(latitude), String.valueOf(longitude)));
         } else {
@@ -239,9 +239,9 @@ public class MainActivity extends AppCompatActivity {
         double latitude = CellMonitorConstants.UNDEFINED;
         double longitude = CellMonitorConstants.UNDEFINED;
 
-        if (locationManager.getGpsLocation() != null) {
-            latitude = locationManager.getGpsLocation().getLatitude();
-            longitude = locationManager.getGpsLocation().getLongitude();
+        if (locationManagerWrapper.getGpsLocation() != null) {
+            latitude = locationManagerWrapper.getGpsLocation().getLatitude();
+            longitude = locationManagerWrapper.getGpsLocation().getLongitude();
         }
 
         kaaManager.sendLog(networkOperatorCode, networkOperatorName, cid, lac, gsmSignalStrength,

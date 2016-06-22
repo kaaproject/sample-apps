@@ -20,12 +20,12 @@ project (Cpp-SDK-sample)
 enable_language(CXX)
 
 # Path to CMake's scripts.
-set(CMAKE_MODULE_PATH 
+set(CMAKE_MODULE_PATH
 	 ${CMAKE_MODULE_PATH}
 	 ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/Modules
     )
 
-if(MSVC)   
+if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -I/usr/local/include")

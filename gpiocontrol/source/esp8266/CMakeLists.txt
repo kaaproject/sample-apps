@@ -36,7 +36,7 @@ set(KAA_SDK_ROOT libs/kaa/src/)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -Os -Wall -Wextra")
 
 if(NOT DEFINED ESPRESSIF_HOME)
-    set(ESP_TOOLCHAIN_DIR /opt/Espressif)
+    set(ESPRESSIF_HOME /opt/Espressif)
 endif()
     
 set(ESP_TOOLCHAIN_DIR ${ESPRESSIF_HOME}/crosstool-NG/builds/xtensa-lx106-elf/bin)

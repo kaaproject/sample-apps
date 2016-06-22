@@ -14,8 +14,9 @@
   limitations under the License.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
@@ -76,7 +77,8 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/generated-resources/demo/cellmonitor
+                            <outputDirectory>
+                                ${project.build.directory}/generated-resources/demo/cellmonitor
                             </outputDirectory>
                             <resources>
                                 <resource>
@@ -86,6 +88,43 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                    <useDefaultExcludes>false</useDefaultExcludes>
+                    <excludes>
+                        <!-- Following excludes generated with Android Studio -->
+                        <exclude>source/android/CellMonitor/gradlew.bat</exclude>
+                        <exclude>source/android/CellMonitor/app/proguard-rules.pro</exclude>
+                        <exclude>source/android/CellMonitor/.idea/</exclude>
+                        <exclude>source/android/CellMonitor/.gradle/</exclude>
+                        <exclude>source/android/CellMonitor/gradle/</exclude>
+                        <exclude>source/android/CellMonitor/app/build/</exclude>
+                        <exclude>source/android/CellMonitor/local.properties</exclude>
+                        <exclude>source/android/CellMonitor/app/app.iml</exclude>
+                        <exclude>source/android/CellMonitor/gradlew.bat</exclude>
+                        <exclude>source/android/CellMonitor/CellMonitor.iml</exclude>
+                        <exclude>source/android/CellMonitor/gradle.properties</exclude>
+                        <!-- Following excludes generated with XCode -->
+                        <exclude>
+                            source/objc/CellMonitorDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+                        </exclude>
+                        <exclude>source/objc/CellMonitorDemo.xcodeproj/project.pbxproj</exclude>
+                        <exclude>source/objc/CellMonitorDemo/Info.plist</exclude>
+                        <exclude>source/objc/CellMonitorDemo/Base.lproj/Main.storyboard</exclude>
+                        <exclude>source/objc/CellMonitorDemo/Base.lproj/LaunchScreen.storyboard
+                        </exclude>
+                        <exclude>
+                            source/objc/CellMonitorDemo/Assets.xcassets/AppIcon.appiconset/Contents.json
+                        </exclude>
+                        <!--Common excludes files -->
+                        <exclude>resources/cell_monitor_log.avsc</exclude>
+                        <exclude>resources/mongo_appender.json</exclude>
+                        <exclude>source/android/CellMonitor/.gitignore</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

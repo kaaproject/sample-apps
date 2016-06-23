@@ -107,6 +107,8 @@
                         <exclude>source/android/CellMonitor/gradlew.bat</exclude>
                         <exclude>source/android/CellMonitor/CellMonitor.iml</exclude>
                         <exclude>source/android/CellMonitor/gradle.properties</exclude>
+			<exclude>source/android/CellMonitor/gradlew</exclude>
+  			<exclude>source/android/CellMonitor/build/</exclude>
                         <!-- Following excludes generated with XCode -->
                         <exclude>
                             source/objc/CellMonitorDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata

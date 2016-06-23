@@ -1,0 +1,17 @@
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/event/Events$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/adapter/AreasAdapter$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/ui/ProgressImageView$1$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/kaa/KaaConfigurationSlave$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/event/Events$KaaStarted$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/adapter/PlacesAdapter$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/fragment/CityFragment$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/event/Events$ConfigurationUpdated$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/MainActivity$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/adapter/CityPagerAdapter$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/fragment/BaseFragment$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/kaa/KaaProfilingSlave$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/ui/ProgressImageView$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/adapter/PlacesAdapter$ViewHolder$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/adapter/AreasAdapter$ViewHolder$override.class
+CHANGED,/home/user083255/projects/kaa/code/android/CityGuide/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/org/kaaproject/kaa/demo/cityguide/kaa/KaaManager$override.class

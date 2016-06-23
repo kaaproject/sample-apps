@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.4.0_4050ecb680fd93e0cdb96e1951fcb5e4128304ac/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.5/442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375/universal-image-loader-1.9.5.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/universal-image-loader-1.9.5_a7e9d3d09a55755bd7cc538a05d905cb29b18b88/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/.gradle/caches/modules-2/files-2.1/org.greenrobot/eventbus/3.0.0/ddd99896e9569eaababbe81b35d80e1b91c4ad85/eventbus-3.0.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ddd99896e9569eaababbe81b35d80e1b91c4ad85">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/eventbus-3.0.0_7fee62d86e9215c131ac61aa19dd237e787f1580/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="217f78b7362d3708a8a095f0f25c139d2f7a480e">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_6f87b83606aaf7e090a2fc3d6d264ea6ff1b573e/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_bc4e24ebcbb675351fec5e912d3acc7b29202c41/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/libs/kaa-android-ep-sdk-E-FWf1OrIzbo5XAACVXNkTg1avQ.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="e7106c6ee75652cf4b27dd028fdb705a3c118e47">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/2/kaa-android-ep-sdk-E-FWf1OrIzbo5XAACVXNkTg1avQ_34f5e45ae1e9ada1a20bbfea447b03a751c93d5a/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.4.0_041dd7fce04d8b5f1e920cd36eef7bab735f6eed/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_48f3215c583033ad3ce003c86ad785f1832ce2cf/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_2918b476030d1cc214e2735022eb6ab5391bae56/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.4.0_35aff629923ae44132311d47a75a7cb819ea39cb/classes.dex" />
+    </item>
+    <item
+        jar="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="57aa5e71240b04b2ca6c827a17b78bec3efad7e7">
+        <dex dex="/home/user083255/projects/kaa/code/android/PhotoFrame/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_edefdabc23f5380f4b9b41557b64631eaabbcdc8/classes.dex" />
+    </item>
+
+</items>

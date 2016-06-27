@@ -29,6 +29,8 @@
 #include "uart_if.h"
 #include "common.h"
 
+#include <stdlib.h>
+
 #define demo_printf(msg, ...) UART_PRINT((msg), ##__VA_ARGS__)
 
 /* Initialises a target. Zero value means success, negative - errors.

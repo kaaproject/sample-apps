@@ -1,98 +1,99 @@
-/**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
 package org.kaaproject.kaa.demo.configuration;
 
+import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
+import org.kaaproject.kaa.client.Kaa;
+import org.kaaproject.kaa.client.KaaClient;
+import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
+import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
+import org.kaaproject.kaa.client.configuration.base.SimpleConfigurationStorage;
+import org.kaaproject.kaa.client.profile.ProfileContainer;
+import org.kaaproject.kaa.schema.sample.Configuration;
+import org.kaaproject.kaa.schema.system.EmptyData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.io.InputStreamReader;
+
 
 /**
- * A demo application class that use the Kaa configuration API.
+ * A demo application that shows how to use the Kaa configuration API.
  */
 public class Main {
 
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) throws IOException {
-        LOG.info("Configuration demo started");
+    private static KaaClient kaaClient;
 
-        // we need folder to save properties in it. In other case we can't create more then one KaaClient
-        if (!Files.exists(Paths.get(KaaManager.PROPERTIES_OUT_DIR))) {
-            LOG.error("No resource folder. Configuration demo cancelled");
-            return;
-        }
+    public static void main(String[] args) throws InterruptedException {
+        LOG.info("Activation demo started");
 
-        KaaManager manager = new KaaManager();
-        for (int i = 0; i < KaaManager.KAA_CLIENT_NUMBER; i++) {
-            try {
-                createResDir(i);
-                manager.startKaaClient(i);
-            } catch (IOException e) {
-                e.printStackTrace();
+        /*
+         * Create the Kaa desktop context for the application.
+         */
+        DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext();
+
+        /*
+         * Create a Kaa client and add a listener which displays the Kaa client
+         * configuration as soon as the Kaa client is started.
+         */
+        kaaClient = Kaa.newClient(desktopKaaPlatformContext, new SimpleKaaClientStateListener() {
+            @Override
+            public void onStarted() {
+                super.onStarted();
+                LOG.info("Kaa client started");
+                Configuration configuration = kaaClient.getConfiguration();
+                LOG.info("Device sample period: " + (configuration.getSamplePeriod()));
             }
-        }
+        });
+        kaaClient.setProfileContainer(new ProfileContainer() {
+            @Override
+            public EmptyData getProfile() {
+                return new EmptyData();
+            }
+        });
+        /*
+         * Persist configuration in a local storage to avoid downloading it each
+         * time the Kaa client is started.
+         */
+        kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));
+
+        /*
+         * Add a listener which displays the Kaa client configuration each time
+         * it is updated.
+         */
+        kaaClient.addConfigurationListener(new ConfigurationListener() {
+            @Override
+            public void onConfigurationUpdate(Configuration deviceType) {
+                LOG.info("Configuration was updated. New sampling period: " + deviceType.getSamplePeriod());
+            }
+        });
+
+        /*
+         * Start the Kaa client and connect it to the Kaa server.
+         */
+        kaaClient.start();
+        LOG.info("Kaa endpoint key hash : " + kaaClient.getEndpointKeyHash());
+        LOG.info("Default sampling period : " + kaaClient.getConfiguration().getSamplePeriod());
 
         LOG.info("--= Press any key to exit =--");
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            LOG.error("IOException was caught - ", e);
-        }
+        readUserExit();
 
-        // Stop the Kaa client and release all the resources which were in use.
-        try {
-            deleteResDir();
-            manager.stopKaaClients();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        LOG.info("Configuration demo stopped");
+        /*
+         * Stop the Kaa client and connect it to the Kaa server.
+         */
+        kaaClient.stop();
     }
 
-    private static void createResDir(int index) throws IOException {
-        Path path = Paths.get(KaaManager.PROPERTIES_OUT_DIR + KaaManager.KAA_PROPERTIES_DIR_PREFIX + index);
-        Files.createDirectory(path);
-    }
 
-    private static void deleteResDir() throws IOException {
-        final Path directory = Paths.get(KaaManager.PROPERTIES_OUT_DIR);
-        Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                Files.delete(file);
-                return FileVisitResult.CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                if (dir != directory)
-                    Files.delete(dir);
-                return FileVisitResult.CONTINUE;
-            }
-
-        });
+    public static void readUserExit() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            LOG.error("IOException has occurred: " + e.getMessage());
+        }
     }
 
 }

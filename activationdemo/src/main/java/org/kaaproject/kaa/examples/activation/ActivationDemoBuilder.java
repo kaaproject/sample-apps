@@ -16,8 +16,10 @@
 
 package org.kaaproject.kaa.examples.activation;
 
+import java.io.FileInputStream;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
@@ -63,11 +65,16 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
 
         loginTenantDeveloper(client);
 
+        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("configuration-schema.avsc")));
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, activationApplication.getTenantId(), activationApplication.getApplicationToken());
+
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(activationApplication.getId());
         configurationSchema.setName("Endpoint activation configuration schema");
         configurationSchema.setDescription("Configuration schema describing active and inactive devices used by city guide application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration-schema.avsc"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
+
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 
         EndpointGroupDto baseEndpointGroup = null;

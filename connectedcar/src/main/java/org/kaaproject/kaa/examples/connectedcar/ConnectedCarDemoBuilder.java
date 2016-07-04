@@ -17,15 +17,18 @@
 package org.kaaproject.kaa.examples.connectedcar;
 
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
@@ -123,15 +126,16 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         connectedCarLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("restAppender.json")));
         connectedCarLogAppender = client.editLogAppenderDto(connectedCarLogAppender);
 
-        /*
-         * Configure the configuration feature.
-         */
+
+        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("configurationSchema.json")));
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(connectedCarApplication.getId());
         configurationSchema.setName("Connected car configuration schema");
         configurationSchema.setDescription("Default configuration schema for the connected car application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configurationSchema.json"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 

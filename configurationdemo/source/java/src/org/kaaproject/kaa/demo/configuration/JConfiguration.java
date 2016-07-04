@@ -1,3 +1,19 @@
+/**
+ *  Copyright 2014-2016 CyberVision, Inc.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package org.kaaproject.kaa.demo.configuration;
 
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
@@ -19,15 +35,17 @@ import java.io.InputStreamReader;
 
 /**
  * A demo application that shows how to use the Kaa configuration API.
+ *
+ * @author Maksym Liashenko
  */
-public class Main {
+public class JConfiguration {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JConfiguration.class);
 
     private static KaaClient kaaClient;
 
     public static void main(String[] args) throws InterruptedException {
-        LOG.info("Activation demo started");
+        LOG.info("Configuration demo started");
 
         /*
          * Create the Kaa desktop context for the application.
@@ -42,9 +60,9 @@ public class Main {
             @Override
             public void onStarted() {
                 super.onStarted();
-                LOG.info("Kaa client started");
+                LOG.info("Getting sampling period value from default configuration");
                 Configuration configuration = kaaClient.getConfiguration();
-                LOG.info("Device sample period: " + (configuration.getSamplePeriod()));
+                LOG.info("Sampling period is now set to: " + (configuration.getSamplePeriod()));
             }
         });
         kaaClient.setProfileContainer(new ProfileContainer() {
@@ -66,7 +84,7 @@ public class Main {
         kaaClient.addConfigurationListener(new ConfigurationListener() {
             @Override
             public void onConfigurationUpdate(Configuration deviceType) {
-                LOG.info("Configuration was updated. New sampling period: " + deviceType.getSamplePeriod());
+                LOG.info("Configuration was updated. Sampling period is now set to " + deviceType.getSamplePeriod());
             }
         });
 
@@ -74,8 +92,7 @@ public class Main {
          * Start the Kaa client and connect it to the Kaa server.
          */
         kaaClient.start();
-        LOG.info("Kaa endpoint key hash : " + kaaClient.getEndpointKeyHash());
-        LOG.info("Default sampling period : " + kaaClient.getConfiguration().getSamplePeriod());
+        LOG.info("Endpoint ID : " + kaaClient.getEndpointKeyHash());
 
         LOG.info("--= Press any key to exit =--");
         readUserExit();

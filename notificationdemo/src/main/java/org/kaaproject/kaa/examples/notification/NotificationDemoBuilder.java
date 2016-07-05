@@ -29,9 +29,11 @@ import org.kaaproject.kaa.common.dto.NotificationTypeDto;
 import org.kaaproject.kaa.common.dto.TopicDto;
 import org.kaaproject.kaa.common.dto.TopicTypeDto;
 import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
+import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,7 +104,10 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setApplicationId(notificationApplication.getId());
         notificationSchemaDto.setName("Notification schema");
         notificationSchemaDto.setDescription("Notification schema of a sample notification");
-        notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto, getResourcePath(notificationSchemaRes));
+        CTLSchemaDto ctlSchema =
+                client.saveCTLSchemaWithAppToken(getResourceAsString(notificationSchemaRes), notificationApplication.getTenantId(), notificationApplication.getApplicationToken());
+        notificationSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto);
         sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 

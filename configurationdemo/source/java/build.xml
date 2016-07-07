@@ -24,7 +24,6 @@
 
     <fileset dir="lib"/>
 
-
     <property name="lib.dir" value="lib"/>
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>

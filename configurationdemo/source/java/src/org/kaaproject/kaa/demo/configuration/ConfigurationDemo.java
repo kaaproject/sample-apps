@@ -38,9 +38,9 @@ import java.io.InputStreamReader;
  *
  * @author Maksym Liashenko
  */
-public class JConfiguration {
+public class ConfigurationDemo {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JConfiguration.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConfigurationDemo.class);
 
     private static KaaClient kaaClient;
 

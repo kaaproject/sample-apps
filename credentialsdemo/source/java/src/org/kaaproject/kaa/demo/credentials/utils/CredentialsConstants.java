@@ -1,7 +1,7 @@
 package org.kaaproject.kaa.demo.credentials.utils;
 
 /**
- * Created by user083255 on 04.07.16.
+ * @author Maksym Liashenko
  */
 public class CredentialsConstants {
 
@@ -14,6 +14,6 @@ public class CredentialsConstants {
     public static final String TENANT_ADMIN_USERNAME = "admin";
     public static final String TENANT_ADMIN_PASSWORD = "admin123";
 
-    public final static String APPLICATION_NAME = "Endpoint activation demo";
+    public final static String APPLICATION_NAME = "Credentials demo";
 
 }

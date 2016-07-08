@@ -23,13 +23,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A demo application that shows how to use the Kaa activation API.
+ * A demo application that shows how to use the Kaa credentials API.
+ *
+ * @author Maksym Liashenko
  */
 public class CredentialsDemo {
     private static final Logger LOG = LoggerFactory.getLogger(CredentialsDemo.class);
 
     public static void main(String[] args) throws InterruptedException {
-        LOG.info("Activation demo started");
+        LOG.info("Credentials demo started");
         if (args.length < 1) {
             LOG.info("Invalid parameters");
             LOG.info("Possible options:");

@@ -24,7 +24,7 @@ import java.security.PublicKey;
 import java.util.List;
 
 /**
- * Created by user083255 on 04.07.16.
+ * @author Maksym Liashenko
  */
 public class KaaAdminManager {
 
@@ -182,46 +182,3 @@ public class KaaAdminManager {
         return new KeyPair(publicKey, privateKey);
     }
 }
-
-//    /**
-//     * Output all available endpoint profiles associated to activation
-//     * application
-//     *
-//     * @param endpointProfiles endpoint profiles associated to activation application
-//     */
-//    private static void printAllEndpointProfiles(Map<String, EndpointProfileDto> endpointProfiles) {
-//        LOG.info("Endpoint profiles: ");
-//        for (Map.Entry<String, EndpointProfileDto> entry : endpointProfiles.entrySet()) {
-//            EndpointProfileDto endpointProfile = entry.getValue();
-//            String endpointKeyHash = Base64.getEncoder().encodeToString(endpointProfile.getEndpointKeyHash());
-//            boolean isActive = DeviceState.parseJsonString(endpointProfile.getServerProfileBody());
-//            LOG.info("Profile id: {} endpointHash: {} device state: {}", entry.getKey(), endpointKeyHash, isActive ? "active" : "inactive");
-//        }
-//    }
-
-//    /**
-//     * Update the server profile object using REST API
-//     *
-//     * @param endpointProfile the endpointProfileDto object
-//     */
-//    public static void updateServerProfile(EndpointProfileDto endpointProfile) {
-//        LOG.info("Update server profile");
-//        String profileBody = endpointProfile.getServerProfileBody();
-//        boolean isActive = DeviceState.parseJsonString(profileBody);
-//        int version = endpointProfile.getServerProfileVersion();
-//        String endpointKeyHash = Base64.getEncoder().encodeToString(endpointProfile.getEndpointKeyHash());
-//        updateServerProfile(endpointKeyHash, version, !isActive);
-//    }
-
-//    /**
-//     * Update the server profile object using REST API
-//     *
-//     * @param endpointKeyHash the endpointKeyHash
-//     * @param profileVersion  the server profile version
-//     * @param newState        new device state
-//     */
-//    public static void updateServerProfile(String endpointKeyHash, int profileVersion, boolean newState) {
-//        LOG.info("Update server profile");
-//        AdminClientManager clientManager = AdminClientManager.instance();
-//        clientManager.updateServerProfile(endpointKeyHash, profileVersion, DeviceState.toJsonString(newState));
-//    }

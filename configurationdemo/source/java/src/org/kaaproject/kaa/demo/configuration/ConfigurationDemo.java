@@ -38,13 +38,13 @@ import java.io.InputStreamReader;
  *
  * @author Maksym Liashenko
  */
-public class ConfigurationDemo {
+public class JConfiguration {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ConfigurationDemo.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JConfiguration.class);
 
     private static KaaClient kaaClient;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         LOG.info("Configuration demo started");
 
         /*
@@ -63,12 +63,6 @@ public class ConfigurationDemo {
                 LOG.info("Getting sampling period value from default configuration");
                 Configuration configuration = kaaClient.getConfiguration();
                 LOG.info("Sampling period is now set to: " + (configuration.getSamplePeriod()));
-            }
-        });
-        kaaClient.setProfileContainer(new ProfileContainer() {
-            @Override
-            public EmptyData getProfile() {
-                return new EmptyData();
             }
         });
         /*
@@ -114,3 +108,4 @@ public class ConfigurationDemo {
     }
 
 }
+

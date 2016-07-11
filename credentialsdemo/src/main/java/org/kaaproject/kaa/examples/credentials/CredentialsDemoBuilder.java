@@ -16,8 +16,6 @@
 
 package org.kaaproject.kaa.examples.credentials;
 
-import java.util.List;
-
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
@@ -26,11 +24,13 @@ import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
  * @author Maksym Liashenko
  */
 @KaaDemoBuilder
-public class CredentialsDemoBuilder extends AbstractDemoBuilder{
+public class CredentialsDemoBuilder extends AbstractDemoBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(CredentialsDemoBuilder.class);
 
@@ -41,7 +41,7 @@ public class CredentialsDemoBuilder extends AbstractDemoBuilder{
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
-        logger.info("Loading 'Ccredentials demo application' data...");
+        logger.info("Loading 'Credentials demo application' data...");
 
         loginTenantAdmin(client);
 
@@ -56,9 +56,9 @@ public class CredentialsDemoBuilder extends AbstractDemoBuilder{
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setProfileSchemaVersion(0);
         sdkProfileDto.setLogSchemaVersion(1);
+        sdkProfileDto.setConfigurationSchemaVersion(1);
 
         loginTenantDeveloper(client);
-
 
         EndpointGroupDto baseEndpointGroup = null;
         List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(credentialsApplication.getApplicationToken());
@@ -71,4 +71,5 @@ public class CredentialsDemoBuilder extends AbstractDemoBuilder{
 
         logger.info("Finished loading 'Credentials demo application' data...");
     }
+
 }

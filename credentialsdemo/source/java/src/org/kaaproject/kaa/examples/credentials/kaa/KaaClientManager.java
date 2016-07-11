@@ -1,13 +1,11 @@
-package org.kaaproject.kaa.demo.credentials.kaa;
+package org.kaaproject.kaa.examples.credentials.kaa;
 
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
-import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
 import org.kaaproject.kaa.client.configuration.base.SimpleConfigurationStorage;
 import org.kaaproject.kaa.client.profile.ProfileContainer;
-import org.kaaproject.kaa.demo.activation.DeviceType;
 import org.kaaproject.kaa.schema.system.EmptyData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

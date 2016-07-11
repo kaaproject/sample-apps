@@ -1,13 +1,12 @@
-package org.kaaproject.kaa.demo.credentials.kaa;
+package org.kaaproject.kaa.examples.credentials.kaa;
 
-import org.apache.http.auth.Credentials;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.admin.AuthResultDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsStatus;
 import org.kaaproject.kaa.common.endpoint.security.KeyUtil;
-import org.kaaproject.kaa.demo.credentials.utils.CredentialsConstants;
-import org.kaaproject.kaa.demo.credentials.utils.IOUtils;
+import org.kaaproject.kaa.examples.credentials.utils.CredentialsConstants;
+import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

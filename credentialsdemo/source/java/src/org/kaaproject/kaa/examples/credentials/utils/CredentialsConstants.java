@@ -1,4 +1,4 @@
-package org.kaaproject.kaa.demo.credentials.utils;
+package org.kaaproject.kaa.examples.credentials.utils;
 
 /**
  * @author Maksym Liashenko

@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.credentials;
+package org.kaaproject.kaa.examples.credentials;
 
-import org.kaaproject.kaa.demo.credentials.kaa.KaaAdminManager;
-import org.kaaproject.kaa.demo.credentials.kaa.KaaClientManager;
-import org.kaaproject.kaa.demo.credentials.utils.IOUtils;
+import org.kaaproject.kaa.examples.credentials.kaa.KaaAdminManager;
+import org.kaaproject.kaa.examples.credentials.kaa.KaaClientManager;
+import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

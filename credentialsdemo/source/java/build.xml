@@ -46,7 +46,7 @@
             </fileset>
             <manifest>
                 <attribute name="Main-Class"
-                           value="org.kaaproject.kaa.demo.credentials.CredentialsDemo"/>
+                           value="org.kaaproject.kaa.examples.credentials.CredentialsDemo"/>
             </manifest>
             <zipgroupfileset includes="*.jar" dir="lib"/>
         </jar>

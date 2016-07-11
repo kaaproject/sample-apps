@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.credentials.utils;
+package org.kaaproject.kaa.examples.credentials.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

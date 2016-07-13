@@ -21,8 +21,7 @@ enable_language(C)
 
 if(KAA_PLATFORM STREQUAL "" OR KAA_PLATFORM STREQUAL "x86-64")
   set(KAA_PLATFORM "x86-64")
-  find_package (OpenSSL REQUIRED)
-  set(APP_LIBS kaac_s crypto)
+  set(APP_LIBS kaac_s)
   set(SAMPLE_SOURCE_FILES
             src/kaa_demo.c 
      )

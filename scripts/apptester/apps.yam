@@ -1,0 +1,132 @@
+#
+#  Copyright 2014-2016 CyberVision, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+# This file contains configurations to build sample applications.
+# Please, take care on application name. The name is unique for
+# each application and for now it is used to download proper Kaa SDK.
+# We cannot use application ID (or token) since it can be changed
+# during the building of the Kaa Sandbox.
+#
+# To build and test applications all necessary tools must be installed.
+#
+# TODO list
+# http://jira.kaaproject.org/browse/APP-53 - tests will be added
+# http://jira.kaaproject.org/browse/APP-194 - build command will be changed
+# http://jira.kaaproject.org/browse/KSF-74 - it will be possible to download
+# an application code directly from Sandbox.
+#
+# Application descriptor example.
+# myapplication:
+#  name: "My first Kaa application"
+#  language:
+#    c:
+#      # must be set relative to sample apps repository
+#      src: "myapplication/src/c"
+#      platform:
+#        posix:
+#          buildcmd: "bash build.sh build <<< posix"
+#        esp8266:
+#          buildcmd: "cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/esp8266.cmake .."
+#          #  [[src, dst], ..] where "src" must be set relative to sample apps repository
+#          #  and dst must be set relative to build directory
+#          dependencies: [["common/init.c", "init.c"], ["esp_sdk_dir", "esp_sdk"]
+#    cpp:
+#      src: "myapplication/src/cpp"
+#      platform:
+#        posix:
+#          skip: "True"
+#          buildcmd: "bash build.sh build <<< posix"
+
+
+configurationdemo:
+  name: "Configuration demo"
+  language:
+    c:
+      src: "configurationdemo/source/c"
+      platform:
+        posix:
+          dependencies: [["common/c/targets", "targets"]]
+          buildcmd: "bash build.sh build <<< posix"
+    cpp:
+      src: "configurationdemo/source/cpp"  
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+
+datacollectiondemo:
+  name: "Data collection demo"
+  language:
+    c:
+      src: "datacollectiondemo/source/c"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+    cpp:
+      src: "datacollectiondemo/source/cpp"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+
+eventdemo:
+  name: "Event demo"
+  language:
+    c:
+      src: "eventdemo/source/c"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+    cpp:
+      src: "eventdemo/source/cpp"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+
+notificationdemo:
+  name: "Notification demo"
+  language: 
+    c:
+      src: "notificationdemo/source/c"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+    cpp:
+      src: "notificationdemo/source/cpp"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+
+stormdemo:
+  name: "Storm data analytics demo"
+  language:
+    c:
+      src: "stormdemo/source/c"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+    cpp:
+      src: "stormdemo/source/cpp"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"
+
+sparkdemo:
+  name: "Spark data analytics demo"
+  language:
+    cpp:
+      src: "sparkdemo/source/cpp"
+      platform:
+        posix:
+          buildcmd: "bash build.sh build <<< posix"

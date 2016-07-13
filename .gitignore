@@ -26,3 +26,4 @@ pom.xml.versionsBackup
 */source/lib/
 */source/java/lib/
 .DS_Store
+apptester_build/**

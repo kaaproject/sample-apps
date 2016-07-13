@@ -38,13 +38,13 @@ public class CredentialsDemo {
             LOG.info(" java -jar CredentialsDemo.jar client");
             LOG.info(" java -jar CredentialsDemo.jar admin");
             return;
-
         }
+
         String mode = args[0];
         switch (mode) {
             case "admin":
-
                 inputAdminMenu();
+                break;
             case "client":
                 inputClientMenu();
                 break;
@@ -60,6 +60,7 @@ public class CredentialsDemo {
 
 
         IOUtils.readSymbol();
+        LOG.info("Stopping client...");
         /*
          * Stop the Kaa client and connect it to the Kaa server.
          */
@@ -91,7 +92,7 @@ public class CredentialsDemo {
                     break;
                 case "4":
                     LOG.info("You choose \"Get credentials status\".");
-                    LOG.info("Your credential sttaus - " + manager.getCredentialsStatus());
+                    LOG.info("Your credential status - " + manager.getCredentialsStatus());
                     break;
                 case "5":
                     LOG.info("You choose \"Exit\". Have a good day!");
@@ -104,14 +105,3 @@ public class CredentialsDemo {
 
     }
 }
-
-//                if (args.length < 2) {
-//                }
-//                if (args.length == 2) {
-//                    AdminClientManager.init(args[1], AdminClientManager.UserType.TENANT_ADMIN);
-//                } else if (args.length == 3) {
-//                    AdminClientManager.init(args[1], Integer.valueOf(args[2]), AdminClientManager.UserType.TENANT_ADMIN);
-//                } else {
-//                    LOG.info("ip/host is not specified or address is invalid");
-//                    return;
-//                }

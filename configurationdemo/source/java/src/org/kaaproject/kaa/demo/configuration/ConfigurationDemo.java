@@ -22,9 +22,7 @@ import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
 import org.kaaproject.kaa.client.configuration.base.SimpleConfigurationStorage;
-import org.kaaproject.kaa.client.profile.ProfileContainer;
 import org.kaaproject.kaa.schema.sample.Configuration;
-import org.kaaproject.kaa.schema.system.EmptyData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +36,9 @@ import java.io.InputStreamReader;
  *
  * @author Maksym Liashenko
  */
-public class JConfiguration {
+public class ConfigurationDemo {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JConfiguration.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConfigurationDemo.class);
 
     private static KaaClient kaaClient;
 
@@ -108,4 +106,3 @@ public class JConfiguration {
     }
 
 }
-

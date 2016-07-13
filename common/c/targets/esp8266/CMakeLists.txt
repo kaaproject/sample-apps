@@ -55,7 +55,6 @@ target_link_libraries(target_support PUBLIC
                       ${ESP_RTOS_SDK}/lib/libwpa.a
                       ${ESP_RTOS_SDK}/lib/liblwip.a
                       ${ESP_RTOS_SDK}/lib/libmain.a
-                      ${ESP_RTOS_SDK}/lib/libssl.a
                       ${ESP_RTOS_SDK}/lib/libhal.a
                       ${ESP8266_LIBGCC}
                       -T${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.app.v6.ld

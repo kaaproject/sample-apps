@@ -21,7 +21,7 @@ set -e
 
 help() {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported platforms: x86-64"
+    echo "Supported platforms: posix"
     exit 1
 }
 
@@ -34,21 +34,7 @@ APP_NAME="demo_client"
 PROJECT_HOME=$(pwd)
 BUILD_DIR="build"
 KAA_TOOLCHAIN_PATH_SDK=""
-KAA_ARCH=x86-64
-
-select_arch() {
-    echo "Please enter architecture(default is x86-64):"
-    read arch
-    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$PROJECT_HOME/libs/kaa/toolchains/$arch.cmake"
-    case "$arch" in
-        edison)
-          KAA_ARCH=x86-64
-        ;;
-        *)
-          KAA_TOOLCHAIN_PATH_SDK=""
-        ;;
-    esac
-}
+KAA_ARCH=posix
 
 build_app() {
     cd $PROJECT_HOME
@@ -77,7 +63,6 @@ do
 
 case "$cmd" in
     build)
-        select_arch
         build_app
     ;;
 
@@ -87,7 +72,6 @@ case "$cmd" in
 
     deploy)
         clean
-        select_arch
         build_app
         run
         ;;

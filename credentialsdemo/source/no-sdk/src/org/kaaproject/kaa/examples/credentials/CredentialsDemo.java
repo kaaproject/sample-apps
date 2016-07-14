@@ -17,7 +17,6 @@
 package org.kaaproject.kaa.examples.credentials;
 
 import org.kaaproject.kaa.examples.credentials.kaa.KaaAdminManager;
-import org.kaaproject.kaa.examples.credentials.kaa.KaaClientManager;
 import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,43 +30,8 @@ public class CredentialsDemo {
     private static final Logger LOG = LoggerFactory.getLogger(CredentialsDemo.class);
 
     public static void main(String[] args) throws InterruptedException {
-        LOG.info("Credentials demo started");
-        if (args.length < 1) {
-            LOG.info("Invalid parameters");
-            LOG.info("Possible options:");
-            LOG.info(" java -jar CredentialsDemo.jar client");
-            LOG.info(" java -jar CredentialsDemo.jar admin");
-            return;
-        }
+        LOG.info("Credentials demo: admin part started!");
 
-        String mode = args[0];
-        switch (mode) {
-            case "admin":
-                inputAdminMenu();
-                break;
-            case "client":
-                inputClientMenu();
-                break;
-            default:
-                LOG.info("Invalid parameters. Please specify 'client' or 'admin'");
-
-        }
-    }
-
-    private static void inputClientMenu() {
-        KaaClientManager manager = new KaaClientManager();
-        manager.start();
-
-
-        IOUtils.readSymbol();
-        LOG.info("Stopping client...");
-        /*
-         * Stop the Kaa client and connect it to the Kaa server.
-         */
-        manager.stop();
-    }
-
-    private static void inputAdminMenu() {
         KaaAdminManager manager = new KaaAdminManager();
 
         LOG.info("Choose action by entering corresponding number:");

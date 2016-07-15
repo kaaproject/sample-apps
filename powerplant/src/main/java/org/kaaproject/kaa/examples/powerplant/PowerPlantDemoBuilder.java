@@ -24,6 +24,7 @@ import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
@@ -72,7 +73,10 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(powerPlantApplication.getId());
         logSchemaDto.setName("Power plant log schema");
         logSchemaDto.setDescription("Log schema describes incoming voltage reports");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
+        CTLSchemaDto ctlSchema =
+                client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
+        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto = client.createLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto powerPlantLogAppender = new LogAppenderDto();

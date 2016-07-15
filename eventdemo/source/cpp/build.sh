@@ -38,6 +38,12 @@ KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-c*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
+MAKE_THREADS=""
+
+if [ $# -eq 2 ]
+then
+    MAKE_THREADS="-j$2"
+fi
 
 function select_arch {
     echo "Please enter architecture (default is posix):"
@@ -71,12 +77,12 @@ function build_thirdparty {
     then
         cd $KAA_LIB_PATH &&
         chmod 755 ./avrogen.sh &&
-        ./avrogen.sh && 
+        ./avrogen.sh &&
         mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DKAA_DEBUG_ENABLED=1 \
-              -DKAA_WITHOUT_LOGGING=1 \
-              -DKAA_WITHOUT_CONFIGURATION=1 \
+        cmake -DCMAKE_BUILD_TYPE=Debug \
               -DKAA_WITHOUT_NOTIFICATIONS=1 \
+              -DKAA_WITHOUT_CONFIGURATION=1 \
+              -DKAA_WITHOUT_LOGGING=1 \
               -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 \
               -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 \
               -DKAA_MAX_LOG_LEVEL=3 \
@@ -85,7 +91,7 @@ function build_thirdparty {
     fi
 
     cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    make -j4 &&
+    make $MAKE_THREADS &&
     cd $PROJECT_HOME
 }
 
@@ -108,10 +114,7 @@ function run {
     ./$APP_NAME
 }
 
-for cmd in $@
-do
-
-case "$cmd" in
+case "$1" in
     build)
         select_arch
         build_thirdparty &&
@@ -133,11 +136,9 @@ case "$cmd" in
     clean)
         clean
     ;;
-    
+
     *)
         help
     ;;
 esac
-
-done
 

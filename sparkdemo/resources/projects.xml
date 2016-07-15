@@ -34,12 +34,13 @@ Please review the webinar below for hands-on experience based on an earlier vers
 <div style="display:none;" id="box">
 
 We assume that you have installed java on your PC. <br />
-First, install ntp and python-software-properties: <br />
+First, install ssh, ntp and python-software-properties: <br />
 
 Log in as a user with sudo:
 <pre>
 $ sudo apt-get update
 $ sudo ntpdate pool.ntp.org
+$ sudo apt-get install ssh
 $ sudo apt-get install ntp
 $ sudo apt-get install python-software-properties
 </pre>

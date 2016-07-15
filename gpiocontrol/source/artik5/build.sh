@@ -20,7 +20,6 @@ RUN_DIR=`pwd`
 
 function help {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported platforms: x86-64, edison"
     exit 1
 }
 

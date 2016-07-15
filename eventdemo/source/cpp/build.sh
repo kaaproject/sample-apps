@@ -19,9 +19,8 @@
 RUN_DIR=`pwd`
 
 function help {
-    echo "Usage:"
-    echo "$0 {build|run|deploy|clean} [num_threads]"
-    echo "Supported platforms: x86-64, edison"
+    echo "Choose one of the following: {build|run|deploy|clean}"
+    echo "Supported platforms: posix, edison"
     exit 1
 }
 
@@ -47,11 +46,11 @@ then
 fi
 
 function select_arch {
-    echo "Please enter architecture(default is x86-64):"
+    echo "Please enter architecture (default is posix):"
     read arch
     case "$arch" in
         edison)
-            KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
+            KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/edison.cmake"
         ;;
         *)
             KAA_TOOLCHAIN_PATH_SDK=""

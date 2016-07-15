@@ -49,7 +49,7 @@ Second, download and install Apache Spark
 $ cd ~
 $ mkdir spark
 $ cd spark/
-$ wget http://mirror.tcpdiag.net/apache/spark/spark-1.6.0/spark-1.6.0.tgz
+$ wget http://archive.apache.org/dist/spark/spark-1.6.0/spark-1.6.0.tgz
 $ gunzip -c spark-1.6.0.tgz | tar -xvf -
 $ cd spark-1.6.0/
 $ sudo sbt/sbt assembly

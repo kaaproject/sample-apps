@@ -86,6 +86,7 @@
                     <descriptors>
                         <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

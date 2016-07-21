@@ -27,6 +27,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.iharder.Base64;
 
 import org.apache.commons.io.IOUtils;
@@ -37,11 +40,13 @@ import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
 import org.kaaproject.kaa.common.dto.admin.SdkTokenDto;
 import org.kaaproject.kaa.common.dto.admin.TenantUserDto;
 import org.kaaproject.kaa.common.dto.admin.UserDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
+import org.kaaproject.kaa.common.dto.event.EventClassFamilyVersionDto;
 import org.kaaproject.kaa.common.dto.event.EventClassType;
 import org.kaaproject.kaa.examples.common.projects.Bundle;
 import org.kaaproject.kaa.examples.common.projects.Project;
@@ -313,6 +318,38 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         aefMap.setEventMaps(eventMaps);
         aefMap = client.editApplicationEventFamilyMap(aefMap);
         return aefMap;
+    }
+
+    protected EventClassFamilyVersionDto generateEventClassFamilyVersion(AdminClient client, ApplicationDto application, String resourcesPath) {
+        EventClassFamilyVersionDto eventClassFamilyVersion = new EventClassFamilyVersionDto();
+        try {
+            String body = FileUtils.readResource(getResourcePath(resourcesPath));
+            JsonNode json = new ObjectMapper().readTree(body);
+            List<EventClassDto> records = new ArrayList<>();
+            for (JsonNode ctlJson : json) {
+                ((ObjectNode) ctlJson).put("version", 1);
+                String ctlBody = ctlJson.toString();
+                CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(ctlBody, application.getTenantId(), application.getApplicationToken());
+
+                String fqn = ctlJson.get("namespace").asText() + "." + ctlJson.get("name").asText();
+                EventClassType classType = EventClassType.valueOf(ctlJson.get("classType").asText().toUpperCase());
+                ((ObjectNode)ctlJson).remove("classType");
+
+                EventClassDto ec = new EventClassDto();
+                ec.setApplicationId(application.getId());
+                ec.setFqn(fqn);
+                ec.setType(classType);
+                ec.setCtlSchemaId(ctlSchema.getId());
+                ec.setName("Test event class in event demo");
+                records.add(ec);
+            }
+            eventClassFamilyVersion.setRecords(records);
+        } catch (IOException e) {
+            logger.error("Can't parse JSON resource!");
+            throw new IllegalArgumentException("Can't parse JSON resource!");
+        }
+
+        return eventClassFamilyVersion;
     }
     
 }

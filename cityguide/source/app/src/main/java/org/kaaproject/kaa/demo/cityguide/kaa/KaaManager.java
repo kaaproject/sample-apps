@@ -77,12 +77,12 @@ public class KaaManager implements KaaClientStateListener, ProfileContainer, Con
      */
     public void start(Context context) {
         KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
-        mClient = Kaa.newClient(kaaClientContext, this);
+
+        mClient = Kaa.newClient(kaaClientContext, this, true);
 
         configurationSlave.createConfigurationStorage(kaaClientContext, mClient);
 
         mClient.addConfigurationListener(this);
-
         mClient.setProfileContainer(this);
 
         mClient.start();

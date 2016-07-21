@@ -95,16 +95,16 @@
                     <useDefaultExcludes>true</useDefaultExcludes>
                     <excludes>
                         <!--Android Studio -->
-                        <exclude>source/CityGuide/gradlew</exclude>
-                        <exclude>source/CityGuide/build.gradle</exclude>
-                        <exclude>source/CityGuide/settings.gradle</exclude>
-                        <exclude>source/CityGuide/gradlew.bat</exclude>
-                        <exclude>source/CityGuide/app/proguard-rules.pro</exclude>
-                        <exclude>source/CityGuide/local.properties</exclude>
-                        <exclude>source/CityGuide/CityGuide.iml</exclude>
-                        <exclude>source/CityGuide/app/app.iml</exclude>
-                        <exclude>source/CityGuide/gradle/wrapper/gradle-wrapper.properties</exclude>
-                        <exclude>source/CityGuide/gradle.properties</exclude>
+                        <exclude>source/gradlew</exclude>
+                        <exclude>source/build.gradle</exclude>
+                        <exclude>source/settings.gradle</exclude>
+                        <exclude>source/gradlew.bat</exclude>
+                        <exclude>source/app/proguard-rules.pro</exclude>
+                        <exclude>source/local.properties</exclude>
+                        <exclude>source/CityGuide.iml</exclude>
+                        <exclude>source/app/app.iml</exclude>
+                        <exclude>source/gradle/wrapper/gradle-wrapper.properties</exclude>
+                        <exclude>source/gradle.properties</exclude>
                         <!--Common files-->
                         <exclude>resources/city_guide_profile.avsc</exclude>
                         <exclude>resources/city_guide_data_all.json</exclude>

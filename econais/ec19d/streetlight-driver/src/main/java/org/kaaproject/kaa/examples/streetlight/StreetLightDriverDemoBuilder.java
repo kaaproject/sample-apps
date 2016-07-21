@@ -79,8 +79,7 @@ public class StreetLightDriverDemoBuilder extends AbstractDemoBuilder {
         logger.info("Profile schema was created.");
 
         logger.info("Creating ctl schema...");
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("configuration.avsc")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, streetLightApplication.getTenantId(), streetLightApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration.avsc"), streetLightApplication.getTenantId(), streetLightApplication.getApplicationToken());
 
 
         logger.info("Creating configuration schema...");

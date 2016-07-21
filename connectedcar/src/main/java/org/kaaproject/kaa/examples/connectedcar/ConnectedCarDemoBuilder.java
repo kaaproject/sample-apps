@@ -127,8 +127,8 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         connectedCarLogAppender = client.editLogAppenderDto(connectedCarLogAppender);
 
 
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("configurationSchema.json")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
+
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configurationSchema.json"), connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(connectedCarApplication.getId());

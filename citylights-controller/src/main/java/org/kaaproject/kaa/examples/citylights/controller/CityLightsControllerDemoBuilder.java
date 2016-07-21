@@ -71,8 +71,7 @@ public class CityLightsControllerDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
         logger.info("Creating ctl schema...");
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("config_schema.avsc")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, cityLightsDemoApplication.getTenantId(), cityLightsDemoApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), cityLightsDemoApplication.getTenantId(), cityLightsDemoApplication.getApplicationToken());
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

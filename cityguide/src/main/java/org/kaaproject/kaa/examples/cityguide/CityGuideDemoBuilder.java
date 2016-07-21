@@ -63,8 +63,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setLogSchemaVersion(1);
         loginTenantDeveloper(client);
 
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("city_guide.avsc")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, cityGuideApplication.getTenantId(), cityGuideApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("city_guide.avsc"), cityGuideApplication.getTenantId(), cityGuideApplication.getApplicationToken());
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(cityGuideApplication.getId());

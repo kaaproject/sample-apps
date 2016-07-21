@@ -65,8 +65,7 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
         loginTenantDeveloper(client);
 
         logger.info("Creating ctl schema...");
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("config_schema.avsc")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, twitterMonitorApplication.getTenantId(), twitterMonitorApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), twitterMonitorApplication.getTenantId(), twitterMonitorApplication.getApplicationToken());
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

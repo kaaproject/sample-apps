@@ -90,8 +90,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setAefMapIds(aefMapIds);
 
         logger.info("Creating ctl schema...");
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("config_schema.avsc")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, verifiersApplication.getTenantId(), verifiersApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), verifiersApplication.getTenantId(), verifiersApplication.getApplicationToken());
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

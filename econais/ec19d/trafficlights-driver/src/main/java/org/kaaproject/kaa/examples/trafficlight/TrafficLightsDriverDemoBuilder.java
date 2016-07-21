@@ -88,8 +88,8 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         appenderDto = client.editLogAppenderDto(appenderDto);
 
         logger.info("Creating ctl schema...");
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("configuration.avsc")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
+
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

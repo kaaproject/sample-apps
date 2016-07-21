@@ -65,8 +65,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
 
         loginTenantDeveloper(client);
 
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("configuration-schema.avsc")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, activationApplication.getTenantId(), activationApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration-schema.avsc"), activationApplication.getTenantId(), activationApplication.getApplicationToken());
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(activationApplication.getId());

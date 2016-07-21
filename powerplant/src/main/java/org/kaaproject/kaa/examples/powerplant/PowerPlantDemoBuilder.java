@@ -95,8 +95,8 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         powerPlantLogAppender = client.editLogAppenderDto(powerPlantLogAppender);
 
         logger.info("Creating ctl schema...");
-        String avroSchema = IOUtils.toString(new FileInputStream(getResourcePath("configSchema.json")));
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(avroSchema, powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
+
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
 
         logger.info("Creating configuration schema...");
 

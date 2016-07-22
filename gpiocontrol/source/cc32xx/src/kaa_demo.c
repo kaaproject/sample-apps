@@ -19,14 +19,14 @@
 #include <string.h>
 #include <time.h>
 
-#include <kaa/kaa_error.h>
-#include <kaa/kaa_context.h>
-#include <kaa/platform/kaa_client.h>
-#include <kaa/utilities/kaa_log.h>
-#include <kaa/utilities/kaa_mem.h>
-#include <kaa/kaa_user.h>
-#include <kaa/gen/kaa_remote_control_ecf.h>
-#include <kaa/kaa_profile.h>
+#include <kaa_error.h>
+#include <kaa_context.h>
+#include <platform/kaa_client.h>
+#include <utilities/kaa_log.h>
+#include <utilities/kaa_mem.h>
+#include <kaa_user.h>
+#include <gen/kaa_remote_control_ecf.h>
+#include <kaa_profile.h>
 
 #include "target.h"
 

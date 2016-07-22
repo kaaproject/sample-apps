@@ -75,9 +75,9 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(powerPlantApplication.getId());
         logSchemaDto.setName("Power plant log schema");
         logSchemaDto.setDescription("Log schema describes incoming voltage reports");
-        CTLSchemaDto ctlSchema =
+        CTLSchemaDto ctlLogSchema =
                 client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
-        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
         logSchemaDto = client.createLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
@@ -99,7 +99,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
 
         logger.info("Creating ctl schema...");
 
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
+        CTLSchemaDto ctlConfSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
 
         logger.info("Creating configuration schema...");
 
@@ -107,7 +107,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setApplicationId(powerPlantApplication.getId());
         configurationSchema.setName("Power plant configuration schema");
         configurationSchema.setDescription("Default configuration schema for the power plant application");
-        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema.setCtlSchemaId(ctlConfSchema.getId());
         configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());

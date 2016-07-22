@@ -15,22 +15,21 @@
  */
 
 /*
- * This header provides several bindings for x86_64 target that abstracts
+ * This header provides several bindings for posix target that abstracts
  * an implementation of its features. Right now it contains only
  * console and target initialisation routines, but it must be extended
  * if required.
  *
- * Note that by x86 target is understood a system with support of
- * stdc library and most likely running full-featured OS.
+ * Note that posix target implies a system with support of
+ * libc library and most likely running full-featured OS.
  *
- * TODO: rename it to something like 'linux' or 'host' ?
  */
-#ifndef X86_64_SUPPORT_H
-#define X86_64_SUPPORT_H
+#ifndef POSIX_SUPPORT_H
+#define POSIX_SUPPORT_H
 
 #include <stdio.h>
 
-/* Demo print routine. Default printf exists for x86_64 target. */
+/* Demo print routine. Default printf exists for posix target. */
 #define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
 
 /* Initialises a target. Zero value means success, negative - errors. */
@@ -40,5 +39,5 @@ static inline int target_initialize(void)
     return 0;
 }
 
-#endif // X86_64_SUPPORT_H
+#endif // POSIX_SUPPORT_H
 

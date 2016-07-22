@@ -22,7 +22,6 @@ RUN_DIR=`pwd`
 
 help() {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported platforms: x86-64"
     exit 1
 }
 
@@ -35,28 +34,12 @@ APP_NAME="demo_client"
 PROJECT_HOME=$(pwd)
 BUILD_DIR="build"
 KAA_TOOLCHAIN_PATH_SDK=""
-KAA_ARCH=x86-64
-
-select_arch() {
-    echo "Please enter architecture(default is x86-64):"
-    read arch
-    KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
-    case "$arch" in
-        edison)
-          KAA_ARCH=x86-64
-        ;;
-        *)
-          KAA_TOOLCHAIN_PATH_SDK=""
-        ;;
-    esac
-}
 
 build_app() {
     cd $PROJECT_HOME
     mkdir -p "$PROJECT_HOME/$BUILD_DIR"
     cd $BUILD_DIR
-    cmake -DKAA_PLATFORM=$KAA_ARCH \
-          -DWITH_EXTENSION_EVENT=OFF \
+    cmake -DWITH_EXTENSION_EVENT=OFF \
           -DWITH_EXTENSION_CONFIGURATION=OFF \
           -DWITH_EXTENSION_LOGGING=OFF \
           -DKAA_MAX_LOG_LEVEL=3 \
@@ -78,7 +61,6 @@ do
 
 case "$cmd" in
     build)
-        select_arch
         build_app
     ;;
 
@@ -88,7 +70,6 @@ case "$cmd" in
 
     deploy)
         clean
-        select_arch
         build_app
         run
         ;;

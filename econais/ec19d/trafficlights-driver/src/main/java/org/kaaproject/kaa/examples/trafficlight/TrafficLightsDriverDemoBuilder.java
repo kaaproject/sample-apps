@@ -66,8 +66,7 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(trafficLightsApplication.getId());
         logSchemaDto.setName("TrafficLightsLog schema");
         logSchemaDto.setDescription("Traffic Lights driver log schema");
-        CTLSchemaDto ctlLogSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString("log.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
+        CTLSchemaDto ctlLogSchema = saveCTLSchemaWithAppToken(client, "log.avsc", trafficLightsApplication);
         logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
         logSchemaDto = client.saveLogSchema(logSchemaDto);
         logger.info("Log schema version: {}", logSchemaDto.getVersion());
@@ -90,9 +89,7 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         appenderDto.setJsonConfiguration(FileUtils.readResource(getResourcePath("rest_appender.json")));
         appenderDto = client.editLogAppenderDto(appenderDto);
 
-        logger.info("Creating ctl schema...");
-
-        CTLSchemaDto ctlConfSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
+        CTLSchemaDto ctlConfSchema = saveCTLSchemaWithAppToken(client, "configuration.avsc", trafficLightsApplication);
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

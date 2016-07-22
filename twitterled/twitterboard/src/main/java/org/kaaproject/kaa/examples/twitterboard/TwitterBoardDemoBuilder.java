@@ -66,8 +66,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        logger.info("Creating ctl schema...");
-        CTLSchemaDto ctlConfigSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), twitterBoardApplication.getTenantId(), twitterBoardApplication.getApplicationToken());
+        CTLSchemaDto ctlConfigSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", twitterBoardApplication);
 
 
         logger.info("Creating configuration schema...");
@@ -87,7 +86,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setApplicationId(twitterBoardApplication.getId());
         notificationSchemaDto.setName("Twitter board notification schema");
         notificationSchemaDto.setDescription("Notification schema for Twitter board application");
-        CTLSchemaDto ctlNotifSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("notification_schema.avsc"), twitterBoardApplication.getTenantId(), twitterBoardApplication.getApplicationToken());
+        CTLSchemaDto ctlNotifSchema = saveCTLSchemaWithAppToken(client, "notification_schema.avsc", twitterBoardApplication);
         notificationSchemaDto.setCtlSchemaId(ctlNotifSchema.getId());
         notificationSchemaDto = client.saveNotificationSchema(notificationSchemaDto);
         sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());

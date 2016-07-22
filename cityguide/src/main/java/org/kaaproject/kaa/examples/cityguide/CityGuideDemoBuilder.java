@@ -63,7 +63,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setLogSchemaVersion(1);
         loginTenantDeveloper(client);
 
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("city_guide.avsc"), cityGuideApplication.getTenantId(), cityGuideApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "city_guide.avsc", cityGuideApplication);
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(cityGuideApplication.getId());
@@ -73,8 +73,7 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         configurationSchema = client.saveConfigurationSchema(configurationSchema);
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 
-        CTLSchemaDto profileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("city_guide_profile.avsc"), cityGuideApplication.getTenantId(),
-                cityGuideApplication.getApplicationToken());
+        CTLSchemaDto profileCtlSchema = saveCTLSchemaWithAppToken(client, "city_guide_profile.avsc", cityGuideApplication);
         
         EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(cityGuideApplication.getId());

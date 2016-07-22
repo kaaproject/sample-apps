@@ -63,8 +63,7 @@ public class CassandraDemoBuider extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(cassandraApplication.getId());
         logSchemaDto.setName("SensorData");
         logSchemaDto.setDescription("Log schema describing incoming logs");
-        CTLSchemaDto ctlSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), cassandraApplication.getTenantId(), cassandraApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "logSchema.json", cassandraApplication);
         logSchemaDto.setCtlSchemaId(ctlSchema.getId());
         logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());

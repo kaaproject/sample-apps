@@ -59,9 +59,7 @@ public class PowerPlantAndroidDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        logger.info("Creating ctl schema...");
-
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), powerPlantAndroidApplciation.getTenantId(), powerPlantAndroidApplciation.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", powerPlantAndroidApplciation);
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

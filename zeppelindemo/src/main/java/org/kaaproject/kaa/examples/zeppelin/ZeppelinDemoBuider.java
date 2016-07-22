@@ -62,8 +62,7 @@ public class ZeppelinDemoBuider extends AbstractDemoBuilder {
         powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
         powerReportLogSchemaDto.setDescription("Zeppelin data analytics demo Power report log schema");
-        CTLSchemaDto ctlSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString("powerReportLogSchema.json"), sparkApplication.getTenantId(), sparkApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "powerReportLogSchema.json", sparkApplication);
         powerReportLogSchemaDto.setCtlSchemaId(ctlSchema.getId());
         powerReportLogSchemaDto = client.saveLogSchema(powerReportLogSchemaDto);
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());

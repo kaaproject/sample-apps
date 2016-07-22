@@ -75,8 +75,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(powerPlantApplication.getId());
         logSchemaDto.setName("Power plant log schema");
         logSchemaDto.setDescription("Log schema describes incoming voltage reports");
-        CTLSchemaDto ctlLogSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
+        CTLSchemaDto ctlLogSchema = saveCTLSchemaWithAppToken(client, "logSchema.json", powerPlantApplication);
         logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
         logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
@@ -97,9 +96,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         powerPlantLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("restAppender.json")));
         powerPlantLogAppender = client.editLogAppenderDto(powerPlantLogAppender);
 
-        logger.info("Creating ctl schema...");
-
-        CTLSchemaDto ctlConfSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
+        CTLSchemaDto ctlConfSchema = saveCTLSchemaWithAppToken(client, "configSchema.json", powerPlantApplication);
 
         logger.info("Creating configuration schema...");
 

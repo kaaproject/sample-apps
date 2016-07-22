@@ -59,8 +59,7 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        CTLSchemaDto profileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("profileSchema.json"), vehicleTelemetryApplication.getTenantId(),
-                vehicleTelemetryApplication.getApplicationToken());
+        CTLSchemaDto profileCtlSchema = saveCTLSchemaWithAppToken(client, "profileSchema.json", vehicleTelemetryApplication);
 
         EndpointProfileSchemaDto profileSchema = new EndpointProfileSchemaDto();
         profileSchema.setApplicationId(vehicleTelemetryApplication.getId());
@@ -74,8 +73,7 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(vehicleTelemetryApplication.getId());
         logSchemaDto.setName("Vehicle telemetry log schema");
         logSchemaDto.setDescription("Log schema describing incoming logs");
-        CTLSchemaDto ctlSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), vehicleTelemetryApplication.getTenantId(), vehicleTelemetryApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "logSchema.json", vehicleTelemetryApplication);
         logSchemaDto.setCtlSchemaId(ctlSchema.getId());
         logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());

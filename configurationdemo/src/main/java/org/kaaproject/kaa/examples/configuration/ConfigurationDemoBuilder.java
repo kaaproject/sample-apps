@@ -61,8 +61,7 @@ public class ConfigurationDemoBuilder extends AbstractDemoBuilder{
 
         loginTenantDeveloper(client);
 
-        logger.info("Creating ctl schema...");
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), configurationApplication.getTenantId(), configurationApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", configurationApplication);
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

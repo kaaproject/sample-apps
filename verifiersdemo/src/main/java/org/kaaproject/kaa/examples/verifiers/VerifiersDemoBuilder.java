@@ -89,8 +89,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         aefMapIds.add(verifiersDemoAefMap.getId());
         sdkProfileDto.setAefMapIds(aefMapIds);
 
-        logger.info("Creating ctl schema...");
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), verifiersApplication.getTenantId(), verifiersApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", verifiersApplication);
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();

@@ -59,8 +59,7 @@ public class SparkDemoBuider extends AbstractDemoBuilder {
         powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
         powerReportLogSchemaDto.setDescription("Spark data analytics demo log schema");
-        CTLSchemaDto ctlSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString("powerReportLogSchema.json"), sparkApplication.getTenantId(), sparkApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "powerReportLogSchema.json", sparkApplication);
         powerReportLogSchemaDto.setCtlSchemaId(ctlSchema.getId());
         powerReportLogSchemaDto = client.saveLogSchema(powerReportLogSchemaDto);
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());

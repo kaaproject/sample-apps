@@ -37,6 +37,7 @@ import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
 import org.kaaproject.kaa.common.dto.admin.SdkTokenDto;
 import org.kaaproject.kaa.common.dto.admin.TenantUserDto;
 import org.kaaproject.kaa.common.dto.admin.UserDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventMapDto;
@@ -282,6 +283,12 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
     
     protected void loginTenantAdmin(AdminClient client) throws Exception {
         client.login(tenantAdminUser, tenantAdminPassword);
+    }
+
+    protected CTLSchemaDto saveCTLSchemaWithAppToken(AdminClient client, String resourcesPath, ApplicationDto applicationDto) throws Exception {
+        logger.info("Creating ctl schema...");
+        return client.saveCTLSchemaWithAppToken(getResourceAsString(resourcesPath),
+                applicationDto.getTenantId(), applicationDto.getApplicationToken());
     }
     
     

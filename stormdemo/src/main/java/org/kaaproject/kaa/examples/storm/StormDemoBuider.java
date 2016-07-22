@@ -61,8 +61,7 @@ public class StormDemoBuider extends AbstractDemoBuilder {
         powerReportLogSchemaDto.setApplicationId(stormDataAnalyticsDemoApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
         powerReportLogSchemaDto.setDescription("Storm demo log schema");
-        CTLSchemaDto ctlSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString("powerReportLogSchema.json"), stormDataAnalyticsDemoApplication.getTenantId(), stormDataAnalyticsDemoApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "powerReportLogSchema.json", stormDataAnalyticsDemoApplication);
         powerReportLogSchemaDto.setCtlSchemaId(ctlSchema.getId());
         powerReportLogSchemaDto = client.saveLogSchema(powerReportLogSchemaDto);
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());

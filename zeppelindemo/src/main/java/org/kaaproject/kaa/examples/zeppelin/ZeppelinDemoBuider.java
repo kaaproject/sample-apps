@@ -17,6 +17,7 @@
 package org.kaaproject.kaa.examples.zeppelin;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
@@ -61,7 +62,9 @@ public class ZeppelinDemoBuider extends AbstractDemoBuilder {
         powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
         powerReportLogSchemaDto.setDescription("Zeppelin data analytics demo Power report log schema");
-        powerReportLogSchemaDto = client.createLogSchema(powerReportLogSchemaDto, getResourcePath("powerReportLogSchema.json"));
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "powerReportLogSchema.json", sparkApplication);
+        powerReportLogSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        powerReportLogSchemaDto = client.saveLogSchema(powerReportLogSchemaDto);
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());
 
         LogAppenderDto panelPerRowCassandraLogAppender = new LogAppenderDto();

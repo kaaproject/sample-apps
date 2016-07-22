@@ -20,6 +20,7 @@ package org.kaaproject.kaa.examples.datacollection;
 import java.util.Arrays;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
@@ -63,7 +64,9 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(dataCollectionApplication.getId());
         logSchemaDto.setName("Log schema");
         logSchemaDto.setDescription("Log schema describing incoming logs");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "logSchema.json", dataCollectionApplication);
+        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();

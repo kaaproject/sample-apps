@@ -16,6 +16,7 @@
 
 package org.kaaproject.kaa.examples.twitterboard;
 
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
@@ -33,6 +34,7 @@ import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -64,12 +66,17 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
+        CTLSchemaDto ctlConfigSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", twitterBoardApplication);
+
+
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(twitterBoardApplication.getId());
         configurationSchema.setName("TwitterBoard schema");
         configurationSchema.setDescription("Default configuration schema for the twitter board application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
+        configurationSchema.setCtlSchemaId(ctlConfigSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
+
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");
@@ -79,9 +86,9 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setApplicationId(twitterBoardApplication.getId());
         notificationSchemaDto.setName("Twitter board notification schema");
         notificationSchemaDto.setDescription("Notification schema for Twitter board application");
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("notification_schema.avsc"), twitterBoardApplication.getTenantId(), twitterBoardApplication.getApplicationToken());
-        notificationSchemaDto.setCtlSchemaId(ctlSchema.getId());
-        notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto);
+        CTLSchemaDto ctlNotifSchema = saveCTLSchemaWithAppToken(client, "notification_schema.avsc", twitterBoardApplication);
+        notificationSchemaDto.setCtlSchemaId(ctlNotifSchema.getId());
+        notificationSchemaDto = client.saveNotificationSchema(notificationSchemaDto);
         sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 

@@ -16,8 +16,10 @@
 
 package org.kaaproject.kaa.examples.twittermonitor;
 
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.kaaproject.kaa.common.dto.*;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
 import org.kaaproject.kaa.examples.twitterboard.TwitterBoardDemoBuilder;
@@ -26,6 +28,7 @@ import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -61,12 +64,15 @@ public class TwitterMonitorDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", twitterMonitorApplication);
+
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(twitterMonitorApplication.getId());
         configurationSchema.setName("TwitterMonitor schema");
         configurationSchema.setDescription("Default configuration schema for the twitter monitor application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");

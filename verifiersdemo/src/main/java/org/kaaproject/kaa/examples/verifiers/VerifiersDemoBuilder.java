@@ -16,7 +16,9 @@
 
 package org.kaaproject.kaa.examples.verifiers;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.*;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
 import org.kaaproject.kaa.common.dto.user.UserVerifierDto;
@@ -32,6 +34,7 @@ import org.kaaproject.kaa.server.verifiers.twitter.config.gen.TwitterAvroConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,12 +89,17 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         aefMapIds.add(verifiersDemoAefMap.getId());
         sdkProfileDto.setAefMapIds(aefMapIds);
 
+        logger.info("Creating ctl schema...");
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("config_schema.avsc"), verifiersApplication.getTenantId(), verifiersApplication.getApplicationToken());
+
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(verifiersApplication.getId());
         configurationSchema.setName("KaaVerifiersTokens schema");
         configurationSchema.setDescription("Configuration schema for the default Kaa verifiers tokens");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("config_schema.avsc"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
+
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created.");

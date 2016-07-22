@@ -16,8 +16,10 @@
 
 package org.kaaproject.kaa.examples.trafficlight;
 
+import java.io.FileInputStream;
 import java.util.Arrays;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
@@ -88,12 +90,18 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         appenderDto.setJsonConfiguration(FileUtils.readResource(getResourcePath("rest_appender.json")));
         appenderDto = client.editLogAppenderDto(appenderDto);
 
+        logger.info("Creating ctl schema...");
+
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
+
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(trafficLightsApplication.getId());
         configurationSchema.setName("TrafficLightsConfiguration schema");
         configurationSchema.setDescription("Traffic Lights configuration schema");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration.avsc"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
+
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created");

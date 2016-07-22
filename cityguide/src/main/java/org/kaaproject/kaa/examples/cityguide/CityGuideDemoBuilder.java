@@ -16,8 +16,11 @@
 
 package org.kaaproject.kaa.examples.cityguide;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
@@ -58,16 +61,18 @@ public class CityGuideDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setApplicationToken(cityGuideApplication.getApplicationToken());
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
-
         loginTenantDeveloper(client);
-        
+
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("city_guide.avsc"), cityGuideApplication.getTenantId(), cityGuideApplication.getApplicationToken());
+
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(cityGuideApplication.getId());
         configurationSchema.setName("City guide configuration schema");
         configurationSchema.setDescription("Configuration schema describing cities and places used by city guide application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("city_guide.avsc"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
-        
+
         CTLSchemaDto profileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("city_guide_profile.avsc"), cityGuideApplication.getTenantId(),
                 cityGuideApplication.getApplicationToken());
         

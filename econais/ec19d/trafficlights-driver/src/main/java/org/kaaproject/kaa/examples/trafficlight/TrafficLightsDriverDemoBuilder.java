@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
@@ -63,7 +64,10 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(trafficLightsApplication.getId());
         logSchemaDto.setName("TrafficLightsLog schema");
         logSchemaDto.setDescription("Traffic Lights driver log schema");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("log.avsc"));
+        CTLSchemaDto ctlSchema =
+                client.saveCTLSchemaWithAppToken(getResourceAsString("log.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
+        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto = client.createLogSchema(logSchemaDto);
         logger.info("Log schema version: {}", logSchemaDto.getVersion());
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
         logger.info("Log schema was created.");

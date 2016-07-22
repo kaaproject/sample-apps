@@ -26,6 +26,7 @@ import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
@@ -104,7 +105,10 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(connectedCarApplication.getId());
         logSchemaDto.setName("Connected Car log schema");
         logSchemaDto.setDescription("Log schema describes incoming RFID reports");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
+        CTLSchemaDto ctlSchema =
+                client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
+        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto = client.createLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto connectedCarLogAppender = new LogAppenderDto();

@@ -288,6 +288,12 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
     protected void loginTenantAdmin(AdminClient client) throws Exception {
         client.login(tenantAdminUser, tenantAdminPassword);
     }
+
+    protected CTLSchemaDto saveCTLSchemaWithAppToken(AdminClient client, String resourcesPath, ApplicationDto applicationDto) throws Exception {
+        logger.info("Creating ctl schema...");
+        return client.saveCTLSchemaWithAppToken(getResourceAsString(resourcesPath),
+                applicationDto.getTenantId(), applicationDto.getApplicationToken());
+    }
     
     
     protected void loginTenantDeveloper(AdminClient client) throws Exception {

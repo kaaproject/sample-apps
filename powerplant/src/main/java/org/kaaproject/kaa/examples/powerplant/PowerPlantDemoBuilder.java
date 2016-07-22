@@ -75,7 +75,9 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(powerPlantApplication.getId());
         logSchemaDto.setName("Power plant log schema");
         logSchemaDto.setDescription("Log schema describes incoming voltage reports");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
+        CTLSchemaDto ctlLogSchema = saveCTLSchemaWithAppToken(client, "logSchema.json", powerPlantApplication);
+        logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto powerPlantLogAppender = new LogAppenderDto();
@@ -94,9 +96,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         powerPlantLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("restAppender.json")));
         powerPlantLogAppender = client.editLogAppenderDto(powerPlantLogAppender);
 
-        logger.info("Creating ctl schema...");
-
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
+        CTLSchemaDto ctlConfSchema = saveCTLSchemaWithAppToken(client, "configSchema.json", powerPlantApplication);
 
         logger.info("Creating configuration schema...");
 
@@ -104,7 +104,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         configurationSchema.setApplicationId(powerPlantApplication.getId());
         configurationSchema.setName("Power plant configuration schema");
         configurationSchema.setDescription("Default configuration schema for the power plant application");
-        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema.setCtlSchemaId(ctlConfSchema.getId());
         configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());

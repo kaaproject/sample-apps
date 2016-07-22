@@ -107,7 +107,9 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(connectedCarApplication.getId());
         logSchemaDto.setName("Connected Car log schema");
         logSchemaDto.setDescription("Log schema describes incoming RFID reports");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
+        CTLSchemaDto ctlLogSchema = saveCTLSchemaWithAppToken(client, "logSchema.json", connectedCarApplication);
+        logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto connectedCarLogAppender = new LogAppenderDto();
@@ -128,13 +130,13 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
 
 
 
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configurationSchema.json"), connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
+        CTLSchemaDto ctlConfSchema = saveCTLSchemaWithAppToken(client, "configurationSchema.json", connectedCarApplication);
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(connectedCarApplication.getId());
         configurationSchema.setName("Connected car configuration schema");
         configurationSchema.setDescription("Default configuration schema for the connected car application");
-        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema.setCtlSchemaId(ctlConfSchema.getId());
         configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());

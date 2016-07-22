@@ -65,7 +65,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
 
         loginTenantDeveloper(client);
 
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration-schema.avsc"), activationApplication.getTenantId(), activationApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "configuration-schema.avsc", activationApplication);
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(activationApplication.getId());
@@ -85,8 +85,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
             throw new RuntimeException("Can't get default endpoint group for activation application!");
         }
 
-        CTLSchemaDto serverProfileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("server_profile_schema.avsc"),
-                activationApplication.getTenantId(), activationApplication.getApplicationToken());
+        CTLSchemaDto serverProfileCtlSchema = saveCTLSchemaWithAppToken(client, "server_profile_schema.avsc", activationApplication);
 
         ServerProfileSchemaDto serverProfileSchema = new ServerProfileSchemaDto();
         serverProfileSchema.setApplicationId(activationApplication.getId());

@@ -104,10 +104,9 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setApplicationId(notificationApplication.getId());
         notificationSchemaDto.setName("Notification schema");
         notificationSchemaDto.setDescription("Notification schema of a sample notification");
-        CTLSchemaDto ctlSchema =
-                client.saveCTLSchemaWithAppToken(getResourceAsString(notificationSchemaRes), notificationApplication.getTenantId(), notificationApplication.getApplicationToken());
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, notificationSchemaRes, notificationApplication);
         notificationSchemaDto.setCtlSchemaId(ctlSchema.getId());
-        notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto);
+        notificationSchemaDto = client.saveNotificationSchema(notificationSchemaDto);
         sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 

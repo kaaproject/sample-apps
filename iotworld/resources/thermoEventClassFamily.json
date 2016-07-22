@@ -18,7 +18,8 @@
  "name": "ThermostatStatusUpdate",
  "fields": [
     {"name": "thermostatInfo", "type": "org.kaaproject.kaa.demo.iotworld.thermo.ThermostatInfo" }
-  ]
+  ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.thermo.ThermostatInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.thermo",

@@ -96,10 +96,4 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         logger.info("Finished loading 'Event Demo Application' data.");
     }
 
-    public static void main(String[] args) throws Throwable {
-        EventDemoBuilder e = new EventDemoBuilder();
-        AdminClient client = new AdminClient("127.0.0.1", 8080);
-        e.buildDemoApplicationImpl(client);
-    }
-
 }

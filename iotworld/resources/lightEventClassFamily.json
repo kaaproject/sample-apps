@@ -27,7 +27,8 @@
 	{"name": "maxBrightness", "type": "int"},
 	{"name": "ignoreBrightnessUpdate", "type": "boolean"},
 	{"name": "status", "type": "org.kaaproject.kaa.demo.iotworld.light.BulbStatus"}
- ]
+ ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.light.BulbStatus", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.light",
@@ -36,7 +37,8 @@
  "name": "BulbListStatusUpdate",
  "fields": [
     {"name": "bulbs", "type": [{"type": "array", "items": "org.kaaproject.kaa.demo.iotworld.light.BulbInfo"}, "null"]}
- ]
+ ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.light.BulbInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.light",
@@ -56,6 +58,7 @@
  "fields": [
 	{"name": "bulbId", "type": "string"},
 	{"name": "status", "type": "org.kaaproject.kaa.demo.iotworld.light.BulbStatus"}
- ]
+ ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.light.BulbStatus", "version":1}]
 }
 ]

@@ -28,7 +28,8 @@
  "fields": [
 	{"name": "mode", "type": "org.kaaproject.kaa.demo.iotworld.geo.OperationMode"},
 	{"name": "position", "type": "org.kaaproject.kaa.demo.iotworld.geo.GeoFencingPosition"}
-  ]
+  ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.geo.OperationMode", "version":1},{"fqn":"org.kaaproject.kaa.demo.iotworld.geo.GeoFencingPosition", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.geo",
@@ -37,7 +38,8 @@
  "name": "OperationModeUpdateRequest",
  "fields": [
 	{"name": "mode", "type": "org.kaaproject.kaa.demo.iotworld.geo.OperationMode"}
-  ]
+  ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.geo.OperationMode", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.geo",
@@ -46,6 +48,7 @@
  "name": "GeoFencingPositionUpdate",
  "fields": [
 	{"name": "position", "type": "org.kaaproject.kaa.demo.iotworld.geo.GeoFencingPosition"}
-  ]
+  ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.geo.GeoFencingPosition", "version":1}]
 }
 ]

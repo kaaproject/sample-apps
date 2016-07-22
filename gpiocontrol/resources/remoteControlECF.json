@@ -45,7 +45,8 @@
                     "items":"org.kaaproject.kaa.examples.gpiocontrol.GpioStatus"
                 }
             }
-        ]
+        ],
+        "dependencies":[{"fqn":"org.kaaproject.kaa.examples.gpiocontrol.GpioStatus", "version":1}]
     },
     {
         "namespace":"org.kaaproject.kaa.examples.gpiocontrol",
@@ -57,6 +58,7 @@
                 "name":"gpio",
                 "type":"org.kaaproject.kaa.examples.gpiocontrol.GpioStatus"
             }
-        ]
+        ],
+        "dependencies":[{"fqn":"org.kaaproject.kaa.examples.gpiocontrol.GpioStatus", "version":1}]
     }
 ]

@@ -51,16 +51,16 @@ public class PhotoFrameDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantAdmin(client);
 
+        ApplicationDto photoFrameApplication = new ApplicationDto();
+        photoFrameApplication.setName("Photo frame");
+        photoFrameApplication = client.editApplication(photoFrameApplication);
+
         EventClassFamilyDto photoFrameEventClassFamily = new EventClassFamilyDto();
         photoFrameEventClassFamily.setName("Photo Frame Event Class Family");
         photoFrameEventClassFamily.setNamespace("org.kaaproject.kaa.demo.photoframe");
         photoFrameEventClassFamily.setClassName("PhotoFrameEventClassFamily");
         photoFrameEventClassFamily = client.editEventClassFamily(photoFrameEventClassFamily);
-        client.addEventClassFamilySchema(photoFrameEventClassFamily.getId(), getResourcePath("photoFrameEventClassFamily.json"));
-
-        ApplicationDto photoFrameApplication = new ApplicationDto();
-        photoFrameApplication.setName("Photo frame");
-        photoFrameApplication = client.editApplication(photoFrameApplication);
+        addEventClassFamilyVersion(photoFrameEventClassFamily, client, photoFrameApplication.getTenantId(), "photoFrameEventClassFamily.json");
 
         sdkProfileDto.setApplicationId(photoFrameApplication.getId());
         sdkProfileDto.setApplicationToken(photoFrameApplication.getApplicationToken());

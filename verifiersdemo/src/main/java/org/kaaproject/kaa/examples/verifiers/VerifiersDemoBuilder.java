@@ -62,18 +62,18 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantAdmin(client);
 
+        ApplicationDto verifiersApplication = new ApplicationDto();
+        verifiersApplication.setName("User verifiers demo");
+        verifiersApplication = client.editApplication(verifiersApplication);
+
         logger.info("Creating event class family schema...");
         EventClassFamilyDto verifiersDemoEventClassFamily = new EventClassFamilyDto();
         verifiersDemoEventClassFamily.setName("Verifiers Demo Event Class Family");
         verifiersDemoEventClassFamily.setNamespace("org.kaaproject.kaa.demo.verifiersdemo");
         verifiersDemoEventClassFamily.setClassName("VerifiersDemoEventClassFamily");
         verifiersDemoEventClassFamily = client.editEventClassFamily(verifiersDemoEventClassFamily);
-        client.addEventClassFamilySchema(verifiersDemoEventClassFamily.getId(), getResourcePath("verifiersDemoEventClassFamily.json"));
+        addEventClassFamilyVersion(verifiersDemoEventClassFamily, client, verifiersApplication.getTenantId(), "verifiersDemoEventClassFamily.json");
         logger.info("Event class family was created");
-
-        ApplicationDto verifiersApplication = new ApplicationDto();
-        verifiersApplication.setName("User verifiers demo");
-        verifiersApplication = client.editApplication(verifiersApplication);
 
         sdkProfileDto.setApplicationId(verifiersApplication.getId());
         sdkProfileDto.setApplicationToken(verifiersApplication.getApplicationToken());

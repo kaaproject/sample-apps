@@ -320,23 +320,22 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         return aefMap;
     }
 
-    protected EventClassFamilyVersionDto generateEventClassFamilyVersion(AdminClient client, ApplicationDto eventApplication) {
+    protected void addEventClassFamilyVersion(EventClassFamilyDto eventClassFamily, AdminClient client,
+                                              String tenantId, String resourcesPath) throws Exception{
         EventClassFamilyVersionDto eventClassFamilyVersion = new EventClassFamilyVersionDto();
         try {
-            String body = FileUtils.readResource(getResourcePath("thermostatEventClassFamily.json"));
+            String body = FileUtils.readResource(getResourcePath(resourcesPath));
             JsonNode json = new ObjectMapper().readTree(body);
             List<EventClassDto> records = new ArrayList<>();
             for (JsonNode ctlJson : json) {
                 ((ObjectNode) ctlJson).put("version", 1);
-                String ctlBody = ctlJson.toString();
-                CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(ctlBody, eventApplication.getTenantId(), eventApplication.getApplicationToken());
-
                 String fqn = ctlJson.get("namespace").asText() + "." + ctlJson.get("name").asText();
                 EventClassType classType = EventClassType.valueOf(ctlJson.get("classType").asText().toUpperCase());
                 ((ObjectNode)ctlJson).remove("classType");
+                String ctlBody = ctlJson.toString();
 
+                CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(ctlBody, tenantId, null);
                 EventClassDto ec = new EventClassDto();
-                ec.setApplicationId(eventApplication.getId());
                 ec.setFqn(fqn);
                 ec.setType(classType);
                 ec.setCtlSchemaId(ctlSchema.getId());
@@ -349,7 +348,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
             throw new IllegalArgumentException("Can't parse JSON resource!");
         }
 
-        return eventClassFamilyVersion;
+        client.addEventClassFamilyVersion(eventClassFamily.getId(), eventClassFamilyVersion);
     }
     
 }

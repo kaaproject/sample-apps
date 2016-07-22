@@ -62,10 +62,7 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         thermoEventClassFamily.setClassName("ThermostatEventClassFamily");
         thermoEventClassFamily = client.editEventClassFamily(thermoEventClassFamily);
 
-        loginTenantDeveloper(client);
-        EventClassFamilyVersionDto eventClassFamilyVersion = generateEventClassFamilyVersion(client, eventApplication);
-        loginTenantAdmin(client);
-        client.addEventClassFamilyVersion(thermoEventClassFamily.getId(), eventClassFamilyVersion);
+        addEventClassFamilyVersion(thermoEventClassFamily, client, eventApplication.getTenantId(), "thermostatEventClassFamily.json");
 
         sdkProfileDto.setApplicationId(eventApplication.getId());
         sdkProfileDto.setApplicationToken(eventApplication.getApplicationToken());

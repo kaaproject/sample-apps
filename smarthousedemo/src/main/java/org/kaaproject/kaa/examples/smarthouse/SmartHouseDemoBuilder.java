@@ -50,32 +50,33 @@ public class SmartHouseDemoBuilder extends AbstractDemoBuilder {
         logger.info("Loading 'Smart House Demo Application' data...");
         
         loginTenantAdmin(client);
+
+        ApplicationDto smartHouseApplication = new ApplicationDto();
+        smartHouseApplication.setName("Smart house");
+        smartHouseApplication = client.editApplication(smartHouseApplication);
+        String tenantId = smartHouseApplication.getTenantId();
         
         EventClassFamilyDto deviceEventClassFamily = new EventClassFamilyDto();
         deviceEventClassFamily.setName("Device Event Class Family");
         deviceEventClassFamily.setNamespace("org.kaaproject.kaa.demo.smarthouse.device");
         deviceEventClassFamily.setClassName("DeviceEventClassFamily");
         deviceEventClassFamily = client.editEventClassFamily(deviceEventClassFamily);
-        client.addEventClassFamilySchema(deviceEventClassFamily.getId(), getResourcePath("deviceEventClassFamily.json"));
+        addEventClassFamilyVersion(deviceEventClassFamily, client, tenantId, "deviceEventClassFamily.json");
 
         EventClassFamilyDto thermoEventClassFamily = new EventClassFamilyDto();
         thermoEventClassFamily.setName("Thermo Event Class Family");
         thermoEventClassFamily.setNamespace("org.kaaproject.kaa.demo.smarthouse.thermo");
         thermoEventClassFamily.setClassName("ThermoEventClassFamily");
         thermoEventClassFamily = client.editEventClassFamily(thermoEventClassFamily);
-        client.addEventClassFamilySchema(thermoEventClassFamily.getId(), getResourcePath("thermoEventClassFamily.json"));
+        addEventClassFamilyVersion(thermoEventClassFamily, client, tenantId, "thermoEventClassFamily.json");
 
         EventClassFamilyDto musicEventClassFamily = new EventClassFamilyDto();
         musicEventClassFamily.setName("Music Event Class Family");
         musicEventClassFamily.setNamespace("org.kaaproject.kaa.demo.smarthouse.music");
         musicEventClassFamily.setClassName("MusicEventClassFamily");
         musicEventClassFamily = client.editEventClassFamily(musicEventClassFamily);
-        client.addEventClassFamilySchema(musicEventClassFamily.getId(), getResourcePath("musicEventClassFamily.json"));
-        
-        ApplicationDto smartHouseApplication = new ApplicationDto();
-        smartHouseApplication.setName("Smart house");
-        smartHouseApplication = client.editApplication(smartHouseApplication);
-               
+        addEventClassFamilyVersion(musicEventClassFamily, client, tenantId, "musicEventClassFamily.json");
+
         sdkProfileDto.setApplicationId(smartHouseApplication.getId());
         sdkProfileDto.setApplicationToken(smartHouseApplication.getApplicationToken());
         sdkProfileDto.setProfileSchemaVersion(0);

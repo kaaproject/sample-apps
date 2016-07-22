@@ -17,15 +17,18 @@
 package org.kaaproject.kaa.examples.connectedcar;
 
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.UpdateStatus;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
@@ -104,7 +107,10 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(connectedCarApplication.getId());
         logSchemaDto.setName("Connected Car log schema");
         logSchemaDto.setDescription("Log schema describes incoming RFID reports");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
+        CTLSchemaDto ctlSchema =
+                client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
+        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto = client.createLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto connectedCarLogAppender = new LogAppenderDto();
@@ -123,15 +129,16 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         connectedCarLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("restAppender.json")));
         connectedCarLogAppender = client.editLogAppenderDto(connectedCarLogAppender);
 
-        /*
-         * Configure the configuration feature.
-         */
+
+
+        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configurationSchema.json"), connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
 
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(connectedCarApplication.getId());
         configurationSchema.setName("Connected car configuration schema");
         configurationSchema.setDescription("Default configuration schema for the connected car application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configurationSchema.json"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 

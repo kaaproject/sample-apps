@@ -74,7 +74,10 @@ public class VehicleTelemetryDemoBuider extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(vehicleTelemetryApplication.getId());
         logSchemaDto.setName("Vehicle telemetry log schema");
         logSchemaDto.setDescription("Log schema describing incoming logs");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("logSchema.json"));
+        CTLSchemaDto ctlSchema =
+                client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), vehicleTelemetryApplication.getTenantId(), vehicleTelemetryApplication.getApplicationToken());
+        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto = client.createLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto vehicleTelemetryLogAppender = new LogAppenderDto();

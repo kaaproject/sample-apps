@@ -62,7 +62,7 @@ public class SparkDemoBuider extends AbstractDemoBuilder {
         CTLSchemaDto ctlSchema =
                 client.saveCTLSchemaWithAppToken(getResourceAsString("powerReportLogSchema.json"), sparkApplication.getTenantId(), sparkApplication.getApplicationToken());
         powerReportLogSchemaDto.setCtlSchemaId(ctlSchema.getId());
-        powerReportLogSchemaDto = client.createLogSchema(powerReportLogSchemaDto);
+        powerReportLogSchemaDto = client.saveLogSchema(powerReportLogSchemaDto);
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());
 
         LogAppenderDto flumeLogAppender = new LogAppenderDto();

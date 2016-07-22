@@ -110,7 +110,7 @@ public class ConnectedCarDemoBuilder extends AbstractDemoBuilder {
         CTLSchemaDto ctlLogSchema =
                 client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), connectedCarApplication.getTenantId(), connectedCarApplication.getApplicationToken());
         logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
-        logSchemaDto = client.createLogSchema(logSchemaDto);
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto connectedCarLogAppender = new LogAppenderDto();

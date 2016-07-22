@@ -66,10 +66,10 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(trafficLightsApplication.getId());
         logSchemaDto.setName("TrafficLightsLog schema");
         logSchemaDto.setDescription("Traffic Lights driver log schema");
-        CTLSchemaDto ctlSchema =
+        CTLSchemaDto ctlLogSchema =
                 client.saveCTLSchemaWithAppToken(getResourceAsString("log.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
-        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
-        logSchemaDto = client.createLogSchema(logSchemaDto);
+        logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         logger.info("Log schema version: {}", logSchemaDto.getVersion());
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
         logger.info("Log schema was created.");
@@ -92,14 +92,14 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
 
         logger.info("Creating ctl schema...");
 
-        CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
+        CTLSchemaDto ctlConfSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("configuration.avsc"), trafficLightsApplication.getTenantId(), trafficLightsApplication.getApplicationToken());
 
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(trafficLightsApplication.getId());
         configurationSchema.setName("TrafficLightsConfiguration schema");
         configurationSchema.setDescription("Traffic Lights configuration schema");
-        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema.setCtlSchemaId(ctlConfSchema.getId());
         configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());

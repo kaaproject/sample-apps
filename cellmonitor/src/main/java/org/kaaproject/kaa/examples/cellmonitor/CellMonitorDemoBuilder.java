@@ -66,7 +66,7 @@ public class CellMonitorDemoBuilder extends AbstractDemoBuilder {
         CTLSchemaDto ctlSchema =
                 client.saveCTLSchemaWithAppToken(getResourceAsString("cell_monitor_log.avsc"), cellMonitorApplication.getTenantId(), cellMonitorApplication.getApplicationToken());
         logSchema.setCtlSchemaId(ctlSchema.getId());
-        logSchema = client.createLogSchema(logSchema);
+        logSchema = client.saveLogSchema(logSchema);
         sdkProfileDto.setLogSchemaVersion(logSchema.getVersion());
         
         LogAppenderDto cellMonitorLogAppender = new LogAppenderDto();

@@ -78,7 +78,7 @@ public class PowerPlantDemoBuilder extends AbstractDemoBuilder {
         CTLSchemaDto ctlLogSchema =
                 client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), powerPlantApplication.getTenantId(), powerPlantApplication.getApplicationToken());
         logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
-        logSchemaDto = client.createLogSchema(logSchemaDto);
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto powerPlantLogAppender = new LogAppenderDto();

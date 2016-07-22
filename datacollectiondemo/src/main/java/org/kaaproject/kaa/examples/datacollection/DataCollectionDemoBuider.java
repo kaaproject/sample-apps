@@ -67,7 +67,7 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         CTLSchemaDto ctlSchema =
                 client.saveCTLSchemaWithAppToken(getResourceAsString("logSchema.json"), dataCollectionApplication.getTenantId(), dataCollectionApplication.getApplicationToken());
         logSchemaDto.setCtlSchemaId(ctlSchema.getId());
-        logSchemaDto = client.createLogSchema(logSchemaDto);
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
         LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();

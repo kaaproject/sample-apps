@@ -89,7 +89,7 @@ public class TwitterBoardDemoBuilder extends AbstractDemoBuilder {
         notificationSchemaDto.setDescription("Notification schema for Twitter board application");
         CTLSchemaDto ctlNotifSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("notification_schema.avsc"), twitterBoardApplication.getTenantId(), twitterBoardApplication.getApplicationToken());
         notificationSchemaDto.setCtlSchemaId(ctlNotifSchema.getId());
-        notificationSchemaDto = client.createNotificationSchema(notificationSchemaDto);
+        notificationSchemaDto = client.saveNotificationSchema(notificationSchemaDto);
         sdkProfileDto.setNotificationSchemaVersion(notificationSchemaDto.getVersion());
         logger.info("Notification schema was created.");
 

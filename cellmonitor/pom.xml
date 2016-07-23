@@ -15,8 +15,8 @@
 -->
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
@@ -96,19 +96,17 @@
                     <useDefaultExcludes>false</useDefaultExcludes>
                     <excludes>
                         <!-- Following excludes generated with Android Studio -->
-                        <exclude>source/android/CellMonitor/gradlew.bat</exclude>
-                        <exclude>source/android/CellMonitor/app/proguard-rules.pro</exclude>
-                        <exclude>source/android/CellMonitor/.idea/</exclude>
-                        <exclude>source/android/CellMonitor/.gradle/</exclude>
-                        <exclude>source/android/CellMonitor/gradle/</exclude>
-                        <exclude>source/android/CellMonitor/app/build/</exclude>
-                        <exclude>source/android/CellMonitor/local.properties</exclude>
-                        <exclude>source/android/CellMonitor/app/app.iml</exclude>
-                        <exclude>source/android/CellMonitor/gradlew.bat</exclude>
-                        <exclude>source/android/CellMonitor/CellMonitor.iml</exclude>
-                        <exclude>source/android/CellMonitor/gradle.properties</exclude>
-			<exclude>source/android/CellMonitor/gradlew</exclude>
-  			<exclude>source/android/CellMonitor/build/</exclude>
+                        <exclude>source/android/gradlew.bat</exclude>
+                        <exclude>source/android/app/proguard-rules.pro</exclude>
+                        <exclude>source/android/gradle/</exclude>
+                        <exclude>source/android/app/build/</exclude>
+                        <exclude>source/android/local.properties</exclude>
+                        <exclude>source/android/app/app.iml</exclude>
+                        <exclude>source/android/gradlew.bat</exclude>
+                        <exclude>source/android/CellMonitor.iml</exclude>
+                        <exclude>source/android/gradle.properties</exclude>
+                        <exclude>source/android/gradlew</exclude>
+                        <exclude>source/android/build/</exclude>
                         <!-- Following excludes generated with XCode -->
                         <exclude>
                             source/objc/CellMonitorDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata

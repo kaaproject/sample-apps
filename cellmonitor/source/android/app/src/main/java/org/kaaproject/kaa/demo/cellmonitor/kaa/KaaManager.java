@@ -19,7 +19,6 @@ package org.kaaproject.kaa.demo.cellmonitor.kaa;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
-
 import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
@@ -82,7 +81,7 @@ public class KaaManager implements LogUploadStrategy, LogDeliveryListener {
 
                 mKaaStarted = true;
             }
-        });
+        }, true);
 
         mClient.setLogUploadStrategy(this);
         mClient.setLogDeliveryListener(this);

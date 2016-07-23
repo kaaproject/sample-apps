@@ -14,12 +14,14 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.activation;
+package org.kaaproject.kaa.demo.profiling;
 
 import java.util.ArrayList;
 
 /**
  * Class for storing test data and showing all functionality
+ *
+ * @author Maksym Liashenko
  */
 public class PagerProfileData {
 
@@ -38,7 +40,6 @@ public class PagerProfileData {
         profiles.add(new InnerData(false, true, false));
         profiles.add(new InnerData(false, false, true));
         profiles.add(new InnerData(false, false, false));
-        profiles.add(new InnerData(true, true, true));
 
         return profiles;
     }

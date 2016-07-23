@@ -19,7 +19,7 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
-    <id>activation-src-java</id>
+    <id>profiling-src-java</id>
     <formats>
         <format>tar.gz</format>
     </formats>
@@ -28,17 +28,17 @@
         <fileSet>
             <directory>${project.basedir}/source/java</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>JActivationDemo</outputDirectory>
+            <outputDirectory>JProfilingDemo</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/lib</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>JActivationDemo/lib</outputDirectory>
+            <outputDirectory>JProfilingDemo/lib</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>${project.basedir}/../thirdparty/java/gson</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>JActivationDemo/lib</outputDirectory>
+            <outputDirectory>JProfilingDemo/lib</outputDirectory>
             <excludes>
                 <exclude>bin/</exclude>
                 <exclude>gen/</exclude>
@@ -48,7 +48,7 @@
     <dependencySets>
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
-            <outputDirectory>JActivationDemo/lib</outputDirectory>
+            <outputDirectory>JProfilingDemo/lib</outputDirectory>
             <unpack>false</unpack>
             <useTransitiveDependencies>true</useTransitiveDependencies>
 	        <useTransitiveFiltering>true</useTransitiveFiltering>

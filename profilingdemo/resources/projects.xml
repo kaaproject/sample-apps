@@ -17,54 +17,54 @@
 
 -->
 
-<projectsConfig 
-    xmlns="http://www.kaaproject.org"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="activation_demo">
-        <name>Endpoint activation demo</name>
-        <description>Endpoint activation application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
+<projectsConfig
+        xmlns="http://www.kaaproject.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+    <project id="profiling_demo">
+        <name>Endpoint Profiling and Grouping demo</name>
+        <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
         <details>
             <![CDATA[
-This Endpoint activation app demonstrates the use of server-side endpoint profile and device management features. It allows to activate/deactivate device based on the endpoint ID and work with endpoint credentials using Kaa REST API.
+This Endpoint profiling and grouping app demonstrates the use of server-side endpoint profile and device management features. It allows to activate/deactivate device based on the endpoint ID and work with endpoint credentials using Kaa REST API.
 
 <h2>Installation</h2>
 Download the jar file to your desktop by clicking the "Binary" button on the left. Make sure that you have Java runtime installed. Application can run in three modes: client, admin and developer. The mode is specified by command line arguments.<br/>
 To run in the "admin" mode, use the following command in the console:
 <pre>
-$ java -jar ActivationDemo.jar admin [ipAddress] [port]
+$ java -jar ProfilingDemo.jar admin [ipAddress] [port]
 Example:
-$ java -jar ActivationDemo.jar admin localhost 8080
+$ java -jar ProfilingDemo.jar admin localhost 8080
 </pre>
 Where ipAddress is the address of the Kaa node, where the administrative REST API is deployed.<br/><br/>
 To run in the "client" mode, use the following command in the console:
 <pre>
-$ java -jar ActivationDemo.jar client
+$ java -jar ProfilingDemo.jar client
 </pre>
 To run in the "developer" mode, use the following command in the console:
 <pre>
-$ java -jar ActivationDemo.jar developer [ipAddress] [port]
+$ java -jar ProfilingDemo.jar developer [ipAddress] [port]
 </pre>
 <h2>Playing around</h2>
 Make sure that the Kaa Sandbox is up and running.
-"Activation Demo" consists of the next modes:
+"Profiling Demo" consists of the next modes:
 
 1) In "admin" mode you will be able to do credentials provisioning (Device Management feature), revocation and registration. Before using "developer" or "client" mode, you need to create and register endpoint credentials via Kaa REST API.
 Run app with the next command:
 <pre>
-$ java -jar ActivationDemo.jar admin [kaa_hostname] 8080
+$ java -jar ProfilingDemo.jar admin [kaa_hostname] 8080
 </pre>
 Then choose the first menu item by typing "1" and pressing "Enter".
 Exit from application by typing "3" and pressing "Enter".
 Now credentials was created and registered in Kaa. Corresponding "key.private" and "key.public" files are created.
 Starting from now, you can use other modes.
 2) In "developer" mode you will be able
-to activate/deactivate any endpoint associated with Activation app. Endpoint activation and deactivation are performed by updating server profile using REST API.<br/><br/>
-"Activation Demo" app in "client" mode creates and registers one Kaa endpoint (per application instance). In this mode app displays the current state of the endpoint (active or inactive). Once the activation/deactivation is performed via the "developer" application, your endpoint will be served with the new configuration data according to the server-side endpoint profile change.<br/>
+to activate/deactivate any endpoint associated with Profiling app. Endpoint profiling are performed by updating server profile using REST API.<br/><br/>
+"Profiling Demo" app in "client" mode creates and registers one Kaa endpoint (per application instance). In this mode app displays the current state of the endpoint (active or inactive). Once the profiling is performed via the "developer" application, your endpoint will be served with the new configuration data according to the server-side endpoint profile change.<br/>
 
 <br/>
 
-To understand better how this app works, you should navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of your Sandbox window. Log in as a tenant developer (devuser / devuser123 by default), and go to the "Activation demo" application. Select "Schemas"->"Server-side EP profile". The app uses one schema version, which contains one value: "active" (boolean). The Kaa server uses this value to filter endpoints by their profile contents. Server-side endpoint profiles can be updated either via Admin Console, or via the REST API (which is done by the "Activation app" in the "admin" mode)<br/><br/>
+To understand better how this app works, you should navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of your Sandbox window. Log in as a tenant developer (devuser / devuser123 by default), and go to the "Profiling demo" application. Select "Schemas"->"Server-side EP profile". The app uses one schema version, which contains one value: "active" (boolean). The Kaa server uses this value to filter endpoints by their profile contents. Server-side endpoint profiles can be updated either via Admin Console, or via the REST API (which is done by the "Profiling app" in the "admin" mode)<br/><br/>
 
 Now open the "Configuration" schema under "Schemas" and select version 2 to see the structure of the configuration data. There is one value in the configuration schema: "active" (boolean). This value is what's actually sent to each endpoint by the server to specify the target endpoint state (active or inactive).<br/><br/>
 
@@ -79,23 +79,23 @@ Please note that all features of the <a href="http://docs.kaaproject.org/display
 For more background on the Kaa endpoint profiling, grouping, and configuration management features, please refer to the <a href="http://docs.kaaproject.org/display/KAA/Programming+guide">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Design+reference">design reference</a> sections.
 ]]>
         </details>
-        
+
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
              (ex. JAVA, CPP, etc., to get list of all possible options
              see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-             
+
         <sdkLanguage>JAVA</sdkLanguage>
-        
+
         <!-- Specifies the target runtime platforms according to the instructions from the project details section
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
-             
+
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
-        <sourceArchive>java/activation_demo.tar.gz</sourceArchive>
-        <projectFolder>JActivationDemo</projectFolder>
-        <sdkLibDir>JActivationDemo/lib</sdkLibDir>
-        <destBinaryFile>JActivationDemo/build/jar/ActivationDemo.jar</destBinaryFile>
+        <sourceArchive>java/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>JProfilingDemo</projectFolder>
+        <sdkLibDir>JProfilingDemo/lib</sdkLibDir>
+        <destBinaryFile>JProfilingDemo/build/jar/ProfilingDemo.jar</destBinaryFile>
     </project>
 </projectsConfig>

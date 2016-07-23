@@ -23,10 +23,10 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>activationdemo</artifactId>
+    <artifactId>profilingdemo</artifactId>
     <packaging>jar</packaging>
 
-    <name>Kaa activation demo</name>
+    <name>Kaa endpoint profiling and grouping demo</name>
     <url>http://kaaproject.org</url>
 
     <properties>
@@ -107,7 +107,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/generated-resources/demo/activation
+                            <outputDirectory>${project.build.directory}/generated-resources/demo/profiling
                             </outputDirectory>
                             <resources>
                                 <resource>

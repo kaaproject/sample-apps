@@ -17,7 +17,7 @@
 
 -->
 
-<project name="ActivationDemo" default="debug">
+<project name="ProfilingDemo" default="debug">
 
     <property name="java.target" value="1.7"/>
     <property name="java.source" value="1.7"/>
@@ -39,14 +39,14 @@
         <mkdir dir="src/build/classes"/>
         <mkdir dir="src/build/jar"/>
         <javac srcdir="src" destdir="src/build/classes" classpathref="classpath" includeantruntime="false"/>
-        <jar destfile="build/jar/ActivationDemo.jar">
+        <jar destfile="build/jar/ProfilingDemo.jar">
             <fileset file="res/logback.xml" />
             <fileset dir="src/build/classes">
                 <include name="**/*.class"/>
             </fileset>
             <manifest>
                 <attribute name="Main-Class"
-                           value="org.kaaproject.kaa.demo.activation.ActivationDemo"/>
+                           value="org.kaaproject.kaa.demo.profiling.ProfilingDemo"/>
             </manifest>
             <zipgroupfileset includes="*.jar" dir="lib"/>
         </jar>

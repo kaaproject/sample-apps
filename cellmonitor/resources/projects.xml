@@ -18,9 +18,9 @@
 -->
 
 <projectsConfig
-    xmlns="http://www.kaaproject.org"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+        xmlns="http://www.kaaproject.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="cellmonitor_demo_android">
         <name>Cell monitor Android</name>
         <description>Cell monitor demo app for Android</description>
@@ -49,25 +49,25 @@ Where $your_application_token$ is the application token you can copy from the ma
 For more background on the Kaa Logging subsystem please refer to the corresponding programming guide and design reference sections.
             ]]>
         </details>
-        
+
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
              (ex. JAVA, CPP, etc., to get list of all possible options
              see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-             
+
         <sdkLanguage>JAVA</sdkLanguage>
-        
+
         <!-- Specifies the target runtime platforms according to the instructions from the project details section
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
-             
+
         <platforms>ANDROID</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
         <bundleId>cell_monitor_demos</bundleId>
         <sourceArchive>android/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>cellmonitor_demo/CellMonitor</projectFolder>
-        <sdkLibDir>cellmonitor_demo/CellMonitor/libs</sdkLibDir>
-        <destBinaryFile>cellmonitor_demo/CellMonitor/bin/CellMonitor-debug.apk</destBinaryFile>
+        <sdkLibDir>cellmonitor_demo/CellMonitor/app/libs</sdkLibDir>
+        <destBinaryFile>cellmonitor_demo/CellMonitor/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
     <project id="cellmonitor_demo_objc">
         <name>Cell monitor iOS</name>

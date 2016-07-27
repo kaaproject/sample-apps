@@ -27,9 +27,9 @@
     <string name="please_wait">Please wait...</string>
     <string name="show_on_map">Show on map</string>
 
-    <string name="no_areas">Kaa client is not started. Wait for it! We show your areas!</string>
-    <string name="no_cities">Kaa client is not started. Wait for it! We show your cities!</string>
-    <string name="no_city">Kaa client is not started. Wait for it! We show your city!</string>
+    <string name="no_areas">Areas info isn\'t available. The areas will be shown as soon as Kaa client will be started.</string>
+    <string name="no_cities">Cities info isn\'t available. The cities will be shown as soon as Kaa client will be started.</string>
+    <string name="no_city">City info isn\'t available. The city details will be shown as soon as Kaa client will be started.</string>
 
     <string name="hotels">HOTELS</string>
     <string name="shops">SHOPS</string>

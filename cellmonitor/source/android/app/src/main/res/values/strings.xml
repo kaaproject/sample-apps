@@ -32,11 +32,11 @@
 
     <string name="unavailable">Unavailable</string>
 
-    <string name="no_internet_connection">You have no internet connection</string>
+    <string name="no_internet_connection">No internet access available</string>
     <string name="location_value">[ %1$s, %2$s ]</string>
     <string name="logs_collected">Collected log count</string>
     <string name="enable_gps">Enable GPS</string>
-    <string name="location_dialog_title">Turn on location services to determine your location</string>
-    <string name="network_dialog_title">Turn on network to allow working with server</string>
+    <string name="location_dialog_title">Enable location services in order to detect your location</string>
+    <string name="network_dialog_title">Enable network in order to communicate with server</string>
 
 </resources>

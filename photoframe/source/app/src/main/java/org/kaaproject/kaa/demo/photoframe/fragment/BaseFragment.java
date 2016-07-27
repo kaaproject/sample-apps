@@ -166,6 +166,7 @@ public abstract class BaseFragment extends Fragment {
                 if (manager.isUserAttached()) {
                     loadSlideshow(playAlbumEvent, fragment);
                 } else {
+                    // If you logout, but get this event
                     Toast.makeText(getActivity(), R.string.logout_interaction_event, Toast.LENGTH_SHORT).show();
                 }
             }

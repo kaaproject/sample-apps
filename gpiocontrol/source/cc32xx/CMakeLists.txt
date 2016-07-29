@@ -33,7 +33,7 @@ add_subdirectory(libs/kaa)
 add_subdirectory(targets/${KAA_TARGET})
 
 # All libraries that demo app depends on.
-target_link_libraries(${APP_NAME} kaac_s target_support)
+target_link_libraries(${APP_NAME} kaac target_support)
 
 # For most embedded targets binary stripping is required.
 if(${KAA_PRODUCE_BINARY})

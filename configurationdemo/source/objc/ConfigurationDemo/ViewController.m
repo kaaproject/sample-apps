@@ -56,6 +56,8 @@
 
 - (void)onStarted {
     [self addLogWithText:@"Kaa client started"];
+    [self addLogWithText:[NSString stringWithFormat:@"Endpoint ID: %@", [self.kaaClient getEndpointKeyHash]]];
+    [self addLogWithText:@"Configuration before updating"];
     [self displayConfiguration];
 }
 
@@ -91,26 +93,21 @@
     return [[KAAEmptyData alloc] init];
 }
 
-- (void)onConfigurationUpdate:(KAASampleConfiguration *)configuration {
+- (void)onConfigurationUpdate:(KAAConfiguration *)configuration {
     [self addLogWithText:@"Configuration was updated"];
     [self displayConfiguration];
 }
 
 - (void)displayConfiguration {
-    KAASampleConfiguration *configuration = [self.kaaClient getConfiguration];
-    NSArray *links = [configuration AddressList].data;
-    NSMutableString *confBody = [NSMutableString stringWithFormat:@"Configuration body :\n"];
-    for (KAALink *link in links) {
-        [confBody appendString:[NSString stringWithFormat:@"%@ - %@\n", link.label, link.url]];
-    }
-    [self addLogWithText:confBody];
+    KAAConfiguration *configuration = [self.kaaClient getConfiguration];
+    [self addLogWithText:[NSString stringWithFormat:@"Sampling period is %d", configuration.samplingPeriod]];
 }
 
 - (void) addLogWithText:(NSString *) text {
     NSLog(@"%@", text);
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];
-    }];
+    });
 }
 
 @end

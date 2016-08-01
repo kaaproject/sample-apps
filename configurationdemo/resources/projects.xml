@@ -162,41 +162,6 @@ Please note that all the features of Administration UI are also supported by RES
         <description>Kaa Configuration subsystem demo app based on Objective-C SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Configuration subsystem on the Objective-C SDK.
-
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
-<pre>
-$ ./build.sh
-</pre>
-
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Configuration Objective-C demo" app, you will obtain the latest configuration accessible by the endpoint. This configuration is provided as a list of links to Kaa documentation.<br/><br/>
-
-Now it's time to test things out: navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Configuration demo" application, then select "Endpoint groups". From here you can manage endpoint groups and update endpoint configuration. Make sure you have tried updating configuration for endpoint group "All" and received it on your device. Do not forget to activate the updated configuration - otherwise the endpoint will not be able to receive it.<br/><br/>
-
-Please note that all the features of Administration UI are also supported by REST API.
-
-<h2>What's next?</h2>
-
-Please note that all the features of Administration UI are also supported by REST API.
-            ]]>
-        </details>
-        <sdkLanguage>OBJC</sdkLanguage>
-        <platforms>IOS</platforms>
-        <features>CONFIGURATION</features>
-        <complexity>BASIC</complexity>
-        <bundleId>configuration_demos</bundleId>
-        <sourceArchive>objc/configuration_demo.tar.gz</sourceArchive>
-        <projectFolder>ObjCConfigurationDemo</projectFolder>
-        <sdkLibDir>ObjCConfigurationDemo/libs</sdkLibDir>
-        <destBinaryFile></destBinaryFile>
-    </project>
-    <bundle id="configuration_demos">
-        <name>Configuration demos</name>
-        <description>Kaa Configuration subsystem demo applications bundle</description>
-        <details>
-            <![CDATA[
 <head>
 	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
 </head>
@@ -218,7 +183,7 @@ Please note that all the features of Administration UI are also supported by RES
 	</p>
 	<p>
 		Using Kaa Sandbox, you can flexibly manage a number of endpoint devices. You can store multiple endpoint groups and manage their settings separately.
-		You can select a <a href="./Glossary/#endpoint-group">group</a> of endpoint devices using filter parameters.
+		You can select a <a href="./Glossary/#endpoint-group">group of endpoint devices</a> using filter parameters.
 	</p>
 	
 	<h1>Playing around</h1>
@@ -268,7 +233,7 @@ Please note that all the features of Administration UI are also supported by RES
 	<p>
 		The messages above inform the user that Kaa client first applied the default value received from the SDK and the then updated it with the new value received from the server.
 		When Kaa client starts, it connects to the server and receives new configuration from the default, non-editable <a href="./Glossary/#group-all">group <i>all</i></a>.
-		For demonstration purpose, this group includes an <a href="./Glossary/#endpoint-profile-client-side-server-side">endpoint profile</a> with _samplingPeriod_ set to 10.
+		For demonstration purpose, this group includes an <a href="./Glossary/#endpoint-profile-client-side-server-side">endpoint profile</a> with <i>samplingPeriod</i> set to 10.
 	</p>
 	
 	<pre>
@@ -307,7 +272,7 @@ Please note that all the features of Administration UI are also supported by RES
 			
 		</li>
 		<li>
-			In the <b>Configurations</b> section, select the schema with maximal version.
+			In the <b>Configurations</b> section, select the latest version schema (the <b>Configuration schema</b> column).
 			The <b>Configuration details</b> page will open.
 		</li>
 		<li>
@@ -397,6 +362,8 @@ Please note that all the features of Administration UI are also supported by RES
 		</li>
 		<li>
 			Enter a name and description (optional) for your new schema.
+			You can create a new type of server-side profile schema or use an existing one.
+			For more information, see <a href="./Programming-guide/Key-platform-features/Common-Type-Library/">Common Type Library (CTL)</a>.
 			Click <b>Create new type</b>.
 			
 			<br />
@@ -541,10 +508,31 @@ Please note that all the features of Administration UI are also supported by RES
 		[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 3 seconds
 	</pre>
 	
-	This means that your endpoint now belongs to the new group you created. To see the list of groups , click <b>Administration console</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.  
+	This means that your endpoint now belongs to the new group you created. To see the list of groups , click <b>Administration console</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
 	
 	<h1>What’s next?</h1>
 	
+	For more information, see:
+	
+	<ul>
+		<li>
+			<a href="./Getting-started/">Getting started</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Your-first-Kaa-application/">Your first Kaa application</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Using-Kaa-endpoint-SDKs/">Using Kaa endpoint SDKs</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Key-platform-features/Endpoint-profiles/">Endpoint profiles</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Key-platform-features/Endpoint-groups/">Endpoint groups</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Key-platform-features/Configuration-management/">Configuration management</a>.
+		</li>
 </body>
 ]]>
         </details>

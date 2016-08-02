@@ -64,7 +64,7 @@ public class TwitterMonitor implements ConfigurationListener {
     private volatile TwitterMonitorWorker worker;
 
     public static void main(String[] args) throws Exception {
-        TwitterMonitor monitor = new TwitterMonitor(Kaa.newClient(new DesktopKaaPlatformContext()));
+        TwitterMonitor monitor = new TwitterMonitor(Kaa.newClient(new DesktopKaaPlatformContext()), null, true);
         LOG.info("Starting monitor");
         monitor.init();
     }

@@ -145,7 +145,7 @@ public class MusicPlayerApplication implements DeviceEventClassFamily.Listener, 
                 statusUpdateThread = new StatusUpdateThread();
                 statusUpdateThread.start();
             }
-        });
+        }, true);
         EventFamilyFactory factory = client.getEventFamilyFactory();
         this.deviceECF = factory.getDeviceEventClassFamily();
         this.musicECF = factory.getMusicEventClassFamily();

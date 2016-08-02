@@ -45,7 +45,7 @@ public class VerifiersApplication extends Application {
         /*
         * Initialize the Kaa client using the Android context.
         */
-        mClient = Kaa.newClient(new AndroidKaaPlatformContext(this), new SimpleKaaClientStateListener());
+        mClient = Kaa.newClient(new AndroidKaaPlatformContext(this), new SimpleKaaClientStateListener(), true);
         
         /*
          * Start the Kaa client workflow.

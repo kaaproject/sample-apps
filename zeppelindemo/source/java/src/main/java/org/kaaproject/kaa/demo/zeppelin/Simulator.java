@@ -57,7 +57,7 @@ public class Simulator {
             public void onStopped() {
                 LOG.info("Kaa client stopped");
             }
-        });
+        }, true);
 
         // Set a custom strategy for uploading logs.
         // The default strategy uploads logs after either a threshold logs count

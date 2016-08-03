@@ -162,6 +162,41 @@ Please note that all the features of Administration UI are also supported by RES
         <description>Kaa Configuration subsystem demo app based on Objective-C SDK</description>
         <details>
             <![CDATA[
+This simple app demonstrates capabilities of the Kaa Configuration subsystem on the Objective-C SDK.
+
+<h2>Installation</h2>
+Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. After starting the "Configuration Objective-C demo" app, you will obtain the latest configuration accessible by the endpoint. This configuration is provided as a list of links to Kaa documentation.<br/><br/>
+
+Now it's time to test things out: navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Configuration demo" application, then select "Endpoint groups". From here you can manage endpoint groups and update endpoint configuration. Make sure you have tried updating configuration for endpoint group "All" and received it on your device. Do not forget to activate the updated configuration - otherwise the endpoint will not be able to receive it.<br/><br/>
+
+Please note that all the features of Administration UI are also supported by REST API.
+
+<h2>What's next?</h2>
+
+Please note that all the features of Administration UI are also supported by REST API.
+            ]]>
+        </details>
+        <sdkLanguage>OBJC</sdkLanguage>
+        <platforms>IOS</platforms>
+        <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>configuration_demos</bundleId>
+        <sourceArchive>objc/configuration_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCConfigurationDemo</projectFolder>
+        <sdkLibDir>ObjCConfigurationDemo/libs</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+    <bundle id="configuration_demos">
+        <name>Configuration demos</name>
+        <description>Kaa Configuration subsystem demo applications bundle</description>
+        <details>
+            <![CDATA[
 <head>
 	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
 </head>

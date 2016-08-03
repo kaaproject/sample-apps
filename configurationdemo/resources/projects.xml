@@ -88,13 +88,16 @@ For more background on the Kaa Configuration subsystem please refer to the corre
 	
 	<ol>
 		<li>
-			Prepare your C SDK environment. To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">Using Kaa endpoint SDKs</a>.
+			Prepare your C SDK environment.
+			To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">Using Kaa endpoint SDKs</a>.
 		</li>
 		<li>
-			Click the <b>Source</b> button. A project source download window will open. Click <b>Ok</b> and download the .tar.gz file.
+			Click the <b>Source</b> button.
+			A project source download window will open.
+			Click <b>Ok</b> and download the .tar.gz file.
 		</li>
 		<li>
-			Unpack the downloaded archive and run the following command from the root directory.
+			Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 			<p>
 				<b>Windows</b>
 				<pre>

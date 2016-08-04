@@ -278,7 +278,7 @@ public class SmartHouseController implements DeviceEventClassFamily.Listener,
         protected void executeAsync() {
             try {
                 Log.d("Kaa", "Initializing Kaa client..."); 
-                client = Kaa.newClient(new AndroidKaaPlatformContext(context), new SimpleKaaClientStateListener());
+                client = Kaa.newClient(new AndroidKaaPlatformContext(context), new SimpleKaaClientStateListener(), true);
 
                 EventFamilyFactory eventFamilyFactory = client.getEventFamilyFactory();
                 devices = eventFamilyFactory.getDeviceEventClassFamily();

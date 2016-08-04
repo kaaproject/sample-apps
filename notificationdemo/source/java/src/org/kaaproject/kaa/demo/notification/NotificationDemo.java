@@ -42,7 +42,7 @@ public class NotificationDemo {
     public static void main(String[] args) {
         LOG.info("Notification demo started");
         LOG.info("--= Press any key to exit =--");
-        kaaClient = Kaa.newClient(new DesktopKaaPlatformContext());
+        kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), null, true);
 
         // A listener that listens to the notification topic list updates.
         NotificationTopicListListener topicListListener = new BasicNotificationTopicListListener();

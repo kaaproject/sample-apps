@@ -77,7 +77,7 @@ find_library(LIB_NOSYS_PATH
 
 find_library(LIB_GCC_PATH
         NAMES gcc
-        PATHS "${TOOLCHAIN_PATH}/lib/gcc/arm-none-eabi/"
+        PATHS "${CC32XX_TOOLCHAIN_PATH}/lib/gcc/arm-none-eabi/"
         PATH_SUFFIXES 5.3.0/armv7e-m/ 4.9.3/armv7e-m/ 4.7.4/armv7e-m/
         NO_DEFAULT_PATH
         NO_CMAKE_FIND_ROOT_PATH)

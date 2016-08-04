@@ -64,11 +64,9 @@ public class JConfiguration {
                 Configuration configuration = kaaClient.getConfiguration();
                 LOG.info("Sampling period is now set to: " + (configuration.getSamplePeriod()));
             }
-        });
-        /*
-         * Persist configuration in a local storage to avoid downloading it each
-         * time the Kaa client is started.
-         */
+        }, true);
+
+        // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
         kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));
 
         /*

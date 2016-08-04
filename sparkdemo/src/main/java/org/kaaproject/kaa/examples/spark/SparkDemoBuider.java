@@ -17,6 +17,7 @@
 package org.kaaproject.kaa.examples.spark;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
@@ -58,7 +59,9 @@ public class SparkDemoBuider extends AbstractDemoBuilder {
         powerReportLogSchemaDto.setApplicationId(sparkApplication.getId());
         powerReportLogSchemaDto.setName("Power report");
         powerReportLogSchemaDto.setDescription("Spark data analytics demo log schema");
-        powerReportLogSchemaDto = client.createLogSchema(powerReportLogSchemaDto, getResourcePath("powerReportLogSchema.json"));
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "powerReportLogSchema.json", sparkApplication);
+        powerReportLogSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        powerReportLogSchemaDto = client.saveLogSchema(powerReportLogSchemaDto);
         sdkProfileDto.setLogSchemaVersion(powerReportLogSchemaDto.getVersion());
 
         LogAppenderDto flumeLogAppender = new LogAppenderDto();

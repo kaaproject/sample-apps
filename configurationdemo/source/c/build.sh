@@ -22,7 +22,7 @@ RUN_DIR=`pwd`
 
 function help_message {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported targets: x86-64, edison, cc32xx, esp8266"
+    echo "Supported targets: posix, cc32xx, esp8266"
     exit 1
 }
 
@@ -46,22 +46,17 @@ KAA_PRODUCE_BINARY=
 KAA_REQUIRE_CREDENTIALS=
 
 function select_arch {	
-    echo "Please enter a target (default is x86-64):"
+    echo "Please enter a target (default is posix):"
     read target
 
     # TODO: better case handling
     case "$target" in
-    edison)
-        KAA_TARGET=x86-64
-        KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$target.cmake"
-        ;;
-    x86-64)
-        KAA_TARGET=x86-64
+    posix)
+        KAA_TARGET=posix
         ;;
 
     "")
-        # Do nothing if string is empty - x86 is requested
-        KAA_TARGET=x86-64
+        KAA_TARGET=posix
         ;;
     *)
         # Interpret custom string as target name

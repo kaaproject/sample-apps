@@ -20,7 +20,7 @@ RUN_DIR=`pwd`
 
 function help {
     echo "Choose one of the following: {build|run|deploy|clean}"
-    echo "Supported platforms: x86-64, edison"
+    echo "Supported platforms: posix, edison"
     exit 1
 }
 
@@ -38,16 +38,22 @@ KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-c*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
+MAKE_THREADS=""
+
+if [ $# -eq 2 ]
+then
+    MAKE_THREADS="-j$2"
+fi
 
 function select_arch {
-    echo "Please enter architecture(default is x86-64):"
+    echo "Please enter architecture (default is posix):"
     read arch
     case "$arch" in
         edison)
-	  KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
+            KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/edison.cmake"
         ;;
         *)
-          KAA_TOOLCHAIN_PATH_SDK=""
+            KAA_TOOLCHAIN_PATH_SDK=""
         ;;
     esac
 }
@@ -71,7 +77,7 @@ function build_thirdparty {
     then
         cd $KAA_LIB_PATH &&
         chmod 755 ./avrogen.sh &&
-        ./avrogen.sh && 
+        ./avrogen.sh &&
         mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
         cmake -DCMAKE_BUILD_TYPE=Debug \
               -DKAA_WITHOUT_EVENTS=1 \
@@ -85,7 +91,7 @@ function build_thirdparty {
     fi
 
     cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    make -j4 &&
+    make $MAKE_THREADS &&
     cd $PROJECT_HOME
 }
 
@@ -108,10 +114,7 @@ function run {
     ./$APP_NAME
 }
 
-for cmd in $@
-do
-
-case "$cmd" in
+case "$1" in
     build)
         select_arch
         build_thirdparty &&
@@ -133,11 +136,9 @@ case "$cmd" in
     clean)
         clean
     ;;
-    
+
     *)
         help
     ;;
 esac
-
-done
 

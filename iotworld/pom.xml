@@ -31,7 +31,7 @@
 
     <properties>
         <main.dir>${basedir}/..</main.dir>
-        <pi4j.version>1.1-SNAPSHOT</pi4j.version>
+        <pi4j.version>1.0</pi4j.version>
         <spark-core.version>1.1.1</spark-core.version>
         <zxing.version>3.2.0</zxing.version>
     </properties>

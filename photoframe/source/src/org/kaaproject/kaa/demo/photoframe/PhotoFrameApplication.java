@@ -81,7 +81,7 @@ public class PhotoFrameApplication extends Application {
                         }
                         LOG.info("Kaa client resumed");
                     }
-                });
+                }, true);
         
         mController = new PhotoFrameController(this, mEventBus, mClient);
         

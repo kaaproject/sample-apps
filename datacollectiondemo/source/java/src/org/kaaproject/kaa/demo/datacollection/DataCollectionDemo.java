@@ -56,7 +56,7 @@ public class DataCollectionDemo {
             public void onStopped() {
                 LOG.info("Kaa client stopped");
             }
-        });
+        }, true);
 
         // Set record count strategy for uploading logs with count threshold set to 1.
         // Defined strategy configuration informs to upload every log record as soon as it is created.

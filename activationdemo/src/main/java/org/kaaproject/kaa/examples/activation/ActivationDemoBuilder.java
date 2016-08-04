@@ -16,8 +16,10 @@
 
 package org.kaaproject.kaa.examples.activation;
 
+import java.io.FileInputStream;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
@@ -63,11 +65,15 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
 
         loginTenantDeveloper(client);
 
+        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "configuration-schema.avsc", activationApplication);
+
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(activationApplication.getId());
         configurationSchema.setName("Endpoint activation configuration schema");
         configurationSchema.setDescription("Configuration schema describing active and inactive devices used by city guide application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration-schema.avsc"));
+        configurationSchema.setCtlSchemaId(ctlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
+
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
 
         EndpointGroupDto baseEndpointGroup = null;
@@ -79,8 +85,7 @@ public class ActivationDemoBuilder extends AbstractDemoBuilder{
             throw new RuntimeException("Can't get default endpoint group for activation application!");
         }
 
-        CTLSchemaDto serverProfileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("server_profile_schema.avsc"),
-                activationApplication.getTenantId(), activationApplication.getApplicationToken());
+        CTLSchemaDto serverProfileCtlSchema = saveCTLSchemaWithAppToken(client, "server_profile_schema.avsc", activationApplication);
 
         ServerProfileSchemaDto serverProfileSchema = new ServerProfileSchemaDto();
         serverProfileSchema.setApplicationId(activationApplication.getId());

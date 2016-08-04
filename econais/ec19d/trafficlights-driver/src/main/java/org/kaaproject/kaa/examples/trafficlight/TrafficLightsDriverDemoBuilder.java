@@ -16,10 +16,13 @@
 
 package org.kaaproject.kaa.examples.trafficlight;
 
+import java.io.FileInputStream;
 import java.util.Arrays;
 
+import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
@@ -63,7 +66,9 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         logSchemaDto.setApplicationId(trafficLightsApplication.getId());
         logSchemaDto.setName("TrafficLightsLog schema");
         logSchemaDto.setDescription("Traffic Lights driver log schema");
-        logSchemaDto = client.createLogSchema(logSchemaDto, getResourcePath("log.avsc"));
+        CTLSchemaDto ctlLogSchema = saveCTLSchemaWithAppToken(client, "log.avsc", trafficLightsApplication);
+        logSchemaDto.setCtlSchemaId(ctlLogSchema.getId());
+        logSchemaDto = client.saveLogSchema(logSchemaDto);
         logger.info("Log schema version: {}", logSchemaDto.getVersion());
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
         logger.info("Log schema was created.");
@@ -84,12 +89,16 @@ public class TrafficLightsDriverDemoBuilder extends AbstractDemoBuilder {
         appenderDto.setJsonConfiguration(FileUtils.readResource(getResourcePath("rest_appender.json")));
         appenderDto = client.editLogAppenderDto(appenderDto);
 
+        CTLSchemaDto ctlConfSchema = saveCTLSchemaWithAppToken(client, "configuration.avsc", trafficLightsApplication);
+
         logger.info("Creating configuration schema...");
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(trafficLightsApplication.getId());
         configurationSchema.setName("TrafficLightsConfiguration schema");
         configurationSchema.setDescription("Traffic Lights configuration schema");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration.avsc"));
+        configurationSchema.setCtlSchemaId(ctlConfSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
+
         logger.info("Configuration schema version: {}", configurationSchema.getVersion());
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         logger.info("Configuration schema was created");

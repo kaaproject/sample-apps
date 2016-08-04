@@ -1,18 +1,21 @@
 {
-  "type":"record",
-  "name":"SampleNotification",
-  "namespace":"org.kaaproject.kaa.demo.notification",
-  "fields":[
-    {
-      "name":"message",
-      "type":[
-        {
-          "type":"string",
-          "avro.java.string":"String"
-        },
-        "null"
-      ]
+  "type" : "record",
+  "name" : "SecurityAlert",
+  "namespace" : "org.kaaproject.kaa.schema.sample.notification",
+  "fields" : [ {
+    "name" : "alertMessage",
+    "type" : {
+      "type" : "string",
+      "avro.java.string" : "String"
     }
-  ],
-  "displayName":"Sample notification to demonstrate API"
+  }, {
+    "name" : "alertType",
+    "type" : {
+      "type" : "enum",
+      "name" : "AlertType",
+      "symbols" : [ "CodeRed", "CodeYellow", "CodeGreen" ]
+    },
+    "displayNames" : [ "Code Red", "Code Yellow", "Code Green" ]
+  } ],
+  "displayName" : "org.kaaproject.kaa.sample.notification.SecurityAlert"
 }

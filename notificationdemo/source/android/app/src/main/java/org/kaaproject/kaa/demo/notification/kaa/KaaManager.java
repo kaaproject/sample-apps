@@ -19,6 +19,7 @@ package org.kaaproject.kaa.demo.notification.kaa;
 import android.app.Activity;
 import android.util.Log;
 
+import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
 import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
@@ -50,7 +51,7 @@ public class KaaManager {
      * Start the Kaa client workflow.
      */
     public void start(NotificationListener notificationListener, NotificationTopicListListener topicListListener) {
-        mClient = Kaa.newClient(new AndroidKaaPlatformContext(activity));
+        mClient = Kaa.newClient(new AndroidKaaPlatformContext(activity), new SimpleKaaClientStateListener(), true);
 
         mClient.addNotificationListener(notificationListener);
         mClient.addTopicListListener(topicListListener);

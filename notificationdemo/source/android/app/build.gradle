@@ -40,9 +40,8 @@ android {
 }
 
 dependencies {
-    compile files('libs/kaa-android-ep-sdk-FGMjC8ayctXgea_Fy75BVWuphaI.jar')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

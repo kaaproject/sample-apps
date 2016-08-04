@@ -1,12 +1,12 @@
 /**
  * Copyright 2014-2016 CyberVision, Inc.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,11 +23,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
+import org.kaaproject.kaa.client.notification.NotificationListener;
+import org.kaaproject.kaa.client.notification.NotificationTopicListListener;
+import org.kaaproject.kaa.common.endpoint.gen.Topic;
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.demo.notification.fragment.NotificationDialogFragment;
 import org.kaaproject.kaa.demo.notification.fragment.NotificationFragment;
@@ -37,10 +36,7 @@ import org.kaaproject.kaa.demo.notification.kaa.KaaManager;
 import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
 import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
 import org.kaaproject.kaa.demo.notification.util.TopicHelper;
-import org.kaaproject.kaa.client.notification.NotificationListener;
-import org.kaaproject.kaa.client.notification.NotificationTopicListListener;
-import org.kaaproject.kaa.common.endpoint.gen.Topic;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
 import java.util.List;
 
@@ -62,12 +58,6 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
-
-        /*
-         * Configure Universal Image Loader
-         */
-        ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(this);
-        ImageLoader.getInstance().init(config);
 
         kaaTask.execute();
         permitPolicy();
@@ -124,16 +114,16 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
 
     private void initNotificationListener() {
         notificationListener = new NotificationListener() {
-            public void onNotification(final long topicId, final Notification notification) {
-                Log.i(NotificationConstants.TAG, "Notification received: " + notification.toString());
+            public void onNotification(final long topicId, final SecurityAlert alert) {
+                Log.i(NotificationConstants.TAG, "Notification received: " + alert.toString());
 
                 List<TopicPojo> updatedTopics = TopicHelper.addNotification(TopicStorage.get().getTopics(),
-                        topicId, notification);
+                        topicId, alert);
                 TopicStorage.get().setTopics(updatedTopics).save(MainActivity.this);
 
                 switch (getCurrentFragmentTag()) {
                     case NotificationConstants.TOPIC_FRAGMENT_TAG:
-                        showNotificationDialog(topicId, notification);
+                        showNotificationDialog(topicId, alert);
                     case NotificationConstants.NOTIFICATION_FRAGMENT_TAG:
                         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(getCurrentFragmentTag());
 
@@ -167,10 +157,10 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         };
     }
 
-    private void showNotificationDialog(long topicId, Notification notification) {
+    private void showNotificationDialog(long topicId, SecurityAlert notification) {
 
         NotificationDialogFragment dialog = NotificationDialogFragment.newInstance(TopicHelper.getTopicName(TopicStorage.get().getTopics(), topicId),
-                notification.getMessage(), notification.getImage());
+                notification.getAlertMessage(), null);
         dialog.show(getSupportFragmentManager(), "fragment_alert");
     }
 
@@ -202,7 +192,7 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         findViewById(R.id.container).setVisibility(View.VISIBLE);
     }
 
-
+    // Tip: you can use it from Service
     private AsyncTask<Void, Void, Void> kaaTask = new AsyncTask<Void, Void, Void>() {
         @Override
         protected Void doInBackground(Void... params) {

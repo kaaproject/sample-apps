@@ -23,13 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.kaaproject.kaa.demo.notification.MainActivity;
 import org.kaaproject.kaa.demo.notification.R;
 import org.kaaproject.kaa.demo.notification.adapter.NotificationAdapter;
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
 import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -66,7 +65,7 @@ public class NotificationFragment extends ListFragment implements OnFragmentUpda
         });
     }
 
-    private List<Notification> getNotificationList() {
+    private List<SecurityAlert> getNotificationList() {
         int topicPosition = getArguments().getInt(NotificationConstants.BUNDLE_TOPIC_ID);
 
         TopicPojo model = TopicStorage.get()

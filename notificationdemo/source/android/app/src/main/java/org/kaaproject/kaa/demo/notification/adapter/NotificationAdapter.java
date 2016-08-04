@@ -26,8 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.notification.R;
-import org.kaaproject.kaa.demo.notification.util.ImageLoaderWrapper;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
 import java.util.List;
 
@@ -35,13 +34,13 @@ import java.util.List;
 /**
  * The implementation of the {@link ArrayAdapter} class.
  * Used as an adapter class for the notification list view.
- * Provides list item views containing message and image of each notification.
+ * Provides list item views containing message and type of each notification.
  */
-public class NotificationAdapter extends ArrayAdapter<Notification> {
+public class NotificationAdapter extends ArrayAdapter<SecurityAlert> {
 
     private Context context;
 
-    public NotificationAdapter(Context context, List<Notification> notifications) {
+    public NotificationAdapter(Context context, List<SecurityAlert> notifications) {
         super(context, R.layout.item_notification, notifications);
 
         this.context = context;
@@ -50,7 +49,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        Notification notification = getItem(position);
+        SecurityAlert notification = getItem(position);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -58,22 +57,21 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
             viewHolder = new ViewHolder();
             viewHolder.message = (TextView) convertView.findViewById(R.id.notification_message);
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.notification_image);
+            viewHolder.type = (TextView) convertView.findViewById(R.id.notification_type);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.message.setText(notification.getMessage());
-
-        ImageLoaderWrapper.loadBitmap(context, viewHolder.image, notification.getImage());
+        viewHolder.message.setText(notification.getAlertMessage());
+        viewHolder.type.setText(notification.getAlertType().name());
 
         return convertView;
     }
 
     private class ViewHolder {
         private TextView message;
-        private ImageView image;
+        private TextView type;
     }
 }

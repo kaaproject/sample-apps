@@ -1,12 +1,12 @@
 /**
  * Copyright 2014-2016 CyberVision, Inc.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,7 +18,6 @@ package org.kaaproject.kaa.demo.notification.fragment;
 
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,11 +27,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.notification.R;
-import org.kaaproject.kaa.demo.notification.util.ImageLoaderWrapper;
+import org.kaaproject.kaa.schema.sample.notification.AlertType;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
 /**
  * Extends {@link DialogFragment} and show new notification, that sent from server.
@@ -43,27 +42,25 @@ public class NotificationDialogFragment extends DialogFragment {
 
     private String topicName;
     private String notificationMessage;
-    private String notificationImageUrl;
+    private AlertType notificationType;
 
     public NotificationDialogFragment() {
     }
 
-    public static NotificationDialogFragment newInstance(String topicName, String notificationMessage, String notificationImageUrl) {
+    public static NotificationDialogFragment newInstance(String topicName, String notificationMessage, String notificationType) {
         NotificationDialogFragment frag = new NotificationDialogFragment();
 
         frag.topicName = topicName;
         frag.notificationMessage = notificationMessage;
-        frag.notificationImageUrl = notificationImageUrl;
+        frag.notificationType = AlertType.valueOf(notificationType);
 
         return frag;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.dialog_notification, container);
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -72,7 +69,7 @@ public class NotificationDialogFragment extends DialogFragment {
         // Get field from view
         TextView mTopicName = ((TextView) view.findViewById(R.id.popup_topic));
         TextView mNotificationMessage = ((TextView) view.findViewById(R.id.popup_notification));
-        ImageView mNotificationLogo = ((ImageView) view.findViewById(R.id.popup_image));
+        TextView mNotificationLogo = ((TextView) view.findViewById(R.id.popup_type));
 
         Button mOkButton = (Button) view.findViewById(R.id.popup_ok);
         mOkButton.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +82,19 @@ public class NotificationDialogFragment extends DialogFragment {
         // Set arguments to field
         mNotificationMessage.setText(notificationMessage);
         mTopicName.setText(topicName);
+        mNotificationLogo.setBackgroundResource(getColor());
+    }
 
-        ImageLoaderWrapper.loadBitmap(view.getContext(), mNotificationLogo, notificationImageUrl);
+    private int getColor() {
+        switch (notificationType) {
+            case CodeGreen:
+                return android.R.color.holo_green_dark;
+            case CodeRed:
+                return android.R.color.holo_red_light;
+            case CodeYellow:
+                return android.R.color.background_light;
+        }
+        return -1;
     }
 
     @NonNull

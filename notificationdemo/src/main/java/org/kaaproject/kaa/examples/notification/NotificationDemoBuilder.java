@@ -16,11 +16,6 @@
 
 package org.kaaproject.kaa.examples.notification;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.EndpointGroupDto;
 import org.kaaproject.kaa.common.dto.NotificationDto;
@@ -37,22 +32,27 @@ import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @KaaDemoBuilder
 public class NotificationDemoBuilder extends AbstractDemoBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(NotificationDemoBuilder.class);
-    
+
     private static final String NOTIFICATION_DEMO_JAVA_ID = "notification_demo_java";
     private static final String NOTIFICATION_DEMO_CPP_ID = "notification_demo_cpp";
     private static final String NOTIFICATION_DEMO_C_ID = "notification_demo_c";
     private static final String NOTIFICATION_DEMO_ANDROID_ID = "notification_demo_android";
     private static final String NOTIFICATION_DEMO_OBJC_ID = "notification_demo_objc";
-    
+
     private static final Long NOTIFICATION_VERSION = 1L;
     private static final Date NOTIFICATION_EXPIRE_DATE = new Date(1900000000000L);
 
     private Map<String, SdkProfileDto> projectsSdkMap = new HashMap<>();
-    
+
     public NotificationDemoBuilder() {
         super("demo/notification");
     }
@@ -66,22 +66,13 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         projectsSdkMap.put(NOTIFICATION_DEMO_CPP_ID, sdkProfile);
         projectsSdkMap.put(NOTIFICATION_DEMO_C_ID, sdkProfile);
         projectsSdkMap.put(NOTIFICATION_DEMO_OBJC_ID, sdkProfile);
-
-        sdkProfile = createNotificationApplication(client, "Android notification demo",
-                NOTIFICATION_DEMO_ANDROID_ID + "/notification_schema.avsc",
-                NOTIFICATION_DEMO_ANDROID_ID + "/mandatory_notification.json",
-                NOTIFICATION_DEMO_ANDROID_ID + "/optional_notification.json");
-
         projectsSdkMap.put(NOTIFICATION_DEMO_ANDROID_ID, sdkProfile);
     }
-    
-    private SdkProfileDto createNotificationApplication(AdminClient client,
-            String appName,
-            String notificationSchemaRes,
-            String mandatoryNotificationRes,
-            String optionalNotificationRes) throws Exception {
 
-
+    private SdkProfileDto createNotificationApplication(AdminClient client, String appName, String notificationSchemaRes,
+                                                        String mandatoryNotificationRes, String optionalNotificationRes)
+            throws Exception {
+        
         SdkProfileDto sdkProfileDto = new SdkProfileDto();
         logger.info("Loading '{} application' data...", appName);
 
@@ -164,11 +155,6 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         logger.info("Finished loading '{} application' data...", appName);
 
         return sdkProfileDto;
-    }
-    
-    @Override
-    protected boolean isMultiApplicationProject() {
-        return true;
     }
 
     @Override

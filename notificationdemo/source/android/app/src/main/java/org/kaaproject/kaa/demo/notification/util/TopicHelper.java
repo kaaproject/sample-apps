@@ -18,12 +18,15 @@ package org.kaaproject.kaa.demo.notification.util;
 
 import android.content.Context;
 
-import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
+import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Library for handy work with topic and notification structure.
@@ -64,7 +67,7 @@ public class TopicHelper {
         if (topicPojo == null) {
             return;
         }
-        for (Notification n : topicPojo.getNotifications()) {
+        for (SecurityAlert n : topicPojo.getNotifications()) {
             buff.addNotification(n);
         }
     }
@@ -74,18 +77,18 @@ public class TopicHelper {
         return model != null ? model.getTopicName() : "";
     }
 
-    public static List<TopicPojo> addNotification(List<TopicPojo> topics, long topicId, Notification notification) {
+    public static List<TopicPojo> addNotification(List<TopicPojo> topics, long topicId, SecurityAlert alert) {
         TopicPojo model = get(topics, topicId);
         if (model != null) {
-            model.addNotification(notification);
+            model.addNotification(alert);
         } else {
             /*
-             * can get notification without topic list
+             * can get alert without topic list
              */
             TopicPojo buff = new TopicPojo();
 
             buff.setTopicId(topicId);
-            buff.addNotification(notification);
+            buff.addNotification(alert);
             topics.add(buff);
         }
         return topics;

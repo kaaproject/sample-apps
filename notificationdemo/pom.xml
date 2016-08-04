@@ -16,8 +16,8 @@
 -->
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
@@ -133,16 +133,12 @@
                     <useDefaultExcludes>true</useDefaultExcludes>
                     <excludes>
                         <!--Android Studio -->
-                        <exclude>source/android/Notification/gradlew</exclude>
-                        <exclude>source/android/Notification/build.gradle</exclude>
-                        <exclude>source/android/Notification/settings.gradle</exclude>
-                        <exclude>source/android/Notification/gradlew.bat</exclude>
-                        <exclude>source/android/Notification/local.properties</exclude>
-                        <exclude>source/android/Notification/Notification.iml</exclude>
-                        <exclude>source/android/Notification/app/app.iml</exclude>
-                        <exclude>
-                            source/android/Notification/gradle/wrapper/gradle-wrapper.properties
-                        </exclude>
+                        <exclude>source/android/gradlew</exclude>
+                        <exclude>source/android/build.gradle</exclude>
+                        <exclude>source/android/settings.gradle</exclude>
+                        <exclude>source/android/gradlew.bat</exclude>
+                        <exclude>source/android/local.properties</exclude>
+                        <exclude>source/android/gradle/wrapper/gradle-wrapper.properties</exclude>
                         <!--XCode-->
                         <exclude>
                             source/objc/NotificationDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata

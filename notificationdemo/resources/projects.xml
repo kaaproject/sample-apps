@@ -425,8 +425,8 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <bundleId>notification_demos</bundleId>
         <sourceArchive>android/notification_demo.tar.gz</sourceArchive>
         <projectFolder>notification_demo/NotificationDemo</projectFolder>
-        <sdkLibDir>notification_demo/NotificationDemo/libs</sdkLibDir>
-        <destBinaryFile>notification_demo/NotificationDemo/bin/KaaNotificationDemo-debug.apk</destBinaryFile>
+        <sdkLibDir>notification_demo/NotificationDemo/app/libs</sdkLibDir>
+        <destBinaryFile>notification_demo/NotificationDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
     <project id="notification_demo_objc">
         <name>Notification Objective-C demo</name>

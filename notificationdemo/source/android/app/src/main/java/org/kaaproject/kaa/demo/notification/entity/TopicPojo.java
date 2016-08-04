@@ -1,12 +1,12 @@
 /**
  * Copyright 2014-2016 CyberVision, Inc.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,7 +18,7 @@ package org.kaaproject.kaa.demo.notification.entity;
 
 import org.kaaproject.kaa.common.endpoint.gen.SubscriptionType;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class TopicPojo {
     /**
      * List aff all get obtained notification of this topic
      */
-    private LinkedList<Notification> notifications;
+    private LinkedList<SecurityAlert> notifications;
     /**
      * Check, if user select this topic. Not interesting, if topic is mandatory
      *
@@ -106,24 +106,20 @@ public class TopicPojo {
         return notifications.size();
     }
 
-    public List<Notification> getNotifications() {
+    public List<SecurityAlert> getNotifications() {
         return notifications;
     }
 
-    public void addNotification(Notification notification) {
+    public void addNotification(SecurityAlert notification) {
         /*
          * Avoid equality of notifications
          */
-        for (Notification n : notifications) {
+        for (SecurityAlert n : notifications) {
             if (n.hashCode() == notification.hashCode()) {
                 return;
             }
         }
         notifications.addFirst(notification);
-    }
-
-    public void addAllNotifications(List<Notification> notifications) {
-        notifications.addAll(notifications);
     }
 
     @Override

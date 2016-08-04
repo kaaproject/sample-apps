@@ -25,7 +25,7 @@ import org.kaaproject.kaa.client.notification.NotificationTopicListListener;
 import org.kaaproject.kaa.client.notification.UnavailableTopicException;
 import org.kaaproject.kaa.common.endpoint.gen.SubscriptionType;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
-import org.kaaproject.kaa.schema.sample.notification.SequrityAlert;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +58,7 @@ public class NotificationDemo {
         // Add a notification listener that listens to all notifications.
         kaaClient.addNotificationListener(new NotificationListener() {
             @Override
-            public void onNotification(long id, SequrityAlert sampleNotification) {
+            public void onNotification(long id, SecurityAlert sampleNotification) {
                 LOG.info("Notification for topic id [{}] and name [{}] received.", id, getTopic(id).getName());
                 LOG.info("Notification body: {} \n", sampleNotification.getAlertMessage());
                 LOG.info("Notification alert type: {} \n", sampleNotification.getAlertType());

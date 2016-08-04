@@ -27,8 +27,6 @@
 #include <kaa_profile.h>
 #include <platform/ext_key_utils.h>
 
-#define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
-
 static kaa_client_t *kaa_client = NULL;
 
 void kaa_demo_print_configuration_message(const kaa_root_configuration_t *configuration)
@@ -48,11 +46,11 @@ kaa_error_t kaa_demo_configuration_receiver(void *context,
 
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
 
-    demo_printf("- - -\n");
-    demo_printf("Endpoint Key Hash %.*s\r\n", (int)endpoint_key_hash_length,
+    printf("- - -\n");
+    printf("Endpoint Key Hash %.*s\n", (int)endpoint_key_hash_length,
                 endpoint_key_hash);
 
-    demo_printf("Configuration was succesfully edited:\r\n");
+    printf("Configuration was succesfully edited:\n");
     kaa_demo_print_configuration_message(configuration);
     kaa_client_stop(kaa_client);
     return KAA_ERR_NONE;
@@ -69,7 +67,7 @@ bool set_client_parameter(char *parameter)
 int main(int argc, char *argv[])
 {   
     if (argc != 5) {
-        demo_printf("Few arguments\n");
+        printf("Please, input + or - for audio, vibro and video supporting and directory for key storage. (Need 4 arguments)\n");
         exit(1);
     }
     
@@ -81,13 +79,14 @@ int main(int argc, char *argv[])
      */
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     if (error_code) {
-        demo_printf("Failed create Kaa client, error code %d\n", error_code);
-        return error_code;
+        printf("Failed create Kaa client, error code %d\n", error_code);
+        return EXIT_FAILURE;
     }
     
     kaa_profile_t *profile = kaa_profile_pager_client_profile_create();
     if (!profile) {
-        demo_printf("Failed to create profile\r\n");
+        printf("Failed to create profile\n");
+        kaa_client_destroy(kaa_client);
         return EXIT_FAILURE;
     }
     
@@ -96,8 +95,8 @@ int main(int argc, char *argv[])
 
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
 
-    demo_printf("- - -\n");
-    demo_printf("Endpoint Key Hash %.*s\r\n", (int)endpoint_key_hash_length,
+    printf("- - -\n");
+    printf("Endpoint Key Hash %.*s\n", (int)endpoint_key_hash_length,
                 endpoint_key_hash);
 
 
@@ -105,15 +104,16 @@ int main(int argc, char *argv[])
     profile->vibro_support = set_client_parameter(argv[2]);
     profile->video_support = set_client_parameter(argv[3]);
 
-    demo_printf("Profiling body (have audio-, vibro-, video-support):\n");
-    demo_printf("%s - %s - %s\n", profile->audio_support ? "true" : "false",
+    printf("Profiling body (have audio-, vibro-, video-support):\n");
+    printf("%s - %s - %s\n", profile->audio_support ? "true" : "false",
                                   profile->vibro_support ? "true" : "false",
                                   profile->video_support ? "true" : "false");
 
     error_code = kaa_profile_manager_update_profile(kaa_client_get_context(kaa_client)->profile_manager, profile);
     if (error_code) {
-        demo_printf("Failed to update profile\r\n");
-        return error_code;
+        printf("Failed to update profile\n");
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
     }
 
     kaa_configuration_root_receiver_t receiver = {
@@ -125,10 +125,11 @@ int main(int argc, char *argv[])
             kaa_client_get_context(kaa_client)->configuration_manager,
             &receiver);
     if (error_code) {
-        demo_printf("Failed to add configuration receiver\r\n");
-        return error_code;
+        printf("Failed to add configuration receiver\n");
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
     }
-    demo_printf("Configuration\n");
+    printf("Default configuration:\n");
     kaa_demo_print_configuration_message(
             kaa_configuration_manager_get_configuration(
                 kaa_client_get_context(kaa_client)->configuration_manager));
@@ -138,8 +139,9 @@ int main(int argc, char *argv[])
      */
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
     if (error_code) {
-        demo_printf("Failed to start Kaa main loop, error code %d\n", error_code);
-        return error_code;
+        printf("Failed to start Kaa main loop, error code %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
     }
     
     /**
@@ -147,5 +149,5 @@ int main(int argc, char *argv[])
      */
     kaa_client_destroy(kaa_client);
 
-    return error_code;
+    return EXIT_SUCCESS;
 }

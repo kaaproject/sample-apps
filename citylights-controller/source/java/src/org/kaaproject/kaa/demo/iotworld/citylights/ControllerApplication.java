@@ -37,7 +37,7 @@ public class ControllerApplication {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerApplication.class);
 
-    private static final KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext());
+    private static final KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), null, true);
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     public static KaaClient getKaaClient() {

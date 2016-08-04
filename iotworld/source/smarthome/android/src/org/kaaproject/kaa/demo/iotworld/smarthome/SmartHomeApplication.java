@@ -75,7 +75,7 @@ public class SmartHomeApplication extends Application {
                     public void onResume() {
                         LOG.info("Kaa client resumed");
                     }
-                });
+                }, true);
         
         mController = new SmartHomeController(this, mClient, mEventBus);
         

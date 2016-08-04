@@ -72,7 +72,7 @@ public class KaaNotificationApp extends Application {
         /*
 	* Initialize the Kaa client using the Android context.
 	*/
-        mClient = Kaa.newClient(new AndroidKaaPlatformContext(this));
+        mClient = Kaa.newClient(new AndroidKaaPlatformContext(this), null, true);
         initPopup();
 
         /*

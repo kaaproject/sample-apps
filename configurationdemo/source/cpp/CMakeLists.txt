@@ -69,13 +69,13 @@ set (SAMPLE_SOURCE_FILES
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${APP_NAME} kaacpp_s ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)
+    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    target_link_libraries(${APP_NAME} kaacpp_s ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES})
+    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES})
 endif()
 
 if (MSVC)
-    target_link_libraries(${APP_NAME} kaacpp_s ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} dbghelp)
+    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} dbghelp)
 endif()

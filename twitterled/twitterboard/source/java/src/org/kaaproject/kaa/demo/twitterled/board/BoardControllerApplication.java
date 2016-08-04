@@ -43,7 +43,7 @@ public class BoardControllerApplication {
             public void onStarted() {
                 controller.start();
             }
-        });
+        }, true);
 
         controller = new BoardController(kaaClient.getConfiguration());
 

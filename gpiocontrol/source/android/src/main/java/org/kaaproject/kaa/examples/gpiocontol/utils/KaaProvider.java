@@ -38,7 +38,7 @@ public class KaaProvider {
         if (kaaClient == null) {
             synchronized (KaaProvider.class) {
                 if (kaaClient == null) {
-                    kaaClient = Kaa.newClient(new AndroidKaaPlatformContext(context), new SimpleKaaClientStateListener());
+                    kaaClient = Kaa.newClient(new AndroidKaaPlatformContext(context), new SimpleKaaClientStateListener(), true);
                 }
             }
         }

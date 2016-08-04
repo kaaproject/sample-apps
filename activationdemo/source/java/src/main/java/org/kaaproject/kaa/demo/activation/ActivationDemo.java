@@ -111,7 +111,7 @@ public class ActivationDemo {
                 DeviceType config = kaaClient.getConfiguration();
                 LOG.info("Device state: " + (config.getActive() ? "active" : "inactive"));
             }
-        });
+        }, true);
         kaaClient.setProfileContainer(new ProfileContainer() {
                         @Override
                         public EmptyData getProfile() {

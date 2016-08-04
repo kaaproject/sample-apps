@@ -50,7 +50,7 @@ public class ConfigurationDemo {
                 super.onStarted();
                 displayConfiguration();
             }
-        });
+        }, true);
 
         // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
         kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));

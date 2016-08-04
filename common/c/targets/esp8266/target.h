@@ -26,6 +26,7 @@
 #define ESP8266_SUPPORT_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /* Demo print routine. printf implementation is available on this platform. */
 #define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)

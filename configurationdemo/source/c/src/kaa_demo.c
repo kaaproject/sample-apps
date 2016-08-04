@@ -21,26 +21,13 @@
 #include <kaa/platform/kaa_client.h>
 #include <kaa/utilities/kaa_log.h>
 #include <kaa_configuration_manager.h>
+#include <platform/ext_key_utils.h>
 
 static kaa_client_t *kaa_client = NULL;
 
 void kaa_demo_print_configuration_message(
         const kaa_root_configuration_t *configuration) {
-    if (configuration->address_list->type ==
-            KAA_CONFIGURATION_UNION_ARRAY_LINK_OR_NULL_BRANCH_0) {
-        demo_printf("Configuration body:\r\n");
-
-        kaa_list_node_t *it = kaa_list_begin(
-                (kaa_list_t *) configuration->address_list->data);
-        while (it) {
-            kaa_configuration_link_t *current_link = kaa_list_get_data(it);
-            demo_printf("%s - %s\r\n", current_link->label->data,
-                        current_link->url->data);
-            it = kaa_list_next(it);
-        }
-    } else {
-        demo_printf("Configuration body: null\r\n");
-    }
+    demo_printf("Sample period is now %d second(s)\r\n", configuration->sample_period);
 }
 
 kaa_error_t kaa_demo_configuration_receiver(void *context,
@@ -60,7 +47,7 @@ int main(/*int argc, char *argv[]*/) {
     if (ret < 0) {
         /* If console is failed to initialise, you will not see this message */
         demo_printf("Failed to initialise a target\r\n");
-        return 1;
+        return EXIT_FAILURE;
     }
 
     demo_printf("Configuration demo started\r\n");
@@ -71,9 +58,12 @@ int main(/*int argc, char *argv[]*/) {
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
     if (error_code) {
         demo_printf("Failed create Kaa client\r\n");
-        return 2;
+        return EXIT_FAILURE;
     }
 
+    /*
+     * Set the handler for configuration updates.
+     */
     kaa_configuration_root_receiver_t receiver = {
             NULL,
             &kaa_demo_configuration_receiver
@@ -85,12 +75,26 @@ int main(/*int argc, char *argv[]*/) {
 
     if (error_code) {
         demo_printf("Failed to add configuration receiver\r\n");
-        return 3;
+        return EXIT_FAILURE;
     }
 
+    /*
+     * Display default configuration.
+     */
     kaa_demo_print_configuration_message(
             kaa_configuration_manager_get_configuration(
                     kaa_client_get_context(kaa_client)->configuration_manager));
+
+    /*
+     * Obtain and display Endpoint Key Hash.
+     */
+    uint8_t *endpoint_key_hash = NULL;
+    size_t endpoint_key_hash_length = 0;
+
+    ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
+
+    printf("Endpoint Key Hash: %.*s\r\n", (int)endpoint_key_hash_length,
+            endpoint_key_hash);
 
     /**
      * Start Kaa client main loop.
@@ -98,7 +102,7 @@ int main(/*int argc, char *argv[]*/) {
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
     if(error_code) {
         demo_printf("Failed to start Kaa main loop\r\n");
-        return 4;
+        return EXIT_FAILURE;
     }
 
     /**
@@ -106,7 +110,6 @@ int main(/*int argc, char *argv[]*/) {
      */
     kaa_client_destroy(kaa_client);
 
-    demo_printf("Configuration demo stopped\r\n");
-    return 0;
+    return EXIT_SUCCESS;
 }
 

@@ -98,18 +98,9 @@ For more background on the Kaa Configuration subsystem please refer to the corre
 		</li>
 		<li>
 			Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-			<p>
-				<b>Windows</b>
-				<pre>
-					build.bat deploy	
-				</pre>
-			</p>
-			<p>
-				<b>Linux, OS X (macOS)</b>
 				<pre>
 					./build.sh deploy	
 				</pre>
-			</p>
 		</li>
 		<li>
 			The program will ask you to enter the target platform for your build.
@@ -120,18 +111,9 @@ For more background on the Kaa Configuration subsystem please refer to the corre
 	
 	Once you built the application, you can start it at any time using the following command.
 	
-	<p>
-		<b>Windows</b>
-		<pre>
-			build.bat run	
-		</pre>
-	</p>
-	<p>
-		<b>Linux, OS X (macOS)</b>
-		<pre>
-			./build.sh run	
-		</pre>
-	</p>
+	<pre>
+		./build.sh run	
+	</pre>
 	
 	<h1>Troubleshooting</h1>
 	
@@ -161,7 +143,7 @@ For more background on the Kaa Configuration subsystem please refer to the corre
 	<h2>CMake returns an error message</h2>
 	
 	<pre>
-		CMake Error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+		CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 	</pre>
 	
 	<p>

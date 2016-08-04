@@ -70,7 +70,6 @@ case "$cmd" in
 
     deploy)
         clean
-        select_arch
         build_app
         run
         ;;

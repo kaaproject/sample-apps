@@ -1,0 +1,10 @@
+{
+  "type" : "record",
+  "name" : "DeviceType",
+  "namespace" : "org.kaaproject.kaa.demo.activation",
+  "fields" : [ {
+    "name" : "active",
+    "type" : "boolean",
+    "by_default": false
+  } ]
+}

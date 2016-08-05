@@ -88,7 +88,7 @@ int main(/*int argc, char *argv[]*/) {
     /*
      * Obtain and display Endpoint Key Hash.
      */
-    uint8_t *endpoint_key_hash = NULL;
+    const uint8_t *endpoint_key_hash = NULL;
     size_t endpoint_key_hash_length = 0;
 
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);

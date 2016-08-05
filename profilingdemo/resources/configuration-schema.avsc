@@ -3,14 +3,17 @@
   "name" : "PagerConfiguration",
   "namespace" : "org.kaaproject.examples.pager",
   "fields" : [ {
-    "name" : "audioSupportEnabled",
-    "type" : "boolean"
+    "name" : "audioSubscriptionActive",
+    "type" : "boolean",
+    "by_default" : false
   }, {
-    "name" : "vibroSupportEnabled",
-    "type" : "boolean"
+    "name" : "vibroSubscriptionActive",
+    "type" : "boolean",
+    "by_default" : false
   }, {
-    "name" : "videoSupportEnabled",
-    "type" : "boolean"
+    "name" : "videoSubscriptionActive",
+    "type" : "boolean",
+    "by_default" : false
   } ],
   "displayName" : "org.kaaproject.examples.pager.PagerConfiguration"
 }

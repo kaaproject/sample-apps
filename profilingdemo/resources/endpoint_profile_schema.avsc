@@ -2,7 +2,6 @@
   "type" : "record",
   "name" : "PagerClientProfile",
   "namespace" : "org.kaaproject.examples.pager",
-  "displayName" : "org.kaaproject.examples.pager.PagerClientProfile",
   "fields" : [ {
     "name" : "audioSupport",
     "type" : "boolean"
@@ -12,5 +11,6 @@
   }, {
     "name" : "videoSupport",
     "type" : "boolean"
-  } ]
+  } ],
+  "displayName" : "org.kaaproject.examples.pager.PagerClientProfile"
 }

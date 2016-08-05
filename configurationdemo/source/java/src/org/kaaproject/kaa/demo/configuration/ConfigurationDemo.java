@@ -58,13 +58,15 @@ public class ConfigurationDemo {
             @Override
             public void onStarted() {
                 super.onStarted();
-                LOG.info("Getting sampling period value from default configuration");
+                LOG.info("Getting sampling period value from default/saved configuration");
                 Configuration configuration = kaaClient.getConfiguration();
                 LOG.info("Sampling period is now set to: " + (configuration.getSamplePeriod()));
             }
         }, true);
 
-        // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
+        /*
+         * Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
+         */
         kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));
 
         /*
@@ -73,8 +75,8 @@ public class ConfigurationDemo {
          */
         kaaClient.addConfigurationListener(new ConfigurationListener() {
             @Override
-            public void onConfigurationUpdate(Configuration deviceType) {
-                LOG.info("Configuration was updated. Sampling period is now set to " + deviceType.getSamplePeriod());
+            public void onConfigurationUpdate(Configuration configuration) {
+                LOG.info("Configuration was updated. Sampling period is now set to " + configuration.getSamplePeriod());
             }
         });
 

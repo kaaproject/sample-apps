@@ -115,24 +115,95 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <description>Kaa Notification subsystem demo app based on C SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Notification subsystem on the C SDK.
+<head>
+	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
+</head>
 
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
-<pre>
-$ ./build.sh deploy
-</pre>
-
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Notification C demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
-
-You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
-
-Please note that all the features of Administration UI are also supported by REST API.
-
-<h2>What's next?</h2>
-
-For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+<body>
+	<p>
+	    This sample application uses the <b>Notification Extension</b> based on the <a href="./Glossary/#sdk-type">Kaa C SDK</a>.
+		This extension enables <a href="./Glossary/#kaa-client">Kaa client</a> to receive <a href="./Programming-guide/Key-platform-features/Notifications">notifications</a> from <a href="./Glossary/#kaa-server">Kaa server</a>.
+		The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="./Glossary/#operations-service">Operations service</a> are available.
+	</p>
+	
+	<h1>Launching</h1>
+	
+	To launch this sample application on the Kaa C SDK:
+	
+	<ol>
+		<li>
+			Prepare your C SDK environment.
+			To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">Using Kaa endpoint SDKs</a>.
+		</li>
+		<li>
+			Click the <b>Source</b> button.
+			A project source download window will open.
+			Click <b>Ok</b> and download the .tar.gz file.
+		</li>
+		<li>
+			Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+				<pre>
+					./build.sh deploy	
+				</pre>
+		</li>
+		<li>
+			The program will ask you to enter the target platform for your build.
+			Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/">supported platforms</a> and press Enter.
+			The C SDK and the demo application are now built and the demo application is launched.
+		</li>
+	</ol>
+	
+	Once you built the application, you can start it at any time using the following command.
+	
+	<pre>
+		./build.sh run	
+	</pre>
+	
+	<h1>Troubleshooting</h1>
+	
+	<h2>Running the build.sh script returns an error message</h2>
+	
+	<pre>
+		Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+	</pre>
+	
+	<p>
+		This means that no SDK tarball was found in the libs/kaa directory.
+	</p>
+	
+	Try the following:
+	
+	<ul>
+		<li>
+			Download and install the <a href="./Glossary/#kaa-sandbox">Kaa Sandbox</a>.
+			To do this, follow the instructions in <a href="./Getting-started/">Getting started</a>.
+		</li>
+		<li>
+			Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+			To do this, follow the instructions in <a href="./Programming-guide/Your-first-Kaa-application/#generating-sdk">Generating SDK</a>.
+		</li>
+	</ul>
+	
+	<h2>CMake returns an error message</h2>
+	
+	<pre>
+		CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+	</pre>
+	
+	<p>
+		This means that CMake could not find the required libraries because they were not installed correctly.
+		To address this issue, check if you completed all the required steps of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">C SDK installation instructions</a>.
+	</p>
+	
+	For more information, see:
+	<ul>
+		<li>
+			<a href="./Programming-guide/Debugging-and-troubleshooting/">General troubleshooting page</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-Linux/">C SDK installation guide for Linux (host)</a>.
+		</li>
+</body>
             ]]>
         </details>
 

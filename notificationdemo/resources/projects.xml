@@ -237,12 +237,229 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <description>Kaa Notification subsystem demo applications bundle</description>
         <details>
             <![CDATA[
-This bundle contains applications that demonstrates capabilities of the Kaa Notification subsystem.
+<head>
+	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
+</head>
 
-Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
-
-<h2>What's next?</h2>
-For more background on the Kaa Notification subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Using+notifications">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Notifications">design reference</a> sections.
+<body>
+	<p>
+		This application bundle demonstrates the features of the Kaa <b>Notification Extension</b>.
+		This extension enables your <a href="./Glossary/#endpoint-ep">endpoint device</a> to receive notifications from the <a href="./Glossary/#kaa-server">Kaa server</a>.
+		You can manage notifications using the <a href="./Programming-guide/Key-platform-features/Notifications/#notification-topics">notification topics</a>.
+		Each notification topic can be assigned to any number of <a href="./Glossary/#endpoint-group">endpoint groups</a>.
+		An endpoint will receive a notification if the topic of that notification is assigned to the group that the endpoint is a member of.
+	</p>	
+	<p>
+		Notifications do not just transfer data to the endpoints, they make the endpoints perform actions.
+		For example, a notification can make a <a href="./Glossary/#kaa-client">Kaa client</a> display a message through the user interface.
+		Notifications can be sent from the Kaa server to the endpoints either by administrator using the <a href="./Glossary/#administration-ui">administration UI</a> or by an application using the <a href="./Glossary/#kaa-administrator">Kaa administrator</a> REST API.
+		For more information about notifications management, see <a href="./Programming-guide/Key-platform-features/Notifications/">Notifications</a>.
+	</p>
+	
+	<h1>Playing around</h1>
+	
+	<p>
+		This sample application enables the Kaa client to receive notifications of predefined structure.
+		The structure of a notification is defined in the notification schema.
+		You can create and manage notifications schemas using the <b>Administration</b> page.
+	</p>
+	<p>
+		To play around with the sample application, download the binaries/sources for the target platform and start the application.
+		To do this, choose the target platform below and follow the instructions on the dedicated page.
+	</p>
+	
+	<h2>Manage notification schema details</h2>
+	
+	To manage notification schema details:
+	
+	<ol>
+		<li>
+			Click the <b>Administration</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
+		</li>
+		<li>
+			Click the <b>Applications</b> arrow to unfold the list.
+			Click <b>Notification demo</b> > <b>Schemas</b> > <b>Notification</b>.
+			You will see the list of all notifications schemas stored for your <a href="./Glossary/#kaa-application">Kaa application</a>.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/notification_description/notificationdemo/resources/pic/notif_demo_1.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			Select the <b>Security alert</b> schema by clicking on the corresponding row.
+			The <b>Notification schema details</b> page will open.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/notification_description/notificationdemo/resources/pic/notif_demo_2.png" />
+			<br />
+			<br />
+			
+			The <b>Security alert</b> schema is included in the Sandbox for demonstration purpose.
+			You can create, upload, and edit your own schemas.
+			For more information, see <a href="./Programming-guide/Key-platform-features/Notifications/#notification-schema">Notifications schema</a>.
+		</li>
+	</ol>
+	
+	<h2>Create notification topics</h2>
+	
+	<p>
+		Use notification topics to configure and send notifications to endpoint groups.
+		Notifications can be mandatory or optional.
+		Optional notifications will be received by the assigned groups of endpoints only if the user manually subscribes certain endpoint groups to receive the optional notifications.
+		Mandatory notifications will be received by the assigned groups of endpoints by default, no manual subscription is required.
+		You cannot unsubscribe an endpoint group from the mandatory notifications.
+	</p>
+	
+	To create a notification topic:
+	
+	<ol>
+		<li>
+			Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
+			The page will display the list of available topics.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/notification_description/notificationdemo/resources/pic/notif_demo_3.png" />
+			<br />
+			<br />
+			
+			If you start your Kaa client, the console will display the following message.
+			
+			<pre>
+				2016-05-31 13:23:52,645 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
+				2016-05-31 13:23:52,647 [main] INFO  o.k.k.d.n.NotificationDemo - --= Press any key to exit =--
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
+				2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+				2016-05-31 13:23:54,106 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed to topics:
+				2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+			</pre>
+			
+			The message above informs the user which topics the endpoint is subscribed to and which are available for subscription.
+		
+		</li>
+		<li>
+			Click the <b>Add notification topic</b> button.
+			The <b>Notification topic details</b> page will open.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/notification_description/notificationdemo/resources/pic/notif_demo_4.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			Enter a <b>Name</b> and <b>Description</b> (optional) for your new notification topic.
+			If you want to make your notification topic mandatory, check the <b>Mandatory</b> checkbox.
+		</li>
+		<li>
+			Click <b>Add</b>.
+			Your new notification topic will appear on the list of notification topics.
+		</li>
+	</ol>
+	
+	To configure and send a notification:
+	
+	<ol>
+		<li>
+			Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
+		</li>
+		<li>
+			Select a notification topic by clicking on the corresponding row.
+			The <b>Notification topic details</b> page will open.
+		</li>
+		<li>
+			Click <b>Send notification</b>.
+			The <b>Notification details</b> page will open.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/notification_description/notificationdemo/resources/pic/notif_demo_5.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			Select the notification schema you want to use.
+			Optionally, you can specify the notification expiration date and the endpoint KeyHash.
+			If you specify a KeyHash, the notification will only be sent to the endpoint with that KeyHash.
+		</li>
+		<li>
+			In the <b>Notification body</b> section, enter a message you want to send with the notification and click <b>Send</b>.
+			If you start your Kaa client, the console will display the following message.
+			
+			<pre>
+				...
+				2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
+				2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster, Notification alert type: Code green
+				...
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+			</pre>
+			
+			The console message above informs the user about the notification message and notification topic ID.
+		</li>
+	</ol>
+	
+	<p>
+		You can subscribe your endpoint to optional notification topics.
+		To do this, type the notification topic ID in the console.
+	</p>
+	
+	<pre>
+		...
+		2016-05-31 13:23:54,107 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
+		2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [251] received.
+		2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: This is sample notification for optional topic. Client should subscribe to optional topics in order to receive notifications. This application subscribes to optional topics automatically.
+		...
+		2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+	</pre>
+	
+		<p>	
+			The console will only display the notifications that are not expired.
+		</p>
+		<p>				
+			To test this, you can set a value in the <b>Expires at</b> field of the <b>Notification details</b> page.
+			For example, you can set it for 1 minute for the notification topic ID 251 above.
+			After 1 minute, the client console will stop receiving messages from notification topic ID 251 and will continue displaying other messages.
+			
+			<pre>
+				...
+				2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
+				2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: message, Message alert type: Code green
+				...
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+			</pre>
+			
+		</p>
+		
+	<h1>What's next?</h1>
+	
+	<p>
+		You can use the <b>Administration</b> page to assign notification topics to endpoint groups.
+	</p>
+	
+	To do this:
+	
+	<ol>
+		<li>
+			Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Endpoint groups</b>.
+			Select a group by clicking the corresponding row.
+			The <b>Endpoint group details</b> page will open.
+		</li>
+		<li>
+			Under the <b>Notification topic</b> section, click the <b>Add notification topic</b> button.
+		</li>
+		<li>
+			In the <b>Add topic to endpoint group</b> window, select a notification topic and click <b>Add</b>.
+			The selected notification topic will appear in the <b>Notification topics</b> section list.
+		</li>
+	</ol>
+	
+	<p>
+		For more information about how to create and manage endpoint groups, see <a href="./Programming-guide/Key-platform-features/Endpoint-groups/">Endpoint groups</a>.
+	</p>
+</body>
 ]]>
         </details>
     </bundle>

@@ -34,7 +34,6 @@ import java.io.InputStreamReader;
 /**
  * A demo application that shows how to use the Kaa configuration API.
  *
- * @author Maksym Liashenko
  */
 public class ConfigurationDemo {
 
@@ -90,7 +89,7 @@ public class ConfigurationDemo {
         readUserExit();
 
         /*
-         * Stop the Kaa client and connect it to the Kaa server.
+         * Stop the Kaa client and release all the resources which were in use.
          */
         kaaClient.stop();
     }

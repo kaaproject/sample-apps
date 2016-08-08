@@ -33,9 +33,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.KaaAuthorityDto;
+import org.kaaproject.kaa.common.dto.TenantDto;
 import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
 import org.kaaproject.kaa.common.dto.admin.SdkTokenDto;
-import org.kaaproject.kaa.common.dto.admin.TenantUserDto;
 import org.kaaproject.kaa.common.dto.admin.UserDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
@@ -218,26 +218,35 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
             logger.info("Creating users...");
             client.createKaaAdmin(kaaAdminUser, kaaAdminPassword);
             loginKaaAdmin(client);
-            createDemoTenant(client);
+            createDemoTenantAdmin(client);
             loginTenantAdmin(client);
             createTenantDeveloper(client);
             usersCreated = true;
         }
     }
 
-    private void createDemoTenant(AdminClient client) throws Exception {
-        TenantUserDto tenant = new TenantUserDto();
-        tenant.setTenantName("Demo Tenant");
-        tenant.setAuthority(KaaAuthorityDto.TENANT_ADMIN);
-        tenant.setUsername(tenantAdminUser);
-        tenant.setMail("admin@demoproject.org");
-        tenant.setFirstName("Tenant");
-        tenant.setLastName("Admin");
-        tenant = client.editTenant(tenant);
+    private TenantDto createTenant(AdminClient client) throws Exception {
+        TenantDto tenantDto = new TenantDto();
+        tenantDto.setName("Demo Tenant");
+        return client.editTenant(tenantDto);
+    }
+
+    private void createDemoTenantAdmin(AdminClient client) throws Exception {
+        TenantDto tenantDto = createTenant(client);
+
+        UserDto tenantAdmin = new UserDto();
+        tenantAdmin.setUsername("Demo Tenant Admin");
+        tenantAdmin.setAuthority(KaaAuthorityDto.TENANT_ADMIN);
+        tenantAdmin.setUsername(tenantAdminUser);
+        tenantAdmin.setMail("admin@demoproject.org");
+        tenantAdmin.setFirstName("Tenant");
+        tenantAdmin.setLastName("Admin");
+        tenantAdmin.setTenantId(tenantDto.getId());
+        tenantAdmin = client.editUser(tenantAdmin);
         
-        if (StringUtils.isNotBlank(tenant.getTempPassword())) {
+        if (StringUtils.isNotBlank(tenantAdmin.getTempPassword())) {
             client.clearCredentials();
-            client.changePassword(tenant.getUsername(), tenant.getTempPassword(), tenantAdminPassword);
+            client.changePassword(tenantAdmin.getUsername(), tenantAdmin.getTempPassword(), tenantAdminPassword);
         }
     }
     

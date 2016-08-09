@@ -17,6 +17,7 @@
 package org.kaaproject.kaa.examples.credentials;
 
 import org.kaaproject.kaa.examples.credentials.kaa.KaaAdminManager;
+import org.kaaproject.kaa.examples.credentials.utils.CredentialsConstants;
 import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +30,28 @@ import org.slf4j.LoggerFactory;
 public class CredentialsDemo {
     private static final Logger LOG = LoggerFactory.getLogger(CredentialsDemo.class);
 
+    private static void getTenantAdminCredentials() {
+        LOG.info("Please, input your tenant admin username (push <Enter> if want to use default): ");
+        String username = IOUtils.getUserInput();
+        if (!"".equals(username)) {
+            CredentialsConstants.TENANT_ADMIN_USERNAME = username;
+        }
+        LOG.info("Please, input your tenant admin password (push <Enter> if want to use default): ");
+        String pass = IOUtils.getUserInput();
+        if (!"".equals(pass)) {
+            CredentialsConstants.TENANT_ADMIN_USERNAME = pass;
+        }
+    }
+
     public static void main(String[] args) throws InterruptedException {
         LOG.info("Credentials demo: admin part started!");
 
-        KaaAdminManager manager = new KaaAdminManager();
+        LOG.info("We need more info about your system. Please provide it.");
+        getSandboxIp();
+        getTenantAdminCredentials();
 
         LOG.info("Choose action by entering corresponding number:");
+        KaaAdminManager manager = new KaaAdminManager();
         while (true) {
             LOG.info("\n1. Generate endpoint credentials.\n" +
                     "2. Provision endpoint credentials.\n" +
@@ -66,6 +83,15 @@ public class CredentialsDemo {
                     LOG.info("You input not readable symbol. Please, input again.");
             }
         }
+    }
 
+    private static void getSandboxIp() {
+        LOG.info("Please, input your sandbox ip: ");
+        String ip = IOUtils.getUserInput();
+        while (!IOUtils.validate(LOG, ip)) {
+            LOG.info("Please, input your sandbox ip: ");
+            ip = IOUtils.getUserInput();
+        }
+        CredentialsConstants.SANDBOX_IP_ADDRESS = ip;
     }
 }

@@ -20,7 +20,6 @@ import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.admin.AuthResultDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsStatus;
-import org.kaaproject.kaa.common.endpoint.security.KeyUtil;
 import org.kaaproject.kaa.examples.credentials.utils.CredentialsConstants;
 import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
@@ -56,6 +55,7 @@ public class KaaAdminManager {
         LOG.info("Going to generate credentials...");
         try {
             getOrCreateKeyPair();
+
             LOG.info("Success generation!");
         } catch (IOException e) {
             LOG.error("Error in generateKeys", e);
@@ -91,14 +91,12 @@ public class KaaAdminManager {
         LOG.info("Enter ID of credentials that needs to be revoked:");
         String credentialsId = IOUtils.getUserInput();
         LOG.info("Going to revoke credentials");
-        revokeCredentials(CredentialsConstants.APPLICATION_NAME, credentialsId);
+        revokeCredentials(CredentialsConstants.APPLICATION_NAME, credentialsId.trim());
     }
 
     private void provideCredentials(String applicationName, byte[] publicKey) {
         CredentialsDto credentialsDto = adminClient.provisionCredentials(getApplicationByName(applicationName)
                 .getApplicationToken(), publicKey);
-//        adminClient.provisionRegistration(getApplicationByName(applicationName).getApplicationToken(),
-//                credentialsDto.getId(), 1, "");
         LOG.debug("APP TOKEN: {}", getApplicationByName(applicationName).getApplicationToken());
         LOG.info("Credentials with ID={} are now in status: {}", credentialsDto.getId(), credentialsDto.getStatus());
     }
@@ -109,9 +107,15 @@ public class KaaAdminManager {
         LOG.info("Credentials revoked. Success!");
     }
 
-    //TODO: http://jira.kaaproject.org/browse/KAA-1194
     public CredentialsStatus getCredentialsStatus() {
-        return null;
+        LOG.info("Enter ID of credentials for what needs to get status:");
+        String credentialsId = IOUtils.getUserInput();
+        LOG.info("Get status!");
+        return getCredentialsStatus(CredentialsConstants.APPLICATION_NAME, credentialsId.trim());
+    }
+
+    private CredentialsStatus getCredentialsStatus(String applicationName, String credentialsId) {
+        return adminClient.getCredentialsStatus(getApplicationByName(applicationName).getApplicationToken(), credentialsId);
     }
 
     /**
@@ -163,7 +167,7 @@ public class KaaAdminManager {
 
     private KeyPair getOrCreateKeyPair() throws IOException, InvalidKeyException, NoSuchAlgorithmException {
         if (!isExists()) {
-            return KeyUtil.generateKeyPair(CredentialsConstants.PRIVATE_KEY_LOCATION, CredentialsConstants.PUBLIC_KEY_LOCATION);
+            return IOUtils.generateKeyPair(CredentialsConstants.PRIVATE_KEY_LOCATION, CredentialsConstants.PUBLIC_KEY_LOCATION);
         } else {
             return getKeyPair();
         }
@@ -178,8 +182,8 @@ public class KaaAdminManager {
         InputStream publicKeyInput = new FileInputStream(new File(CredentialsConstants.PUBLIC_KEY_LOCATION));
         InputStream privateKeyInput = new FileInputStream(new File(CredentialsConstants.PRIVATE_KEY_LOCATION));
 
-        PublicKey publicKey = KeyUtil.getPublic(publicKeyInput);
-        PrivateKey privateKey = KeyUtil.getPrivate(privateKeyInput);
+        PublicKey publicKey = IOUtils.getPublic(publicKeyInput);
+        PrivateKey privateKey = IOUtils.getPrivate(privateKeyInput);
 
         return new KeyPair(publicKey, privateKey);
     }

@@ -35,5 +35,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CConfigurationDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/nix/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CConfigurationDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

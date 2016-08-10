@@ -66,7 +66,9 @@ set (SAMPLE_SOURCE_FILES
             src/KaaDemo.cpp
 )
 
+add_subdirectory(libs/kaa)
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
+install(TARGETS ${APP_NAME} DESTINATION bin)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)

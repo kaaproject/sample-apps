@@ -30,5 +30,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CEventDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/nix/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CEventDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

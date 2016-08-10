@@ -70,7 +70,9 @@ if ( NOT KAA_WITHOUT_THREADSAFE OR NOT KAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL O
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DKAA_THREADSAFE")
 endif()
 
+add_subdirectory(libs/kaa)
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
+install(TARGETS ${APP_NAME} DESTINATION bin)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)

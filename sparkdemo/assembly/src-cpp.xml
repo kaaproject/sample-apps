@@ -33,5 +33,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>KaaSparkLauncher</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/nix/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CppSparkDataAnalyticsDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

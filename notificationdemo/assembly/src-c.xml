@@ -30,5 +30,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CNotificationDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/nix/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CNotificationDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

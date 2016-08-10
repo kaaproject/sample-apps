@@ -28,5 +28,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CCassandraDataAnalyticsDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/nix/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CCassandraDataAnalyticsDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

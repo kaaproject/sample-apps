@@ -41,3 +41,4 @@ if(${KAA_PRODUCE_BINARY})
           COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
 endif()
 
+install(TARGETS ${APP_NAME} DESTINATION bin)

@@ -32,3 +32,4 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
 
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
 target_link_libraries(${APP_NAME} kaac)
+install(TARGETS ${APP_NAME} DESTINATION bin)

@@ -33,5 +33,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>KaaStormServer</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/nix/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CStormDataAnalyticsDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

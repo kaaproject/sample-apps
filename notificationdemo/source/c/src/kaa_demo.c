@@ -20,12 +20,11 @@
 #include <time.h>
 #include <stdbool.h>
 
-#include <kaa/kaa_error.h>
-#include <kaa/platform/kaa_client.h>
-#include <kaa/utilities/kaa_log.h>
+#include <kaa_error.h>
+#include <platform/kaa_client.h>
+#include <utilities/kaa_log.h>
 #include <kaa_notification_manager.h>
-
-
+#include <gen/kaa_notification_gen.h>
 
 #define KAA_DEMO_UNUSED(x) (void)(x);
 
@@ -44,10 +43,11 @@ static kaa_client_t *kaa_client = NULL;
 void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *notification)
 {
     KAA_DEMO_UNUSED(context);
-    if (notification->message->type == KAA_NOTIFICATION_UNION_STRING_OR_NULL_BRANCH_0) {
-        kaa_string_t *message = (kaa_string_t *)notification->message->data;
-        printf("Notification for topic id '%llu' received\n", *topic_id);
-        printf("Notification body: %s\n", message->data);
+    if (notification->alert_message) {
+            kaa_string_t *message = (kaa_string_t *)notification->alert_message;
+            printf("Notification for topic id '%llu' received\n", *topic_id);
+            printf("Notification body: %s\n", message->data);
+            printf("Message alert type: %s\n", KAA_NOTIFICATION_ALERT_TYPE_SYMBOLS[notification->alert_type]);
     } else {
         printf("Error:Received notification's body is null\n");
     }
@@ -78,12 +78,16 @@ void on_topics_received(void *context, kaa_list_t *topics)
     printf("Topic list was updated\n");
     show_topics(topics);
 
+    printf("Type topic ID in order to subscribe on one:");
+    size_t topic_id;
+    scanf("%zu", &topic_id);
+
     kaa_error_t err = KAA_ERR_NONE;
     kaa_client_t *client = (kaa_client_t *)context;
     kaa_list_node_t *it = kaa_list_begin(topics);
     while (it) {
         kaa_topic_t *topic = (kaa_topic_t *) kaa_list_get_data(it);
-        if (topic->subscription_type == OPTIONAL_SUBSCRIPTION) {
+        if (topic->subscription_type == OPTIONAL_SUBSCRIPTION && topic->id == topic_id) {
             printf("Subscribing to optional topic '%llu'\n", topic->id);
             err = kaa_subscribe_to_topic(kaa_client_get_context(client)->notification_manager, &topic->id, false);
             if (err) {

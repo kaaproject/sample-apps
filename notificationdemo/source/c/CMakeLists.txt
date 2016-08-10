@@ -28,6 +28,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra")
 
 set(SAMPLE_SOURCE_FILES src/kaa_demo.c)
 
+add_definitions(-DGENC_ENUM_STRING_LITERALS)
+
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
                  ${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}/build)
 

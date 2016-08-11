@@ -1,11 +1,12 @@
 {
   "audioSubscriptionActive": {
-    "boolean": false
-  },
-  "vibroSubscriptionActive": {
     "boolean": true
   },
   "videoSubscriptionActive": {
+    "boolean": true
+  },
+  "vibroSubscriptionActive": {
     "boolean": false
   }
 }
+

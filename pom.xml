@@ -65,6 +65,7 @@
         <module>zeppelindemo</module>
         <module>sparkdemo</module>
         <module>cassandrademo</module>
+        <module>profilingdemo</module>
         <module>activationdemo</module>
         <module>stormdemo</module>
     </modules>

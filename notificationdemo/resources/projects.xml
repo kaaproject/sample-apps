@@ -26,23 +26,108 @@
         <description>Kaa Notification subsystem demo app based on Java SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Notification subsystem on the Java SDK.
+<head>
+	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
+</head>
 
-<h2>Installation</h2>
-Download the jar file to your device by clicking the "Binary" button on the left. Make sure that you have Java installed on your device. Run the application using the following command in the console:
-<pre>
-$ java -jar NotificationDemo.jar
-</pre>
-
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Notification Java demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
-
-You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
-
-Please note that all the features of Administration UI are also supported by REST API.
-
-<h2>What's next?</h2>
-For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+<body>
+	<p>
+	    This sample application uses the <b>Notification Extension</b> based on the <a href="./Glossary/#sdk-type">Kaa Java SDK</a>.
+		This extension enables <a href="./Glossary/#kaa-client">Kaa client</a> to receive <a href="./Programming-guide/Key-platform-features/Notifications">notifications</a> from <a href="./Glossary/#kaa-server">Kaa server</a>.
+	</p>
+	
+	To implement that feature for Java SDK, the following classes and methods are used:
+	
+	<ul>
+		<li>
+			<code>NotificationTopicListListener</code> class gets notification topics after they are updated on the server side.
+		</li>
+		<li>
+			<code>NotificationListener</code> class gets notification messages.
+			It is used by Kaa client to receive all notification messages for the endpoint.
+		</li>
+		<li>
+			<code>getTopics</code> method returns the list of available notification topics upon Kaa client startup.
+			Use this method only after starting up the Kaa client.
+		</li>
+		<li>
+			<code>subscribeToTopic</code> method subscribes an endpoint to an optional notification topic available.
+		</li>
+	</ul>
+	
+	When you close the Kaa client, be sure to unsubscribe from notification topics and remove NotificationTopicListListener.
+	In this app we provide example for this action.
+	
+	<h1>Launching</h1>
+	
+	<p>
+		To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
+		To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/Java/">Using Kaa endpoint SDKs</a>.
+	</p>
+	
+	<p>
+		For sample applications that utilize Kaa Java SDK, both the binary files (.jar archive) and the source code (.tar.gz archive) are available for download.
+		If you want to only launch the sample application, download the binary files.
+		If you want to explore the source code of the sample application, download the source code archive.
+	</p>
+	
+	<h2>Install using the binary files</h2>
+	
+	To install the Notification sample application using the binary files:
+		
+	<ol>
+		<li>
+			Click the <b>Binary</b> button.
+			A binary build window will open.
+			Click <b>Ok</b> and download the .jar file.
+		</li>
+		<li>
+			Run the following command from the directory containing the downloaded .jar archive.
+			
+			<pre>
+				$ java -jar NotificationDemo.jar 	
+			</pre>
+			
+			The sample application console will display the startup message.
+									
+		</li>
+	</ol>
+	
+	<h2>Install using the source code</h2>
+	
+	To install the Notification sample application using the source code:
+	
+	<ol>
+		<li>
+			Click the <b>Source</b> button.
+			A project source download window will open.
+			Click <b>Ok</b> and download the .tar.gz file.
+		</li>
+		<li>
+			Unpack the downloaded archive.
+		</li>
+		<li>
+			To build from new sources you need to have Apache Ant installed on your host machine.
+			To install Apache ant, run the following command from the directory containing the unpacked sources.
+			
+			<pre>
+				$ ant debug
+			</pre>
+			
+			To launch the sample application from the previously built sources run the following command from the directory containing the sources.
+			
+			<pre>
+				$ java -jar build/jar/Notification.jar
+			</pre>
+		</li>
+	</ol>
+		
+	If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="./Programming-guide/Your-first-Kaa-application/">Your first Kaa application</a>.
+	
+	<h1>Troubleshooting</h1>
+	
+	For troubleshooting information, see <a href="./Administration-guide/Troubleshooting/">Troubleshooting</a>.
+</body>
             ]]>
         </details>
 
@@ -70,24 +155,114 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <description>Kaa Notification subsystem demo app based on C++ SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Notification subsystem on the C++ SDK.
+<head>
+	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
+</head>
 
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
-<pre>
-$ ./build.sh deploy
-</pre>
+<body>
+	<p>
+	    This sample application uses the <b>Notification Extension</b> based on the <a href="./Glossary/#sdk-type">Kaa C++ SDK</a>.
+		This extension enables <a href="./Glossary/#kaa-client">Kaa client</a> to receive <a href="./Programming-guide/Key-platform-features/Notifications">notifications</a> from <a href="./Glossary/#kaa-server">Kaa server</a>.
+	</p>
+	
+	<h1>Launching</h1>
+	
+	To launch this sample application on the Kaa C++ SDK:
+	
+	<ol>
+		<li>
+			Prepare your C++ SDK environment.
+			To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C++/">Using Kaa endpoint SDKs</a>.
+		</li>
+		<li>
+			Click the <b>Source</b> button.
+			A project source download window will open.
+			Click <b>Ok</b> and download the .tar.gz file.
+		</li>
+		<li>
+			Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+			
+			<p>
+				<b>Windows</b>
+				<pre>
+					build.bat deploy	
+				</pre>
+			</p>
+			<p>
+				<b>Linux, OS X (macOS)</b>
+ 				<pre>
+ 					./build.sh deploy	
+ 				</pre>
+			</p>
+		</li>
+		<li>
+			The program will ask you to enter the target platform for your build.
+			Press Enter to specify POSIX (default) or enter the name of one of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/">supported platforms</a> and press Enter.
+			The C++ SDK and the demo application are now built and the demo application is launched.
+		</li>
+	</ol>
+	
+	Once you built the application, you can start it at any time using the following command.
 
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Notification C++ demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
-
-You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
-
-Please note that all the features of Administration UI are also supported by REST API.
-
-<h2>What's next?</h2>
-
-For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+	<p>
+		<b>Windows</b>
+		<pre>
+			build.bat deploy	
+		</pre>
+	</p>
+	<p>
+		<b>Linux, OS X (macOS)</b>
+		<pre>
+			./build.sh deploy	
+		</pre>
+	</p>
+		
+	<h1>Troubleshooting</h1>
+	
+	<h2>Running the build.sh script returns an error message</h2>
+	
+	<pre>
+		Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+	</pre>
+	
+	<p>
+		This means that no SDK tarball was found in the libs/kaa directory.
+	</p>
+	
+	Try the following:
+	
+	<ul>
+		<li>
+			Download and install the <a href="./Glossary/#kaa-sandbox">Kaa Sandbox</a>.
+			To do this, follow the instructions in <a href="./Getting-started/">Getting started</a>.
+		</li>
+		<li>
+			Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+			To do this, follow the instructions in <a href="./Programming-guide/Your-first-Kaa-application/#generating-sdk">Generating SDK</a>.
+		</li>
+	</ul>
+	
+	<h2>CMake returns an error message</h2>
+	
+	<pre>
+		CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+	</pre>
+	
+	<p>
+		This means that CMake could not find the required libraries because they were not installed correctly.
+		To address this issue, check if you completed all the required steps of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C++/">C++ SDK installation instructions</a>.
+	</p>
+		
+	For more information, see:
+	
+	<ul>
+		<li>
+			<a href="./Programming-guide/Debugging-and-troubleshooting/">General troubleshooting page</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C++/SDK-Linux/">C++ SDK installation guide for Linux (host)</a>.
+		</li>
+</body>
             ]]>
         </details>
 
@@ -115,24 +290,95 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <description>Kaa Notification subsystem demo app based on C SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Notification subsystem on the C SDK.
+<head>
+	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
+</head>
 
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
-<pre>
-$ ./build.sh deploy
-</pre>
-
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Notification C demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
-
-You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
-
-Please note that all the features of Administration UI are also supported by REST API.
-
-<h2>What's next?</h2>
-
-For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+<body>
+	<p>
+	    This sample application uses the <b>Notification Extension</b> based on the <a href="./Glossary/#sdk-type">Kaa C SDK</a>.
+		This extension enables <a href="./Glossary/#kaa-client">Kaa client</a> to receive <a href="./Programming-guide/Key-platform-features/Notifications">notifications</a> from <a href="./Glossary/#kaa-server">Kaa server</a>.
+		The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="./Glossary/#operations-service">Operations service</a> are available.
+	</p>
+	
+	<h1>Launching</h1>
+	
+	To launch this sample application on the Kaa C SDK:
+	
+	<ol>
+		<li>
+			Prepare your C SDK environment.
+			To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">Using Kaa endpoint SDKs</a>.
+		</li>
+		<li>
+			Click the <b>Source</b> button.
+			A project source download window will open.
+			Click <b>Ok</b> and download the .tar.gz file.
+		</li>
+		<li>
+			Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+				<pre>
+					./build.sh deploy	
+				</pre>
+		</li>
+		<li>
+			The program will ask you to enter the target platform for your build.
+			Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/">supported platforms</a> and press Enter.
+			The C SDK and the demo application are now built and the demo application is launched.
+		</li>
+	</ol>
+	
+	Once you built the application, you can start it at any time using the following command.
+	
+	<pre>
+		./build.sh run	
+	</pre>
+	
+	<h1>Troubleshooting</h1>
+	
+	<h2>Running the build.sh script returns an error message</h2>
+	
+	<pre>
+		Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+	</pre>
+	
+	<p>
+		This means that no SDK tarball was found in the libs/kaa directory.
+	</p>
+	
+	Try the following:
+	
+	<ul>
+		<li>
+			Download and install the <a href="./Glossary/#kaa-sandbox">Kaa Sandbox</a>.
+			To do this, follow the instructions in <a href="./Getting-started/">Getting started</a>.
+		</li>
+		<li>
+			Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+			To do this, follow the instructions in <a href="./Programming-guide/Your-first-Kaa-application/#generating-sdk">Generating SDK</a>.
+		</li>
+	</ul>
+	
+	<h2>CMake returns an error message</h2>
+	
+	<pre>
+		CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+	</pre>
+	
+	<p>
+		This means that CMake could not find the required libraries because they were not installed correctly.
+		To address this issue, check if you completed all the required steps of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">C SDK installation instructions</a>.
+	</p>
+	
+	For more information, see:
+	<ul>
+		<li>
+			<a href="./Programming-guide/Debugging-and-troubleshooting/">General troubleshooting page</a>.
+		</li>
+		<li>
+			<a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-Linux/">C SDK installation guide for Linux (host)</a>.
+		</li>
+</body>
             ]]>
         </details>
 
@@ -237,12 +483,229 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <description>Kaa Notification subsystem demo applications bundle</description>
         <details>
             <![CDATA[
-This bundle contains applications that demonstrates capabilities of the Kaa Notification subsystem.
+<head>
+	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
+</head>
 
-Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
-
-<h2>What's next?</h2>
-For more background on the Kaa Notification subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Using+notifications">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Notifications">design reference</a> sections.
+<body>
+	<p>
+		This application bundle demonstrates the features of the Kaa <b>Notification Extension</b>.
+		This extension enables your <a href="./Glossary/#endpoint-ep">endpoint device</a> to receive notifications from the <a href="./Glossary/#kaa-server">Kaa server</a>.
+		You can manage notifications using the <a href="./Programming-guide/Key-platform-features/Notifications/#notification-topics">notification topics</a>.
+		Each notification topic can be assigned to any number of <a href="./Glossary/#endpoint-group">endpoint groups</a>.
+		An endpoint will receive a notification if the topic of that notification is assigned to the group that the endpoint is a member of.
+	</p>	
+	<p>
+		Notifications do not just transfer data to the endpoints, they make the endpoints perform actions.
+		For example, a notification can make a <a href="./Glossary/#kaa-client">Kaa client</a> display a message through the user interface.
+		Notifications can be sent from the Kaa server to the endpoints either by administrator using the <a href="./Glossary/#administration-ui">administration UI</a> or by an application using the <a href="./Glossary/#kaa-administrator">Kaa administrator</a> REST API.
+		For more information about notifications management, see <a href="./Programming-guide/Key-platform-features/Notifications/">Notifications</a>.
+	</p>
+	
+	<h1>Playing around</h1>
+	
+	<p>
+		This sample application enables the Kaa client to receive notifications of predefined structure.
+		The structure of a notification is defined in the notification schema.
+		You can create and manage notifications schemas using the <b>Administration</b> page.
+	</p>
+	<p>
+		To play around with the sample application, download the binaries/sources for the target platform and start the application.
+		To do this, choose the target platform below and follow the instructions on the dedicated page.
+	</p>
+	
+	<h2>Manage notification schema details</h2>
+	
+	To manage notification schema details:
+	
+	<ol>
+		<li>
+			Click the <b>Administration</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
+		</li>
+		<li>
+			Click the <b>Applications</b> arrow to unfold the list.
+			Click <b>Notification demo</b> > <b>Schemas</b> > <b>Notification</b>.
+			You will see the list of all notifications schemas stored for your <a href="./Glossary/#kaa-application">Kaa application</a>.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/notif_demo_1.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			Select the <b>Security alert</b> schema by clicking on the corresponding row.
+			The <b>Notification schema details</b> page will open.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/notif_demo_2.png" />
+			<br />
+			<br />
+			
+			The <b>Security alert</b> schema is included in the Sandbox for demonstration purpose.
+			You can create, upload, and edit your own schemas.
+			For more information, see <a href="./Programming-guide/Key-platform-features/Notifications/#notification-schema">Notifications schema</a>.
+		</li>
+	</ol>
+	
+	<h2>Create notification topics</h2>
+	
+	<p>
+		Use notification topics to configure and send notifications to endpoint groups.
+		Notifications can be mandatory or optional.
+		Optional notifications will be received by the assigned groups of endpoints only if the user manually subscribes certain endpoint groups to receive the optional notifications.
+		Mandatory notifications will be received by the assigned groups of endpoints by default, no manual subscription is required.
+		You cannot unsubscribe an endpoint group from the mandatory notifications.
+	</p>
+	
+	To create a notification topic:
+	
+	<ol>
+		<li>
+			Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
+			The page will display the list of available topics.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/notif_demo_3.png" />
+			<br />
+			<br />
+			
+			If you start your Kaa client, the console will display the following message.
+			
+			<pre>
+				2016-05-31 13:23:52,645 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
+				2016-05-31 13:23:52,647 [main] INFO  o.k.k.d.n.NotificationDemo - --= Press any key to exit =--
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
+				2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+				2016-05-31 13:23:54,106 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed to topics:
+				2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+			</pre>
+			
+			The message above informs the user which topics the endpoint is subscribed to and which are available for subscription.
+		
+		</li>
+		<li>
+			Click the <b>Add notification topic</b> button.
+			The <b>Notification topic details</b> page will open.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/notif_demo_4.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			Enter a <b>Name</b> and <b>Description</b> (optional) for your new notification topic.
+			If you want to make your notification topic mandatory, check the <b>Mandatory</b> checkbox.
+		</li>
+		<li>
+			Click <b>Add</b>.
+			Your new notification topic will appear on the list of notification topics.
+		</li>
+	</ol>
+	
+	To configure and send a notification:
+	
+	<ol>
+		<li>
+			Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
+		</li>
+		<li>
+			Select a notification topic by clicking on the corresponding row.
+			The <b>Notification topic details</b> page will open.
+		</li>
+		<li>
+			Click <b>Send notification</b>.
+			The <b>Notification details</b> page will open.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/notif_demo_5.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			Select the notification schema you want to use.
+			Optionally, you can specify the notification expiration date and the endpoint KeyHash.
+			If you specify a KeyHash, the notification will only be sent to the endpoint with that KeyHash.
+		</li>
+		<li>
+			In the <b>Notification body</b> section, enter a message you want to send with the notification and click <b>Send</b>.
+			If you start your Kaa client, the console will display the following message.
+			
+			<pre>
+				...
+				2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
+				2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster, Notification alert type: Code green
+				...
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+			</pre>
+			
+			The console message above informs the user about the notification message and notification topic ID.
+		</li>
+	</ol>
+	
+	<p>
+		You can subscribe your endpoint to optional notification topics.
+		To do this, type the notification topic ID in the console.
+	</p>
+	
+	<pre>
+		...
+		2016-05-31 13:23:54,107 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
+		2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [251] received.
+		2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: This is sample notification for optional topic. Client should subscribe to optional topics in order to receive notifications. This application subscribes to optional topics automatically.
+		...
+		2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+	</pre>
+	
+		<p>	
+			The console will only display the notifications that are not expired.
+		</p>
+		<p>				
+			To test this, you can set a value in the <b>Expires at</b> field of the <b>Notification details</b> page.
+			For example, you can set it for 1 minute for the notification topic ID 251 above.
+			After 1 minute, the client console will stop receiving messages from notification topic ID 251 and will continue displaying other messages.
+			
+			<pre>
+				...
+				2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
+				2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: message, Message alert type: Code green
+				...
+				2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+			</pre>
+			
+		</p>
+		
+	<h1>What's next?</h1>
+	
+	<p>
+		You can use the <b>Administration</b> page to assign notification topics to endpoint groups.
+	</p>
+	
+	To do this:
+	
+	<ol>
+		<li>
+			Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Endpoint groups</b>.
+			Select a group by clicking the corresponding row.
+			The <b>Endpoint group details</b> page will open.
+		</li>
+		<li>
+			Under the <b>Notification topic</b> section, click the <b>Add notification topic</b> button.
+		</li>
+		<li>
+			In the <b>Add topic to endpoint group</b> window, select a notification topic and click <b>Add</b>.
+			The selected notification topic will appear in the <b>Notification topics</b> section list.
+		</li>
+	</ol>
+	
+	<p>
+		For more information about how to create and manage endpoint groups, see <a href="./Programming-guide/Key-platform-features/Endpoint-groups/">Endpoint groups</a>.
+	</p>
+</body>
 ]]>
         </details>
     </bundle>

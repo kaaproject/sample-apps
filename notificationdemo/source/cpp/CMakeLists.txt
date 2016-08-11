@@ -19,12 +19,6 @@ cmake_minimum_required(VERSION 2.8.8)
 project (Cpp-SDK-notification-sample)
 enable_language(CXX)
 
-# Path to CMake's scripts.
-set(CMAKE_MODULE_PATH 
-	 ${CMAKE_MODULE_PATH}
-	 ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/Modules
-    )
-
 if(MSVC)   
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 else()

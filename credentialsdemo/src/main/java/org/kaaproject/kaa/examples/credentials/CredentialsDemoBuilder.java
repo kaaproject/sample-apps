@@ -26,9 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-/**
- * @author Maksym Liashenko
- */
 @KaaDemoBuilder
 public class CredentialsDemoBuilder extends AbstractDemoBuilder {
 

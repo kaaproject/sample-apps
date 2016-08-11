@@ -33,23 +33,20 @@ import java.io.IOException;
 
 /**
  * A demo application that shows how to use the Kaa credentials API.
- * z
- *
- * @author Maksym Liashenko
  */
 public class CredentialsDemo {
     private static final Logger LOG = LoggerFactory.getLogger(CredentialsDemo.class);
     private static KaaClient kaaClient;
 
     public static void main(String[] args) throws InterruptedException {
-/*
+        /*
          * Create the Kaa desktop context for the application.
          */
         DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext();
 
         /*
          * Create a Kaa client and add a listener which displays the Kaa client
-         * configuration as soon as the Kaa client is started.
+         * endpoint key hash, when the Kaa client is started.
          */
         kaaClient = Kaa.newClient(desktopKaaPlatformContext, new SimpleKaaClientStateListener() {
             @Override
@@ -60,20 +57,9 @@ public class CredentialsDemo {
                 LOG.info("Endpoint ID:" + kaaClient.getEndpointKeyHash());
 
             }
-        }, false);
-        kaaClient.setProfileContainer(new ProfileContainer() {
-            @Override
-            public EmptyData getProfile() {
-                return new EmptyData();
-            }
-        });
+        }, true);
 
         kaaClient.setFailoverStrategy(new CustomFailoverStrategy());
-        /*
-         * Persist configuration in a local storage to avoid downloading it each
-         * time the Kaa client is started.
-         */
-        kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));
 
         /*
          * Start the Kaa client and connect it to the Kaa server.
@@ -96,6 +82,10 @@ public class CredentialsDemo {
         }
     }
 
+    /**
+     * Extended from {@link DefaultFailoverStrategy}. Give a possibility to manage device behavior when it can't goes
+     * verification process on Kaa node service on Sandbox
+     */
     private static class CustomFailoverStrategy extends DefaultFailoverStrategy {
 
         @Override

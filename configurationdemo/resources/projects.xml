@@ -68,7 +68,7 @@ To install the Configuration sample application using the binary files:
 		Run the following command from the directory containing the downloaded .jar archive.
 		
 		<pre>
-			$ java -jar ConfigurationDemo.jar 	
+			$ java -jar ConfigurationDemo.jar
 		</pre>
 		
 		The sample application console will show the following messages.
@@ -147,95 +147,91 @@ For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/do
         <description>Kaa Configuration subsystem demo app based on C SDK</description>
         <details>
             <![CDATA[
-<head>
-	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
-</head>
+<p>
+	This sample application uses the <b>Configuration Extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
+</p>
 
-<body>
-	<p>
-	    This sample application uses the <b>Configuration Extension</b> based on the <a href="./Glossary/#sdk-type">Kaa C SDK</a>.
-		This extension enables <a href="./Glossary/#kaa-client">Kaa client</a> to update the <a href="./Glossary/#endpoint-ep">endpoint</a> configuration by receiving the data from <a href="./Glossary/#kaa-server">Kaa server</a>.
-		The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="./Glossary/#operations-service">Operations service</a> are available.
-	</p>
-	
-	<h1>Launching</h1>
-	
-	To launch this sample application on the Kaa C SDK:
-	
-	<ol>
-		<li>
-			Prepare your C SDK environment.
-			To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">Using Kaa endpoint SDKs</a>.
-		</li>
-		<li>
-			Click the <b>Source</b> button.
-			A project source download window will open.
-			Click <b>Ok</b> and download the .tar.gz file.
-		</li>
-		<li>
-			Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-				<pre>
-					./build.sh deploy	
-				</pre>
-		</li>
-		<li>
-			The program will ask you to enter the target platform for your build.
-			Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/">supported platforms</a> and press Enter.
-			The C SDK and the demo application are now built and the demo application is launched.
-		</li>
-	</ol>
-	
-	Once you built the application, you can start it at any time using the following command.
-	
-	<pre>
-		./build.sh run	
-	</pre>
-	
-	<h1>Troubleshooting</h1>
-	
-	<h2>Running the build.sh script returns an error message</h2>
-	
-	<pre>
-		Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
-	</pre>
-	
-	<p>
-		This means that no SDK tarball was found in the libs/kaa directory.
-	</p>
-	
-	Try the following:
-	
-	<ul>
-		<li>
-			Download and install the <a href="./Glossary/#kaa-sandbox">Kaa Sandbox</a>.
-			To do this, follow the instructions in <a href="./Getting-started/">Getting started</a>.
-		</li>
-		<li>
-			Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-			To do this, follow the instructions in <a href="./Programming-guide/Your-first-Kaa-application/#generating-sdk">Generating SDK</a>.
-		</li>
-	</ul>
-	
-	<h2>CMake returns an error message</h2>
-	
-	<pre>
-		CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
-	</pre>
-	
-	<p>
-		This means that CMake could not find the required libraries because they were not installed correctly.
-		To address this issue, check if you completed all the required steps of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/">C SDK installation instructions</a>.
-	</p>
-	
-	For more information, see:
-	<ul>
-		<li>
-			<a href="./Programming-guide/Debugging-and-troubleshooting/">General troubleshooting page</a>.
-		</li>
-		<li>
-			<a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-Linux/">C SDK installation guide for Linux (host)</a>.
-		</li>
-</body>
+<h1>Launching</h1>
+
+To launch this sample application on the Kaa C SDK:
+
+<ol>
+	<li>
+		Prepare your C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+			<pre>
+				./build.sh deploy
+			</pre>
+	</li>
+	<li>
+		The program will ask you to enter the target platform for your build.
+		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		The C SDK and the demo application are now built and the demo application is launched.
+	</li>
+</ol>
+
+Once you built the application, you can start it at any time using the following command.
+
+<pre>
+	./build.sh run
+</pre>
+
+<h1>Troubleshooting</h1>
+
+<h2>Running the build.sh script returns an error message</h2>
+
+<pre>
+	Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+</pre>
+
+<p>
+	This means that no SDK tarball was found in the libs/kaa directory.
+</p>
+
+Try the following:
+
+<ul>
+	<li>
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+	</li>
+	<li>
+		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+	</li>
+</ul>
+
+<h2>CMake returns an error message</h2>
+
+<pre>
+	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+</pre>
+
+<p>
+	This means that CMake could not find the required libraries because they were not installed correctly.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+</p>
+
+For more information, see:
+
+<ul>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">General troubleshooting page</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-Linux/" target="_blank">C SDK installation guide for Linux (host)</a>.
+	</li>
+</ul>
             ]]>
         </details>
 
@@ -263,115 +259,111 @@ For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/do
         <description>Kaa Configuration subsystem demo app based on C++ SDK</description>
         <details>
             <![CDATA[
-<head>
-	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
-</head>
+<p>
+	This sample application uses the <b>Configuration Extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
+	The latest configuration is stored locally in the configuration storage and can be obtained regardless of the Operations service availability.
+	This sample application stores the configuration in the saved_config.cfg file located in the sample application working directory.
+	</p>
 
-<body>
-	<p>
-	    This sample application uses the <b>Configuration Extension</b> based on the <a href="./Glossary/#sdk-type">Kaa C++ SDK</a>.
-		This extension enables <a href="./Glossary/#kaa-client">Kaa client</a> to update the <a href="./Glossary/#endpoint-ep">endpoint</a> configuration by receiving the data from <a href="./Glossary/#kaa-server">Kaa server</a>.
-		The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="./Glossary/#operations-service">Operations service</a> are available.
-		The latest configuration is stored locally in the configuration storage and can be obtained regardless of the Operations service availability.
-		This sample application stores the configuration in the saved_config.cfg file located in the sample application working directory.
-		</p>
-	
-	<h1>Launching</h1>
-	
-	To launch this sample application on the Kaa C++ SDK:
-	
-	<ol>
-		<li>
-			Prepare your C++ SDK environment.
-			To do this, follow the instructions in <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C++/">Using Kaa endpoint SDKs</a>.
-		</li>
-		<li>
-			Click the <b>Source</b> button.
-			A project source download window will open.
-			Click <b>Ok</b> and download the .tar.gz file.
-		</li>
-		<li>
-			Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-			
-			<pre>
-				./build.sh deploy	
-			</pre>
-			
-		</li>
-		<li>
-			The program will ask you to enter the target platform for your build.
-			Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/">supported platforms</a> and press Enter.
-			The C++ SDK and the demo application are now built and the demo application is launched.
-		</li>
-	</ol>
-	
-	Once you built the application, you can start it at any time using the following command.
+<h1>Launching</h1>
 
-	<pre>
-		./build.sh run	
-	</pre>
+To launch this sample application on the Kaa C++ SDK:
+
+<ol>
+	<li>
+		Prepare your C++ SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
-	<h1>Troubleshooting</h1>
+		<pre>
+			./build.sh deploy
+		</pre>
+		
+	</li>
+	<li>
+		The program will ask you to enter the target platform for your build.
+		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		The C++ SDK and the demo application are now built and the demo application is launched.
+	</li>
+</ol>
+
+Once you built the application, you can start it at any time using the following command.
+
+<pre>
+	./build.sh run
+</pre>
 	
-	<h2>Running the build.sh script returns an error message</h2>
-	
-	<pre>
-		Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
-	</pre>
-	
-	<p>
-		This means that no SDK tarball was found in the libs/kaa directory.
-	</p>
-	
-	Try the following:
-	
-	<ul>
-		<li>
-			Download and install the <a href="./Glossary/#kaa-sandbox">Kaa Sandbox</a>.
-			To do this, follow the instructions in <a href="./Getting-started/">Getting started</a>.
-		</li>
-		<li>
-			Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-			To do this, follow the instructions in <a href="./Programming-guide/Your-first-Kaa-application/#generating-sdk">Generating SDK</a>.
-		</li>
-	</ul>
-	
-	<h2>CMake returns an error message</h2>
-	
-	<pre>
-		CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
-	</pre>
-	
-	<p>
-		This means that CMake could not find the required libraries because they were not installed correctly.
-		To address this issue, check if you completed all the required steps of the <a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C++/">C++ SDK installation instructions</a>.
-	</p>
-	
-	<h2>Error during compilation</h2>
-	
-	<pre>
-		c++: Internal compiler error: Killed (program cc1plus)
-	</pre>
-	
-	<p>
-		This error can occur due to insufficient memory available to the compiler.
-		By default, the sample applications and SDK based on C++ are compiled using the four-threaded parallelism mode.
-		This may cause failures on low-performance systems.
-	</p>
-	
-	<p>
-		Try restarting your build in the single-threaded mode. Run the <code>make</code> command from the <i>build</i> directory of the sample application.
-	</p>
-	
-	For more information, see:
-	<ul>
-		<li>
-			<a href="./Programming-guide/Debugging-and-troubleshooting/">General troubleshooting page</a>.
-		</li>
-		<li>
-			<a href="./Programming-guide/Using-Kaa-endpoint-SDKs/C++/SDK-Linux/">C++ SDK installation guide for Linux (host)</a>.
-		</li>
-</body>
+<h1>Troubleshooting</h1>
+
+<h2>Running the build.sh script returns an error message</h2>
+
+<pre>
+	Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+</pre>
+
+<p>
+	This means that no SDK tarball was found in the libs/kaa directory.
+</p>
+
+Try the following:
+
+<ul>
+	<li>
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+	</li>
+	<li>
+		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+	</li>
+</ul>
+
+<h2>CMake returns an error message</h2>
+
+<pre>
+	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+</pre>
+
+<p>
+	This means that CMake could not find the required libraries because they were not installed correctly.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+</p>
+
+<h2>Error during compilation</h2>
+
+<pre>
+	c++: Internal compiler error: Killed (program cc1plus)
+</pre>
+
+<p>
+	This error can occur due to insufficient memory available to the compiler.
+	By default, the sample applications and SDK based on C++ are compiled using the four-threaded parallelism mode.
+	This may cause failures on low-performance systems.
+</p>
+
+<p>
+	Try restarting your build in the single-threaded mode. Run the <code>make</code> command from the <i>build</i> directory of the sample application.
+</p>
+
+For more information, see:
+
+<ul>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">General troubleshooting page</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/SDK-Linux/" target="_blank">C++ SDK installation guide for Linux (host)</a>.
+	</li>
+</ul>
             ]]>
         </details>
 
@@ -435,378 +427,373 @@ Please note that all the features of Administration UI are also supported by RES
         <description>Kaa Configuration subsystem demo applications bundle</description>
         <details>
             <![CDATA[
-<head>
-	<base href="http://kaaproject.github.io/kaa/docs/" target="_blank">
-</head>
+<p>	
+	This application bundle demonstrates the features of the Kaa <b>Configuration Extension</b>.
+	This extension allows you to configure the sampling period of your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> sensor.
+	To do this, you need to configure settings in the Kaa <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Sandbox</a>.
+	The settings will take effect after the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> of your endpoint device receives them from the Kaa Sandbox.
+</p>	
+<p>		
+	Configuration settings are vital to any device. Your endpoint device is preprogrammed with a default configuration.
+	Using this Configuration Extension, you can register on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> and get a configuration update.
+	You can manage configuration settings in the Kaa client of your endpoint device by making the necessary changes in the Sandbox.
+	When both the endpoint and Sandbox are online, you can change your configuration settings on the fly.
+	When either Sandbox or the endpoint is offline, the Kaa client stores the last known settings locally.
+	This is useful when you need to restart your device, or when there is an unexpected power outage, etc.
+</p>
+<p>
+	Using Kaa Sandbox, you can flexibly manage a number of endpoint devices. You can store multiple endpoint groups and manage their settings separately.
+	You can select a <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-group" target="_blank">group of endpoint devices</a> using filter parameters.
+</p>
 
-<body>
-	<p>	
-		This application bundle demonstrates the features of the Kaa <b>Configuration Extension</b>.
-		This extension allows you to configure the sampling period of your <a href="./Glossary/#endpoint-ep">endpoint</a> sensor.
-		To do this, you need to configure settings in the Kaa <a href="./Glossary/#kaa-sandbox">Sandbox</a>.
-		The settings will take effect after the <a href="./Glossary/#kaa-client">Kaa client</a> of your endpoint device receives them from the Kaa Sandbox.
-	</p>	
-	<p>		
-		Configuration settings are vital to any device. Your endpoint device is preprogrammed with a default configuration.
-		Using this Configuration Extension, you can register on the <a href="./Glossary/#kaa-server">Kaa server</a> and get a configuration update.
-		You can manage configuration settings in the Kaa client of your endpoint device by making the necessary changes in the Sandbox.
-		When both the endpoint and Sandbox are online, you can change your configuration settings on the fly.
-		When either Sandbox or the endpoint is offline, the Kaa client stores the last known settings locally.
-		This is useful when you need to restart your device, or when there is an unexpected power outage, etc.
-	</p>
-	<p>
-		Using Kaa Sandbox, you can flexibly manage a number of endpoint devices. You can store multiple endpoint groups and manage their settings separately.
-		You can select a <a href="./Glossary/#endpoint-group">group of endpoint devices</a> using filter parameters.
-	</p>
-	
-	<h1>Playing around</h1>
-	
-	<p>
-		To control the sampling period of a sensor, Kaa client uses the following configuration schema.
-	</p>
-	
-	<pre>
-		{
-			"type": "record",
-			"name": "Configuration",
-			"namespace": "org.kaaproject.kaa.schema.sample",
-			"fields": [
-				{
-					"name": "samplingPeriod",
-					"type": "int",
-					"by_default": "1"
-				}
-			]
-		}
-	</pre>
-	
-	<p>
-		In the example above, there is a default value specified for the sampling period.
-		This default configuration value is used by the Kaa client and <a href="./Glossary/#endpoint-sdk">SDK of the endpoint device</a>.
-		This means no connection to the server is required for your initial configuration.
-	</p>
-	<p>
-		To verify this, download the binaries/sources for the target platform and start the application.
-		To do this, choose the target platform below and follow the instructions on the dedicated page.
-	</p>
-	<p>
-		When Kaa client starts, it will display following messages.
-	</p>	
-	
-	<pre>
-		[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
-		[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
-		[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Getting sampling period value from default configuration
-		[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 1 second
-		[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
-		[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 10 seconds
-		[main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--
-	</pre>
-	
-	<p>
-		The messages above inform the user that Kaa client first applied the default value received from the SDK and the then updated it with the new value received from the server.
-		When Kaa client starts, it connects to the server and receives new configuration from the default, non-editable <a href="./Glossary/#group-all">group <i>all</i></a>.
-		For demonstration purpose, this group includes an <a href="./Glossary/#endpoint-profile-client-side-server-side">endpoint profile</a> with <i>samplingPeriod</i> set to 10.
-	</p>
-	
-	<pre>
-		{
-		  "samplingPeriod" : 10
-		}
-	</pre>
-	
-	<h2>Change sampling period</h2>
-	
-	To change the sampling period:
-	
-	<ol>
-		<li>
-			Click the <b>Administration</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
-		</li>
-		<li>
-			Click the <b>Applications</b> arrow to unfold the list.
-			Click the <b>Configuration demo</b> arrow to unfold the next list and select <b>Endpoint groups</b>.
-			You will see the list of all groups that your endpoint belongs to.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_2.png?raw=true" />
-			<br />
-			<br />
-			
-		</li>
-		<li>
-			Select the group <b>All</b> by clicking the corresponding row.
-			The <b>Endpoint group details</b> page will open.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_3.png" />
-			<br />
-			<br />
-			
-		</li>
-		<li>
-			In the <b>Configurations</b> section, select the latest version schema (the <b>Configuration schema</b> column).
-			The <b>Configuration details</b> page will open.
-		</li>
-		<li>
-			Select the <b>Draft</b> tab and enter a new <i>samplingPeriod</i> value.
-		
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_4.png" />
-			<br />
-			<br />
-			
-		</li>	
-		<li>
-			Click <b>Save</b> to save the changes, then click <b>Activate</b> to activate the configuration.
-		
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_5.png" />
-			<br />
-			<br />
-			
-		</li>
-	</ol>
-	
-	<p>
-		Kaa client will notify you about successful configuration update and the new sampling period value.
-	</p>
-	
-	<pre>
-		[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
-		[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
-	</pre>
-	
-	<p>
-		If you now shut down your Kaa client and the Sandbox, and then restart Kaa client, the last known configuration value will be displayed in the console.
-	</p>
-	
-	<pre>
-		[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
-		[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
-		[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
-		...
-		[pool-1-thread-1] WARN  o.k.k.c.c.impl.DefaultChannelManager - Attempt to connect to the next bootstrap server will be made in 2000 ms, according to failover strategy decision
-		[pool-1-thread-1] WARN  o.k.k.c.b.DefaultBootstrapManager - Trying to switch to the next bootstrap server according to failover strategy decision
-		...
-	</pre>
-	
-	<h2>Add endpoint profiles and groups</h2>
-	
-	<p>
-		You can add new endpoint groups and profiles. This allows you to manage your endpoint devices more effectively.
-		For example, some of your sensors require checking their readings every second, and some other - every 300 seconds.
-		To manage them separately, you can create two groups of sensors and set up an individual <a href="./Glossary/#profile-filter">profile filter</a> for each group.
-		To do this, you need to create a configuration schema and then create a group to be managed in accordance with that schema.
-		For this purpose, you can create a new configuration schema that looks like this.
-	</p>
-	
-	<pre>
-		{
-		  "type" : "record",
-		  "name" : "SamplingServerSideSchema",
-		  "namespace" : "org.kaaproject.kaa.schema.sample",
-		  "fields" : [ {
-			"name" : "enableDetailedSampling",
-			"type" : "boolean"
-		  } ],
-		  "displayName" : "Sampling server side schema",
-		  "description" : ""
-		}
-	</pre>
-	
-	<p>
-		This example schema contains only one boolean field <i>enableDetailedSampling</i>.
-		The value of this field will control the sampling period for your endpoint device.
-	</p>
-	
-		To create a new configuration schema:
-	
-	<ol>
-		<li>
-			Start the Sandbox and click <b>Administration</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Schemas</b> > <b>Server-side EP profile</b>.
-			Click the <b>Add schema</b> button.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_6.png" />
-			<br />
-			<br />
-			
-		</li>
-		<li>
-			Enter a name and description (optional) for your new schema.
-			You can create a new type of server-side profile schema or use an existing one.
-			For more information, see <a href="./Programming-guide/Key-platform-features/Common-Type-Library/">Common Type Library (CTL)</a>.
-			Click <b>Create new type</b>.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_7.png" />
-			<br />
-			<br />
-			
-		</li>
-		<li>
-			A new page will open, where you can create a new type for your schema using the <b>Fields</b> section, or upload a .json file containing the schema.
-			After you created or uploaded a new schema, click <b>Add</b>.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_8.png" />
-			<br />
-			<br />
-			
-			Your new schema is now in the <b>Server-side EP profiles</b> list.
-		</li>
-	</ol>
-	
-	To create a new endpoint group:
-	
-	<ol>	
-		<li>
-			On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
-			Click the <b>Add endpoint group</b> button.
-		</li>
-		<li>
-			Enter a name, weight, and description (optional) for your new endpoint group, and click <b>Add</b>.
-			For more information, see <a href="./Programming-guide/Key-platform-features/Endpoint-groups">Endpoint groups</a>.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_9.png" />
-			<br />
-			<br />
-			
-		</li>
-		<li>
-			Your endpoint group will be saved, and the <b>Endpoint group details</b> page will open automatically.
-			On this page, you can add profile filters, configurations, and notification topics.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_10.png" />
-			<br />
-			<br />
-			
-		</li>	
-	</ol>
-		
-	<h2>Add profile filters and configurations</h2>
-	
-	To create an endpoint profile filter:
-	
-	<ol>	
-		<li>
-			On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
-			Select the group by clicking the corresponding row.
-			The <b>Endpoint group details</b> page will open.
-		</li>
-		<li>
-			Click the <b>Add profile filter</b> button under the <b>Profile filters</b> section.
-			The <b>Profile filter details</b> page will open.
-		</li>
-		<li>
-			Select corresponding version of the Server-side EP profile schema.
-		
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_11.png" />
-			<br />
-			<br />
-			
-		</li>
-		<li>
-			Copy the line below and paste it into the <b>Filter body</b> field of the <b>Draft</b> tab.
-		</li>
-		
-			<pre>
-				#sp.enableDetailedSampling == true
-			</pre>
-		
-		<li>
-			Click <b>Activate</b>.
-			The filter is now applied to the group.
-		</li>
-	<ol>
-	
-	To add a group configuration:
-	
-	<ol>	
-		<li>
-			On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
-			Select the group by clicking the corresponding row.
-			The <b>Endpoint group details</b> page will open.
-		</li>
-		<li>
-			Click the <b>Add configuration</b> button under the <b>Configurations</b> section.
-			The <b>Configuration details</b> page will open.
-		</li>
-		<li>
-			Select the configuration schema version (in our case, it is version 2).
-			Enter a new value for sampling period (3 seconds), click <b>Save</b>, then click <b>Activate</b>.
-			Now, every endpoint included in this group will have the sampling period value set to 3 seconds.
-			
-			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_12.png" />
-			<br />
-			<br />
-			
-		</li>
-	</ol>
-	
-	To see the list of all endpoints registered in your <a href="./Glossary/#kaa-application">application</a>, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint profiles</b>.
-	
-	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_13.png" />
-	<br />
-	
-	<p>
-		Click the endpoint profile with the <b>endpointKeyHash</b> value that you saw in the Kaa client logs.
-		The <b>Endpoint profile details</b> page will open.
-		Here you can edit the server-side profile of the endpoint.
-	</p>
+<h1>Playing around</h1>
 
-	<blockquote>NOTE: Kaa client must be running while you edit the server-side profile.</blockquote>
+<p>
+	To control the sampling period of a sensor, Kaa client uses the following configuration schema.
+</p>
+
+<pre>
+	{
+		"type": "record",
+		"name": "Configuration",
+		"namespace": "org.kaaproject.kaa.schema.sample",
+		"fields": [
+			{
+				"name": "samplingPeriod",
+				"type": "int",
+				"by_default": "1"
+			}
+		]
+	}
+</pre>
+
+<p>
+	In the example above, there is a default value specified for the sampling period.
+	This default configuration value is used by the Kaa client and <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-sdk" target="_blank">SDK of the endpoint device</a>.
+	This means no connection to the server is required for your initial configuration.
+</p>
+<p>
+	To verify this, download the binaries/sources for the target platform and start the application.
+	To do this, choose the target platform below and follow the instructions on the dedicated page.
+</p>
+<p>
+	When Kaa client starts, it will display following messages.
+</p>	
+
+<pre>
+	[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
+	[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
+	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Getting sampling period value from default configuration
+	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 1 second
+	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
+	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 10 seconds
+	[main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--
+</pre>
+
+<p>
+	The messages above inform the user that Kaa client first applied the default value received from the SDK and the then updated it with the new value received from the server.
+	When Kaa client starts, it connects to the server and receives new configuration from the default, non-editable <a href="http://kaaproject.github.io/kaa/docs/Glossary/#group-all" target="_blank">group <i>all</i></a>.
+	For demonstration purpose, this group includes an <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-profile-client-side-server-side" target="_blank">endpoint profile</a> with <i>samplingPeriod</i> set to 10.
+</p>
+
+<pre>
+	{
+	  "samplingPeriod" : 10
+	}
+</pre>
+
+<h2>Change sampling period</h2>
+
+To change the sampling period:
+
+<ol>
+	<li>
+		Click the <b>Administration</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
+	</li>
+	<li>
+		Click the <b>Applications</b> arrow to unfold the list.
+		Click the <b>Configuration demo</b> arrow to unfold the next list and select <b>Endpoint groups</b>.
+		You will see the list of all groups that your endpoint belongs to.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_2.png?raw=true" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Select the group <b>All</b> by clicking the corresponding row.
+		The <b>Endpoint group details</b> page will open.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_3.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		In the <b>Configurations</b> section, select the latest version schema (the <b>Configuration schema</b> column).
+		The <b>Configuration details</b> page will open.
+	</li>
+	<li>
+		Select the <b>Draft</b> tab and enter a new <i>samplingPeriod</i> value.
 	
-	Click <b>Edit</b> and enable the <b>enableDetailedSampling</b> option.
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_4.png" />
+		<br />
+		<br />
+		
+	</li>	
+	<li>
+		Click <b>Save</b> to save the changes, then click <b>Activate</b> to activate the configuration.
 	
-	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_14.png" />
-	<br />
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_5.png" />
+		<br />
+		<br />
+		
+	</li>
+</ol>
+
+<p>
+	Kaa client will notify you about successful configuration update and the new sampling period value.
+</p>
+
+<pre>
+	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
+	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
+</pre>
+
+<p>
+	If you now shut down your Kaa client and the Sandbox, and then restart Kaa client, the last known configuration value will be displayed in the console.
+</p>
+
+<pre>
+	[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
+	[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
+	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
+	...
+	[pool-1-thread-1] WARN  o.k.k.c.c.impl.DefaultChannelManager - Attempt to connect to the next bootstrap server will be made in 2000 ms, according to failover strategy decision
+	[pool-1-thread-1] WARN  o.k.k.c.b.DefaultBootstrapManager - Trying to switch to the next bootstrap server according to failover strategy decision
+	...
+</pre>
+
+<h2>Add endpoint profiles and groups</h2>
+
+<p>
+	You can add new endpoint groups and profiles. This allows you to manage your endpoint devices more effectively.
+	For example, some of your sensors require checking their readings every second, and some other - every 300 seconds.
+	To manage them separately, you can create two groups of sensors and set up an individual <a href="http://kaaproject.github.io/kaa/docs/Glossary/#profile-filter" target="_blank">profile filter</a> for each group.
+	To do this, you need to create a configuration schema and then create a group to be managed in accordance with that schema.
+	For this purpose, you can create a new configuration schema that looks like this.
+</p>
+
+<pre>
+	{
+	  "type" : "record",
+	  "name" : "SamplingServerSideSchema",
+	  "namespace" : "org.kaaproject.kaa.schema.sample",
+	  "fields" : [ {
+		"name" : "enableDetailedSampling",
+		"type" : "boolean"
+	  } ],
+	  "displayName" : "Sampling server side schema",
+	  "description" : ""
+	}
+</pre>
+
+<p>
+	This example schema contains only one boolean field <i>enableDetailedSampling</i>.
+	The value of this field will control the sampling period for your endpoint device.
+</p>
+
+	To create a new configuration schema:
+
+<ol>
+	<li>
+		Start the Sandbox and click <b>Administration</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Schemas</b> > <b>Server-side EP profile</b>.
+		Click the <b>Add schema</b> button.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_6.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Enter a name and description (optional) for your new schema.
+		You can create a new type of server-side profile schema or use an existing one.
+		For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Common-Type-Library/" target="_blank">Common Type Library (CTL)</a>.
+		Click <b>Create new type</b>.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_7.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		A new page will open, where you can create a new type for your schema using the <b>Fields</b> section, or upload a .json file containing the schema.
+		After you created or uploaded a new schema, click <b>Add</b>.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_8.png" />
+		<br />
+		<br />
+		
+		Your new schema is now in the <b>Server-side EP profiles</b> list.
+	</li>
+</ol>
+
+To create a new endpoint group:
+
+<ol>	
+	<li>
+		On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+		Click the <b>Add endpoint group</b> button.
+	</li>
+	<li>
+		Enter a name, weight, and description (optional) for your new endpoint group, and click <b>Add</b>.
+		For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups" target="_blank">Endpoint groups</a>.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_9.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Your endpoint group will be saved, and the <b>Endpoint group details</b> page will open automatically.
+		On this page, you can add profile filters, configurations, and notification topics.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_10.png" />
+		<br />
+		<br />
+		
+	</li>	
+</ol>
 	
-	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_15.png" />
-	<br />
+<h2>Add profile filters and configurations</h2>
+
+To create an endpoint profile filter:
+
+<ol>	
+	<li>
+		On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+		Select the group by clicking the corresponding row.
+		The <b>Endpoint group details</b> page will open.
+	</li>
+	<li>
+		Click the <b>Add profile filter</b> button under the <b>Profile filters</b> section.
+		The <b>Profile filter details</b> page will open.
+	</li>
+	<li>
+		Select corresponding version of the Server-side EP profile schema.
 	
-	Kaa client will output the message below.
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_11.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Copy the line below and paste it into the <b>Filter body</b> field of the <b>Draft</b> tab.
+	</li>
 	
-	<pre>
-		...
-		[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
-		[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 3 seconds
-	</pre>
+		<pre>
+			#sp.enableDetailedSampling == true
+		</pre>
 	
-	This means that your endpoint now belongs to the new group you created. To see the list of groups , click <b>Administration console</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
-	
-	<h1>What’s next?</h1>
-	
-	For more information, see:
-	
-	<ul>
-		<li>
-			<a href="./Getting-started/">Getting started</a>.
-		</li>
-		<li>
-			<a href="./Programming-guide/Your-first-Kaa-application/">Your first Kaa application</a>.
-		</li>
-		<li>
-			<a href="./Programming-guide/Using-Kaa-endpoint-SDKs/">Using Kaa endpoint SDKs</a>.
-		</li>
-		<li>
-			<a href="./Programming-guide/Key-platform-features/Endpoint-profiles/">Endpoint profiles</a>.
-		</li>
-		<li>
-			<a href="./Programming-guide/Key-platform-features/Endpoint-groups/">Endpoint groups</a>.
-		</li>
-		<li>
-			<a href="./Programming-guide/Key-platform-features/Configuration-management/">Configuration management</a>.
-		</li>
-</body>
+	<li>
+		Click <b>Activate</b>.
+		The filter is now applied to the group.
+	</li>
+<ol>
+
+To add a group configuration:
+
+<ol>	
+	<li>
+		On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+		Select the group by clicking the corresponding row.
+		The <b>Endpoint group details</b> page will open.
+	</li>
+	<li>
+		Click the <b>Add configuration</b> button under the <b>Configurations</b> section.
+		The <b>Configuration details</b> page will open.
+	</li>
+	<li>
+		Select the configuration schema version (in our case, it is version 2).
+		Enter a new value for sampling period (3 seconds), click <b>Save</b>, then click <b>Activate</b>.
+		Now, every endpoint included in this group will have the sampling period value set to 3 seconds.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_12.png" />
+		<br />
+		<br />
+		
+	</li>
+</ol>
+
+To see the list of all endpoints registered in your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-application" target="_blank">application</a>, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint profiles</b>.
+
+<br />
+<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_13.png" />
+<br />
+
+<p>
+	Click the endpoint profile with the <b>endpointKeyHash</b> value that you saw in the Kaa client logs.
+	The <b>Endpoint profile details</b> page will open.
+	Here you can edit the server-side profile of the endpoint.
+</p>
+
+<blockquote>NOTE: Kaa client must be running while you edit the server-side profile.</blockquote>
+
+Click <b>Edit</b> and enable the <b>enableDetailedSampling</b> option.
+
+<br />
+<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_14.png" />
+<br />
+
+<br />
+<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_15.png" />
+<br />
+
+Kaa client will output the message below.
+
+<pre>
+	...
+	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
+	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 3 seconds
+</pre>
+
+This means that your endpoint now belongs to the new group you created. To see the list of groups , click <b>Administration console</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+
+<h1>What’s next?</h1>
+
+For more information, see:
+
+<ul>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-profiles/" target="_blank">Endpoint profiles</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration management</a>.
+	</li>
+</ul>
 ]]>
         </details>
     </bundle>

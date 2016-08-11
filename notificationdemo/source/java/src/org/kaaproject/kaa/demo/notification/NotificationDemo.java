@@ -25,7 +25,7 @@ import org.kaaproject.kaa.client.notification.NotificationTopicListListener;
 import org.kaaproject.kaa.client.notification.UnavailableTopicException;
 import org.kaaproject.kaa.common.endpoint.gen.SubscriptionType;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
-import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
+import org.kaaproject.kaa.schema.sample.notification.SequrityAlert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +35,6 @@ import java.util.Scanner;
 
 /**
  * A demo application that shows how to use the Kaa notifications API.
- *
- * @author Maksym Liashenko
  */
 public class NotificationDemo {
 
@@ -48,7 +46,6 @@ public class NotificationDemo {
     public static void main(String[] args) {
         LOG.info("Notification demo started");
 
-        LOG.info("--= Press any key to exit =--");
         kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), new SimpleKaaClientStateListener(), true);
 
         // A listener that listens to the notification topic list updates.
@@ -58,23 +55,24 @@ public class NotificationDemo {
         // Add a notification listener that listens to all notifications.
         kaaClient.addNotificationListener(new NotificationListener() {
             @Override
-            public void onNotification(long id, SecurityAlert sampleNotification) {
+            public void onNotification(long id, SequrityAlert sampleNotification) {
                 LOG.info("Notification for topic id [{}] and name [{}] received.", id, getTopic(id).getName());
                 LOG.info("Notification body: {} \n", sampleNotification.getAlertMessage());
                 LOG.info("Notification alert type: {} \n", sampleNotification.getAlertType());
+
+                inputTopicIdMessage();
             }
         });
 
         // Start the Kaa client and connect it to the Kaa server.
         kaaClient.start();
 
-        // Get available notification topics.
+        // The list of all available notification topics.
         topics = kaaClient.getTopics();
 
         // List the obtained notification topics.
         showTopics();
 
-        LOG.info("Type topic ID in order to subscribe to ones or type any text to exit");
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLong()) {
             long topicId = scanner.nextLong();
@@ -95,6 +93,10 @@ public class NotificationDemo {
         LOG.info("Notification demo stopped");
     }
 
+    private static void inputTopicIdMessage() {
+        LOG.info("\nPlease, type topic ID in order to subscribe to ones or type any text to exit: \n");
+    }
+
     private static void showTopics() {
         if (topics == null || topics.isEmpty()) {
             LOG.info("Topic list is empty");
@@ -110,6 +112,7 @@ public class NotificationDemo {
         for (Topic t : getOneTypeTopics(SubscriptionType.MANDATORY_SUBSCRIPTION)) {
             LOG.info("Topic id: {}, name: {}, type: {}", t.getId(), t.getName(), t.getSubscriptionType().name());
         }
+        inputTopicIdMessage();
     }
 
     private static List<Topic> getOneTypeTopics(SubscriptionType type) {
@@ -128,7 +131,7 @@ public class NotificationDemo {
         } catch (UnavailableTopicException e) {
             e.printStackTrace();
         }
-
+        inputTopicIdMessage();
     }
 
     private static Topic getTopic(long id) {
@@ -140,6 +143,7 @@ public class NotificationDemo {
 
     private static void unsubscribeOptionalTopics() {
         List<Topic> topics = getOneTypeTopics(SubscriptionType.OPTIONAL_SUBSCRIPTION);
+
         for (Topic t : topics) {
             try {
                 kaaClient.unsubscribeFromTopic(t.getId());
@@ -154,7 +158,7 @@ public class NotificationDemo {
     private static class BasicNotificationTopicListListener implements NotificationTopicListListener {
         @Override
         public void onListUpdated(List<Topic> list) {
-            LOG.info("Topic list is updating...");
+            LOG.info("Topic list was updated:");
             topics.clear();
             topics.addAll(list);
 

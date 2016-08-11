@@ -24,6 +24,7 @@ function help {
     exit 1
 }
 
+
 if [ $# -eq 0 ]
 then
     help
@@ -46,11 +47,11 @@ then
 fi
 
 function select_arch {
-    echo "Please enter architecture (default is posix):"
+    echo "Please enter architecture(default is posix):"
     read arch
     case "$arch" in
         edison)
-            KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/edison.cmake"
+            KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$arch.cmake"
         ;;
         *)
             KAA_TOOLCHAIN_PATH_SDK=""
@@ -58,7 +59,7 @@ function select_arch {
     esac
 }
 
-function build_thirdparty {
+function unpack_sdk {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
     then
         KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
@@ -72,40 +73,26 @@ function build_thirdparty {
         mkdir -p $KAA_LIB_PATH &&
         tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
     fi
-
-    if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
-    then
-        cd $KAA_LIB_PATH &&
-        chmod 755 ./avrogen.sh &&
-        ./avrogen.sh &&
-        mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DCMAKE_BUILD_TYPE=Debug \
-              -DKAA_WITHOUT_EVENTS=1 \
-              -DKAA_WITHOUT_CONFIGURATION=1 \
-              -DKAA_WITHOUT_LOGGING=1 \
-              -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 \
-              -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 \
-              -DKAA_MAX_LOG_LEVEL=3 \
-               $KAA_TOOLCHAIN_PATH_SDK \
-              ..
-    fi
-
-    cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    make $MAKE_THREADS &&
-    cd $PROJECT_HOME
 }
 
 function build_app {
     cd $PROJECT_HOME &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
-    cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
     cd $BUILD_DIR &&
-    cmake -DAPP_NAME=$APP_NAME $KAA_TOOLCHAIN_PATH_SDK ..
-    make
+    cmake -DCMAKE_BUILD_TYPE=Debug \
+          -DKAA_WITHOUT_EVENTS=1 \
+          -DKAA_WITHOUT_LOGGING=1 \
+          -DKAA_WITHOUT_CONFIGURATION=1 \
+          -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 \
+          -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 \
+          -DKAA_MAX_LOG_LEVEL=3 \
+           $KAA_TOOLCHAIN_PATH_SDK \
+          ..
+    make $MAKE_THREADS &&
+    cd $PROJECT_HOME
 }
 
 function clean {
-    rm -rf "$KAA_LIB_PATH/$BUILD_DIR"
     rm -rf "$PROJECT_HOME/$BUILD_DIR"
 }
 
@@ -116,8 +103,8 @@ function run {
 
 case "$1" in
     build)
+        unpack_sdk
         select_arch
-        build_thirdparty &&
         build_app
     ;;
 
@@ -126,9 +113,9 @@ case "$1" in
     ;;
 
     deploy)
+        unpack_sdk
         clean
         select_arch
-        build_thirdparty
         build_app
         run
         ;;
@@ -141,4 +128,3 @@ case "$1" in
         help
     ;;
 esac
-

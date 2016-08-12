@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 
+#This code is identical or almost identical to the code for Kaa library.
+
 { stdenv, wine, requireFile, xvfb_run
 }:
 stdenv.mkDerivation rec {

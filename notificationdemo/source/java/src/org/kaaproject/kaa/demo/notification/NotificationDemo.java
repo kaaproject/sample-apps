@@ -47,22 +47,26 @@ public class NotificationDemo {
     /**
      * Topics client subscribed
      */
-    private static List<Topic> subscribedTopics;
+    private static List<Topic> subscribedTopics = new ArrayList<Topic>();
 
     public static void main(String[] args) {
         LOG.info("Notification demo started");
 
         kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), new SimpleKaaClientStateListener(), true);
 
-        // A listener that listens to the notification topic list updates.
+        /*
+         * A listener that listens to the notification topic list updates.
+         */
         NotificationTopicListListener topicListListener = new BasicNotificationTopicListListener();
         kaaClient.addTopicListListener(topicListListener);
 
-        // Add a notification listener that listens to all notifications.
+        /*
+         * Add a notification listener that listens to all notifications.
+         */
         kaaClient.addNotificationListener(new NotificationListener() {
             @Override
             public void onNotification(long id, SecurityAlert sampleNotification) {
-                LOG.info("Notification for topic id [{}] and name [{}] received.", id, getTopic(id).getName());
+                LOG.info("Notification from the topic with id [{}] and name [{}] received.", id, getTopic(id).getName());
                 LOG.info("Notification body: {} \n", sampleNotification.getAlertMessage());
                 LOG.info("Notification alert type: {} \n", sampleNotification.getAlertType());
 
@@ -70,12 +74,16 @@ public class NotificationDemo {
             }
         });
 
-        // Start the Kaa client and connect it to the Kaa server.
+        /*
+         * Start the Kaa client and connect it to the Kaa server.
+         */
         kaaClient.start();
 
         topics = kaaClient.getTopics();
 
-        // List the obtained notification topics.
+        /*
+         * List the obtained notification topics.
+         */
         showTopics();
 
         Scanner scanner = new Scanner(System.in);
@@ -89,11 +97,15 @@ public class NotificationDemo {
             }
         }
 
-        // Stop listening to the notification topic list updates.
+        /*
+         * Stop listening to the notification topic list updates.
+         */
         kaaClient.removeTopicListListener(topicListListener);
         unsubscribeOptionalTopics();
 
-        // Stop the Kaa client and release all the resources which were in use.
+        /*
+         * Stop the Kaa client and release all the resources which were in use.
+         */
         kaaClient.stop();
         LOG.info("Notification demo stopped");
     }
@@ -117,8 +129,10 @@ public class NotificationDemo {
         for (Topic t : getOneTypeTopics(SubscriptionType.MANDATORY_SUBSCRIPTION)) {
             LOG.info("Topic id: {}, name: {}, type: {}", t.getId(), t.getName(), t.getSubscriptionType().name());
         }
-        // Optional topics
-        if (subscribedTopics.isEmpty()) {
+        /*
+         * Optional topics
+         */
+        if (!subscribedTopics.isEmpty()) {
             for (Topic t : subscribedTopics) {
                 LOG.info("Topic id: {}, name: {}, type: {}", t.getId(), t.getName(), t.getSubscriptionType().name());
             }
@@ -138,6 +152,7 @@ public class NotificationDemo {
 
     private static void subscribeTopic(long topicId) {
         try {
+            subscribedTopics.add(getTopic(topicId));
             kaaClient.subscribeToTopic(topicId, true);
         } catch (UnavailableTopicException e) {
             e.printStackTrace();
@@ -155,7 +170,7 @@ public class NotificationDemo {
     private static void unsubscribeOptionalTopics() {
         List<Topic> topics = getOneTypeTopics(SubscriptionType.OPTIONAL_SUBSCRIPTION);
 
-        for (Topic t : topics) {
+        for (Topic t : subscribedTopics) {
             try {
                 kaaClient.unsubscribeFromTopic(t.getId());
             } catch (UnavailableTopicException e) {

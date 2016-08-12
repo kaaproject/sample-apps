@@ -14,7 +14,6 @@
 #  limitations under the License.
 #
 
-
 let pkgs = import ./nix { };
 
 in pkgs.kaa-client-cpp.override

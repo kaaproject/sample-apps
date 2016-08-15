@@ -17,13 +17,15 @@
 
 -->
 
-<projectsConfig 
-    xmlns="http://www.kaaproject.org"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+<projectsConfig
+        xmlns="http://www.kaaproject.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="cityguide_demo">
         <name>City guide</name>
-        <description>City guide Android app that demonstrates Kaa’s endpoint profiling, grouping, and configuration management capabilities</description>
+        <description>City guide Android app that demonstrates Kaa’s endpoint profiling, grouping, and configuration
+            management capabilities
+        </description>
         <details>
             <![CDATA[
 This Android app illustrates how the Kaa Configuration subsystem can be used to deliver custom-tailored contents to endpoints depending on their profile.
@@ -51,23 +53,23 @@ Please note that all the features of Administration UI are also supported by RES
 For more background on the Kaa Configuration subsystem, please refer to the corresponding programming guide and design reference sections.
         	]]>
         </details>
-        
+
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
              (ex. JAVA, CPP, etc., to get list of all possible options
              see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-             
+
         <sdkLanguage>JAVA</sdkLanguage>
-        
+
         <!-- Specifies the target runtime platforms according to the instructions from the project details section
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
-             
+
         <platforms>ANDROID</platforms>
         <features>CONFIGURATION PROFILING</features>
         <complexity>ADVANCED</complexity>
         <sourceArchive>android/cityguide_demo.tar.gz</sourceArchive>
         <projectFolder>cityguide_demo/CityGuide</projectFolder>
-        <sdkLibDir>cityguide_demo/CityGuide/libs</sdkLibDir>
-        <destBinaryFile>cityguide_demo/CityGuide/bin/CityGuide-debug.apk</destBinaryFile>
+        <sdkLibDir>cityguide_demo/CityGuide/app/libs</sdkLibDir>
+        <destBinaryFile>cityguide_demo/CityGuide/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
 </projectsConfig>

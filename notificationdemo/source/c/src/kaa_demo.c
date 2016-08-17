@@ -24,21 +24,26 @@
 #include <platform/kaa_client.h>
 #include <utilities/kaa_log.h>
 #include <kaa_notification_manager.h>
-#include <gen/kaa_notification_gen.h>
 
 #define KAA_DEMO_UNUSED(x) (void)(x);
 
-#define KAA_DEMO_RETURN_IF_ERROR(error, message) \
-    if ((error)) { \
-        printf(message ", error code %d\n", (error)); \
-        return (error); \
-    }
-
-
-
 static kaa_client_t *kaa_client = NULL;
 
+enum color_t {RED, YELLOW, GREEN};
 
+static const char *enum_to_str(enum color_t code_color)
+{
+    switch(code_color) {
+        case RED:
+            return "CodeRed";
+        case YELLOW:
+            return "CodeYellow";
+        case GREEN:
+            return "CodeGreen";
+        default:
+            return "Incorrect value";
+    }
+}
 
 void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *notification)
 {
@@ -47,7 +52,7 @@ void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *noti
             kaa_string_t *message = (kaa_string_t *)notification->alert_message;
             printf("Notification for topic id '%llu' received\n", *topic_id);
             printf("Notification body: %s\n", message->data);
-            printf("Message alert type: %s\n", KAA_NOTIFICATION_ALERT_TYPE_SYMBOLS[notification->alert_type]);
+            printf("Message alert type: %s\n", enum_to_str(notification->alert_type));
     } else {
         printf("Error:Received notification's body is null\n");
     }
@@ -110,7 +115,10 @@ int main(/*int argc, char *argv[]*/)
      * Initialize Kaa client.
      */
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
+    if (error_code) {
+        printf("Failed create Kaa client %d\n", error_code);
+        return error_code;
+    }
 
     kaa_topic_listener_t topic_listener = { &on_topics_received, kaa_client };
     kaa_notification_listener_t notification_listener = { &on_notification, kaa_client };
@@ -121,18 +129,30 @@ int main(/*int argc, char *argv[]*/)
     error_code = kaa_add_topic_list_listener(kaa_client_get_context(kaa_client)->notification_manager
                                            , &topic_listener
                                            , &topic_listener_id);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed add topic listener");
+    if (error_code) {
+        printf("Failed add topic listener %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return error_code;
+    }
 
     error_code = kaa_add_notification_listener(kaa_client_get_context(kaa_client)->notification_manager
                                              , &notification_listener
                                              , &notification_listener_id);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed add notification listener");
+    if (error_code) {
+        printf("Failed add notification listener %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return error_code;
+    }
 
     /**
      * Start Kaa client main loop.
      */
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to start Kaa main loop");
+    if (error_code) {
+        printf("Failed to start Kaa main loop %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return error_code;
+    }
 
     /**
      * Destroy Kaa client.

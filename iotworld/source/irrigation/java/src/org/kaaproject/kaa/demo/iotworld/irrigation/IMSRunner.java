@@ -60,7 +60,7 @@ public class IMSRunner {
             public void onStopped() {
                 LOG.info("Kaa client stopped");
             }
-        });
+        }, true);
 
         try {
             kaaClient.setEndpointAccessToken(DEFAULT_ACCESS_CODE);

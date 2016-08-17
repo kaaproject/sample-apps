@@ -142,7 +142,7 @@ public class PhotoPlayerApplication implements DeviceEventClassFamily.Listener, 
                     }
                 });
             }
-        });
+        }, true);
         EventFamilyFactory factory = client.getEventFamilyFactory();
         this.deviceECF = factory.getDeviceEventClassFamily();
         this.photoECF = factory.getPhotoEventClassFamily();

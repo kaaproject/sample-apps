@@ -86,7 +86,7 @@ public class CityGuideApplication extends Application {
                         mEventBus.post(new KaaStarted());
                         LOG.info("Kaa client started");
                     }
-                });
+                }, true);
 
         /*
          * Set a configuration storage file to persist configuration.

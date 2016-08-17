@@ -20,12 +20,12 @@ project (Cpp-SDK-sample)
 enable_language(CXX)
 
 # Path to CMake's scripts.
-set(CMAKE_MODULE_PATH 
+set(CMAKE_MODULE_PATH
 	 ${CMAKE_MODULE_PATH}
 	 ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/Modules
     )
 
-if(MSVC)   
+if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -I/usr/local/include")
@@ -69,13 +69,13 @@ set (SAMPLE_SOURCE_FILES
 add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${APP_NAME} kaacpp_s ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)
+    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    target_link_libraries(${APP_NAME} kaacpp_s ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES})
+    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES})
 endif()
 
 if (MSVC)
-    target_link_libraries(${APP_NAME} kaacpp_s ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} dbghelp)
+    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} dbghelp)
 endif()

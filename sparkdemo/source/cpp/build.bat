@@ -1,17 +1,17 @@
 @REM
-@REM Copyright 2014-2016 CyberVision, Inc.
+@REM  Copyright 2014-2016 CyberVision, Inc.
 @REM
-@REM Licensed under the Apache License, Version 2.0 (the "License");
-@REM you may not use this file except in compliance with the License.
-@REM You may obtain a copy of the License at
+@REM  Licensed under the Apache License, Version 2.0 (the "License");
+@REM  you may not use this file except in compliance with the License.
+@REM  You may obtain a copy of the License at
 @REM
-@REM      http://www.apache.org/licenses/LICENSE-2.0
+@REM       http://www.apache.org/licenses/LICENSE-2.0
 @REM
-@REM Unless required by applicable law or agreed to in writing, software
-@REM distributed under the License is distributed on an "AS IS" BASIS,
-@REM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-@REM See the License for the specific language governing permissions and
-@REM limitations under the License.
+@REM  Unless required by applicable law or agreed to in writing, software
+@REM  distributed under the License is distributed on an "AS IS" BASIS,
+@REM  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+@REM  See the License for the specific language governing permissions and
+@REM  limitations under the License.
 @REM
 
 @echo off
@@ -59,15 +59,15 @@ goto help
 
 :build_thirdparty
  IF NOT EXIST %KAA_C_LIB_HEADER_PATH%\NUL (
-    IF NOT EXIST %KAA_CPP_LIB_HEADER_PATH%\NUL (
-        for /R %PROJECT_HOME% %%f in (kaa-c*.tar.gz) do (
+	IF NOT EXIST %KAA_CPP_LIB_HEADER_PATH%\NUL (
+		for /R %PROJECT_HOME% %%f in (kaa-c*.tar.gz) do (
                         set val=%%f
                         set KAA_SDK_TAR_NAME=!val:\=/!
-        )
-            md %KAA_LIB_PATH%
-            7z x -y !KAA_SDK_TAR_NAME! -o%KAA_LIB_PATH%
-        7z x -y !KAA_SDK_TAR_NAME:~0,-3! -o%KAA_LIB_PATH%
-    )
+		)
+        	md %KAA_LIB_PATH%
+        	7z x -y !KAA_SDK_TAR_NAME! -o%KAA_LIB_PATH%
+		7z x -y !KAA_SDK_TAR_NAME:~0,-3! -o%KAA_LIB_PATH%
+	) 	
  )
 
  IF NOT EXIST %KAA_LIB_PATH%\%BUILD_DIR%\NUL (
@@ -76,13 +76,14 @@ goto help
         md %BUILD_DIR%
         cd %BUILD_DIR%
         cmake -G "NMake Makefiles" ^
-          -DCMAKE_BUILD_TYPE=Debug ^
+              -DCMAKE_BUILD_TYPE=Debug ^
               -DKAA_WITHOUT_EVENTS=1 ^
               -DKAA_WITHOUT_CONFIGURATION=1 ^
               -DKAA_WITHOUT_NOTIFICATIONS=1 ^
               -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 ^
               -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 ^
               -DKAA_MAX_LOG_LEVEL=3 ^
+              -DCMAKE_FIND_ROOT_PATH=%ROOT_PATH% ^
               ..
  )
 

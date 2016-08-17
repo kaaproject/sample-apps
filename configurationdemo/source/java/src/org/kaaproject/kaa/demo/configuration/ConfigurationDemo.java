@@ -22,69 +22,86 @@ import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
 import org.kaaproject.kaa.client.configuration.base.SimpleConfigurationStorage;
+import org.kaaproject.kaa.schema.sample.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStreamReader;
+
 
 /**
  * A demo application that shows how to use the Kaa configuration API.
+ *
  */
 public class ConfigurationDemo {
+
     private static final Logger LOG = LoggerFactory.getLogger(ConfigurationDemo.class);
+
     private static KaaClient kaaClient;
 
     public static void main(String[] args) {
         LOG.info("Configuration demo started");
-        LOG.info("--= Press any key to exit =--");
 
-        // Create the Kaa desktop context for the application.
+        /*
+         * Create the Kaa desktop context for the application.
+         */
         DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext();
 
-        // Create a Kaa client and add a listener which displays the Kaa client configuration 
-        // as soon as the Kaa client is started. 
+        /*
+         * Create a Kaa client and add a listener which displays the Kaa client
+         * configuration as soon as the Kaa client is started.
+         */
         kaaClient = Kaa.newClient(desktopKaaPlatformContext, new SimpleKaaClientStateListener() {
             @Override
             public void onStarted() {
                 super.onStarted();
-                displayConfiguration();
+                LOG.info("Getting sampling period value from default/saved configuration");
+                Configuration configuration = kaaClient.getConfiguration();
+                LOG.info("Sampling period is now set to: " + (configuration.getSamplePeriod()));
             }
-        });
+        }, true);
 
-        // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
+        /*
+         * Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
+         */
         kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));
 
-        // Add a listener which displays the Kaa client configuration each time it is updated.
+        /*
+         * Add a listener which displays the Kaa client configuration each time
+         * it is updated.
+         */
         kaaClient.addConfigurationListener(new ConfigurationListener() {
             @Override
-            public void onConfigurationUpdate(SampleConfiguration sampleConfiguration) {
-                LOG.info("Configuration was updated");
-                displayConfiguration();
+            public void onConfigurationUpdate(Configuration configuration) {
+                LOG.info("Configuration was updated. Sampling period is now set to " + configuration.getSamplePeriod());
             }
         });
 
-        // Start the Kaa client and connect it to the Kaa server.
+        /*
+         * Start the Kaa client and connect it to the Kaa server.
+         */
         kaaClient.start();
+        LOG.info("Endpoint ID : " + kaaClient.getEndpointKeyHash());
 
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            LOG.error("IOException was caught", e);
-        }
+        LOG.info("--= Press any key to exit =--");
+        readUserExit();
 
-        // Stop the Kaa client and release all the resources which were in use.
+        /*
+         * Stop the Kaa client and release all the resources which were in use.
+         */
         kaaClient.stop();
-
-        LOG.info("Configuration demo stopped");
     }
 
-    private static void displayConfiguration() {
-        SampleConfiguration configuration = kaaClient.getConfiguration();
-        List<Link> links = configuration.getAddressList();
-        LOG.info("Configuration body:");
-        for (Link l : links) {
-            LOG.info("{} - {}", l.getLabel(), l.getUrl());
+
+    public static void readUserExit() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            LOG.error("IOException has occurred: " + e.getMessage());
         }
     }
+
 }

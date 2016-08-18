@@ -1,0 +1,11 @@
+{
+  "type" : "record",
+  "name" : "DataCollection",
+  "namespace" : "org.kaaproject.kaa.schema.sample",
+  "fields" : [ {
+    "name" : "temperature",
+    "type" : "int"
+  } ],
+  "displayName" : "Data collection schema",
+  "description" : "Schema that defines temperature sensor measurements log record format."
+}

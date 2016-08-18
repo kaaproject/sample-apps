@@ -68,7 +68,7 @@ public:
         std::cout << (boost::format("Notification for topic id '%1%' received") % topicId) << std::endl;
         std::cout << (boost::format("Alert type %1%, Alert message %2%") %
                 alertTypeToString(notification.alertType) %
-                notification.alertMessage.empty() ? "Body is empty" : notification.alertMessage() ) << std::endl;
+                (notification.alertMessage.empty() ? "Body is empty" : notification.alertMessage)) << std::endl;
     }
 };
 

@@ -24,7 +24,7 @@
 #include <platform/kaa_client.h>
 #include <utilities/kaa_log.h>
 #include <kaa_notification_manager.h>
-#include <gen/kaa_notification_gen.h>
+//#include <gen/kaa_notification_gen.h>
 
 #define KAA_DEMO_UNUSED(x) (void)(x);
 
@@ -47,7 +47,7 @@ void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *noti
             kaa_string_t *message = (kaa_string_t *)notification->alert_message;
             printf("Notification for topic id '%llu' received\n", *topic_id);
             printf("Notification body: %s\n", message->data);
-            printf("Message alert type: %s\n", KAA_NOTIFICATION_ALERT_TYPE_SYMBOLS[notification->alert_type]);
+            //printf("Message alert type: %s\n", KAA_NOTIFICATION_ALERT_TYPE_SYMBOLS[notification->alert_type]);
     } else {
         printf("Error:Received notification's body is null\n");
     }

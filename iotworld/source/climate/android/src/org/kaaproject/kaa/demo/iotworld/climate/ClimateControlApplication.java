@@ -73,7 +73,7 @@ public class ClimateControlApplication extends Application {
                     public void onResume() {
                         LOG.info("Kaa client resumed");
                     }
-                });
+                }, true);
         
         mController = new ClimateController(this, mClient, mEventBus);
         

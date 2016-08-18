@@ -66,7 +66,7 @@ public class StormDataAnalyticsDemo {
             public void onStopped() {
                 LOG.info("Kaa client stopped");
             }
-        });
+        }, true);
         // The default strategy uploads logs after either a threshold logs count
         // or a threshold logs size has been reached.
         // The following custom strategy uploads every log record as soon as it is created.

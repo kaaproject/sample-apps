@@ -23,19 +23,11 @@
 
 using namespace kaa;
 
-const char savedConfig[] = "saved_config.cfg";
-
 class UserConfigurationReceiver : public IConfigurationReceiver {
 public:
     void displayConfiguration(const KaaRootConfiguration &configuration)
     {
-        if (!configuration.AddressList.is_null()) {
-            std::cout << "Configuration body:" << std::endl;
-            auto links = configuration.AddressList.get_array();
-            for (auto& e : links) {
-                 std::cout << e.label << " - " << e.url << std::endl;
-            }
-        }
+        std::cout << "Sampling period is now " << configuration.samplePeriod << " seconds" << std::endl;
     }
     virtual void onConfigurationUpdated(const KaaRootConfiguration &configuration)
     {
@@ -45,9 +37,6 @@ public:
 
 int main()
 {
-    std::cout << "Configuration demo started" << std::endl;
-    std::cout << "--= Press Enter to exit =--" << std::endl;
-
     /*
      * Initialize the Kaa endpoint.
      */
@@ -56,8 +45,13 @@ int main()
     /*
      * Set up a configuration subsystem.
      */
-    IConfigurationStoragePtr storage(std::make_shared<FileConfigurationStorage>(savedConfig));
+    IConfigurationStoragePtr storage(std::make_shared<FileConfigurationStorage>("saved_config.cfg"));
     kaaClient->setConfigurationStorage(storage);
+
+    /*
+     * Display Endpoint Key Hash
+     */
+    std::cout << "Endpoint Key Hash: " << kaaClient->getEndpointKeyHash() << std::endl;
 
     /*
      * Set configuration update receiver.
@@ -70,8 +64,10 @@ int main()
      */
     kaaClient->start();
 
+    std::cout << "Press Enter to stop" << std::endl;
+
     /*
-     * Wait for the Enter key before exiting.
+     * Wait for the keypress.
      */
     std::cin.get();
 
@@ -79,8 +75,6 @@ int main()
      * Stop the Kaa endpoint.
      */
     kaaClient->stop();
-
-    std::cout << "Configuration demo stopped" << std::endl;
 
     return 0;
 }

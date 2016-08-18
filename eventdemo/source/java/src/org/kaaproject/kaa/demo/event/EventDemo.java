@@ -69,7 +69,7 @@ public class EventDemo {
             public void onStopped() {
                 LOG.info("Kaa client stopped");
             }
-        });
+        }, true);
 
         //Start the Kaa client and connect it to the Kaa server.
         kaaClient.start();

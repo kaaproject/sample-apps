@@ -24,21 +24,21 @@
 
 using namespace kaa;
 
-
-static void showTopicList(const Topics& topics)
+static void showTopicList(const Topics &topics)
 {
     if (topics.empty()) {
         std::cout << "Topic list is empty" << std::endl;
     } else {
         for (const auto& topic : topics) {
             std::cout << (boost::format("Topic: id '%1%', name '%2%', type '%3%'")
-                % topic.id % topic.name % LoggingUtils::TopicSubscriptionTypeToString(topic.subscriptionType)) << std::endl;
+                % topic.id % topic.name % LoggingUtils::toString(topic.subscriptionType)) << std::endl;
         }
     }
 }
 
-static std::list<std::int64_t> extractOptionalTopicIds(const Topics& topics) {
-    std::list<std::int64_t> topicIds;
+static std::list<int64_t> extractOptionalTopicIds(const Topics& topics)
+{
+    std::list<int64_t> topicIds;
     for (const auto& topic : topics) {
         if (topic.subscriptionType == SubscriptionType::OPTIONAL_SUBSCRIPTION) {
             topicIds.push_back(topic.id);
@@ -47,98 +47,77 @@ static std::list<std::int64_t> extractOptionalTopicIds(const Topics& topics) {
     return topicIds;
 }
 
+static std::string alertTypeToString(const kaa_notification::AlertType alertType)
+{
+    switch(alertType) {
+        case kaa_notification::CodeRed:
+            return "CodeRed";
+        case kaa_notification::CodeYellow:
+            return "CodeYellow";
+        case kaa_notification::CodeGreen:
+            return "CodeGreen";
+        default:
+            return "Unknown type";
+    }
+}
 
-// The listener which receives notifications on topics.
-class BasicNotificationListener : public INotificationListener {
+class NotificationListener : public INotificationListener {
 public:
-    virtual void onNotification(const std::int64_t topicId, const KaaNotification& notification)
+    virtual void onNotification(const int64_t topicId, const KaaNotification &notification)
     {
         std::cout << (boost::format("Notification for topic id '%1%' received") % topicId) << std::endl;
-        std::cout << (boost::format("Notification body: '%1%'")
-            % (notification.message.is_null() ? "" : notification.message.get_string())) << std::endl;
+        std::cout << (boost::format("Alert type %1%, Alert message %2%") %
+                alertTypeToString(notification.alertType) %
+                (notification.alertMessage.empty() ? "Body is empty" : notification.alertMessage)) << std::endl;
     }
 };
 
-// A listener that tracks the notification topic list updates
-// and subscribes the Kaa client to every new topic available.
-class BasicNotificationTopicListListener : public INotificationTopicListListener {
+class TopicListListener : public INotificationTopicListListener {
 public:
-    BasicNotificationTopicListListener(IKaaClient& kaaClient) : kaaClient_(kaaClient) {}
 
     virtual void onListUpdated(const Topics& topics)
     {
         std::cout << ("Topic list was updated") << std::endl;
         showTopicList(topics);
+        optionalTopicsList_ = extractOptionalTopicIds(topics);
+    }
 
-        try {
-            auto optionalTopicIds = extractOptionalTopicIds(topics);
-            for (const auto& id : optionalTopicIds) {
-                std::cout << (boost::format("Subscribing to optional topic '%1%'") % id) << std::endl;
-            }
-
-            kaaClient_.subscribeToTopics(optionalTopicIds);
-        } catch (UnavailableTopicException& e) {
-            std::cout << (boost::format("Topic is unavailable, can't subscribe: %1%") % e.what()) << std::endl;
-        }
+    std::list<int64_t> getOptionalTopicList() const
+    {
+        return optionalTopicsList_;
     }
 
 private:
-    IKaaClient&    kaaClient_;
+    std::list<int64_t> optionalTopicsList_;
 };
 
 int main()
 {
-    std::cout << "Notification demo started" << std::endl;
-    std::cout << "--= Press Enter to exit =--" << std::endl;
-
-    /*
-     * Initialize the Kaa endpoint.
-     */
     auto kaaClient = Kaa::newClient();
 
-    /*
-     * Add the listener which receives the list of available topics.
-     */
-    std::unique_ptr<INotificationTopicListListener> topicListListener(new BasicNotificationTopicListListener(*kaaClient));
-    kaaClient->addTopicListListener(*topicListListener);
-
-    /*
-     * Add the listener which receives notifications on all topics.
-     */
-    std::unique_ptr<INotificationListener> commonNotificationListener(new BasicNotificationListener);
-    kaaClient->addNotificationListener(*commonNotificationListener);
-
-    /*
-     * Run the Kaa endpoint.
-     */
     kaaClient->start();
 
-    /*
-     * Get available notification topics.
-     */
-    auto availableTopics = kaaClient->getTopics();
+    TopicListListener topicListListener;
+    kaaClient->addTopicListListener(topicListListener);
 
-    /*
-     * List the obtained notification topics.
-     */
-    showTopicList(availableTopics);
+    NotificationListener notificationListener;
+    kaaClient->addNotificationListener(notificationListener);
 
-    /*
-     * Wait for the Enter key before exiting.
-     */
+    std::cout << "Press Enter to subscribe to optional topics" << std::endl;
+    std::cin.clear();
     std::cin.get();
 
-    /*
-     * Remove the listener which receives the list of available topics.
-     */
-    kaaClient->removeTopicListListener(*topicListListener);
+    try {
+        kaaClient->subscribeToTopics(topicListListener.getOptionalTopicList());
+    } catch (UnavailableTopicException& e) {
+        std::cout << (boost::format("Topic is unavailable, can't subscribe: %1%") % e.what()) << std::endl;
+    }
 
-    /*
-     * Stop the Kaa endpoint.
-     */
+    std::cout << "Press Enter to exit" << std::endl;
+
+    std::cin.get();
     kaaClient->stop();
-
-    std::cout << "Notification demo stopped" << std::endl;
 
     return 0;
 }
+

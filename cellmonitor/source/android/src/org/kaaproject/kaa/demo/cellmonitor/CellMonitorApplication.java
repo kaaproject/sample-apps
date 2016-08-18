@@ -109,7 +109,7 @@ public class CellMonitorApplication extends Application {
                         mKaaStarted = true;
                         LOG.info("Kaa client started");
                     }
-                });
+                }, true);
         
         /*
          * Define a log upload strategy used by the Kaa client for logs delivery.

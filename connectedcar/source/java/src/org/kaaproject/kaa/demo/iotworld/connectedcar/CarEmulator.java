@@ -44,7 +44,7 @@ public class CarEmulator {
     private static final Charset UTF8 = Charset.forName("UTF-8");
 
     public static void main(String[] args) {
-        KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext());
+        KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), null, true);
 
         final Set<String> homeTags = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
         final Set<String> nearTags = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());

@@ -28,6 +28,7 @@
 #define POSIX_SUPPORT_H
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /* Demo print routine. Default printf exists for posix target. */
 #define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)

@@ -160,7 +160,7 @@ public class DashboardFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         androidKaaPlatformContext = new AndroidKaaPlatformContext(getActivity());
-        kaaClient = Kaa.newClient(androidKaaPlatformContext);
+        kaaClient = Kaa.newClient(androidKaaPlatformContext, null, true);
         
         endpoint = DataEndpointFactory.createEndpoint(kaaClient.getConfiguration(), getActivity());
         Log.i(TAG, "Default configuration: " + kaaClient.getConfiguration().toString());

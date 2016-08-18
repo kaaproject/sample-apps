@@ -139,6 +139,9 @@
                         <exclude>source/android/gradlew.bat</exclude>
                         <exclude>source/android/local.properties</exclude>
                         <exclude>source/android/gradle/wrapper/gradle-wrapper.properties</exclude>
+                        <exclude>source/android/Notification.iml</exclude>
+                        <exclude>source/android/app/app.iml</exclude>
+                        <exclude>source/android/project.properties</exclude>
                         <!--XCode-->
                         <exclude>
                             source/objc/NotificationDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata

@@ -76,13 +76,14 @@ goto help
         md %BUILD_DIR%
         cd %BUILD_DIR%
         cmake -G "NMake Makefiles" ^
-	      -DCMAKE_BUILD_TYPE=Debug ^
+              -DCMAKE_BUILD_TYPE=Debug ^
               -DKAA_WITHOUT_EVENTS=1 ^
               -DKAA_WITHOUT_LOGGING=1 ^
               -DKAA_WITHOUT_NOTIFICATIONS=1 ^
               -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 ^
               -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 ^
               -DKAA_MAX_LOG_LEVEL=3 ^
+              -DCMAKE_FIND_ROOT_PATH=%ROOT_PATH% ^
               ..
  )
 

@@ -1,0 +1,10 @@
+{
+  "type" : "record",
+  "name" : "Data",
+  "namespace" : "org.kaaproject.kaa.scheme.sample",
+  "fields" : [ {
+    "name" : "temperature",
+    "type" : "int"
+  } ],
+  "displayName" : "Logging scheme"
+}

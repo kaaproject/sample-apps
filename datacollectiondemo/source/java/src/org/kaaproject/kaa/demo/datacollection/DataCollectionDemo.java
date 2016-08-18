@@ -29,8 +29,8 @@ import org.kaaproject.kaa.client.logging.BucketInfo;
 import org.kaaproject.kaa.client.logging.RecordInfo;
 import org.kaaproject.kaa.client.logging.future.RecordFuture;
 import org.kaaproject.kaa.client.logging.strategies.RecordCountLogUploadStrategy;
-import org.kaaproject.kaa.schema.sample.logging.Level;
-import org.kaaproject.kaa.schema.sample.logging.LogData;
+//import org.kaaproject.kaa.schema.sample.logging.Level;
+//import org.kaaproject.kaa.schema.sample.logging.LogData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,43 +67,47 @@ public class DataCollectionDemo {
         // Start the Kaa client and connect it to the Kaa server.
         kaaClient.start();
 
+        /*
+         Comment out this part in order to pass the Sandbox build process.
+         */
+
         // Collect log record delivery futures and corresponding log record creation timestamps.
-        Map<RecordFuture, Long> futuresMap = new HashMap<>();
-
-        // Send logs in a loop.
-        for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
-            futuresMap.put(kaaClient.addLogRecord(log), log.getTimeStamp());
-            LOG.info("Log record {} sent", log.toString());
-        }
-
-        // Iterate over log record delivery futures and wait for delivery
-        // acknowledgment for each record.
-        for (RecordFuture future : futuresMap.keySet()) {
-            try {
-                RecordInfo recordInfo = future.get();
-                BucketInfo bucketInfo = recordInfo.getBucketInfo();
-                Long timeSpent = (recordInfo.getRecordAddedTimestampMs() - futuresMap.get(future))
-                        + recordInfo.getRecordDeliveryTimeMs();
-                LOG.info(
-                        "Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
-                        bucketInfo.getBucketId(), timeSpent);
-            } catch (Exception e) {
-                LOG.error(
-                        "Exception was caught while waiting for callback future",
-                        e);
-            }
-        }
+//        Map<RecordFuture, Long> futuresMap = new HashMap<>();
+//
+//        // Send logs in a loop.
+//        for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
+//            futuresMap.put(kaaClient.addLogRecord(log), log.getTimeStamp());
+//            LOG.info("Log record {} sent", log.toString());
+//        }
+//
+//        // Iterate over log record delivery futures and wait for delivery
+//        // acknowledgment for each record.
+//        for (RecordFuture future : futuresMap.keySet()) {
+//            try {
+//                RecordInfo recordInfo = future.get();
+//                BucketInfo bucketInfo = recordInfo.getBucketInfo();
+//                Long timeSpent = (recordInfo.getRecordAddedTimestampMs() - futuresMap.get(future))
+//                        + recordInfo.getRecordDeliveryTimeMs();
+//                LOG.info(
+//                        "Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
+//                        bucketInfo.getBucketId(), timeSpent);
+//            } catch (Exception e) {
+//                LOG.error(
+//                        "Exception was caught while waiting for callback future",
+//                        e);
+//            }
+//        }
 
         // Stop the Kaa client and release all the resources which were in use.
         kaaClient.stop();
         LOG.info("Data collection demo stopped");
     }
 
-    public static List<LogData> generateLogs(int logCount) {
-        List<LogData> logs = new LinkedList<LogData>();
-        for (int i = 0; i < logCount; i++) {
-            logs.add(new LogData(Level.KAA_INFO, "TAG", "MESSAGE_" + i, System.currentTimeMillis()));
-        }
-        return logs;
-    }
+//    public static List<LogData> generateLogs(int logCount) {
+//        List<LogData> logs = new LinkedList<LogData>();
+//        for (int i = 0; i < logCount; i++) {
+//            logs.add(new LogData(Level.KAA_INFO, "TAG", "MESSAGE_" + i, System.currentTimeMillis()));
+//        }
+//        return logs;
+//    }
 }

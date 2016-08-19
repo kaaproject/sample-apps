@@ -29,17 +29,20 @@
 
 static kaa_client_t *kaa_client = NULL;
 
-enum color_t {RED, YELLOW, GREEN};
+enum color {RED, YELLOW, GREEN};
 
-static const char *enum_to_str(enum color_t code_color)
+static const char *color_to_str(enum color code_color)
 {
     switch(code_color) {
         case RED:
             return "CodeRed";
+            break;
         case YELLOW:
             return "CodeYellow";
+            break;
         case GREEN:
             return "CodeGreen";
+            break;
         default:
             return "Incorrect value";
     }
@@ -52,7 +55,7 @@ void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *noti
             kaa_string_t *message = (kaa_string_t *)notification->alert_message;
             printf("Notification for topic id '%llu' received\n", *topic_id);
             printf("Notification body: %s\n", message->data);
-            printf("Message alert type: %s\n", enum_to_str(notification->alert_type));
+            printf("Message alert type: %s\n", color_to_str(notification->alert_type));
     } else {
         printf("Error:Received notification's body is null\n");
     }

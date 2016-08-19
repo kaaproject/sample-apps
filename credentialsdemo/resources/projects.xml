@@ -48,4 +48,120 @@
         <sdkLibDir>JCredentialsDemo/lib</sdkLibDir>
         <destBinaryFile>JCredentialsDemo/build/jar/JCredentialsDemo.jar</destBinaryFile>
     </project>
+    <project id="credentials_demo_c">
+        <name>Credentials C demo</name>
+        <description>Kaa Credentials management demo app based on C SDK</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This feature is used to connect to <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> and authorize the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank"> endpoint upon <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> startup.
+</p>
+
+<p>
+	To handle cases when the endpoint credentials are invalid or revoked, you can use the <code>kaa_set_auth_faliure_handler()</code> method.
+	It allows you to set a callback triggered by authorization failure.
+</p>
+
+<h1>Launching</h1>
+
+To launch this sample application on the Kaa C SDK:
+
+<ol>
+	<li>
+		Prepare your C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+			<pre>
+				./build.sh deploy
+			</pre>
+	</li>
+	<li>
+		The program will ask you to enter the target platform for your build.
+		Press Enter to specify the POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		The C SDK and the demo application are now built and the demo application is launched.
+	</li>
+</ol>
+
+Once you built the application, you can start it at any time using the following command.
+
+<pre>
+	./build.sh run
+</pre>
+
+<h1>Troubleshooting</h1>
+
+<h2>Running the build.sh script returns an error message</h2>
+
+<pre>
+	Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+</pre>
+
+<p>
+	This means that no SDK tarball was found in the libs/kaa directory.
+</p>
+
+Try the following:
+
+<ul>
+	<li>
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+	</li>
+	<li>
+		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+	</li>
+</ul>
+
+<h2>CMake returns an error message</h2>
+
+<pre>
+	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+</pre>
+
+<p>
+	This means that CMake could not find the required libraries because they were not installed correctly.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+</p>
+
+For more information, see:
+
+<ul>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">General troubleshooting page</a>.
+	</li>
+	<li>
+		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-Linux/" target="_blank">C SDK installation guide for Linux (host)</a>.
+	</li>
+</ul>
+            ]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>C</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>LINUX_X86</platforms>
+        <features>CREDENTIALS</features>
+        <complexity>BASIC</complexity>
+        <bundleId>credentials_demos</bundleId>
+        <sourceArchive>c/credentials_demo.tar.gz</sourceArchive>
+        <projectFolder>CCredentialsDemo</projectFolder>
+        <sdkLibDir>CCredentialsDemo/libs/kaa</sdkLibDir>
+        <destBinaryFile>CCredentialsDemo/build/demo_client</destBinaryFile>
+    </project>
 </projectsConfig>

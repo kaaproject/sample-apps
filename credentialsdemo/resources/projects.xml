@@ -23,11 +23,95 @@
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="credentials_demo">
         <name>Credentials demo</name>
-        <description>Credentials desc</description>
+        <description>Kaa Credentials management demo app based on Java SDK</description>
         <details>
             <![CDATA[
-            Credentials text
-]]>
+<p>
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+</p>
+
+The sample application uses the following methods to manage credentials:
+
+<ul>
+	<li>
+		<code>getEndpointKeyHash</code> method is used to retrieve the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> data used for connection to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	</li>
+	<li>
+		<code>DefaultFailoverStrategy</code> class manages the application behavior when an error occurs outside the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">Kaa client</a>.
+		For example, when no Bootstrap service or Operations service is found, no Internet connection, error while validating the endpoint credentials, etc.
+	</li>
+</ul>
+
+<h1>Launching</h1>
+
+<p>
+	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+</p>
+
+<p>
+	For sample applications that utilize Kaa Java SDK, both the binary files (.jar archive) and the source code (.tar.gz archive) are available for download.
+	If you want to only launch the sample application, download the binary files.
+	If you want to explore the source code of the sample application, download the source code archive.
+</p>
+
+<h2>Install using the binary files</h2>
+
+To install the Credentials management sample application using the binary files:
+	
+<ol>
+	<li>
+		Click the <b>Binary</b> button.
+		A binary build window will open.
+		Click <b>Ok</b> and download the .jar file.
+	</li>
+	<li>
+		Run the following command from the directory containing the downloaded .jar archive.
+		
+		<pre>
+			$ java -jar JCredentialsDemo.jar
+		</pre>
+		
+		The sample application console will display the startup message.
+								
+	</li>
+</ol>
+
+<h2>Install using the source code</h2>
+
+To install the Credentials management sample application using the source code:
+
+<ol>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		To build from new sources you need to have Apache Ant installed on your host machine.
+		To install Apache ant, run the following command from the directory containing the unpacked sources.
+		
+		<pre>
+			$ ant debug
+		</pre>
+		
+		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
+		
+		<pre>
+			$ java -jar build/jar/JCredentialsDemo.jar
+		</pre>
+	</li>
+</ol>
+	
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+
+<h1>Troubleshooting</h1>
+
+For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Troubleshooting/" target="_blank">Troubleshooting</a>.
+			]]>
         </details>
         
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
@@ -41,7 +125,7 @@
              see 'platform' type in demo_projects_schema.xsd schema) -->
              
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
-        <features>CONFIGURATION</features>
+        <features>CREDENTIALS</features>
         <complexity>BASIC</complexity>
         <sourceArchive>java/credentials_demo.tar.gz</sourceArchive>
         <projectFolder>JCredentialsDemo</projectFolder>

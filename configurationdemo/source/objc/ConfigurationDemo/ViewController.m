@@ -52,7 +52,7 @@
     [self.kaaClient start];
 }
 
-#pragma mark - Delegate methods
+#pragma mark - KaaClientStateDelegate
 
 - (void)onStarted {
     [self addLogWithText:@"Kaa client started"];
@@ -89,21 +89,27 @@
     [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
+#pragma mark - ProfileContainer
+
 - (KAAEmptyData *)getProfile {
     return [[KAAEmptyData alloc] init];
 }
+
+#pragma mark - ConfigurationDelegate
 
 - (void)onConfigurationUpdate:(KAAConfiguration *)configuration {
     [self addLogWithText:@"Configuration was updated"];
     [self displayConfiguration];
 }
 
+#pragma mark - Supporting methods
+
 - (void)displayConfiguration {
     KAAConfiguration *configuration = [self.kaaClient getConfiguration];
     [self addLogWithText:[NSString stringWithFormat:@"Sampling period is %d", configuration.samplingPeriod]];
 }
 
-- (void) addLogWithText:(NSString *) text {
+- (void)addLogWithText:(NSString *)text {
     NSLog(@"%@", text);
     dispatch_async(dispatch_get_main_queue(), ^{
         self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];

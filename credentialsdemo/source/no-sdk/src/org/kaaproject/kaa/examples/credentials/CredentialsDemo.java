@@ -17,38 +17,20 @@
 package org.kaaproject.kaa.examples.credentials;
 
 import org.kaaproject.kaa.examples.credentials.kaa.KaaAdminManager;
-import org.kaaproject.kaa.examples.credentials.utils.CredentialsConstants;
 import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A demo application that shows how to use the Kaa credentials API.
- *
- * @author Maksym Liashenko
  */
 public class CredentialsDemo {
     private static final Logger LOG = LoggerFactory.getLogger(CredentialsDemo.class);
 
-    private static void getTenantAdminCredentials() {
-        LOG.info("Please, input your tenant admin username (push <Enter> if want to use default): ");
-        String username = IOUtils.getUserInput();
-        if (!"".equals(username)) {
-            CredentialsConstants.TENANT_ADMIN_USERNAME = username;
-        }
-        LOG.info("Please, input your tenant admin password (push <Enter> if want to use default): ");
-        String pass = IOUtils.getUserInput();
-        if (!"".equals(pass)) {
-            CredentialsConstants.TENANT_ADMIN_USERNAME = pass;
-        }
-    }
-
     public static void main(String[] args) throws InterruptedException {
         LOG.info("Credentials demo: admin part started!");
 
-        LOG.info("We need more info about your system. Please provide it.");
-        getSandboxIp();
-        getTenantAdminCredentials();
+        verifyInputData(args);
 
         LOG.info("Choose action by entering corresponding number:");
         KaaAdminManager manager = new KaaAdminManager();
@@ -60,23 +42,23 @@ public class CredentialsDemo {
                     "5. Exit");
             switch (IOUtils.getUserInput()) {
                 case "1":
-                    LOG.info("You choose \"Generate endpoint credentials\".");
+                    LOG.info("Going to \"Generate endpoint credentials\".");
                     manager.generateKeys();
                     break;
                 case "2":
-                    LOG.info("You choose \"Provision endpoint credentials\".");
+                    LOG.info("Going to \"Provision endpoint credentials\".");
                     manager.provisionKeys();
                     break;
                 case "3":
-                    LOG.info("You choose \"Revoke endpoint credentials\".");
+                    LOG.info("Going to \"Revoke endpoint credentials\".");
                     manager.revokeCredentials();
                     break;
                 case "4":
-                    LOG.info("You choose \"Get credentials status\".");
+                    LOG.info("Going to \"Get credentials status\".");
                     LOG.info("Your credential status - " + manager.getCredentialsStatus());
                     break;
                 case "5":
-                    LOG.info("You choose \"Exit\". Have a good day!");
+                    LOG.info("Going to \"Exit\". Have a good day!");
                     System.exit(0);
                     break;
                 default:
@@ -85,13 +67,29 @@ public class CredentialsDemo {
         }
     }
 
-    private static void getSandboxIp() {
-        LOG.info("Please, input your sandbox ip: ");
-        String ip = IOUtils.getUserInput();
-        while (!IOUtils.validate(LOG, ip)) {
-            LOG.info("Please, input your sandbox ip: ");
-            ip = IOUtils.getUserInput();
+    private static void verifyInputData(String[] args) {
+        System.out.println(args.length);
+        if (!(args.length == 1 || args.length == 3)) {
+            LOG.info("We need more info about your system. Please provide it.");
+
+            LOG.info("Possible options:");
+            LOG.info(" java -jar JCredentialsAdminDemo.jar sandboxIp");
+            LOG.info(" java -jar JCredentialsAdminDemo.jar sandboxIp tenantAdminUsername tenantAdminPassword");
+
+            System.exit(0);
         }
-        CredentialsConstants.SANDBOX_IP_ADDRESS = ip;
+
+        String ip = args[0];
+        if (IOUtils.validateIp(ip)) {
+            IOUtils.SANDBOX_IP_ADDRESS = ip;
+        } else {
+            LOG.info("Your ip isn't valid! Please, check it and input again!");
+            System.exit(0);
+        }
+
+        if (args.length == 3) {
+            IOUtils.TENANT_ADMIN_USERNAME = args[1];
+            IOUtils.TENANT_ADMIN_USERNAME = args[2];
+        }
     }
 }

@@ -20,7 +20,6 @@ import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.admin.AuthResultDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsStatus;
-import org.kaaproject.kaa.examples.credentials.utils.CredentialsConstants;
 import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.slf4j.Logger;
@@ -37,61 +36,54 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.List;
 
-/**
- * @author Maksym Liashenko
- */
 public class KaaAdminManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(KaaAdminManager.class);
 
-
     private AdminClient adminClient;
 
     public KaaAdminManager() {
-        this.adminClient = new AdminClient(CredentialsConstants.SANDBOX_IP_ADDRESS, CredentialsConstants.DEFAULT_KAA_PORT);
+        this.adminClient = new AdminClient(IOUtils.SANDBOX_IP_ADDRESS, IOUtils.DEFAULT_KAA_PORT);
     }
 
+    /**
+     * Generate or get created RSA public/private key pair from folder named in IoUtils.*_KEY_LOCATION values
+     */
     public void generateKeys() {
         LOG.info("Going to generate credentials...");
         try {
             getOrCreateKeyPair();
 
             LOG.info("Success generation!");
-        } catch (IOException e) {
-            LOG.error("Error in generateKeys", e);
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            LOG.error("Error in generateKeys", e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (IOException | InvalidKeyException | NoSuchAlgorithmException e) {
             LOG.error("Error in generateKeys", e);
             e.printStackTrace();
         }
     }
 
+    /**
+     * Provision keys on sandbox with needed REST method
+     */
     public void provisionKeys() {
         LOG.info("Going to provision credentials...");
         try {
-            provideCredentials(CredentialsConstants.APPLICATION_NAME, getOrCreateKeyPair().getPublic().getEncoded());
+            provideCredentials(IOUtils.APPLICATION_NAME, getOrCreateKeyPair().getPublic().getEncoded());
 
             LOG.info("Credentials is provisioning. Success!");
-        } catch (IOException e) {
-            LOG.error("Error in provisionKeys", e);
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            LOG.error("Error in provisionKeys", e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (IOException | InvalidKeyException | NoSuchAlgorithmException e) {
             LOG.error("Error in provisionKeys", e);
             e.printStackTrace();
         }
     }
 
+    /**
+     * Revoke user credentials on sandbox with needed REST method
+     */
     public void revokeCredentials() {
         LOG.info("Enter ID of credentials that needs to be revoked:");
         String credentialsId = IOUtils.getUserInput();
         LOG.info("Going to revoke credentials");
-        revokeCredentials(CredentialsConstants.APPLICATION_NAME, credentialsId.trim());
+        revokeCredentials(IOUtils.APPLICATION_NAME, credentialsId.trim());
     }
 
     private void provideCredentials(String applicationName, byte[] publicKey) {
@@ -104,14 +96,18 @@ public class KaaAdminManager {
     private void revokeCredentials(String applicationName, String credentialsId) {
         LOG.debug("APP TOKEN: {}", getApplicationByName(applicationName).getApplicationToken());
         adminClient.revokeCredentials(getApplicationByName(applicationName).getApplicationToken(), credentialsId);
-        LOG.info("Credentials revoked. Success!");
+        LOG.info("Credentials successfully provisioned.");
     }
 
+    /**
+     * Check credentials status for getting information
+     * @return credential status
+     */
     public CredentialsStatus getCredentialsStatus() {
         LOG.info("Enter ID of credentials for what needs to get status:");
         String credentialsId = IOUtils.getUserInput();
         LOG.info("Get status!");
-        return getCredentialsStatus(CredentialsConstants.APPLICATION_NAME, credentialsId.trim());
+        return getCredentialsStatus(IOUtils.APPLICATION_NAME, credentialsId.trim());
     }
 
     private CredentialsStatus getCredentialsStatus(String applicationName, String credentialsId) {
@@ -145,7 +141,7 @@ public class KaaAdminManager {
      */
     private void checkAuthorizationAndLogin() {
         if (!checkAuth()) {
-            adminClient.login(CredentialsConstants.TENANT_ADMIN_USERNAME, CredentialsConstants.TENANT_ADMIN_PASSWORD);
+            adminClient.login(IOUtils.TENANT_ADMIN_USERNAME, IOUtils.TENANT_ADMIN_PASSWORD);
         }
     }
 
@@ -167,20 +163,20 @@ public class KaaAdminManager {
 
     private KeyPair getOrCreateKeyPair() throws IOException, InvalidKeyException, NoSuchAlgorithmException {
         if (!isExists()) {
-            return IOUtils.generateKeyPair(CredentialsConstants.PRIVATE_KEY_LOCATION, CredentialsConstants.PUBLIC_KEY_LOCATION);
+            return IOUtils.generateKeyPair(IOUtils.PRIVATE_KEY_LOCATION, IOUtils.PUBLIC_KEY_LOCATION);
         } else {
             return getKeyPair();
         }
     }
 
     private boolean isExists() {
-        return new File(CredentialsConstants.PRIVATE_KEY_LOCATION).exists() &&
-                new File(CredentialsConstants.PUBLIC_KEY_LOCATION).exists();
+        return new File(IOUtils.PRIVATE_KEY_LOCATION).exists() &&
+                new File(IOUtils.PUBLIC_KEY_LOCATION).exists();
     }
 
     private KeyPair getKeyPair() throws IOException, InvalidKeyException {
-        InputStream publicKeyInput = new FileInputStream(new File(CredentialsConstants.PUBLIC_KEY_LOCATION));
-        InputStream privateKeyInput = new FileInputStream(new File(CredentialsConstants.PRIVATE_KEY_LOCATION));
+        InputStream publicKeyInput = new FileInputStream(new File(IOUtils.PUBLIC_KEY_LOCATION));
+        InputStream privateKeyInput = new FileInputStream(new File(IOUtils.PRIVATE_KEY_LOCATION));
 
         PublicKey publicKey = IOUtils.getPublic(publicKeyInput);
         PrivateKey privateKey = IOUtils.getPrivate(privateKeyInput);

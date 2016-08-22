@@ -39,26 +39,43 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.regex.Pattern;
 
-/**
- * @author Maksym Liashenko
- */
 public class IOUtils {
+
+    public static String SANDBOX_IP_ADDRESS = "provided by user";
+    public static final int DEFAULT_KAA_PORT = 8080;
+
+    public static final String PRIVATE_KEY_LOCATION = "key.private";
+    public static final String PUBLIC_KEY_LOCATION = "key.public";
+
+    public static String TENANT_ADMIN_USERNAME = "admin";
+    public static String TENANT_ADMIN_PASSWORD = "admin123";
+
+    public final static String APPLICATION_NAME = "Credentials demo";
 
     private static final Logger LOG = LoggerFactory.getLogger(IOUtils.class);
 
     private static final Pattern PATTERN = Pattern.compile(
             "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
-    public static boolean validate(Logger logger, String ip) {
+    /**
+     * Validate user input ip for avoid errors
+     * @param ip - user ip
+     * @return if validated
+     */
+    public static boolean validateIp(String ip) {
         if (PATTERN.matcher(ip).matches()) {
-            logger.info("Ip is valid");
+            LOG.info("Ip is valid");
             return true;
         } else {
-            logger.info("Ip isn't valid. Please, provide it again.");
+            LOG.info("Ip isn't valid. Please, provide it again.");
             return false;
         }
     }
 
+    /**
+     * Read from console user string
+     * @return string, that  user input in console
+     */
     public static String getUserInput() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String userInput = null;

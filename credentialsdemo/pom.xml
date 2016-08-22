@@ -89,12 +89,9 @@
                 <configuration>
                     <descriptors>
                         <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
-<<<<<<< 92fc90803f7f4fef98363b3081ee5ccb32944d26
                         <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
-=======
                         <descriptor>${project.basedir}/assembly/src-no-sdk.xml</descriptor>
->>>>>>> rebasing
                     </descriptors>
                 </configuration>
                 <executions>

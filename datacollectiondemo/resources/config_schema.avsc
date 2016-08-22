@@ -1,0 +1,12 @@
+{
+  "type" : "record",
+  "name" : "Configuration",
+  "namespace" : "org.kaaproject.kaa.schema.sample",
+  "fields" : [ {
+    "name" : "samplePeriod",
+    "type" : "int",
+    "by_default" : 1
+  } ],
+  "displayName" : "Logging configuration schema",
+  "description" : "The configuration schema that defines sampling period for temperature sensor measurements."
+}

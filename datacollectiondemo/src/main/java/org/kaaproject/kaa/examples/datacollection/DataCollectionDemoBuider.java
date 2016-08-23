@@ -20,6 +20,7 @@ package org.kaaproject.kaa.examples.datacollection;
 import java.util.Arrays;
 
 import org.kaaproject.kaa.common.dto.ApplicationDto;
+import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
@@ -52,23 +53,42 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         dataCollectionApplication.setName("Data collection demo");
         dataCollectionApplication = client.editApplication(dataCollectionApplication);
 
+        logger.info("Data collection demo: Creating SDK profile...");
         sdkProfileDto.setApplicationId(dataCollectionApplication.getId());
+        sdkProfileDto.setName("Default SDK profile");
         sdkProfileDto.setApplicationToken(dataCollectionApplication.getApplicationToken());
         sdkProfileDto.setProfileSchemaVersion(0);
-        sdkProfileDto.setConfigurationSchemaVersion(1);
         sdkProfileDto.setNotificationSchemaVersion(1);
 
         loginTenantDeveloper(client);
 
+        logger.info("Data collection demo: Creating configuration schema...");
+        CTLSchemaDto configCtlSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", dataCollectionApplication);
+        ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
+        configurationSchema.setApplicationId(dataCollectionApplication.getId());
+        configurationSchema.setName("Configuration schema");
+        configurationSchema.setDescription("Default configuration schema for the Data collection demo application");
+        configurationSchema.setCtlSchemaId(configCtlSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
+
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
+        logger.info("Configuration schema was created.");
+
+        logger.info("Data collection demo: Creating log schema...");
         LogSchemaDto logSchemaDto = new LogSchemaDto();
         logSchemaDto.setApplicationId(dataCollectionApplication.getId());
-        logSchemaDto.setName("Log schema");
-        logSchemaDto.setDescription("Log schema describing incoming logs");
-        CTLSchemaDto ctlSchema = saveCTLSchemaWithAppToken(client, "logSchema.json", dataCollectionApplication);
-        logSchemaDto.setCtlSchemaId(ctlSchema.getId());
+        logSchemaDto.setName("Logging schema");
+        logSchemaDto.setDescription("Default logging schema for the Data collection demo application");
+        CTLSchemaDto loggingCtlSchema = saveCTLSchemaWithAppToken(client, "logging_schema.avsc", dataCollectionApplication);
+        logSchemaDto.setCtlSchemaId(loggingCtlSchema.getId());
         logSchemaDto = client.saveLogSchema(logSchemaDto);
-        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
 
+        logger.info("Log schema version: {}", logSchemaDto.getVersion());
+        sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
+        logger.info("Log schema was created.");
+
+        logger.info("Data collection demo: Creating Log appender...");
         LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();
         dataCollectionLogAppender.setName("Data collection log appender");
         dataCollectionLogAppender.setDescription("Log appender used to deliver log records from data collection application to local mongo db instance");
@@ -84,8 +104,6 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.mongo.appender.MongoDbLogAppender");
         dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("mongo_appender.json")));
         dataCollectionLogAppender = client.editLogAppenderDto(dataCollectionLogAppender);
-
-
 
         logger.info("Finished loading 'Data Collection Demo Application' data.");
     }

@@ -17,6 +17,7 @@
 
 -->
 
+<<<<<<< 92fc90803f7f4fef98363b3081ee5ccb32944d26
 <projectsConfig 
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -127,11 +128,41 @@ For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/do
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>CREDENTIALS</features>
         <complexity>BASIC</complexity>
+=======
+<projectsConfig
+        xmlns="http://www.kaaproject.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+    <project id="credentials_demo_java">
+        <name>Credentials demo</name>
+        <description>Credentials desc</description>
+        <details>
+            <![CDATA[
+            Credentials text
+]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>JAVA</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
+        <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>credentials_demos</bundleId>
+>>>>>>> rebasing
         <sourceArchive>java/credentials_demo.tar.gz</sourceArchive>
         <projectFolder>JCredentialsDemo</projectFolder>
         <sdkLibDir>JCredentialsDemo/lib</sdkLibDir>
         <destBinaryFile>JCredentialsDemo/build/jar/JCredentialsDemo.jar</destBinaryFile>
     </project>
+<<<<<<< 92fc90803f7f4fef98363b3081ee5ccb32944d26
     <project id="credentials_demo_c">
         <name>Credentials C demo</name>
         <description>Kaa Credentials management demo app based on C SDK</description>
@@ -248,4 +279,43 @@ For more information, see:
         <sdkLibDir>CCredentialsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile>CCredentialsDemo/build/demo_client</destBinaryFile>
     </project>
+=======
+    <project id="credentials_demo_no_sdk">
+        <name>Credentials Admin part</name>
+        <description>Credentials admin desc</description>
+        <details>
+            <![CDATA[
+            Credentials admin text
+]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>JAVA</sdkLanguage>
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
+        <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>credentials_demos</bundleId>
+        <sourceArchive>no-sdk/credentials_demo.tar.gz</sourceArchive>
+        <projectFolder>JCredentialsAdminDemo</projectFolder>
+        <sdkLibDir>JCredentialsAdminDemo/lib</sdkLibDir>
+        <destBinaryFile>JCredentialsAdminDemo/build/jar/JCredentialsAdminDemo.jar</destBinaryFile>
+    </project>
+    <bundle id="credentials_demos">
+        <name>Credentials demos</name>
+        <description>Kaa Credentials subsystem demo applications bundle</description>
+        <details>
+            <![CDATA[
+This bundle contains applications that demonstrates capabilities of the Kaa Credentials subsystem.
+
+Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+
+<h2>What's next?</h2>
+For more background on the Kaa Credentials subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Distributing+data+to+endpoints">programming guide</a> section.
+]]>
+        </details>
+    </bundle>
+>>>>>>> rebasing
 </projectsConfig>

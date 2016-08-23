@@ -50,6 +50,10 @@
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -87,6 +91,7 @@
                         <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-no-sdk.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

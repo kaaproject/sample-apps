@@ -29,7 +29,6 @@ then
     help
 fi
 
-APP_NAME="demo_client"
 PROJECT_HOME=$(pwd)
 BUILD_DIR="build"
 LIBS_PATH="libs"
@@ -45,6 +44,21 @@ then
     MAKE_THREADS="-j$2"
 fi
 
+if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
+then
+    KAA_SDK_TAR_NAME=$(find "$PROJECT_HOME" -iname $KAA_SDK_TAR)
+
+    if [ -z "$KAA_SDK_TAR_NAME" ]
+    then
+        echo "Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script."
+        exit 1
+    fi
+
+    mkdir -p $KAA_LIB_PATH &&
+    tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
+fi
+
+
 function select_arch {
     echo "Please enter architecture (default is posix):"
     read arch
@@ -58,50 +72,19 @@ function select_arch {
     esac
 }
 
-function build_thirdparty {
-    if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
-    then
-        KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
-
-        if [ -z "$KAA_SDK_TAR_NAME" ]
-        then
-            echo "Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script."
-            exit 1
-        fi
-
-        mkdir -p $KAA_LIB_PATH &&
-        tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
-    fi
-
-    if [ ! -d "$KAA_LIB_PATH/$BUILD_DIR" ]
-    then
-        cd $KAA_LIB_PATH &&
-        chmod 755 ./avrogen.sh &&
-        ./avrogen.sh &&
-        mkdir -p $BUILD_DIR && cd $BUILD_DIR &&
-        cmake -DCMAKE_BUILD_TYPE=Debug \
-              -DKAA_WITHOUT_EVENTS=1 \
-              -DKAA_WITHOUT_CONFIGURATION=1 \
-              -DKAA_WITHOUT_NOTIFICATIONS=1 \
-              -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 \
-              -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 \
-              -DKAA_MAX_LOG_LEVEL=3 \
-               $KAA_TOOLCHAIN_PATH_SDK \
-              ..
-    fi
-
-    cd "$PROJECT_HOME/$KAA_LIB_PATH/$BUILD_DIR"
-    make $MAKE_THREADS &&
-    cd $PROJECT_HOME
-}
-
 function build_app {
-    cd $PROJECT_HOME &&
+    cd "$PROJECT_HOME" &&
     mkdir -p "$PROJECT_HOME/$BUILD_DIR" &&
-    cp "$KAA_LIB_PATH/$BUILD_DIR/"libkaa* "$PROJECT_HOME/$BUILD_DIR/" &&
-    cd $BUILD_DIR &&
-    cmake -DAPP_NAME=$APP_NAME $KAA_TOOLCHAIN_PATH_SDK ..
-    make
+    cd "$BUILD_DIR" &&
+    cmake  \
+        -DKAA_WITHOUT_EVENTS=1 \
+        -DKAA_WITHOUT_NOTIFICATIONS=1 \
+        -DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 \
+        -DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 \
+        -DKAA_MAX_LOG_LEVEL=3 \
+        "$KAA_TOOLCHAIN_PATH_SDK" \
+        ..
+    make $MAKE_THREADS
 }
 
 function clean {
@@ -111,13 +94,11 @@ function clean {
 
 function run {
     cd "$PROJECT_HOME/$BUILD_DIR"
-    ./$APP_NAME
+    ./demo_client
 }
 
 case "$1" in
     build)
-        select_arch
-        build_thirdparty &&
         build_app
     ;;
 
@@ -128,7 +109,6 @@ case "$1" in
     deploy)
         clean
         select_arch
-        build_thirdparty
         build_app
         run
         ;;

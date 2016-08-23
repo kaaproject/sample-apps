@@ -14,77 +14,112 @@
  *  limitations under the License.
  */
 
-
 #include <memory>
-#include <cstdint>
 #include <string>
-#include <list>
+#include <cstdint>
+
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
 
 #include <kaa/Kaa.hpp>
+#include <kaa/IKaaClient.hpp>
+#include <kaa/configuration/manager/IConfigurationReceiver.hpp>
+#include <kaa/configuration/storage/FileConfigurationStorage.hpp>
 #include <kaa/log/strategies/RecordCountLogUploadStrategy.hpp>
 
 using namespace kaa;
 
-/*
- * A demo application that shows how to use the Kaa logging API.
- */
+class TemperatureSensor : public IConfigurationReceiver {
+public:
+    TemperatureSensor():
+        kaaClient_(Kaa::newClient()),
+        samplePeriod_(0),
+        interval_(samplePeriod_),
+        timer_(service_, interval_)
+    {
+        // Set a custom strategy for uploading logs.
+        // The logs will be uploaded to server
+        // each time the number of buckets reaches
+        // the logUploadThreshold value
+        kaaClient_->setLogUploadStrategy(
+            std::make_shared<RecordCountLogUploadStrategy>(int(logUploadThreshold), kaaClient_->getKaaClientContext()));
+
+        // Set up a configuration subsystem.
+        IConfigurationStoragePtr storage(
+            std::make_shared<FileConfigurationStorage>(std::string(savedConfig_)));
+        kaaClient_->setConfigurationStorage(storage);
+        kaaClient_->addConfigurationListener(*this);
+    }
+
+    ~TemperatureSensor()
+    {
+        // Stop the Kaa endpoint.
+        kaaClient_->stop();
+        std::lock_guard<std::mutex> guard(iostream_mutex_);
+        std::cout << "Data collection demo stopped" << std::endl;
+    }
+
+    void run()
+    {
+        // Run the Kaa endpoint.
+        kaaClient_->start();
+        samplePeriod_ = kaaClient_->getConfiguration().samplePeriod;
+        timer_.async_wait(boost::bind(&TemperatureSensor::sendTemperature, this));
+        timer_.expires_from_now(boost::posix_time::seconds(samplePeriod_));
+        service_.run();
+    }
+
+private:
+    static constexpr auto savedConfig_ = "saved_config.cfg";
+    static constexpr int logUploadThreshold = 5;
+    std::shared_ptr<IKaaClient> kaaClient_;
+    int32_t samplePeriod_;
+    boost::asio::io_service service_;
+    boost::posix_time::seconds interval_;
+    boost::asio::deadline_timer timer_;
+    std::mutex iostream_mutex_;
+
+    int32_t getTemperature()
+    {
+        // For sake of example random data is used
+        return rand() % 10 + 25;
+    }
+
+    void sendTemperature()
+    {
+        KaaUserLogRecord logRecord;
+        logRecord.temperature = getTemperature();
+        logRecord.timeStamp = std::time(nullptr);
+        // Send value of temperature
+        kaaClient_->addLogRecord(logRecord);
+        // Show log
+        {
+            std::lock_guard<std::mutex> guard(iostream_mutex_);
+            std::cout << "Sampled temperature: " << logRecord.temperature
+                << ", timestamp: " << logRecord.timeStamp << std::endl;
+        }
+        // Change timer expiry period
+        timer_.expires_at(timer_.expires_at() + boost::posix_time::seconds(samplePeriod_));
+        // Posts the timer event
+        timer_.async_wait(boost::bind(&TemperatureSensor::sendTemperature, this));
+    }
+
+    void onConfigurationUpdated(const KaaRootConfiguration &configuration)
+    {
+        samplePeriod_ = configuration.samplePeriod;
+        std::lock_guard<std::mutex> guard(iostream_mutex_);
+        std::cout << "Received configuration data. New sample period: "
+            << configuration.samplePeriod << " seconds" << "\n";
+    }
+};
+
 int main()
 {
-    std::cout << "Data collection demo started" << std::endl;
-
-    const std::size_t LOGS_TO_SEND_COUNT = 5;
-
-    /*
-     * Initialize the Kaa endpoint.
-     */
-    auto kaaClient =  Kaa::newClient();
-
-    /*
-     * Set a custom strategy for uploading logs.
-     */
-    kaaClient->setLogUploadStrategy(std::make_shared<RecordCountLogUploadStrategy>(1, kaaClient->getKaaClientContext()));
-
-    /*
-     * Run the Kaa endpoint.
-     */
-    kaaClient->start();
-
-    std::list<std::pair<RecordFuture, std::size_t>> futurePairs;
-
-    // Send LOGS_TO_SEND_COUNT logs in a loop.
-    std::size_t logNumber = 0;
-    while (logNumber++ < LOGS_TO_SEND_COUNT) {
-        KaaUserLogRecord logRecord;
-        logRecord.level = kaa_log::Level::KAA_INFO;
-        logRecord.tag = "TAG";
-        logRecord.message = "MESSAGE_" + std::to_string(logNumber);
-        logRecord.timeStamp = TimeUtils::getCurrentTimeInMs();
-
-        futurePairs.push_back(std::make_pair(std::move(kaaClient->addLogRecord(logRecord)), logRecord.timeStamp));
-        std::cout << "Sent " << logNumber << "th record" << std::endl;
+    try {
+        TemperatureSensor sensor;
+        sensor.run();
+    } catch (std::exception& e) {
+        std::cout << "Exception: " << e.what();
     }
-
-    for (auto& pair : futurePairs) {
-        try {
-            RecordInfo recordInfo = pair.first.get();
-            BucketInfo bucketInfo = recordInfo.getBucketInfo();
-
-            std::size_t timeSpent = (recordInfo.getRecordAddedTimestampMs() - pair.second)
-                                        + recordInfo.getRecordDeliveryTimeMs();
-
-            std::cout << "Received log record delivery info. Bucket Id [" <<  bucketInfo.getBucketId() << "]. "
-                      << "Record delivery time [" << timeSpent << " ms]." << std::endl;
-        } catch (std::exception& e) {
-            std::cout << "Exception was caught while waiting for callback future" << e.what();
-        }
-    }
-
-    /*
-     * Stop the Kaa endpoint.
-     */
-    kaaClient->stop();
-
-    std::cout << "Data collection demo stopped" << std::endl;
-
     return 0;
 }

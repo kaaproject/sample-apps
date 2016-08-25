@@ -222,9 +222,10 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
             logger.info("Creating users...");
             client.createKaaAdmin(kaaAdminUser, kaaAdminPassword);
             loginKaaAdmin(client);
-            createDemoTenantAdmin(client);
+            TenantDto tenantDto = createTenant(client);
+            createTenantAdmin(client, tenantDto);
             loginTenantAdmin(client);
-            createTenantDeveloper(client);
+            createTenantDeveloper(client, tenantDto);
             usersCreated = true;
         }
     }
@@ -235,9 +236,7 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         return client.editTenant(tenantDto);
     }
 
-    private void createDemoTenantAdmin(AdminClient client) throws Exception {
-        TenantDto tenantDto = createTenant(client);
-
+    private void createTenantAdmin(AdminClient client, TenantDto tenantDto) throws Exception {
         UserDto tenantAdmin = new UserDto();
         tenantAdmin.setUsername("Demo Tenant Admin");
         tenantAdmin.setAuthority(KaaAuthorityDto.TENANT_ADMIN);
@@ -254,13 +253,14 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         }
     }
     
-    private void createTenantDeveloper(AdminClient client) throws Exception {
+    private void createTenantDeveloper(AdminClient client, TenantDto tenantDto) throws Exception {
         UserDto tenantDeveloper = new UserDto();
         tenantDeveloper.setAuthority(KaaAuthorityDto.TENANT_DEVELOPER);
         tenantDeveloper.setUsername(tenantDeveloperUser);
         tenantDeveloper.setMail("devuser@demoproject.org");
         tenantDeveloper.setFirstName("Tenant");
         tenantDeveloper.setLastName("Developer");
+        tenantDeveloper.setTenantId(tenantDto.getId());
         tenantDeveloper = client.editUser(tenantDeveloper);
         
         if (StringUtils.isNotBlank(tenantDeveloper.getTempPassword())) {

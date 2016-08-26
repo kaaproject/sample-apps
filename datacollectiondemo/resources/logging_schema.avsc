@@ -5,6 +5,9 @@
   "fields" : [ {
     "name" : "temperature",
     "type" : "int"
+  }, {
+    "name" : "timeStamp",
+    "type" : "long"
   } ],
   "displayName" : "Logging scheme"
 }

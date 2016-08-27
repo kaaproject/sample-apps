@@ -18,9 +18,11 @@
 
 @import Kaa;
 
-@interface ViewController () <KaaClientStateDelegate, NotificationTopicListDelegate, NotificationDelegate, ProfileContainer>
+@interface ViewController () <KaaClientStateDelegate, NotificationTopicListDelegate, NotificationDelegate, ProfileContainer, UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextView *logTextView;
+@property (weak, nonatomic) IBOutlet UITextField *topicIdTextField;
+@property (nonatomic, strong) NSMutableAttributedString *log;
 
 @property (nonatomic, strong) id<KaaClient> kaaClient;
 
@@ -31,6 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.log = [[NSMutableAttributedString alloc] init];
+    self.topicIdTextField.delegate = self;
 
     [self addLogWithText:@"NotificationDemo started"];
     
@@ -56,34 +60,36 @@
     [self showTopicList:topics];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - Delegate methods
+#pragma mark - NotificationTopicListDelegate
 
 - (void)onListUpdated:(NSArray *)list {
     [self addLogWithText:@"Topic list was updated"];
     [self showTopicList:list];
-    @try {
-        //Try to subscribe to all new optional topics, if any.
-        NSArray *optionalTopics = [self extractOptionalTopicIds:list];
-        for (NSNumber *optionalTopicId in optionalTopics) {
-            [self addLogWithText:[NSString stringWithFormat:@"Subscribing to optional topic with id %@", optionalTopicId]];
-        }
-        [self.kaaClient subscribeToTopicsWithIDs:optionalTopics forceSync:YES];
-    }
-    @catch (NSException *exception) {
-        [self addLogWithText:@"Topic is unavaliable. Can't subscribe"];
+}
+
+#pragma mark - NotificationDelegate
+
+- (void)onNotification:(KAASecurityAlert *)notification withTopicId:(int64_t)topicId {
+    [self addLogWithText:[NSString stringWithFormat:@"Notification for topicId %lld received", topicId]];
+    switch (notification.alertType) {
+        case ALERT_TYPE_CodeRed:
+            [self addLogWithText:[NSString stringWithFormat:@"Notification body: %@", notification.alertMessage] textColor:[UIColor redColor]];
+            break;
+            
+        case ALERT_TYPE_CodeGreen:
+            [self addLogWithText:[NSString stringWithFormat:@"Notification body: %@", notification.alertMessage] textColor:[UIColor greenColor]];
+            break;
+            
+        case ALERT_TYPE_CodeYellow:
+            [self addLogWithText:[NSString stringWithFormat:@"Notification body: %@", notification.alertMessage] textColor:[UIColor yellowColor]];
+            break;
+            
+        default:
+            break;
     }
 }
 
-- (void)onNotification:(KAASampleNotification *)notification withTopicId:(int64_t)topicId {
-    [self addLogWithText:[NSString stringWithFormat:@"Notification for topicId %lld received", topicId]];
-    [self addLogWithText:[NSString stringWithFormat:@"Notification body: %@", notification.message.data]];
-}
+#pragma mark - KaaClientStateDelegate
 
 - (void)onStarted {
     [self addLogWithText:@"Kaa client started"];
@@ -117,11 +123,26 @@
     [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
 }
 
-#pragma mark - Supporting methods
+#pragma mark - ProfileContainer
 
 - (KAAEmptyData *)getProfile {
     return [[KAAEmptyData alloc] init];
 }
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    @try {
+        [self.kaaClient subscribeToTopicWithId:self.topicIdTextField.text.intValue];
+        [self addLogWithText:[NSString stringWithFormat:@"Subscribed to optional topic with id %d", self.topicIdTextField.text.intValue]];
+    } @catch (NSException *exception) {
+        [self addLogWithText:[NSString stringWithFormat:@"Topic with id %d is unavaliable. Can't subscribe", self.topicIdTextField.text.intValue]];
+    }
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - Supporting methods
 
 - (void)showTopicList:(NSArray *)topics {
     if (topics.count == 0) {
@@ -143,12 +164,20 @@
     return topicIds;
 }
 
-- (void)addLogWithText:(NSString *) text {
-    NSLog(@"%@", text);
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];
-    }];
+- (void)addLogWithText:(NSString *)text {
+    [self addLogWithText:text textColor:nil];
 }
 
+- (void)addLogWithText:(NSString *)text textColor:(UIColor *)textColor {
+    NSMutableAttributedString *newLog = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n", text]];
+    [newLog addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.f] range:NSMakeRange(0, newLog.length)];
+    UIColor *color = (textColor == nil) ? [UIColor whiteColor] : textColor;
+    [newLog addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, newLog.length)];
+    [self.log appendAttributedString:newLog];
+    NSLog(@"%@", text);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.logTextView.attributedText = self.log;
+    });
+}
 
 @end

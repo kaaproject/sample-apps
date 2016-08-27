@@ -53,7 +53,8 @@
         "name":"status",
         "type":"org.kaaproject.kaa.demo.iotworld.irrigation.IrrigationStatus"
       }
-    ]
+    ],
+    "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.irrigation.IrrigationStatus", "version":1}]
   },
   {
     "namespace":"org.kaaproject.kaa.demo.iotworld.irrigation",

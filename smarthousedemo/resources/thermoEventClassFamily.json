@@ -24,7 +24,8 @@
  "name": "ThermostatInfoResponse",
  "fields": [
     {"name": "thermostatInfo", "type": ["org.kaaproject.kaa.demo.smarthouse.thermo.ThermostatInfo", "null"]}
-  ]
+  ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.smarthouse.thermo.ThermostatInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.smarthouse.thermo",

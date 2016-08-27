@@ -44,12 +44,13 @@
          {
             "name":"deviceInfo",
             "type":[
-               "DeviceInfo",
+               "org.kaaproject.kaa.demo.photoframe.DeviceInfo",
                "null"
             ]
          }
       ],
-      "classType":"event"
+      "classType":"event",
+      "dependencies":[{"fqn":"org.kaaproject.kaa.demo.photoframe.DeviceInfo", "version":1}]
    },
    {
       "type":"record",
@@ -105,13 +106,14 @@
             "type":[
                {
                   "type":"array",
-                  "items":"AlbumInfo"
+                  "items":"org.kaaproject.kaa.demo.photoframe.AlbumInfo"
                },
                "null"
             ]
          }
       ],
-      "classType":"event"
+      "classType":"event",
+      "dependencies":[{"fqn":"org.kaaproject.kaa.demo.photoframe.AlbumInfo", "version":1}]
    },
    {
       "type":"record",
@@ -150,16 +152,6 @@
       "classType":"event"
    },
    {
-      "type":"enum",
-      "name":"PlayStatus",
-      "namespace":"org.kaaproject.kaa.demo.photoframe",
-      "symbols":[
-         "PLAYING",
-         "STOPPED"
-      ],
-      "classType":"object"
-   },
-   {
       "type":"record",
       "name":"PlayInfo",
       "namespace":"org.kaaproject.kaa.demo.photoframe",
@@ -167,19 +159,29 @@
          {
             "name":"currentAlbumInfo",
             "type":[       
-               "AlbumInfo",
+               "org.kaaproject.kaa.demo.photoframe.AlbumInfo",
                "null"
             ]
          },
          {
             "name":"status",
             "type":[
-               "PlayStatus",
+               {
+                  "type":"enum",
+                  "name":"PlayStatus",
+                  "namespace":"org.kaaproject.kaa.demo.photoframe",
+                  "symbols":[
+                     "PLAYING",
+                     "STOPPED"
+                  ],
+                  "classType":"object"
+               },
                "null"
             ]
          }
       ],
-      "classType":"object"
+      "classType":"object",
+      "dependencies":[{"fqn":"org.kaaproject.kaa.demo.photoframe.AlbumInfo", "version":1}]
    },
    {
       "type":"record",
@@ -189,11 +191,12 @@
          {
             "name":"playInfo",
             "type":[
-               "PlayInfo",
+               "org.kaaproject.kaa.demo.photoframe.PlayInfo",
                "null"
             ]
          }
       ],
-      "classType":"event"
+      "classType":"event",
+      "dependencies":[{"fqn":"org.kaaproject.kaa.demo.photoframe.PlayInfo", "version":1}]
    }
 ]

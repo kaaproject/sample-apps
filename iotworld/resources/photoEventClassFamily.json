@@ -25,7 +25,8 @@
  "name": "PhotoAlbumsResponse",
  "fields": [
     {"name": "albums", "type": {"type": "array", "items": "org.kaaproject.kaa.demo.iotworld.photo.PhotoAlbumInfo"} }
-  ]
+  ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.photo.PhotoAlbumInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.photo",
@@ -80,6 +81,7 @@
      {"name": "status", "type": ["org.kaaproject.kaa.demo.iotworld.photo.SlideShowStatus", "null"]},
      {"name": "photoNumber", "type": ["int", "null"]},
      {"name": "thumbnail", "type": ["bytes","null"]}
- ]
+ ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.photo.SlideShowStatus", "version":1}]
 }
 ]

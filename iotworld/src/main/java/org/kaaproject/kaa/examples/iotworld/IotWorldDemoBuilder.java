@@ -96,65 +96,7 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
         logger.info("Loading 'Iot World Demo' data...");
         
         loginTenantAdmin(client);
-        
-        Map<String, EventClassFamilyDto> ecfMap = new HashMap<>();
-        
-        ecfMap.put(DEVICE_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    DEVICE_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "DeviceEventClassFamily",
-                                    "deviceEventClassFamily.json"));
-        
-        ecfMap.put(GEO_FENCING_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    GEO_FENCING_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "GeoFencingEventClassFamily",
-                                    "geoFencingEventClassFamily.json"));
 
-        ecfMap.put(THERMO_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    THERMO_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "ThermoEventClassFamily",
-                                    "thermoEventClassFamily.json"));
-
-        ecfMap.put(MUSIC_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    MUSIC_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "MusicEventClassFamily",
-                                    "musicEventClassFamily.json"));
-
-        ecfMap.put(PHOTO_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    PHOTO_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "PhotoEventClassFamily",
-                                    "photoEventClassFamily.json"));
-
-        ecfMap.put(LIGHT_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    LIGHT_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "LightEventClassFamily",
-                                    "lightEventClassFamily.json"));
-
-        ecfMap.put(IRRIGATION_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    IRRIGATION_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "IrrigationEventClassFamily",
-                                    "irrigationEventClassFamily.json"));
-
-        ecfMap.put(FAN_EVENT_CLASS_FAMILY,  
-                addEventClassFamily(client,
-                                    FAN_EVENT_CLASS_FAMILY, 
-                                    "org.kaaproject.kaa.demo.iotworld",
-                                    "FanEventClassFamily",
-                                    "fanEventClassFamily.json"));
-        
         ApplicationDto smartHomeApplication = new ApplicationDto();
         smartHomeApplication.setName("Smart Home");
         smartHomeApplication = client.editApplication(smartHomeApplication);
@@ -182,6 +124,65 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
         ApplicationDto irrigationSystemApplication = new ApplicationDto();
         irrigationSystemApplication.setName("Irrigation System");
         irrigationSystemApplication = client.editApplication(irrigationSystemApplication);
+
+        String tenantId = irrigationSystemApplication.getTenantId();
+        Map<String, EventClassFamilyDto> ecfMap = new HashMap<>();
+        
+        ecfMap.put(DEVICE_EVENT_CLASS_FAMILY,
+                addEventClassFamily(client, tenantId,
+                        DEVICE_EVENT_CLASS_FAMILY,
+                        "org.kaaproject.kaa.demo.iotworld",
+                        "DeviceEventClassFamily",
+                        "deviceEventClassFamily.json"));
+        
+        ecfMap.put(GEO_FENCING_EVENT_CLASS_FAMILY,  
+                addEventClassFamily(client, tenantId,
+                                    GEO_FENCING_EVENT_CLASS_FAMILY, 
+                                    "org.kaaproject.kaa.demo.iotworld",
+                                    "GeoFencingEventClassFamily",
+                                    "geoFencingEventClassFamily.json"));
+
+        ecfMap.put(THERMO_EVENT_CLASS_FAMILY,  
+                addEventClassFamily(client, tenantId,
+                                    THERMO_EVENT_CLASS_FAMILY, 
+                                    "org.kaaproject.kaa.demo.iotworld",
+                                    "ThermoEventClassFamily",
+                                    "thermoEventClassFamily.json"));
+
+        ecfMap.put(MUSIC_EVENT_CLASS_FAMILY,
+                addEventClassFamily(client, tenantId,
+                        MUSIC_EVENT_CLASS_FAMILY,
+                        "org.kaaproject.kaa.demo.iotworld",
+                        "MusicEventClassFamily",
+                        "musicEventClassFamily.json"));
+
+        ecfMap.put(PHOTO_EVENT_CLASS_FAMILY,  
+                addEventClassFamily(client, tenantId,
+                                    PHOTO_EVENT_CLASS_FAMILY, 
+                                    "org.kaaproject.kaa.demo.iotworld",
+                                    "PhotoEventClassFamily",
+                                    "photoEventClassFamily.json"));
+
+        ecfMap.put(LIGHT_EVENT_CLASS_FAMILY,  
+                addEventClassFamily(client, tenantId,
+                                    LIGHT_EVENT_CLASS_FAMILY, 
+                                    "org.kaaproject.kaa.demo.iotworld",
+                                    "LightEventClassFamily",
+                                    "lightEventClassFamily.json"));
+
+        ecfMap.put(IRRIGATION_EVENT_CLASS_FAMILY,
+                addEventClassFamily(client, tenantId,
+                        IRRIGATION_EVENT_CLASS_FAMILY,
+                        "org.kaaproject.kaa.demo.iotworld",
+                        "IrrigationEventClassFamily",
+                        "irrigationEventClassFamily.json"));
+
+        ecfMap.put(FAN_EVENT_CLASS_FAMILY,  
+                addEventClassFamily(client, tenantId,
+                                    FAN_EVENT_CLASS_FAMILY, 
+                                    "org.kaaproject.kaa.demo.iotworld",
+                                    "FanEventClassFamily",
+                                    "fanEventClassFamily.json"));
 
         loginTenantDeveloper(client);
         
@@ -520,14 +521,14 @@ public class IotWorldDemoBuilder extends AbstractDemoBuilder {
     }
 
     
-    private EventClassFamilyDto addEventClassFamily(AdminClient client, 
+    private EventClassFamilyDto addEventClassFamily(AdminClient client, String tenantId,
             String name, String namespace, String className, String resource) throws Exception {
         EventClassFamilyDto eventClassFamily = new EventClassFamilyDto();
         eventClassFamily.setName(name);
         eventClassFamily.setNamespace(namespace);
         eventClassFamily.setClassName(className);
         eventClassFamily = client.editEventClassFamily(eventClassFamily);
-        client.addEventClassFamilySchema(eventClassFamily.getId(), getResourcePath(resource));
+        addEventClassFamilyVersion(eventClassFamily, client, tenantId, resource);
         return eventClassFamily;
     }
 

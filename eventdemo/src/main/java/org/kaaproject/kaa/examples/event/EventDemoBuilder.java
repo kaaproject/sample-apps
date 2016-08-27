@@ -23,6 +23,7 @@ import java.util.List;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
+import org.kaaproject.kaa.common.dto.event.EventClassFamilyVersionDto;
 import org.kaaproject.kaa.common.dto.user.UserVerifierDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
@@ -47,21 +48,21 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
-
         logger.info("Loading 'Event Demo Application' data...");
 
         loginTenantAdmin(client);
+
+        ApplicationDto eventApplication = new ApplicationDto();
+        eventApplication.setName("Event demo");
+        eventApplication = client.editApplication(eventApplication);
 
         EventClassFamilyDto thermoEventClassFamily = new EventClassFamilyDto();
         thermoEventClassFamily.setName("Thermostat Event Class Family");
         thermoEventClassFamily.setNamespace("org.kaaproject.kaa.schema.sample.event.thermo");
         thermoEventClassFamily.setClassName("ThermostatEventClassFamily");
         thermoEventClassFamily = client.editEventClassFamily(thermoEventClassFamily);
-        client.addEventClassFamilySchema(thermoEventClassFamily.getId(), getResourcePath("thermostatEventClassFamily.json"));
 
-        ApplicationDto eventApplication = new ApplicationDto();
-        eventApplication.setName("Event demo");
-        eventApplication = client.editApplication(eventApplication);
+        addEventClassFamilyVersion(thermoEventClassFamily, client, eventApplication.getTenantId(), "thermostatEventClassFamily.json");
 
         sdkProfileDto.setApplicationId(eventApplication.getId());
         sdkProfileDto.setApplicationToken(eventApplication.getApplicationToken());
@@ -94,6 +95,5 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
         logger.info("Finished loading 'Event Demo Application' data.");
     }
-
 
 }

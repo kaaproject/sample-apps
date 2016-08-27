@@ -13,7 +13,8 @@
  "name": "SwitchRequest",
  "fields": [
     {"name": "status", "type": "org.kaaproject.kaa.demo.iotworld.fan.FanStatus"}
-  ]
+  ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.fan.FanStatus", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.fan",
@@ -22,6 +23,7 @@
  "name": "FanStatusUpdate",
  "fields": [
      {"name": "status", "type": "org.kaaproject.kaa.demo.iotworld.fan.FanStatus"}
- ]
+ ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.fan.FanStatus", "version":1}]
 }
 ]

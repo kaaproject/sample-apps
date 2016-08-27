@@ -27,7 +27,8 @@
  "name": "PlayListResponse",
  "fields": [
     {"name": "playList", "type": [{"type": "array", "items": "org.kaaproject.kaa.demo.smarthouse.music.SongInfo"}, "null"]}
-  ]
+  ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.smarthouse.music.SongInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.smarthouse.music",
@@ -97,7 +98,9 @@
     {"name": "timeSetOnDevice", "type": ["boolean", "null"]},
     {"name": "volumeSetOnDevice", "type": ["boolean", "null"]},
     {"name": "status", "type": ["org.kaaproject.kaa.demo.smarthouse.music.PlaybackStatus", "null"]}
- ]
+ ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.smarthouse.music.SongInfo", "version":1},
+    {"fqn":"org.kaaproject.kaa.demo.smarthouse.music.PlaybackStatus", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.smarthouse.music",
@@ -106,6 +109,7 @@
  "name": "PlaybackInfoResponse",
  "fields": [
     {"name": "playbackInfo", "type": ["org.kaaproject.kaa.demo.smarthouse.music.PlaybackInfo", "null"]}
- ]
+ ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.smarthouse.music.PlaybackInfo", "version":1}]
 }
 ]

@@ -27,6 +27,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.iharder.Base64;
 
 import org.apache.commons.io.IOUtils;
@@ -43,6 +46,7 @@ import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventMapDto;
 import org.kaaproject.kaa.common.dto.event.EventClassDto;
 import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
+import org.kaaproject.kaa.common.dto.event.EventClassFamilyVersionDto;
 import org.kaaproject.kaa.common.dto.event.EventClassType;
 import org.kaaproject.kaa.examples.common.projects.Bundle;
 import org.kaaproject.kaa.examples.common.projects.Project;
@@ -329,6 +333,48 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         aefMap.setEventMaps(eventMaps);
         aefMap = client.editApplicationEventFamilyMap(aefMap);
         return aefMap;
+    }
+
+    protected void addEventClassFamilyVersion(EventClassFamilyDto eventClassFamily, AdminClient client,
+                                              String tenantId, String resourcesPath) throws Exception{
+        EventClassFamilyVersionDto eventClassFamilyVersion = new EventClassFamilyVersionDto();
+        try {
+            String body = FileUtils.readResource(getResourcePath(resourcesPath));
+            JsonNode json = new ObjectMapper().readTree(body);
+            List<EventClassDto> records = new ArrayList<>();
+
+            addEventClassesByType(EventClassType.OBJECT, json, records, client, tenantId);
+            addEventClassesByType(EventClassType.EVENT, json, records, client, tenantId);
+
+            eventClassFamilyVersion.setRecords(records);
+        } catch (IOException e) {
+            logger.error("Can't parse JSON resource!");
+            throw new IllegalArgumentException("Can't parse JSON resource!");
+        }
+
+        client.addEventClassFamilyVersion(eventClassFamily.getId(), eventClassFamilyVersion);
+    }
+
+    private void addEventClassesByType(EventClassType classType, JsonNode json, List<EventClassDto> records,
+                                       AdminClient client, String tenantId) {
+        for (JsonNode ctlJson : json) {
+            boolean isRequestedType = ctlJson.get("classType") != null &&
+                    classType.equals(EventClassType.valueOf(ctlJson.get("classType").asText().toUpperCase()));
+            if (!isRequestedType) continue;
+
+            ((ObjectNode) ctlJson).put("version", 1);
+            String fqn = ctlJson.get("namespace").asText() + "." + ctlJson.get("name").asText();
+            ((ObjectNode)ctlJson).remove("classType");
+            String ctlBody = ctlJson.toString();
+
+            CTLSchemaDto ctlSchema = client.saveCTLSchemaWithAppToken(ctlBody, tenantId, null);
+            EventClassDto ec = new EventClassDto();
+            ec.setFqn(fqn);
+            ec.setType(classType);
+            ec.setCtlSchemaId(ctlSchema.getId());
+            ec.setName("Test event class in event demo");
+            records.add(ec);
+        }
     }
     
 }

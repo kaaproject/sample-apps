@@ -23,7 +23,8 @@
  "name": "DeviceInfoResponse",
  "fields": [
 	{"name": "deviceInfo", "type": "org.kaaproject.kaa.demo.iotworld.device.DeviceInfo" }
-  ]
+  ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.device.DeviceInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.device",

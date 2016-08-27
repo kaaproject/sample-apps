@@ -29,7 +29,8 @@
     {"name": "albumId", "type": "string" },
     {"name": "cover", "type": "bytes" },
     {"name": "songs", "type": {"type": "array", "items": "org.kaaproject.kaa.demo.iotworld.music.SongInfo"} }
- ]
+ ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.music.SongInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.music",
@@ -38,7 +39,8 @@
  "name": "PlayListResponse",
  "fields": [
     {"name": "albums", "type": {"type": "array", "items": "org.kaaproject.kaa.demo.iotworld.music.AlbumInfo"} }
-  ]
+  ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.music.AlbumInfo", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.music",
@@ -101,7 +103,8 @@
     {"name": "ignoreTimeUpdate", "type": "boolean" },
     {"name": "ignoreVolumeUpdate", "type": "boolean" },
     {"name": "status", "type": "org.kaaproject.kaa.demo.iotworld.music.PlaybackStatus" }
- ]
+ ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.music.SongInfo", "version":1},{"fqn":"org.kaaproject.kaa.demo.iotworld.music.PlaybackStatus", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.iotworld.music",
@@ -110,6 +113,7 @@
  "name": "PlaybackStatusUpdate",
  "fields": [
     {"name": "playbackInfo", "type": "org.kaaproject.kaa.demo.iotworld.music.PlaybackInfo" }
- ]
+ ],
+  "dependencies":[{"fqn":"org.kaaproject.kaa.demo.iotworld.music.PlaybackInfo", "version":1}]
 }
 ]

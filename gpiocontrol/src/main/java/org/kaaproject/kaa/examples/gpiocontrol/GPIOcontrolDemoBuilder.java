@@ -87,14 +87,6 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantAdmin(client);
 
-        Map<String, EventClassFamilyDto> ecfMap = new HashMap<>();
-        ecfMap.put(REMOTE_CONTROL_ECF_NAME,
-                addEventClassFamily(client,
-                        REMOTE_CONTROL_ECF_NAME,
-                        "org.kaaproject.kaa.examples.gpiocontrol",
-                        "RemoteControlECF",
-                        "remoteControlECF.json"));
-
         ApplicationDto GPIOcontrolApplicationMaster = new ApplicationDto();
         GPIOcontrolApplicationMaster.setName("GPIO control master");
         GPIOcontrolApplicationMaster = client.editApplication(GPIOcontrolApplicationMaster);
@@ -102,6 +94,14 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         ApplicationDto GPIOcontrolApplicationSlave = new ApplicationDto();
         GPIOcontrolApplicationSlave.setName("GPIO control slave");
         GPIOcontrolApplicationSlave = client.editApplication(GPIOcontrolApplicationSlave);
+
+        Map<String, EventClassFamilyDto> ecfMap = new HashMap<>();
+        ecfMap.put(REMOTE_CONTROL_ECF_NAME,
+                addEventClassFamily(client, GPIOcontrolApplicationMaster.getTenantId(),
+                        REMOTE_CONTROL_ECF_NAME,
+                        "org.kaaproject.kaa.examples.gpiocontrol",
+                        "RemoteControlECF",
+                        "remoteControlECF.json"));
 
         loginTenantDeveloper(client);
 
@@ -150,14 +150,14 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         projectsSdkMap.put(GPIO_ARTIK5_ID, sdkProfile);
     }
 
-    private EventClassFamilyDto addEventClassFamily(AdminClient client,
+    private EventClassFamilyDto addEventClassFamily(AdminClient client, String tenantId,
                                                     String name, String namespace, String className, String resource) throws Exception {
         EventClassFamilyDto eventClassFamily = new EventClassFamilyDto();
         eventClassFamily.setName(name);
         eventClassFamily.setNamespace(namespace);
         eventClassFamily.setClassName(className);
         eventClassFamily = client.editEventClassFamily(eventClassFamily);
-        client.addEventClassFamilySchema(eventClassFamily.getId(), getResourcePath(resource));
+        addEventClassFamilyVersion(eventClassFamily, client, tenantId, resource);
         return eventClassFamily;
     }
 

@@ -22,7 +22,8 @@
     {"name": "deviceType", "type": ["org.kaaproject.kaa.demo.smarthouse.device.DeviceType", "null"]},
     {"name": "model", "type": ["string", "null"]},
     {"name": "manufacturer", "type": ["string", "null"]}
- ]
+ ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.smarthouse.device.DeviceType", "version":1}]
 },
 {
  "namespace": "org.kaaproject.kaa.demo.smarthouse.device",
@@ -31,6 +32,7 @@
  "name": "DeviceInfoResponse",
  "fields": [
 	{"name": "deviceInfo", "type": ["org.kaaproject.kaa.demo.smarthouse.device.DeviceInfo", "null"]}
-  ]
+  ],
+ "dependencies":[{"fqn":"org.kaaproject.kaa.demo.smarthouse.device.DeviceInfo", "version":1}]
 }
 ]

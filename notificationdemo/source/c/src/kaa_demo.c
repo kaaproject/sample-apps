@@ -53,7 +53,7 @@ void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *noti
     KAA_DEMO_UNUSED(context);
     if (notification->alert_message) {
             kaa_string_t *message = (kaa_string_t *)notification->alert_message;
-            printf("Notification for topic id '%llu' received\n", *topic_id);
+            printf("Notification for topic id '%lu' received\n", *topic_id);
             printf("Notification body: %s\n", message->data);
             printf("Message alert type: %s\n", color_to_str(notification->alert_type));
     } else {
@@ -71,7 +71,7 @@ void show_topics(kaa_list_t *topics)
     kaa_list_node_t *it = kaa_list_begin(topics);
     while (it) {
         kaa_topic_t *topic = (kaa_topic_t *)kaa_list_get_data(it);
-        printf("Topic: id '%llu', name: %s, type: ", topic->id, topic->name);
+        printf("Topic: id '%lu', name: %s, type: ", topic->id, topic->name);
         if (topic->subscription_type == MANDATORY_SUBSCRIPTION) {
             printf("MANDATORY\n");
         } else {
@@ -96,7 +96,7 @@ void on_topics_received(void *context, kaa_list_t *topics)
     while (it) {
         kaa_topic_t *topic = (kaa_topic_t *) kaa_list_get_data(it);
         if (topic->subscription_type == OPTIONAL_SUBSCRIPTION && topic->id == topic_id) {
-            printf("Subscribing to optional topic '%llu'\n", topic->id);
+            printf("Subscribing to optional topic '%lu'\n", topic->id);
             err = kaa_subscribe_to_topic(kaa_client_get_context(client)->notification_manager, &topic->id, false);
             if (err) {
                 printf("Failed to subscribe.\n");

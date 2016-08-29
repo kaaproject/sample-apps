@@ -40,7 +40,6 @@ build_app() {
     mkdir -p "$PROJECT_HOME/$BUILD_DIR"
     cd $BUILD_DIR
     cmake -DWITH_EXTENSION_EVENT=OFF \
-          -DWITH_EXTENSION_CONFIGURATION=OFF \
           -DWITH_EXTENSION_NOTIFICATION=OFF \
           -DKAA_MAX_LOG_LEVEL=3 \
           $KAA_TOOLCHAIN_PATH_SDK ..

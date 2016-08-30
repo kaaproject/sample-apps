@@ -36,7 +36,7 @@
             <outputDirectory>CDataCollectionDemo</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>${main.dir}/comman/nix/<directory>
+            <directory>${main.dir}/common/nix/</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CDataCollectionDemo</outputDirectory>
         </fileSet>

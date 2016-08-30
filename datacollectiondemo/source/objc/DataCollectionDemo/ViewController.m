@@ -18,13 +18,17 @@
 
 @import Kaa;
 
-#define LOGS_TO_SEND_COUNT 5
+static const int32_t temperatureLowerLimit = 25;
+static const int32_t temperatureUpperLimit = 35;
 
-@interface ViewController () <KaaClientStateDelegate, ProfileContainer>
+@interface ViewController () <KaaClientStateDelegate, ProfileContainer, ConfigurationDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextView *logTextView;
 
 @property (nonatomic, strong) id<KaaClient> kaaClient;
+@property (nonatomic, weak) NSTimer *logTimer;
+@property (nonatomic, strong) NSMutableDictionary *bucketRunnersDictionary;
+@property (nonatomic, strong) NSOperationQueue *bucketRunnersQueue;
 
 @end
 
@@ -35,7 +39,7 @@
 
     [self addLogWithText:@"DataCollectionDemo started"];
 
-    //Create a Kaa client with the Kaa default context.
+    // Create a Kaa client with the Kaa default context.
     self.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
     
     // Set a custom strategy for uploading logs.
@@ -43,59 +47,104 @@
     // or a threshold logs size has been reached.
     // The following custom strategy uploads every log record as soon as it is created.
     [self.kaaClient setLogUploadStrategy:[[RecordCountLogUploadStrategy alloc] initWithCountThreshold:1]];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *configurationPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"savedconfig.cfg"];
+    
+    // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
+    [self.kaaClient setConfigurationStorage:[SimpleConfigurationStorage storageWithPath:configurationPath]];
+    
+    // Add a listener which displays the Kaa client configuration each time it is updated.
+    [self.kaaClient addConfigurationDelegate:self];
+    
     [self.kaaClient setProfileContainer:self];
 
     // Start the Kaa client and connect it to the Kaa server.
     [self.kaaClient start];
+    
+    self.bucketRunnersDictionary = [NSMutableDictionary dictionary];
+    self.bucketRunnersQueue = [[NSOperationQueue alloc] init];
+    
+    // Schedules timer to generate logs with delay, which was set in configuration.
+    self.logTimer = [NSTimer scheduledTimerWithTimeInterval:([self.kaaClient getConfiguration].Threshold / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
 }
+
+#pragma mark - KaaClientStateDelegate
 
 - (void)onStarted {
     [self addLogWithText:@"Kaa client started"];
-
-    // Send logs in a loop.
-    NSArray *logs = [self generateLogs:LOGS_TO_SEND_COUNT];
-
-    // Collect log record delivery runners.
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-
-    for (KAALogData *log in logs) {
-        dictionary[@(log.timeStamp)] = [self.kaaClient addLogRecord:log];
-        [self addLogWithText:[NSString stringWithFormat:@"Log sent: loglevel: %u, tag: %@, message: %@, timestamp: %lld",
-                              log.level, log.tag, log.message, log.timeStamp]];
-    }
-
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-
-    for (NSNumber *timeKey in dictionary.allKeys) {
-        @try {
-            [queue addOperationWithBlock:^{
-                BucketRunner *runner = dictionary[timeKey];
-                BucketInfo *bucketInfo = [runner getValue];
-                int64_t timeSpent = bucketInfo.scheduledBucketTimestamp - [timeKey longLongValue] + bucketInfo.bucketDeliveryDuration;
-                [self addLogWithText:[NSString stringWithFormat:@"Received log record delivery info. Bucket id [%d], delivery time [%lld ms]", bucketInfo.bucketId, timeSpent]];
-            }];
-        }
-        @catch (NSException *exception) {
-            [self addLogWithText:@"Exception was caught while waiting for callback future"];
-        }
-    }
 }
+
+- (void)onStopped {
+    [self addLogWithText:@"Kaa client stopped"];
+}
+
+- (void)onStartFailureWithException:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"START FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+
+- (void)onPaused {
+    [self addLogWithText:@"Client paused"];
+}
+
+- (void)onPauseFailureWithException:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"PAUSE FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+
+- (void)onResume {
+    [self addLogWithText:@"Client resumed"];
+}
+
+- (void)onResumeFailureWithException:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"RESUME FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+
+- (void)onStopFailureWithException:(NSException *)exception {
+    [self addLogWithText:[NSString stringWithFormat:@"STOP FAILURE: %@ : %@", exception.name, exception.reason]];
+}
+
+#pragma mark - ProfileContainer
 
 - (KAAEmptyData *)getProfile {
     return [[KAAEmptyData alloc] init];
 }
 
-- (NSArray *)generateLogs:(int)logCount {
-    NSMutableArray *logs = [NSMutableArray arrayWithCapacity:logCount];
-    for (int i = 0; i < logCount; i++) {
-        KAALogData *log = [[KAALogData alloc] init];
-        log.level = LEVEL_KAA_INFO;
-        log.tag = @"iOS";
-        log.message = [NSString stringWithFormat:@"MESSAGE_%d", i];
-        log.timeStamp = CACurrentMediaTime() * 1000;
-        [logs addObject:log];
+#pragma mark - ConfigurationDelegate
+
+- (void)onConfigurationUpdate:(KAALogUploadThreshold *)configuration {
+    [self addLogWithText:[NSString stringWithFormat:@"Configuration update received. New log threshold is %d", configuration.Threshold]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.logTimer invalidate];
+        self.logTimer = nil;
+        
+        // Schedules the new log timer with updated threshold.
+        self.logTimer = [NSTimer scheduledTimerWithTimeInterval:(configuration.Threshold / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:self repeats:YES];
+    });
+}
+
+#pragma mark - Supporting methods
+
+- (void)generateAndSendLogRecord {
+    KAALogData *log = [[KAALogData alloc] init];
+    log.temperature = (arc4random() % (temperatureUpperLimit - temperatureLowerLimit)) + temperatureLowerLimit;
+    log.timeStamp = CACurrentMediaTime() * 1000;
+    [self addLogWithText:[NSString stringWithFormat:@"Log sent with temperature: %d, timestamp: %lld", log.temperature, log.timeStamp]];
+    
+    self.bucketRunnersDictionary[@(log.timeStamp)] = [self.kaaClient addLogRecord:log];
+    [self getBuckerInfoForRecordWithTimeStamp:log.timeStamp];
+}
+ 
+- (void)getBuckerInfoForRecordWithTimeStamp:(int64_t)timeStamp {
+    @try {
+        [self.bucketRunnersQueue addOperationWithBlock:^{
+            BucketRunner *runner = self.bucketRunnersDictionary[@(timeStamp)];
+            BucketInfo *bucketInfo = [runner getValue];
+            int64_t timeSpent = bucketInfo.scheduledBucketTimestamp - timeStamp + bucketInfo.bucketDeliveryDuration;
+            [self addLogWithText:[NSString stringWithFormat:@"Received log record delivery info. Bucket id [%d], delivery time [%lld ms]", bucketInfo.bucketId, timeSpent]];
+        }];
+    } @catch (NSException *exception) {
+        [self addLogWithText:@"Exception was caught while waiting for callback future"];
     }
-    return logs;
 }
 
 - (void)addLogWithText:(NSString *) text {
@@ -104,6 +153,5 @@
         self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];
     }];
 }
-
 
 @end

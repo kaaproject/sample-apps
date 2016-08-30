@@ -1,5 +1,5 @@
 #
-#  Copyright 2014-2016 CyberVision, Inc.
+#  Copyright 2016 CyberVision, Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -14,13 +14,17 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+let pkgs = import ./nix { };
 
-project (Cpp-SDK-notification-sample)
-enable_language(CXX)
-
-add_subdirectory(libs/kaa)
-
-add_executable(demo_client src/KaaDemo.cpp)
-target_link_libraries(demo_client kaacpp)
-install(TARGETS demo_client DESTINATION bin)
+in pkgs.kaa-client-cpp.override
+{
+  doUnpack = true;
+  flags = "-DCMAKE_BUILD_TYPE=Debug " + 
+          "-DKAA_WITHOUT_EVENTS=1 " +
+          "-DKAA_WITHOUT_CONFIGURATION=1 " +
+          "-DKAA_WITHOUT_NOTIFICATIONS=1 " +
+          "-DKAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL=1 " +
+          "-DKAA_WITHOUT_OPERATION_HTTP_CHANNEL=1 " +
+          "-DKAA_MAX_LOG_LEVEL=3 " +
+          "-DAPP_NAME=demo_client";
+}

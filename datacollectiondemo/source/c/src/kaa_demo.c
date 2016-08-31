@@ -14,185 +14,160 @@
  *  limitations under the License.
  */
 
-#include <stdint.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
 #include <time.h>
 
 #include <kaa/kaa_error.h>
 #include <kaa/kaa_context.h>
 #include <kaa/platform/kaa_client.h>
-#include <kaa/utilities/kaa_log.h>
+#include <kaa_configuration_manager.h>
 #include <kaa_logging.h>
-#include <kaa/platform-impl/common/ext_log_upload_strategies.h>
+#include <platform-impl/common/ext_log_upload_strategies.h>
 
 
+#define DEMO_LOG_UPLOAD_THRESHOLD 5
 
-/*
- * Strategy-specific configuration parameters used by Kaa log collection feature.
- */
-#define KAA_DEMO_UPLOAD_COUNT_THRESHOLD      1 /* Count of collected logs needed to initiate log upload */
-#define KAA_DEMO_LOG_GENERATION_FREQUENCY    1 /* In seconds */
-#define KAA_DEMO_LOGS_TO_SEND                5
-#define KAA_DEMO_LOG_STORAGE_SIZE            10000 /* The amount of space allocated for a log storage, in bytes */
-#define KAA_DEMO_BUCKET_SIZE                 500   /* Size of single bucket, in bytes */
-#define KAA_DEMO_LOGS_IN_BUCKET              5     /* Amount of logs in single bucket */
-#define KAA_DEMO_LOGS_TO_KEEP                50    /* The minimum amount of logs to be present in a log storage, in percents */
-#define KAA_DEMO_LOG_BUF_SZ                  32    /* Log buffer size in bytes */
+typedef struct {
+    kaa_client_t *kaa_client;
+    int32_t sample_period;
+    time_t last_upload_time;
+} temperature_sensor_context;
 
-/*
- * Hard-coded Kaa log entry body.
- */
-#define KAA_DEMO_LOG_TAG     "TAG"
-#define KAA_DEMO_LOG_MESSAGE "MESSAGE_"
-
-
-
-/*
- * Forward declarations.
- */
-extern kaa_error_t ext_limited_log_storage_create(void **log_storage_context_p
-                          , kaa_logger_t *logger
-                          , size_t size
-                          , size_t percent);
-
-
-static kaa_client_t *kaa_client = NULL;
-
-static void *log_storage_context         = NULL;
-static void *log_upload_strategy_context = NULL;
-static size_t log_record_counter = 0;
-static size_t log_successfully_sent_counter = 0;
-
-
-
-#define KAA_DEMO_RETURN_IF_ERROR(error, message) \
-    if ((error)) { \
-        printf(message ", error code %d\n", (error)); \
-        return (error); \
+static void error_cleanup(kaa_client_t *client)
+{
+    if (client != NULL) {
+        kaa_client_stop(client);
+        kaa_client_destroy(client);
     }
 
-static void success_log_delivery(void *context, const kaa_log_bucket_info_t *bucket)
-{
-    (void) context;
-    printf("Bucket: %u is successfully delivered. Logs uploaded: %zu\n",
-           bucket->bucket_id,
-           bucket->log_count);
-
-    log_successfully_sent_counter += bucket->log_count;
+    exit(EXIT_FAILURE);
 }
 
-/* Under normal conditions this callback shouldn't be called */
-static void failed_log_delivery(void *context, const kaa_log_bucket_info_t *bucket)
+static kaa_error_t configuration_update(void *context,
+        const kaa_configuration_configuration_t *configuration)
 {
-    (void) context;
-    printf("Log delivery of the bucket: %u is failed!\n", bucket->bucket_id);
-}
-
-/* Under normal conditions this callback shouldn't be called */
-static void timeout_log_delivery(void *context, const kaa_log_bucket_info_t *bucket)
-{
-    (void) context;
-    printf("Timeout reached for log delivery of the bucket: %u!\n", bucket->bucket_id);
-}
-
-static kaa_log_delivery_listener_t log_listener = {
-    .on_success = success_log_delivery,
-    .on_failed  = failed_log_delivery,
-    .on_timeout = timeout_log_delivery,
-    .ctx        = NULL,
-};
-
-static void kaa_demo_add_log_record(void *context)
-{
-    (void) context;
-
-    if (log_record_counter >= KAA_DEMO_LOGS_TO_SEND) {
-        printf("All logs are sent, waiting for responce\n");
-        if (log_successfully_sent_counter == KAA_DEMO_LOGS_TO_SEND) {
-            printf("All logs successfully sent, stopping demo...\n");
-            kaa_client_stop(context);
-        }
-        return;
+    if (!context || !configuration) {
+        return KAA_ERR_BADPARAM;
     }
 
-    printf("Going to add %zuth log record\n", log_record_counter);
+    printf("Received new sample period: %d\n", configuration->sample_period);
+    temperature_sensor_context *sensor_context = context;
+    sensor_context->sample_period = configuration->sample_period;
+    return KAA_ERR_NONE;
+}
 
-    kaa_user_log_record_t *log_record = kaa_logging_log_data_create();
+static void send_temperature(kaa_client_t *kaa_client)
+{
+    int32_t temp = rand() % 10 + 25;
+    int64_t timestamp = time(NULL);
+    kaa_logging_data_t *log_record = kaa_logging_data_create();
     if (!log_record) {
-        printf("Failed to create log record, error code %d\n", KAA_ERR_NOMEM);
-        return;
+        fprintf(stderr, "Failed to create log record\n");
+        error_cleanup(kaa_client);
     }
 
-    log_record->level = ENUM_LEVEL_KAA_INFO;
-    log_record->tag = kaa_string_move_create(KAA_DEMO_LOG_TAG, NULL);
+    log_record->temperature = temp;
+    log_record->time_stamp = timestamp;
 
-    log_record->time_stamp = KAA_TIME() * 1000;
+    printf("Sampled temperature %d %lu\n", temp, timestamp);
+    kaa_error_t error = kaa_logging_add_record(
+            kaa_client_get_context(kaa_client)->log_collector,
+            log_record, NULL);
 
-    char log_message_buffer[KAA_DEMO_LOG_BUF_SZ];
-    snprintf(log_message_buffer, KAA_DEMO_LOG_BUF_SZ, KAA_DEMO_LOG_MESSAGE"%zu", log_record_counter);
-
-    log_record->message = kaa_string_copy_create(log_message_buffer);
-
-    kaa_log_record_info_t log_info;
-    kaa_error_t error_code = kaa_logging_add_record(kaa_client_get_context(kaa_client)->log_collector, log_record, &log_info);
-    if (error_code) {
-        printf("Failed to add log record, error code %d\n", error_code);
-    } else {
-        printf("Log record: %u added to bucket %u\n", log_info.log_id, log_info.bucket_id);
+    if (error) {
+        fprintf(stderr, "Failed to add log record\n");
+        error_cleanup(kaa_client);
     }
 
     log_record->destroy(log_record);
-    log_record_counter++;
 }
 
-int main(/*int argc, char *argv[]*/)
+static void temperature_update(void *context)
+{
+    if (context == NULL) {
+        return;
+    }
+
+    temperature_sensor_context *sensor_context = context;
+    time_t current = time(NULL);
+
+    if (current - sensor_context->last_upload_time >=
+            sensor_context->sample_period) {
+        send_temperature(sensor_context->kaa_client);
+        sensor_context->last_upload_time = time(NULL);
+    }
+}
+
+int main(void)
 {
     printf("Data collection demo started\n");
-    kaa_log_bucket_constraints_t bucket_sizes = {
-        .max_bucket_size       = KAA_DEMO_BUCKET_SIZE,
-        .max_bucket_log_count  = KAA_DEMO_LOGS_IN_BUCKET,
+
+    kaa_client_t *kaa_client = NULL;
+    kaa_error_t error = kaa_client_create(&kaa_client, NULL);
+
+    if (error) {
+        fprintf(stderr, "Failed to create Kaa client\n");
+        return EXIT_FAILURE;
+    }
+
+    kaa_configuration_root_receiver_t receiver = {
+        &sensor_context,
+        configuration_update,
     };
 
-    /**
-     * Initialize Kaa client.
-     */
-    kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
+    error = kaa_configuration_manager_set_root_receiver(
+            kaa_client_get_context(kaa_client)->configuration_manager,
+            &receiver);
 
-    error_code = ext_limited_log_storage_create(&log_storage_context, kaa_client_get_context(kaa_client)->logger, KAA_DEMO_LOG_STORAGE_SIZE, KAA_DEMO_LOGS_TO_KEEP);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create limited log storage");
+    if (error) {
+        fprintf(stderr, "Failed to set configuiration receiver\n");
+        return EXIT_FAILURE;
+    }
 
-    error_code = ext_log_upload_strategy_create(kaa_client_get_context(kaa_client), &log_upload_strategy_context, KAA_LOG_UPLOAD_VOLUME_STRATEGY);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to create log upload strategy");
+    const kaa_configuration_configuration_t *default_configuration =
+            kaa_configuration_manager_get_configuration(kaa_client_get_context(kaa_client)->configuration_manager);
 
-    error_code = ext_log_upload_strategy_set_threshold_count(log_upload_strategy_context, KAA_DEMO_UPLOAD_COUNT_THRESHOLD);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to set threshold log record count");
+    temperature_sensor_context sensor_context;
+    sensor_context.sample_period = default_configuration->sample_period;
+    sensor_context.last_upload_time = time(NULL);
+    sensor_context.kaa_client = kaa_client;
 
-    error_code = kaa_logging_init(kaa_client_get_context(kaa_client)->log_collector
-                                , log_storage_context
-                                , log_upload_strategy_context
-                                , &bucket_sizes);
+    void *log_upload_strategy_context = NULL;
+    error = ext_log_upload_strategy_create(kaa_client_get_context(kaa_client),
+            &log_upload_strategy_context, KAA_LOG_UPLOAD_VOLUME_STRATEGY);
 
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to init Kaa log collector");
+    if (error) {
+        fprintf(stderr, "Failed to create log upload strategy\n");
+        return EXIT_FAILURE;
+    }
 
-    error_code = kaa_logging_set_listeners(kaa_client_get_context(kaa_client)->log_collector,
-                                           &log_listener);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to add log listeners");
+    error = ext_log_upload_strategy_set_threshold_count(log_upload_strategy_context,
+            DEMO_LOG_UPLOAD_THRESHOLD);
 
-    /**
-     * Start Kaa client main loop.
-     */
-    error_code = kaa_client_start(kaa_client, &kaa_demo_add_log_record, (void *)kaa_client, KAA_DEMO_LOG_GENERATION_FREQUENCY);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to start Kaa main loop");
+    if (error) {
+        fprintf(stderr, "Failed to set threshold log record count\n");
+        return EXIT_FAILURE;
+    }
 
-    /**
-     * Destroy Kaa client.
-     */
+    error = kaa_logging_set_strategy(kaa_client_get_context(kaa_client)->log_collector,
+            log_upload_strategy_context);
+
+    if (error) {
+        fprintf(stderr, "Failed to set log upload strategy\n");
+        return EXIT_FAILURE;
+    }
+
+    error = kaa_client_start(kaa_client, temperature_update,
+            &sensor_context, sensor_context.sample_period);
+
+    if (error) {
+        fprintf(stderr, "Failed to start Kaa client\n");
+        return EXIT_FAILURE;
+    }
+
     kaa_client_destroy(kaa_client);
 
-    printf("Data collection demo stopped\n");
-
-    return error_code;
+    return EXIT_SUCCESS;
 }
-

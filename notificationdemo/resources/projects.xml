@@ -386,48 +386,6 @@ For more information, see:
         <sdkLibDir>CNotificationDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <project id="notification_demo_android">
-        <name>Notification Android demo</name>
-        <description>Kaa Notification subsystem demo app for Android</description>
-        <details>
-            <![CDATA[
-This simple app demonstrates the capabilities of the Kaa Notification subsystem for Android.
-
-<h2>Installation</h2>
-Download the .apk to your Android device by clicking the "Binary" button on the left. Make sure that the device permits installing apps from "Unknown sources". Open the downloaded apk and follow the on-screen instructions.
-
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Notification Android demo" app, you will receive two notification topics accessible by the endpoint — one of which is mandatory and another is optional. A notification on the mandatory topic will be delivered automatically. Notifications on optional topics usually require subscription, but this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive a notification on the optional topic too.<br/><br/>
-
-You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Android Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
-
-Please note that all the features of Administration UI are also supported by REST API.
-
-<h2>What's next?</h2>
-
-For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
-            ]]>
-        </details>
-
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
-        <sdkLanguage>JAVA</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
-
-        <platforms>ANDROID</platforms>
-        <features>NOTIFICATION</features>
-        <complexity>BASIC</complexity>
-        <bundleId>notification_demos</bundleId>
-        <sourceArchive>android/notification_demo.tar.gz</sourceArchive>
-        <projectFolder>notification_demo/NotificationDemo</projectFolder>
-        <sdkLibDir>notification_demo/NotificationDemo/app/libs</sdkLibDir>
-        <destBinaryFile>notification_demo/NotificationDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
-    </project>
     <project id="notification_demo_objc">
         <name>Notification Objective-C demo</name>
         <description>Kaa Notification subsystem demo app based on Objective-C SDK</description>

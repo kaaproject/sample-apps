@@ -21,8 +21,8 @@
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="verifiers_demo">
-        <name>User verifiers demo</name>
+    <project id="verifiers_demo_android">
+        <name>User verifiers demo android</name>
         <description>Kaa user verifiers demo app for Android</description>
         <details>
             <![CDATA[
@@ -62,4 +62,23 @@ For more background on the user verification refer to the corresponding design r
         <sdkLibDir>verifiers_demo/VerifiersDemo/libs</sdkLibDir>
         <destBinaryFile>verifiers_demo/VerifiersDemo/bin/VerifiersDemo-debug.apk</destBinaryFile>
     </project>
+    <project id="verifiers_demo_ios">
+        <name>GPIO control iOS</name>
+        <description>User verifiers demo iOS</description>
+        <details>
+            <![CDATA[
+This simple app demonstrates a user verification flow in Kaa on iOS.
+]]>
+        </details>
+        <sdkLanguage>OBJC</sdkLanguage>
+        <platforms>IOS</platforms>
+        <features>USER_VERIFIER</features>
+        <complexity>REGULAR</complexity>
+        <bundleId>verifiers_demo</bundleId>
+        <sourceArchive>objc/verifiers_demo.tar.gz</sourceArchive>
+        <projectFolder>verifiers_demo</projectFolder>
+        <sdkLibDir>verifiers_demo/libs</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+
 </projectsConfig>

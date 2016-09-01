@@ -14,10 +14,7 @@
  *  limitations under the License.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
+#include <target.h>
 
 #include <kaa/kaa_error.h>
 #include <kaa/kaa_context.h>
@@ -64,20 +61,20 @@ static void send_temperature(kaa_client_t *kaa_client)
     int64_t timestamp = time(NULL);
     kaa_logging_data_t *log_record = kaa_logging_data_create();
     if (!log_record) {
-        fprintf(stderr, "Failed to create log record\n");
+        demo_printf("Failed to create log record\r\n");
         error_cleanup(kaa_client);
     }
 
     log_record->temperature = temp;
     log_record->time_stamp = timestamp;
 
-    printf("Sampled temperature %d %lu\n", temp, timestamp);
+    demo_printf("Sampled temperature %d %lu\n", temp, timestamp);
     kaa_error_t error = kaa_logging_add_record(
             kaa_client_get_context(kaa_client)->log_collector,
             log_record, NULL);
 
     if (error) {
-        fprintf(stderr, "Failed to add log record\n");
+        demo_printf("Failed to add log record, error code %d\r\n");
         error_cleanup(kaa_client);
     }
 
@@ -102,13 +99,26 @@ static void temperature_update(void *context)
 
 int main(void)
 {
-    printf("Data collection demo started\n");
+    /**
+     * Initialise a board.
+     */
+    int ret = target_initialize();
+    if (ret < 0) {
+        /* If console is failed to initialise, you will not see this message */
+        demo_printf("Failed to initialise a target\r\n");
+        return 1;
+    }
+    
+    demo_printf("Data collection demo started\r\n");
 
+    /**
+     * Initialize Kaa client.
+     */
     kaa_client_t *kaa_client = NULL;
     kaa_error_t error = kaa_client_create(&kaa_client, NULL);
 
     if (error) {
-        fprintf(stderr, "Failed to create Kaa client\n");
+        demo_printf("Failed to create Kaa client\r\n", error);
         return EXIT_FAILURE;
     }
 
@@ -122,7 +132,7 @@ int main(void)
             &receiver);
 
     if (error) {
-        fprintf(stderr, "Failed to set configuiration receiver\n");
+        demo_printf("Failed to set configuiration receiver\r\n", error);
         return EXIT_FAILURE;
     }
 
@@ -139,7 +149,7 @@ int main(void)
             &log_upload_strategy_context, KAA_LOG_UPLOAD_VOLUME_STRATEGY);
 
     if (error) {
-        fprintf(stderr, "Failed to create log upload strategy\n");
+        demo_printf("Failed to create log upload strategy, error code %d\r\n", error);
         return EXIT_FAILURE;
     }
 
@@ -147,7 +157,7 @@ int main(void)
             DEMO_LOG_UPLOAD_THRESHOLD);
 
     if (error) {
-        fprintf(stderr, "Failed to set threshold log record count\n");
+        demo_printf("Failed to set threshold log record count, error code %d\r\n", error);
         return EXIT_FAILURE;
     }
 
@@ -155,18 +165,24 @@ int main(void)
             log_upload_strategy_context);
 
     if (error) {
-        fprintf(stderr, "Failed to set log upload strategy\n");
+        demo_printf("Failed to set log upload strategy, error code %d\r\n", error);
         return EXIT_FAILURE;
     }
 
+    /**
+     * Start Kaa client main loop.
+     */
     error = kaa_client_start(kaa_client, temperature_update,
             &sensor_context, sensor_context.sample_period);
 
     if (error) {
-        fprintf(stderr, "Failed to start Kaa client\n");
+        demo_printf("Failed to start Kaa client, error code %d\r\n", error);
         return EXIT_FAILURE;
     }
 
+    /**
+     * Destroy Kaa client.
+     */
     kaa_client_destroy(kaa_client);
 
     return EXIT_SUCCESS;

@@ -17,9 +17,16 @@
 #import "ViewController.h"
 #import "KaaManager.h"
 
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 @import Kaa;
 
 @interface ViewController () <KaaClientStateDelegate>
+
+@property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
+@property (weak, nonatomic) IBOutlet FBSDKLoginButton *fbLoginButton;
+@property (weak, nonatomic) IBOutlet FBSDKLoginButton *fb2loginButton;
+@property (weak, nonatomic) IBOutlet FBSDKLoginButton *fb3loginbutton;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
 
@@ -32,6 +39,5 @@
     
     self.kaaManager = [KaaManager sharedInstance];
 }
-
 
 @end

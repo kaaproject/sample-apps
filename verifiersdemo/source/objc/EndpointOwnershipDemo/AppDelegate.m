@@ -18,6 +18,8 @@
 #import "KaaManager.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <Fabric/Fabric.h>
+#import <TwitterKit/TwitterKit.h>
 
 @import Kaa;
 
@@ -28,6 +30,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [Fabric with:@[[Twitter class]]];
     return YES;
 }
 
@@ -35,6 +38,11 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
+    
+    if ([[Twitter sharedInstance] application:application openURL:url options:annotation]) {
+        return YES;
+    }
+    
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                           openURL:url
                                                 sourceApplication:sourceApplication

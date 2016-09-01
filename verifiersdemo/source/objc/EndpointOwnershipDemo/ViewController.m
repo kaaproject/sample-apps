@@ -18,6 +18,8 @@
 #import "KaaManager.h"
 
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <Fabric/Fabric.h>
+#import <TwitterKit/TwitterKit.h>
 
 @import Kaa;
 
@@ -25,7 +27,8 @@
 
 @property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *fbLoginButton;
-@property (weak, nonatomic) IBOutlet FBSDKLoginButton *fb2loginButton;
+@property (weak, nonatomic) IBOutlet TWTRLogInButton *twtrLogInButton;
+
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *fb3loginbutton;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
@@ -36,6 +39,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.twtrLogInButton.loginMethods = TWTRLoginMethodAll;
+    self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
+        if (session) {
+            NSLog(@"signed in as %@", [session userName]);
+        } else {
+            NSLog(@"error: %@", [error localizedDescription]);
+        }
+    };
     
     self.kaaManager = [KaaManager sharedInstance];
 }

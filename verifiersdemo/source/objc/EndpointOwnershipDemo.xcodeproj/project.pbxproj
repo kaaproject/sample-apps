@@ -12,6 +12,7 @@
 		3985F00D1D781AE100B156D0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F00A1D781AE100B156D0 /* FBSDKLoginKit.framework */; };
 		3985F00E1D781AE100B156D0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F00B1D781AE100B156D0 /* FBSDKShareKit.framework */; };
 		3985F01C1D781D0F00B156D0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F01B1D781D0F00B156D0 /* Bolts.framework */; };
+		64D1CB5158FE6F4A0ADCF3E9 /* Pods_EndpointOwnershipDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A958FC0DB9B1E178545EF5 /* Pods_EndpointOwnershipDemo.framework */; };
 		C571EFBC1CC13B79000FFDD2 /* Kaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C571EFB01CC13B77000FFDD2 /* Kaa.framework */; };
 		C571EFBE1CC13B82000FFDD2 /* Kaa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C571EFB01CC13B77000FFDD2 /* Kaa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E8290BB71C088CAA00AA184A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BA01C088CAA00AA184A /* AppDelegate.m */; };
@@ -102,12 +103,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		377EC1F7A49CB1AA8D2DA1B9 /* Pods-EndpointOwnershipDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EndpointOwnershipDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-EndpointOwnershipDemo/Pods-EndpointOwnershipDemo.release.xcconfig"; sourceTree = "<group>"; };
+		390398DC4F45D731546FBEC3 /* Pods-EndpointOwnershipDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EndpointOwnershipDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EndpointOwnershipDemo/Pods-EndpointOwnershipDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		3985F0061D77143600B156D0 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3985F0071D77143600B156D0 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3985F0091D781AE100B156D0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		3985F00A1D781AE100B156D0 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		3985F00B1D781AE100B156D0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		3985F01B1D781D0F00B156D0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		A4A958FC0DB9B1E178545EF5 /* Pods_EndpointOwnershipDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EndpointOwnershipDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B87824B41C18900100F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
 		B87824BD1C18900600F12E02 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-ep-sdk/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
 		B8B997501BE3FB9600C0ABCE /* EndpointOwnershipDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EndpointOwnershipDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +136,7 @@
 				C571EFBC1CC13B79000FFDD2 /* Kaa.framework in Frameworks */,
 				3985F00C1D781AE100B156D0 /* FBSDKCoreKit.framework in Frameworks */,
 				3985F00D1D781AE100B156D0 /* FBSDKLoginKit.framework in Frameworks */,
+				64D1CB5158FE6F4A0ADCF3E9 /* Pods_EndpointOwnershipDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,8 +150,18 @@
 				3985F00A1D781AE100B156D0 /* FBSDKLoginKit.framework */,
 				3985F01B1D781D0F00B156D0 /* Bolts.framework */,
 				3985F00B1D781AE100B156D0 /* FBSDKShareKit.framework */,
+				A4A958FC0DB9B1E178545EF5 /* Pods_EndpointOwnershipDemo.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1C13752FC0B9581294C4B3B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				390398DC4F45D731546FBEC3 /* Pods-EndpointOwnershipDemo.debug.xcconfig */,
+				377EC1F7A49CB1AA8D2DA1B9 /* Pods-EndpointOwnershipDemo.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		B87824B51C18900100F12E02 /* Products */ = {
@@ -180,6 +195,7 @@
 				E8290B9E1C088CAA00AA184A /* EndpointOwnershipDemo */,
 				3985F0111D781CF300B156D0 /* Frameworks */,
 				B8B997511BE3FB9600C0ABCE /* Products */,
+				A1C13752FC0B9581294C4B3B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,10 +232,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8B997671BE3FB9600C0ABCE /* Build configuration list for PBXNativeTarget "EndpointOwnershipDemo" */;
 			buildPhases = (
+				F17AA9CF036A2B86C6708FFC /* [CP] Check Pods Manifest.lock */,
 				B8B9974C1BE3FB9600C0ABCE /* Sources */,
 				B8B9974D1BE3FB9600C0ABCE /* Frameworks */,
 				B8B9974E1BE3FB9600C0ABCE /* Resources */,
 				C571EFBD1CC13B7B000FFDD2 /* CopyFiles */,
+				9E726BB7562718FCD897A1BA /* [CP] Embed Pods Frameworks */,
+				C8F5A4C3A2EC17160AE67C9D /* [CP] Copy Pods Resources */,
+				E869A8C31D78740100374082 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -241,6 +261,7 @@
 				TargetAttributes = {
 					B8B9974F1BE3FB9600C0ABCE = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = TVMFX8XPT9;
 					};
 				};
 			};
@@ -350,6 +371,67 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9E726BB7562718FCD897A1BA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EndpointOwnershipDemo/Pods-EndpointOwnershipDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8F5A4C3A2EC17160AE67C9D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EndpointOwnershipDemo/Pods-EndpointOwnershipDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E869A8C31D78740100374082 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" d2892036acc24e7574816ef331bb7c107647d020 bb91bf5943efdda395694e7f4a2015bdecc5b5c0768ec4c1491ca8957688ec6a";
+		};
+		F17AA9CF036A2B86C6708FFC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B8B9974C1BE3FB9600C0ABCE /* Sources */ = {
@@ -469,37 +551,49 @@
 		};
 		B8B997681BE3FB9600C0ABCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 390398DC4F45D731546FBEC3 /* Pods-EndpointOwnershipDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)/**",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/EndpointOwnershipDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EndpointOwnershipDemo;
 				PRODUCT_NAME = EndpointOwnershipDemo;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		B8B997691BE3FB9600C0ABCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 377EC1F7A49CB1AA8D2DA1B9 /* Pods-EndpointOwnershipDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)/**",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/EndpointOwnershipDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EndpointOwnershipDemo;
 				PRODUCT_NAME = EndpointOwnershipDemo;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -74,7 +74,7 @@ static void send_temperature(kaa_client_t *kaa_client)
             log_record, NULL);
 
     if (error) {
-        demo_printf("Failed to add log record\r\n");
+        demo_printf("Failed to add log record, error code %d\r\n");
         error_cleanup(kaa_client);
     }
 

@@ -38,6 +38,8 @@ public:
 
     virtual void onEvent(const nsThermostatEventClassFamily::ThermostatInfoRequest& event, const std::string& source)
     {
+        (void)event;
+        (void)source;
         std::cout << "Kaa Demo ThermostatInfoRequest event received!" << std::endl;
 
         nsThermostatEventClassFamily::ThermostatInfo info;
@@ -53,6 +55,7 @@ public:
 
     virtual void onEvent(const nsThermostatEventClassFamily::ThermostatInfoResponse& event, const std::string& source)
     {
+        (void)source;
         std::cout << "Kaa Demo ThermostatInfoResponse event received!" << std::endl;
 
         if (!event.thermostatInfo.is_null()) {
@@ -71,6 +74,7 @@ public:
 
     virtual void onEvent(const nsThermostatEventClassFamily::ChangeDegreeRequest& event, const std::string& source)
     {
+        (void)source;
         std::cout << "Kaa Demo ChangeDegreeRequest event received!" << std::endl;
         if (!event.degree.is_null()) {
             std::cout << "Kaa Demo changing degree to " << event.degree.get_int() << std::endl;

@@ -105,10 +105,9 @@ build_app() {
           -DWIFI_PASSWORD=$PASSWORD \
           -DCMAKE_BUILD_TYPE=MinSizeRel \
           -DWITH_EXTENSION_EVENT=OFF \
-          -DWITH_EXTENSION_CONFIGURATION=OFF \
           -DWITH_EXTENSION_NOTIFICATION=OFF \
           -DKAA_MAX_LOG_LEVEL=3 \
-          ${KAA_TOOLCHAIN_PATH_SDK} ..
+          "$KAA_TOOLCHAIN_PATH_SDK" ..
     make
 }
 

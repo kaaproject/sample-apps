@@ -18,6 +18,10 @@
 
 @import Kaa;
 
+@interface ConcreteClientStateDelegate : NSObject
+
+@end
+
 @interface KaaManager : NSObject
 
 + (KaaManager *)sharedInstance;

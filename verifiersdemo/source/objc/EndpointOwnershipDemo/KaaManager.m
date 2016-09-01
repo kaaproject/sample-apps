@@ -16,6 +16,39 @@
 
 #import "KaaManager.h"
 
+@interface ConcreteClientStateDelegate () <KaaClientStateDelegate>
+
+@end
+
+@implementation ConcreteClientStateDelegate
+
+- (void)onStarted{
+    NSLog(@"Kaa client started");
+}
+- (void)onStartFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client startup failure. %@", exception);
+}
+- (void)onPaused {
+    NSLog(@"Kaa client paused");
+}
+- (void)onPauseFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client pause failure. %@", exception);
+}
+- (void)onResume{
+    NSLog(@"Kaa client resumed");
+}
+- (void)onResumeFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client resume failure. %@", exception);
+}
+- (void)onStopped {
+    NSLog(@"Kaa client stopped");
+}
+- (void)onStopFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client stop failure. %@", exception);
+}
+
+@end
+
 @interface KaaManager ()
 
 @property (nonatomic, strong) volatile id<KaaClient> kaaClient;
@@ -29,7 +62,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[KaaManager alloc] init];
-        manager.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:nil];
+        manager.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:[[ConcreteClientStateDelegate alloc] init]];
     });
     return manager;
 }

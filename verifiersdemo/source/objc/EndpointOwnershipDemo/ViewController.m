@@ -15,10 +15,13 @@
  */
 
 #import "ViewController.h"
+#import "KaaManager.h"
 
 @import Kaa;
 
 @interface ViewController () <KaaClientStateDelegate>
+
+@property (nonatomic, strong) KaaManager *kaaManager;
 
 @end
 
@@ -26,33 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.kaaManager = [KaaManager sharedInstance];
 }
 
-#pragma mark - KaaClientStateDelegate
-
-- (void)onStarted{
-    NSLog(@"Kaa client started");
-}
-- (void)onStartFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client startup failure. %@", exception);
-}
-- (void)onPaused {
-    NSLog(@"Kaa client paused");
-}
-- (void)onPauseFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client pause failure. %@", exception);
-}
-- (void)onResume{
-    NSLog(@"Kaa client resumed");
-}
-- (void)onResumeFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client resume failure. %@", exception);
-}
-- (void)onStopped {
-    NSLog(@"Kaa client stopped");
-}
-- (void)onStopFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client stop failure. %@", exception);
-}
 
 @end

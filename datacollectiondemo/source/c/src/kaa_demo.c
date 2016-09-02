@@ -112,6 +112,8 @@ int main(void)
         return EXIT_FAILURE;
     }
 
+    temperature_sensor_context sensor_context;
+    sensor_context.kaa_client = kaa_client;
     kaa_configuration_root_receiver_t receiver = {
         &sensor_context,
         configuration_update,
@@ -129,10 +131,8 @@ int main(void)
     const kaa_configuration_configuration_t *default_configuration =
             kaa_configuration_manager_get_configuration(kaa_client_get_context(kaa_client)->configuration_manager);
 
-    temperature_sensor_context sensor_context;
     sensor_context.sample_period = default_configuration->sample_period;
     sensor_context.last_upload_time = time(NULL);
-    sensor_context.kaa_client = kaa_client;
 
     void *log_upload_strategy_context = NULL;
     error = ext_log_upload_strategy_create(kaa_client_get_context(kaa_client),

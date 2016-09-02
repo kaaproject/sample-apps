@@ -29,7 +29,7 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
     AuthorizedNetworkGoogle
 };
 
-@interface ViewController () <KaaClientStateDelegate>
+@interface ViewController () <FBSDKLoginButtonDelegate>
 
 @property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
 
@@ -48,6 +48,7 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.twtrLogOutButton.hidden = YES;
+    self.fbLoginButton.delegate = self;
         
     self.twtrLogInButton.loginMethods = TWTRLoginMethodAll;
     self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
@@ -86,6 +87,20 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
             break;
     }
 }
+
+#pragma mark - FBSDKLoginButtonDelegate
+
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
+    self.twtrLogInButton.hidden = YES;
+    self.fb3loginbutton.hidden = YES;
+}
+
+- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
+    self.twtrLogInButton.hidden = NO;
+    self.fb3loginbutton.hidden = NO;
+}
+
+#pragma mark - Actions
 
 - (IBAction)twtrLogOutButtonPressed:(id)sender {
     TWTRSessionStore *store = [[Twitter sharedInstance] sessionStore];

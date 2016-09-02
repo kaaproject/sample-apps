@@ -427,7 +427,7 @@ Please note that all the features of Administration UI are also supported by RES
         <description>Kaa Configuration subsystem demo applications bundle</description>
         <details>
             <![CDATA[
-<p>	
+            <p>	
 	This application bundle demonstrates the features of the Kaa <b>Configuration Extension</b>.
 	This extension allows you to configure the sampling period of your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> sensor.
 	To do this, you need to configure settings in the Kaa <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Sandbox</a>.
@@ -508,7 +508,7 @@ To change the sampling period:
 
 <ol>
 	<li>
-		Click the <b>Administration</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
+		Click the <b>Administration UI</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
 	</li>
 	<li>
 		Click the <b>Applications</b> arrow to unfold the list.
@@ -611,7 +611,7 @@ To change the sampling period:
 
 <ol>
 	<li>
-		Start the Sandbox and click <b>Administration</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Schemas</b> > <b>Server-side EP profile</b>.
+		Start the Sandbox and click <b>Administration UI</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Schemas</b> > <b>Server-side EP profile</b>.
 		Click the <b>Add schema</b> button.
 		
 		<br />
@@ -649,7 +649,7 @@ To create a new endpoint group:
 
 <ol>	
 	<li>
-		On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+		On the <b>Administration UI</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
 		Click the <b>Add endpoint group</b> button.
 	</li>
 	<li>
@@ -680,7 +680,7 @@ To create an endpoint profile filter:
 
 <ol>	
 	<li>
-		On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+		On the <b>Administration UI</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
 		Select the group by clicking the corresponding row.
 		The <b>Endpoint group details</b> page will open.
 	</li>
@@ -715,7 +715,7 @@ To add a group configuration:
 
 <ol>	
 	<li>
-		On the <b>Administration</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+		On the <b>Administration UI</b> page, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
 		Select the group by clicking the corresponding row.
 		The <b>Endpoint group details</b> page will open.
 	</li>
@@ -768,7 +768,7 @@ Kaa client will output the message below.
 	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 3 seconds
 </pre>
 
-This means that your endpoint now belongs to the new group you created. To see the list of groups , click <b>Administration console</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
+This means that your endpoint now belongs to the new group you created. To see the list of groups , click <b>Administration UI</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.
 
 <h1>What’s next?</h1>
 
@@ -794,7 +794,7 @@ For more information, see:
 		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration management</a>.
 	</li>
 </ul>
-]]>
+            ]]>
         </details>
     </bundle>
 </projectsConfig>

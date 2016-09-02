@@ -23,15 +23,23 @@
 
 @import Kaa;
 
+typedef NS_ENUM(int, AuthorizedNetwork) {
+    AuthorizedNetworkFacebook,
+    AuthorizedNetworkTwitter,
+    AuthorizedNetworkGoogle
+};
+
 @interface ViewController () <KaaClientStateDelegate>
 
 @property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
+
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *fbLoginButton;
 @property (weak, nonatomic) IBOutlet TWTRLogInButton *twtrLogInButton;
-
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *fb3loginbutton;
+@property (weak, nonatomic) IBOutlet UIButton *twtrLogOutButton;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
+@property (nonatomic) AuthorizedNetwork authorizedNetwork;
 
 @end
 
@@ -39,17 +47,56 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.twtrLogOutButton.hidden = YES;
+        
     self.twtrLogInButton.loginMethods = TWTRLoginMethodAll;
     self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
         if (session) {
             NSLog(@"signed in as %@", [session userName]);
+            self.authorizedNetwork = AuthorizedNetworkTwitter;
+            [self loggedInWithNetwork:AuthorizedNetworkTwitter];
         } else {
             NSLog(@"error: %@", [error localizedDescription]);
         }
     };
     
     self.kaaManager = [KaaManager sharedInstance];
+}
+
+- (void)loggedInWithNetwork:(AuthorizedNetwork)network {
+    switch (network) {
+        case AuthorizedNetworkFacebook:
+            self.twtrLogInButton.hidden = YES;
+            self.fb3loginbutton.hidden = YES;
+            break;
+            
+        case AuthorizedNetworkTwitter:
+            self.fbLoginButton.hidden = YES;
+            self.twtrLogInButton.hidden = YES;
+            self.fb3loginbutton.hidden = YES;
+            self.twtrLogOutButton.hidden = NO;
+            break;
+            
+        case AuthorizedNetworkGoogle:
+            self.fbLoginButton.hidden = YES;
+            self.twtrLogInButton.hidden = YES;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (IBAction)twtrLogOutButtonPressed:(id)sender {
+    TWTRSessionStore *store = [[Twitter sharedInstance] sessionStore];
+    NSString *userID = store.session.userID;
+    
+    [store logOutUserID:userID];
+    
+    self.fbLoginButton.hidden = NO;
+    self.twtrLogInButton.hidden = NO;
+    self.fb3loginbutton.hidden = NO;
+    self.twtrLogOutButton.hidden = YES;
 }
 
 @end

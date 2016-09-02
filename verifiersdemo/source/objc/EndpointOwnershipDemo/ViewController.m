@@ -20,6 +20,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <Fabric/Fabric.h>
 #import <TwitterKit/TwitterKit.h>
+#import <Google/SignIn.h>
 
 @import Kaa;
 
@@ -29,14 +30,14 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
     AuthorizedNetworkGoogle
 };
 
-@interface ViewController () <FBSDKLoginButtonDelegate>
+@interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate>
 
 @property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
 
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *fbLoginButton;
 @property (weak, nonatomic) IBOutlet TWTRLogInButton *twtrLogInButton;
-@property (weak, nonatomic) IBOutlet FBSDKLoginButton *fb3loginbutton;
-@property (weak, nonatomic) IBOutlet UIButton *twtrLogOutButton;
+@property (weak, nonatomic) IBOutlet GIDSignInButton *googleLogInButton; 
+@property (weak, nonatomic) IBOutlet UIButton *logOutButton;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
 @property (nonatomic) AuthorizedNetwork authorizedNetwork;
@@ -47,9 +48,13 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.twtrLogOutButton.hidden = YES;
+    self.logOutButton.hidden = YES;
+    self.googleLogInButton.colorScheme = kGIDSignInButtonColorSchemeDark;
+    
     self.fbLoginButton.delegate = self;
-        
+    [GIDSignIn sharedInstance].uiDelegate = self;
+    [GIDSignIn sharedInstance].delegate = self;
+    
     self.twtrLogInButton.loginMethods = TWTRLoginMethodAll;
     self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
         if (session) {
@@ -68,19 +73,15 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
     switch (network) {
         case AuthorizedNetworkFacebook:
             self.twtrLogInButton.hidden = YES;
-            self.fb3loginbutton.hidden = YES;
+            self.googleLogInButton.hidden = YES;
             break;
             
         case AuthorizedNetworkTwitter:
-            self.fbLoginButton.hidden = YES;
-            self.twtrLogInButton.hidden = YES;
-            self.fb3loginbutton.hidden = YES;
-            self.twtrLogOutButton.hidden = NO;
-            break;
-            
         case AuthorizedNetworkGoogle:
             self.fbLoginButton.hidden = YES;
             self.twtrLogInButton.hidden = YES;
+            self.googleLogInButton.hidden = YES;
+            self.logOutButton.hidden = NO;
             break;
             
         default:
@@ -92,26 +93,36 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
     self.twtrLogInButton.hidden = YES;
-    self.fb3loginbutton.hidden = YES;
+    self.googleLogInButton.hidden = YES;
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
     self.twtrLogInButton.hidden = NO;
-    self.fb3loginbutton.hidden = NO;
+    self.googleLogInButton.hidden = NO;
+}
+
+#pragma mark - GIDSignInDelegate
+
+- (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
+    [self loggedInWithNetwork:AuthorizedNetworkGoogle];
 }
 
 #pragma mark - Actions
 
-- (IBAction)twtrLogOutButtonPressed:(id)sender {
-    TWTRSessionStore *store = [[Twitter sharedInstance] sessionStore];
-    NSString *userID = store.session.userID;
-    
-    [store logOutUserID:userID];
+- (IBAction)logOutBtnPressed:(id)sender {
+    if (self.authorizedNetwork == AuthorizedNetworkTwitter) {
+        TWTRSessionStore *store = [[Twitter sharedInstance] sessionStore];
+        NSString *userID = store.session.userID;
+        
+        [store logOutUserID:userID];
+    } else {
+        [[GIDSignIn sharedInstance] signOut];
+    }
     
     self.fbLoginButton.hidden = NO;
     self.twtrLogInButton.hidden = NO;
-    self.fb3loginbutton.hidden = NO;
-    self.twtrLogOutButton.hidden = YES;
+    self.googleLogInButton.hidden = NO;
+    self.logOutButton.hidden = YES;
 }
 
 @end

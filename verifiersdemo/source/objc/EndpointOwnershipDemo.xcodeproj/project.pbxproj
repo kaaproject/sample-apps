@@ -21,6 +21,7 @@
 		E8290BBA1C088CAA00AA184A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8290BA41C088CAA00AA184A /* Main.storyboard */; };
 		E8290BC11C088CAA00AA184A /* KaaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB11C088CAA00AA184A /* KaaManager.m */; };
 		E8290BC21C088CAA00AA184A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB21C088CAA00AA184A /* main.m */; };
+		E869A8D21D796D3600374082 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E869A8D11D796D3600374082 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		E8290BB01C088CAA00AA184A /* KaaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KaaManager.h; sourceTree = "<group>"; };
 		E8290BB11C088CAA00AA184A /* KaaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KaaManager.m; sourceTree = "<group>"; };
 		E8290BB21C088CAA00AA184A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E869A8D11D796D3600374082 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +223,7 @@
 				E8290BA41C088CAA00AA184A /* Main.storyboard */,
 				E8290BB21C088CAA00AA184A /* main.m */,
 				E8290BAF1C088CAA00AA184A /* Info.plist */,
+				E869A8D11D796D3600374082 /* GoogleService-Info.plist */,
 			);
 			path = EndpointOwnershipDemo;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8290BBA1C088CAA00AA184A /* Main.storyboard in Resources */,
+				E869A8D21D796D3600374082 /* GoogleService-Info.plist in Resources */,
 				E8290BB81C088CAA00AA184A /* Assets.xcassets in Resources */,
 				E8290BB91C088CAA00AA184A /* LaunchScreen.storyboard in Resources */,
 			);

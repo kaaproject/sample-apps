@@ -27,6 +27,11 @@
                                             <constraint firstAttribute="height" constant="50" id="V8h-0H-vz5"/>
                                             <constraint firstAttribute="width" constant="200" id="mrt-Qk-fDj"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6q-cP-4rN" customClass="TWTRLogInButton">
                                         <rect key="frame" x="0.0" y="60" width="200" height="50"/>
@@ -36,7 +41,7 @@
                                             <constraint firstAttribute="width" constant="200" id="gKI-if-CrK"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Os4-pA-clA" customClass="FBSDKLoginButton">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Os4-pA-clA" customClass="GIDSignInButton">
                                         <rect key="frame" x="0.0" y="120" width="200" height="50"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -55,8 +60,13 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="Log out"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="twtrLogOutButtonPressed:" destination="3MJ-NA-VOp" eventType="touchUpInside" id="wFR-1u-ZDV"/>
+                                    <action selector="logOutBtnPressed:" destination="3MJ-NA-VOp" eventType="touchUpInside" id="Xjr-Ug-oQQ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -69,11 +79,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="fb3loginbutton" destination="Os4-pA-clA" id="6j0-I7-tO5"/>
                         <outlet property="fbLoginButton" destination="rbJ-xP-XZb" id="Qyh-PP-Zbb"/>
+                        <outlet property="googleLogInButton" destination="Os4-pA-clA" id="Fe1-4V-CrT"/>
+                        <outlet property="logOutButton" destination="mNb-f0-loZ" id="wdG-eA-hZm"/>
                         <outlet property="socialButtonsStackView" destination="dLE-kc-toP" id="tPZ-jI-RAT"/>
                         <outlet property="twtrLogInButton" destination="v6q-cP-4rN" id="i3H-sa-5nX"/>
-                        <outlet property="twtrLogOutButton" destination="mNb-f0-loZ" id="6nt-Eg-BY4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zbf-aN-oYe" userLabel="First Responder" sceneMemberID="firstResponder"/>

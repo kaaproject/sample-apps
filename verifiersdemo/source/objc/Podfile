@@ -2,5 +2,6 @@ target 'EndpointOwnershipDemo' do
     use_frameworks!
     pod 'Fabric'
     pod 'TwitterKit'
+    pod 'Google/SignIn'
 end
 

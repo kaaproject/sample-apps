@@ -31,22 +31,32 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Fabric with:@[[Twitter class]]];
+    
+    NSError* configureError;
+    [[GGLContext sharedInstance] configureWithError: &configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options {
     
-    if ([[Twitter sharedInstance] application:application openURL:url options:annotation]) {
+    if ([[FBSDKApplicationDelegate sharedInstance] application:app
+                                                       openURL:url
+                                             sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                    annotation:options[UIApplicationOpenURLOptionsAnnotationKey]]) {
         return YES;
     }
     
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                       annotation:annotation];
+    if ([[Twitter sharedInstance] application:app
+                                      openURL:url
+                                      options:options[UIApplicationOpenURLOptionsSourceApplicationKey]]) {
+        return YES;
+    }
+    
+    return [[GIDSignIn sharedInstance] handleURL:url
+                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
 }
 
 @end

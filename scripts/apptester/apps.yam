@@ -102,6 +102,7 @@ notificationdemo:
       src: "notificationdemo/source/c"
       platform:
         posix:
+          dependencies: [["common/c/targets", "targets"]]
           buildcmd: "bash build.sh build <<< posix"
     cpp:
       src: "notificationdemo/source/cpp"

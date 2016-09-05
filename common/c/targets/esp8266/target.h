@@ -38,4 +38,10 @@
  */
 int target_initialize(void);
 
+/* The ESP8266 SDK does not define getchar() anywhere,
+ * but it is required to read user input in some demos,
+ * so it is implemented here.
+ */
+int getchar(void);
+
 #endif //ESP8266_SUPPORT_H_

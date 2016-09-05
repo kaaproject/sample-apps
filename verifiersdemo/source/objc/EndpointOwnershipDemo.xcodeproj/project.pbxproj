@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3912E3F61D7D91A100BC6172 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3912E3F51D7D91A100BC6172 /* User.m */; };
 		3985F0081D77143600B156D0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3985F0071D77143600B156D0 /* ViewController.m */; };
 		3985F00C1D781AE100B156D0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F0091D781AE100B156D0 /* FBSDKCoreKit.framework */; };
 		3985F00D1D781AE100B156D0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F00A1D781AE100B156D0 /* FBSDKLoginKit.framework */; };
@@ -106,6 +107,8 @@
 /* Begin PBXFileReference section */
 		377EC1F7A49CB1AA8D2DA1B9 /* Pods-EndpointOwnershipDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EndpointOwnershipDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-EndpointOwnershipDemo/Pods-EndpointOwnershipDemo.release.xcconfig"; sourceTree = "<group>"; };
 		390398DC4F45D731546FBEC3 /* Pods-EndpointOwnershipDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EndpointOwnershipDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EndpointOwnershipDemo/Pods-EndpointOwnershipDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		3912E3F41D7D91A100BC6172 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		3912E3F51D7D91A100BC6172 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		3985F0061D77143600B156D0 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3985F0071D77143600B156D0 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3985F0091D781AE100B156D0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				3985F0071D77143600B156D0 /* ViewController.m */,
 				E8290BB01C088CAA00AA184A /* KaaManager.h */,
 				E8290BB11C088CAA00AA184A /* KaaManager.m */,
+				3912E3F41D7D91A100BC6172 /* User.h */,
+				3912E3F51D7D91A100BC6172 /* User.m */,
 				E8290BA11C088CAA00AA184A /* Assets.xcassets */,
 				E8290BA21C088CAA00AA184A /* LaunchScreen.storyboard */,
 				E8290BA41C088CAA00AA184A /* Main.storyboard */,
@@ -442,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3912E3F61D7D91A100BC6172 /* User.m in Sources */,
 				E8290BB71C088CAA00AA184A /* AppDelegate.m in Sources */,
 				E8290BC11C088CAA00AA184A /* KaaManager.m in Sources */,
 				3985F0081D77143600B156D0 /* ViewController.m in Sources */,

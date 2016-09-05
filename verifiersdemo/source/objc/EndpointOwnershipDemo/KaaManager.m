@@ -49,13 +49,18 @@
 
 @end
 
-@interface KaaManager ()
+@interface KaaManager () <ConfigurationDelegate>
 
 @property (nonatomic, strong) volatile id<KaaClient> kaaClient;
+@property (nonatomic, strong) KAAKaaVerifiersTokens *verifiersTokens;
 
 @end
 
 @implementation KaaManager
+
+/**
+ * Returns shared instance of KaaManager class.
+ */
 
 + (KaaManager *)sharedInstance {
     static KaaManager *manager = nil;
@@ -63,8 +68,48 @@
     dispatch_once(&onceToken, ^{
         manager = [[KaaManager alloc] init];
         manager.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:[[ConcreteClientStateDelegate alloc] init]];
+        manager.verifiersTokens = [manager.kaaClient getConfiguration];
     });
     return manager;
+}
+
+- (void)attachUser:(User *)user delegate:(id<UserAttachDelegate>)delegate {
+    NSLog(@"Attaching user...");
+    [self.kaaClient attachUserWithVerifierToken:[self getKaaVerifiersTokenForUser:user] userId:user.userId accessToken:user.token delegate:delegate];
+}
+
+/**
+ * Detach the endpoint from the user.
+ */
+
+- (void)detachEndpoitWithDelegate:(id<DetachEndpointFromUserDelegate>)delegate {
+    NSLog(@"Detaching endpoint with key hash %@", [self.kaaClient getEndpointKeyHash]);
+    [self.kaaClient detachEndpointWithKeyHash:[self.kaaClient getEndpointKeyHash] delegate:delegate];
+}
+
+- (NSString *)getKaaVerifiersTokenForUser:(User *)user {
+    switch (user.network) {
+        case AuthorizedNetworkFacebook:
+            return self.verifiersTokens.facebookKaaVerifierToken.data;
+            break;
+            
+        case AuthorizedNetworkTwitter:
+            return self.verifiersTokens.twitterKaaVerifierToken.data;
+            break;
+            
+        case AuthorizedNetworkGoogle:
+            return self.verifiersTokens.googleKaaVerifierToken.data;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - ConfigurationDelegate
+
+- (void)onConfigurationUpdate:(KAAKaaVerifiersTokens *)configuration {
+    self.verifiersTokens = configuration;
 }
 
 @end

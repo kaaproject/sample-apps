@@ -14,29 +14,18 @@
  *  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
 #import "User.h"
 
+@implementation User
 
-typedef NS_ENUM(int, AuthorizedNetwork) {
-    AuthorizedNetworkFacebook,
-    AuthorizedNetworkTwitter,
-    AuthorizedNetworkGoogle
-};
-
-
-@import Kaa;
-
-@interface ConcreteClientStateDelegate : NSObject
-
-@end
-
-@interface KaaManager : NSObject
-
-+ (KaaManager *)sharedInstance;
-
-- (void)attachUser:(User *)user delegate:(id<UserAttachDelegate>)delegate;
-
-- (void)detachEndpoitWithDelegate:(id<DetachEndpointFromUserDelegate>)delegate;
+- (instancetype)initWithUserId:(NSInteger)userId token:(NSString *)token authorizedNetwork:(AuthorizedNetwork)network {
+    self = [super init];
+    if (self) {
+        self.userId = userId;
+        self.token = token;
+        self.network = network;
+    }
+    return self;
+}
 
 @end

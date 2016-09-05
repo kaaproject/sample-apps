@@ -15,28 +15,14 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "User.h"
+#import "KaaManager.h"
 
+@interface User : NSObject
 
-typedef NS_ENUM(int, AuthorizedNetwork) {
-    AuthorizedNetworkFacebook,
-    AuthorizedNetworkTwitter,
-    AuthorizedNetworkGoogle
-};
+@property (nonatomic) NSInteger userId;
+@property (nonatomic, strong) NSString *token;
+@property (nonatomic) AuthorizedNetwork network;
 
-
-@import Kaa;
-
-@interface ConcreteClientStateDelegate : NSObject
-
-@end
-
-@interface KaaManager : NSObject
-
-+ (KaaManager *)sharedInstance;
-
-- (void)attachUser:(User *)user delegate:(id<UserAttachDelegate>)delegate;
-
-- (void)detachEndpoitWithDelegate:(id<DetachEndpointFromUserDelegate>)delegate;
+- (instancetype)initWithUserId:(NSInteger)userId token:(NSString *)token authorizedNetwork:(AuthorizedNetwork)network;
 
 @end

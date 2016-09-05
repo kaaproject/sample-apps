@@ -16,6 +16,7 @@
 
 #import "ViewController.h"
 #import "KaaManager.h"
+#import "User.h"
 
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <Fabric/Fabric.h>
@@ -24,13 +25,7 @@
 
 @import Kaa;
 
-typedef NS_ENUM(int, AuthorizedNetwork) {
-    AuthorizedNetworkFacebook,
-    AuthorizedNetworkTwitter,
-    AuthorizedNetworkGoogle
-};
-
-@interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate>
+@interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UserAttachDelegate, DetachEndpointFromUserDelegate>
 
 @property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
 
@@ -40,6 +35,7 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
 @property (weak, nonatomic) IBOutlet UIButton *logOutButton;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
+@property (nonatomic, strong) User *user;
 @property (nonatomic) AuthorizedNetwork authorizedNetwork;
 
 @end
@@ -58,14 +54,13 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
     self.twtrLogInButton.loginMethods = TWTRLoginMethodAll;
     self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
         if (session) {
-            NSLog(@"signed in as %@", [session userName]);
-            self.authorizedNetwork = AuthorizedNetworkTwitter;
+            NSLog(@"Signed in as %@", [session userName]);
+            self.user = [[User alloc] initWithUserId:session.userID token:session.authToken authorizedNetwork:AuthorizedNetworkTwitter];
             [self loggedInWithNetwork:AuthorizedNetworkTwitter];
         } else {
             NSLog(@"error: %@", [error localizedDescription]);
         }
     };
-    
     self.kaaManager = [KaaManager sharedInstance];
 }
 
@@ -92,11 +87,17 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
 #pragma mark - FBSDKLoginButtonDelegate
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
-    self.twtrLogInButton.hidden = YES;
-    self.googleLogInButton.hidden = YES;
+    if (result.token) {
+        NSLog(@"Signed in as user with id %@", result.token.userID);
+        self.twtrLogInButton.hidden = YES;
+        self.googleLogInButton.hidden = YES;
+        self.user = [[User alloc] initWithUserId:result.token.userID token:result.token.tokenString authorizedNetwork:AuthorizedNetworkFacebook];
+        [self.kaaManager attachUser:self.user delegate:self];
+    }
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
+    [self.kaaManager detachEndpoitWithDelegate:self];
     self.twtrLogInButton.hidden = NO;
     self.googleLogInButton.hidden = NO;
 }
@@ -105,12 +106,39 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
     [self loggedInWithNetwork:AuthorizedNetworkGoogle];
+    NSLog(@"Signed in as %@", user.profile.name);
+    self.user = [[User alloc] initWithUserId:user.userID token:user.authentication.accessToken authorizedNetwork:AuthorizedNetworkGoogle];
+    [self.kaaManager attachUser:self.user delegate:self];
+}
+
+#pragma mark - UserAttachDelegate
+
+- (void)onAttachResult:(UserAttachResponse *)response {
+    switch (response.result) {
+        case SYNC_RESPONSE_RESULT_TYPE_SUCCESS:
+            NSLog(@"User attach result: success.");
+            break;
+            
+        case SYNC_RESPONSE_RESULT_TYPE_FAILURE:
+            NSLog(@"User attach result type: failure.");
+            break;
+            
+        default:
+            break;
+    }
+    if (response.errorCode.branch == KAA_UNION_USER_ATTACH_ERROR_CODE_OR_NULL_BRANCH_0) {
+        NSLog(@"Error code: %@, error reason: %@", response.errorCode.data, response.errorReason.data);
+    }
+}
+
+- (void)onDetachedEndpointWithAccessToken:(NSString *)endpointAccessToken {
+    NSLog(@"Endpoint with access token %@ was sucessfully detached.", endpointAccessToken);
 }
 
 #pragma mark - Actions
 
 - (IBAction)logOutBtnPressed:(id)sender {
-    if (self.authorizedNetwork == AuthorizedNetworkTwitter) {
+    if (self.user.network == AuthorizedNetworkTwitter) {
         TWTRSessionStore *store = [[Twitter sharedInstance] sessionStore];
         NSString *userID = store.session.userID;
         
@@ -118,6 +146,8 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
     } else {
         [[GIDSignIn sharedInstance] signOut];
     }
+    
+    [self.kaaManager detachEndpoitWithDelegate:self];
     
     self.fbLoginButton.hidden = NO;
     self.twtrLogInButton.hidden = NO;

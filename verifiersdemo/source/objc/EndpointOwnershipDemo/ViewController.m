@@ -24,6 +24,11 @@
 #import <TwitterKit/TwitterKit.h>
 #import <Google/SignIn.h>
 
+typedef NS_ENUM(int, AuthorizationLabel) {
+    AuthorizationLabelSocial,
+    AuthorizationLabelKaa
+};
+
 @import Kaa;
 
 @interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UserAttachDelegate, OnDetachEndpointOperationDelegate>
@@ -34,6 +39,8 @@
 @property (weak, nonatomic) IBOutlet TWTRLogInButton *twtrLogInButton;
 @property (weak, nonatomic) IBOutlet GIDSignInButton *googleLogInButton; 
 @property (weak, nonatomic) IBOutlet UIButton *logOutButton;
+@property (weak, nonatomic) IBOutlet UILabel *socialNetworkAuthorizationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *kaaAuthorizationLabel;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
 @property (nonatomic, strong) User *user;
@@ -68,6 +75,8 @@
 }
 
 - (void)userHasLoggedIn {
+    [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:YES];
+    
     switch (self.user.network) {
         case AuthorizedNetworkFacebook:
             self.twtrLogInButton.hidden = YES;
@@ -87,15 +96,42 @@
     }
 }
 
+- (void)updateAuthorizationStatusForLabel:(AuthorizationLabel)label status:(BOOL)status {
+    switch (label) {
+        case AuthorizationLabelKaa: {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (status) {
+                    self.kaaAuthorizationLabel.text = [NSString stringWithFormat:@"Kaa: YES"];
+                } else {
+                    self.kaaAuthorizationLabel.text = [NSString stringWithFormat:@"Kaa: NO"];
+                }
+            });
+            break;
+        }
+        case AuthorizationLabelSocial: {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (status) {
+                    self.socialNetworkAuthorizationLabel.text = [NSString stringWithFormat:@"Social network: YES"];
+                } else {
+                    self.socialNetworkAuthorizationLabel.text = [NSString stringWithFormat:@"Social network: NO"];
+                }
+            });
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - FBSDKLoginButtonDelegate
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
     if (result.token) {
         NSLog(@"Signed in as user with id %@", result.token.userID);
-        self.twtrLogInButton.hidden = YES;
-        self.googleLogInButton.hidden = YES;
         self.user = [[User alloc] initWithUserId:result.token.userID token:result.token.tokenString authorizedNetwork:AuthorizedNetworkFacebook];
         [self.kaaManager attachUser:self.user delegate:self];
+        [self userHasLoggedIn];
     }
 }
 
@@ -103,6 +139,7 @@
     [self.kaaManager detachEndpoitWithDelegate:self];
     self.twtrLogInButton.hidden = NO;
     self.googleLogInButton.hidden = NO;
+    [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:NO];
 }
 
 #pragma mark - GIDSignInDelegate
@@ -120,6 +157,7 @@
     switch (response.result) {
         case SYNC_RESPONSE_RESULT_TYPE_SUCCESS:
             NSLog(@"User attach result: success.");
+            [self updateAuthorizationStatusForLabel:AuthorizationLabelKaa status:YES];
             break;
             
         case SYNC_RESPONSE_RESULT_TYPE_FAILURE:
@@ -140,6 +178,7 @@
     switch (result) {
         case SYNC_RESPONSE_RESULT_TYPE_SUCCESS:
             NSLog(@"Endpoint detach result: success");
+            [self updateAuthorizationStatusForLabel:AuthorizationLabelKaa status:NO];
             break;
             
         case SYNC_RESPONSE_RESULT_TYPE_FAILURE:
@@ -173,6 +212,7 @@
     
     [self.kaaManager detachEndpoitWithDelegate:self];
     
+    self.socialNetworkAuthorizationLabel.text = @"Social network: NO";
     self.fbLoginButton.hidden = NO;
     self.twtrLogInButton.hidden = NO;
     self.googleLogInButton.hidden = NO;

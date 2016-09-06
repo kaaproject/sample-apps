@@ -62,7 +62,9 @@
             NSLog(@"error: %@", [error localizedDescription]);
         }
     };
+    
     self.kaaManager = [KaaManager sharedInstance];
+    [self.kaaManager startKaaClient];
 }
 
 - (void)userHasLoggedIn {

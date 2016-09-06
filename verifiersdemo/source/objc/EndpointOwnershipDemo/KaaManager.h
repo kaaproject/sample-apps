@@ -19,13 +19,11 @@
 
 @import Kaa;
 
-@interface ConcreteClientStateDelegate : NSObject
-
-@end
-
 @interface KaaManager : NSObject
 
 + (KaaManager *)sharedInstance;
+
+- (void)startKaaClient;
 
 - (void)attachUser:(User *)user delegate:(id<UserAttachDelegate>)delegate;
 

@@ -16,40 +16,7 @@
 
 #import "KaaManager.h"
 
-@interface ConcreteClientStateDelegate () <KaaClientStateDelegate>
-
-@end
-
-@implementation ConcreteClientStateDelegate
-
-- (void)onStarted{
-    NSLog(@"Kaa client started");
-}
-- (void)onStartFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client startup failure. %@", exception);
-}
-- (void)onPaused {
-    NSLog(@"Kaa client paused");
-}
-- (void)onPauseFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client pause failure. %@", exception);
-}
-- (void)onResume{
-    NSLog(@"Kaa client resumed");
-}
-- (void)onResumeFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client resume failure. %@", exception);
-}
-- (void)onStopped {
-    NSLog(@"Kaa client stopped");
-}
-- (void)onStopFailureWithException:(NSException *)exception {
-    NSLog(@"Kaa client stop failure. %@", exception);
-}
-
-@end
-
-@interface KaaManager () <ConfigurationDelegate>
+@interface KaaManager () <ProfileContainer, ConfigurationDelegate, KaaClientStateDelegate>
 
 @property (nonatomic, strong) volatile id<KaaClient> kaaClient;
 @property (nonatomic, strong) KAAKaaVerifiersTokens *verifiersTokens;
@@ -67,10 +34,20 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[KaaManager alloc] init];
-        manager.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:[[ConcreteClientStateDelegate alloc] init]];
-        manager.verifiersTokens = [manager.kaaClient getConfiguration];
+        manager.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:manager];
+        [manager.kaaClient setProfileContainer:manager];
     });
     return manager;
+}
+
+- (void)startKaaClient {
+    if (self.kaaClient) {
+        [self.kaaClient start];
+    } else {
+        self.kaaClient = [KaaClientFactory clientWithContext:[[DefaultKaaPlatformContext alloc] init] stateDelegate:self];
+        [self.kaaClient start];
+    }
+    self.verifiersTokens = [self.kaaClient getConfiguration];
 }
 
 - (void)attachUser:(User *)user delegate:(id<UserAttachDelegate>)delegate {
@@ -107,10 +84,43 @@
     }
 }
 
+#pragma mark - ProfileContainer
+
+- (KAAEmptyData *)getProfile {
+    return [[KAAEmptyData alloc] init];
+}
+
 #pragma mark - ConfigurationDelegate
 
 - (void)onConfigurationUpdate:(KAAKaaVerifiersTokens *)configuration {
     self.verifiersTokens = configuration;
+}
+
+#pragma mark - KaaClientStateDelegate
+
+- (void)onStarted{
+    NSLog(@"Kaa client started");
+}
+- (void)onStartFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client startup failure. %@", exception);
+}
+- (void)onPaused {
+    NSLog(@"Kaa client paused");
+}
+- (void)onPauseFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client pause failure. %@", exception);
+}
+- (void)onResume{
+    NSLog(@"Kaa client resumed");
+}
+- (void)onResumeFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client resume failure. %@", exception);
+}
+- (void)onStopped {
+    NSLog(@"Kaa client stopped");
+}
+- (void)onStopFailureWithException:(NSException *)exception {
+    NSLog(@"Kaa client stop failure. %@", exception);
 }
 
 @end

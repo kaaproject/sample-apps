@@ -15,14 +15,19 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "KaaManager.h"
+
+typedef NS_ENUM(int, AuthorizedNetwork) {
+    AuthorizedNetworkFacebook,
+    AuthorizedNetworkTwitter,
+    AuthorizedNetworkGoogle
+};
 
 @interface User : NSObject
 
-@property (nonatomic) NSInteger userId;
+@property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *token;
 @property (nonatomic) AuthorizedNetwork network;
 
-- (instancetype)initWithUserId:(NSInteger)userId token:(NSString *)token authorizedNetwork:(AuthorizedNetwork)network;
+- (instancetype)initWithUserId:(NSString *)userId token:(NSString *)token authorizedNetwork:(AuthorizedNetwork)network;
 
 @end

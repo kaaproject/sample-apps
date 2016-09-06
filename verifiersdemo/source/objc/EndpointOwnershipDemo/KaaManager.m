@@ -82,9 +82,10 @@
  * Detach the endpoint from the user.
  */
 
-- (void)detachEndpoitWithDelegate:(id<DetachEndpointFromUserDelegate>)delegate {
+- (void)detachEndpoitWithDelegate:(id<OnDetachEndpointOperationDelegate>)delegate {
     NSLog(@"Detaching endpoint with key hash %@", [self.kaaClient getEndpointKeyHash]);
-    [self.kaaClient detachEndpointWithKeyHash:[self.kaaClient getEndpointKeyHash] delegate:delegate];
+    EndpointKeyHash *keyHash = [[EndpointKeyHash alloc] initWithKeyHash:[self.kaaClient getEndpointKeyHash]];
+    [self.kaaClient detachEndpointWithKeyHash:keyHash delegate:delegate];
 }
 
 - (NSString *)getKaaVerifiersTokenForUser:(User *)user {

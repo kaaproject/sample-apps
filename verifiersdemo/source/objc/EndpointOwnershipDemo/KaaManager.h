@@ -17,14 +17,6 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 
-
-typedef NS_ENUM(int, AuthorizedNetwork) {
-    AuthorizedNetworkFacebook,
-    AuthorizedNetworkTwitter,
-    AuthorizedNetworkGoogle
-};
-
-
 @import Kaa;
 
 @interface ConcreteClientStateDelegate : NSObject
@@ -37,6 +29,6 @@ typedef NS_ENUM(int, AuthorizedNetwork) {
 
 - (void)attachUser:(User *)user delegate:(id<UserAttachDelegate>)delegate;
 
-- (void)detachEndpoitWithDelegate:(id<DetachEndpointFromUserDelegate>)delegate;
+- (void)detachEndpoitWithDelegate:(id<OnDetachEndpointOperationDelegate>)delegate;
 
 @end

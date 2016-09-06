@@ -19,13 +19,14 @@
 #import "User.h"
 
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
 #import <Fabric/Fabric.h>
 #import <TwitterKit/TwitterKit.h>
 #import <Google/SignIn.h>
 
 @import Kaa;
 
-@interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UserAttachDelegate, DetachEndpointFromUserDelegate>
+@interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UserAttachDelegate, OnDetachEndpointOperationDelegate>
 
 @property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
 
@@ -65,7 +66,7 @@
 }
 
 - (void)loggedInWithNetwork:(AuthorizedNetwork)network {
-    switch (network) {
+    switch (self.user.network) {
         case AuthorizedNetworkFacebook:
             self.twtrLogInButton.hidden = YES;
             self.googleLogInButton.hidden = YES;
@@ -131,8 +132,29 @@
     }
 }
 
-- (void)onDetachedEndpointWithAccessToken:(NSString *)endpointAccessToken {
-    NSLog(@"Endpoint with access token %@ was sucessfully detached.", endpointAccessToken);
+#pragma mark - OnDetachEndpointOperationDelegate
+
+- (void)onDetachResult:(SyncResponseResultType)result {
+    switch (result) {
+        case SYNC_RESPONSE_RESULT_TYPE_SUCCESS:
+            NSLog(@"Endpoint detach result: success");
+            break;
+            
+        case SYNC_RESPONSE_RESULT_TYPE_FAILURE:
+            NSLog(@"Endpoint detach result: failure");
+            break;
+            
+        case SYNC_RESPONSE_RESULT_TYPE_PROFILE_RESYNC:
+            NSLog(@"Endpoint detach result: profile resync");
+            break;
+            
+        case SYNC_RESPONSE_RESULT_TYPE_REDIRECT:
+            NSLog(@"Endpoint detach result: redirect");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - Actions

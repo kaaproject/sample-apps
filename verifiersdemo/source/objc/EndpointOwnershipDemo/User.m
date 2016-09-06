@@ -18,7 +18,7 @@
 
 @implementation User
 
-- (instancetype)initWithUserId:(NSInteger)userId token:(NSString *)token authorizedNetwork:(AuthorizedNetwork)network {
+- (instancetype)initWithUserId:(NSString *)userId token:(NSString *)token authorizedNetwork:(AuthorizedNetwork)network {
     self = [super init];
     if (self) {
         self.userId = userId;

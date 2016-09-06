@@ -57,7 +57,7 @@
         if (session) {
             NSLog(@"Signed in as %@", [session userName]);
             self.user = [[User alloc] initWithUserId:session.userID token:session.authToken authorizedNetwork:AuthorizedNetworkTwitter];
-            [self loggedInWithNetwork:AuthorizedNetworkTwitter];
+            [self userHasLoggedIn];
         } else {
             NSLog(@"error: %@", [error localizedDescription]);
         }
@@ -65,7 +65,7 @@
     self.kaaManager = [KaaManager sharedInstance];
 }
 
-- (void)loggedInWithNetwork:(AuthorizedNetwork)network {
+- (void)userHasLoggedIn {
     switch (self.user.network) {
         case AuthorizedNetworkFacebook:
             self.twtrLogInButton.hidden = YES;
@@ -106,7 +106,7 @@
 #pragma mark - GIDSignInDelegate
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
-    [self loggedInWithNetwork:AuthorizedNetworkGoogle];
+    [self userHasLoggedIn];
     NSLog(@"Signed in as %@", user.profile.name);
     self.user = [[User alloc] initWithUserId:user.userID token:user.authentication.accessToken authorizedNetwork:AuthorizedNetworkGoogle];
     [self.kaaManager attachUser:self.user delegate:self];

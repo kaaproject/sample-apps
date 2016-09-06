@@ -145,10 +145,12 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 #pragma mark - GIDSignInDelegate
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
-    [self userHasLoggedIn];
-    NSLog(@"Signed in as %@", user.profile.name);
-    self.user = [[User alloc] initWithUserId:user.userID token:user.authentication.accessToken authorizedNetwork:AuthorizedNetworkGoogle];
-    [self.kaaManager attachUser:self.user delegate:self];
+    if (user) {
+        NSLog(@"Signed in as %@", user.profile.name);
+        self.user = [[User alloc] initWithUserId:user.userID token:user.authentication.accessToken authorizedNetwork:AuthorizedNetworkGoogle];
+        [self.kaaManager attachUser:self.user delegate:self];
+        [self userHasLoggedIn];
+    }
 }
 
 #pragma mark - UserAttachDelegate

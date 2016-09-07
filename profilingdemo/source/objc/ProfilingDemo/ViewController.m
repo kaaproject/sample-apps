@@ -107,7 +107,7 @@
     [self addLogWithText:[NSString stringWithFormat:@"Audio support enabled: %@, video support enabled: %@, vibro support enabled: %@", configuration.audioSubscriptionActive ? @"yes" : @"no", configuration.videoSubscriptionActive ? @"yes" : @"no", configuration.vibroSubscriptionActive ? @"yes" : @"no"]];
 }
 
-- (void) addLogWithText:(NSString *) text {
+- (void)addLogWithText:(NSString *) text {
     NSLog(@"%@", text);
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         self.logTextView.text = [NSString stringWithFormat:@"%@%@\n", self.logTextView.text, text];

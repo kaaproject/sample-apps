@@ -67,6 +67,7 @@
         <module>sparkdemo</module>
         <module>cassandrademo</module>
         <module>stormdemo</module>
+        <module>profilingdemo</module>
     </modules>
 
     <profiles>

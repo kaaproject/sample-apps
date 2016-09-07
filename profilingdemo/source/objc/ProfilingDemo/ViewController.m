@@ -90,7 +90,7 @@
 #pragma mark - ProfileContainer
 
 - (KAAPagerClientProfile *)getProfile {
-    return [[KAAPagerClientProfile alloc] init];
+    return [[KAAPagerClientProfile alloc] initWithAudioSupport:NO videoSupport:NO vibroSupport:YES];
 }
 
 #pragma mark - ConfigurationDelegate

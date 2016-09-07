@@ -1,0 +1,16 @@
+{
+  "type" : "record",
+  "name" : "PagerServerProfile",
+  "namespace" : "org.kaaproject.examples.pager",
+  "fields" : [ {
+    "name" : "audioSubscription",
+    "type" : "boolean"
+  }, {
+    "name" : "videoSubscription",
+    "type" : "boolean"
+  }, {
+    "name" : "vibroSubscription",
+    "type" : "boolean"
+  } ],
+  "displayName" : "org.kaaproject.examples.pager.PagerServerProfile"
+}

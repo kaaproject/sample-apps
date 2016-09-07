@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B8B9974F1BE3FB9600C0ABCE"
-            BuildableName = "ConfigurationDemo.app"
-            BlueprintName = "ConfigurationDemo"
-            ReferencedContainer = "container:ConfigurationDemo.xcodeproj">
+            BuildableName = "ProfilingDemo.app"
+            BlueprintName = "ProfilingDemo"
+            ReferencedContainer = "container:ProfilingDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B8B9974F1BE3FB9600C0ABCE"
-            BuildableName = "ConfigurationDemo.app"
-            BlueprintName = "ConfigurationDemo"
-            ReferencedContainer = "container:ConfigurationDemo.xcodeproj">
+            BuildableName = "ProfilingDemo.app"
+            BlueprintName = "ProfilingDemo"
+            ReferencedContainer = "container:ProfilingDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

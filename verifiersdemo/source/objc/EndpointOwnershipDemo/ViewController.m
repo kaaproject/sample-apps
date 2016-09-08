@@ -274,6 +274,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 - (IBAction)sendButtonTapped:(id)sender {
     if (self.messageTextField.text.length > 0) {
         [self sendMessageWithText:self.messageTextField.text];
+        [self.messageTextField resignFirstResponder];
     }
 }
 

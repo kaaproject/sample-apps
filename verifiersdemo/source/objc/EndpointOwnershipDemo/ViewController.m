@@ -62,7 +62,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     [self.chatDateFormatter setDateFormat:@"HH:mm dd.MM.yy"];
     
     self.logOutButton.hidden = YES;
-    self.messagingView.hidden = NO;
+    self.messagingView.hidden = YES;
     self.googleLogInButton.colorScheme = kGIDSignInButtonColorSchemeDark;
     
     self.fbLoginButton.delegate = self;
@@ -100,6 +100,32 @@ typedef NS_ENUM(int, AuthorizationLabel) {
             self.twtrLogInButton.hidden = YES;
             self.googleLogInButton.hidden = YES;
             self.logOutButton.hidden = NO;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)userHasLoggedOut {
+    [self.kaaManager detachEndpoitWithDelegate:self];
+    
+    [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:NO];
+    self.messagingView.hidden = YES;
+    self.chatTextView.text = @"";
+    
+    switch (self.user.network) {
+        case AuthorizedNetworkFacebook:
+            self.twtrLogInButton.hidden = NO;
+            self.googleLogInButton.hidden = NO;
+            break;
+            
+        case AuthorizedNetworkTwitter:
+        case AuthorizedNetworkGoogle:
+            self.fbLoginButton.hidden = NO;
+            self.twtrLogInButton.hidden = NO;
+            self.googleLogInButton.hidden = NO;
+            self.logOutButton.hidden = YES;
             break;
             
         default:
@@ -167,10 +193,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
-    [self.kaaManager detachEndpoitWithDelegate:self];
-    self.twtrLogInButton.hidden = NO;
-    self.googleLogInButton.hidden = NO;
-    [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:NO];
+    [self userHasLoggedOut];
 }
 
 #pragma mark - GIDSignInDelegate
@@ -244,13 +267,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
         [[GIDSignIn sharedInstance] signOut];
     }
     
-    [self.kaaManager detachEndpoitWithDelegate:self];
-    
-    self.socialNetworkAuthorizationLabel.text = @"Social network: NO";
-    self.fbLoginButton.hidden = NO;
-    self.twtrLogInButton.hidden = NO;
-    self.googleLogInButton.hidden = NO;
-    self.logOutButton.hidden = YES;
+    [self userHasLoggedOut];
 }
 
 - (IBAction)sendButtonTapped:(id)sender {

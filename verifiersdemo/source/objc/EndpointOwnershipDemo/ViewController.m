@@ -85,6 +85,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 }
 
 - (void)userHasLoggedIn {
+    [self.kaaManager attachUser:self.user delegate:self];
     [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:YES];
     self.messagingView.hidden = NO;
     
@@ -187,7 +188,6 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     if (result.token) {
         NSLog(@"Signed in as user with id %@", result.token.userID);
         self.user = [[User alloc] initWithUserId:result.token.userID token:result.token.tokenString authorizedNetwork:AuthorizedNetworkFacebook];
-        [self.kaaManager attachUser:self.user delegate:self];
         [self userHasLoggedIn];
     }
 }
@@ -202,7 +202,6 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     if (user) {
         NSLog(@"Signed in as %@", user.profile.name);
         self.user = [[User alloc] initWithUserId:user.userID token:user.authentication.accessToken authorizedNetwork:AuthorizedNetworkGoogle];
-        [self.kaaManager attachUser:self.user delegate:self];
         [self userHasLoggedIn];
     }
 }

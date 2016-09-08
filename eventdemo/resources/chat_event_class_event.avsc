@@ -1,0 +1,28 @@
+{
+  "type": "record",
+  "name": "ChatEvent",
+  "namespace": "org.kaaproject.kaa.examples.event",
+  "fields": [
+    {
+      "name": "ChatName",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "EventType",
+      "type": {
+        "type": "enum",
+        "name": "ChatEventType",
+        "symbols": [
+          "CREATE",
+          "DELETE"
+        ],
+        "classType": "object"
+      }
+    }
+  ],
+  "description": "",
+  "classType": "event"
+}

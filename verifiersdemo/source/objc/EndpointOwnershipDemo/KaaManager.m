@@ -65,6 +65,14 @@
     [self.kaaClient detachEndpointWithKeyHash:keyHash delegate:delegate];
 }
 
+- (EventFamilyFactory *)getEventFamilyFactory {
+    return [self.kaaClient getEventFamilyFactory];
+}
+
+- (VerifiersDemoEventClassFamily *)getEventClassFamily {
+    return [[self.kaaClient getEventFamilyFactory] getVerifiersDemoEventClassFamily];
+}
+
 - (NSString *)getKaaVerifiersTokenForUser:(User *)user {
     switch (user.network) {
         case AuthorizedNetworkFacebook:

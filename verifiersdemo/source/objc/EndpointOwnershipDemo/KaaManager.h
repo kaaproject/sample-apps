@@ -29,4 +29,8 @@
 
 - (void)detachEndpoitWithDelegate:(id<OnDetachEndpointOperationDelegate>)delegate;
 
+- (EventFamilyFactory *)getEventFamilyFactory;
+
+- (VerifiersDemoEventClassFamily *)getEventClassFamily;
+
 @end

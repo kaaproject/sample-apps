@@ -99,14 +99,60 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJG-bv-zW0" userLabel="Messaging View">
+                                <rect key="frame" x="20" y="207" width="560" height="180"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0I-9O-8Mh">
+                                        <rect key="frame" x="501" y="0.0" width="48" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="48" id="EWh-vZ-NAj"/>
+                                            <constraint firstAttribute="height" constant="30" id="vZw-ou-H5m"/>
+                                        </constraints>
+                                        <state key="normal" title="Send"/>
+                                        <connections>
+                                            <action selector="sendButtonTapped:" destination="3MJ-NA-VOp" eventType="touchUpInside" id="KhE-52-G51"/>
+                                        </connections>
+                                    </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ggh-ho-dm3">
+                                        <rect key="frame" x="8" y="33" width="544" height="147"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Message text" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BQR-C7-4kr">
+                                        <rect key="frame" x="8" y="0.0" width="485" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="qLt-hg-66Y"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ggh-ho-dm3" firstAttribute="leading" secondItem="XJG-bv-zW0" secondAttribute="leading" constant="8" id="3JH-c7-vfC"/>
+                                    <constraint firstAttribute="bottom" secondItem="ggh-ho-dm3" secondAttribute="bottom" id="RjZ-K3-8zx"/>
+                                    <constraint firstItem="ggh-ho-dm3" firstAttribute="top" secondItem="BQR-C7-4kr" secondAttribute="bottom" constant="3" id="U2b-Wf-V2f"/>
+                                    <constraint firstItem="BQR-C7-4kr" firstAttribute="top" secondItem="XJG-bv-zW0" secondAttribute="top" id="XmS-Wx-jui"/>
+                                    <constraint firstItem="BQR-C7-4kr" firstAttribute="leading" secondItem="XJG-bv-zW0" secondAttribute="leading" constant="8" id="ctT-ah-WrJ"/>
+                                    <constraint firstItem="ggh-ho-dm3" firstAttribute="top" secondItem="E0I-9O-8Mh" secondAttribute="bottom" constant="3" id="gVS-Pg-KLd"/>
+                                    <constraint firstItem="E0I-9O-8Mh" firstAttribute="leading" secondItem="BQR-C7-4kr" secondAttribute="trailing" constant="8" id="guo-Jl-XBC"/>
+                                    <constraint firstAttribute="trailing" secondItem="ggh-ho-dm3" secondAttribute="trailing" constant="8" id="m7M-Jj-git"/>
+                                    <constraint firstAttribute="trailing" secondItem="E0I-9O-8Mh" secondAttribute="trailing" constant="11" id="xb6-uT-dOo"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kZ6-Sg-ZTT" firstAttribute="centerX" secondItem="ZM7-bg-uLD" secondAttribute="centerX" id="5vq-zz-9Uw"/>
+                            <constraint firstItem="XJG-bv-zW0" firstAttribute="leading" secondItem="ZM7-bg-uLD" secondAttribute="leading" constant="20" id="6cX-e7-JgT"/>
+                            <constraint firstItem="dLE-kc-toP" firstAttribute="top" secondItem="XJG-bv-zW0" secondAttribute="bottom" constant="8" id="7x4-ML-m22"/>
                             <constraint firstItem="mNb-f0-loZ" firstAttribute="centerX" secondItem="dLE-kc-toP" secondAttribute="centerX" id="FJQ-1l-ywu"/>
                             <constraint firstItem="w1h-nL-reL" firstAttribute="top" secondItem="kZ6-Sg-ZTT" secondAttribute="bottom" id="Hfi-Qr-Cf7"/>
+                            <constraint firstItem="XJG-bv-zW0" firstAttribute="top" secondItem="xBL-Z3-oLu" secondAttribute="bottom" constant="109" id="I3u-Yb-imd"/>
                             <constraint firstItem="xBL-Z3-oLu" firstAttribute="centerX" secondItem="ZM7-bg-uLD" secondAttribute="centerX" id="Kui-nN-YPE"/>
                             <constraint firstItem="dLE-kc-toP" firstAttribute="centerX" secondItem="ZM7-bg-uLD" secondAttribute="centerX" id="PP6-xt-1w3"/>
+                            <constraint firstAttribute="trailing" secondItem="XJG-bv-zW0" secondAttribute="trailing" constant="20" id="QVh-En-9Za"/>
                             <constraint firstItem="xBL-Z3-oLu" firstAttribute="top" secondItem="w1h-nL-reL" secondAttribute="bottom" id="V8U-fw-k3T"/>
                             <constraint firstItem="9Ro-AX-Hia" firstAttribute="top" secondItem="dLE-kc-toP" secondAttribute="centerY" constant="120" id="cgE-0i-elI"/>
                             <constraint firstItem="mNb-f0-loZ" firstAttribute="centerY" secondItem="dLE-kc-toP" secondAttribute="centerY" id="kJ8-e2-WLW"/>
@@ -115,10 +161,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="chatTextView" destination="ggh-ho-dm3" id="eWV-PK-xZX"/>
                         <outlet property="fbLoginButton" destination="rbJ-xP-XZb" id="Qyh-PP-Zbb"/>
                         <outlet property="googleLogInButton" destination="Os4-pA-clA" id="Fe1-4V-CrT"/>
                         <outlet property="kaaAuthorizationLabel" destination="xBL-Z3-oLu" id="B5v-pk-83b"/>
                         <outlet property="logOutButton" destination="mNb-f0-loZ" id="wdG-eA-hZm"/>
+                        <outlet property="messageTextField" destination="BQR-C7-4kr" id="UZM-Bp-IMN"/>
+                        <outlet property="messagingView" destination="XJG-bv-zW0" id="ygK-hQ-wUY"/>
                         <outlet property="socialButtonsStackView" destination="dLE-kc-toP" id="tPZ-jI-RAT"/>
                         <outlet property="socialNetworkAuthorizationLabel" destination="w1h-nL-reL" id="ckq-7Q-162"/>
                         <outlet property="twtrLogInButton" destination="v6q-cP-4rN" id="i3H-sa-5nX"/>

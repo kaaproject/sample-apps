@@ -41,9 +41,15 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 @property (weak, nonatomic) IBOutlet UIButton *logOutButton;
 @property (weak, nonatomic) IBOutlet UILabel *socialNetworkAuthorizationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *kaaAuthorizationLabel;
+@property (weak, nonatomic) IBOutlet UIView *messagingView;
+@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
+@property (weak, nonatomic) IBOutlet UITextView *chatTextView;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
 @property (nonatomic, strong) User *user;
+@property (nonatomic, strong) EventFamilyFactory *eventFamilyFactory;
+@property (nonatomic, strong) VerifiersDemoEventClassFamily *vdecf;
+@property (nonatomic, strong) NSDateFormatter *chatDateFormatter;
 @property (nonatomic) AuthorizedNetwork authorizedNetwork;
 
 @end
@@ -52,7 +58,11 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.chatDateFormatter = [[NSDateFormatter alloc] init];
+    [self.chatDateFormatter setDateFormat:@"HH:mm dd.MM.yy"];
+    
     self.logOutButton.hidden = YES;
+    self.messagingView.hidden = NO;
     self.googleLogInButton.colorScheme = kGIDSignInButtonColorSchemeDark;
     
     self.fbLoginButton.delegate = self;
@@ -76,6 +86,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 
 - (void)userHasLoggedIn {
     [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:YES];
+    self.messagingView.hidden = NO;
     
     switch (self.user.network) {
         case AuthorizedNetworkFacebook:
@@ -96,32 +107,52 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     }
 }
 
+- (void)userHasAttached {
+    //Obtain the event family factory.
+    self.eventFamilyFactory = [self.kaaManager getEventFamilyFactory];
+    //Obtain the concrete event family.
+    self.vdecf = [self.kaaManager getEventClassFamily];
+}
+
+- (void)sendMessageWithText:(NSString *)text {
+    MessageEvent *message = [[MessageEvent alloc] initWithMessage:[KAAUnion unionWithBranch:KAA_UNION_STRING_OR_NULL_BRANCH_0 data:text]];
+    if (self.vdecf) {
+        [self.vdecf sendMessageEventToAll:message];
+        [self updateMessagingUiWithText:text];
+    }
+}
+
+- (void)updateMessagingUiWithText:(NSString *)text {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.messageTextField.text = @"";
+        self.chatTextView.text = [NSString stringWithFormat:@"[%@] %@\n%@", [self.chatDateFormatter stringFromDate:[NSDate date]],text, self.chatTextView.text];
+    });
+}
+
 - (void)updateAuthorizationStatusForLabel:(AuthorizationLabel)label status:(BOOL)status {
-    switch (label) {
-        case AuthorizationLabelKaa: {
-            dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (label) {
+            case AuthorizationLabelKaa: {
                 if (status) {
                     self.kaaAuthorizationLabel.text = [NSString stringWithFormat:@"Kaa: YES"];
                 } else {
                     self.kaaAuthorizationLabel.text = [NSString stringWithFormat:@"Kaa: NO"];
                 }
-            });
-            break;
-        }
-        case AuthorizationLabelSocial: {
-            dispatch_async(dispatch_get_main_queue(), ^{
+                break;
+            }
+            case AuthorizationLabelSocial: {
                 if (status) {
                     self.socialNetworkAuthorizationLabel.text = [NSString stringWithFormat:@"Social network: YES"];
                 } else {
                     self.socialNetworkAuthorizationLabel.text = [NSString stringWithFormat:@"Social network: NO"];
                 }
-            });
-            break;
+                break;
+            }
+                
+            default:
+                break;
         }
-            
-        default:
-            break;
-    }
+    });
 }
 
 #pragma mark - FBSDKLoginButtonDelegate
@@ -159,6 +190,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     switch (response.result) {
         case SYNC_RESPONSE_RESULT_TYPE_SUCCESS:
             NSLog(@"User attach result: success.");
+            [self userHasAttached];
             [self updateAuthorizationStatusForLabel:AuthorizationLabelKaa status:YES];
             break;
             
@@ -220,5 +252,10 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     self.googleLogInButton.hidden = NO;
     self.logOutButton.hidden = YES;
 }
+
+- (IBAction)sendButtonTapped:(id)sender {
+    [self sendMessageWithText:self.messageTextField.text];
+}
+
 
 @end

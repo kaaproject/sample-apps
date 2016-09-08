@@ -293,3 +293,11 @@ uart_init_new(void)
     */
 
 }
+
+int uart_getchar(void)
+{
+    // Wait until data arrives to RX FIFO
+    while (!((READ_PERI_REG(UART_STATUS(UART0)) >> UART_RXFIFO_CNT_S) & UART_RXFIFO_CNT));
+
+    return READ_PERI_REG(UART_FIFO(UART0)) & 0xFF;
+}

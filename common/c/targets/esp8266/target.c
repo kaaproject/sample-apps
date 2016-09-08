@@ -181,3 +181,8 @@ void ets_putc(char c)
     os_putc(c);
 }
 
+int getchar(void)
+{
+    return uart_getchar();
+}
+

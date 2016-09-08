@@ -87,7 +87,6 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 - (void)userHasLoggedIn {
     [self.kaaManager attachUser:self.user delegate:self];
     [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:YES];
-    self.messagingView.hidden = NO;
     
     switch (self.user.network) {
         case AuthorizedNetworkFacebook:
@@ -135,6 +134,9 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 }
 
 - (void)userHasAttached {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.messagingView.hidden = NO;
+    });
     //Obtain the event family factory.
     self.eventFamilyFactory = [self.kaaManager getEventFamilyFactory];
     //Obtain the concrete event family.
@@ -270,7 +272,9 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 }
 
 - (IBAction)sendButtonTapped:(id)sender {
-    [self sendMessageWithText:self.messageTextField.text];
+    if (self.messageTextField.text.length > 0) {
+        [self sendMessageWithText:self.messageTextField.text];
+    }
 }
 
 

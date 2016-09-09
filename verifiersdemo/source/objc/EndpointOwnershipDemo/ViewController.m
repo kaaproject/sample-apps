@@ -61,7 +61,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
             self.user = [[User alloc] initWithUserId:session.userID
                                                token:session.authToken
                                    authorizedNetwork:AuthorizedNetworkTwitter];
-            [self userHasLoggedIn];
+            [self updateSocialNetworkAuthorizationWithStatus:YES];
         } else {
             NSLog(@"error: %@", [error localizedDescription]);
         }
@@ -71,53 +71,53 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     [self.kaaManager startKaaClient];
 }
 
-- (void)userHasLoggedIn {
-    [self.kaaManager attachUser:self.user delegate:self];
-    [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:YES];
-    
-    switch (self.user.network) {
-        case AuthorizedNetworkFacebook:
-            self.twtrLogInButton.hidden = YES;
-            self.googleLogInButton.hidden = YES;
-            break;
-            
-        case AuthorizedNetworkTwitter:
-        case AuthorizedNetworkGoogle:
-            self.fbLoginButton.hidden = YES;
-            self.twtrLogInButton.hidden = YES;
-            self.googleLogInButton.hidden = YES;
-            self.logOutButton.hidden = NO;
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void)userHasLoggedOut {
-    [self.kaaManager detachEndpoitWithDelegate:self];
-    
-    [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:NO];
-    self.messagingView.hidden = YES;
-    self.attachView.hidden = YES;
-    self.chatTextView.text = @"";
-    
-    switch (self.user.network) {
-        case AuthorizedNetworkFacebook:
-            self.twtrLogInButton.hidden = NO;
-            self.googleLogInButton.hidden = NO;
-            break;
-            
-        case AuthorizedNetworkTwitter:
-        case AuthorizedNetworkGoogle:
-            self.fbLoginButton.hidden = NO;
-            self.twtrLogInButton.hidden = NO;
-            self.googleLogInButton.hidden = NO;
-            self.logOutButton.hidden = YES;
-            break;
-            
-        default:
-            break;
+- (void)updateSocialNetworkAuthorizationWithStatus:(BOOL)status {
+    if (status) {
+        [self.kaaManager attachUser:self.user delegate:self];
+        [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:YES];
+        
+        switch (self.user.network) {
+            case AuthorizedNetworkFacebook:
+                self.twtrLogInButton.hidden = YES;
+                self.googleLogInButton.hidden = YES;
+                break;
+                
+            case AuthorizedNetworkTwitter:
+            case AuthorizedNetworkGoogle:
+                self.fbLoginButton.hidden = YES;
+                self.twtrLogInButton.hidden = YES;
+                self.googleLogInButton.hidden = YES;
+                self.logOutButton.hidden = NO;
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        [self.kaaManager detachEndpoitWithDelegate:self];
+        
+        [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:NO];
+        self.messagingView.hidden = YES;
+        self.attachView.hidden = YES;
+        self.chatTextView.text = @"";
+        
+        switch (self.user.network) {
+            case AuthorizedNetworkFacebook:
+                self.twtrLogInButton.hidden = NO;
+                self.googleLogInButton.hidden = NO;
+                break;
+                
+            case AuthorizedNetworkTwitter:
+            case AuthorizedNetworkGoogle:
+                self.fbLoginButton.hidden = NO;
+                self.twtrLogInButton.hidden = NO;
+                self.googleLogInButton.hidden = NO;
+                self.logOutButton.hidden = YES;
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 
@@ -185,12 +185,12 @@ typedef NS_ENUM(int, AuthorizationLabel) {
         self.user = [[User alloc] initWithUserId:result.token.userID
                                            token:result.token.tokenString
                                authorizedNetwork:AuthorizedNetworkFacebook];
-        [self userHasLoggedIn];
+        [self updateSocialNetworkAuthorizationWithStatus:YES];
     }
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
-    [self userHasLoggedOut];
+    [self updateSocialNetworkAuthorizationWithStatus:NO];
 }
 
 #pragma mark - GIDSignInDelegate
@@ -201,7 +201,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
         self.user = [[User alloc] initWithUserId:user.userID
                                            token:user.authentication.accessToken
                                authorizedNetwork:AuthorizedNetworkGoogle];
-        [self userHasLoggedIn];
+        [self updateSocialNetworkAuthorizationWithStatus:YES];
     }
 }
 
@@ -284,7 +284,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
         [[GIDSignIn sharedInstance] signOut];
     }
     
-    [self userHasLoggedOut];
+    [self updateSocialNetworkAuthorizationWithStatus:NO];
 }
 
 - (IBAction)sendButtonTapped:(id)sender {

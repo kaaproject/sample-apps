@@ -52,7 +52,10 @@
 
 - (void)attachUser:(User *)user delegate:(id<UserAttachDelegate>)delegate {
     NSLog(@"Attaching user...");
-    [self.kaaClient attachUserWithVerifierToken:[self getKaaVerifiersTokenForUser:user] userId:user.userId accessToken:user.token delegate:delegate];
+    [self.kaaClient attachUserWithVerifierToken:[self getKaaVerifiersTokenForUser:user]
+                                         userId:user.userId
+                                    accessToken:user.token
+                                       delegate:delegate];
 }
 
 - (void)assistedAttachWithAccessToken:(NSString *)tokenString delegate:(id<OnAttachEndpointOperationDelegate>)delegate {

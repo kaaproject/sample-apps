@@ -16,6 +16,29 @@
 
 #import <UIKit/UIKit.h>
 
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
+#import <Fabric/Fabric.h>
+#import <TwitterKit/TwitterKit.h>
+#import <Google/SignIn.h>
+
 @interface ViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
+
+@property (weak, nonatomic) IBOutlet FBSDKLoginButton *fbLoginButton;
+@property (weak, nonatomic) IBOutlet TWTRLogInButton *twtrLogInButton;
+@property (weak, nonatomic) IBOutlet GIDSignInButton *googleLogInButton;
+@property (weak, nonatomic) IBOutlet UIButton *logOutButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *socialNetworkAuthorizationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *kaaAuthorizationLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *messagingView;
+@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
+@property (weak, nonatomic) IBOutlet UITextView *chatTextView;
+
+@property (weak, nonatomic) IBOutlet UITextField *endpointAccessTokenTextField;
+@property (weak, nonatomic) IBOutlet UIView *attachView;
 
 @end

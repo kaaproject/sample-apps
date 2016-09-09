@@ -18,12 +18,6 @@
 #import "KaaManager.h"
 #import "User.h"
 
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKCoreKit/FBSDKAccessToken.h>
-#import <Fabric/Fabric.h>
-#import <TwitterKit/TwitterKit.h>
-#import <Google/SignIn.h>
-
 typedef NS_ENUM(int, AuthorizationLabel) {
     AuthorizationLabelSocial,
     AuthorizationLabelKaa
@@ -33,22 +27,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 
 @interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UserAttachDelegate, OnDetachEndpointOperationDelegate, OnAttachEndpointOperationDelegate>
 
-@property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
 
-@property (weak, nonatomic) IBOutlet FBSDKLoginButton *fbLoginButton;
-@property (weak, nonatomic) IBOutlet TWTRLogInButton *twtrLogInButton;
-@property (weak, nonatomic) IBOutlet GIDSignInButton *googleLogInButton;
-@property (weak, nonatomic) IBOutlet UIButton *logOutButton;
-
-@property (weak, nonatomic) IBOutlet UILabel *socialNetworkAuthorizationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *kaaAuthorizationLabel;
-
-@property (weak, nonatomic) IBOutlet UIView *messagingView;
-@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
-@property (weak, nonatomic) IBOutlet UITextView *chatTextView;
-
-@property (weak, nonatomic) IBOutlet UITextField *endpointAccessTokenTextField;
-@property (weak, nonatomic) IBOutlet UIView *attachView;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
 @property (nonatomic, strong) User *user;
@@ -79,7 +58,9 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
         if (session) {
             NSLog(@"Signed in as %@", [session userName]);
-            self.user = [[User alloc] initWithUserId:session.userID token:session.authToken authorizedNetwork:AuthorizedNetworkTwitter];
+            self.user = [[User alloc] initWithUserId:session.userID
+                                               token:session.authToken
+                                   authorizedNetwork:AuthorizedNetworkTwitter];
             [self userHasLoggedIn];
         } else {
             NSLog(@"error: %@", [error localizedDescription]);
@@ -152,7 +133,8 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 }
 
 - (void)sendMessageWithText:(NSString *)text {
-    MessageEvent *message = [[MessageEvent alloc] initWithMessage:[KAAUnion unionWithBranch:KAA_UNION_STRING_OR_NULL_BRANCH_0 data:text]];
+    MessageEvent *message = [[MessageEvent alloc] initWithMessage:[KAAUnion unionWithBranch:KAA_UNION_STRING_OR_NULL_BRANCH_0
+                                                                                       data:text]];
     if (self.vdecf) {
         [self.vdecf sendMessageEventToAll:message];
         [self updateMessagingUiWithText:text];
@@ -162,7 +144,10 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 - (void)updateMessagingUiWithText:(NSString *)text {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.messageTextField.text = @"";
-        self.chatTextView.text = [NSString stringWithFormat:@"[%@] %@\n%@", [self.chatDateFormatter stringFromDate:[NSDate date]],text, self.chatTextView.text];
+        self.chatTextView.text = [NSString stringWithFormat:@"[%@] %@\n%@",
+                                  [self.chatDateFormatter stringFromDate:[NSDate date]],
+                                  text,
+                                  self.chatTextView.text];
     });
 }
 
@@ -197,7 +182,9 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
     if (result.token) {
         NSLog(@"Signed in as user with id %@", result.token.userID);
-        self.user = [[User alloc] initWithUserId:result.token.userID token:result.token.tokenString authorizedNetwork:AuthorizedNetworkFacebook];
+        self.user = [[User alloc] initWithUserId:result.token.userID
+                                           token:result.token.tokenString
+                               authorizedNetwork:AuthorizedNetworkFacebook];
         [self userHasLoggedIn];
     }
 }
@@ -211,7 +198,9 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
     if (user) {
         NSLog(@"Signed in as %@", user.profile.name);
-        self.user = [[User alloc] initWithUserId:user.userID token:user.authentication.accessToken authorizedNetwork:AuthorizedNetworkGoogle];
+        self.user = [[User alloc] initWithUserId:user.userID
+                                           token:user.authentication.accessToken
+                               authorizedNetwork:AuthorizedNetworkGoogle];
         [self userHasLoggedIn];
     }
 }

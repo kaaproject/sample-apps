@@ -10,7 +10,6 @@
 		7B5BDABA1D7F009100E34857 /* ChatClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BDAB91D7F009100E34857 /* ChatClientManager.m */; };
 		7B5BDAD21D7F019D00E34857 /* RoomsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BDAD11D7F019D00E34857 /* RoomsListViewController.m */; };
 		7B5BDAD51D7F01BA00E34857 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BDAD41D7F01BA00E34857 /* RoomViewController.m */; };
-		7BD03F561D7F1F91006A1F01 /* RoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD03F551D7F1F91006A1F01 /* RoomCell.m */; };
 		7BD03F591D7F1F9E006A1F01 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD03F581D7F1F9E006A1F01 /* MessageCell.m */; };
 		B8B997551BE3FB9600C0ABCE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B997541BE3FB9600C0ABCE /* main.m */; };
 		B8B997581BE3FB9600C0ABCE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B997571BE3FB9600C0ABCE /* AppDelegate.m */; };
@@ -107,8 +106,6 @@
 		7B5BDAD11D7F019D00E34857 /* RoomsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsListViewController.m; sourceTree = "<group>"; };
 		7B5BDAD31D7F01BA00E34857 /* RoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
 		7B5BDAD41D7F01BA00E34857 /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
-		7BD03F541D7F1F91006A1F01 /* RoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomCell.h; sourceTree = "<group>"; };
-		7BD03F551D7F1F91006A1F01 /* RoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomCell.m; sourceTree = "<group>"; };
 		7BD03F571D7F1F9E006A1F01 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
 		7BD03F581D7F1F9E006A1F01 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		B87824931C188EE700F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
@@ -149,8 +146,6 @@
 		7BD03F4A1D7F1F68006A1F01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7BD03F541D7F1F91006A1F01 /* RoomCell.h */,
-				7BD03F551D7F1F91006A1F01 /* RoomCell.m */,
 				7BD03F571D7F1F9E006A1F01 /* MessageCell.h */,
 				7BD03F581D7F1F9E006A1F01 /* MessageCell.m */,
 			);
@@ -256,6 +251,7 @@
 				TargetAttributes = {
 					B8B9974F1BE3FB9600C0ABCE = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = TVMFX8XPT9;
 					};
 				};
 			};
@@ -375,7 +371,6 @@
 				7B5BDAD51D7F01BA00E34857 /* RoomViewController.m in Sources */,
 				B8B997581BE3FB9600C0ABCE /* AppDelegate.m in Sources */,
 				B8B997551BE3FB9600C0ABCE /* main.m in Sources */,
-				7BD03F561D7F1F91006A1F01 /* RoomCell.m in Sources */,
 				7BD03F591D7F1F9E006A1F01 /* MessageCell.m in Sources */,
 				7B5BDAD21D7F019D00E34857 /* RoomsListViewController.m in Sources */,
 			);
@@ -489,6 +484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = EventDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -503,6 +499,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = EventDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;

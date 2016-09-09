@@ -16,23 +16,18 @@
 
 #import "RoomsListViewController.h"
 #import "ChatClientManager.h"
-#import "RoomCell.h"
 #import "RoomViewController.h"
 
-@interface RoomsListViewController ()
-{
-    NSArray *roomsList;
-}
 
-
-@end
 
 @implementation RoomsListViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRoomsList) name:RoomsListUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateRoomsList)
+                                                 name:RoomsListUpdated object:nil];
 }
 
 
@@ -44,9 +39,11 @@
 
 
 - (void)updateRoomsList
-{
-    roomsList = [[ChatClientManager sharedManager] roomsList];
-    [self.tableView reloadData];
+{   //Updating rooms list from the client manager
+    roomsList = [ChatClientManager sharedManager].rooms;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 
@@ -58,10 +55,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RoomCell *cell = (RoomCell *)[tableView dequeueReusableCellWithIdentifier:[RoomCell cellIdentitier] forIndexPath:indexPath];
-    NSString *room = roomsList[indexPath.row];
-    BOOL isJoined = [[ChatClientManager sharedManager] isJoinedRoom:room];
-    [cell setName:room isJoined:isJoined];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomCell" forIndexPath:indexPath];
+    cell.textLabel.text = roomsList[indexPath.row];
     return cell;
 }
 
@@ -82,19 +77,20 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[ChatClientManager sharedManager] deleteRoom:roomsList[indexPath.row]];
+    [[ChatClientManager sharedManager] deleteRoom:roomsList[indexPath.row] onlyLocal:NO];
 }
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [[ChatClientManager sharedManager] canRemoveRoom:roomsList[indexPath.row]];
+{   //Check if we can delete Room from this row
+    return ![[ChatClientManager sharedManager].defaultRooms containsObject:roomsList[indexPath.row]];
 }
 
 
-- (IBAction)editPressed:(UIBarButtonItem *)sender
+- (IBAction)editPressed:(UIButton *)sender
 {
     [self.tableView setEditing:!self.tableView.isEditing animated:YES];
+    _editButton.selected = self.tableView.isEditing;
 }
 
 
@@ -104,13 +100,13 @@
                                                                    message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alert addTextFieldWithConfigurationHandler:nil];
     
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok"
+                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *name = alert.textFields[0].text;
-        [[ChatClientManager sharedManager] addRoom:name];
+        [[ChatClientManager sharedManager] createRoom:name onlyLocal:NO];
     }];
     
     [alert addAction:okAction];
-    
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
                                               style:UIAlertActionStyleCancel
                                             handler:nil]];

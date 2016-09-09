@@ -19,48 +19,49 @@
 #import "MessageCell.h"
 
 @interface RoomViewController () <UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomOffsetConstraint;
 
 @end
 
 @implementation RoomViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    self.title = _roomName;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
-    BOOL isJoined = [[ChatClientManager sharedManager] isJoinedRoom:_roomName];
-    _leaveButton.hidden = isJoined;
+    self.title =_roomName;
+    _tableView.rowHeight = UITableViewAutomaticDimension;
+    _tableView.estimatedRowHeight = 44;
+
+    [self setupNotifications];
+    [self updateMessages];
 }
 
-
+- (void)updateMessages
+{
+    self.messages = [[ChatClientManager sharedManager] messagesForRoom:_roomName];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
 
 - (IBAction)sendPressed:(id)sender
 {
-    [_messageTextField resignFirstResponder];
-    _messageTextField.text = @"";
     [[ChatClientManager sharedManager] sendMessage:_messageTextField.text
-                                               room:_roomName];
+                                              room:_roomName];
+    _messageTextField.text = @"";
 }
 
-- (IBAction)leavePressed:(id)sender
-{
-    [[ChatClientManager sharedManager] leaveRoom:_roomName];
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[ChatClientManager sharedManager] messagesForRoom:_roomName].count;
+    return _messages.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:[MessageCell cellIdentitier] forIndexPath:indexPath];
-    NSString *msg = [[ChatClientManager sharedManager] messagesForRoom:_roomName][indexPath.row];
-    cell.msgLabel.text = msg;
+    cell.msgLabel.text = _messages[indexPath.row];;
     return cell;
 }
 
@@ -81,6 +82,13 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)setupNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMessages) name:MessagesListUpdated object:nil];
 }
 
 @end

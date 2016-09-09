@@ -19,9 +19,9 @@
 @interface RoomViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) NSString *roomName;
+@property (strong, nonatomic) NSArray *messages;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UIView *messageBar;
-@property (weak, nonatomic) IBOutlet UIButton *leaveButton;
 
 @end

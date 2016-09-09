@@ -23,28 +23,30 @@ static NSString *MessagesListUpdated = @"MessagesListUpdated";
 
 @import Kaa;
 
+/*
+ *  Class ChatClientManager is a Singletone class.
+ *  It's responsible for all chat logic: sending messages,
+ *  creating and removing chat rooms.
+ *
+ *  Handles Kaa client initialization and delegate methods
+ */
 
-@interface ChatClientManager : NSObject <KaaClientStateDelegate, UserAttachDelegate, ProfileContainer>
+@interface ChatClientManager : NSObject <KaaClientStateDelegate, UserAttachDelegate, ProfileContainer,ChatDelegate>
 {
-    NSMutableArray *addedRooms;
-    NSMutableArray *joinedRooms;
-
+    NSMutableDictionary *messages;
 }
 
 @property (nonatomic, strong) id<KaaClient> kaaClient;
+@property (nonatomic, strong) Chat *chatEventFamily;
 
+@property (nonatomic, strong) NSMutableArray *rooms;
+@property (nonatomic, strong) NSArray *defaultRooms;
 
-+ (id)sharedManager;
-- (void)sendMessage:(NSString *)message room:(NSString *)roomName;
-- (NSArray *)roomsList;
-- (BOOL)isJoinedRoom:(NSString *)room;
-- (BOOL)canRemoveRoom:(NSString *)room;
-- (void)addRoom:(NSString *)room;
-- (void)deleteRoom:(NSString *)room;
-- (void)joinRoom:(NSString *)room;
-- (void)leaveRoom:(NSString *)room;
-
++ (ChatClientManager *)sharedManager;
 
 - (NSArray *)messagesForRoom:(NSString *)roomName;
+- (void)sendMessage:(NSString *)message room:(NSString *)roomName;
+- (void)createRoom:(NSString *)name onlyLocal:(BOOL)onlyLocal;
+- (void)deleteRoom:(NSString *)room onlyLocal:(BOOL)onlyLocal;
 
 @end

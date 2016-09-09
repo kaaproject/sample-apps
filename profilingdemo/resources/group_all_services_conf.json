@@ -1,5 +1,5 @@
 {
   "audioSubscriptionActive": true,
   "videoSubscriptionActive": true,
-  "vibroSubscriptionActive": false
+  "vibroSubscriptionActive": true
 }

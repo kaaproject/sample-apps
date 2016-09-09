@@ -6,10 +6,10 @@
     "name" : "audioSupport",
     "type" : "boolean"
   }, {
-    "name" : "vibroSupport",
+    "name" : "videoSupport",
     "type" : "boolean"
   }, {
-    "name" : "videoSupport",
+    "name" : "vibroSupport",
     "type" : "boolean"
   } ],
   "displayName" : "org.kaaproject.examples.pager.PagerClientProfile"

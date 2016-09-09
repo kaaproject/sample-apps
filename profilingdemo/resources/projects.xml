@@ -21,8 +21,8 @@
         xmlns="http://www.kaaproject.org"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="profiling_demo">
-        <name>Endpoint Profiling and Grouping demo</name>
+    <project id="profiling_demo_java">
+        <name>Endpoint Profiling and Grouping Java demo</name>
         <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
         <details>
             <![CDATA[
@@ -99,9 +99,9 @@ For more background on the Kaa endpoint profiling, grouping, and configuration m
         <destBinaryFile>JProfilingDemo/build/jar/ProfilingDemo.jar</destBinaryFile>
     </project>
     
-    <project id="notification_demo_objc">
-        <name>Notification Objective-C demo</name>
-        <description>Kaa Notification subsystem demo app based on Objective-C SDK</description>
+    <project id="profiling_demo_objc">
+        <name>Endpoint Profiling and Grouping Objective-C demo</name>
+        <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities based on Objective-C SDK</description>
         <details>
             <![CDATA[
 This simple app demonstrates capabilities of the Kaa Notification subsystem on the Objective-C SDK.
@@ -126,12 +126,12 @@ For more background on the Kaa Notification subsystem please refer to the corres
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
         <platforms>IOS</platforms>
-        <features>NOTIFICATION</features>
+        <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
-        <bundleId>notification_demos</bundleId>
-        <sourceArchive>objc/notification_demo.tar.gz</sourceArchive>
-        <projectFolder>ObjCNotificationDemo</projectFolder>
-        <sdkLibDir>ObjCNotificationDemo/libs</sdkLibDir>
+        <bundleId>profiling_demos</bundleId>
+        <sourceArchive>objc/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCProfilingDemo</projectFolder>
+        <sdkLibDir>ObjCProfilingDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
 

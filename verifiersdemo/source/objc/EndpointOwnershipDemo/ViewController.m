@@ -72,52 +72,34 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 }
 
 - (void)updateSocialNetworkAuthorizationWithStatus:(BOOL)status {
+    [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:status];
+    
+    switch (self.user.network) {
+        case AuthorizedNetworkFacebook:
+            self.twtrLogInButton.hidden = status;
+            self.googleLogInButton.hidden = status;
+            break;
+            
+        case AuthorizedNetworkTwitter:
+        case AuthorizedNetworkGoogle:
+            self.fbLoginButton.hidden = status;
+            self.twtrLogInButton.hidden = status;
+            self.googleLogInButton.hidden = status;
+            self.logOutButton.hidden = !status;
+            break;
+            
+        default:
+            break;
+    }
+    
     if (status) {
         [self.kaaManager attachUser:self.user delegate:self];
-        [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:YES];
-        
-        switch (self.user.network) {
-            case AuthorizedNetworkFacebook:
-                self.twtrLogInButton.hidden = YES;
-                self.googleLogInButton.hidden = YES;
-                break;
-                
-            case AuthorizedNetworkTwitter:
-            case AuthorizedNetworkGoogle:
-                self.fbLoginButton.hidden = YES;
-                self.twtrLogInButton.hidden = YES;
-                self.googleLogInButton.hidden = YES;
-                self.logOutButton.hidden = NO;
-                break;
-                
-            default:
-                break;
-        }
     } else {
         [self.kaaManager detachEndpoitWithDelegate:self];
         
-        [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:NO];
         self.messagingView.hidden = YES;
         self.attachView.hidden = YES;
         self.chatTextView.text = @"";
-        
-        switch (self.user.network) {
-            case AuthorizedNetworkFacebook:
-                self.twtrLogInButton.hidden = NO;
-                self.googleLogInButton.hidden = NO;
-                break;
-                
-            case AuthorizedNetworkTwitter:
-            case AuthorizedNetworkGoogle:
-                self.fbLoginButton.hidden = NO;
-                self.twtrLogInButton.hidden = NO;
-                self.googleLogInButton.hidden = NO;
-                self.logOutButton.hidden = YES;
-                break;
-                
-            default:
-                break;
-        }
     }
 }
 
@@ -155,19 +137,11 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     dispatch_async(dispatch_get_main_queue(), ^{
         switch (label) {
             case AuthorizationLabelKaa: {
-                if (status) {
-                    self.kaaAuthorizationLabel.text = [NSString stringWithFormat:@"Kaa: YES"];
-                } else {
-                    self.kaaAuthorizationLabel.text = [NSString stringWithFormat:@"Kaa: NO"];
-                }
+                self.kaaAuthorizationLabel.text = [NSString stringWithFormat:@"Kaa: %@", status ? @"YES" : @"NO"];
                 break;
             }
             case AuthorizationLabelSocial: {
-                if (status) {
-                    self.socialNetworkAuthorizationLabel.text = [NSString stringWithFormat:@"Social network: YES"];
-                } else {
-                    self.socialNetworkAuthorizationLabel.text = [NSString stringWithFormat:@"Social network: NO"];
-                }
+                self.socialNetworkAuthorizationLabel.text = [NSString stringWithFormat:@"Social network: %@", status ? @"YES" : @"NO"];
                 break;
             }
                 

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+     Copyright 2014-2016 CyberVision, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<projectsConfig
+        xmlns="http://www.kaaproject.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+    <project id="profiling_demo_java">
+        <name>Endpoint Profiling and Grouping Java demo</name>
+        <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
+        <details>
+            <![CDATA[
+This Endpoint profiling and grouping app demonstrates the use of server-side endpoint profile and device management features. It allows to activate/deactivate device based on the endpoint ID and work with endpoint credentials using Kaa REST API.
+
+<h2>Installation</h2>
+Download the jar file to your desktop by clicking the "Binary" button on the left. Make sure that you have Java runtime installed. Application can run in three modes: client, admin and developer. The mode is specified by command line arguments.<br/>
+To run in the "admin" mode, use the following command in the console:
+<pre>
+$ java -jar ProfilingDemo.jar admin [ipAddress] [port]
+Example:
+$ java -jar ProfilingDemo.jar admin localhost 8080
+</pre>
+Where ipAddress is the address of the Kaa node, where the administrative REST API is deployed.<br/><br/>
+To run in the "client" mode, use the following command in the console:
+<pre>
+$ java -jar ProfilingDemo.jar client
+</pre>
+To run in the "developer" mode, use the following command in the console:
+<pre>
+$ java -jar ProfilingDemo.jar developer [ipAddress] [port]
+</pre>
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running.
+"Profiling Demo" consists of the next modes:
+
+1) In "admin" mode you will be able to do credentials provisioning (Device Management feature), revocation and registration. Before using "developer" or "client" mode, you need to create and register endpoint credentials via Kaa REST API.
+Run app with the next command:
+<pre>
+$ java -jar ProfilingDemo.jar admin [kaa_hostname] 8080
+</pre>
+Then choose the first menu item by typing "1" and pressing "Enter".
+Exit from application by typing "3" and pressing "Enter".
+Now credentials was created and registered in Kaa. Corresponding "key.private" and "key.public" files are created.
+Starting from now, you can use other modes.
+2) In "developer" mode you will be able
+to activate/deactivate any endpoint associated with Profiling app. Endpoint profiling are performed by updating server profile using REST API.<br/><br/>
+"Profiling Demo" app in "client" mode creates and registers one Kaa endpoint (per application instance). In this mode app displays the current state of the endpoint (active or inactive). Once the profiling is performed via the "developer" application, your endpoint will be served with the new configuration data according to the server-side endpoint profile change.<br/>
+
+<br/>
+
+To understand better how this app works, you should navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of your Sandbox window. Log in as a tenant developer (devuser / devuser123 by default), and go to the "Profiling demo" application. Select "Schemas"->"Server-side EP profile". The app uses one schema version, which contains one value: "active" (boolean). The Kaa server uses this value to filter endpoints by their profile contents. Server-side endpoint profiles can be updated either via Admin Console, or via the REST API (which is done by the "Profiling app" in the "admin" mode)<br/><br/>
+
+Now open the "Configuration" schema under "Schemas" and select version 2 to see the structure of the configuration data. There is one value in the configuration schema: "active" (boolean). This value is what's actually sent to each endpoint by the server to specify the target endpoint state (active or inactive).<br/><br/>
+
+Finally, it's time to see what determines the configuration data. Go to the "Endpoint groups" section. There are three endpoint groups available.<br/><br/>
+
+The endpoints are put into either "Active device group" or "Inactive device group" depending on the "active" variable value in the server profile. See the corresponding profile filters in the group details window. Each endpoint group defines its own configuration (active or inactive) - and when the server-side profile for some EP is changed, the EP is moved from one group to another and this results in updated configuration being pushed by the server to the corresponding EP.<br/><br/>
+
+Please note that all features of the <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+
+<h2>What's next?</h2>
+
+For more background on the Kaa endpoint profiling, grouping, and configuration management features, please refer to the <a href="http://docs.kaaproject.org/display/KAA/Programming+guide">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Design+reference">design reference</a> sections.
+]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>JAVA</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
+        <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
+        <sourceArchive>java/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>JProfilingDemo</projectFolder>
+        <sdkLibDir>JProfilingDemo/lib</sdkLibDir>
+        <destBinaryFile>JProfilingDemo/build/jar/ProfilingDemo.jar</destBinaryFile>
+    </project>
+    
+    <project id="profiling_demo_objc">
+        <name>Endpoint Profiling and Grouping Objective-C demo</name>
+        <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities based on Objective-C SDK</description>
+        <details>
+            <![CDATA[
+This simple app demonstrates capabilities of the Kaa Notification subsystem on the Objective-C SDK.
+
+<h2>Installation</h2>
+Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<pre>
+$ ./build.sh
+</pre>
+
+<h2>Playing around</h2>
+Make sure that the Kaa Sandbox is up and running. After starting the "Notification Objective-C demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
+
+You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
+
+Please note that all the features of Administration UI are also supported by REST API.
+
+<h2>What's next?</h2>
+
+For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+            ]]>
+        </details>
+        <sdkLanguage>OBJC</sdkLanguage>
+        <platforms>IOS</platforms>
+        <features>CONFIGURATION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>profiling_demos</bundleId>
+        <sourceArchive>objc/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCProfilingDemo</projectFolder>
+        <sdkLibDir>ObjCProfilingDemo/libs</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+
+</projectsConfig>

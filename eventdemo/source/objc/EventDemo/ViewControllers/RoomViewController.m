@@ -18,18 +18,13 @@
 #import "ChatClientManager.h"
 #import "MessageCell.h"
 
-@interface RoomViewController () <UITextFieldDelegate>
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomOffsetConstraint;
-
-@end
 
 @implementation RoomViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title =_roomName;
+    self.title = _roomName;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.estimatedRowHeight = 44;
 

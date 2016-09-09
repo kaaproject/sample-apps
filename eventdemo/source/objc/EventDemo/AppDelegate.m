@@ -15,6 +15,8 @@
  */
 
 #import "AppDelegate.h"
+#import "ChatClientManager.h"
+
 
 @interface AppDelegate ()
 
@@ -22,7 +24,9 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [ChatClientManager sharedManager];
     return YES;
 }
 

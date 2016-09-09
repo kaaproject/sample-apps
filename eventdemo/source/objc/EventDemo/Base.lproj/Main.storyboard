@@ -176,6 +176,11 @@
                                                 <constraint firstItem="gPp-bb-sVr" firstAttribute="centerY" secondItem="IuD-YE-OJr" secondAttribute="centerY" id="iiP-CM-U1A"/>
                                                 <constraint firstItem="gPp-bb-sVr" firstAttribute="top" secondItem="IuD-YE-OJr" secondAttribute="top" constant="8" id="oMV-40-Stq"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="iiP-CM-U1A"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>

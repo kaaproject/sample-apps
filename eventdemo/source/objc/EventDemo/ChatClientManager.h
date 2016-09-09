@@ -25,7 +25,7 @@ static NSString *MessagesListUpdated = @"MessagesListUpdated";
 
 /*
  *  Class ChatClientManager is a Singletone class.
- *  It's responsible for all chat logic: sending messages,
+ *  It's responsible for the chat logic: sending messages,
  *  creating and removing chat rooms.
  *
  *  Handles Kaa client initialization and delegate methods

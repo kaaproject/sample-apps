@@ -20,6 +20,7 @@
 {
     NSArray *roomsList;
 }
+
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @end

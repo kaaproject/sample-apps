@@ -29,6 +29,8 @@
 
 - (void)detachEndpoitWithDelegate:(id<OnDetachEndpointOperationDelegate>)delegate;
 
+- (void)assistedAttachWithAccessToken:(NSString *)tokenString delegate:(id<OnAttachEndpointOperationDelegate>)delegate;
+
 - (EventFamilyFactory *)getEventFamilyFactory;
 
 - (VerifiersDemoEventClassFamily *)getEventClassFamily;

@@ -55,6 +55,11 @@
     [self.kaaClient attachUserWithVerifierToken:[self getKaaVerifiersTokenForUser:user] userId:user.userId accessToken:user.token delegate:delegate];
 }
 
+- (void)assistedAttachWithAccessToken:(NSString *)tokenString delegate:(id<OnAttachEndpointOperationDelegate>)delegate {
+    EndpointAccessToken *token = [[EndpointAccessToken alloc] initWithToken:tokenString];
+    [self.kaaClient attachEndpointWithAccessToken:token delegate:delegate];
+}
+
 /**
  * Detach the endpoint from the user.
  */

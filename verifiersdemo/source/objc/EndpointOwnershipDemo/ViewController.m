@@ -31,19 +31,24 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 
 @import Kaa;
 
-@interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UserAttachDelegate, OnDetachEndpointOperationDelegate>
+@interface ViewController () <FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UserAttachDelegate, OnDetachEndpointOperationDelegate, OnAttachEndpointOperationDelegate>
 
 @property (weak, nonatomic) IBOutlet UIStackView *socialButtonsStackView;
 
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *fbLoginButton;
 @property (weak, nonatomic) IBOutlet TWTRLogInButton *twtrLogInButton;
-@property (weak, nonatomic) IBOutlet GIDSignInButton *googleLogInButton; 
+@property (weak, nonatomic) IBOutlet GIDSignInButton *googleLogInButton;
 @property (weak, nonatomic) IBOutlet UIButton *logOutButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *socialNetworkAuthorizationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *kaaAuthorizationLabel;
+
 @property (weak, nonatomic) IBOutlet UIView *messagingView;
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UITextView *chatTextView;
+
+@property (weak, nonatomic) IBOutlet UITextField *endpointAccessTokenTextField;
+@property (weak, nonatomic) IBOutlet UIView *attachView;
 
 @property (nonatomic, strong) KaaManager *kaaManager;
 @property (nonatomic, strong) User *user;
@@ -63,6 +68,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     
     self.logOutButton.hidden = YES;
     self.messagingView.hidden = YES;
+    self.attachView.hidden = YES;
     self.googleLogInButton.colorScheme = kGIDSignInButtonColorSchemeDark;
     
     self.fbLoginButton.delegate = self;
@@ -112,6 +118,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     
     [self updateAuthorizationStatusForLabel:AuthorizationLabelSocial status:NO];
     self.messagingView.hidden = YES;
+    self.attachView.hidden = YES;
     self.chatTextView.text = @"";
     
     switch (self.user.network) {
@@ -136,6 +143,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 - (void)userHasAttached {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.messagingView.hidden = NO;
+        self.attachView.hidden = NO;
     });
     //Obtain the event family factory.
     self.eventFamilyFactory = [self.kaaManager getEventFamilyFactory];
@@ -256,6 +264,25 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     }
 }
 
+#pragma mark - OnAttachEndpointOperationDelegate
+
+- (void)onAttachResult:(SyncResponseResultType)result withEndpointKeyHash:(EndpointKeyHash *)endpointKeyHash {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (result) {
+            case SYNC_RESPONSE_RESULT_TYPE_SUCCESS:
+                self.chatTextView.text = [NSString stringWithFormat:@"Endpoint with key hash %@ joined chat\n%@", endpointKeyHash.keyHash, self.chatTextView.text];
+                break;
+                
+            case SYNC_RESPONSE_RESULT_TYPE_FAILURE:
+                self.chatTextView.text = [NSString stringWithFormat:@"Failed to add endpoint to chat\n%@", self.chatTextView.text];
+                break;
+                
+            default:
+                break;
+        }
+    });
+}
+
 #pragma mark - Actions
 
 - (IBAction)logOutBtnPressed:(id)sender {
@@ -278,5 +305,11 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     }
 }
 
+- (IBAction)attachButtonPressed:(id)sender {
+    if (self.endpointAccessTokenTextField.text.length > 0) {
+        [self.kaaManager assistedAttachWithAccessToken:self.endpointAccessTokenTextField.text delegate:self];
+        self.endpointAccessTokenTextField.text = @"";
+    }
+}
 
 @end

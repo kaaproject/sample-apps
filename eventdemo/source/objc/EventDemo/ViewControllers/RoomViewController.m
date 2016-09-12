@@ -31,13 +31,6 @@
     [self updateMessages];
 }
 
-- (void)updateMessages {
-    self.messages = [[ChatClientManager sharedManager] messagesForRoom:self.roomName];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-    });
-}
-
 #pragma mark - UITableViewDatasource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -50,6 +43,15 @@
     return cell;
 }
 
+#pragma mark - Notifications
+
+- (void)updateMessages {
+    self.messages = [[ChatClientManager sharedManager] messagesForRoom:self.roomName];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 - (void)keyboardWillShow:(NSNotification *)notif {
     CGRect keyboardFrame = [notif.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     self.bottomOffsetConstraint.constant = keyboardFrame.size.height;
@@ -59,6 +61,12 @@
 - (void)keyboardWillHide {
     self.bottomOffsetConstraint.constant = 0;
     [self.view layoutIfNeeded];
+}
+
+- (void)setupNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMessages) name:MessagesListUpdated object:nil];
 }
 
 #pragma mark - Actions
@@ -76,10 +84,6 @@
     return YES;
 }
 
-- (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMessages) name:MessagesListUpdated object:nil];
-}
+
 
 @end

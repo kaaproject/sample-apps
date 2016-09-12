@@ -39,6 +39,8 @@
     [self updateRoomsList];
 }
 
+#pragma mark - Notifications
+
 - (void)updateRoomsList {
     // Updating rooms list from the client manager
     self.roomsList = [ChatClientManager sharedManager].rooms;

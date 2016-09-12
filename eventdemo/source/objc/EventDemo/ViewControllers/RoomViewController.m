@@ -38,6 +38,8 @@
     });
 }
 
+#pragma mark - UITableViewDatasource methods
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.messages.count;
 }

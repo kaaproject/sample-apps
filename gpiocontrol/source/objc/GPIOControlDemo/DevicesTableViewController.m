@@ -97,7 +97,7 @@
 
 - (BOOL)isFirstTimeOpening {
     NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-    if([theDefaults integerForKey:@"hasRun"] == 0) {
+    if ([theDefaults integerForKey:@"hasRun"] == 0) {
         return true;
     }
     return false;

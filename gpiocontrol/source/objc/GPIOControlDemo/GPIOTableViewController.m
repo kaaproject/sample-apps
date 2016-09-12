@@ -39,12 +39,10 @@
 }
 
 - (void)sortGpioStatuses {
-    NSArray *sorteadArray = [self.gpioStatusArray sortedArrayUsingComparator:^NSComparisonResult(RemoteControlECFGpioStatus *obj1, RemoteControlECFGpioStatus *obj2) {
-        NSNumber *id1 = @(obj1.id);
-        NSNumber *id2 = @(obj2.id);
-        return [id1 compare:id2];
+    NSArray *sortedArray = [self.gpioStatusArray sortedArrayUsingComparator:^ NSComparisonResult(RemoteControlECFGpioStatus *obj1, RemoteControlECFGpioStatus *obj2) {
+        return [@(obj1.id) compare:@(obj1.id)];
     }];
-    self.gpioStatusArray = sorteadArray;
+    self.gpioStatusArray = sortedArray;
 }
 
 #pragma mark - Table view data source
@@ -68,14 +66,7 @@
 - (IBAction)statusSwitchChanged:(UISwitch *)sender {
     ConnectivityChecker *checker = [[ConnectivityChecker alloc] init];
     if ([checker isConnected]) {
-        RemoteControlECFGpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
-        status.status = sender.on;
-        id <KaaClient> client = [KaaProvider getClient];
-        EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
-        RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
-        RemoteControlECFGpioToggleRequest *request = [[RemoteControlECFGpioToggleRequest alloc] init];
-        request.gpio = self.gpioStatusArray[sender.tag];
-        [ecf sendRemoteControlECFGpioToggleRequest:request to:self.device.kaaEndpointId];
+        [self sendToggleRequest];
     } else {
         UIAlertController *alertController = [UIAlertController
                                               alertControllerWithTitle:@"Connection status"
@@ -90,6 +81,17 @@
 
         [self presentViewController:alertController animated:YES completion:nil];
     }
+}
+
+- (void)sendToggleRequest {
+    RemoteControlECFGpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
+    status.status = sender.on;
+    id <KaaClient> client = [KaaProvider getClient];
+    EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
+    RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
+    RemoteControlECFGpioToggleRequest *request = [[RemoteControlECFGpioToggleRequest alloc] init];
+    request.gpio = self.gpioStatusArray[sender.tag];
+    [ecf sendRemoteControlECFGpioToggleRequest:request to:self.device.kaaEndpointId];
 }
 
 

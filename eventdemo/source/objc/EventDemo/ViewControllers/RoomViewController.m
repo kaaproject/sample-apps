@@ -21,66 +21,66 @@
 
 @implementation RoomViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    
     [super viewDidLoad];
-    self.title = _roomName;
-    _tableView.rowHeight = UITableViewAutomaticDimension;
-    _tableView.estimatedRowHeight = 44;
+    self.title = self.roomName;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 44;
 
     [self setupNotifications];
     [self updateMessages];
 }
 
-- (void)updateMessages
-{
-    self.messages = [[ChatClientManager sharedManager] messagesForRoom:_roomName];
+- (void)updateMessages {
+    
+    self.messages = [[ChatClientManager sharedManager] messagesForRoom:self.roomName];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
 }
 
-- (IBAction)sendPressed:(id)sender
-{
-    [[ChatClientManager sharedManager] sendMessage:_messageTextField.text
-                                              room:_roomName];
-    _messageTextField.text = @"";
+- (IBAction)sendPressed:(id)sender {
+    
+    [[ChatClientManager sharedManager] sendMessage:self.messageTextField.text
+                                              room:self.roomName];
+    self.messageTextField.text = @"";
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _messages.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return self.messages.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:[MessageCell cellIdentitier] forIndexPath:indexPath];
-    cell.msgLabel.text = _messages[indexPath.row];;
+    cell.msgLabel.text = self.messages[indexPath.row];
     return cell;
 }
 
-- (void)keyboardWillShow:(NSNotification *)notif
-{
+- (void)keyboardWillShow:(NSNotification *)notif {
+    
     CGRect keyboardFrame = [notif.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    _bottomOffsetConstraint.constant = keyboardFrame.size.height;
+    self.bottomOffsetConstraint.constant = keyboardFrame.size.height;
     [self.view layoutIfNeeded];
 }
 
-- (void)keyboardWillHide
-{
-    _bottomOffsetConstraint.constant = 0;
+- (void)keyboardWillHide {
+    
+    self.bottomOffsetConstraint.constant = 0;
     [self.view layoutIfNeeded];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
     [textField resignFirstResponder];
     return YES;
 }
 
-- (void)setupNotifications
-{
+- (void)setupNotifications {
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMessages) name:MessagesListUpdated object:nil];

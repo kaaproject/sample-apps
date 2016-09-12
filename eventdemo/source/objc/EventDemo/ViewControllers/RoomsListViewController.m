@@ -22,72 +22,72 @@
 
 @implementation RoomsListViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateRoomsList)
                                                  name:RoomsListUpdated object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:animated];
     [self updateRoomsList];
 }
 
-- (void)updateRoomsList
-{
-    //Updating rooms list from the client manager
+- (void)updateRoomsList {
+    
+    // Updating rooms list from the client manager
     roomsList = [ChatClientManager sharedManager].rooms;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
     return roomsList.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomCell" forIndexPath:indexPath];
     cell.textLabel.text = roomsList[indexPath.row];
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     RoomViewController *roomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RoomViewController"];
     roomVC.roomName = roomsList[indexPath.row];
     [self.navigationController pushViewController:roomVC animated:YES];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     return UITableViewCellEditingStyleDelete;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
     [[ChatClientManager sharedManager] deleteRoom:roomsList[indexPath.row] onlyLocal:NO];
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //Check if we can delete Room from this row
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // Check if we can delete Room from this row
     return ![[ChatClientManager sharedManager].defaultRooms containsObject:roomsList[indexPath.row]];
 }
 
-- (IBAction)editPressed:(UIButton *)sender
-{
+- (IBAction)editPressed:(UIButton *)sender {
+    
     [self.tableView setEditing:!self.tableView.isEditing animated:YES];
-    _editButton.selected = self.tableView.isEditing;
+    self.editButton.selected = self.tableView.isEditing;
 }
 
-- (IBAction)addPressed:(id)sender
-{
+- (IBAction)addPressed:(id)sender {
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enter room name:"
                                                                    message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alert addTextFieldWithConfigurationHandler:nil];

@@ -18,8 +18,8 @@
 
 @implementation MessageCell
 
-+ (NSString *)cellIdentitier
-{
++ (NSString *)cellIdentitier {
+    
     return @"MessageCell";
 }
 

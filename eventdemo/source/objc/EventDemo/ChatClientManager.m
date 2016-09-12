@@ -23,8 +23,8 @@
 @implementation ChatClientManager
 
 
-+ (ChatClientManager *)sharedManager //Singletone
-{
++ (ChatClientManager *)sharedManager { // Singletone
+    
     static ChatClientManager *sharedMyManager = nil;
     @synchronized(self) {
         if (sharedMyManager == nil)
@@ -33,10 +33,10 @@
     return sharedMyManager;
 }
 
-- (id)init
-{
+- (id)init {
+    
     self = [super init];
-    if(self)
+    if (self)
     {
         [self initializeKaa];
         self.defaultRooms = @[@"Living", @"Guest"];
@@ -46,9 +46,9 @@
     return self;
 }
 
-- (void)initializeKaa
-{
-    //Create a Kaa client with the Kaa default context.
+- (void)initializeKaa {
+    
+    // Create a Kaa client with the Kaa default context.
     self.kaaClient = [KaaClientFactory
                       clientWithContext:[[DefaultKaaPlatformContext alloc] init]
                       stateDelegate:self];
@@ -57,124 +57,115 @@
     // Start the Kaa client and connect it to the Kaa server.
     [self.kaaClient start];
     
-    //Attaching new user
+    // Attaching new user
     [self.kaaClient attachUserWithId:USER_EXTERNAL_ID
-                         accessToken:USER_ACCESS_TOKEN delegate:self];
+                         accessToken:USER_ACCESS_TOKEN
+                            delegate:self];
 }
-
-#pragma mark - Kaa Delegates methods
 
 #pragma mark - KaaClientStateDelegate
 
-- (void)onStarted
-{
+- (void)onStarted {
+    
     NSLog(@"Kaa client started");
 }
 
 #pragma mark - UserAttachDelegate
 
-- (void)onAttachResult:(UserAttachResponse *)response
-{    
-    if (response.result == SYNC_RESPONSE_RESULT_TYPE_SUCCESS)
-    {
+- (void)onAttachResult:(UserAttachResponse *)response {
+    
+    if (response.result == SYNC_RESPONSE_RESULT_TYPE_SUCCESS) {
         NSLog(@"Endpoint successfully attached!");
-        //Obtain the event family factory.
+        // Obtain the event family factory.
         EventFamilyFactory *eventFamilyFactory = [self.kaaClient getEventFamilyFactory];
         
-        //Obtain the concrete event family.
+        // Obtain the concrete event family.
         self.chatEventFamily = [eventFamilyFactory getChat];
         [self.chatEventFamily addDelegate:self];
-    }
-    else
-    {
+    } else {
         NSLog(@"Endpoint attach failed: event demo stopped");
     }
 }
 
 #pragma mark - ChatDelegate
 
-- (void)onChatEvent:(ChatEvent *)event fromSource:(NSString *)source
-{
+- (void)onChatEvent:(ChatEvent *)event fromSource:(NSString *)source {
+    
     NSLog(@"Got chat event");
     
-    //Handling chat event
-    switch (event.EventType)
-    {
+    // Handling chat event
+    switch (event.EventType) {
         case CHAT_EVENT_TYPE_CREATE:
-            //Handling CREATE chat event
+            // Handling CREATE chat event
             [self createRoom:event.ChatName onlyLocal:YES];
             break;
             
         case CHAT_EVENT_TYPE_DELETE:
-            //Handling CREATE chat event
+            // Handling CREATE chat event
             [self deleteRoom:event.ChatName onlyLocal:YES];
             break;
     }
 }
 
-- (void)onMessage:(Message *)event fromSource:(NSString *)source
-{
+- (void)onMessage:(Message *)event fromSource:(NSString *)source {
+    
     NSLog(@"Got chat message");
     [self saveMessage:event.Message toRoom:event.ChatName];
 }
 
 #pragma mark - ProfileContainer
 
-- (KAAEmptyData *)getProfile
-{
+- (KAAEmptyData *)getProfile {
+    
     return [[KAAEmptyData alloc] init];
 }
 
 #pragma mark - Sending Kaa Events logic
 
-- (void)createRoom:(NSString *)name onlyLocal:(BOOL)onlyLocal
-{
-    if(name.isEmpty == NO) // chat room nema should not be empty
-    {
-        if(onlyLocal == NO) //Check if we don't need to save it only locally
-        {
-            //create and send CREATE chat event to the Kaa
+- (void)createRoom:(NSString *)name onlyLocal:(BOOL)onlyLocal {
+    
+    if (name.isEmpty == NO) { // chat room name should not be empty
+        if (onlyLocal == NO) { // Check if we don't need to save it only locally
+            // create and send CREATE chat event to the Kaa
             ChatEvent *addEvent = [[ChatEvent alloc] initWithChatName:name
                                                             EventType:CHAT_EVENT_TYPE_CREATE];
-            [_chatEventFamily sendChatEventToAll:addEvent];
+            [self.chatEventFamily sendChatEventToAll:addEvent];
         }
-        [_rooms addObject:name];
+        [self.rooms addObject:name];
         [self notify:RoomsListUpdated];
     }
 }
 
-- (void)deleteRoom:(NSString *)room  onlyLocal:(BOOL)onlyLocal
-{
-    if([_rooms containsObject:room])
-    {
-        if(onlyLocal == NO) //Check if we don't need to save it only locally
+- (void)deleteRoom:(NSString *)room  onlyLocal:(BOOL)onlyLocal {
+    
+    if ([self.rooms containsObject:room]) {
+        if (onlyLocal == NO) // Check if we don't need to save it only locally
         {
-            //create and send DELETE chat event to the Kaa
+            // create and send DELETE chat event to the Kaa
             ChatEvent *addEvent = [[ChatEvent alloc] initWithChatName:room
                                                             EventType:CHAT_EVENT_TYPE_DELETE];
-            [_chatEventFamily sendChatEventToAll:addEvent];
+            [self.chatEventFamily sendChatEventToAll:addEvent];
         }
-        [_rooms removeObject:room];
+        [self.rooms removeObject:room];
         [self notify:RoomsListUpdated];
     }
 }
 
-- (void)sendMessage:(NSString *)message room:(NSString *)roomName
-{
+- (void)sendMessage:(NSString *)message room:(NSString *)roomName {
+    
     [self saveMessage:message toRoom:roomName];
-    //Creating Message event ovject
+    // Creating Message event ovject
     Message *msg = [[Message alloc] initWithChatName:roomName Message:message];
-    //Sending Message event to Kaa
+    // Sending Message event to Kaa
     [self.chatEventFamily sendMessageToAll:msg];
 }
 
 #pragma mark - Chat helper methods
 
-- (void)saveMessage:(NSString *)msg toRoom:(NSString *)room
-{
+- (void)saveMessage:(NSString *)msg toRoom:(NSString *)room {
+    
     NSMutableArray *msgList = messages[room];
-    if(msgList == nil)
-    {
+    if (msgList == nil) {
         msgList = [NSMutableArray array];
         messages[room] = msgList;
     }
@@ -182,13 +173,13 @@
     [self notify:MessagesListUpdated];
 }
 
-- (NSArray *)messagesForRoom:(NSString *)roomName
-{
+- (NSArray *)messagesForRoom:(NSString *)roomName {
+    
     return messages[roomName];
 }
 
-- (void)notify:(NSString *)name
-{
+- (void)notify:(NSString *)name {
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
 

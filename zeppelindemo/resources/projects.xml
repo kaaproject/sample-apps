@@ -60,7 +60,7 @@ Execute following commands:
 $ cd /opt
 $ sudo wget http://archive.apache.org/dist/zeppelin/zeppelin-0.6.1/zeppelin-0.6.1-bin-all.tgz
 $ sudo tar -xzvf zeppelin-0.6.1-bin-all.tgz
-$ sudo ln -s /opt/zeppelin-0.6.1-bin-all.tgz /opt/zeppelin
+$ sudo ln -s /opt/zeppelin-0.6.1-bin-all /opt/zeppelin
 $ cd ./zeppelin/conf
 $ sudo cp ./zeppelin-env.sh.template  ./zeppelin-env.sh
 </pre>

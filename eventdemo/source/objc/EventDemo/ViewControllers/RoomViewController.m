@@ -38,12 +38,6 @@
     });
 }
 
-- (IBAction)sendPressed:(id)sender {
-    [[ChatClientManager sharedManager] sendMessage:self.messageTextField.text
-                                              room:self.roomName];
-    self.messageTextField.text = @"";
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.messages.count;
 }
@@ -64,6 +58,16 @@
     self.bottomOffsetConstraint.constant = 0;
     [self.view layoutIfNeeded];
 }
+
+#pragma mark - Actions
+
+- (IBAction)sendPressed:(id)sender {
+    [[ChatClientManager sharedManager] sendMessage:self.messageTextField.text
+                                              room:self.roomName];
+    self.messageTextField.text = @"";
+}
+
+#pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];

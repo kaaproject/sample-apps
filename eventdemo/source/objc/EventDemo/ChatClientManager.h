@@ -32,9 +32,6 @@ static NSString *MessagesListUpdated = @"MessagesListUpdated";
  */
 
 @interface ChatClientManager : NSObject <KaaClientStateDelegate, UserAttachDelegate, ProfileContainer,ChatDelegate>
-{
-    NSMutableDictionary *messages;
-}
 
 @property (nonatomic, strong) id<KaaClient> kaaClient;
 @property (nonatomic, strong) Chat *chatEventFamily;

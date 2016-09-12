@@ -17,9 +17,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RoomsListViewController : UITableViewController
-{
-    NSArray *roomsList;
-}
 
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 

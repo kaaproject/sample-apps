@@ -19,6 +19,11 @@
 #define USER_EXTERNAL_ID    @"user@email.com"
 #define USER_ACCESS_TOKEN   @"token"
 
+@interface ChatClientManager ()
+
+@property (nonatomic, strong) NSMutableDictionary *messages;
+
+@end
 
 @implementation ChatClientManager
 
@@ -39,7 +44,7 @@
         [self initializeKaa];
         self.defaultRooms = @[@"Living", @"Guest"];
         self.rooms = [NSMutableArray arrayWithArray:_defaultRooms];
-        messages = [NSMutableDictionary dictionary];
+        self.messages = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -143,7 +148,7 @@
 
 - (void)sendMessage:(NSString *)message room:(NSString *)roomName {
     [self saveMessage:message toRoom:roomName];
-    // Creating Message event ovject
+    // Creating Message event object
     Message *msg = [[Message alloc] initWithChatName:roomName Message:message];
     // Sending Message event to Kaa
     [self.chatEventFamily sendMessageToAll:msg];
@@ -152,17 +157,17 @@
 #pragma mark - Chat helper methods
 
 - (void)saveMessage:(NSString *)msg toRoom:(NSString *)room {
-    NSMutableArray *msgList = messages[room];
+    NSMutableArray *msgList = self.messages[room];
     if (msgList == nil) {
         msgList = [NSMutableArray array];
-        messages[room] = msgList;
+        self.messages[room] = msgList;
     }
     [msgList addObject:msg];
     [self notify:MessagesListUpdated];
 }
 
 - (NSArray *)messagesForRoom:(NSString *)roomName {
-    return messages[roomName];
+    return self.messages[roomName];
 }
 
 - (void)notify:(NSString *)name {

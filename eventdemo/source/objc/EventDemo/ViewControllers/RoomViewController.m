@@ -22,7 +22,6 @@
 @implementation RoomViewController
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     self.title = self.roomName;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -33,7 +32,6 @@
 }
 
 - (void)updateMessages {
-    
     self.messages = [[ChatClientManager sharedManager] messagesForRoom:self.roomName];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -41,46 +39,38 @@
 }
 
 - (IBAction)sendPressed:(id)sender {
-    
     [[ChatClientManager sharedManager] sendMessage:self.messageTextField.text
                                               room:self.roomName];
     self.messageTextField.text = @"";
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.messages.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:[MessageCell cellIdentitier] forIndexPath:indexPath];
     cell.msgLabel.text = self.messages[indexPath.row];
     return cell;
 }
 
 - (void)keyboardWillShow:(NSNotification *)notif {
-    
     CGRect keyboardFrame = [notif.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     self.bottomOffsetConstraint.constant = keyboardFrame.size.height;
     [self.view layoutIfNeeded];
 }
 
 - (void)keyboardWillHide {
-    
     self.bottomOffsetConstraint.constant = 0;
     [self.view layoutIfNeeded];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
     [textField resignFirstResponder];
     return YES;
 }
 
 - (void)setupNotifications {
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMessages) name:MessagesListUpdated object:nil];

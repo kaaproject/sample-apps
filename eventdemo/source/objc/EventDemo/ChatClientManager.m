@@ -24,7 +24,6 @@
 
 
 + (ChatClientManager *)sharedManager { // Singletone
-    
     static ChatClientManager *sharedMyManager = nil;
     @synchronized(self) {
         if (sharedMyManager == nil)
@@ -34,7 +33,6 @@
 }
 
 - (id)init {
-    
     self = [super init];
     if (self)
     {
@@ -47,7 +45,6 @@
 }
 
 - (void)initializeKaa {
-    
     // Create a Kaa client with the Kaa default context.
     self.kaaClient = [KaaClientFactory
                       clientWithContext:[[DefaultKaaPlatformContext alloc] init]
@@ -66,14 +63,12 @@
 #pragma mark - KaaClientStateDelegate
 
 - (void)onStarted {
-    
     NSLog(@"Kaa client started");
 }
 
 #pragma mark - UserAttachDelegate
 
 - (void)onAttachResult:(UserAttachResponse *)response {
-    
     if (response.result == SYNC_RESPONSE_RESULT_TYPE_SUCCESS) {
         NSLog(@"Endpoint successfully attached!");
         // Obtain the event family factory.
@@ -90,7 +85,6 @@
 #pragma mark - ChatDelegate
 
 - (void)onChatEvent:(ChatEvent *)event fromSource:(NSString *)source {
-    
     NSLog(@"Got chat event");
     
     // Handling chat event
@@ -108,7 +102,6 @@
 }
 
 - (void)onMessage:(Message *)event fromSource:(NSString *)source {
-    
     NSLog(@"Got chat message");
     [self saveMessage:event.Message toRoom:event.ChatName];
 }
@@ -116,14 +109,12 @@
 #pragma mark - ProfileContainer
 
 - (KAAEmptyData *)getProfile {
-    
     return [[KAAEmptyData alloc] init];
 }
 
 #pragma mark - Sending Kaa Events logic
 
 - (void)createRoom:(NSString *)name onlyLocal:(BOOL)onlyLocal {
-    
     if (name.isEmpty == NO) { // chat room name should not be empty
         if (onlyLocal == NO) { // Check if we don't need to save it only locally
             // create and send CREATE chat event to the Kaa
@@ -137,7 +128,6 @@
 }
 
 - (void)deleteRoom:(NSString *)room  onlyLocal:(BOOL)onlyLocal {
-    
     if ([self.rooms containsObject:room]) {
         if (onlyLocal == NO) // Check if we don't need to save it only locally
         {
@@ -152,7 +142,6 @@
 }
 
 - (void)sendMessage:(NSString *)message room:(NSString *)roomName {
-    
     [self saveMessage:message toRoom:roomName];
     // Creating Message event ovject
     Message *msg = [[Message alloc] initWithChatName:roomName Message:message];
@@ -163,7 +152,6 @@
 #pragma mark - Chat helper methods
 
 - (void)saveMessage:(NSString *)msg toRoom:(NSString *)room {
-    
     NSMutableArray *msgList = messages[room];
     if (msgList == nil) {
         msgList = [NSMutableArray array];
@@ -174,12 +162,10 @@
 }
 
 - (NSArray *)messagesForRoom:(NSString *)roomName {
-    
     return messages[roomName];
 }
 
 - (void)notify:(NSString *)name {
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
 

@@ -19,7 +19,6 @@
 @implementation MessageCell
 
 + (NSString *)cellIdentitier {
-    
     return @"MessageCell";
 }
 

@@ -141,6 +141,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B9998C91D86D53C00755E28 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E8290BAB1C088CAA00AA184A /* DevicesTableViewController.h */,
+				E8290BAC1C088CAA00AA184A /* DevicesTableViewController.m */,
+				E8290BAD1C088CAA00AA184A /* GPIOTableViewController.h */,
+				E8290BAE1C088CAA00AA184A /* GPIOTableViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7B9998D31D86D54E00755E28 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E8290BA21C088CAA00AA184A /* LaunchScreen.storyboard */,
+				E8290BA41C088CAA00AA184A /* Main.storyboard */,
+				E8290BB21C088CAA00AA184A /* main.m */,
+				E8290BA11C088CAA00AA184A /* Assets.xcassets */,
+				E8290BAF1C088CAA00AA184A /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7B9998D41D86D57400755E28 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E8290BB31C088CAA00AA184A /* PreferencesManager.h */,
+				E8290BB41C088CAA00AA184A /* PreferencesManager.m */,
+				E8290BA71C088CAA00AA184A /* ConnectionAlert.h */,
+				E8290BA81C088CAA00AA184A /* ConnectionAlert.m */,
+				E8290BB51C088CAA00AA184A /* StatusTableViewCell.h */,
+				E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		B87824B51C18900100F12E02 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,27 +221,15 @@
 		E8290B9E1C088CAA00AA184A /* GPIOControlDemo */ = {
 			isa = PBXGroup;
 			children = (
+				7B9998D41D86D57400755E28 /* Helpers */,
+				7B9998C91D86D53C00755E28 /* ViewControllers */,
 				E8290B9F1C088CAA00AA184A /* AppDelegate.h */,
 				E8290BA01C088CAA00AA184A /* AppDelegate.m */,
-				E8290BA11C088CAA00AA184A /* Assets.xcassets */,
-				E8290BA21C088CAA00AA184A /* LaunchScreen.storyboard */,
-				E8290BA41C088CAA00AA184A /* Main.storyboard */,
-				E8290BA71C088CAA00AA184A /* ConnectionAlert.h */,
-				E8290BA81C088CAA00AA184A /* ConnectionAlert.m */,
 				E8290BA91C088CAA00AA184A /* Device.h */,
 				E8290BAA1C088CAA00AA184A /* Device.m */,
-				E8290BAB1C088CAA00AA184A /* DevicesTableViewController.h */,
-				E8290BAC1C088CAA00AA184A /* DevicesTableViewController.m */,
-				E8290BAD1C088CAA00AA184A /* GPIOTableViewController.h */,
-				E8290BAE1C088CAA00AA184A /* GPIOTableViewController.m */,
 				E8290BB01C088CAA00AA184A /* KaaProvider.h */,
 				E8290BB11C088CAA00AA184A /* KaaProvider.m */,
-				E8290BB21C088CAA00AA184A /* main.m */,
-				E8290BB31C088CAA00AA184A /* PreferencesManager.h */,
-				E8290BB41C088CAA00AA184A /* PreferencesManager.m */,
-				E8290BB51C088CAA00AA184A /* StatusTableViewCell.h */,
-				E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */,
-				E8290BAF1C088CAA00AA184A /* Info.plist */,
+				7B9998D31D86D54E00755E28 /* Resources */,
 			);
 			path = GPIOControlDemo;
 			sourceTree = "<group>";

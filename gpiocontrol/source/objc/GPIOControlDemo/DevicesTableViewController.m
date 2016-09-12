@@ -28,7 +28,7 @@
 @interface DevicesTableViewController ()
 
 @property (nonatomic, strong) id <KaaClient> kaaClient;
-@property (nonatomic, strong) KAAEmptyData *profile;
+@property (nonatomic, strong) KAAProfileEmptyData *profile;
 @property (nonatomic, strong) NSMutableArray *devices;
 @property (nonatomic, strong) NSString *endpointId;
 @property (nonatomic, strong) NSIndexPath *deletingIndexPath;
@@ -51,7 +51,7 @@
         //Get Kaa client instance from KaaProvider class
         self.kaaClient = [KaaProvider getClient];
         [self.kaaClient setProfileContainer:self];
-        self.profile = [[KAAEmptyData alloc] init];
+        self.profile = [[KAAProfileEmptyData alloc] init];
         self.devices = [NSMutableArray array];
         //Starting Kaa client
         [self.kaaClient start];
@@ -109,7 +109,7 @@
     });
 }
 
-- (KAAEmptyData *)getProfile {
+- (KAAProfileEmptyData *)getProfile {
     return self.profile;
 }
 
@@ -182,7 +182,7 @@
 
 #pragma mark - Delegates methods
 
-- (void)onDeviceInfoResponse:(DeviceInfoResponse *)event fromSource:(NSString *)source {
+- (void)onRemoteControlECFDeviceInfoResponse:(RemoteControlECFDeviceInfoResponse *)event fromSource:(NSString *)source {
     NSLog(@"%@ Got DeviceInfoResponse", TAG);
     Device *device = [[Device alloc] initWithModel:event.model deviceName:event.deviceName kaaEndpointId:source GPIOStatuses:event.gpioStatus];
     [self addItem:device];

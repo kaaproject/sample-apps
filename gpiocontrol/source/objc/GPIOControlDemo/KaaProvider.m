@@ -70,7 +70,7 @@
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     
     [ecf addDelegate:delegate];
-    [ecf sendDeviceInfoRequestToAll:[[DeviceInfoRequest alloc] init]];
+    [ecf sendRemoteControlECFDeviceInfoRequestToAll:[[RemoteControlECFDeviceInfoRequest alloc] init]];
 }
 
 + (void)sendDeviceInfoRequestToAll {
@@ -78,7 +78,7 @@
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     
-    [ecf sendDeviceInfoRequestToAll:[[DeviceInfoRequest alloc] init]];
+    [ecf sendRemoteControlECFDeviceInfoRequestToAll:[[RemoteControlECFDeviceInfoRequest alloc] init]];
 }
 
 - (void)onAttachResult:(UserAttachResponse *)response {

@@ -39,7 +39,7 @@
 }
 
 - (void)sortGpioStatuses {
-    NSArray *sorteadArray = [self.gpioStatusArray sortedArrayUsingComparator:^NSComparisonResult(GpioStatus *obj1, GpioStatus *obj2) {
+    NSArray *sorteadArray = [self.gpioStatusArray sortedArrayUsingComparator:^NSComparisonResult(RemoteControlECFGpioStatus *obj1, RemoteControlECFGpioStatus *obj2) {
         NSNumber *id1 = @(obj1.id);
         NSNumber *id2 = @(obj2.id);
         return [id1 compare:id2];
@@ -56,7 +56,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cell";
     StatusTableViewCell *cell = (StatusTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    GpioStatus *status = self.gpioStatusArray[indexPath.row];
+    RemoteControlECFGpioStatus *status = self.gpioStatusArray[indexPath.row];
     cell.idLabel.text = [NSString stringWithFormat:@"GPIO id: %d", status.id];
     cell.statusSwitch.tag = indexPath.row;
     [cell.statusSwitch setOn:status.status animated:YES];
@@ -68,14 +68,14 @@
 - (IBAction)statusSwitchChanged:(UISwitch *)sender {
     ConnectivityChecker *checker = [[ConnectivityChecker alloc] init];
     if ([checker isConnected]) {
-        GpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
+        RemoteControlECFGpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
         status.status = sender.on;
         id <KaaClient> client = [KaaProvider getClient];
         EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
         RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
-        GpioToggleRequest *request = [[GpioToggleRequest alloc] init];
+        RemoteControlECFGpioToggleRequest *request = [[RemoteControlECFGpioToggleRequest alloc] init];
         request.gpio = self.gpioStatusArray[sender.tag];
-        [ecf sendGpioToggleRequest:request to:self.device.kaaEndpointId];
+        [ecf sendRemoteControlECFGpioToggleRequest:request to:self.device.kaaEndpointId];
     } else {
         UIAlertController *alertController = [UIAlertController
                                               alertControllerWithTitle:@"Connection status"

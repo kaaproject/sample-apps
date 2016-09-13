@@ -14,19 +14,12 @@
  *  limitations under the License.
  */
 
-#import "AppDelegate.h"
-#import "ChatClientManager.h"
+#import "MessageCell.h"
 
+@implementation MessageCell
 
-@interface AppDelegate ()
-
-@end
-
-@implementation AppDelegate
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [ChatClientManager sharedManager];
-    return YES;
++ (NSString *)cellIdentitier {
+    return @"MessageCell";
 }
 
 @end

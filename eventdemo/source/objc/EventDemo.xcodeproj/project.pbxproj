@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B5BDABA1D7F009100E34857 /* ChatClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BDAB91D7F009100E34857 /* ChatClientManager.m */; };
+		7B5BDAD21D7F019D00E34857 /* RoomsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BDAD11D7F019D00E34857 /* RoomsListViewController.m */; };
+		7B5BDAD51D7F01BA00E34857 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BDAD41D7F01BA00E34857 /* RoomViewController.m */; };
+		7BD03F591D7F1F9E006A1F01 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD03F581D7F1F9E006A1F01 /* MessageCell.m */; };
 		B8B997551BE3FB9600C0ABCE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B997541BE3FB9600C0ABCE /* main.m */; };
 		B8B997581BE3FB9600C0ABCE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B997571BE3FB9600C0ABCE /* AppDelegate.m */; };
-		B8B9975B1BE3FB9600C0ABCE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B9975A1BE3FB9600C0ABCE /* ViewController.m */; };
 		B8B9975E1BE3FB9600C0ABCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B9975C1BE3FB9600C0ABCE /* Main.storyboard */; };
 		B8B997601BE3FB9600C0ABCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B9975F1BE3FB9600C0ABCE /* Assets.xcassets */; };
 		B8B997631BE3FB9600C0ABCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B997611BE3FB9600C0ABCE /* LaunchScreen.storyboard */; };
@@ -97,14 +100,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7B5BDAB81D7F009100E34857 /* ChatClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatClientManager.h; sourceTree = "<group>"; };
+		7B5BDAB91D7F009100E34857 /* ChatClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatClientManager.m; sourceTree = "<group>"; };
+		7B5BDAD01D7F019D00E34857 /* RoomsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomsListViewController.h; sourceTree = "<group>"; };
+		7B5BDAD11D7F019D00E34857 /* RoomsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsListViewController.m; sourceTree = "<group>"; };
+		7B5BDAD31D7F01BA00E34857 /* RoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
+		7B5BDAD41D7F01BA00E34857 /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
+		7BD03F571D7F1F9E006A1F01 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		7BD03F581D7F1F9E006A1F01 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		B87824931C188EE700F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
 		B878249C1C188EF000F12E02 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-ep-sdk/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
 		B8B997501BE3FB9600C0ABCE /* EventDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B997541BE3FB9600C0ABCE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B8B997561BE3FB9600C0ABCE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B8B997571BE3FB9600C0ABCE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		B8B997591BE3FB9600C0ABCE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B8B9975A1BE3FB9600C0ABCE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B8B9975D1BE3FB9600C0ABCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8B9975F1BE3FB9600C0ABCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8B997621BE3FB9600C0ABCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -123,6 +132,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B5BDACF1D7F016A00E34857 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7B5BDAD01D7F019D00E34857 /* RoomsListViewController.h */,
+				7B5BDAD11D7F019D00E34857 /* RoomsListViewController.m */,
+				7B5BDAD31D7F01BA00E34857 /* RoomViewController.h */,
+				7B5BDAD41D7F01BA00E34857 /* RoomViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7BD03F4A1D7F1F68006A1F01 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BD03F571D7F1F9E006A1F01 /* MessageCell.h */,
+				7BD03F581D7F1F9E006A1F01 /* MessageCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B87824941C188EE700F12E02 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,9 +178,9 @@
 		B8B997471BE3FB9600C0ABCE = {
 			isa = PBXGroup;
 			children = (
+				B8B997521BE3FB9600C0ABCE /* EventDemo */,
 				B878249C1C188EF000F12E02 /* Pods.xcodeproj */,
 				B87824931C188EE700F12E02 /* Kaa.xcodeproj */,
-				B8B997521BE3FB9600C0ABCE /* EventDemo */,
 				B8B997511BE3FB9600C0ABCE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -167,10 +196,12 @@
 		B8B997521BE3FB9600C0ABCE /* EventDemo */ = {
 			isa = PBXGroup;
 			children = (
+				7B5BDAB81D7F009100E34857 /* ChatClientManager.h */,
+				7B5BDAB91D7F009100E34857 /* ChatClientManager.m */,
+				7B5BDACF1D7F016A00E34857 /* ViewControllers */,
+				7BD03F4A1D7F1F68006A1F01 /* Views */,
 				B8B997561BE3FB9600C0ABCE /* AppDelegate.h */,
 				B8B997571BE3FB9600C0ABCE /* AppDelegate.m */,
-				B8B997591BE3FB9600C0ABCE /* ViewController.h */,
-				B8B9975A1BE3FB9600C0ABCE /* ViewController.m */,
 				B8B9975C1BE3FB9600C0ABCE /* Main.storyboard */,
 				B8B9975F1BE3FB9600C0ABCE /* Assets.xcassets */,
 				B8B997611BE3FB9600C0ABCE /* LaunchScreen.storyboard */,
@@ -220,6 +251,7 @@
 				TargetAttributes = {
 					B8B9974F1BE3FB9600C0ABCE = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = TVMFX8XPT9;
 					};
 				};
 			};
@@ -335,9 +367,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8B9975B1BE3FB9600C0ABCE /* ViewController.m in Sources */,
+				7B5BDABA1D7F009100E34857 /* ChatClientManager.m in Sources */,
+				7B5BDAD51D7F01BA00E34857 /* RoomViewController.m in Sources */,
 				B8B997581BE3FB9600C0ABCE /* AppDelegate.m in Sources */,
 				B8B997551BE3FB9600C0ABCE /* main.m in Sources */,
+				7BD03F591D7F1F9E006A1F01 /* MessageCell.m in Sources */,
+				7B5BDAD21D7F019D00E34857 /* RoomsListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = EventDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -463,6 +499,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = EventDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;

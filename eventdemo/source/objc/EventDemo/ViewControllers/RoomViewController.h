@@ -16,7 +16,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface RoomViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+
+@property (strong, nonatomic) NSString *roomName;
+@property (strong, nonatomic) NSArray *messages;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
+@property (weak, nonatomic) IBOutlet UIView *messageBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomOffsetConstraint;
 
 @end
-

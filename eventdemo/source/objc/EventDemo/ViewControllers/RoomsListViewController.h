@@ -14,19 +14,10 @@
  *  limitations under the License.
  */
 
-#import "AppDelegate.h"
-#import "ChatClientManager.h"
+#import <UIKit/UIKit.h>
 
+@interface RoomsListViewController : UITableViewController
 
-@interface AppDelegate ()
-
-@end
-
-@implementation AppDelegate
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [ChatClientManager sharedManager];
-    return YES;
-}
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @end

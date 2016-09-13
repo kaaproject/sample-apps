@@ -14,19 +14,12 @@
  *  limitations under the License.
  */
 
-#import "AppDelegate.h"
-#import "ChatClientManager.h"
+#import <UIKit/UIKit.h>
 
+@interface MessageCell : UITableViewCell
 
-@interface AppDelegate ()
+@property (weak, nonatomic) IBOutlet UILabel *msgLabel;
 
-@end
-
-@implementation AppDelegate
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [ChatClientManager sharedManager];
-    return YES;
-}
++ (NSString *)cellIdentitier;
 
 @end

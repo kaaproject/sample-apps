@@ -191,26 +191,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/noInternetConnection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:text="@string/no_internet_connection"
-                android:textColor="@color/red"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
     </RelativeLayout>
 
 </RelativeLayout>

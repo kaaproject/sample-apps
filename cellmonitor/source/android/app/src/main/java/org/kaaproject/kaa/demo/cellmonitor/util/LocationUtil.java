@@ -39,13 +39,13 @@ public class LocationUtil {
         try {
             gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            CellMonitorConstants.LOG.error("GPS provider disabled");
         }
 
         try {
             networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            CellMonitorConstants.LOG.error("Network provider disabled");
         }
 
         return gpsEnabled || networkEnabled;

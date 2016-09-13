@@ -16,10 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol RemoteControlECFDelegate;
-@protocol OnDetachEndpointOperationDelegate;
-@protocol OnAttachEndpointOperationDelegate;
-
-@interface DevicesTableViewController : UITableViewController <RemoteControlECFDelegate, OnDetachEndpointOperationDelegate, OnAttachEndpointOperationDelegate>
+@interface DevicesTableViewController : UITableViewController
 
 @end

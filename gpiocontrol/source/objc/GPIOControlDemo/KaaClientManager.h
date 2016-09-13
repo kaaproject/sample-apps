@@ -28,8 +28,7 @@
 @property (nonatomic, strong) volatile id<KaaClient> kaaClient;
 
 + (KaaClientManager *)sharedManager;
-- (void)setUpEventDelegate:(id<RemoteControlECFDelegate>)delegate;
-- (void)sendDeviceInfoRequestToAll;
+- (void)sendDeviceInfoRequestToAll:(id <RemoteControlECFDelegate>)delegate;
 - (void)attachEndpoint:(NSString *)endpointId delegate:(id<OnAttachEndpointOperationDelegate>)delegate;
 - (void)detachEndpoint:(NSString *)endpointId delegate:(id<OnDetachEndpointOperationDelegate>)delegate;
 

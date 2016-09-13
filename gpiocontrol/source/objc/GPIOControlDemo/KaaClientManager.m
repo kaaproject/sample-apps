@@ -60,19 +60,11 @@
                             delegate:self];
 }
 
-
-- (void)setUpEventDelegate:(id <RemoteControlECFDelegate>)delegate {
+- (void)sendDeviceInfoRequestToAll:(id <RemoteControlECFDelegate>)delegate {
     EventFamilyFactory *eventFamilyFactory = [self.kaaClient getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
-    
     [ecf addDelegate:delegate];
-    [ecf sendRemoteControlECFDeviceInfoRequestToAll:[[RemoteControlECFDeviceInfoRequest alloc] init]];
-}
 
-- (void)sendDeviceInfoRequestToAll {
-    EventFamilyFactory *eventFamilyFactory = [self.kaaClient getEventFamilyFactory];
-    RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
-    
     [ecf sendRemoteControlECFDeviceInfoRequestToAll:[[RemoteControlECFDeviceInfoRequest alloc] init]];
 }
 

@@ -24,7 +24,7 @@
 
 #define TAG @"DevicesTableViewController"
 
-@interface DevicesTableViewController ()
+@interface DevicesTableViewController () <RemoteControlECFDelegate, OnDetachEndpointOperationDelegate, OnAttachEndpointOperationDelegate>
 
 @property (nonatomic, strong) NSMutableArray *devices;
 @property (nonatomic, strong) NSIndexPath *deletingIndexPath;
@@ -40,14 +40,13 @@
     ConnectivityChecker *checker = [[ConnectivityChecker alloc] init];
     if ([checker isConnected]) {
         self.devices = [NSMutableArray array];
-        [[KaaClientManager sharedManager] setUpEventDelegate:self];
+        [[KaaClientManager sharedManager] sendDeviceInfoRequestToAll:self];
     } else {
         [self presentViewController:[ConnectionAlert noConnectionAlert]
                            animated:YES
                          completion:nil];
     }
 }
-
 
 #pragma mark - Actions
 
@@ -122,7 +121,7 @@
 }
 
 - (void)onDetachResult:(SyncResponseResultType)result {
-    NSLog(@"%@ SyncresponseResultType: %u", TAG, result);
+    NSLog(@"%@ Detach result: %u", TAG, result);
     if (result == SYNC_RESPONSE_RESULT_TYPE_SUCCESS) {
         [self.devices removeObjectAtIndex:self.deletingIndexPath.row];
         [self reloadTable];
@@ -142,7 +141,7 @@
     } else {
         NSString *endpointId = text;
         [[KaaClientManager sharedManager] attachEndpoint:endpointId delegate:self];
-        [[KaaClientManager sharedManager] sendDeviceInfoRequestToAll];
+        [[KaaClientManager sharedManager] sendDeviceInfoRequestToAll:self];
     }
 }
 

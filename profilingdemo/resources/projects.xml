@@ -105,20 +105,23 @@ For more background on the Kaa endpoint profiling, grouping, and configuration m
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Configuration Extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-profile-client-side-server-side">endpoint profiling</a> and <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-group">grouping</a> features based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	These features enable <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to set the default configuration and receive configuration updates from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> in compliance with profile and group settings.
 </p>
 
 <p>
-	The application first sets up the path to save the configuration file to.
-	<br />
-	The generated path is then transferred to the initializer of <code>SimpleConfigurationStorage</code> and a <code>ViewController</code> instance is added to the <code>ConfigurationDelegate</code> list with the <code>addConfigurationDelegate:</code> function.
-</p>
-
-<p>
-	When the client starts, the <code>getConfiguration</code> method returns the latest version of the configuration.
-	<br />
-	For the demonstration purposes, the <code>ConfigurationDelegate</code> list includes the <b>self</b> parameter so that every time the configuration changes, the delegate will receive the updated configuration to the <code>onConfigurationUpdate:</code> method.
+	The sample application uses three API call methods:
+	<ul>
+		<li>
+			<code>addConfigurationDelegate:</code> method calls every time the configuration is updated.
+		</li>
+		<li>
+			<code>setConfigurationStorage:</code> method sets the configuration storage that will be used to persist configuration.
+		</li>
+		<li>
+			<code>setProfileContainer:</code> method changes the data in the client-side endpoint profile.
+		</li>
+    </ul>
 </p>
 
 <h1>Launching</h1>
@@ -149,21 +152,17 @@ To launch this sample application on the Kaa Objective-C SDK:
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
 	</li>
 	<li>
-		Open the ConfigurationDemo.xcodeproj and click the <b>Play</b> button.
+		Open the ProfilingDemo.xcodeproj and click the <b>Play</b> button.
 		You should see the following console messages.
 		
 		<pre>
-			2016-08-02 10:25:55.131 ConfigurationDemo[29486:7687014] ConfigurationDemo started
-			2016-08-02 10:25:55.155 ConfigurationDemo[29486:7687534] Kaa client started
-			2016-08-02 10:25:55.157 ConfigurationDemo[29486:7687534] Endpoint ID: 8cnSqxdiSjmkGbNdy5kC9hJIumE=
-			2016-08-02 10:25:55.157 ConfigurationDemo[29486:7687534] Configuration before updating
-			2016-08-02 10:25:55.158 ConfigurationDemo[29486:7687534] Sampling period is 1
+			2016-09-07 14:46:14.053 ProfilingDemo[26391:4700219] ProfilingDemo started
+			2016-09-07 14:46:15.165 ProfilingDemo[26391:4700295] Kaa client started
+			2016-09-07 14:46:15.166 ProfilingDemo[26391:4700295] Audio support enabled: yes, video support enabled: yes, vibro support enabled: yes
 		</pre>
 		
 	</li>
 </ol>
-
-If you have not yet updated your configuration, the sampling period will be set to <b>1</b> as this is the default value in the sample application schema.
 
 <h1>Troubleshooting</h1>
 
@@ -201,11 +200,11 @@ Try the following:
 	</li>
 </ol>
 
-Now you can open the ConfigurationDemo.xcodeproj file and run the build script.
+Now you can open the ProfilingDemo.xcodeproj file and run the build script.
 
 <h2>Nothing happens after the "Build succeeded" message</h2>
 
-Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</b>.
+Make sure that the build target is set to <b>ProfilingDemo</b>, not <b>Kaa</b>.
 
 <p>
 	For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">Debugging and troubleshooting</a>.

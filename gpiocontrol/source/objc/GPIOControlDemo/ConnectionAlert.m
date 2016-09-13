@@ -18,12 +18,12 @@
 
 @implementation ConnectionAlert
 
-+ (UIAlertController *)showAlertNoConnection {
++ (UIAlertController *)noConnectionAlert {
     
     return [self baseAlertWithTitle:@"Connection status" message:@"No connection"];
 }
 
-+ (UIAlertController *)showAlertEmtpyEndpointId {
++ (UIAlertController *)emtpyEndpointIdAlert {
     return [self baseAlertWithTitle:@"Empty endpoint id"
                             message:@"Endpoint id can't be empty"];
 

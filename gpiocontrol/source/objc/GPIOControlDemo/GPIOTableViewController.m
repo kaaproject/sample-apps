@@ -16,7 +16,7 @@
 
 #import "GPIOTableViewController.h"
 #import "StatusTableViewCell.h"
-#import "KaaProvider.h"
+#import "KaaClientManager.h"
 #import "ConnectionAlert.h"
 #import "Device.h"
 
@@ -34,7 +34,7 @@
     [self sortGpioStatuses];
     ConnectivityChecker *checker = [[ConnectivityChecker alloc]init];
     if (![checker isConnected]) {
-        [self presentViewController:[ConnectionAlert showAlertNoConnection] animated:YES completion:nil];
+        [self presentViewController:[ConnectionAlert noConnectionAlert] animated:YES completion:nil];
     }
 }
 
@@ -66,27 +66,18 @@
 - (IBAction)statusSwitchChanged:(UISwitch *)sender {
     ConnectivityChecker *checker = [[ConnectivityChecker alloc] init];
     if ([checker isConnected]) {
-        [self sendToggleRequest];
+        [self sendToggleRequest:sender];
     } else {
-        UIAlertController *alertController = [UIAlertController
-                                              alertControllerWithTitle:@"Connection status"
-                                              message:@"No connection"
-                                              preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action) {
-                                                           [alertController dismissViewControllerAnimated:YES completion:nil];
-                                                       }];
-        [alertController addAction:cancel];
-        sender.on = !sender.on;
-
-        [self presentViewController:alertController animated:YES completion:nil];
+        [self presentViewController:[ConnectionAlert noConnectionAlert]
+                           animated:YES
+                         completion:nil];
     }
 }
 
-- (void)sendToggleRequest {
+- (void)sendToggleRequest:(UISwitch *)sender {
     RemoteControlECFGpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
     status.status = sender.on;
-    id <KaaClient> client = [KaaProvider getClient];
+    id <KaaClient> client = [KaaClientManager sharedManager].kaaClient;
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     RemoteControlECFGpioToggleRequest *request = [[RemoteControlECFGpioToggleRequest alloc] init];

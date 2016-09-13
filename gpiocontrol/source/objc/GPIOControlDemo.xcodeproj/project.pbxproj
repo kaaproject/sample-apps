@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B6BC5121D881163009EE058 /* StatusTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6BC5111D881163009EE058 /* StatusTableViewCell.m */; };
 		C571EFBC1CC13B79000FFDD2 /* Kaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C571EFB01CC13B77000FFDD2 /* Kaa.framework */; };
 		C571EFBE1CC13B82000FFDD2 /* Kaa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C571EFB01CC13B77000FFDD2 /* Kaa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E8290BB71C088CAA00AA184A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BA01C088CAA00AA184A /* AppDelegate.m */; };
@@ -17,10 +18,8 @@
 		E8290BBD1C088CAA00AA184A /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BAA1C088CAA00AA184A /* Device.m */; };
 		E8290BBE1C088CAA00AA184A /* DevicesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BAC1C088CAA00AA184A /* DevicesTableViewController.m */; };
 		E8290BBF1C088CAA00AA184A /* GPIOTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BAE1C088CAA00AA184A /* GPIOTableViewController.m */; };
-		E8290BC11C088CAA00AA184A /* KaaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB11C088CAA00AA184A /* KaaProvider.m */; };
+		E8290BC11C088CAA00AA184A /* KaaClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB11C088CAA00AA184A /* KaaClientManager.m */; };
 		E8290BC21C088CAA00AA184A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB21C088CAA00AA184A /* main.m */; };
-		E8290BC31C088CAA00AA184A /* PreferencesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB41C088CAA00AA184A /* PreferencesManager.m */; };
-		E8290BC41C088CAA00AA184A /* StatusTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +102,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7B6BC5101D881163009EE058 /* StatusTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewCell.h; sourceTree = "<group>"; };
+		7B6BC5111D881163009EE058 /* StatusTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewCell.m; sourceTree = "<group>"; };
 		B87824B41C18900100F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
 		B87824BD1C18900600F12E02 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-ep-sdk/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
 		B8B997501BE3FB9600C0ABCE /* GPIOControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPIOControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,13 +121,9 @@
 		E8290BAD1C088CAA00AA184A /* GPIOTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPIOTableViewController.h; sourceTree = "<group>"; };
 		E8290BAE1C088CAA00AA184A /* GPIOTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPIOTableViewController.m; sourceTree = "<group>"; };
 		E8290BAF1C088CAA00AA184A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E8290BB01C088CAA00AA184A /* KaaProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KaaProvider.h; sourceTree = "<group>"; };
-		E8290BB11C088CAA00AA184A /* KaaProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KaaProvider.m; sourceTree = "<group>"; };
+		E8290BB01C088CAA00AA184A /* KaaClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KaaClientManager.h; sourceTree = "<group>"; };
+		E8290BB11C088CAA00AA184A /* KaaClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KaaClientManager.m; sourceTree = "<group>"; };
 		E8290BB21C088CAA00AA184A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E8290BB31C088CAA00AA184A /* PreferencesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesManager.h; sourceTree = "<group>"; };
-		E8290BB41C088CAA00AA184A /* PreferencesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesManager.m; sourceTree = "<group>"; };
-		E8290BB51C088CAA00AA184A /* StatusTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewCell.h; sourceTree = "<group>"; };
-		E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,12 +164,10 @@
 		7B9998D41D86D57400755E28 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E8290BB31C088CAA00AA184A /* PreferencesManager.h */,
-				E8290BB41C088CAA00AA184A /* PreferencesManager.m */,
+				7B6BC5101D881163009EE058 /* StatusTableViewCell.h */,
+				7B6BC5111D881163009EE058 /* StatusTableViewCell.m */,
 				E8290BA71C088CAA00AA184A /* ConnectionAlert.h */,
 				E8290BA81C088CAA00AA184A /* ConnectionAlert.m */,
-				E8290BB51C088CAA00AA184A /* StatusTableViewCell.h */,
-				E8290BB61C088CAA00AA184A /* StatusTableViewCell.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -227,8 +222,8 @@
 				E8290BA01C088CAA00AA184A /* AppDelegate.m */,
 				E8290BA91C088CAA00AA184A /* Device.h */,
 				E8290BAA1C088CAA00AA184A /* Device.m */,
-				E8290BB01C088CAA00AA184A /* KaaProvider.h */,
-				E8290BB11C088CAA00AA184A /* KaaProvider.m */,
+				E8290BB01C088CAA00AA184A /* KaaClientManager.h */,
+				E8290BB11C088CAA00AA184A /* KaaClientManager.m */,
 				7B9998D31D86D54E00755E28 /* Resources */,
 			);
 			path = GPIOControlDemo;
@@ -385,11 +380,10 @@
 				E8290BBE1C088CAA00AA184A /* DevicesTableViewController.m in Sources */,
 				E8290BBC1C088CAA00AA184A /* ConnectionAlert.m in Sources */,
 				E8290BB71C088CAA00AA184A /* AppDelegate.m in Sources */,
-				E8290BC31C088CAA00AA184A /* PreferencesManager.m in Sources */,
-				E8290BC11C088CAA00AA184A /* KaaProvider.m in Sources */,
-				E8290BC41C088CAA00AA184A /* StatusTableViewCell.m in Sources */,
+				E8290BC11C088CAA00AA184A /* KaaClientManager.m in Sources */,
 				E8290BC21C088CAA00AA184A /* main.m in Sources */,
 				E8290BBF1C088CAA00AA184A /* GPIOTableViewController.m in Sources */,
+				7B6BC5121D881163009EE058 /* StatusTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

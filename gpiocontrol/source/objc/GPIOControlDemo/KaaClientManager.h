@@ -16,22 +16,21 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol KaaClientStateDelegate;
-@protocol UserAttachDelegate;
-@protocol KaaClient;
 @protocol RemoteControlECFDelegate;
+@protocol OnAttachEndpointOperationDelegate;
+@protocol OnDetachEndpointOperationDelegate;
+@protocol KaaClient;
 
-@interface ConcreteStateDelegate : NSObject <KaaClientStateDelegate>
 
-@end
 
-@interface KaaProvider : NSObject <UserAttachDelegate>
+@interface KaaClientManager : NSObject
 
 @property (nonatomic, strong) volatile id<KaaClient> kaaClient;
 
-+ (id<KaaClient>)getClient;
-- (void)attachUser;
-+ (void)setUpEventDelegate:(id<RemoteControlECFDelegate>)delegate;
-+ (void)sendDeviceInfoRequestToAll;
++ (KaaClientManager *)sharedManager;
+- (void)setUpEventDelegate:(id<RemoteControlECFDelegate>)delegate;
+- (void)sendDeviceInfoRequestToAll;
+- (void)attachEndpoint:(NSString *)endpointId delegate:(id<OnAttachEndpointOperationDelegate>)delegate;
+- (void)detachEndpoint:(NSString *)endpointId delegate:(id<OnDetachEndpointOperationDelegate>)delegate;
 
 @end

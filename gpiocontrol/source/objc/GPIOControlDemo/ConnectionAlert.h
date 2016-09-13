@@ -18,7 +18,7 @@
 
 @interface ConnectionAlert : NSObject
 
-+ (UIAlertController *)showAlertNoConnection;
-+ (UIAlertController *)showAlertEmtpyEndpointId;
++ (UIAlertController *)noConnectionAlert;
++ (UIAlertController *)emtpyEndpointIdAlert;
 
 @end

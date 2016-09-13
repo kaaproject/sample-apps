@@ -53,8 +53,8 @@
             <useTransitiveDependencies>true</useTransitiveDependencies>
 	        <useTransitiveFiltering>true</useTransitiveFiltering>
             <includes>
-                 <include>org.kaaproject.kaa.server.common:admin-rest-client</include>
-		 <include>org.kaaproject.kaa.common:core</include>
+                <include>org.kaaproject.kaa.server.common:admin-rest-client</include>
+		        <include>org.kaaproject.kaa.common:core</include>
             </includes>  
         </dependencySet>
     </dependencySets> 

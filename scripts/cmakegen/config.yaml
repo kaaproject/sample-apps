@@ -1,0 +1,39 @@
+configurationdemo:
+    appname: "ConfigurationDemo"
+    languages: ['c', 'cpp']
+    features: ['configuration']
+    path: 'configurationdemo/source/'
+    build_embedded: true
+
+notificationdemo:
+    appname: "NotificationDemo"
+    languages: ['c', 'cpp']
+    features: ['notification']
+    path: 'notificationdemo/source/'
+    build_embedded: true
+
+datacollectiondemo:
+    appname: "DataCollectionDemo"
+    languages: ['c', 'cpp']
+    features: ['logging', 'configuration']
+    path: 'datacollectiondemo/source/'
+    build_embedded: true
+
+eventsdemo:
+    appname: "EventsDemo"
+    languages: ['c', 'cpp']
+    features: ['events']
+    path: 'eventdemo/source/'
+
+credentialsdemo:
+    appname: "CredentialsDemo"
+    languages: ['c', 'cpp']
+    path: 'credentialsdemo/source/'
+    definitions:
+        KAA_RUNTIME_KEY_GENERATION: 'OFF'
+
+profilingdemo:
+    appname: "ProfilingDemo"
+    features: ['configuration']
+    languages: ['c', 'cpp']
+    path: 'profilingdemo/source/'

@@ -21,9 +21,11 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb152380755206188</string>
+				<string>fb1704658276524522</string>
 			</array>
 		</dict>
 		<dict>
@@ -31,7 +33,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>twitterkit-u9p60BeVvFrhVYBHmzymL66N0</string>
+				<string>twitterkit-FTa2SbY4NlonklfkrlceR9UGw</string>
 			</array>
 		</dict>
 		<dict>
@@ -39,7 +41,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.957489733619-59mplaucmbb2v4jb3pnbi0649spuiif8</string>
+				<string>com.googleusercontent.apps.182711447959-nk5lb9o5pcnlgmh6vdqkjd1r6e7juu6p</string>
 			</array>
 		</dict>
 		<dict>
@@ -56,16 +58,16 @@
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
-		<string>d2892036acc24e7574816ef331bb7c107647d020</string>
+		<string>1eda96e15f9ff75e90e421cfed3dc5fc7bc11e9f</string>
 		<key>Kits</key>
 		<array>
 			<dict>
 				<key>KitInfo</key>
 				<dict>
 					<key>consumerKey</key>
-					<string>u9p60BeVvFrhVYBHmzymL66N0</string>
+					<string>FTa2SbY4NlonklfkrlceR9UGw</string>
 					<key>consumerSecret</key>
-					<string>6LodKyqJvdDuhw53f0auCCCkdYz6VMHKyokT3ncBhRldkyMl0v</string>
+					<string>bMUZIQgXMisr5ycgTdyTPMz1ONVRG9SicuJ9D0ybZqZcvDSQvg</string>
 				</dict>
 				<key>KitName</key>
 				<string>Twitter</string>
@@ -73,9 +75,9 @@
 		</array>
 	</dict>
 	<key>FacebookAppID</key>
-	<string>152380755206188</string>
+	<string>1704658276524522</string>
 	<key>FacebookDisplayName</key>
-	<string>KaaVerifiersDemo</string>
+	<string>Endpoint ownership demo</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -103,8 +105,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

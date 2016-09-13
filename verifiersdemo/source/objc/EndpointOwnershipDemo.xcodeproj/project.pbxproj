@@ -13,6 +13,7 @@
 		3985F00D1D781AE100B156D0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F00A1D781AE100B156D0 /* FBSDKLoginKit.framework */; };
 		3985F00E1D781AE100B156D0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F00B1D781AE100B156D0 /* FBSDKShareKit.framework */; };
 		3985F01C1D781D0F00B156D0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3985F01B1D781D0F00B156D0 /* Bolts.framework */; };
+		39AE3DD31D881CF800B0D248 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39AE3DD21D881CF800B0D248 /* GoogleService-Info.plist */; };
 		64D1CB5158FE6F4A0ADCF3E9 /* Pods_EndpointOwnershipDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A958FC0DB9B1E178545EF5 /* Pods_EndpointOwnershipDemo.framework */; };
 		C571EFBC1CC13B79000FFDD2 /* Kaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C571EFB01CC13B77000FFDD2 /* Kaa.framework */; };
 		C571EFBE1CC13B82000FFDD2 /* Kaa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C571EFB01CC13B77000FFDD2 /* Kaa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -22,7 +23,6 @@
 		E8290BBA1C088CAA00AA184A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8290BA41C088CAA00AA184A /* Main.storyboard */; };
 		E8290BC11C088CAA00AA184A /* KaaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB11C088CAA00AA184A /* KaaManager.m */; };
 		E8290BC21C088CAA00AA184A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290BB21C088CAA00AA184A /* main.m */; };
-		E869A8D21D796D3600374082 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E869A8D11D796D3600374082 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +115,7 @@
 		3985F00A1D781AE100B156D0 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		3985F00B1D781AE100B156D0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		3985F01B1D781D0F00B156D0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		39AE3DD21D881CF800B0D248 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A4A958FC0DB9B1E178545EF5 /* Pods_EndpointOwnershipDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EndpointOwnershipDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B87824B41C18900100F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
 		B87824BD1C18900600F12E02 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-ep-sdk/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
@@ -128,7 +129,6 @@
 		E8290BB01C088CAA00AA184A /* KaaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KaaManager.h; sourceTree = "<group>"; };
 		E8290BB11C088CAA00AA184A /* KaaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KaaManager.m; sourceTree = "<group>"; };
 		E8290BB21C088CAA00AA184A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E869A8D11D796D3600374082 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,7 +228,7 @@
 				E8290BA41C088CAA00AA184A /* Main.storyboard */,
 				E8290BB21C088CAA00AA184A /* main.m */,
 				E8290BAF1C088CAA00AA184A /* Info.plist */,
-				E869A8D11D796D3600374082 /* GoogleService-Info.plist */,
+				39AE3DD21D881CF800B0D248 /* GoogleService-Info.plist */,
 			);
 			path = EndpointOwnershipDemo;
 			sourceTree = "<group>";
@@ -373,7 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8290BBA1C088CAA00AA184A /* Main.storyboard in Resources */,
-				E869A8D21D796D3600374082 /* GoogleService-Info.plist in Resources */,
+				39AE3DD31D881CF800B0D248 /* GoogleService-Info.plist in Resources */,
 				E8290BB81C088CAA00AA184A /* Assets.xcassets in Resources */,
 				E8290BB91C088CAA00AA184A /* LaunchScreen.storyboard in Resources */,
 			);
@@ -423,7 +423,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" d2892036acc24e7574816ef331bb7c107647d020 bb91bf5943efdda395694e7f4a2015bdecc5b5c0768ec4c1491ca8957688ec6a";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 1eda96e15f9ff75e90e421cfed3dc5fc7bc11e9f b746d1f9ab846e7bb433f48f07f83755331affdc9a36d18ca47fd6dbba53055f";
 		};
 		F17AA9CF036A2B86C6708FFC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

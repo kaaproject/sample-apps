@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>957489733619-59mplaucmbb2v4jb3pnbi0649spuiif8.apps.googleusercontent.com</string>
+	<string>182711447959-nk5lb9o5pcnlgmh6vdqkjd1r6e7juu6p.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.957489733619-59mplaucmbb2v4jb3pnbi0649spuiif8</string>
+	<string>com.googleusercontent.apps.182711447959-nk5lb9o5pcnlgmh6vdqkjd1r6e7juu6p</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>org.kaaproject.EndpointOwnershipDemo</string>
 	<key>PROJECT_ID</key>
-	<string>kaaendpointownershipdemo</string>
+	<string>endpoint-ownership-demo</string>
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -23,6 +23,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:957489733619:ios:1cc628a0ffa7ae7f</string>
+	<string>1:182711447959:ios:1cc628a0ffa7ae7f</string>
 </dict>
 </plist>

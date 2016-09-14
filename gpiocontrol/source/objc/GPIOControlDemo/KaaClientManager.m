@@ -40,7 +40,7 @@
     return sharedMyManager;
 }
 
-- (id)init {
+- (KaaClientManager *)init {
     self = [super init];
     if (self) {
         [self initializeKaa];
@@ -60,7 +60,7 @@
                             delegate:self];
 }
 
-- (void)sendDeviceInfoRequestToAll:(id <RemoteControlECFDelegate>)delegate {
+- (void)sendDeviceInfoRequestToAllWithDelegate:(id <RemoteControlECFDelegate>)delegate {
     EventFamilyFactory *eventFamilyFactory = [self.kaaClient getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     [ecf addDelegate:delegate];
@@ -79,8 +79,7 @@
     [self.kaaClient detachEndpointWithKeyHash:keyHash delegate:delegate];
 }
 
-- (KAAProfileEmptyData *)getProfile
-{
+- (KAAProfileEmptyData *)getProfile {
     return self.profile;
 }
 
@@ -88,27 +87,33 @@
     NSLog(@"User attach resultType: %u", response.result);
 }
 
-- (void)onStarted{
+- (void)onStarted {
     NSLog(@"Kaa client started");
 }
+
 - (void)onStartFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client startup failure. %@", exception);
 }
 - (void)onPaused {
     NSLog(@"Kaa client paused");
 }
+
 - (void)onPauseFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client pause failure. %@", exception);
 }
-- (void)onResume{
+
+- (void)onResume {
     NSLog(@"Kaa client resumed");
 }
+
 - (void)onResumeFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client resume failure. %@", exception);
 }
+
 - (void)onStopped {
     NSLog(@"Kaa client stopped");
 }
+
 - (void)onStopFailureWithException:(NSException *)exception {
     NSLog(@"Kaa client stop failure. %@", exception);
 }

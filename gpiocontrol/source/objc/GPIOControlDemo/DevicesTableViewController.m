@@ -40,7 +40,7 @@
     ConnectivityChecker *checker = [[ConnectivityChecker alloc] init];
     if ([checker isConnected]) {
         self.devices = [NSMutableArray array];
-        [[KaaClientManager sharedManager] sendDeviceInfoRequestToAll:self];
+        [[KaaClientManager sharedManager] sendDeviceInfoRequestToAllWithDelegate:self];
     } else {
         [self presentViewController:[ConnectionAlert noConnectionAlert]
                            animated:YES
@@ -53,7 +53,7 @@
 - (IBAction)plusButtonPressed:(UIBarButtonItem *)sender {
     UIAlertController *alert = nil;
     if ([[[ConnectivityChecker alloc] init] isConnected]) {
-         alert = [UIAlertController alertControllerWithTitle:@"Access token"
+        alert = [UIAlertController alertControllerWithTitle:@"Access token"
                                                      message:@"Enter access token"
                                               preferredStyle:UIAlertControllerStyleAlert];
         
@@ -141,7 +141,7 @@
     } else {
         NSString *endpointId = text;
         [[KaaClientManager sharedManager] attachEndpoint:endpointId delegate:self];
-        [[KaaClientManager sharedManager] sendDeviceInfoRequestToAll:self];
+        [[KaaClientManager sharedManager] sendDeviceInfoRequestToAllWithDelegate:self];
     }
 }
 

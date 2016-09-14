@@ -77,7 +77,7 @@
 - (void)sendToggleRequest:(UISwitch *)sender {
     RemoteControlECFGpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
     status.status = sender.on;
-    id <KaaClient> client = [KaaClientManager sharedManager].kaaClient;
+    id<KaaClient> client = [KaaClientManager sharedManager].kaaClient;
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     RemoteControlECFGpioToggleRequest *request = [[RemoteControlECFGpioToggleRequest alloc] init];

@@ -15,7 +15,7 @@
  */
 
 #import "AppDelegate.h"
-#import "KaaProvider.h"
+#import "KaaClientManager.h"
 
 @import Kaa;
 
@@ -26,19 +26,16 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-    NSInteger times = [theDefaults integerForKey:@"hasRun"];
-    [theDefaults setInteger:times forKey:@"hasRun"];
-    [theDefaults synchronize];
+    [KaaClientManager sharedManager];
     return YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[KaaProvider getClient] pause];
+    [[KaaClientManager sharedManager].kaaClient pause];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [[KaaProvider getClient] resume];
+    [[KaaClientManager sharedManager].kaaClient resume];
 }
 
 @end

@@ -16,11 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ProfileContainer;
-@protocol RemoteControlECFDelegate;
-@protocol OnDetachEndpointOperationDelegate;
-@protocol OnAttachEndpointOperationDelegate;
-
-@interface DevicesTableViewController : UITableViewController <ProfileContainer, RemoteControlECFDelegate, OnDetachEndpointOperationDelegate, OnAttachEndpointOperationDelegate>
+@interface DevicesTableViewController : UITableViewController
 
 @end

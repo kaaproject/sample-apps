@@ -18,23 +18,22 @@
 
 @implementation ConnectionAlert
 
-+ (UIAlertController *)showAlertNoConnection {
-    UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"Connection status"
-                                          message:@"No connection"
-                                          preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * action) {
-                                                       [alertController dismissViewControllerAnimated:YES completion:nil];
-                                                   }];
-    [alertController addAction:cancel];
-    return alertController;
++ (UIAlertController *)noConnectionAlert {
+    
+    return [self baseAlertWithTitle:@"Connection status" message:@"No connection"];
 }
 
-+ (UIAlertController *)showAlertEmtpyEndpointId {
++ (UIAlertController *)emtpyEndpointIdAlert {
+    return [self baseAlertWithTitle:@"Empty endpoint id"
+                            message:@"Endpoint id can't be empty"];
+
+}
+
++ (UIAlertController *)baseAlertWithTitle:(NSString *)title message:(NSString *)message {
+    
     UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"Empty endpoint id"
-                                          message:@"Endpoint id can't be empty"
+                                          alertControllerWithTitle:title
+                                          message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
@@ -42,7 +41,6 @@
                                                    }];
     [alertController addAction:cancel];
     return alertController;
-
 }
 
 @end

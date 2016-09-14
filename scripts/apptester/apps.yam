@@ -93,6 +93,7 @@ eventdemo:
       src: "eventdemo/source/cpp"
       platform:
         posix:
+          skip: "True"
           buildcmd: "bash build.sh build <<< posix"
 
 notificationdemo:

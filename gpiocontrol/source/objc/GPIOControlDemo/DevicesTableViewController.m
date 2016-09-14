@@ -109,7 +109,7 @@
     }
 }
 
-#pragma mark - Kaa Delegates methods
+#pragma mark - RemoteControlECFDelegate
 
 - (void)onRemoteControlECFDeviceInfoResponse:(RemoteControlECFDeviceInfoResponse *)event fromSource:(NSString *)source {
     NSLog(@"%@ Got DeviceInfoResponse", TAG);
@@ -120,6 +120,8 @@
     [self addItem:device];
 }
 
+#pragma mark - OnDetachEndpointOperationDelegate
+
 - (void)onDetachResult:(SyncResponseResultType)result {
     NSLog(@"%@ Detach result: %u", TAG, result);
     if (result == SYNC_RESPONSE_RESULT_TYPE_SUCCESS) {
@@ -127,6 +129,8 @@
         [self reloadTable];
     }
 }
+
+#pragma mark - OnAttachEndpointOperationDelegate
 
 - (void)onAttachResult:(SyncResponseResultType)result withEndpointKeyHash:(EndpointKeyHash *)endpointKeyHash {
     NSLog(@"%@ attachEndpoint result: %u", TAG, result);

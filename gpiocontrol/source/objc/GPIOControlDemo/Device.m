@@ -33,7 +33,7 @@
 }
 
 - (void)setGpioStatusesFromArray:(NSArray *)gpioStatusesArray {
-    for (RemoteControlECFGpioStatus *status in gpioStatusesArray) {
+    for (KAAEventGpioStatus *status in gpioStatusesArray) {
         self.gpioStatuses[@(status.id)] = @(status.status);
     }
 }
@@ -41,7 +41,7 @@
 - (NSArray *)getGpioStatuses {
     NSMutableArray *gpioStatuses = [NSMutableArray array];
     for (NSNumber *key in self.gpioStatuses.allKeys) {
-        RemoteControlECFGpioStatus *status = [[RemoteControlECFGpioStatus alloc] init];
+        KAAEventGpioStatus *status = [[KAAEventGpioStatus alloc] init];
         status.id = key.intValue;
         status.status = [self.gpioStatuses[key] boolValue];
         [gpioStatuses addObject:status];

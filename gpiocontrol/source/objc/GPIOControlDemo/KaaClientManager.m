@@ -65,7 +65,7 @@
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
     [ecf addDelegate:delegate];
 
-    [ecf sendRemoteControlECFDeviceInfoRequestToAll:[[RemoteControlECFDeviceInfoRequest alloc] init]];
+    [ecf sendKAAEventDeviceInfoRequestToAll:[[KAAEventDeviceInfoRequest alloc] init]];
 }
 
 - (void)attachEndpoint:(NSString *)endpointId delegate:(id<OnAttachEndpointOperationDelegate>)delegate {

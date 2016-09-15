@@ -39,7 +39,7 @@
 }
 
 - (void)sortGpioStatuses {
-    NSArray *sortedArray = [self.gpioStatusArray sortedArrayUsingComparator:^ NSComparisonResult(RemoteControlECFGpioStatus *obj1, RemoteControlECFGpioStatus *obj2) {
+    NSArray *sortedArray = [self.gpioStatusArray sortedArrayUsingComparator:^ NSComparisonResult(KAAEventGpioStatus *obj1, KAAEventGpioStatus *obj2) {
         return [@(obj1.id) compare:@(obj1.id)];
     }];
     self.gpioStatusArray = sortedArray;
@@ -54,7 +54,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cell";
     StatusTableViewCell *cell = (StatusTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    RemoteControlECFGpioStatus *status = self.gpioStatusArray[indexPath.row];
+    KAAEventGpioStatus *status = self.gpioStatusArray[indexPath.row];
     cell.idLabel.text = [NSString stringWithFormat:@"GPIO id: %d", status.id];
     cell.statusSwitch.tag = indexPath.row;
     [cell.statusSwitch setOn:status.status animated:YES];
@@ -75,14 +75,14 @@
 }
 
 - (void)sendToggleRequest:(UISwitch *)sender {
-    RemoteControlECFGpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
+    KAAEventGpioStatus *status = [self.gpioStatusArray objectAtIndex:sender.tag];
     status.status = sender.on;
     id<KaaClient> client = [KaaClientManager sharedManager].kaaClient;
     EventFamilyFactory *eventFamilyFactory = [client getEventFamilyFactory];
     RemoteControlECF *ecf = [eventFamilyFactory getRemoteControlECF];
-    RemoteControlECFGpioToggleRequest *request = [[RemoteControlECFGpioToggleRequest alloc] init];
+    KAAEventGpioToggleRequest *request = [[KAAEventGpioToggleRequest alloc] init];
     request.gpio = self.gpioStatusArray[sender.tag];
-    [ecf sendRemoteControlECFGpioToggleRequest:request to:self.device.kaaEndpointId];
+    [ecf sendKAAEventGpioToggleRequest:request to:self.device.kaaEndpointId];
 }
 
 

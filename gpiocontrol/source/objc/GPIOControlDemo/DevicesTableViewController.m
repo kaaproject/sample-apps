@@ -111,7 +111,7 @@
 
 #pragma mark - RemoteControlECFDelegate
 
-- (void)onRemoteControlECFDeviceInfoResponse:(RemoteControlECFDeviceInfoResponse *)event fromSource:(NSString *)source {
+- (void)onKAAEventDeviceInfoResponse:(KAAEventDeviceInfoResponse *)event fromSource:(NSString *)source {
     NSLog(@"%@ Got DeviceInfoResponse", TAG);
     Device *device = [[Device alloc] initWithModel:event.model
                                         deviceName:event.deviceName

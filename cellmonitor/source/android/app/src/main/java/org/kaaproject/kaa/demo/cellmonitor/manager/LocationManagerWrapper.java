@@ -43,7 +43,7 @@ public class LocationManagerWrapper {
         mGpsLocation = getLocation(context);
     }
 
-    public Location getLocation(Context context) {
+    private Location getLocation(Context context) {
         mLocationManager = (android.location.LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location bestLocation = null;
         Location lastKnownLocation = null;

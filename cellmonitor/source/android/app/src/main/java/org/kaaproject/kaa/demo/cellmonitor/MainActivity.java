@@ -24,7 +24,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.CellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.cellmonitor.kaa.KaaManager;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView mLastLogTimeValue;
     private TextView mSentLogCountValue;
     private TextView mCollectedLogCountValue;
-    private LinearLayout mNoInternetConnection;
 
     private KaaManager kaaManager;
     private CellManager cellManager;
@@ -73,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
         mLastLogTimeValue = (TextView) findViewById(R.id.lastLogTimeValue);
         mCollectedLogCountValue = (TextView) findViewById(R.id.logsCollectedValue);
         mSentLogCountValue = (TextView) findViewById(R.id.logsSentValue);
-
-        mNoInternetConnection = (LinearLayout) findViewById(R.id.noInternetConnection);
-
 
         kaaManager = new KaaManager(cellCallback);
         cellManager = new CellManager(this, cellCallback);

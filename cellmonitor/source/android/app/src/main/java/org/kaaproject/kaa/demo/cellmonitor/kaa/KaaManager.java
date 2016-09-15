@@ -71,7 +71,6 @@ public class KaaManager implements LogUploadStrategy, LogDeliveryListener {
      */
     public void start(Context context) {
 
-
         KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
         mClient = Kaa.newClient(kaaClientContext, new SimpleKaaClientStateListener() {
 

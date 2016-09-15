@@ -91,13 +91,13 @@
 
 #pragma mark - ProfileContainer
 
-- (KAAEmptyData *)getProfile {
-    return [[KAAEmptyData alloc] init];
+- (KAAProfileEmptyData *)getProfile {
+    return [[KAAProfileEmptyData alloc] init];
 }
 
 #pragma mark - ConfigurationDelegate
 
-- (void)onConfigurationUpdate:(KAAConfiguration *)configuration {
+- (void)onConfigurationUpdate:(KAAConfigurationConfiguration *)configuration {
     [self addLogWithText:@"Configuration was updated"];
     [self displayConfiguration];
 }
@@ -105,8 +105,8 @@
 #pragma mark - Supporting methods
 
 - (void)displayConfiguration {
-    KAAConfiguration *configuration = [self.kaaClient getConfiguration];
-    [self addLogWithText:[NSString stringWithFormat:@"Sampling period is %d", configuration.samplingPeriod]];
+    KAAConfigurationConfiguration *configuration = [self.kaaClient getConfiguration];
+    [self addLogWithText:[NSString stringWithFormat:@"Sampling period is %d", configuration.samplePeriod]];
 }
 
 - (void)addLogWithText:(NSString *)text {

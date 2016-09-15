@@ -115,10 +115,10 @@ typedef NS_ENUM(int, AuthorizationLabel) {
 }
 
 - (void)sendMessageWithText:(NSString *)text {
-    MessageEvent *message = [[MessageEvent alloc] initWithMessage:[KAAUnion unionWithBranch:KAA_UNION_STRING_OR_NULL_BRANCH_0
+    KAAEventMessageEvent *message = [[KAAEventMessageEvent alloc] initWithMessage:[KAAUnion unionWithBranch:KAA_UNION_STRING_OR_NULL_BRANCH_0
                                                                                        data:text]];
     if (self.vdecf) {
-        [self.vdecf sendMessageEventToAll:message];
+        [self.vdecf sendKAAEventMessageEventToAll:message];
         [self updateMessagingUiWithText:text];
     }
 }

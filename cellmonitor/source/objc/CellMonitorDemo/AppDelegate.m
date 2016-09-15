@@ -85,8 +85,8 @@
 
 #pragma mark - ProfileContainer
 
-- (KAAEmptyData *)getProfile {
-    return [[KAAEmptyData alloc] init];
+- (KAAProfileEmptyData *)getProfile {
+    return [[KAAProfileEmptyData alloc] init];
 }
 
 

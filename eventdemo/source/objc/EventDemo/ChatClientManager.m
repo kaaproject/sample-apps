@@ -89,7 +89,7 @@
 
 #pragma mark - ChatDelegate
 
-- (void)onChatEvent:(ChatEvent *)event fromSource:(NSString *)source {
+- (void)onKAAEventChatEvent:(KAAEventChatEvent *)event fromSource:(NSString *)source {
     NSLog(@"Got chat event");
     
     // Handling chat event
@@ -106,15 +106,15 @@
     }
 }
 
-- (void)onMessage:(Message *)event fromSource:(NSString *)source {
+- (void)onKAAEventMessage:(KAAEventMessage *)event fromSource:(NSString *)source {
     NSLog(@"Got chat message");
     [self saveMessage:event.Message toRoom:event.ChatName];
 }
 
 #pragma mark - ProfileContainer
 
-- (KAAEmptyData *)getProfile {
-    return [[KAAEmptyData alloc] init];
+- (KAAProfileEmptyData *)getProfile {
+    return [[KAAProfileEmptyData alloc] init];
 }
 
 #pragma mark - Sending Kaa Events logic
@@ -123,9 +123,9 @@
     if (name.isEmpty == NO) { // chat room name should not be empty
         if (onlyLocal == NO) { // Check if we don't need to save it only locally
             // create and send CREATE chat event to the Kaa
-            ChatEvent *addEvent = [[ChatEvent alloc] initWithChatName:name
+            KAAEventChatEvent *addEvent = [[KAAEventChatEvent alloc] initWithChatName:name
                                                             EventType:CHAT_EVENT_TYPE_CREATE];
-            [self.chatEventFamily sendChatEventToAll:addEvent];
+            [self.chatEventFamily sendKAAEventChatEventToAll:addEvent];
         }
         [self.rooms addObject:name];
         [self notify:RoomsListUpdated];
@@ -137,9 +137,9 @@
         if (onlyLocal == NO) // Check if we don't need to save it only locally
         {
             // create and send DELETE chat event to the Kaa
-            ChatEvent *addEvent = [[ChatEvent alloc] initWithChatName:room
+            KAAEventChatEvent *addEvent = [[KAAEventChatEvent alloc] initWithChatName:room
                                                             EventType:CHAT_EVENT_TYPE_DELETE];
-            [self.chatEventFamily sendChatEventToAll:addEvent];
+            [self.chatEventFamily sendKAAEventChatEventToAll:addEvent];
         }
         [self.rooms removeObject:room];
         [self notify:RoomsListUpdated];
@@ -149,9 +149,9 @@
 - (void)sendMessage:(NSString *)message room:(NSString *)roomName {
     [self saveMessage:message toRoom:roomName];
     // Creating Message event object
-    Message *msg = [[Message alloc] initWithChatName:roomName Message:message];
+    KAAEventMessage *msg = [[KAAEventMessage alloc] initWithChatName:roomName Message:message];
     // Sending Message event to Kaa
-    [self.chatEventFamily sendMessageToAll:msg];
+    [self.chatEventFamily sendKAAEventMessageToAll:msg];
 }
 
 #pragma mark - Chat helper methods

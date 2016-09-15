@@ -19,7 +19,7 @@
 @interface KaaManager () <ProfileContainer, ConfigurationDelegate, KaaClientStateDelegate>
 
 @property (nonatomic, strong) volatile id<KaaClient> kaaClient;
-@property (nonatomic, strong) KAAKaaVerifiersTokens *verifiersTokens;
+@property (nonatomic, strong) KAAConfigurationKaaVerifiersTokens *verifiersTokens;
 
 @end
 
@@ -102,13 +102,13 @@
 
 #pragma mark - ProfileContainer
 
-- (KAAEmptyData *)getProfile {
-    return [[KAAEmptyData alloc] init];
+- (KAAProfileEmptyData *)getProfile {
+    return [[KAAProfileEmptyData alloc] init];
 }
 
 #pragma mark - ConfigurationDelegate
 
-- (void)onConfigurationUpdate:(KAAKaaVerifiersTokens *)configuration {
+- (void)onConfigurationUpdate:(KAAConfigurationKaaVerifiersTokens *)configuration {
     self.verifiersTokens = configuration;
 }
 

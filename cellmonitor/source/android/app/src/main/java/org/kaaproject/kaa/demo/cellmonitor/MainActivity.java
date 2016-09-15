@@ -16,9 +16,11 @@
 
 package org.kaaproject.kaa.demo.cellmonitor;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.CellLocation;
@@ -32,6 +34,7 @@ import org.kaaproject.kaa.demo.cellmonitor.manager.LocationManagerWrapper;
 import org.kaaproject.kaa.demo.cellmonitor.util.CellMonitorConstants;
 import org.kaaproject.kaa.demo.cellmonitor.util.LocationUtil;
 import org.kaaproject.kaa.demo.cellmonitor.util.NetworkUtil;
+import org.kaaproject.kaa.demo.cellmonitor.util.PermissionUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,6 +46,7 @@ import java.util.Locale;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PERMISSION_LOCATION_REQUEST_CODE = 123;
     private TextView mNetworkOperatorValue;
     private TextView mNetworkOperatorNameValue;
     private TextView mGsmCellIdValue;
@@ -72,25 +76,22 @@ public class MainActivity extends AppCompatActivity {
         mCollectedLogCountValue = (TextView) findViewById(R.id.logsCollectedValue);
         mSentLogCountValue = (TextView) findViewById(R.id.logsSentValue);
 
-        kaaManager = new KaaManager(cellCallback);
-        cellManager = new CellManager(this, cellCallback);
-        locationManagerWrapper = new LocationManagerWrapper(this, cellCallback);
-
-        kaaManager.start(this);
-
-        if (!LocationUtil.isLocationEnabled(this)) {
-            LocationUtil.getLocationSettingDialog(this).show();
-            return;
+        if (!isLocationPermissionGranted()) {
+            PermissionUtil.showPermissionDialog(this, PERMISSION_LOCATION_REQUEST_CODE);
+        } else {
+            checkLocationEnabled();
+            locationManagerWrapper = new LocationManagerWrapper(this, cellCallback);
+            cellManager = new CellManager(this, cellCallback);
         }
+
+        kaaManager = new KaaManager(cellCallback);
+
+        updateContent();
+        initActionBar();
 
         if (!NetworkUtil.isNetworkAvailable(this)) {
             NetworkUtil.getNetworkDialog(this).show();
-            return;
         }
-
-        initActionBar();
-        initContent();
-
     }
 
     private void initActionBar() {
@@ -103,11 +104,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initContent() {
-        updateNetworkOperator();
-        updateGsmCellLocation();
-        updateGsmSignalStrength();
-        updateGpsLocation();
+    private boolean checkLocationEnabled() {
+        if (!LocationUtil.isLocationEnabled(this)) {
+            LocationUtil.getLocationSettingDialog(this).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void updateContent() {
+        if (isLocationPermissionGranted()) {
+            updateGpsLocation();
+            updateNetworkOperator();
+            updateGsmCellLocation();
+            updateGsmSignalStrength();
+        }
         updateSentLogs();
     }
 
@@ -117,9 +128,13 @@ public class MainActivity extends AppCompatActivity {
         /*
          * Notify the application of the background state.
          */
+
         kaaManager.pause();
-        locationManagerWrapper.pause();
-        cellManager.pause();
+
+        if (isLocationPermissionGranted()) {
+            locationManagerWrapper.pause();
+            cellManager.pause();
+        }
     }
 
     @Override
@@ -128,9 +143,17 @@ public class MainActivity extends AppCompatActivity {
         /*
          * Notify the application of the foreground state.
          */
-        kaaManager.resume();
-        locationManagerWrapper.resume();
-        cellManager.resume();
+
+        if (kaaManager.isKaaStarted()) {
+            kaaManager.resume();
+        } else {
+            kaaManager.start(this);
+        }
+
+        if (isLocationPermissionGranted()) {
+            locationManagerWrapper.resume();
+            cellManager.resume();
+        }
     }
 
     @Override
@@ -202,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendLog() {
-        if (!LocationUtil.isLocationEnabled(this) || !NetworkUtil.isNetworkAvailable(this)) {
+        if (!NetworkUtil.isNetworkAvailable(this)) {
             return;
         }
 
@@ -241,6 +264,29 @@ public class MainActivity extends AppCompatActivity {
 
         kaaManager.sendLog(networkOperatorCode, networkOperatorName, cid, lac, gsmSignalStrength,
                 latitude, longitude);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_LOCATION_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    locationManagerWrapper = new LocationManagerWrapper(this, cellCallback);
+                    cellManager = new CellManager(this, cellCallback);
+                    checkLocationEnabled();
+                    updateContent();
+                } else {
+                    finish();
+                }
+            }
+        }
+    }
+
+    private boolean isLocationPermissionGranted() {
+        return PermissionUtil.isLocationPermissionGranted(this);
     }
 
     private Handler cellCallback = new Handler() {

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 
      Copyright 2014-2016 CyberVision, Inc.
 
@@ -38,5 +39,6 @@
     <string name="enable_gps">Enable GPS</string>
     <string name="location_dialog_title">Enable location services in order to detect your location</string>
     <string name="network_dialog_title">Enable network in order to communicate with server</string>
+    <string name="accept_location_permission">Please accept location permission to use the app</string>
 
 </resources>

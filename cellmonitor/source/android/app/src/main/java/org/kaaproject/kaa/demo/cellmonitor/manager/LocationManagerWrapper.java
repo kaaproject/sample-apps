@@ -20,10 +20,16 @@ import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
+import org.kaaproject.kaa.demo.cellmonitor.R;
 import org.kaaproject.kaa.demo.cellmonitor.util.CellMonitorConstants;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Manager for working with user location.
@@ -31,47 +37,63 @@ import org.kaaproject.kaa.demo.cellmonitor.util.CellMonitorConstants;
  */
 public class LocationManagerWrapper {
 
-    private android.location.LocationManager mLocationManager;
+    private LocationManager mLocationManager;
     private GpsLocationListener mGpsLocationListener;
     private Location mGpsLocation;
     private Handler cellCallback;
 
-    public LocationManagerWrapper(Context context, Handler cellCalback) {
-        this.cellCallback = cellCalback;
+    public LocationManagerWrapper(Context context, Handler cellCallback) {
+        this.cellCallback = cellCallback;
 
         mGpsLocationListener = new GpsLocationListener();
         mGpsLocation = getLocation(context);
     }
 
     private Location getLocation(Context context) {
-        mLocationManager = (android.location.LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location bestLocation = null;
         Location lastKnownLocation = null;
 
-        for (String provider : mLocationManager.getAllProviders()) {
-            Location location = mLocationManager.getLastKnownLocation(provider);
-            if (location == null) {
-                continue;
+        try {
+            for (String provider : mLocationManager.getAllProviders()) {
+                Location location = mLocationManager.getLastKnownLocation(provider);
+                if (location == null) {
+                    continue;
+                }
+                if (bestLocation == null || location.getAccuracy() < bestLocation.getAccuracy()) {
+                    bestLocation = location;
+                }
             }
-            if (bestLocation == null || location.getAccuracy() < bestLocation.getAccuracy()) {
-                bestLocation = location;
-            }
-        }
 
-        if (bestLocation != null)
-            lastKnownLocation = bestLocation;
+            if (bestLocation != null)
+                lastKnownLocation = bestLocation;
+        } catch (SecurityException securityException) {
+            CellMonitorConstants.LOG.error("Can't receive last known location", securityException);
+            Toast.makeText(context, R.string.accept_location_permission, Toast.LENGTH_LONG).show();
+        }
 
         return lastKnownLocation;
     }
 
     public void pause() {
-        mLocationManager.removeUpdates(mGpsLocationListener);
+        try {
+            mLocationManager.removeUpdates(mGpsLocationListener);
+        } catch (SecurityException securityException) {
+            CellMonitorConstants.LOG.error("Can't pause location update");
+            throw securityException;
+        }
     }
 
     public void resume() {
         Criteria criteria = new Criteria();
-        String bestProvider = mLocationManager.getBestProvider(criteria, false);
-        mLocationManager.requestLocationUpdates(bestProvider, 0, 0, mGpsLocationListener);
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        String bestProvider = mLocationManager.getBestProvider(criteria, true);
+        try {
+            mLocationManager.requestLocationUpdates(bestProvider, 5, 1000, mGpsLocationListener);
+        } catch (SecurityException securityException) {
+            CellMonitorConstants.LOG.error("Can't resume location update", securityException);
+            throw securityException;
+        }
     }
 
     public Location getGpsLocation() {

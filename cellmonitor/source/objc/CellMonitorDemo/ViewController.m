@@ -63,7 +63,7 @@ static CLLocationManager *locationManager;
     /*
      * Initialize the Kaa client using the Platform context.
      */
-    self.appDelegate = [[UIApplication sharedApplication] delegate];
+    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.kaaClient = self.appDelegate.kaaClient;
     [self.kaaClient setLogUploadStrategy:[[RecordCountLogUploadStrategy alloc] initWithCountThreshold:1]];
     [self.kaaClient setLogDeliveryDelegate:self];
@@ -99,7 +99,7 @@ static CLLocationManager *locationManager;
         /*
          * Create an instance of a cell monitor log record and populate it with the latest values.
          */
-        KAACellMonitorLog *cellMonitorLog = [[KAACellMonitorLog alloc] init];
+        KAALoggingCellMonitorLog *cellMonitorLog = [[KAALoggingCellMonitorLog alloc] init];
         cellMonitorLog.logTime = self.lastLogTime;
         CTCarrier *carrier = [self.telephoneNetworkManager subscriberCellularProvider];
         NSString *operatorCode = [carrier mobileNetworkCode];
@@ -125,7 +125,7 @@ static CLLocationManager *locationManager;
         [cellMonitorLog setGsmLac:lac];
         [cellMonitorLog setSignalStrength:signalStreigth];
         
-        KAALocation *currentPhoneLocation = [[KAALocation alloc] init];
+        KAALoggingLocation *currentPhoneLocation = [[KAALoggingLocation alloc] init];
         currentPhoneLocation.longitude = locationManager.location.coordinate.longitude;
         currentPhoneLocation.latitude = locationManager.location.coordinate.latitude;
         [cellMonitorLog setPhoneGpsLocation:currentPhoneLocation];

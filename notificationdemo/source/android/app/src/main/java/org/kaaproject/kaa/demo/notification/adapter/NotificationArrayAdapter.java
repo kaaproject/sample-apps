@@ -15,24 +15,24 @@
  */
 
 package org.kaaproject.kaa.demo.notification.adapter;
- 
+
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import org.kaaproject.kaa.demo.notification.ImageCache;
+
 import org.kaaproject.kaa.demo.notification.R;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
+
 import java.util.List;
 
-public class NotificationArrayAdapter extends ArrayAdapter<Notification> {
-    private final List<Notification> list;
+public class NotificationArrayAdapter extends ArrayAdapter<SecurityAlert> {
+    private final List<SecurityAlert> list;
     private final LayoutInflater inflater;
 
-    public NotificationArrayAdapter(LayoutInflater inflater, List<Notification> list) {
+    public NotificationArrayAdapter(LayoutInflater inflater, List<SecurityAlert> list) {
         super(inflater.getContext(), R.layout.notifications, list);
         this.inflater = inflater;
         this.list = list;
@@ -40,27 +40,30 @@ public class NotificationArrayAdapter extends ArrayAdapter<Notification> {
 
     static class ViewHolder {
         protected TextView message;
-        protected ImageView image;
+        private TextView type;
     }
 
     @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
+
         if (convertView == null) {
             view = inflater.inflate(R.layout.notifications, null);
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.message = (TextView) view.findViewById(R.id.notification_message);
-            viewHolder.image = (ImageView) view.findViewById(R.id.notification_image);
+            viewHolder.type = (TextView) convertView.findViewById(R.id.notification_type);
             view.setTag(viewHolder);
             viewHolder.message.setTag(list.get(position));
         } else {
             view = convertView;
         }
+
         ViewHolder holder = (ViewHolder) view.getTag();
-        Notification notification = (Notification) holder.message.getTag();
-        holder.message.setText(notification.getMessage());
-        holder.image.setImageBitmap(ImageCache.cache.getImage(notification.getImage()));
+        SecurityAlert securityAlert = (SecurityAlert) holder.message.getTag();
+
+        holder.message.setText(securityAlert.getAlertMessage());
+        holder.type.setText(securityAlert.getAlertType().name());
         return view;
     }
 }

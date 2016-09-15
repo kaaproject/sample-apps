@@ -17,9 +17,16 @@
 package org.kaaproject.kaa.demo.notification;
 
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class TopicInfoHolder {
 
@@ -42,10 +49,10 @@ public class TopicInfoHolder {
         return list;
     }
 
-    public void addNotification(Long topicId, Notification notification) {
+    public void addNotification(Long topicId, SecurityAlert securityAlert) {
         TopicModel model = topicModelMap.get(topicId);
         if (null != model) {
-            model.addNotification(notification);
+            model.addNotification(securityAlert);
         }
     }
 

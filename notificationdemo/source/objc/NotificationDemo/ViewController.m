@@ -69,7 +69,7 @@
 
 #pragma mark - NotificationDelegate
 
-- (void)onNotification:(KAASecurityAlert *)notification withTopicId:(int64_t)topicId {
+- (void)onNotification:(KAAnotificationSecurityAlert *)notification withTopicId:(int64_t)topicId {
     [self addLogWithText:[NSString stringWithFormat:@"Notification for topicId %lld received", topicId]];
     switch (notification.alertType) {
         case ALERT_TYPE_CodeRed:
@@ -125,8 +125,8 @@
 
 #pragma mark - ProfileContainer
 
-- (KAAEmptyData *)getProfile {
-    return [[KAAEmptyData alloc] init];
+- (KAAProfileEmptyData *)getProfile {
+    return [[KAAProfileEmptyData alloc] init];
 }
 
 #pragma mark - UITextFieldDelegate

@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 project(%APP_NAME %APP_LANG)
 
 # Disable unused features
@@ -27,4 +27,4 @@ else (NOT DEFINED KAA_SDK_PATH)
 endif (NOT DEFINED KAA_SDK_PATH)
 
 %DEFINE_EXECUTABLE
-install(TARGET demo_client DESTINATION bin)
+install(TARGETS demo_client DESTINATION bin)

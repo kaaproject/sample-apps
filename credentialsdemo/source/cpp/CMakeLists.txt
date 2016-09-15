@@ -14,14 +14,29 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
+project(CredentialsDemo CXX)
 
-project(Cpp-SDK-sample)
-enable_language(CXX)
+# Disable unused features
+set(KAA_WITHOUT_CONFIGURATION 1)
+set(KAA_WITHOUT_NOTIFICATION 1)
+set(KAA_WITHOUT_LOGGING 1)
+set(KAA_WITHOUT_EVENTS 1)
 
-add_subdirectory(libs/kaa)
+if (DEFINED KAA_RUNTIME_KEY_GENERATION)
+    add_definitions(-DKAA_RUNTIME_KEY_GENERATION=${KAA_RUNTIME_KEY_GENERATION})
+else (DEFINED KAA_RUNTIME_KEY_GENERATION)
+    add_definitions(-DKAA_RUNTIME_KEY_GENERATION="OFF")
+endif (DEFINED KAA_RUNTIME_KEY_GENERATION)
 
-set(SAMPLE_SOURCE_FILES src/KaaDemo.cpp)
 
-add_executable(demo_client ${SAMPLE_SOURCE_FILES})
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
+
+add_executable(demo_client src/KaaDemo.cpp)
 target_link_libraries(demo_client kaacpp)
+
+install(TARGETS demo_client DESTINATION bin)

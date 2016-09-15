@@ -14,42 +14,54 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
+project(NotificationDemo C)
 
-project(C-SDK-sample)
-enable_language(C)
+# Disable unused features
+set(WITH_EXTENSION_CONFIGURATION OFF)
+set(WITH_EXTENSION_LOGGING OFF)
+set(WITH_EXTENSION_EVENTS OFF)
 
-# Our application name.
-set(APP_NAME demo_client)
+if (DEFINED WIFI_SSID)
+    add_definitions(-DWIFI_SSID=${WIFI_SSID})
+else (DEFINED WIFI_SSID)
+    add_definitions(-DWIFI_SSID="WiFi SSID")
+endif (DEFINED WIFI_SSID)
 
-# Target-independent flags.
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -Wextra")
+if (DEFINED WIFI_PWD)
+    add_definitions(-DWIFI_PWD=${WIFI_PWD})
+else (DEFINED WIFI_PWD)
+    add_definitions(-DWIFI_PWD="Password")
+endif (DEFINED WIFI_PWD)
 
-# Path to the Kaa SDK.
-add_subdirectory(libs/kaa)
-# Directory containing target support library.
-add_subdirectory(targets/${KAA_TARGET})
+if (DEFINED KAA_TARGET)
+    add_definitions(-DKAA_TARGET=${KAA_TARGET})
+else (DEFINED KAA_TARGET)
+    add_definitions(-DKAA_TARGET="posix")
+endif (DEFINED KAA_TARGET)
+
+
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
 # This is required for ESP8266 platform
 # due to it's specific requirements regarding linked executable.
 # The blank.c file is a placeholder for CMake's add_executable()
 # All the code (Kaa SDK, ESP8266 SDK and demo) is compiled as static libraries
 # and linked into that executable.
+add_subdirectory(targets/${KAA_TARGET})
 if("${KAA_TARGET}" STREQUAL "esp8266")
-    add_library(${APP_NAME}_s STATIC src/kaa_demo.c)
+    add_library(demo_client_s STATIC src/kaa_demo.c)
     file(WRITE ${CMAKE_BINARY_DIR}/blank.c "")
-    add_executable(${APP_NAME} ${CMAKE_BINARY_DIR}/blank.c)
-    target_link_libraries(${APP_NAME} ${APP_NAME}_s)
-    target_link_libraries(${APP_NAME}_s target_support kaac)
+    add_executable(demo_client ${CMAKE_BINARY_DIR}/blank.c)
+    target_link_libraries(demo_client demo_client_s)
+    target_link_libraries(demo_client_s kaac target_support)
 else()
-    add_executable(${APP_NAME} src/kaa_demo.c)
-    target_link_libraries(${APP_NAME} kaac target_support)
+    add_executable(demo_client src/kaa_demo.c)
+    target_link_libraries(demo_client kaac target_support)
 endif()
 
-# For most embedded targets binary stripping is required.
-if (${KAA_PRODUCE_BINARY})
-    add_custom_command(TARGET ${APP_NAME} POST_BUILD
-            COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
-endif ()
-
-install(TARGETS ${APP_NAME} DESTINATION bin)
+install(TARGETS demo_client DESTINATION bin)

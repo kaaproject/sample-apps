@@ -14,23 +14,22 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
-project (C-SDK-sample C)
+cmake_minimum_required(VERSION 2.8.12)
+project(EventsDemo C)
+
+# Disable unused features
+set(WITH_EXTENSION_CONFIGURATION OFF)
+set(WITH_EXTENSION_NOTIFICATION OFF)
+set(WITH_EXTENSION_LOGGING OFF)
 
 
-set(APP_NAME "demo_client")
-set(KAA_SDK_DIR "client-c")
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${KAA_SDK_DIR})
-execute_process(COMMAND sh -c "tar -zxf ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/kaa-c*.tar.gz -C ${KAA_SDK_DIR}")
+add_executable(demo_client src/kaa_demo.c)
+target_link_libraries(demo_client kaac)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -Wextra")
-
-set(SAMPLE_SOURCE_FILES src/kaa_demo.c)
-
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
-                 ${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}/build)
-
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} kaac)
-install(TARGETS ${APP_NAME} DESTINATION bin)
+install(TARGETS demo_client DESTINATION bin)

@@ -15,18 +15,28 @@
 #
 
 cmake_minimum_required(VERSION 2.8.12)
+project(CredentialsDemo C)
 
-project(C-SDK-sample)
-enable_language(C)
+# Disable unused features
+set(WITH_EXTENSION_CONFIGURATION OFF)
+set(WITH_EXTENSION_NOTIFICATION OFF)
+set(WITH_EXTENSION_LOGGING OFF)
+set(WITH_EXTENSION_EVENTS OFF)
 
-# Our application name.
-set(APP_NAME demo_client)
+if (DEFINED KAA_RUNTIME_KEY_GENERATION)
+    add_definitions(-DKAA_RUNTIME_KEY_GENERATION=${KAA_RUNTIME_KEY_GENERATION})
+else (DEFINED KAA_RUNTIME_KEY_GENERATION)
+    add_definitions(-DKAA_RUNTIME_KEY_GENERATION="OFF")
+endif (DEFINED KAA_RUNTIME_KEY_GENERATION)
 
-# Target-independent flags.
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra")
 
-# Path to the Kaa SDK.
-add_subdirectory(libs/kaa)
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
-add_executable(${APP_NAME} src/kaa_demo.c)
-target_link_libraries(${APP_NAME} kaac)
+add_executable(demo_client src/kaa_demo.c)
+target_link_libraries(demo_client kaac)
+
+install(TARGETS demo_client DESTINATION bin)

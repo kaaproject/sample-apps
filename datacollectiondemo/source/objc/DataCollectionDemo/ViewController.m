@@ -66,7 +66,7 @@ static const int32_t temperatureUpperLimit = 35;
     self.bucketRunnersQueue = [[NSOperationQueue alloc] init];
     
     // Schedules timer to generate logs with delay, which was set in configuration.
-    self.logTimer = [NSTimer scheduledTimerWithTimeInterval:([self.kaaClient getConfiguration].Threshold / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
+    self.logTimer = [NSTimer scheduledTimerWithTimeInterval:([self.kaaClient getConfiguration].samplePeriod / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
 }
 
 #pragma mark - KaaClientStateDelegate
@@ -105,27 +105,27 @@ static const int32_t temperatureUpperLimit = 35;
 
 #pragma mark - ProfileContainer
 
-- (KAAEmptyData *)getProfile {
-    return [[KAAEmptyData alloc] init];
+- (KAAProfileEmptyData *)getProfile {
+    return [[KAAProfileEmptyData alloc] init];
 }
 
 #pragma mark - ConfigurationDelegate
 
-- (void)onConfigurationUpdate:(KAALogUploadThreshold *)configuration {
-    [self addLogWithText:[NSString stringWithFormat:@"Configuration update received. New log threshold is %d", configuration.Threshold]];
+- (void)onConfigurationUpdate:(KAAConfigurationConfiguration *)configuration {
+    [self addLogWithText:[NSString stringWithFormat:@"Configuration update received. New log threshold is %d", configuration.samplePeriod]];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.logTimer invalidate];
         self.logTimer = nil;
         
         // Schedules the new log timer with updated threshold.
-        self.logTimer = [NSTimer scheduledTimerWithTimeInterval:(configuration.Threshold / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:self repeats:YES];
+        self.logTimer = [NSTimer scheduledTimerWithTimeInterval:(configuration.samplePeriod / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:self repeats:YES];
     });
 }
 
 #pragma mark - Supporting methods
 
 - (void)generateAndSendLogRecord {
-    KAALogData *log = [[KAALogData alloc] init];
+    KAALoggingData *log = [[KAALoggingData alloc] init];
     log.temperature = (arc4random() % (temperatureUpperLimit - temperatureLowerLimit)) + temperatureLowerLimit;
     log.timeStamp = CACurrentMediaTime() * 1000;
     [self addLogWithText:[NSString stringWithFormat:@"Log sent with temperature: %d, timestamp: %lld", log.temperature, log.timeStamp]];

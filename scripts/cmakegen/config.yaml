@@ -8,7 +8,7 @@ configurationdemo:
 notificationdemo:
     appname: "NotificationDemo"
     languages: ['c', 'cpp']
-    features: ['notification']
+    features: ['notifications']
     path: 'notificationdemo/source/'
     build_embedded: true
 

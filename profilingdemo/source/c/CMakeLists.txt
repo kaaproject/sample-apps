@@ -18,7 +18,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(ProfilingDemo C)
 
 # Disable unused features
-set(WITH_EXTENSION_NOTIFICATION OFF)
+set(WITH_EXTENSION_NOTIFICATIONS OFF)
 set(WITH_EXTENSION_LOGGING OFF)
 set(WITH_EXTENSION_EVENTS OFF)
 

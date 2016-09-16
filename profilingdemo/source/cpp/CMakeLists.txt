@@ -18,7 +18,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(ProfilingDemo CXX)
 
 # Disable unused features
-set(KAA_WITHOUT_NOTIFICATION 1)
+set(KAA_WITHOUT_NOTIFICATIONS 1)
 set(KAA_WITHOUT_LOGGING 1)
 set(KAA_WITHOUT_EVENTS 1)
 

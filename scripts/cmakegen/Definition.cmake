@@ -1,6 +1,5 @@
-if (DEFINED %variable)
-    add_definitions(-D%variable=${%variable})
-else (DEFINED %variable)
-    add_definitions(-D%variable="%value")
-endif (DEFINED %variable)
+if (NOT DEFINED %variable)
+    set(%variable "%value")
+endif (NOT DEFINED %variable)
+add_definitions(-D%variable=${%variable})
 

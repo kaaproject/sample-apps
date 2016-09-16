@@ -20,6 +20,7 @@ project(EventsDemo CXX)
 # Disable unused features
 set(KAA_WITHOUT_CONFIGURATION 1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 set(KAA_WITHOUT_NOTIFICATIONS 1)
 set(KAA_WITHOUT_LOGGING 1)
 set(KAA_MAX_LOG_LEVEL 3)
@@ -35,6 +36,9 @@ target_link_libraries(demo_client kaacpp)
 
 =======
 set(KAA_WITHOUT_NOTIFICATION 1)
+=======
+set(KAA_WITHOUT_NOTIFICATIONS 1)
+>>>>>>> ed259ef... APP-194: Remove build.sh/build.bat scripts and update apps.yam
 set(KAA_WITHOUT_LOGGING 1)
 
 

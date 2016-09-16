@@ -33,7 +33,7 @@ class FeaturesGenerator:
             raise GeneratorException('Unknown language: '+language)
 
     def _generate_from_template(self, template):
-        features = ['configuration', 'notification', 'logging', 'events']
+        features = ['configuration', 'notifications', 'logging', 'events']
         output = ''
         for f in features:
             if not f in self._features:

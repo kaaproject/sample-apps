@@ -59,12 +59,12 @@ configurationdemo:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"]]
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
     cpp:
       src: "configurationdemo/source/cpp"  
       platform:
         posix:
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
 
 datacollectiondemo:
   name: "Data collection demo"
@@ -74,12 +74,12 @@ datacollectiondemo:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"]]
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
     cpp:
       src: "datacollectiondemo/source/cpp"
       platform:
         posix:
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
 
 eventdemo:
   name: "Event demo"
@@ -88,13 +88,13 @@ eventdemo:
       src: "eventdemo/source/c"
       platform:
         posix:
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
     cpp:
       src: "eventdemo/source/cpp"
       platform:
         posix:
           skip: "True"
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
 
 notificationdemo:
   name: "Notification demo"
@@ -104,12 +104,12 @@ notificationdemo:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"]]
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
     cpp:
       src: "notificationdemo/source/cpp"
       platform:
         posix:
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
 
 stormdemo:
   name: "Storm data analytics demo"

@@ -110,7 +110,7 @@ public class CitiesFragment extends BaseFragment {
         showCities();
     }
 
-    private void onCityClicked(int position) {
+    void onCityClicked(int position) {
         City city = mCitiesAdapter.getItem(position);
         CityFragment cityFragment = CityFragment.newInstance(mAreaName, city.getName());
 

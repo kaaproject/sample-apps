@@ -44,7 +44,7 @@ public class ProgressImageView extends FrameLayout {
 
     private ImageView image;
     private ProgressBar progress;
-    private int defaultImage = R.drawable.ic_launcher;
+    private final int defaultImage = R.drawable.ic_launcher;
 
     public ProgressImageView(Context context) {
         this(context, null, 0);

@@ -24,6 +24,7 @@
     <item
         android:id="@+id/action_set_location"
         app:showAsAction="always"
+        android:icon="@mipmap/ic_marker"
         android:title="@string/action_set_location"/>
 
 </menu>

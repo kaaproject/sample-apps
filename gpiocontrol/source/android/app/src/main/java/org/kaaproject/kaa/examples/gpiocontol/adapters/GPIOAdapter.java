@@ -1,23 +1,24 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.examples.gpiocontol.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -46,18 +47,18 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
     private Context context;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public boolean state;
-        public CardView cardView;
-        public TextView gpioId;
-        public SwitchCompat switcher;
+        private boolean state;
+        private CardView cardView;
+        private TextView gpioId;
+        private SwitchCompat switcher;
 
-        public ViewHolder(CardView holderView) {
+        private ViewHolder(CardView holderView) {
             super(holderView);
             cardView = holderView;
-            gpioId = (TextView)cardView.findViewById(R.id.gpioId);
-            switcher = (SwitchCompat)cardView.findViewById(R.id.switcher);
+            gpioId = (TextView) cardView.findViewById(R.id.gpioId);
+            switcher = (SwitchCompat) cardView.findViewById(R.id.switcher);
             state = false;
         }
     }
@@ -75,12 +76,13 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
         return new ViewHolder((CardView) view);
     }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.switcher.setChecked(gpioStatusList.get(position).getStatus());
-        holder.gpioId.setText(Integer.toString(gpioStatusList.get(position).getId()));
+        holder.gpioId.setText(String.valueOf(gpioStatusList.get(position).getId()));
 
-        final int teaColor = context.getResources().getColor(R.color.tea_color);
+        final int teaColor = ContextCompat.getColor(context, R.color.tea_color);
         holder.gpioId.setTextColor(holder.switcher.isChecked() ? teaColor : Color.RED);
 
         holder.switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

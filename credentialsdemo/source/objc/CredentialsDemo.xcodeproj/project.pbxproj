@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39BCA0C51D9027850044D968 /* CredentialsDemoFailoverStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BCA0C41D9027850044D968 /* CredentialsDemoFailoverStrategy.m */; };
 		C55252A61CC1381600C19145 /* Kaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C552529A1CC137E300C19145 /* Kaa.framework */; };
 		C55252A81CC1381F00C19145 /* Kaa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C552529A1CC137E300C19145 /* Kaa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E8290B251C0888DA00AA184A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290B1B1C0888DA00AA184A /* AppDelegate.m */; };
@@ -97,6 +98,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		39BCA0C31D9027850044D968 /* CredentialsDemoFailoverStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CredentialsDemoFailoverStrategy.h; sourceTree = "<group>"; };
+		39BCA0C41D9027850044D968 /* CredentialsDemoFailoverStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CredentialsDemoFailoverStrategy.m; sourceTree = "<group>"; };
 		B878246E1C188B3400F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
 		B87824771C188B3800F12E02 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-ep-sdk/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
 		B8B997501BE3FB9600C0ABCE /* CredentialsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CredentialsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +174,8 @@
 				E8290B1B1C0888DA00AA184A /* AppDelegate.m */,
 				E8290B231C0888DA00AA184A /* ViewController.h */,
 				E8290B241C0888DA00AA184A /* ViewController.m */,
+				39BCA0C31D9027850044D968 /* CredentialsDemoFailoverStrategy.h */,
+				39BCA0C41D9027850044D968 /* CredentialsDemoFailoverStrategy.m */,
 				E8290B1C1C0888DA00AA184A /* Assets.xcassets */,
 				E8290B1D1C0888DA00AA184A /* LaunchScreen.storyboard */,
 				E8290B1F1C0888DA00AA184A /* Main.storyboard */,
@@ -330,6 +335,7 @@
 			files = (
 				E8290B2B1C0888DA00AA184A /* ViewController.m in Sources */,
 				E8290B2A1C0888DA00AA184A /* main.m in Sources */,
+				39BCA0C51D9027850044D968 /* CredentialsDemoFailoverStrategy.m in Sources */,
 				E8290B251C0888DA00AA184A /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -31,6 +31,7 @@
     <string name="endpoint_id_hint">Enter access token here…</string>
     <string name="no_endpoints">No endpoints found. Use \"+\" button.</string>
     <string name="endpoint_delete">Do you want to delete this endpoint?</string>
+    <string name="gpio_count_device_adapter">%i GPIO</string>
 
     <string name="no_internet_connection">You don\'t have Internet connection</string>
 </resources>

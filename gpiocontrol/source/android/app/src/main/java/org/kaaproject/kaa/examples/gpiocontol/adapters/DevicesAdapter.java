@@ -1,21 +1,22 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.examples.gpiocontol.adapters;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -39,29 +40,31 @@ import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
 
 import java.util.List;
 
-public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder>{
+public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder> {
 
     private static final String TAG = DevicesAdapter.class.getSimpleName();
-
     private List<Device> devicesDataset;
+    private Context context;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public CardView cardView;
-        public TextView modelName;
-        public TextView deviceName;
-        public TextView gpioCount;
+    public DevicesAdapter(List<Device> devicesDataset, Context context) {
 
-        public ViewHolder(CardView viewHolder) {
-            super(viewHolder);
-            cardView = viewHolder;
-            modelName = (TextView)cardView.findViewById(R.id.model);
-            deviceName = (TextView)cardView.findViewById(R.id.deviceName);
-            gpioCount = (TextView)cardView.findViewById(R.id.gpioCount);
-        }
+        this.devicesDataset = devicesDataset;
+        this.context = context;
     }
 
-    public DevicesAdapter(List<Device> devicesDataset) {
-        this.devicesDataset = devicesDataset;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        private CardView cardView;
+        private TextView modelName;
+        private TextView deviceName;
+        private TextView gpioCount;
+
+        private ViewHolder(CardView viewHolder) {
+            super(viewHolder);
+            cardView = viewHolder;
+            modelName = (TextView) cardView.findViewById(R.id.model);
+            deviceName = (TextView) cardView.findViewById(R.id.deviceName);
+            gpioCount = (TextView) cardView.findViewById(R.id.gpioCount);
+        }
     }
 
     @Override
@@ -69,14 +72,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.device_view, parent, false);
 
-        return new ViewHolder((CardView)view);
+        return new ViewHolder((CardView) view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.modelName.setText(devicesDataset.get(position).getModel());
         holder.deviceName.setText(devicesDataset.get(position).getDeviceName());
-        holder.gpioCount.setText(devicesDataset.get(position).getGpioStatuses().size() + " GPIO");
+        holder.gpioCount.setText(context.getString(R.string.gpio_count_device_adapter, devicesDataset.get(position).getGpioStatuses().size()));
 
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -103,7 +106,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         return devicesDataset.size();
     }
 
-    private void showDeleteEndpointDialog(final View view, final String endpointKey, final int position){
+    private void showDeleteEndpointDialog(final View view, final String endpointKey, final int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
         View promptView = layoutInflater.inflate(R.layout.dialog_delete_endpoint, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
@@ -118,7 +121,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                             @Override
                             public void onDetach(SyncResponseResultType syncResponseResultType) {
                                 Log.d(TAG, syncResponseResultType.name());
-                                if(syncResponseResultType == SyncResponseResultType.SUCCESS){
+                                if (syncResponseResultType == SyncResponseResultType.SUCCESS) {
                                     devicesDataset.remove(position);
                                     notifyItemRemoved(position);
                                     notifyItemRangeChanged(position, devicesDataset.size());

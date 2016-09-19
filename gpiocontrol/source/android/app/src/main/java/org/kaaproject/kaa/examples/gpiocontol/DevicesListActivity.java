@@ -16,7 +16,6 @@
 
 package org.kaaproject.kaa.examples.gpiocontol;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -35,7 +34,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.client.KaaClient;
-import org.kaaproject.kaa.client.connectivity.AndroidConnectivityChecker;
 import org.kaaproject.kaa.client.event.EndpointAccessToken;
 import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.registration.OnAttachEndpointOperationCallback;
@@ -57,15 +55,12 @@ public class DevicesListActivity extends AppCompatActivity {
 
     private final String TAG = DevicesListActivity.class.getSimpleName();
 
-    private AndroidConnectivityChecker connectivityChecker;
-
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
     private ProgressBar progressBar;
 
     private KaaClient kaaClient;
-    private final Context context = this;
 
     private String endpointId;
     private List<Device> devices;
@@ -81,10 +76,9 @@ public class DevicesListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devices = new ArrayList<>();
-        mAdapter = new DevicesAdapter(devices);
+        mAdapter = new DevicesAdapter(devices, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        connectivityChecker = new AndroidConnectivityChecker(this);
         startKaa();
     }
 
@@ -124,7 +118,7 @@ public class DevicesListActivity extends AppCompatActivity {
             if (isFirstLaunch()) {
                 PreferencesManager.setUserExternalId(this, "2");
                 Log.d(TAG, "Attaching user...");
-                KaaProvider.attachUser(context);
+                KaaProvider.attachUser(DevicesListActivity.this);
             }
             setUpEndpointListener();
         }
@@ -181,7 +175,7 @@ public class DevicesListActivity extends AppCompatActivity {
                                 Log.d(TAG, "attachEndpoint result: " + syncResponseResultType.toString());
                             }
                         });
-                        KaaProvider.sendDeviceInfoRequestToAll(context);
+                        KaaProvider.sendDeviceInfoRequestToAll(DevicesListActivity.this);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 })

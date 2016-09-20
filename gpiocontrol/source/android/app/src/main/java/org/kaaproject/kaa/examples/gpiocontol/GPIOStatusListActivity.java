@@ -21,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import org.kaaproject.kaa.examples.gpiocontol.adapters.GPIOAdapter;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
@@ -30,9 +29,8 @@ import org.kaaproject.kaa.examples.gpiocontrol.R;
 
 public class GPIOStatusListActivity extends AppCompatActivity {
 
+    public static final String DEVICE = "device";
     private RecyclerView mRecyclerView;
-
-    private Device device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +46,9 @@ public class GPIOStatusListActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        device = (Device) getIntent().getSerializableExtra("device");
+        Device device = (Device) getIntent().getSerializableExtra(DEVICE);
 
-        RecyclerView.Adapter mAdapter = new GPIOAdapter(this, device);
+        GPIOAdapter mAdapter = new GPIOAdapter(this, device);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -58,7 +56,6 @@ public class GPIOStatusListActivity extends AppCompatActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        ((TextView) findViewById(R.id.appName)).setText(getText(R.string.app_name));
     }
 
     @Override

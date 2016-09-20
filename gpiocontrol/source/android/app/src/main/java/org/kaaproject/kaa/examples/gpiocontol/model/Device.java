@@ -94,16 +94,5 @@ public class Device implements Serializable {
         return result;
     }
 
-    public void setKaaEndpointId(String kaaToken) {
-        this.kaaEndpointId = kaaToken;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
 }
 

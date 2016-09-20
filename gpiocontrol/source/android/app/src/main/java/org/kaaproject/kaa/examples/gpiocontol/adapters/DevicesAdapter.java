@@ -53,22 +53,6 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         this.context = context;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        private CardView cardView;
-        private TextView modelName;
-        private TextView deviceName;
-        private TextView gpioCount;
-
-        private ViewHolder(CardView viewHolder) {
-            super(viewHolder);
-            cardView = viewHolder;
-            modelName = (TextView) cardView.findViewById(R.id.model);
-            deviceName = (TextView) cardView.findViewById(R.id.deviceName);
-            gpioCount = (TextView) cardView.findViewById(R.id.gpioCount);
-        }
-
-    }
-
     @Override
     public DevicesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -89,7 +73,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                showDeleteEndpointDialog(holder.cardView, device.getKaaEndpointId(), holder.getAdapterPosition());
+                showDeleteEndpointDialog(device.getKaaEndpointId(), holder.getAdapterPosition());
                 return true;
             }
         });
@@ -97,11 +81,11 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), GPIOStatusListActivity.class);
+                Intent intent = new Intent(context, GPIOStatusListActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(DEVICE, device);
                 intent.putExtras(bundle);
-                view.getContext().startActivity(intent);
+                context.startActivity(intent);
             }
         });
 
@@ -112,16 +96,13 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         return devicesDataset.size();
     }
 
-    private void showDeleteEndpointDialog(final View view, final String endpointKey, final int position) {
-//        View promptView = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_delete_endpoint, null);
-        View promptView = View.inflate(context, R.layout.dialog_delete_endpoint, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
-        alertDialogBuilder.setView(promptView);
-
-        alertDialogBuilder.setCancelable(false)
+    private void showDeleteEndpointDialog(final String endpointKey, final int position) {
+        new AlertDialog.Builder(context)
+                .setMessage(context.getString(R.string.endpoint_delete))
+                .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        KaaClient kaaClient = KaaProvider.getClient(view.getContext());
+                        KaaClient kaaClient = KaaProvider.getClient(context);
                         Log.d(TAG, "Going to detach....");
                         kaaClient.detachEndpoint(new EndpointKeyHash(endpointKey), new OnDetachEndpointOperationCallback() {
                             @Override
@@ -142,9 +123,22 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
-                        });
+                        })
+                .show();
+    }
 
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        private CardView cardView;
+        private TextView modelName;
+        private TextView deviceName;
+        private TextView gpioCount;
+
+        private ViewHolder(CardView viewHolder) {
+            super(viewHolder);
+            cardView = viewHolder;
+            modelName = (TextView) cardView.findViewById(R.id.model);
+            deviceName = (TextView) cardView.findViewById(R.id.deviceName);
+            gpioCount = (TextView) cardView.findViewById(R.id.gpioCount);
+        }
     }
 }

@@ -42,45 +42,6 @@ public class Device implements Serializable {
         this.kaaEndpointId = kaaEndpointId;
     }
 
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
-    public List<GpioStatus> getGpioStatuses() {
-        List<GpioStatus> gpioStatusList = new LinkedList<>();
-        for (Map.Entry<Integer, Boolean> gpio : gpioStatuses.entrySet()) {
-            gpioStatusList.add(new GpioStatus(gpio.getKey(), gpio.getValue()));
-        }
-        return gpioStatusList;
-    }
-
-    public void setGpioStatuses(List<GpioStatus> gpioStatusList) {
-        gpioStatuses = new LinkedHashMap<>();
-        for(GpioStatus gpioStatus : gpioStatusList){
-            this.gpioStatuses.put(gpioStatus.getId(), gpioStatus.getStatus());
-        }
-    }
-
-    public String getKaaEndpointId() {
-        return kaaEndpointId;
-    }
-
-    public void setKaaEndpointId(String kaaToken) {
-        this.kaaEndpointId = kaaToken;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,7 +56,33 @@ public class Device implements Serializable {
         if (gpioStatuses != null ? !gpioStatuses.equals(device.gpioStatuses) : device.gpioStatuses != null)
             return false;
         return !(kaaEndpointId != null ? !kaaEndpointId.equals(device.kaaEndpointId) : device.kaaEndpointId != null);
+    }
 
+    public String getModel() {
+        return model;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public List<GpioStatus> getGpioStatuses() {
+        List<GpioStatus> gpioStatusList = new LinkedList<>();
+        for (Map.Entry<Integer, Boolean> gpio : gpioStatuses.entrySet()) {
+            gpioStatusList.add(new GpioStatus(gpio.getKey(), gpio.getValue()));
+        }
+        return gpioStatusList;
+    }
+
+    private void setGpioStatuses(List<GpioStatus> gpioStatusList) {
+        gpioStatuses = new LinkedHashMap<>();
+        for(GpioStatus gpioStatus : gpioStatusList){
+            this.gpioStatuses.put(gpioStatus.getId(), gpioStatus.getStatus());
+        }
+    }
+
+    public String getKaaEndpointId() {
+        return kaaEndpointId;
     }
 
     @Override
@@ -105,6 +92,18 @@ public class Device implements Serializable {
         result = 31 * result + (gpioStatuses != null ? gpioStatuses.hashCode() : 0);
         result = 31 * result + (kaaEndpointId != null ? kaaEndpointId.hashCode() : 0);
         return result;
+    }
+
+    public void setKaaEndpointId(String kaaToken) {
+        this.kaaEndpointId = kaaToken;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 }
 

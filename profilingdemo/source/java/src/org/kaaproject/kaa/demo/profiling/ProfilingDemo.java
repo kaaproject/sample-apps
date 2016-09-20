@@ -91,11 +91,11 @@ public class ProfilingDemo {
         return clients;
     }
 
-    private static KaaClient createKaaClient(final int index) throws IOException {
+    private static KaaClient createKaaClient(final int endpointIndex) throws IOException {
 
         // Setup separate working folder for endpoint
         KaaClientProperties kaaClientProperties = new KaaClientProperties();
-        kaaClientProperties.setWorkingDirectory(KAA_CLIENT_WORKING_DIR + index);
+        kaaClientProperties.setWorkingDirectory(KAA_CLIENT_WORKING_DIR + endpointIndex);
 
         // Create the Kaa desktop context for the application.
         DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext(kaaClientProperties);
@@ -105,7 +105,7 @@ public class ProfilingDemo {
             @Override
             public void onStarted() {
                 super.onStarted();
-                displayConfiguration(index);
+                displayConfiguration(endpointIndex);
             }
         }, true);
 
@@ -113,19 +113,19 @@ public class ProfilingDemo {
         kaaClient.setProfileContainer(new ProfileContainer() {
             @Override
             public PagerClientProfile getProfile() {
-                return profiles.get(index);
+                return profiles.get(endpointIndex);
             }
         });
 
         // Persist configuration in a local storage to avoid downloading it each time the Kaa client is started.
-        kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, KAA_CLIENT_WORKING_DIR + index + "/saved_config.cfg"));
+        kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, KAA_CLIENT_WORKING_DIR + endpointIndex + "/saved_config.cfg"));
 
         //Add a listener to display endpoint's profile/configuration data each time configuration is updated.
         kaaClient.addConfigurationListener(new ConfigurationListener() {
             @Override
             public void onConfigurationUpdate(PagerConfiguration configuration) {
-                LOG.info("Endpoint #{} configuration was updated.", index);
-                displayConfiguration(index);
+                LOG.info("Endpoint #{} configuration was updated.", endpointIndex);
+                displayConfiguration(endpointIndex);
             }
         });
 
@@ -150,7 +150,7 @@ public class ProfilingDemo {
         if (kaaClient != null) {
 
             LOG.info("Endpoint #{} data:", index);
-            LOG.info("KeyHash - {}", kaaClient.getEndpointKeyHash());
+            LOG.info("Endpoint ID (Endpoint Key Hash): {}", kaaClient.getEndpointKeyHash());
 
             PagerClientProfile profile = profiles.get(index);
             LOG.info("Client-side endpoint profile (audio/video/vibro support): {} - {} - {}",

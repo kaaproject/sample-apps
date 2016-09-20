@@ -149,12 +149,15 @@ public class ProfilingDemoBuilder extends AbstractDemoBuilder {
     }
 
     private EndpointGroupDto getBaseEndpointGroup(AdminClient client, ApplicationDto application) throws Exception {
-        EndpointGroupDto baseEndpointGroup = null;
-        List<EndpointGroupDto> endpointGroups = client.getEndpointGroupsByAppToken(application.getApplicationToken());
-        if (endpointGroups.size() == 1 && endpointGroups.get(AUTO_GENERATED_SCHEMA_INDEX).getWeight() == 0) {
-            baseEndpointGroup = endpointGroups.get(AUTO_GENERATED_SCHEMA_INDEX);
+        List<EndpointGroupDto> groups = client.getEndpointGroupsByAppToken(application.getApplicationToken());
+        if (groups.size() > 0) {
+            EndpointGroupDto firstGroup = groups.get(AUTO_GENERATED_SCHEMA_INDEX);
+            if (firstGroup.getWeight() == 0) {
+                return firstGroup;
+            }
         }
-        return baseEndpointGroup;
+
+        return null;
     }
 
     private ConfigurationSchemaDto createConfigurationSchema(AdminClient client, ApplicationDto application,

@@ -214,13 +214,285 @@ For more background on the Kaa Logging subsystem, please refer to the correspond
         <description>Kaa Logging subsystem demo applications bundle</description>
         <details>
             <![CDATA[
-This bundle contains applications that demonstrates capabilities of the Kaa Logging subsystem.
+<p>
+	This application bundle demonstrates the features of Kaa <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection" target="_blank">Data collection extension</a>.
+	This extension allows you to collect log records from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a>.
+	The log records are sent from the endpoints to <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations services</a> where they are either persisted on the server for further processing, or submitted for the immediate stream analysis.
+</p>
+<p>
+	For better illustration, the Data collection extension will be demonstrated in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration extension</a>.
+</p>
+<p>
+	This demonstration explains how you can record the readings of a temperature sensor to a database and configure the sampling period of the sensor.
+</p>
+<p>
+	See also <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+</p>
 
-Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+<h1>Playing around</h1>
 
-<h2>What's next?</h2>
-For more background on the Kaa Logging subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.
-]]>
+<h2>Log schema</h2>
+
+The structure of Kaa logs is defined by the chosen CT schema.
+This demo <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-application" target="_blank">application</a> will record the readings of the temperature sensors and save them to the MongoDB database.
+
+<p>
+	The following schema is used to define the format of the log records.
+	
+	<pre>
+		{
+		  "type" : "record",
+		  "name" : "DataCollection",
+		  "namespace" : "org.kaaproject.kaa.schema.sample",
+		  "fields" : [ {
+			"name" : "temperature",
+			"type" : "int"
+		  } ],
+		  "displayName" : "org.kaaproject.kaa.schema.sample.DataCollection"
+		}
+	</pre>
+	
+</p>
+
+<p>
+	You can view and edit this schema using the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">Administration UI</a>.
+</p>
+
+To do this:
+
+<ol>
+	<li>
+		Click the <b>Administration UI</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
+	</li>
+	<li>
+		Click the <b>Applications</b> arrow to unfold the list.
+		Click <b>Data collection demo</b> > <b>Schemas</b> > <b>Log</b>.
+		You will see the list of all log schemas stored for your application.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_6.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Select the <b>DataCollection</b> schema by clicking on the corresponding row.
+		The <b>Log schema details</b> page will open.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_7.png" />
+		<br />
+		<br />
+		
+		The <b>DataCollection</b> schema is included in the Sandbox for demonstration purpose.
+		You can create your own log schemas.
+		To do this, use the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Server-REST-APIs/#!/Logging/saveLogSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-client-side-EP-profile-schema" target="_blank">these instructions</a>for Administration UI.
+	</li>
+</ol>
+
+<p>
+	To configure the sampling period of the sensor, you need to change the default configuration of the endpoint initially received from the group <a href="http://kaaproject.github.io/kaa/docs/Glossary/#group-all" target="_blank">All</a>.
+	In this demo application, the following configuration schema is used to configure the sampling period of the sensor.
+	
+	<pre>
+		{
+		  "type" : "record",
+		  "name" : "Configuration",
+		  "namespace" : "org.kaaproject.kaa.schema.sample",
+		  "fields" : [ {
+			"name" : "samplePeriod",
+			"type" : "int",
+			"by_default" : 1
+		  } ],
+		  "displayName" : "org.kaaproject.kaa.schema.sample.Configuration"
+		}
+	</pre>
+	
+	To view the list of configuration schemas, open the <b>Configuration</b> page under the <b>Schemas</b> section of the application.
+	
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_8.png" />
+	<br />
+	<br />	
+	
+	To edit a configuration schema, click the corresponding row to open the <b>Configuration schema details</b> page.
+	
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_9.png" />
+	<br />
+	<br />	
+	
+	This schema has only one property named <code>samplePeriod</code> that defines the sampling period value.
+</p>
+
+<h2>Log appenders</h2>
+
+To send the log records from the Operations service to the MongoDB database, Kaa uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+
+<p>
+	To view the list of log appenders, open the <b>Log appenders</b> page of the application.
+	
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_10.png" />
+	<br />
+	<br />	
+	
+	To edit a log appender, click on the corresponding row to open the <b>Log appender details</b> page.
+</p>
+
+<p>
+	This demo application uses the following log appender definition.
+	
+	<pre>
+		{
+		   "mongoServers":[
+			  {
+				 "host":"localhost",
+				 "port":27017
+			  }
+		   ],
+		   "mongoCredentials":[
+		
+		   ],
+		   "dbName":"kaa",
+		   "connectionsPerHost":{
+			  "int":30
+		   },
+		   "maxWaitTime":{
+			  "int":120000
+		   },
+		   "connectionTimeout":{
+			  "int":5000
+		   },
+		   "socketTimeout":{
+			  "int":0
+		   },
+		   "socketKeepalive":{
+			  "boolean":false
+		   },
+		   "includeClientProfile":{
+			  "boolean":false
+		   },
+		   "includeServerProfile":{
+			  "boolean":false
+		   }
+		}
+	</pre>
+	
+</p>
+
+<p>
+	To define the conditions under which the logs should be sent to the server, Kaa uses <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategies</a>.
+	This demo application uses the <b>Log count</b> strategy and uploads the logs upon reaching the set limit of log records number.
+	The default threshold value for this strategy is set to <b>1</b> which means that Kaa will send every log record separately.
+</p>
+
+<p>
+	If you start your demo application, the console will display report the sampling period value and the sensor readings.
+	
+	<pre>
+		2016-08-22 13:54:40,897 [main] INFO  o.k.k.d.d.DataCollectionDemo - DataCollectionDemo app starting!
+		2016-08-22 13:54:41,996 [main] INFO  o.k.k.d.d.DataCollectionDemo - --= Press any key to exit =--
+		2016-08-22 13:54:41,997 [pool-3-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Kaa client started
+		2016-08-22 13:54:42,015 [pool-3-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Default sample period: 1
+		2016-08-22 13:54:57,519 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 38
+		2016-08-22 13:55:02,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 34
+		2016-08-22 13:55:07,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 37
+		2016-08-22 13:55:12,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 40
+		2016-08-22 13:55:17,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 35
+		2016-08-22 13:55:22,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 32
+		...
+	</pre>
+	
+	You can access the collected data directly from the database using the MongoDB CLI tool.
+	To do this, access Sandbox virtual machine over ssh using the username <b>kaa</b> and password <b>kaa123</b> or use the virtual machine to run a Mongo client application for the MongoDB database.
+	
+	<pre>
+		 $ ssh kaa@%your_sandbox_instance_ip/host%
+
+		 $ mongo kaa
+		 > db.logs_%data_collection_application_token%.find()
+	</pre>
+	
+	You will see the following output.
+	
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_0.png" />
+	<br />
+	<br />	
+	
+	Now you need to replace <i>%your_sandbox_instance_ip/host%</i> with the actual host/ip address of your Sandbox (in case with NAT, it will be <b>localhost</b> so the command will look like this: <code>$ ssh kaa@127.0.0.1 -p 2222</code>) and replace the <i>%data_collection_application_token%</i> with the actual <b>Data collection</b> <a href="http://kaaproject.github.io/kaa/docs/Glossary/#application-token" target="_blank">application token</a>.
+	To view the application token, open the <b>Application details</b> page.
+	
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_1.png" />
+	<br />
+	<br />
+	
+</p>
+
+<h2>Change sampling period</h2>
+
+Every endpoint, once registered, becomes a member of the default group <b>All</b> and receives its default configuration from that group.
+To change the configuration of the endpoint, you need to either make the endpoint a member of a different group, or change the default configuration values of the group <b>All</b>.
+See also <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
+
+<p>
+	To change a value in the default configuration:
+	
+	<ol>
+		<li>
+			Open the <b>Endpoint groups</b> page of the application and select the group <b>All</b> by clicking on the corresponding row.
+			The <b>Endpoint group details</b> page will open.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_2.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			In the <b>Configurations</b> section, select the current configuration (the one that has the latest version).
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_3.png" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			On the <b>Configuration details</b> page, select the <b>Draft</b> tab and specify the new <b>samplingPeriod</b> value in the <b>Configuration body</b> block.
+			For example, set it to <b>5</b>
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_5.png" />
+			<br />
+			<br />
+			
+			Click <b>Save</b> to save the new value, then click <b>Activate</b> to apply the new configuration to this group.
+		</li>
+	</ol>
+</p>
+
+<p>
+	If you now start the application, the console will display the following messages.
+	
+	<pre>
+		...
+		2016-08-22 13:54:42,934 [pool-5-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Received configuration data. New sample period: 5
+		2016-08-22 13:54:57,519 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 38
+		2016-08-22 13:55:02,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 34
+		2016-08-22 13:55:07,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 37
+		2016-08-22 13:55:12,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 40
+	</pre>
+	
+	This means that the sampling period has been changed in the default configuration, and now the application sends the log records every 5 seconds.
+</p>
+
+<h1>Troubleshooting</h1>
+
+If you experience problems while running the demo application, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">Debugging and troubleshooting</a>.
+            ]]>
         </details>
     </bundle>
 </projectsConfig>

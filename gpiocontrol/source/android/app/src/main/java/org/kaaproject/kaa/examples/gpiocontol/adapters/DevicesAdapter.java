@@ -17,19 +17,18 @@
 package org.kaaproject.kaa.examples.gpiocontol.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.support.v7.app.AlertDialog;
-import android.content.DialogInterface;
-import android.util.Log;
 
-import org.kaaproject.kaa.examples.gpiocontrol.R;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.registration.OnDetachEndpointOperationCallback;
@@ -37,17 +36,19 @@ import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.examples.gpiocontol.GPIOStatusListActivity;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
 import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
+import org.kaaproject.kaa.examples.gpiocontrol.R;
 
 import java.util.List;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder> {
 
     private static final String TAG = DevicesAdapter.class.getSimpleName();
+    private static final String DEVICE = "device";
+
     private List<Device> devicesDataset;
     private Context context;
 
     public DevicesAdapter(List<Device> devicesDataset, Context context) {
-
         this.devicesDataset = devicesDataset;
         this.context = context;
     }
@@ -65,6 +66,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
             deviceName = (TextView) cardView.findViewById(R.id.deviceName);
             gpioCount = (TextView) cardView.findViewById(R.id.gpioCount);
         }
+
     }
 
     @Override
@@ -76,15 +78,18 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.modelName.setText(devicesDataset.get(position).getModel());
-        holder.deviceName.setText(devicesDataset.get(position).getDeviceName());
-        holder.gpioCount.setText(context.getString(R.string.gpio_count_device_adapter, devicesDataset.get(position).getGpioStatuses().size()));
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final Device device = devicesDataset.get(position);
+        int gpioStatusesSize = devicesDataset.get(position).getGpioStatuses().size();
+
+        holder.modelName.setText(device.getModel());
+        holder.deviceName.setText(device.getDeviceName());
+        holder.gpioCount.setText(context.getString(R.string.gpio_count_device_adapter, gpioStatusesSize));
 
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                showDeleteEndpointDialog(holder.cardView, devicesDataset.get(position).getKaaEndpointId(), position);
+                showDeleteEndpointDialog(holder.cardView, device.getKaaEndpointId(), holder.getAdapterPosition());
                 return true;
             }
         });
@@ -94,11 +99,12 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), GPIOStatusListActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("device", devicesDataset.get(position));
+                bundle.putSerializable(DEVICE, device);
                 intent.putExtras(bundle);
                 view.getContext().startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -107,8 +113,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
     }
 
     private void showDeleteEndpointDialog(final View view, final String endpointKey, final int position) {
-        LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
-        View promptView = layoutInflater.inflate(R.layout.dialog_delete_endpoint, null);
+//        View promptView = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_delete_endpoint, null);
+        View promptView = View.inflate(context, R.layout.dialog_delete_endpoint, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
         alertDialogBuilder.setView(promptView);
 

@@ -44,24 +44,7 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
     private List<GpioStatus> gpioStatusList;
     private Device device;
-
     private Context context;
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private boolean state;
-        private CardView cardView;
-        private TextView gpioId;
-        private SwitchCompat switcher;
-
-        private ViewHolder(CardView holderView) {
-            super(holderView);
-            cardView = holderView;
-            gpioId = (TextView) cardView.findViewById(R.id.gpioId);
-            switcher = (SwitchCompat) cardView.findViewById(R.id.switcher);
-            state = false;
-        }
-    }
 
     public GPIOAdapter(Context context, Device device) {
         this.device = device;
@@ -79,8 +62,10 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.switcher.setChecked(gpioStatusList.get(position).getStatus());
-        holder.gpioId.setText(String.valueOf(gpioStatusList.get(position).getId()));
+        final GpioStatus gpioStatus = gpioStatusList.get(position);
+
+        holder.switcher.setChecked(gpioStatus.getStatus());
+        holder.gpioId.setText(String.valueOf(gpioStatus.getId()));
 
         final int teaColor = ContextCompat.getColor(context, R.color.tea_color);
         holder.gpioId.setTextColor(holder.switcher.isChecked() ? teaColor : Color.RED);
@@ -97,14 +82,14 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
                 //Skips system recycler invoking
                 if (!buttonView.isPressed()) return;
 
-                gpioStatusList.get(position).setStatus(isChecked);
+                gpioStatus.setStatus(isChecked);
 
                 KaaClient kaaClient = KaaProvider.getClient(holder.cardView.getContext());
 
                 EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
                 final RemoteControlECF ecf = eventFamilyFactory.getRemoteControlECF();
                 holder.gpioId.setTextColor(buttonView.isChecked() ? teaColor : Color.RED);
-                ecf.sendEvent(new GpioToggleRequest(gpioStatusList.get(position)), device.getKaaEndpointId());
+                ecf.sendEvent(new GpioToggleRequest(gpioStatus), device.getKaaEndpointId());
             }
         });
     }
@@ -112,5 +97,19 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return device.getGpioStatuses().size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private CardView cardView;
+        private TextView gpioId;
+        private SwitchCompat switcher;
+
+        private ViewHolder(CardView holderView) {
+            super(holderView);
+            cardView = holderView;
+            gpioId = (TextView) cardView.findViewById(R.id.gpioId);
+            switcher = (SwitchCompat) cardView.findViewById(R.id.switcher);
+        }
     }
 }

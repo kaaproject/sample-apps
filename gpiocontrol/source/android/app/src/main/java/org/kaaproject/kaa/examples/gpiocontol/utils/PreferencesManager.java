@@ -26,7 +26,7 @@ public class PreferencesManager {
 
     public static void setUserExternalId(final Context context, String id){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(USER_EXTERNAL_ID, id).commit();
+        sp.edit().putString(USER_EXTERNAL_ID, id).apply();
     }
 
     public static String getUserExternalId(final Context context){

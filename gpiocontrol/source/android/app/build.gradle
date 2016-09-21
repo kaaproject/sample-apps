@@ -44,5 +44,6 @@ android {
         compile "com.android.support:appcompat-v7:$supportVersionLibrary"
         compile "com.android.support:design:$supportVersionLibrary"
         compile "com.android.support:cardview-v7:$supportVersionLibrary"
+        compile "com.android.support:recyclerview-v7:$supportVersionLibrary"
     }
 }

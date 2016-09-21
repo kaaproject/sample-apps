@@ -37,7 +37,7 @@
     [self addLogWithText:@"CredentialsDemo started"];
     
     self.logTextView.hidden = YES;
-    self.logTextView.alpha = 100;
+    self.logTextView.alpha = 1.0;
 }
 
 #pragma mark - KaaClientStateDelegate

@@ -1,7 +1,7 @@
 {
   "type" : "record",
-  "name" : "Data",
-  "namespace" : "org.kaaproject.kaa.scheme.sample",
+  "name" : "LogData",
+  "namespace" : "org.kaaproject.kaa.schema.sample.logging",
   "fields" : [ {
     "name" : "temperature",
     "type" : "int"
@@ -9,5 +9,5 @@
     "name" : "timeStamp",
     "type" : "long"
   } ],
-  "displayName" : "Logging scheme"
+  "displayName" : "Logging schema (temperature)"
 }

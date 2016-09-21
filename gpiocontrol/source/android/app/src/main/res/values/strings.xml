@@ -34,4 +34,5 @@
     <string name="gpio_count_device_adapter">%d GPIO</string>
 
     <string name="no_internet_connection">You don\'t have Internet connection</string>
+    <string name="refresh_button">refresh button</string>
 </resources>

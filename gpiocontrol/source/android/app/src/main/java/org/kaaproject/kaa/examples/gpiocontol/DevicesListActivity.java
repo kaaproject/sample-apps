@@ -105,7 +105,7 @@ public class DevicesListActivity extends AppCompatActivity {
             mAdapter.notifyItemInserted(devices.size() - 1);
         }
 
-        TextView noEndpoints = (TextView) findViewById(R.id.noEndpointsText);
+        TextView noEndpoints = (TextView) findViewById(R.id.no_endpoints_text);
         noEndpoints.setVisibility(View.INVISIBLE);
     }
 
@@ -205,9 +205,9 @@ public class DevicesListActivity extends AppCompatActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        ((TextView) findViewById(R.id.appName)).setText(getText(R.string.app_name));
-        findViewById(R.id.reloadButton).setOnClickListener(new View.OnClickListener() {
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        ((TextView) findViewById(R.id.app_name)).setText(getText(R.string.app_name));
+        findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 refreshActivity();

@@ -18,21 +18,21 @@
 PREFACE
 ************************************
 
-This demo application illustrate user verifiers feature using the Kaa C++ SDK.
+This demo application illustrates user verifiers feature using the Kaa C++ SDK.
 To read more about the user verifiers feature visit http://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users.
 
 ************************************
 INSTALLATION
 ************************************
 
-To run the demo application, do the following:
+To run the demo application, proceed as follows:
 
-1. Install third-party libraries to build the Kaa C SDK.
+1. Install third-party libraries to build the Kaa C++ SDK.
 Follow http://docs.kaaproject.org/display/KAA/Third-party+components#Third-partycomponents-Kaaendpoint to see the full
-list of third-party dependencies for the Kaa C SDK.
+list of third-party dependencies for the Kaa C++ SDK.
 2. Download and install the Kaa sandbox (http://docs.kaaproject.org/display/KAA/sandbox).
-3. Generate the C SDK using the Kaa sandbox. The Avro log schema required for the demo application is located in 
-the 'avro' directory. Put the SDK archive into the 'libs/kaa' directory.
+3. Generate the C++ SDK using the Kaa sandbox. The Avro log schema required for the demo application is located in
+the 'avro' directory. Put the SDK tarball into the 'libs/kaa' directory.
 4. Use the build.sh script to build and run the demo application (the 'deploy' option).
 
 ************************************

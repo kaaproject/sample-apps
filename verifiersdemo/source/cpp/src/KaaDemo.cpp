@@ -29,8 +29,8 @@ using namespace kaa;
 class VerifiersDemoEventClassFamilyListener : public VerifiersDemoEventClassFamily::VerifiersDemoEventClassFamilyListener {
 public:
 
-    VerifiersDemoEventClassFamilyListener(EventFamilyFactory & factory) : eventFactory_(factory) { }
-    virtual void onEvent(const nsVerifiersDemoEventClassFamily::MessageEvent& event, const std::string& source)
+    VerifiersDemoEventClassFamilyListener(EventFamilyFactory &factory) : eventFactory_(factory) { }
+    void onEvent(const nsVerifiersDemoEventClassFamily::MessageEvent& event, const std::string& source) override
     {
         (void)source;
         std::cout << "Message was received!" << std::endl;
@@ -54,7 +54,7 @@ int main()
     
     kaaClient->setEndpointAccessToken(DEMO_ACCESS_TOKEN);
 
-    std::cout << DEMO_ACCESS_TOKEN << std::endl;
+    std::cout << "Endpoint access token: " << DEMO_ACCESS_TOKEN << std::endl;
 
     /*
      * Run the Kaa endpoint.
@@ -66,6 +66,11 @@ int main()
 
     kaaClient->getEventFamilyFactory().getVerifiersDemoEventClassFamily().addEventFamilyListener(messageListener);
 
+    std::cout << "Press Enter to stop" << std::endl;
+
+    /*
+     * Wait for the keypress.
+     */
     std::cin.get();
 
     kaaClient->stop();

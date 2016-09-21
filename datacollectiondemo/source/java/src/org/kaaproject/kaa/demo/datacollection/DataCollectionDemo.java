@@ -26,18 +26,23 @@ import org.kaaproject.kaa.client.logging.BucketInfo;
 import org.kaaproject.kaa.client.logging.RecordInfo;
 import org.kaaproject.kaa.client.logging.future.RecordFuture;
 import org.kaaproject.kaa.client.logging.strategies.RecordCountLogUploadStrategy;
+import org.kaaproject.kaa.client.logging.strategies.RecordCountWithTimeLimitLogUploadStrategy;
 import org.kaaproject.kaa.schema.sample.logging.LogData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A demo application that shows how to use the Kaa logging API.
  */
 public class DataCollectionDemo {
 
-    private static final int LOGS_TO_SEND_COUNT = 5;
+    private static final int LOGS_DEFAULT_THRESHOLD = 1;
+    private static final int LOGS_TO_SEND_COUNT = 10;
+    private static final int LOGS_MAX_WAIT_TIME = 5;
     private static final int MIN_TEMPERATURE = -25;
     private static final int MAX_TEMPERATURE = 45;
 
@@ -60,9 +65,9 @@ public class DataCollectionDemo {
 
         // Set record count strategy for uploading logs with count threshold set to 1.
         // Defined strategy configuration informs to upload every log record as soon as it is created.
-        // The default strategy uploads logs after either a threshold logs count
-        // or a threshold logs size has been reached.
-        kaaClient.setLogUploadStrategy(new RecordCountLogUploadStrategy(1));
+        // Use "WithTimeLimit" modification so that application will not wait for infinite time,
+        // if current "logs count threshold" will not be submultiple of real logs count
+        kaaClient.setLogUploadStrategy(new RecordCountWithTimeLimitLogUploadStrategy(LOGS_DEFAULT_THRESHOLD, LOGS_MAX_WAIT_TIME, TimeUnit.SECONDS));
 
         //Add a listener to display endpoint's profile/configuration data each time configuration is updated.
         kaaClient.addConfigurationListener(new ConfigurationListener() {
@@ -70,6 +75,14 @@ public class DataCollectionDemo {
             public void onConfigurationUpdate(LogUploadThreshold configuration) {
                 LOG.info("Endpoint configuration was updated.");
                 displayConfiguration(configuration);
+
+                Integer threshold = configuration.getThreshold();
+                if (threshold != null) {
+                    if (threshold > 0) {
+                        kaaClient.setLogUploadStrategy(new RecordCountWithTimeLimitLogUploadStrategy(threshold, LOGS_MAX_WAIT_TIME, TimeUnit.SECONDS));
+                    }
+                    LOG.info("--= Input \"Y\" to repeat data sending or other symbol otherwise =--", LOGS_DEFAULT_THRESHOLD);
+                }
             }
         });
 
@@ -79,31 +92,14 @@ public class DataCollectionDemo {
         /*
          Comment out this part in order to pass the Sandbox build process.
          */
+        sleepForMilliseconds(2000);
+        Scanner scan  = new Scanner(System.in);
+        while (true) {
+            sendLogBatch(kaaClient);
 
-        // Collect log record delivery futures and corresponding log record creation timestamps.
-        Map<RecordFuture, Long> futuresMap = new HashMap<>();
-
-        // Send logs in a loop
-        for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
-            futuresMap.put(kaaClient.addLogRecord(log), log.getTimeStamp());
-            LOG.info("Log record {} sent", log.toString());
-        }
-
-        // Iterate over log record delivery futures and wait for delivery
-        // acknowledgment for each record.
-        for (RecordFuture future : futuresMap.keySet()) {
-            try {
-                RecordInfo recordInfo = future.get();
-                BucketInfo bucketInfo = recordInfo.getBucketInfo();
-                Long timeSpent = (recordInfo.getRecordAddedTimestampMs() - futuresMap.get(future))
-                        + recordInfo.getRecordDeliveryTimeMs();
-                LOG.info(
-                        "Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
-                        bucketInfo.getBucketId(), timeSpent);
-            } catch (Exception e) {
-                LOG.error(
-                        "Exception was caught while waiting for callback future",
-                        e);
+            LOG.info("--= Repeat data sending (Y/N)? =--");
+            if (!scan.next().trim().toUpperCase().equals("Y")) {
+                break;
             }
         }
 
@@ -111,6 +107,31 @@ public class DataCollectionDemo {
         kaaClient.stop();
         LOG.info("Data collection demo stopped");
     }
+
+    private static void sendLogBatch(KaaClient kaaClient) {
+        // Collect log record delivery futures and corresponding log record creation timestamps.
+        Map<RecordFuture, Long> futuresMap = new HashMap<>();
+
+        // Send logs in a loop
+        for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
+            futuresMap.put(kaaClient.addLogRecord(log), log.getTimeStamp());
+            LOG.info("Log record {} submitted for sending", log.toString());
+            sleepForMilliseconds(200);
+        }
+
+        // Iterate over log record delivery futures and wait for delivery acknowledgment for each record.
+        for (RecordFuture future : futuresMap.keySet()) {
+            try {
+                RecordInfo recordInfo = future.get();
+                BucketInfo bucketInfo = recordInfo.getBucketInfo();
+                LOG.info("Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
+                        bucketInfo.getBucketId(), recordInfo.getRecordDeliveryTimeMs());
+            } catch (Exception e) {
+                LOG.error("Exception was caught while waiting for callback future", e);
+            }
+        }
+    }
+
 
     private static void displayConfiguration(LogUploadThreshold configuration) {
         LOG.info("Configuration = {}", configuration.toString());
@@ -126,4 +147,13 @@ public class DataCollectionDemo {
         }
         return logs;
     }
+
+    private static void sleepForMilliseconds(int milliseconds) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

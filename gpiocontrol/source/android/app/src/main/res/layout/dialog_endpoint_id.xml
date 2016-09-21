@@ -37,4 +37,5 @@
         android:layout_height="wrap_content"
         android:hint="@string/endpoint_id_hint"
         android:padding="10dp" />
+
 </LinearLayout>

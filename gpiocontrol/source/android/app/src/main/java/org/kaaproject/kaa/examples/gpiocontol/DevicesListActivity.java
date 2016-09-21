@@ -1,17 +1,17 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.examples.gpiocontol;
@@ -26,10 +26,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -55,15 +56,13 @@ public class DevicesListActivity extends AppCompatActivity {
 
     private final String TAG = DevicesListActivity.class.getSimpleName();
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-
     private ProgressBar progressBar;
-
-    private KaaClient kaaClient;
+    private RecyclerView mRecyclerView;
 
     private String endpointId;
+    private KaaClient kaaClient;
     private List<Device> devices;
+    private RecyclerView.Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +82,7 @@ public class DevicesListActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart(){
+    protected void onRestart() {
         super.onRestart();
         refreshActivity();
     }
@@ -105,27 +104,32 @@ public class DevicesListActivity extends AppCompatActivity {
             devices.add(device);
             mAdapter.notifyItemInserted(devices.size() - 1);
         }
-        findViewById(R.id.noEndpointsText).setVisibility(View.INVISIBLE);
+
+        TextView noEndpoints = (TextView) findViewById(R.id.noEndpointsText);
+        noEndpoints.setVisibility(View.INVISIBLE);
     }
 
     private void startKaa() {
         progressBar.setVisibility(View.VISIBLE);
+
         if (!NetworkUtil.isNetworkAvailable(this)) {
             NetworkUtil.showNetworkDialog(this);
-        }else {
-            kaaClient = KaaProvider.getClient(this);
-            kaaClient.start();
-            if (isFirstLaunch()) {
-                PreferencesManager.setUserExternalId(this, "2");
-                Log.d(TAG, "Attaching user...");
-                KaaProvider.attachUser(DevicesListActivity.this);
-            }
-            setUpEndpointListener();
+            return;
         }
+
+        kaaClient = KaaProvider.getClient(this);
+        kaaClient.start();
+        if (isFirstLaunch()) {
+            PreferencesManager.setUserExternalId(this, "2");
+            Log.d(TAG, "Attaching user...");
+            KaaProvider.attachUser(DevicesListActivity.this);
+        }
+        setUpEndpointListener();
+
         progressBar.setVisibility(View.INVISIBLE);
     }
 
-    private void setUpEndpointListener(){
+    private void setUpEndpointListener() {
         if (!NetworkUtil.isNetworkAvailable(this)) {
             NetworkUtil.showNetworkDialog(this);
             return;
@@ -149,23 +153,27 @@ public class DevicesListActivity extends AppCompatActivity {
     }
 
     private void showEndpointDialog() {
-        LayoutInflater layoutInflater = LayoutInflater.from(DevicesListActivity.this);
-        View promptView = layoutInflater.inflate(R.layout.dialog_endpoint_id, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DevicesListActivity.this);
-        alertDialogBuilder.setView(promptView);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
-        alertDialogBuilder.setCancelable(false)
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+
+        alertDialogBuilder
+                .setView(input)
+                .setMessage(getString(R.string.endpoint_id))
+                .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (kaaClient == null) {
                             startKaa();
                         }
 
-                        endpointId = editText.getText().toString();
+                        endpointId = input.getText().toString();
                         progressBar.setVisibility(View.VISIBLE);
 
-                        if (endpointId == null || endpointId.isEmpty()) {
+                        if (TextUtils.isEmpty(endpointId)) {
                             Snackbar.make(mRecyclerView, "Endpoint ID can't be empty", Snackbar.LENGTH_SHORT).show();
                             return;
                         }
@@ -175,6 +183,7 @@ public class DevicesListActivity extends AppCompatActivity {
                                 Log.d(TAG, "attachEndpoint result: " + syncResponseResultType.toString());
                             }
                         });
+
                         KaaProvider.sendDeviceInfoRequestToAll(DevicesListActivity.this);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
@@ -184,13 +193,11 @@ public class DevicesListActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
-                        });
-
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
+                        })
+                .show();
     }
 
-    private boolean isFirstLaunch(){
+    private boolean isFirstLaunch() {
         return PreferencesManager.getUserExternalId(this).isEmpty();
     }
 
@@ -207,7 +214,6 @@ public class DevicesListActivity extends AppCompatActivity {
             }
         });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.attachToRecyclerView(mRecyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

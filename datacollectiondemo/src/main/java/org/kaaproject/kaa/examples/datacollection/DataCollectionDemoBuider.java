@@ -42,6 +42,20 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         super("demo/datacollection");
     }
 
+    // method for fast builder testing
+    // just setup IP and port parameters
+    public static void main(String[] args) {
+        DataCollectionDemoBuider pdb = new DataCollectionDemoBuider();
+        String kaaNodeIp = "10.2.3.18";
+        int kaaNodePort = 8080;
+        AdminClient client = new AdminClient(kaaNodeIp, kaaNodePort);
+        try {
+            pdb.buildDemoApplicationImpl(client);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
@@ -103,7 +117,7 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         dataCollectionLogAppender.setPluginTypeName("MongoDB");
         dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.mongo.appender.MongoDbLogAppender");
         dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("mongo_appender.json")));
-        dataCollectionLogAppender = client.editLogAppenderDto(dataCollectionLogAppender);
+        client.editLogAppenderDto(dataCollectionLogAppender);
 
         logger.info("Finished loading 'Data Collection Demo Application' data.");
     }

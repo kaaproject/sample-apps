@@ -69,6 +69,7 @@ For more background on the Kaa Logging subsystem, please refer to the correspond
         <sdkLibDir>JDataCollectionDemo/lib</sdkLibDir>
         <destBinaryFile>JDataCollectionDemo/build/jar/DataCollectionDemo.jar</destBinaryFile>
     </project>
+
     <project id="datacollection_demo_c">
         <name>Data collection C demo</name>
         <description>Kaa Logging subsystem demo app based on C SDK</description>
@@ -186,6 +187,7 @@ Try the following:
         <sdkLibDir>CDataCollectionDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
     <project id="datacollection_demo_cpp">
         <name>Data collection C++ demo</name>
         <description>Kaa Logging subsystem demo app based on C++ SDK</description>
@@ -320,6 +322,7 @@ Try the following:
         <sdkLibDir>CppDataCollectionDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
     <project id="datacollection_demo_objc">
         <name>Data collection Objective-C demo</name>
         <description>Kaa Logging subsystem demo app based on Objective-C SDK</description>
@@ -437,6 +440,7 @@ Make sure that the build target is set to <b>DataCollectionDemo</b>, not <b>Kaa<
         <sdkLibDir>ObjCDataCollectionDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
     <bundle id="datacollection_demos">
         <name>Data collection demos</name>
         <description>Kaa Logging subsystem demo applications bundle</description>

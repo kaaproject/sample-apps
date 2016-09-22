@@ -1,0 +1,21 @@
+---
+sitemap: false
+title: Search dictionary
+---
+{% capture database %}
+{% include variables.md %}
+{
+    {% for post in site.pages %}
+      {% if post.url contains version and post.url != page.url and post.title != page.title %}
+          {% assign content =  post.content | strip_html | jsonify | replace: '\r', '\n' | strip_newlines | normalize_whitespace %}
+      ,
+      "{{ post.url | slugify }}": {
+        "title": "{{ post.title | xml_escape }}",
+        "content": {{ content }},
+        "url": "{{ site.baseurl}}{{ post.url | xml_escape }}"
+        }
+      {% endif %}
+    {% endfor %}
+  }
+  {% endcapture %}
+{{ database | replace_first: ',', '' | strip_newlines | normalize_whitespace | replace: '\n\n\n\n', '\n' | replace: '\n\n\n', '\n' | replace: '\n\n', '\n' }}

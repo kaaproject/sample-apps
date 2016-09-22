@@ -1,0 +1,48 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - CocoaLumberjack (2.3.0):
+    - CocoaLumberjack/Default (= 2.3.0)
+    - CocoaLumberjack/Extensions (= 2.3.0)
+  - CocoaLumberjack/Core (2.3.0)
+  - CocoaLumberjack/Default (2.3.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.3.0):
+    - CocoaLumberjack/Default
+  - Kaa (0.9.0):
+    - AFNetworking (~> 3.x)
+    - CocoaLumberjack
+    - sqlite3
+  - sqlite3 (3.14.2):
+    - sqlite3/common (= 3.14.2)
+  - sqlite3/common (3.14.2)
+
+DEPENDENCIES:
+  - Kaa (from `./libs/kaa-ep-sdk`)
+
+EXTERNAL SOURCES:
+  Kaa:
+    :path: ./libs/kaa-ep-sdk
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
+  Kaa: 0fb8cae1282c99865a711b802669bb4f63e4ad7e
+  sqlite3: 0da4924a394eff8e354bb63138818c870b28b097
+
+PODFILE CHECKSUM: f8043142a0dc6d539b83d3edd9d5c5d1bd7fb7e1
+
+COCOAPODS: 1.0.1

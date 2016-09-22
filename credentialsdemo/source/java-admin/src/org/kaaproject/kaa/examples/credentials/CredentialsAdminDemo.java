@@ -39,29 +39,34 @@ public class CredentialsAdminDemo {
         LOG.info("Choose action by entering corresponding number:");
 
         while (true) {
-            LOG.info("\n1. Generate endpoint credentials.\n" +
-                        "2. Provision endpoint credentials.\n" +
-                        "3. Revoke endpoint credentials\n" +
-                        "4. Get credentials status\n" +
-                        "5. Exit");
+            LOG.info("\n1. Generate endpoint credentials\n" +
+                        "2. Provision endpoint credentials using key files\n" +
+                        "3. Provision endpoint credentials using public key string\n" +
+                        "4. Revoke endpoint credentials\n" +
+                        "5. Get credentials status\n" +
+                        "6. Exit");
             switch (IOUtils.getUserInput()) {
                 case "1":
                     LOG.info("Going to \"Generate endpoint credentials\".");
                     adminManager.generateKeys();
                     break;
                 case "2":
-                    LOG.info("Going to \"Provision endpoint credentials\".");
+                    LOG.info("Going to \"Provision endpoint credentials using key files\".");
                     adminManager.provisionKeys();
                     break;
                 case "3":
+                    LOG.info("Going to \"Provision endpoint credentials using public key string\".");
+                    adminManager.provisionWithKeyString();
+                    break;
+                case "4":
                     LOG.info("Going to \"Revoke endpoint credentials\".");
                     adminManager.revokeCredentials();
                     break;
-                case "4":
+                case "5":
                     LOG.info("Going to \"Get credentials status\".");
                     LOG.info("Your credential status - " + adminManager.getCredentialsStatusAsString());
                     break;
-                case "5":
+                case "6":
                     LOG.info("Going to \"Exit\". Have a good day!");
                     System.exit(0);
                     break;

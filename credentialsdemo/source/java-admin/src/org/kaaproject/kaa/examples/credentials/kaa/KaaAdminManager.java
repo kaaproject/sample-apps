@@ -16,6 +16,7 @@
 
 package org.kaaproject.kaa.examples.credentials.kaa;
 
+import org.kaaproject.kaa.client.util.Base64;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.admin.AuthResultDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsDto;
@@ -25,6 +26,7 @@ import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.Base64Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -85,19 +87,40 @@ public class KaaAdminManager {
     public void provisionKeys() {
         LOG.info("Going to provision credentials...");
         try {
-            provideCredentials(APPLICATION_NAME, getOrCreateKeyPair().getPublic().getEncoded());
-
-            LOG.info("Credentials is provisioning. Success!");
-        } catch (IOException | InvalidKeyException | NoSuchAlgorithmException e) {
+            PublicKey publicKey = getOrCreateKeyPair().getPublic();
+            provideCredentials(APPLICATION_NAME, publicKey);
+            LOG.info("Credentials is successfully provisioned!");
+        } catch (NullPointerException | IOException | InvalidKeyException | NoSuchAlgorithmException e) {
             LOG.error("Error in provisionKeys", e);
             e.printStackTrace();
         }
     }
 
-    private void provideCredentials(String applicationName, byte[] publicKey) {
-        CredentialsDto credentialsDto = adminClient.provisionCredentials(getApplicationByName(applicationName)
-                .getApplicationToken(), publicKey);
-        LOG.debug("APP TOKEN: {}", getApplicationByName(applicationName).getApplicationToken());
+    /**
+     *  Provision keys on sandbox with needed REST method using key-string
+     */
+    public void provisionWithKeyString() {
+        LOG.info("Enter endpoint public key string which credentials needs to be provisioned:");
+        String keyString = IOUtils.getUserInput().trim();
+        LOG.info("Going to provision credentials with public key...");
+        try {
+
+            // TODO: test with real iOS public key example
+            byte[] keyBytes = Base64Utils.decodeFromString(keyString);
+            PublicKey publicKey = IOUtils.getPublic(keyBytes);
+            provideCredentials(APPLICATION_NAME, publicKey);
+
+            LOG.info("Credentials is successfully provisioned!");
+        } catch (Exception e) {
+            LOG.error("Error in provisionKeys", e);
+            e.printStackTrace();
+        }
+    }
+
+    private void provideCredentials(String applicationName, PublicKey publicKey) {
+        String appToken = getApplicationByName(applicationName).getApplicationToken();
+        CredentialsDto credentialsDto = adminClient.provisionCredentials(appToken, publicKey.getEncoded());
+        LOG.debug("APP TOKEN: {}", appToken);
         LOG.info("Credentials with ID = {} are now in status: {}", credentialsDto.getId(), credentialsDto.getStatus());
     }
 

@@ -24,8 +24,10 @@ pom.xml.versionsBackup
 */source/lib/
 */source/java/lib/
 */source/objc/libs
+kaa-android-ep-sdk-*.jar
 .DS_Store
 apptester_build/**
+
 
 
 # Created by https://www.gitignore.io/api/android,intellij

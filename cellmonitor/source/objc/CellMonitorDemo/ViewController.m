@@ -22,7 +22,7 @@
 
 @import CoreLocation;
 @import CoreTelephony;
-@import Kaa;
+#import <Kaa/Kaa.h>
 
 static CLLocationManager *locationManager;
 

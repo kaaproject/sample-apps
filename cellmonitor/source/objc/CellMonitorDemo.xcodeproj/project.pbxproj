@@ -14,75 +14,7 @@
 		39B345BD1C11986D00184BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B345B41C11986D00184BE0 /* Main.storyboard */; };
 		39B345BF1C11986D00184BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B345B71C11986D00184BE0 /* main.m */; };
 		39B345C01C11986D00184BE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B345B91C11986D00184BE0 /* ViewController.m */; };
-		C5E6A6071CC0F0190030707A /* Kaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C51867DA1CBE86A6005165FE /* Kaa.framework */; };
-		C5E6A6161CC101D50030707A /* Kaa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C51867DA1CBE86A6005165FE /* Kaa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B82B6CC31C18839600B71A74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B824A1F61B1452C50076C753;
-			remoteInfo = KaaTests;
-		};
-		B82B6CCE1C18839F00B71A74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 23F38E6BC9B0905CA0BA27DD1180C461;
-			remoteInfo = AFNetworking;
-		};
-		B82B6CD01C18839F00B71A74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2A6FEA6068153C2E51DD58BF5C5E1923;
-			remoteInfo = CocoaLumberjack;
-		};
-		B82B6CD21C18839F00B71A74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B52F6BE1F62FD7D4E156FB1C1016481F;
-			remoteInfo = OCHamcrest;
-		};
-		B82B6CD41C18839F00B71A74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FB0BD60DE6CE4F5F0074E2A0F3637B63;
-			remoteInfo = OCMockito;
-		};
-		B82B6CD61C18839F00B71A74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2F9F2BD61CE8A92314B98E03BBAE1DDD;
-			remoteInfo = "Pods-KaaTests";
-		};
-		C51867D91CBE86A6005165FE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5AAD8891CB7DC710046AA91;
-			remoteInfo = Kaa;
-		};
-		C51867E21CBE86A6005165FE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0B2AEF7928285B60CFB19219147BC376;
-			remoteInfo = "Pods-Kaa";
-		};
-		C51867E41CBE86A6005165FE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A055D00B899A2917E39015C988A19A2C;
-			remoteInfo = sqlite3;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		C51867E91CBE86BA005165FE /* CopyFiles */ = {
@@ -91,7 +23,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C5E6A6161CC101D50030707A /* Kaa.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,8 +39,6 @@
 		39B345B71C11986D00184BE0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		39B345B81C11986D00184BE0 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		39B345B91C11986D00184BE0 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
-		B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-ep-sdk/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
 		B8B997501BE3FB9600C0ABCE /* CellMonitorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CellMonitorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -119,7 +48,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				39796BF91C157D4E00BF91B2 /* CoreTelephony.framework in Frameworks */,
-				C5E6A6071CC0F0190030707A /* Kaa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,34 +70,9 @@
 			path = CellMonitorDemo;
 			sourceTree = "<group>";
 		};
-		B82B6CBD1C18839600B71A74 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C51867DA1CBE86A6005165FE /* Kaa.framework */,
-				B82B6CC41C18839600B71A74 /* KaaTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		B82B6CC61C18839E00B71A74 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B82B6CCF1C18839F00B71A74 /* libAFNetworking.a */,
-				B82B6CD11C18839F00B71A74 /* libCocoaLumberjack.a */,
-				B82B6CD31C18839F00B71A74 /* libOCHamcrest.a */,
-				B82B6CD51C18839F00B71A74 /* libOCMockito.a */,
-				C51867E31CBE86A6005165FE /* libPods-Kaa.a */,
-				B82B6CD71C18839F00B71A74 /* libPods-KaaTests.a */,
-				C51867E51CBE86A6005165FE /* libsqlite3.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		B8B997471BE3FB9600C0ABCE = {
 			isa = PBXGroup;
 			children = (
-				B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */,
-				B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */,
 				39796BF81C157D4E00BF91B2 /* CoreTelephony.framework */,
 				39B345AE1C11986D00184BE0 /* CellMonitorDemo */,
 				B8B997511BE3FB9600C0ABCE /* Products */,
@@ -230,88 +133,12 @@
 			mainGroup = B8B997471BE3FB9600C0ABCE;
 			productRefGroup = B8B997511BE3FB9600C0ABCE /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B82B6CBD1C18839600B71A74 /* Products */;
-					ProjectRef = B82B6CBC1C18839600B71A74 /* Kaa.xcodeproj */;
-				},
-				{
-					ProductGroup = B82B6CC61C18839E00B71A74 /* Products */;
-					ProjectRef = B82B6CC51C18839E00B71A74 /* Pods.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B8B9974F1BE3FB9600C0ABCE /* CellMonitorDemo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		B82B6CC41C18839600B71A74 /* KaaTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = KaaTests.xctest;
-			remoteRef = B82B6CC31C18839600B71A74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B82B6CCF1C18839F00B71A74 /* libAFNetworking.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAFNetworking.a;
-			remoteRef = B82B6CCE1C18839F00B71A74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B82B6CD11C18839F00B71A74 /* libCocoaLumberjack.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaLumberjack.a;
-			remoteRef = B82B6CD01C18839F00B71A74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B82B6CD31C18839F00B71A74 /* libOCHamcrest.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libOCHamcrest.a;
-			remoteRef = B82B6CD21C18839F00B71A74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B82B6CD51C18839F00B71A74 /* libOCMockito.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libOCMockito.a;
-			remoteRef = B82B6CD41C18839F00B71A74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B82B6CD71C18839F00B71A74 /* libPods-KaaTests.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-KaaTests.a";
-			remoteRef = B82B6CD61C18839F00B71A74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C51867DA1CBE86A6005165FE /* Kaa.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Kaa.framework;
-			remoteRef = C51867D91CBE86A6005165FE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C51867E31CBE86A6005165FE /* libPods-Kaa.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-Kaa.a";
-			remoteRef = C51867E21CBE86A6005165FE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C51867E51CBE86A6005165FE /* libsqlite3.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libsqlite3.a;
-			remoteRef = C51867E41CBE86A6005165FE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B8B9974E1BE3FB9600C0ABCE /* Resources */ = {
@@ -449,8 +276,8 @@
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CellMonitorDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EventDemo;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.CellMonitorDemo;
 				PRODUCT_NAME = CellMonitorDemo;
 			};
 			name = Debug;
@@ -463,8 +290,8 @@
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CellMonitorDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.EventDemo;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.CellMonitorDemo;
 				PRODUCT_NAME = CellMonitorDemo;
 			};
 			name = Release;

@@ -206,7 +206,6 @@ public class DevicesListActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        ((TextView) findViewById(R.id.app_name)).setText(getText(R.string.app_name));
         findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

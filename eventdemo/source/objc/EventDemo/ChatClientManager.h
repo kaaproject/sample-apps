@@ -21,7 +21,7 @@ static NSString *RoomsListUpdated = @"RoomsListUpdated";
 static NSString *MessagesListUpdated = @"MessagesListUpdated";
 
 
-@import Kaa;
+#import <Kaa/Kaa.h>
 
 /*
  *  Class ChatClientManager is a Singletone class.

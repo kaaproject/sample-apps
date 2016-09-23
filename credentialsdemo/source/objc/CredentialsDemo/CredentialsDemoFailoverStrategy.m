@@ -47,11 +47,9 @@
                                                         retryPeriod:self.noConnectivityRetryPeriod
                                                            timeUnit:self.timeUnit];
         case FailoverStatusEndpointCredentialsRevoked:
+        case FailoverStatusEndpointVerificationFailed:
             NSLog(@"Credentials were rejected. Client can't register on cluster");
             return [[FailoverDecision alloc] initWithFailoverAction:FailoverActionNoop];
-            
-        case FailoverStatusEndpointVerificationFailed:
-            return [[FailoverDecision alloc] initWithFailoverAction:FailoverActionRetry];
         default:
             return [[FailoverDecision alloc] initWithFailoverAction:FailoverActionNoop];
     }

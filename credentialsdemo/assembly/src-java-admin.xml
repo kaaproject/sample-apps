@@ -35,15 +35,6 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>JCredentialsAdminDemo/lib</outputDirectory>
         </fileSet>
-        <fileSet>
-            <directory>${project.basedir}/../thirdparty/java/gson</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>JCredentialsAdminDemo/lib</outputDirectory>
-            <excludes>
-                <exclude>bin/</exclude>
-                <exclude>gen/</exclude>
-            </excludes>
-        </fileSet>
     </fileSets>
     <dependencySets>
         <dependencySet>

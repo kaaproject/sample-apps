@@ -16,7 +16,6 @@
 
 package org.kaaproject.kaa.examples.credentials.kaa;
 
-import org.kaaproject.kaa.client.util.Base64;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.admin.AuthResultDto;
 import org.kaaproject.kaa.common.dto.credentials.CredentialsDto;
@@ -25,7 +24,6 @@ import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.Base64Utils;
 
 import java.io.File;
@@ -100,7 +98,7 @@ public class KaaAdminManager {
      *  Provision keys on sandbox with needed REST method using key-string
      */
     public void provisionWithKeyString() {
-        LOG.info("Enter endpoint public key string which credentials needs to be provisioned:");
+        LOG.info("Enter public key string of endpoint which credentials needs to be provisioned:");
         String keyString = IOUtils.getUserInput().trim();
         LOG.info("Going to provision credentials with public key...");
         try {
@@ -139,10 +137,10 @@ public class KaaAdminManager {
         }
     }
 
-    private void revokeCredentials(String applicationName, String credentialsId) {
+    private void revokeCredentials(String applicationName, String endpointId) {
         String applicationToken = getApplicationByName(applicationName).getApplicationToken();
         LOG.debug("APP TOKEN: {}", applicationToken);
-        adminClient.revokeCredentials(applicationToken, credentialsId);
+        adminClient.revokeCredentials(applicationToken, endpointId);
     }
 
     /**

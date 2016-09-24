@@ -53,27 +53,27 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
         android:gravity="center_vertical"
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gpio_id"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-        <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/gpio_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignRight="@+id/gpio_id"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/textView"
+            android:layout_alignTop="@+id/gpio_id"
             android:text="@string/gpio_status"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <TextView
+            android:id="@+id/gpio_id"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gpio_id"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     </RelativeLayout>
@@ -82,7 +82,6 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout"
         android:animateLayoutChanges="false"
         android:padding="8dp"/>
 

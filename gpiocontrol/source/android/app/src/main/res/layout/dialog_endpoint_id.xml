@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/endpoint_id"
-        android:id="@+id/textView" />
+        android:id="@+id/gpio_id" />
 
     <EditText
         android:id="@+id/edittext"

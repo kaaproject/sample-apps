@@ -125,23 +125,7 @@ public class KaaManager implements KaaClientStateListener, ProfileContainer, Con
     public List<Area> getAreas() {
         return configurationSlave.getAreas();
     }
-
-    /**
-     * Resume the Kaa client. Restore the Kaa client workflow.
-     * Resume all the Kaa client tasks.
-     */
-    public void resume() {
-        mClient.resume();
-    }
-
-    /**
-     * Suspend the Kaa client. Release all network connections and application
-     * resources. Suspend all the Kaa client tasks.
-     */
-    public void pause() {
-        mClient.pause();
-    }
-
+    
     /**
      * Stop the Kaa client. Release all network connections and application
      * resources. Shut down all the Kaa client tasks.

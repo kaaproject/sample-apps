@@ -24,7 +24,7 @@ pom.xml.versionsBackup
 */source/lib/
 */source/java/lib/
 */source/objc/libs
-kaa-android-ep-sdk-*.jar
+*/source/android/app/libs
 .DS_Store
 apptester_build/**
 

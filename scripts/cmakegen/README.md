@@ -10,7 +10,7 @@ The scripts are generated from the following template files:
 * `Embedded.cmake` -- is used to define CMake target for multiplatform
  (posix + embedded targets) applications.
 * `Posix.cmake` -- is used to define CMake target for posix-only applications.
-* `Definitions.cmake` -- Template for user-specified compile-time definitions.
+* `Definition.cmake` -- Template for user-specified compile-time definitions.
 
 # Template variables
 
@@ -44,4 +44,4 @@ Possible values: `configuration`, `notification`, `logging`, `events`.
 # Usage
 
 Specify path to the `sample-apps` root directory as a first `cmakegen.py`'s argument.
-Note that `cmakegen` assumes that `config.yaml`, `CMakeLists.txt`, `Definitions.cmake`, `Posix.cmake` and `Embedded.cmake` are located in the working directory.
+Note that `cmakegen` assumes that `config.yaml`, `CMakeLists.txt`, `Definition.cmake`, `Posix.cmake` and `Embedded.cmake` are located in the working directory.

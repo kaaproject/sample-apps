@@ -115,32 +115,8 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        /*
-         * Notify the application of the background state.
-         */
-        manager.pause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        /*
-         * Notify the application of the foreground state.
-         */
-        if (manager.isKaaStarted()) {
-            manager.resume();
-        } else {
-            manager.start(this);
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
 
         /*
          * Stop current Kaa client.

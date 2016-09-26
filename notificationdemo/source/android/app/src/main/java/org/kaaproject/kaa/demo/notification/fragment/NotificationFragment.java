@@ -16,20 +16,20 @@
 
 package org.kaaproject.kaa.demo.notification.fragment;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.kaaproject.kaa.demo.notification.NotificationDemoActivity;
-import org.kaaproject.kaa.demo.notification.TopicInfoHolder;
-import org.kaaproject.kaa.demo.notification.TopicModel;
-import org.kaaproject.kaa.demo.notification.adapter.NotificationArrayAdapter;
-import org.kaaproject.kaa.schema.example.Notification;
-
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.kaaproject.kaa.demo.notification.NotificationDemoActivity;
+import org.kaaproject.kaa.demo.notification.TopicInfoHolder;
+import org.kaaproject.kaa.demo.notification.TopicModel;
+import org.kaaproject.kaa.demo.notification.adapter.NotificationArrayAdapter;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class NotificationFragment extends ListFragment {
 
@@ -48,17 +48,17 @@ public class NotificationFragment extends ListFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    private List<Notification> getNotificationList() {
+    private List<SecurityAlert> getNotificationList() {
         Bundle bundle = ((NotificationDemoActivity) getActivity()).getFragmentData();
         if (bundle != null) {
             List<TopicModel> list = TopicInfoHolder.holder.getTopicModelList();
             if (list != null) {
                 Integer position = bundle.getInt("position");
                 TopicModel model = list.get(position);
-                return model != null ? model.getNotifications() : new LinkedList<Notification>();
+                return model != null ? model.getNotifications() : new LinkedList<SecurityAlert>();
             }
         }
-        return new LinkedList<Notification>();
+        return new LinkedList<>();
     }
 
     public String getFragmentTag() {

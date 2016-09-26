@@ -17,31 +17,32 @@
 
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants">
-
-
-    <ImageView
-        android:id="@+id/notification_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp" />
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/notification_message"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/notification_image"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
         android:text=" "
-        android:textSize="20sp" />
+        android:textSize="20sp"/>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/notification_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:maxLines="100"
+        android:padding="10dp"
+        android:scrollHorizontally="true"
+        android:textSize="20sp"/>
+
+</LinearLayout>

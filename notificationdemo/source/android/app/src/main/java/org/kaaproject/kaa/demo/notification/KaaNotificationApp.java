@@ -1,22 +1,20 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.demo.notification;
-
-import java.util.List;
 
 import android.app.Activity;
 import android.app.Application;
@@ -28,7 +26,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -44,7 +41,9 @@ import org.kaaproject.kaa.demo.notification.adapter.NotificationArrayAdapter;
 import org.kaaproject.kaa.demo.notification.adapter.TopicArrayAdapter;
 import org.kaaproject.kaa.demo.notification.fragment.NotificationFragment;
 import org.kaaproject.kaa.demo.notification.fragment.TopicFragment;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
+
+import java.util.List;
 
 /**
  * Implementation of the base {@link Application} class. Performs initialization of
@@ -70,7 +69,7 @@ public class KaaNotificationApp extends Application {
         mContext = this;
         
         /*
-	* Initialize the Kaa client using the Android context.
+    * Initialize the Kaa client using the Android context.
 	*/
         mClient = Kaa.newClient(new AndroidKaaPlatformContext(this), null, true);
         initPopup();
@@ -158,12 +157,11 @@ public class KaaNotificationApp extends Application {
         }
     }
 
-    public void showPopup(Activity context, long topicId, Notification notification) {
+    public void showPopup(Activity context, long topicId, SecurityAlert securityAlert) {
 
-        ((TextView) popup.findViewById(R.id.popup_notification)).setText(notification.getMessage());
+        ((TextView) popup.findViewById(R.id.popup_notification)).setText(securityAlert.getAlertMessage());
         ((TextView) popup.findViewById(R.id.popup_topic)).setText(TopicInfoHolder.holder.getTopicName(topicId));
-        ((ImageView) popup.findViewById(R.id.popup_image)).setImageBitmap(ImageCache.cache.getImage(notification
-                .getImage()));
+        ((TextView) popup.findViewById(R.id.popup_type)).setText(securityAlert.getAlertType().name());
         View view = context.getCurrentFocus();
         if (view != null) {
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -188,7 +186,7 @@ public class KaaNotificationApp extends Application {
 
     private void initNotificationListener() {
         this.notificationListener = new NotificationListener() {
-            public void onNotification(final long topicId, final Notification notification) {
+            public void onNotification(final long topicId, final SecurityAlert notification) {
                 Log.i(TAG, "Notification received: " + notification.toString());
                 TopicInfoHolder.holder.addNotification(topicId, notification);
                 if (demoActivity != null) {
@@ -199,7 +197,7 @@ public class KaaNotificationApp extends Application {
                                     NotificationFragment.class.getSimpleName());
                             if (fragment != null && fragment.isVisible()) {
                                 int position = demoActivity.getFragmentData().getInt("position");
-                                List<Notification> list = TopicInfoHolder.holder.getTopicModelList().get(position)
+                                List<SecurityAlert> list = TopicInfoHolder.holder.getTopicModelList().get(position)
                                         .getNotifications();
                                 ((ListFragment) fragment).setListAdapter(new NotificationArrayAdapter(demoActivity
                                         .getLayoutInflater(), list));

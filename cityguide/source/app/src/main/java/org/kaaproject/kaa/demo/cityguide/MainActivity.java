@@ -112,27 +112,7 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        /*
-         * Notify the application of the background state.
-         */
-        manager.pause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        /*
-         * Notify the application of the foreground state.
-         */
-        manager.resume();
-    }
-
-    @Override
-    protected void onStop() {
+    protected void onDestroy() {
         super.onStop();
 
         /*

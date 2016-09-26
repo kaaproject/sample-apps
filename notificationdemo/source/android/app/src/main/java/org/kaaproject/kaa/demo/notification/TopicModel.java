@@ -18,7 +18,7 @@ package org.kaaproject.kaa.demo.notification;
 
 import org.kaaproject.kaa.common.endpoint.gen.SubscriptionType;
 import org.kaaproject.kaa.common.endpoint.gen.Topic;
-import org.kaaproject.kaa.schema.example.Notification;
+import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 public class TopicModel {
 
     private final Topic topic;
-    private final LinkedList<Notification> notifications;
+    private final LinkedList<SecurityAlert> securityAlerts;
 
     private boolean selected;
     private boolean subscribedTo;
@@ -36,7 +36,7 @@ public class TopicModel {
         if (topic.getSubscriptionType() == SubscriptionType.MANDATORY_SUBSCRIPTION) {
             selected = true;
         }
-        notifications = new LinkedList<>();
+        securityAlerts = new LinkedList<>();
     }
 
     public String getTopicName() {
@@ -60,27 +60,27 @@ public class TopicModel {
     }
 
     public int getNotificationsCount() {
-        return notifications.size();
+        return securityAlerts.size();
     }
 
     @SuppressWarnings("serial")
-    public List<Notification> getNotifications() {
-        if (notifications.size() > 0) {
-            return notifications;
+    public List<SecurityAlert> getNotifications() {
+        if (securityAlerts.size() > 0) {
+            return securityAlerts;
         } else {
-            return new LinkedList<Notification>() {{
-                add(new Notification("no notifications on this topic at the moment", ""));
+            return new LinkedList<SecurityAlert>() {{
+                add(new SecurityAlert());
             }};
         }
     }
 
-    public void addNotification(Notification notification) {
-        notifications.addFirst(notification);
+    public void addNotification(SecurityAlert notification) {
+        securityAlerts.addFirst(notification);
     }
 
     public void setSubscribedTo(boolean subscribedTo) {
         if (!subscribedTo) {
-            notifications.clear();
+            securityAlerts.clear();
         }
         this.subscribedTo = subscribedTo;
     }

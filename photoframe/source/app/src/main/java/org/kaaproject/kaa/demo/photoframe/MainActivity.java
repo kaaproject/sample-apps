@@ -58,26 +58,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        /*
-         * Notify the application about the background state.
-         */
-        manager.pause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        /*
-         * Notify the application about the foreground state.
-         */
-        manager.resume();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
 

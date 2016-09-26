@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         /*
          * Notify the application of the background state.
          */
-        kaaManager.pause();
         locationManagerWrapper.pause();
         cellManager.pause();
     }
@@ -128,14 +127,13 @@ public class MainActivity extends AppCompatActivity {
         /*
          * Notify the application of the foreground state.
          */
-        kaaManager.resume();
         locationManagerWrapper.resume();
         cellManager.resume();
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
 
         kaaManager.stop();
     }

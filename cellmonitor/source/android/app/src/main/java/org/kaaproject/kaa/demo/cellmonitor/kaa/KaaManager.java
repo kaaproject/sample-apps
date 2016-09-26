@@ -125,23 +125,6 @@ public class KaaManager implements LogUploadStrategy, LogDeliveryListener {
         }
     }
 
-
-    /**
-     * Suspend the Kaa client. Release all network connections and application
-     * resources. Suspend all the Kaa client tasks.
-     */
-    public void pause() {
-        mClient.pause();
-    }
-
-    /**
-     * Resume the Kaa client. Restore the Kaa client workflow. Resume all the Kaa client
-     * tasks.
-     */
-    public void resume() {
-        mClient.resume();
-    }
-
     /**
      * Stop the Kaa client. Release all network connections and application
      * resources. Shut down all the Kaa client tasks.

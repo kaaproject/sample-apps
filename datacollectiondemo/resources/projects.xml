@@ -84,7 +84,7 @@ In order to build sources you need to have <a href="http://ant.apache.org/" targ
 Navigate to folder with unpacked sources, launch CLI (command line, terminal) from this folder and consequently execute next commands:
 <pre>
 ant debug
-java -jar build/jar/ProfilingDemo.jar
+java -jar build/jar/DataCollectionDemo.jar
 </pre>
 You will see demo output in console. After you make some changes in source code you need to repeat these commands to launch changed application.
 <br/><br/>

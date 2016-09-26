@@ -25,13 +25,11 @@ import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
 import org.kaaproject.kaa.client.logging.BucketInfo;
 import org.kaaproject.kaa.client.logging.RecordInfo;
 import org.kaaproject.kaa.client.logging.future.RecordFuture;
-import org.kaaproject.kaa.client.logging.strategies.RecordCountLogUploadStrategy;
 import org.kaaproject.kaa.client.logging.strategies.RecordCountWithTimeLimitLogUploadStrategy;
 import org.kaaproject.kaa.schema.sample.logging.LogData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +48,7 @@ public class DataCollectionDemo {
 
     public static void main(String[] args) {
         LOG.info("Data collection demo started");
+
         //Create a Kaa client with the Kaa desktop context.
         KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), new SimpleKaaClientStateListener() {
             @Override
@@ -80,8 +79,11 @@ public class DataCollectionDemo {
                 if (threshold != null) {
                     if (threshold > 0) {
                         kaaClient.setLogUploadStrategy(new RecordCountWithTimeLimitLogUploadStrategy(threshold, LOGS_MAX_WAIT_TIME, TimeUnit.SECONDS));
+                        LOG.warn("Set new logs count threshold value = {}.", threshold);
+                    } else {
+                        LOG.warn("Threshold value (= {}) in updated configuration is less than 1 so ignore it.", threshold);
                     }
-                    LOG.info("--= Input \"Y\" to repeat data sending or other symbol otherwise =--", LOGS_DEFAULT_THRESHOLD);
+                    LOG.info("--= Input \"Y\" to repeat data sending or other symbol to exit demo application =--", LOGS_DEFAULT_THRESHOLD);
                 }
             }
         });

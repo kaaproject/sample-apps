@@ -22,77 +22,144 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="profiling_demo_java">
-        <name>Endpoint Profiling and Grouping Java demo</name>
+        <name>Endpoint profiling and grouping Java demo</name>
         <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
         <details>
             <![CDATA[
-This Endpoint profiling and grouping app demonstrates the use of server-side endpoint profile and device management features. It allows to activate/deactivate device based on the endpoint ID and work with endpoint credentials using Kaa REST API.
 
-<h2>Installation</h2>
-Download the jar file to your desktop by clicking the "Binary" button on the left. Make sure that you have Java runtime installed. Application can run in three modes: client, admin and developer. The mode is specified by command line arguments.<br/>
-To run in the "admin" mode, use the following command in the console:
-<pre>
-$ java -jar ProfilingDemo.jar admin [ipAddress] [port]
-Example:
-$ java -jar ProfilingDemo.jar admin localhost 8080
-</pre>
-Where ipAddress is the address of the Kaa node, where the administrative REST API is deployed.<br/><br/>
-To run in the "client" mode, use the following command in the console:
-<pre>
-$ java -jar ProfilingDemo.jar client
-</pre>
-To run in the "developer" mode, use the following command in the console:
-<pre>
-$ java -jar ProfilingDemo.jar developer [ipAddress] [port]
-</pre>
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running.
-"Profiling Demo" consists of the next modes:
-
-1) In "admin" mode you will be able to do credentials provisioning (Device Management feature), revocation and registration. Before using "developer" or "client" mode, you need to create and register endpoint credentials via Kaa REST API.
-Run app with the next command:
-<pre>
-$ java -jar ProfilingDemo.jar admin [kaa_hostname] 8080
-</pre>
-Then choose the first menu item by typing "1" and pressing "Enter".
-Exit from application by typing "3" and pressing "Enter".
-Now credentials was created and registered in Kaa. Corresponding "key.private" and "key.public" files are created.
-Starting from now, you can use other modes.
-2) In "developer" mode you will be able
-to activate/deactivate any endpoint associated with Profiling app. Endpoint profiling are performed by updating server profile using REST API.<br/><br/>
-"Profiling Demo" app in "client" mode creates and registers one Kaa endpoint (per application instance). In this mode app displays the current state of the endpoint (active or inactive). Once the profiling is performed via the "developer" application, your endpoint will be served with the new configuration data according to the server-side endpoint profile change.<br/>
-
+This sample application is based on the Kaa Java SDK for demonstration of the Profiling and Grouping feature.
 <br/>
+In this application there are three important API (class <b>org.kaaproject.kaa.client.KaaClient</b>) methods:
+<ul>
+	<li>
+		<code><b>setProfileContainer()</b></code>, which change client-side endpoint profile with needed information, in example we use class-library for this information, but you can use info from your preferred storage;
+	</li>
+	<li>
+		<code><b>setConfigurationStorage()</b></code>, which persist configuration in a local storage to avoid downloading it each time the Kaa client is started, after application started you will see local file "saved_config.cfg" in which configuration data will be stored;
+	</li>
+	<li>
+		<code><b>addConfigurationListener()</b></code>, which displays the Kaa client configuration each time it is updated (update can be caused by direct group configuration change or by group adding/activating/deactivating);
+	</li>
+	<li>
+		<code><b>getConfiguration()</b></code>, which gets the actual endpoint configuration.
+	</li>
+</ul>
 
-To understand better how this app works, you should navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of your Sandbox window. Log in as a tenant developer (devuser / devuser123 by default), and go to the "Profiling demo" application. Select "Schemas"->"Server-side EP profile". The app uses one schema version, which contains one value: "active" (boolean). The Kaa server uses this value to filter endpoints by their profile contents. Server-side endpoint profiles can be updated either via Admin Console, or via the REST API (which is done by the "Profiling app" in the "admin" mode)<br/><br/>
+This is simple, if you want to start only one Kaa client. But what you must do if you want to start several Kaa clients?
+For this in Kaa Java SDK we have <b>KaaClientProperties</b> class. This class provide getting working directory, in which there are some Kaa client configuration files.
+After you provide separate file directory you can start more than one client.
 
-Now open the "Configuration" schema under "Schemas" and select version 2 to see the structure of the configuration data. There is one value in the configuration schema: "active" (boolean). This value is what's actually sent to each endpoint by the server to specify the target endpoint state (active or inactive).<br/><br/>
 
-Finally, it's time to see what determines the configuration data. Go to the "Endpoint groups" section. There are three endpoint groups available.<br/><br/>
+<h2>Launching</h2>
 
-The endpoints are put into either "Active device group" or "Inactive device group" depending on the "active" variable value in the server profile. See the corresponding profile filters in the group details window. Each endpoint group defines its own configuration (active or inactive) - and when the server-side profile for some EP is changed, the EP is moved from one group to another and this results in updated configuration being pushed by the server to the corresponding EP.<br/><br/>
+Note that Profiling Demo requires Java Development Kit 7+ version.
+For more details about Kaa Java SDK refer to <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa Java SDK</a> documentation page.
+In this app you have two possibilities: download binary file and download sources. Sources are good opportunity to change code and try to check some needed functionality for your product, which based on our working example. Binary file is an example how it can works.
+<br/><br/>
+So, let's start from binary, click on <b>Binary</b> button and download ProfilingDemo.jar. In folder with jar file input in terminal
 
-Please note that all features of the <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+<pre>
+java -jar ProfilingDemo.jar
+</pre>
+
+You will see expected output in terminal.
+<br/><br/>
+In case, if you want to change some configurations in this app, change code or check some other features, you must download sources.
+For this click <b>Sources</b> button and save archive to local folder.
+In order to build sources you need to have Apache Ant to be installed on your host machine.
+Navigate to folder with unpacked sources, launch CLI (command line, terminal) from this folder and execute next command:
+
+<pre>
+ant debug
+java -jar build/jar/ProfilingDemo.jar
+</pre>
+
+If all is right, in console you'll see:
+
+<pre>
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Profiling demo started
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint #2 data:
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint ID (Endpoint Key Hash): UIM/Vi5P5fRz37EdugNsSIA9kYM=
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Client-side endpoint profile (audio/video/vibro support): true - true - true
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Configuration (is audio/video/vibro subscription active): false - false - true
+. . .
+</pre>
+
+Tip: Endpoint IDs in your case will be different.
+<br/><br/>
+In application code there are several main points - changing client-side endpoint profile and getting server-side endpoint configuration.
+<br/><br/>
+First point is how you can setup client-side endpoint profile. This code is responsible for this:
+
+<pre>
+// Client-side profiles list, for creating endpoints
+private static List<PagerClientProfile> profiles = new ArrayList<>();
+static {
+    profiles.add(new PagerClientProfile(false, false, true));
+    profiles.add(new PagerClientProfile(true, false, true));
+    profiles.add(new PagerClientProfile(true, true, true));
+}
+
+. . .
+
+// Setup endpoint profile
+kaaClient.setProfileContainer(new ProfileContainer() {
+    @Override
+    public PagerClientProfile getProfile() {
+        return profiles.get(endpointIndex);
+    }
+});
+</pre>
+
+You can catch configuration updates from server using KaaClient <b>ConfigurationListener</b>:
+
+<pre>
+//Add a listener to display endpoint's profile/configuration data each time configuration is updated.
+kaaClient.addConfigurationListener(new ConfigurationListener() {
+    @Override
+    public void onConfigurationUpdate(PagerConfiguration configuration) {
+        displayConfiguration(endpointIndex);
+    }
+});
+</pre>
+
+<h2>Playing around</h2>
+See on main demo page: <a href="/sandbox/#bundleId:bundleId=profiling_demos">Profiling and grouping demo</a>
+
+<h2>Troubleshooting</h2>
+1. If you close your demo application, endpoint profiles (inside Kaa node) will not be deleted. If you restart the app with new keys, you just will add new endpoint profiles.
+To delete endpoint profiles you need to open your sandbox terminal and type in the following commands:
+<pre>
+mongo
+</pre>
+In mongo console you need to delete table endpoint_profile. To do this:
+<pre>
+use kaa
+show tables
+db.endpoint_profile.remove({})
+</pre>
+2. You can create some filters with configurations that will create deadlock.
+In that case endpoint ends in group with the biggest weight. So don't forget to input different weights in your filters!
 
 <h2>What's next?</h2>
-
 For more background on the Kaa endpoint profiling, grouping, and configuration management features, please refer to the <a href="http://docs.kaaproject.org/display/KAA/Programming+guide">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Design+reference">design reference</a> sections.
+<br/><br/>
 ]]>
         </details>
 
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
              (ex. JAVA, CPP, etc., to get list of all possible options
              see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>JAVA</sdkLanguage>
 
         <!-- Specifies the target runtime platforms according to the instructions from the project details section
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
-
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
+
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
+        <bundleId>profiling_demos</bundleId>
         <sourceArchive>java/profiling_demo.tar.gz</sourceArchive>
         <projectFolder>JProfilingDemo</projectFolder>
         <sdkLibDir>JProfilingDemo/lib</sdkLibDir>
@@ -221,8 +288,9 @@ Make sure that the build target is set to <b>ProfilingDemo</b>, not <b>Kaa</b>.
         <sdkLibDir>ObjCProfilingDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
     <bundle id="profiling_demos">
-        <name>Profiling demos</name>
+        <name>Profiling and grouping demos</name>
         <description>Kaa Profiling subsystem demo applications bundle</description>
         <details>
             <![CDATA[

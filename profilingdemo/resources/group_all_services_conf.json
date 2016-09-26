@@ -1,0 +1,6 @@
+{
+  "audioSubscriptionActive": {"boolean":true},
+  "videoSubscriptionActive": {"boolean":true},
+  "vibroSubscriptionActive": {"boolean":true},
+  "__uuid": null
+}

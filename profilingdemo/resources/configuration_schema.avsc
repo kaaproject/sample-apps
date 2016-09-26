@@ -1,0 +1,19 @@
+{
+  "type" : "record",
+  "name" : "PagerConfiguration",
+  "namespace" : "org.kaaproject.examples.pager",
+  "fields" : [ {
+    "name" : "audioSubscriptionActive",
+    "type" : "boolean",
+    "by_default" : false
+  }, {
+    "name" : "videoSubscriptionActive",
+    "type" : "boolean",
+    "by_default" : false
+  }, {
+    "name" : "vibroSubscriptionActive",
+    "type" : "boolean",
+    "by_default" : true
+  } ],
+  "displayName" : "org.kaaproject.examples.pager.PagerConfiguration"
+}

@@ -38,6 +38,11 @@ endif (NOT DEFINED KAA_TARGET)
 add_definitions(-DKAA_TARGET=${KAA_TARGET})
 
 
+
+if (NOT DEFINED KAA_MAX_LOG_LEVEL)
+set(KAA_MAX_LOG_LEVEL 3)
+endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
+
 if (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(libs/kaa)
 else (NOT DEFINED KAA_SDK_PATH)

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jmc-J5-2sG">
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HNz-Io-rS0">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4y-5A-K6b">
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="90" id="IGx-sD-e2y"/>
+                                            <constraint firstAttribute="height" constant="30" id="qyJ-LI-Zjg"/>
+                                        </constraints>
+                                        <state key="normal" title="NO">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="defaultKeysStrategyTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bK1-As-U6B"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehU-fP-WYq">
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="DWZ-Y6-L0e"/>
+                                            <constraint firstAttribute="width" constant="90" id="JIx-gR-SGs"/>
+                                        </constraints>
+                                        <state key="normal" title="YES">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="autogeneratedKeysTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QTk-jR-plE"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-generated keys?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xk5-1V-Bi7">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="tfb-q3-jbb"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Xk5-1V-Bi7" firstAttribute="top" secondItem="HNz-Io-rS0" secondAttribute="top" id="DUL-mU-RkW"/>
+                                    <constraint firstAttribute="trailing" secondItem="Xk5-1V-Bi7" secondAttribute="trailing" id="KfU-6G-SLG"/>
+                                    <constraint firstAttribute="trailing" secondItem="v4y-5A-K6b" secondAttribute="trailing" id="S0R-PY-TvN"/>
+                                    <constraint firstAttribute="bottom" secondItem="v4y-5A-K6b" secondAttribute="bottom" id="Wzf-nf-d0a"/>
+                                    <constraint firstItem="Xk5-1V-Bi7" firstAttribute="leading" secondItem="HNz-Io-rS0" secondAttribute="leading" id="XOo-XA-r0U"/>
+                                    <constraint firstAttribute="height" constant="100" id="aBj-yU-ni0"/>
+                                    <constraint firstItem="v4y-5A-K6b" firstAttribute="leading" secondItem="ehU-fP-WYq" secondAttribute="trailing" constant="20" id="cai-6Q-kW7"/>
+                                    <constraint firstItem="ehU-fP-WYq" firstAttribute="leading" secondItem="HNz-Io-rS0" secondAttribute="leading" id="vao-aM-ffk"/>
+                                    <constraint firstAttribute="bottom" secondItem="ehU-fP-WYq" secondAttribute="bottom" id="x1S-Gw-46N"/>
+                                    <constraint firstAttribute="width" constant="200" id="xlS-ke-QJh"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Jmc-J5-2sG" secondAttribute="trailing" constant="-20" id="2fE-Ul-2B4"/>
+                            <constraint firstItem="Jmc-J5-2sG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Ep9-Pb-nG5"/>
+                            <constraint firstItem="HNz-Io-rS0" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GMf-7V-pgC"/>
+                            <constraint firstItem="Jmc-J5-2sG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="WHe-qu-JJE"/>
+                            <constraint firstItem="HNz-Io-rS0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YMn-pP-eg2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jmc-J5-2sG" secondAttribute="bottom" id="opi-PY-jnF"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="autogeneratedKeysView" destination="HNz-Io-rS0" id="c7S-4f-JHz"/>
+                        <outlet property="logTextView" destination="Jmc-J5-2sG" id="gzg-tI-E3k"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="381.60000000000002" y="221.73913043478262"/>
+        </scene>
+    </scenes>
+</document>

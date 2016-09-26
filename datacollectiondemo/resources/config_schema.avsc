@@ -1,11 +1,11 @@
 {
   "type" : "record",
-  "name" : "LogUploadThreshold",
-  "namespace" : "org.kaaproject.example.datacollection",
+  "name" : "Configuration",
+  "namespace" : "org.kaaproject.kaa.schema.sample",
   "fields" : [ {
-    "name" : "Threshold",
+    "name" : "samplePeriod",
     "type" : "int",
     "by_default" : 1
   } ],
-  "displayName" : "Logging configuration schema"
+  "displayName" : "org.kaaproject.kaa.schema.sample.Configuration"
 }

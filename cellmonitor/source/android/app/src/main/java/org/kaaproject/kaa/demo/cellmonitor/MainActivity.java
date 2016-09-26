@@ -129,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
          * Notify the application of the background state.
          */
 
-        kaaManager.pause();
-
         if (isLocationPermissionGranted()) {
             locationManagerWrapper.pause();
             cellManager.pause();
@@ -144,12 +142,6 @@ public class MainActivity extends AppCompatActivity {
          * Notify the application of the foreground state.
          */
 
-        if (kaaManager.isKaaStarted()) {
-            kaaManager.resume();
-        } else {
-            kaaManager.start(this);
-        }
-
         if (isLocationPermissionGranted()) {
             locationManagerWrapper.resume();
             cellManager.resume();
@@ -157,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
 
         kaaManager.stop();
     }

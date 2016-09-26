@@ -5,6 +5,7 @@
   "fields" : [ {
     "name" : "Threshold",
     "type" : "int",
-    "displayName" : ""
-  } ]
+    "by_default" : 1
+  } ],
+  "displayName" : "Logging configuration schema"
 }

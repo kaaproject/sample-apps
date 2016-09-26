@@ -19,6 +19,7 @@ package org.kaaproject.kaa.demo.cellmonitor.kaa;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+
 import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
@@ -70,6 +71,7 @@ public class KaaManager implements LogUploadStrategy, LogDeliveryListener {
      * Start the Kaa client workflow.
      */
     public void start(Context context) {
+
 
         KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
         mClient = Kaa.newClient(kaaClientContext, new SimpleKaaClientStateListener() {
@@ -149,6 +151,10 @@ public class KaaManager implements LogUploadStrategy, LogDeliveryListener {
     public void stop() {
         mClient.stop();
         mKaaStarted = false;
+    }
+
+    public boolean isKaaStarted() {
+        return mKaaStarted;
     }
 
     public int getSentLogCount() {

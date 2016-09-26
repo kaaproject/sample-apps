@@ -37,8 +37,10 @@ import java.util.List;
  */
 public class SetLocationDialog extends Dialog {
 
+    static final String EMPTY_ITEM_TEXT = "...";
+
     private KaaManager manager;
-    private SetLocationCallback callback;
+    SetLocationCallback callback;
 
     public SetLocationDialog(KaaManager manager, Context context, SetLocationCallback callback) {
         super(context);
@@ -56,12 +58,12 @@ public class SetLocationDialog extends Dialog {
 
         final Spinner mSelectAreaSpinner = (Spinner) findViewById(R.id.selectAreaSpinner);
         final ArrayAdapter<String> mAreasAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item);
+                android.R.layout.simple_spinner_dropdown_item);
         mSelectAreaSpinner.setAdapter(mAreasAdapter);
 
         final Spinner mSelectCitySpinner = (Spinner) findViewById(R.id.selectCitySpinner);
         final ArrayAdapter<String> mCitiesAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item);
+                android.R.layout.simple_spinner_dropdown_item);
         mSelectCitySpinner.setAdapter(mCitiesAdapter);
 
         Button okButton = (Button) findViewById(R.id.okButton);
@@ -70,11 +72,11 @@ public class SetLocationDialog extends Dialog {
             public void onClick(View v) {
                 dismiss();
                 String area = (String) mSelectAreaSpinner.getSelectedItem();
-                if (area != null && area.length() == 0) {
+                if (area != null && area.equals(EMPTY_ITEM_TEXT)) {
                     area = null;
                 }
                 String city = (String) mSelectCitySpinner.getSelectedItem();
-                if (city != null && city.length() == 0) {
+                if (city != null && city.equals(EMPTY_ITEM_TEXT)) {
                     city = null;
                 }
                 callback.onLocationSelected(area, city);
@@ -89,7 +91,7 @@ public class SetLocationDialog extends Dialog {
             }
         });
 
-        // update areas
+        // Update areas
         updateAreasSpinner(mAreasAdapter);
         int position = 0;
         String currentArea = manager.getArea();
@@ -98,7 +100,7 @@ public class SetLocationDialog extends Dialog {
         }
         mSelectAreaSpinner.setSelection(position);
 
-        // update cities
+        // Update cities
         updateCitiesSpinner(mSelectAreaSpinner, mCitiesAdapter);
         position = 0;
         String currentCity = manager.getCity();
@@ -123,7 +125,7 @@ public class SetLocationDialog extends Dialog {
 
     private void updateAreasSpinner(ArrayAdapter<String> mAreasAdapter) {
         mAreasAdapter.clear();
-        mAreasAdapter.add("");
+        mAreasAdapter.add(EMPTY_ITEM_TEXT);
 
         List<AvailableArea> availableAreas = manager.getAvailableAreas();
         for (AvailableArea area : availableAreas) {
@@ -131,9 +133,9 @@ public class SetLocationDialog extends Dialog {
         }
     }
 
-    private void updateCitiesSpinner(Spinner mSelectAreaSpinner, ArrayAdapter<String> mCitiesAdapter) {
+    void updateCitiesSpinner(Spinner mSelectAreaSpinner, ArrayAdapter<String> mCitiesAdapter) {
         mCitiesAdapter.clear();
-        mCitiesAdapter.add("");
+        mCitiesAdapter.add(EMPTY_ITEM_TEXT);
 
         String areaName = (String) mSelectAreaSpinner.getSelectedItem();
         if (areaName == null || areaName.length() <= 0) {

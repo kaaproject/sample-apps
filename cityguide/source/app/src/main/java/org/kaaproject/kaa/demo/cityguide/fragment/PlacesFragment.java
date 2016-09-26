@@ -99,7 +99,7 @@ public class PlacesFragment extends BaseFragment {
         return rootView;
     }
 
-    private void onPlaceClicked(int position) {
+    void onPlaceClicked(int position) {
         Place place = mPlacesAdapter.getItem(position);
         PlaceDetailFragment placeDetailFragment = PlaceDetailFragment.newInstance(mAreaName, mCityName,
                 mPlaceCategory, place.getTitle());
@@ -119,7 +119,7 @@ public class PlacesFragment extends BaseFragment {
 
     @Override
     public String getTitle() {
-        return mAreaName + "_" + mCityName;
+        return mCityName;
     }
 
     @Override

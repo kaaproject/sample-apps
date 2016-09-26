@@ -81,7 +81,10 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                getCurrentFragment().popBackStack(this);
+                Fragment currentFragment = getCurrentFragment();
+                if (currentFragment != null) {
+                    getCurrentFragment().popBackStack(this);
+                }
                 break;
             case R.id.action_set_location:
                 setLocation();
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
 
     private BaseFragment getCurrentFragment() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments != null || !fragments.isEmpty()) {
+        if (fragments != null && !fragments.isEmpty()) {
             for (Fragment fragment : fragments) {
                 if (fragment != null && fragment.isVisible())
                     return (BaseFragment) fragment;
@@ -128,7 +131,11 @@ public class MainActivity extends AppCompatActivity implements SetLocationCallba
         /*
          * Notify the application of the foreground state.
          */
-        manager.resume();
+        if (manager.isKaaStarted()) {
+            manager.resume();
+        } else {
+            manager.start(this);
+        }
     }
 
     @Override

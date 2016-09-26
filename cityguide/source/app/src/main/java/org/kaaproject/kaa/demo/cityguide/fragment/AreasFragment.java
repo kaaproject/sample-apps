@@ -87,7 +87,7 @@ public class AreasFragment extends BaseFragment {
         });
     }
 
-    private void onAreaClicked(int position) {
+    void onAreaClicked(int position) {
         Area area = mAreasAdapter.getItem(position);
 
         CitiesFragment citiesFragment = CitiesFragment.newInstance(area.getName());

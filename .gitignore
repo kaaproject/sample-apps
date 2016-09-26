@@ -24,6 +24,7 @@ pom.xml.versionsBackup
 */source/lib/
 */source/java/lib/
 */source/objc/libs
+*/source/android/app/libs
 .DS_Store
 apptester_build/**
 

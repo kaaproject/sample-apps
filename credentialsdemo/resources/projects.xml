@@ -21,9 +21,9 @@
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="credentials_demo">
-        <name>Credentials demo</name>
-        <description>Kaa Credentials management demo app based on Java SDK</description>
+    <project id="credentials_demo_java">
+        <name>Credentials Client Java demo</name>
+        <description>Kaa Credentials management demo client app based on Java SDK</description>
         <details>
             <![CDATA[
 <p>
@@ -127,11 +127,134 @@ For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/do
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>CREDENTIALS</features>
         <complexity>BASIC</complexity>
+        <bundleId>credentials_demos</bundleId>
         <sourceArchive>java/credentials_demo.tar.gz</sourceArchive>
         <projectFolder>JCredentialsDemo</projectFolder>
         <sdkLibDir>JCredentialsDemo/lib</sdkLibDir>
         <destBinaryFile>JCredentialsDemo/build/jar/JCredentialsDemo.jar</destBinaryFile>
     </project>
+
+
+    <project id="credentials_demo_java_admin">
+        <name>Credentials Admin Java demo</name>
+        <description>Kaa Credentials management admin demo app based on Kaa REST calls (wrapped with AdminClient class)</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Kaa Java SDK</a>.
+</p>
+
+The sample application uses the following methods of <b>org.kaaproject.kaa.server.common.admin.AdminClient</b> and other classes to manage credentials:
+
+<ul>
+	<li>
+		<code><b>java.security.KeyPairGenerator.genKeyPair()</b></code> method to generate new key pair for the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a>.
+	</li>
+	 data used for connection to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>
+	<li>
+		<code><b>AdminClient.provisionCredentials()</b></code> method to provision endpoint credentials by application token and public key.
+	</li>
+	<li>
+		<code><b>AdminClient.revokeCredentials()</b></code> method to revoke (deactivate) endpoint credentials by application token and endpoint ID.
+	</li>
+	<li>
+		<code><b>AdminClient.getCredentialsStatus()</b></code> method to check endpoint credentials status by application token and endpoint ID.
+	</li>
+</ul>
+
+<h1>Launching</h1>
+
+<p>
+	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+</p>
+
+<p>
+	For demo applications that utilize Kaa Java SDK, both the binary files (.jar archive) and the source code (.tar.gz archive) are available for download.
+	If you want to only launch the demo application, download the binary files.
+	If you want to explore the source code of the demo application, download the source code archive.
+</p>
+
+<h2>Launch using the binary files</h2>
+
+To install the Credentials management sample application using the binary files:
+
+<ol>
+	<li>
+		Click the <b>Binary</b> button.
+		A binary build window will open.
+		Click <b>Ok</b> and download the <b>*.jar</b> file.
+	</li>
+	<li>
+		Run the following command from the directory containing the downloaded <b>*.jar</b> archive.
+
+		<pre>
+			$ java -jar JCredentialsAdminDemo.jar
+		</pre>
+
+		The sample application console will display the startup message.
+
+	</li>
+</ol>
+
+<h2>Launch using the source code</h2>
+
+To install the Credentials management sample application using the source code:
+
+<ol>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the <b>*.tar.gz</b> file.
+	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		To build from new sources you need to have Apache Ant installed on your host machine.
+		To install Apache ant, run the following command from the directory containing the unpacked sources.
+
+		<pre>
+			$ ant debug
+		</pre>
+
+		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
+
+		<pre>
+			$ java -jar build/jar/JCredentialsAdminDemo.jar
+		</pre>
+	</li>
+</ol>
+
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+
+<h1>Troubleshooting</h1>
+
+For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Troubleshooting/" target="_blank">Troubleshooting</a>.
+			]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>JAVA</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
+        <features>CREDENTIALS</features>
+        <complexity>BASIC</complexity>
+        <bundleId>credentials_demos</bundleId>
+        <sourceArchive>java-admin/credentials_demo.tar.gz</sourceArchive>
+        <projectFolder>JCredentialsAdminDemo</projectFolder>
+        <sdkLibDir>JCredentialsAdminDemo/lib</sdkLibDir>
+        <destBinaryFile>JCredentialsAdminDemo/build/jar/JCredentialsAdminDemo.jar</destBinaryFile>
+    </project>
+
+
     <project id="credentials_demo_cpp">
         <name>Credentials C++ demo</name>
         <description>Kaa Credentials management demo app based on C++ SDK</description>
@@ -252,7 +375,7 @@ For more information, see:
              (ex. JAVA, CPP, etc., to get list of all possible options
              see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
 
-        <sdkLanguage>C++</sdkLanguage>
+        <sdkLanguage>CPP</sdkLanguage>
 
         <!-- Specifies the target runtime platforms according to the instructions from the project details section
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
@@ -265,8 +388,10 @@ For more information, see:
         <sourceArchive>cpp/credentials_demo.tar.gz</sourceArchive>
         <projectFolder>CppCredentialsDemo</projectFolder>
         <sdkLibDir>CppCredentialsDemo/libs/kaa</sdkLibDir>
-        <destBinaryFile>CppCredentialsDemo/build/demo_client</destBinaryFile>
+        <destBinaryFile></destBinaryFile>
     </project>
+
+
     <project id="credentials_demo_c">
         <name>Credentials C demo</name>
         <description>Kaa Credentials management demo app based on C SDK</description>
@@ -381,8 +506,10 @@ For more information, see:
         <sourceArchive>c/credentials_demo.tar.gz</sourceArchive>
         <projectFolder>CCredentialsDemo</projectFolder>
         <sdkLibDir>CCredentialsDemo/libs/kaa</sdkLibDir>
-        <destBinaryFile>CCredentialsDemo/build/demo_client</destBinaryFile>
+        <destBinaryFile></destBinaryFile>
     </project>
+
+
     <bundle id="credentials_demos">
         <name>Credentials demos</name>
         <description>Kaa Credentials management subsystem demo applications bundle</description>

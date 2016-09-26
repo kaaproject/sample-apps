@@ -1,9 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3MJ-NA-VOp">
+<?xml version="1.0" encoding="UTF-8"?><!--
+
+    Copyright 2014-2016 CyberVision, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3MJ-NA-VOp">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,15 +32,13 @@
                         <viewControllerLayoutGuide type="bottom" id="9Ro-AX-Hia"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZM7-bg-uLD">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dLE-kc-toP" userLabel="social-buttons-stack-view">
-                                <rect key="frame" x="200" y="395" width="200" height="170"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rbJ-xP-XZb" customClass="FBSDKLoginButton">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="V8h-0H-vz5"/>
                                             <constraint firstAttribute="width" constant="200" id="mrt-Qk-fDj"/>
@@ -35,16 +50,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6q-cP-4rN" customClass="TWTRLogInButton">
-                                        <rect key="frame" x="0.0" y="60" width="200" height="50"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ds1-XV-fQR"/>
                                             <constraint firstAttribute="width" constant="200" id="gKI-if-CrK"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Os4-pA-clA" customClass="GIDSignInButton">
-                                        <rect key="frame" x="0.0" y="120" width="200" height="50"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="e7B-zG-ptk"/>
                                             <constraint firstAttribute="height" constant="50" id="s6j-Cg-lHM"/>
@@ -53,8 +66,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mNb-f0-loZ">
-                                <rect key="frame" x="200" y="455" width="200" height="50"/>
-                                <color key="backgroundColor" red="0.25098039215686274" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.25098039215686274" green="0.59999999999999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="Kiy-Ag-RW1"/>
                                     <constraint firstAttribute="height" constant="50" id="xH3-1f-Jas"/>
@@ -71,40 +83,35 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorization status:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZ6-Sg-ZTT">
-                                <rect key="frame" x="221" y="35" width="158" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="E6G-1a-voq"/>
                                     <constraint firstAttribute="width" constant="158" id="huI-eq-eTh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kaa: NO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBL-Z3-oLu">
-                                <rect key="frame" x="263" y="77" width="75" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="TML-vx-VuB"/>
                                     <constraint firstAttribute="width" constant="75" id="Tl5-5a-4k5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Social network: NO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1h-nL-reL">
-                                <rect key="frame" x="220" y="56" width="160" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="50F-p0-ljx"/>
                                     <constraint firstAttribute="height" constant="21" id="HAj-8M-wdf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJG-bv-zW0" userLabel="Messaging View">
-                                <rect key="frame" x="20" y="207" width="560" height="180"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0I-9O-8Mh">
-                                        <rect key="frame" x="501" y="0.0" width="48" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="EWh-vZ-NAj"/>
                                             <constraint firstAttribute="height" constant="30" id="vZw-ou-H5m"/>
@@ -115,13 +122,11 @@
                                         </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ggh-ho-dm3">
-                                        <rect key="frame" x="8" y="33" width="544" height="147"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Message text" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BQR-C7-4kr">
-                                        <rect key="frame" x="8" y="0.0" width="485" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="qLt-hg-66Y"/>
                                         </constraints>
@@ -129,7 +134,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="ggh-ho-dm3" firstAttribute="leading" secondItem="XJG-bv-zW0" secondAttribute="leading" constant="8" id="3JH-c7-vfC"/>
                                     <constraint firstAttribute="bottom" secondItem="ggh-ho-dm3" secondAttribute="bottom" id="RjZ-K3-8zx"/>
@@ -143,10 +148,8 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOj-ky-XsP" userLabel="Attach view">
-                                <rect key="frame" x="50" y="122" width="500" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F05-OL-IuE">
-                                        <rect key="frame" x="450" y="0.0" width="50" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="XaI-hR-iyh"/>
                                         </constraints>
@@ -156,7 +159,6 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type endpoint access token" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wv6-8w-eLC">
-                                        <rect key="frame" x="0.0" y="0.0" width="440" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="gfE-jW-ylx"/>
                                         </constraints>
@@ -164,7 +166,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="F05-OL-IuE" secondAttribute="trailing" id="Fsc-vh-3Ph"/>
                                     <constraint firstItem="F05-OL-IuE" firstAttribute="leading" secondItem="wv6-8w-eLC" secondAttribute="trailing" constant="10" id="SnK-Y6-Dep"/>
@@ -177,7 +179,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="kZ6-Sg-ZTT" firstAttribute="centerX" secondItem="ZM7-bg-uLD" secondAttribute="centerX" id="5vq-zz-9Uw"/>
                             <constraint firstItem="XJG-bv-zW0" firstAttribute="leading" secondItem="ZM7-bg-uLD" secondAttribute="leading" constant="20" id="6cX-e7-JgT"/>

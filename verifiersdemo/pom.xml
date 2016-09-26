@@ -257,9 +257,6 @@
                             /source/objc/FBSDKCoreKit.framework/Headers/FBSDKConstants.h
                         </exclude>
                         <exclude>
-                            /source/objc/EndpointOwnershipDemo.xcworkspace/contents.xcworkspacedata
-                        </exclude>
-                        <exclude>
                             /source/objc/FBSDKShareKit.framework/Modules/module.modulemap
                         </exclude>
                         <exclude>
@@ -363,14 +360,9 @@
                         </exclude>
                         <exclude>/source/android/kits.properties</exclude>
                         <exclude>/source/android/project.properties</exclude>
-                        <exclude>/source/objc/EndpointOwnershipDemo/Info.plist</exclude>
-                        <exclude>/source/objc/EndpointOwnershipDemo/Base.lproj/Main.storyboard</exclude>
                         <exclude>/source/objc/EndpointOwnershipDemo/Assets.xcassets/AppIcon.appiconset/Contents.json
                         </exclude>
                         <exclude>/source/objc/EndpointOwnershipDemo/GoogleService-Info.plist</exclude>
-                        <exclude>
-                            /source/objc/EndpointOwnershipDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata
-                        </exclude>
                         <exclude>/source/objc/EndpointOwnershipDemo.xcodeproj/project.pbxproj</exclude>
                         <exclude>/resources/verifiersDemoEventClassFamily.json</exclude>
                         <exclude>/resources/config_schema.avsc</exclude>

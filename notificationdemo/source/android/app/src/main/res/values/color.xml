@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e74c3c</color>
+    <color name="colorPrimaryDark">#c0392b</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="clouds">#ecf0f1</color>
+</resources>

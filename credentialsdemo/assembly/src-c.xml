@@ -30,5 +30,13 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CCredentialsDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/build-scripts/</directory>
+            <includes>
+                <include>build.sh</include>
+            </includes>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CCredentialsDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

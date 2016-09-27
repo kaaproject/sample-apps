@@ -287,7 +287,6 @@
                         <exclude>scripts/cmakegen/Posix.cmake</exclude>
                         <exclude>scripts/cmakegen/Embedded.cmake</exclude>
                         <exclude>scripts/cmakegen/Definition.cmake</exclude>
-                        <exclude>scripts/cmakegen/Config.cmake</exclude>
                         <exclude>scripts/cmakegen/README.md</exclude>
                     </excludes>
                 </configuration>

@@ -19,6 +19,7 @@ PROJECT_HOME=$(pwd)
 KAA_LIB_PATH="libs/kaa"
 KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
+KAA_SDK_TAR="kaa-c*.tar.gz"
 
 help_message() {
     echo "Choose one of the following: {build|run|deploy|clean}"

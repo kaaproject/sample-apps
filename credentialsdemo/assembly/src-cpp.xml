@@ -30,5 +30,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CppCredentialsDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/build-scripts/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CppCredentialsDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

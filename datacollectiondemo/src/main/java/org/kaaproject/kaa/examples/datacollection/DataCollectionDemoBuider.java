@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class DataCollectionDemoBuider extends AbstractDemoBuilder {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(DataCollectionDemoBuider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemoBuider.class);
 
     public DataCollectionDemoBuider() {
         super("demo/datacollection");
@@ -45,7 +45,7 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
-        logger.info("Loading 'Data Collection Demo Application' data...");
+        LOG.info("Loading 'Data Collection Demo Application' data...");
 
         loginTenantAdmin(client);
 
@@ -53,7 +53,7 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         dataCollectionApplication.setName("Data collection demo");
         dataCollectionApplication = client.editApplication(dataCollectionApplication);
 
-        logger.info("Data collection demo: Creating SDK profile...");
+        LOG.info("Data collection demo: Creating SDK profile...");
         sdkProfileDto.setApplicationId(dataCollectionApplication.getId());
         sdkProfileDto.setName("Default SDK profile");
         sdkProfileDto.setApplicationToken(dataCollectionApplication.getApplicationToken());
@@ -62,7 +62,7 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        logger.info("Data collection demo: Creating configuration schema...");
+        LOG.info("Data collection demo: Creating configuration schema...");
         CTLSchemaDto configCtlSchema = saveCTLSchemaWithAppToken(client, "config_schema.avsc", dataCollectionApplication);
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(dataCollectionApplication.getId());
@@ -71,11 +71,11 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         configurationSchema.setCtlSchemaId(configCtlSchema.getId());
         configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
-        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        LOG.info("Configuration schema version: {}", configurationSchema.getVersion());
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
-        logger.info("Configuration schema was created.");
+        LOG.info("Configuration schema was created.");
 
-        logger.info("Data collection demo: Creating log schema...");
+        LOG.info("Data collection demo: Creating log schema...");
         LogSchemaDto logSchemaDto = new LogSchemaDto();
         logSchemaDto.setApplicationId(dataCollectionApplication.getId());
         logSchemaDto.setName("Logging schema");
@@ -84,11 +84,11 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         logSchemaDto.setCtlSchemaId(loggingCtlSchema.getId());
         logSchemaDto = client.saveLogSchema(logSchemaDto);
 
-        logger.info("Log schema version: {}", logSchemaDto.getVersion());
+        LOG.info("Log schema version: {}", logSchemaDto.getVersion());
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
-        logger.info("Log schema was created.");
+        LOG.info("Log schema was created.");
 
-        logger.info("Data collection demo: Creating Log appender...");
+        LOG.info("Data collection demo: Creating Log appender...");
         LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();
         dataCollectionLogAppender.setName("Data collection log appender");
         dataCollectionLogAppender.setDescription("Log appender used to deliver log records from data collection application to local mongo db instance");
@@ -103,9 +103,9 @@ public class DataCollectionDemoBuider extends AbstractDemoBuilder {
         dataCollectionLogAppender.setPluginTypeName("MongoDB");
         dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.mongo.appender.MongoDbLogAppender");
         dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("mongo_appender.json")));
-        dataCollectionLogAppender = client.editLogAppenderDto(dataCollectionLogAppender);
+        client.editLogAppenderDto(dataCollectionLogAppender);
 
-        logger.info("Finished loading 'Data Collection Demo Application' data.");
+        LOG.info("Finished loading 'Data Collection Demo Application' data.");
     }
 
 }

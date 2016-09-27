@@ -71,13 +71,13 @@ class DefinitionsGenerator:
         return out
 
 class Generator:
-    def __init__(self, basedir, **kwargs):
-        self._appname = str(kwargs.get('appname'))
-        self._path = os.path.abspath(os.path.join(basedir,kwargs.get('path')))
-        self._languages = list(kwargs.get('languages'))
+    def __init__(self, basedir, appname, path, languages, **kwargs):
+        self._appname = str(appname)
+        self._path = os.path.abspath(os.path.join(basedir, str(path)))
+        self._languages = list(languages)
         self._build_embedded = kwargs.get('build_embedded')
-        self._features = list(kwargs.get('features') or [])
-        self._definitions = dict(kwargs.get('definitions') or {})
+        self._features = list(kwargs.get('features', []))
+        self._definitions = dict(kwargs.get('definitions', {}))
         if self._build_embedded and not 'c' in self._languages:
             raise GeneratorException('build_embedded option is supported only for C projects')
 
@@ -125,8 +125,7 @@ if __name__ == "__main__":
     config = yaml.load(open(os.path.join(os.path.dirname(__file__), 'config.yaml')).read())
 
     if len(sys.argv) != 2:
-        print 'Usage: %s base_dir' % sys.argv[0]
-        sys.exit(0)
+        sys.exit('Usage: %s base_dir' % sys.argv[0])
 
 
     for app in config:
@@ -134,5 +133,9 @@ if __name__ == "__main__":
         print '='*50
         print 'Generating CMakeLists.txt for '+ appcfg['appname']
         print '='*50
-        Generator(sys.argv[1], **appcfg).generate()
+        Generator(sys.argv[1],
+            appcfg.pop('appname'),
+            appcfg.pop('path'),
+            appcfg.pop('languages'),
+            **appcfg).generate()
 

@@ -1,87 +1,40 @@
 #
-# Copyright 2014-2016 CyberVision, Inc.
+#  Copyright 2014-2016 CyberVision, Inc.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#       http://www.apache.org/licenses/LICENSE-2.0
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
+project(StormDemo CXX)
 
-project (Cpp-SDK-logging-sample)
-enable_language(CXX)
+# Disable unused features
+set(KAA_WITHOUT_CONFIGURATION 1)
+set(KAA_WITHOUT_NOTIFICATIONS 1)
+set(KAA_WITHOUT_EVENTS 1)
 
-# Path to CMake's scripts.
-set(CMAKE_MODULE_PATH 
-     ${CMAKE_MODULE_PATH}
-     ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/Modules
-    )
 
-if(MSVC)   
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra")
-endif()
 
-if (CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wno-type-limits -Wno-unused-parameter")
-endif()
+if (NOT DEFINED KAA_MAX_LOG_LEVEL)
+set(KAA_MAX_LOG_LEVEL 3)
+endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -stdlib=libc++")
-endif()
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
-find_package (Boost 1.54 REQUIRED COMPONENTS log system thread)
-find_package (Avro REQUIRED)
-find_package (Botan REQUIRED)
+add_executable(demo_client src/KaaDemo.cpp)
+target_link_libraries(demo_client kaacpp)
 
-if (WIN32 AND NOT CYGWIN AND NOT MSYS)
-add_definitions (/EHs)
-add_definitions (
-    -DBOOST_REGEX_DYN_LINK
-    -DBOOST_FILESYSTEM_DYN_LINK
-    -DBOOST_SYSTEM_DYN_LINK
-    -DBOOST_PROGRAM_OPTIONS_DYN_LINK
-    -DBOOST_LOG_DYN_LINK
-    -DBOOST_ALL_NO_LIB)
-endif()
-
-include_directories(${Boost_INCLUDE_DIRS}
-                    ${AVRO_INCLUDE_DIRS}
-                    ${BOTAN_INCLUDE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/src
-                    ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa)
-
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
-
-set (SAMPLE_SOURCE_FILES
-            src/KaaDemo.cpp
-)
-
-if ( NOT KAA_WITHOUT_THREADSAFE OR NOT KAA_WITHOUT_OPERATION_LONG_POLL_CHANNEL OR NOT KAA_WITHOUT_OPERATION_TCP_CHANNEL)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DKAA_THREADSAFE")
-endif()
-
-add_subdirectory(libs/kaa)
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-install(TARGETS ${APP_NAME} DESTINATION bin)
-
-if (CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)
-endif()
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES})
-endif()
-
-if (MSVC)
-    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} dbghelp)
-endif()
+install(TARGETS demo_client DESTINATION bin)

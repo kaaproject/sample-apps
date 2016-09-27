@@ -14,41 +14,53 @@
 #  limitations under the License.
 
 configurationdemo:
-    appname: "ConfigurationDemo"
+    appname: 'ConfigurationDemo'
     languages: ['c', 'cpp']
     features: ['configuration']
     path: 'configurationdemo/source/'
     build_embedded: true
 
 notificationdemo:
-    appname: "NotificationDemo"
+    appname: 'NotificationDemo'
     languages: ['c', 'cpp']
     features: ['notifications']
     path: 'notificationdemo/source/'
     build_embedded: true
 
 datacollectiondemo:
-    appname: "DataCollectionDemo"
+    appname: 'DataCollectionDemo'
     languages: ['c', 'cpp']
     features: ['logging', 'configuration']
     path: 'datacollectiondemo/source/'
     build_embedded: true
 
 eventsdemo:
-    appname: "EventsDemo"
+    appname: 'EventsDemo'
     languages: ['c', 'cpp']
     features: ['events']
     path: 'eventdemo/source/'
 
 credentialsdemo:
-    appname: "CredentialsDemo"
+    appname: 'CredentialsDemo'
     languages: ['c', 'cpp']
     path: 'credentialsdemo/source/'
     definitions:
         KAA_RUNTIME_KEY_GENERATION: 'OFF'
 
 profilingdemo:
-    appname: "ProfilingDemo"
+    appname: 'ProfilingDemo'
     features: ['configuration']
     languages: ['c', 'cpp']
     path: 'profilingdemo/source/'
+
+stormdemo:
+    appname: 'StormDemo'
+    languages: ['c', 'cpp']
+    features: ['logging']
+    path: 'stormdemo/source'
+
+sparkdemo:
+    appname: 'SparkDemo'
+    languages: ['cpp']
+    features: ['logging']
+    path: 'sparkdemo/source'

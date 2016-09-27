@@ -118,12 +118,12 @@ stormdemo:
       src: "stormdemo/source/c"
       platform:
         posix:
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
     cpp:
       src: "stormdemo/source/cpp"
       platform:
         posix:
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""
 
 sparkdemo:
   name: "Spark data analytics demo"
@@ -132,4 +132,4 @@ sparkdemo:
       src: "sparkdemo/source/cpp"
       platform:
         posix:
-          buildcmd: "bash build.sh build <<< posix"
+          buildcmd: "bash -c \"tar zxf libs/kaa/kaa*.tar.gz -C libs/kaa/ && mkdir build && cd build && cmake .. && make\""

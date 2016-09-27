@@ -1,0 +1,5 @@
+use_frameworks!
+
+target 'CellMonitorDemo' do
+    pod 'Kaa', :path => './libs/kaa-ep-sdk'
+end

@@ -16,7 +16,7 @@
 
 #import "ViewController.h"
 
-@import Kaa;
+#import <Kaa/Kaa.h>
 
 @interface ViewController () <KaaClientStateDelegate, NotificationTopicListDelegate, NotificationDelegate, ProfileContainer, UITextFieldDelegate>
 

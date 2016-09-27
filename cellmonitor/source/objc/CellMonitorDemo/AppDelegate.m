@@ -18,7 +18,7 @@
 #import "ViewController.h"
 
 @import CoreLocation;
-@import Kaa;
+#import <Kaa/Kaa.h>
 
 @interface AppDelegate () <KaaClientStateDelegate, ProfileContainer>
 

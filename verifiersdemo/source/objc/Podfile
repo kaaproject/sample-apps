@@ -4,5 +4,8 @@ target 'EndpointOwnershipDemo' do
     pod 'TwitterKit'
     pod 'TwitterCore'
     pod 'Google/SignIn'
+    pod 'FBSDKLoginKit', '~> 4.15'
+    pod 'Kaa', :path => './libs/kaa-ep-sdk'
+
 end
 

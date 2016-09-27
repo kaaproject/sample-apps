@@ -23,6 +23,6 @@ mkdir "$KAA_SDK_DIR"
 KAA_SDK_TAR=$(find . -name "kaa-*.tar.gz")
 
 tar -zxvf "$KAA_SDK_TAR" -C "$KAA_SDK_DIR"
-cd "$KAA_SDK_DIR"
+cd ./
 pod setup
 pod install

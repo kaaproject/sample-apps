@@ -27,7 +27,7 @@
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification Extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
 	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
@@ -118,10 +118,6 @@ To install the Notification sample application using the source code:
 </ol>
 	
 If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
-
-<h1>Troubleshooting</h1>
-
-For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Troubleshooting/" target="_blank">Troubleshooting</a>.
             ]]>
         </details>
 
@@ -150,7 +146,7 @@ For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/do
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification Extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
 	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
@@ -241,17 +237,6 @@ Try the following:
 	This means that CMake could not find the required libraries because they were not installed correctly.
 	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
 </p>
-	
-For more information, see:
-
-<ul>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">General troubleshooting page</a>.
-	</li>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/SDK-Linux/" target="_blank">C++ SDK installation guide for Linux (host)</a>.
-	</li>
-</ul>
             ]]>
         </details>
 
@@ -280,7 +265,7 @@ For more information, see:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification Extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
 	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
 </p>
@@ -353,17 +338,6 @@ Try the following:
 	This means that CMake could not find the required libraries because they were not installed correctly.
 	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
 </p>
-
-For more information, see:
-
-<ul>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">General troubleshooting page</a>.
-	</li>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-Linux/" target="_blank">C SDK installation guide for Linux (host)</a>.
-	</li>
-</ul>
             ]]>
         </details>
 
@@ -427,7 +401,7 @@ For more background on the Kaa Notification subsystem please refer to the corres
         <details>
             <![CDATA[
 <p>
-	This application bundle demonstrates the features of the Kaa <b>Notification Extension</b>.
+	This application bundle demonstrates the features of the Kaa <b>Notification extension</b>.
 	This extension enables your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint device</a> to receive notifications from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 	You can manage notifications using the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications/#notification-topics" target="_blank">notification topics</a>.
 	Each notification topic can be assigned to any number of <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-group" target="_blank">endpoint groups</a>.

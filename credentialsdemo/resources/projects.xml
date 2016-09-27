@@ -136,24 +136,24 @@ If you want to modify the sample application source code or create your own appl
             <![CDATA[
 <p>
 	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
-	The application uses the Kaa REST API to generate public and private user keys, provision the credentials, get their status and revoke them.
+	The application uses the Kaa REST API wrapped inside <code>org.kaaproject.kaa.server.common.admin.AdminClient</code> class to generate public and private user keys, provision the credentials, get their status and revoke them.
 </p>
 
 <p>
-	To generate the RSA keys for the user, the <code>org.kaaproject.kaa.common.endpoint.security.KeyUtil</code> class functionality and standard Java functions are used.
+	To generate the RSA keys for the user, standard Java functions are used.
 </p>
 
 The sample application also uses the following methods:
 
 <ul>
 	<li>
-		<code>adminClient.provisionCredentials</code> method is used to provision the credentials.
+		<code>AdminClient.provisionCredentials()</code> method is used to provision the credentials.
 	</li>
 	<li>
-		<code>adminClient.revokeCredentials</code> method is used to revoke the credentials.
+		<code>AdminClient.revokeCredentials()</code> method is used to revoke the credentials.
 	</li>
 	<li>
-		<code>adminClient.getCredentialsStatus</code> method returns the status of credentials.
+		<code>AdminClient.getCredentialsStatus()</code> method returns the status of credentials.
 	</li>
 </ul>
 

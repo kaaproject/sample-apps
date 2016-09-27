@@ -36,6 +36,14 @@
             <url>http://repository.kaaproject.org/repository/releases</url>
         </repository>
         <repository>
+            <id>repository.kaaproject.shapshots</id>
+            <url>http://repository.kaaproject.org/repository/snapshots/</url>
+        </repository>
+        <repository>
+            <id>repository.kaaproject.internal</id>
+            <url>http://repository.kaaproject.org/repository/internal/</url>
+        </repository>
+        <repository>
             <id>repository.jboss.org-public</id>
             <name>JBoss repository</name>
             <url>https://repository.jboss.org/nexus/content/groups/public</url>

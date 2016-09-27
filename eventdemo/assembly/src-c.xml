@@ -35,5 +35,13 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CEventDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/build-scripts/</directory>
+            <includes>
+                <include>build.sh</include>
+            </includes>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CEventDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

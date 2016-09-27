@@ -107,10 +107,6 @@ To install the Credentials management sample application using the source code:
 </ol>
 	
 If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
-
-<h1>Troubleshooting</h1>
-
-For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Troubleshooting/" target="_blank">Troubleshooting</a>.
 			]]>
         </details>
         
@@ -227,10 +223,6 @@ To install the Credentials management sample application using the source code:
 </ol>
 
 If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
-
-<h1>Troubleshooting</h1>
-
-For troubleshooting information, see <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Troubleshooting/" target="_blank">Troubleshooting</a>.
 			]]>
         </details>
 
@@ -357,17 +349,6 @@ Try the following:
 	This means that CMake could not find the required libraries because they were not installed correctly.
 	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
 </p>
-	
-For more information, see:
-
-<ul>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">General troubleshooting page</a>.
-	</li>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/SDK-Linux/" target="_blank">C++ SDK installation guide for Linux (host)</a>.
-	</li>
-</ul>
             ]]>
         </details>
 
@@ -475,17 +456,6 @@ Try the following:
 	This means that CMake could not find the required libraries because they were not installed correctly.
 	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
 </p>
-
-For more information, see:
-
-<ul>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">General troubleshooting page</a>.
-	</li>
-	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-Linux/" target="_blank">C SDK installation guide for Linux (host)</a>.
-	</li>
-</ul>
             ]]>
         </details>
 

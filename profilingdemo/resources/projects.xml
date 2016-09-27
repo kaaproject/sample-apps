@@ -272,10 +272,6 @@ Now you can open the ProfilingDemo.xcodeproj file and run the build script.
 <h2>Nothing happens after the "Build succeeded" message</h2>
 
 Make sure that the build target is set to <b>ProfilingDemo</b>, not <b>Kaa</b>.
-
-<p>
-	For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">Debugging and troubleshooting</a>.
-</p>
             ]]>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
@@ -905,10 +901,6 @@ You can create filters with conditions that apply to both client- and server-sid
 	
 	This means that the configuration of endpoint #2 changed and now it cannot produce vibration signal.
 </p>
-
-<h1>Troubleshooting</h1>
-
-If you experience problems while running the demo application, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">Debugging and troubleshooting</a>.
             ]]>
         </details>
     </bundle>

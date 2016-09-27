@@ -488,10 +488,6 @@ See also <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-pla
 	
 	This means that the sampling period has been changed in the default configuration, and now the application sends the log records every 5 seconds.
 </p>
-
-<h1>Troubleshooting</h1>
-
-If you experience problems while running the demo application, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Debugging-and-troubleshooting/" target="_blank">Debugging and troubleshooting</a>.
             ]]>
         </details>
     </bundle>

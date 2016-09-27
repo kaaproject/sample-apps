@@ -1,10 +1,13 @@
 {
   "type" : "record",
-  "name" : "DataCollection",
-  "namespace" : "org.kaaproject.kaa.schema.sample",
+  "name" : "Data",
+  "namespace" : "org.kaaproject.kaa.scheme.sample",
   "fields" : [ {
     "name" : "temperature",
     "type" : "int"
+  }, {
+    "name" : "timeStamp",
+    "type" : "long"
   } ],
-  "displayName" : "org.kaaproject.kaa.schema.sample.DataCollection"
+  "displayName" : "Logging scheme"
 }

@@ -35,13 +35,11 @@
         </encoder>
     </appender>
 
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="console"/>
         <appender-ref ref="fileLogAppender"/>
     </root>
 
-    <logger name="org.kaaproject.kaa" level="ERROR"/>
-    <logger name="org.kaaproject.kaa.client.logging.memory" level="INFO"/>
-    <logger name="org.kaaproject.kaa.demo.datacollection" level="INFO"/>
+    <logger name="org.kaaproject.kaa.demo" level="INFO"/>
 
 </configuration>

@@ -15,14 +15,11 @@
 #
 
 cmake_minimum_required(VERSION 2.8.12)
-project(StormDemo CXX)
+project(%APP_NAME %APP_LANG)
 
 # Disable unused features
-set(KAA_WITHOUT_CONFIGURATION 1)
-set(KAA_WITHOUT_NOTIFICATIONS 1)
-set(KAA_WITHOUT_EVENTS 1)
-
-
+%KAA_FEATURES
+%DEMO_DEFINITIONS
 
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
 set(KAA_MAX_LOG_LEVEL 3)
@@ -34,7 +31,5 @@ else (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(${KAA_SDK_PATH})
 endif (NOT DEFINED KAA_SDK_PATH)
 
-add_executable(demo_client src/KaaDemo.cpp)
-target_link_libraries(demo_client kaacpp)
-
+%DEFINE_EXECUTABLE
 install(TARGETS demo_client DESTINATION bin)

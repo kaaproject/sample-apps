@@ -15,22 +15,26 @@
 #
 
 cmake_minimum_required(VERSION 2.8.12)
+project(ProfilingDemo C)
 
-project(demo C)
+# Disable unused features
+set(WITH_EXTENSION_NOTIFICATIONS OFF)
+set(WITH_EXTENSION_LOGGING OFF)
+set(WITH_EXTENSION_EVENTS OFF)
 
-set(APP_NAME "demo_client")
-set(KAA_SDK_DIR "client-c")
 
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${KAA_SDK_DIR})
-execute_process(COMMAND sh -c "tar -zxf ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/kaa-c*.tar.gz -C ${KAA_SDK_DIR}")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -Wextra")
+if (NOT DEFINED KAA_MAX_LOG_LEVEL)
+set(KAA_MAX_LOG_LEVEL 3)
+endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
-set(SAMPLE_SOURCE_FILES src/kaa_demo.c)
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
-                 ${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}/build)
+add_executable(demo_client src/kaa_demo.c)
+target_link_libraries(demo_client kaac)
 
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} kaac)
-
+install(TARGETS demo_client DESTINATION bin)

@@ -35,5 +35,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CppConfigurationDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/build-scripts/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CppConfigurationDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

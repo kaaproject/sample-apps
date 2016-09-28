@@ -1,35 +1,40 @@
 #
-# Copyright 2014-2016 CyberVision, Inc.
+#  Copyright 2014-2016 CyberVision, Inc.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#       http://www.apache.org/licenses/LICENSE-2.0
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
-project(C-SDK-sample C)
+cmake_minimum_required(VERSION 2.8.12)
+project(StormDemo C)
 
-set(APP_NAME "demo_client")
-set(KAA_SDK_DIR "client-c")
+# Disable unused features
+set(WITH_EXTENSION_CONFIGURATION OFF)
+set(WITH_EXTENSION_NOTIFICATIONS OFF)
+set(WITH_EXTENSION_EVENTS OFF)
 
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${KAA_SDK_DIR})
-execute_process(COMMAND sh -c "tar -zxf ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/kaa-c*.tar.gz -C ${KAA_SDK_DIR}")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g3 -Wall -Wextra")
 
-set(SAMPLE_SOURCE_FILES src/kaa_demo.c)
+if (NOT DEFINED KAA_MAX_LOG_LEVEL)
+set(KAA_MAX_LOG_LEVEL 3)
+endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
-                 ${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}/build)
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} kaac)
-install(TARGETS ${APP_NAME} DESTINATION bin)
+add_executable(demo_client src/kaa_demo.c)
+target_link_libraries(demo_client kaac)
+
+install(TARGETS demo_client DESTINATION bin)

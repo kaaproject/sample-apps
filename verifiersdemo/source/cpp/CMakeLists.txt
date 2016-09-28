@@ -1,4 +1,3 @@
-
 #
 #  Copyright 2014-2016 CyberVision, Inc.
 #
@@ -15,20 +14,32 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
+project(VerifiersDemo CXX)
 
-project(Cpp-SDK-notification-sample)
-enable_language(CXX)
+# Disable unused features
+set(KAA_WITHOUT_CONFIGURATION 1)
+set(KAA_WITHOUT_NOTIFICATIONS 1)
+set(KAA_WITHOUT_LOGGING 1)
 
-set(APP_NAME "demo_client")
-set(KAA_SDK_DIR "client-cpp")
+if (NOT DEFINED DEMO_ACCESS_TOKEN)
+    set(DEMO_ACCESS_TOKEN "asscess_token")
+endif (NOT DEFINED DEMO_ACCESS_TOKEN)
+add_definitions(-DDEMO_ACCESS_TOKEN=${DEMO_ACCESS_TOKEN})
 
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${KAA_SDK_DIR})
-execute_process(COMMAND sh -c "tar -zxf ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/kaa-c*.tar.gz -C ${KAA_SDK_DIR}")
 
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
-                 ${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}/build)
 
-add_definitions(-DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
-add_executable(${APP_NAME} src/KaaDemo.cpp)
-target_link_libraries(${APP_NAME} kaacpp)
+if (NOT DEFINED KAA_MAX_LOG_LEVEL)
+set(KAA_MAX_LOG_LEVEL 3)
+endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
+
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
+
+add_executable(demo_client src/KaaDemo.cpp)
+target_link_libraries(demo_client kaacpp)
+
+install(TARGETS demo_client DESTINATION bin)

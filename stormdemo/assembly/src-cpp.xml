@@ -38,5 +38,10 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CppStormDataAnalyticsDemo</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/build-scripts/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CppStormDataAnalyticsDemo</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

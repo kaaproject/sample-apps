@@ -284,6 +284,10 @@
                         <exclude>**/iotworld/lights/traffic/TrafficLightsLog.java</exclude>
                         <exclude>**/resources/profile_filters.txt</exclude>
                         <exclude>**/PUT_SDK_HERE</exclude>
+                        <exclude>scripts/cmakegen/Posix.cmake</exclude>
+                        <exclude>scripts/cmakegen/Embedded.cmake</exclude>
+                        <exclude>scripts/cmakegen/Definition.cmake</exclude>
+                        <exclude>scripts/cmakegen/README.md</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -14,19 +14,27 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
+project(ProfilingDemo CXX)
 
-project(Cpp-SDK-sample)
-enable_language(CXX)
+# Disable unused features
+set(KAA_WITHOUT_NOTIFICATIONS 1)
+set(KAA_WITHOUT_LOGGING 1)
+set(KAA_WITHOUT_EVENTS 1)
 
-add_subdirectory(libs/kaa)
 
-find_package(Boost REQUIRED
-             COMPONENTS filesystem)
 
-set(SAMPLE_SOURCE_FILES src/KaaDemo.cpp)
+if (NOT DEFINED KAA_MAX_LOG_LEVEL)
+set(KAA_MAX_LOG_LEVEL 3)
+endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
-add_executable(demo_client ${SAMPLE_SOURCE_FILES})
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
-target_include_directories(demo_client PRIVATE ${Boost_INCLUDE_DIRS})
-target_link_libraries(demo_client kaacpp ${Boost_LIBRARIES})
+add_executable(demo_client src/KaaDemo.cpp)
+target_link_libraries(demo_client kaacpp)
+
+install(TARGETS demo_client DESTINATION bin)

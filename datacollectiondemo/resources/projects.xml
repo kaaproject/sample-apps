@@ -323,31 +323,108 @@ Try the following:
     <project id="datacollection_demo_objc">
         <name>Data collection Objective-C demo</name>
         <description>Kaa Logging subsystem demo app based on Objective-C SDK</description>
-        <details><![CDATA[
-This simple app demonstrates capabilities of the Kaa Logging subsystem on the Objective-C SDK.
+        <details>
+        	<![CDATA[
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This feature enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to store collect log records, store them in the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a>, persist them on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>, and send them to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a>.
+</p>
 
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<p>
+	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a> set by the <code>setLogUploadStrategy:</code> method.
+	The <code>BucketRunner</code> feature is used to track the batch uploads.
+</p>
+
+<h1>Launching</h1>
+
+<p>
+	Before launching the application, make sure you have the latest version of xCode and CocoaPods installed.
+</p>
+
+To launch this sample application on the Kaa Objective-C SDK:
+
+<ol>
+	<li>
+		Prepare your Objective-C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		
+		<pre>
+			sh build.sh compile
+		</pre>
+		
+		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
+	</li>
+	<li>
+		Open the DataCollectionDemo.xcodeproj file and click the <b>Play</b> button.
+		You should see the following console messages.
+		
+		<pre>
+			2016-08-30 11:45:01.754 DataCollectionDemo[77224:13403075] DataCollectionDemo started
+			2016-08-30 11:45:02.080 DataCollectionDemo[77224:13403521] Kaa client started
+			2016-08-30 11:45:03.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 28, timestamp: 149909177
+			2016-08-30 11:45:03.104 DataCollectionDemo[77224:13403449] Received log record delivery info. Bucket id [0], delivery time [23 ms]
+			2016-08-30 11:45:04.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 29, timestamp: 149910177
+			2016-08-30 11:45:04.107 DataCollectionDemo[77224:13403448] Received log record delivery info. Bucket id [1], delivery time [26 ms]
+			2016-08-30 11:45:05.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 30, timestamp: 149911177
+			2016-08-30 11:45:05.095 DataCollectionDemo[77224:13403521] Received log record delivery info. Bucket id [2], delivery time [14 ms]
+			2016-08-30 11:45:06.080 DataCollectionDemo[77224:13403075] Log sent with temperature: 27, timestamp: 149912176
+			2016-08-30 11:45:06.102 DataCollectionDemo[77224:13403521] Received log record delivery info. Bucket id [3], delivery time [22 ms]
+			2016-08-30 11:45:07.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 30, timestamp: 149913177
+			2016-08-30 11:45:07.094 DataCollectionDemo[77224:13403449] Received log record delivery info. Bucket id [4], delivery time [13 ms]
+		</pre>
+		
+	</li>
+</ol>
+
+<h1>Troubleshooting</h1>
+
+<h2>Running the build script returns an error message</h2>
+
 <pre>
-$ ./build.sh
+	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By starting the "Data collection Objective-C demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster. The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender. You can explore the collected data by querying the sandbox MongoDB instance as follows:
-<pre>
-$ mongo kaa
-db.logs_$your_application_token$.find()
-</pre>
+<p>
+	This error can occur when using newer than version 1.0 of Cocoapods.
+</p>
 
-Where $your_application_token$ is the application token you can copy from the main window of the application in the Administration UI.<br/><br/>
+Try the following:
 
-Additionally, you can create custom log appenders. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Data collection demo" application, then select "Log appenders". From here you can manage log appenders.<br/><br/>
+<ol>
+	<li>
+		Run the following command from the ./libs/kaa-ep-sdk/ folder.
+		
+		<pre>
+			vim Podfile
+		</pre>
+		
+	</li>
+	<li>
+		Delete <b>:exclusive=>true</b>.
+	</li>
+	<li>
+		Run this command.
+		
+		<pre>
+			pod install
+		</pre>
+		
+	</li>
+</ol>
 
-Please note that all the features of Administration UI are also supported by REST API.
+Now you can open the DataCollectionDemo.xcodeproj file and run the build script.
 
-<h2>What's next?</h2>
+<h2>Nothing happens after the "Build succeeded" message</h2>
 
-For more background on the Kaa Logging subsystem, please refer to the corresponding programming guide and design reference sections.
+Make sure that the build target is set to <b>DataCollectionDemo</b>, not <b>Kaa</b>.
             ]]>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>

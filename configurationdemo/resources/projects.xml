@@ -411,7 +411,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
 	</li>
 	<li>
-		Open the ConfigurationDemo.xcodeproj and click the <b>Play</b> button.
+		Open the ConfigurationDemo.xcodeproj file and click the <b>Play</b> button.
 		You should see the following console messages.
 		
 		<pre>

@@ -192,13 +192,13 @@ Once you built the application, you can start it at any time using the following
 <p>
 	<b>Windows</b>
 	<pre>
-		build.bat deploy
+		build.bat run
 	</pre>
 </p>
 <p>
 	<b>Linux, OS X (macOS)</b>
 	<pre>
-		./build.sh deploy
+		./build.sh run
 	</pre>
 </p>
 	

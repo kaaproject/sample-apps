@@ -66,7 +66,7 @@ $ sudo cp ./zeppelin-env.sh.template  ./zeppelin-env.sh
 </pre>
 If download link does not work, you can download <b>archive</b> from
 <a href="http://zeppelin.apache.org/download.html">official page</a>
-directly.
+directly. <br />
 4. Change the default Zeppelin port if needed. (In case of the free port 8080, you can skip this step). Add line:
 <pre>
 export ZEPPELIN_PORT=7080
@@ -76,18 +76,71 @@ into the zeppelin-env.sh file. <br />
 <pre>
 $ sudo /opt/zeppelin/bin/zeppelin-daemon.sh start
 </pre>
-6. Configure Cassandra log appenders.<br />
+6. Downgrade Cassandra version, since Zeppelin compatible only with not higher than 2.2 (by default on Sandbox Cassandra version 3.5 is installed). <br />
+Add the DataStax Community repository to the /etc/apt/sources.list.d/cassandra.sources.list. <br />
+<pre>
+echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+</pre>
+Install Cassandra 2.2.5. <br />
+<pre>
+sudo apt-get update
+sudo apt-get install cassandra=2.2.5
+</pre>
+While installation will be following question, use default answer to avoid compatibility issues. <br />
+<pre>
+Configuration file '/etc/cassandra/cassandra.yaml'
+ ==> Modified (by you or by a script) since installation.
+ ==> Package distributor has shipped an updated version.
+   What would you like to do about it ?  Your options are:
+    Y or I  : install the package maintainer's version
+    N or O  : keep your currently-installed version
+      D     : show the differences between the versions
+      Z     : start a shell to examine the situation
+ The default action is to keep your current version.
+*** cassandra.yaml (Y/I/N/O/D/Z) [default=N] ? 
+N
+</pre>
+You can check if the Cassandra service is running by executing the following command. <br />
+<pre>
+sudo netstat -ntlp | grep 9042
+</pre>
+Install Java Native Access (JNA). <br />
+<pre>
+sudo apt-get install libjna-java
+</pre>
+Reboot Cassandra cluster. <br />
+<pre>
+sudo cassandra
+</pre>
+Check cassandra cql shell. <br />
+<pre>
+cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
+Use HELP for help.
+cqlsh>
+</pre>
+8. Add initial data into Cassandra cluster from "cqlsh" shell. <br />
+<pre>
+CREATE KEYSPACE logs WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+use logs;
+CREATE OR REPLACE FUNCTION logs.timeFormat(time bigint) RETURNS NULL ON NULL INPUT RETURNS text LANGUAGE java AS $$ return new java.text.SimpleDateFormat("mm:ss").format(new java.util.Date(time));$$;
+CREATE OR REPLACE FUNCTION logs.timeDelta(arg bigint, delta bigint) RETURNS NULL ON NULL INPUT RETURNS bigint LANGUAGE java AS $$ return arg - delta;$$;
+</pre>
+9. Recover tables <b>"panel_per_row"</b> and <b>"zone_per_row"</b> in <b>"logs"</b> keyspace. 
+It will be created automatically, if you go to Kaa Admin UI and do empty-edit (just edit name and revert back) of both according appenders and click <b>Save</b> button. <br />
+10. Configure Cassandra log appenders.<br />
 Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window.
 Log in as a tenant developer (devuser / devuser123), and navigate to the "Zeppelin data analytics demo" application, then select "Log appenders".
 From here you can manage two log appenders "Panel per row appender" and "Zone per row appender". Update appenders according to your
-Cassandra cluster configuration (<b>if you use Cassandra (downgraded) inside Kaa Sandbox then you don't need to change appender settings</b>).
-Make sure that version of your Cassandra cluster is not higher than 2.2 which Cassandra Zeppelin interpreter currently supports.<br />
-7. On your host PC go to the JZeppelinDataAnalyticsDemo/lib folder and rename kaa-java-ep-sdk-&lt;SDK token&gt;.jar to the kaa-java-ep-sdk.jar. <br />
-8. Go to the JZeppelinDataAnalyticsDemo folder and start Zeppelin data analytics demo by executing command:
+Cassandra cluster configuration (<b>if you use Cassandra (downgraded) inside Kaa Sandbox then you don't need to change appender settings</b>). <br />
+11. On your host PC go to the JZeppelinDataAnalyticsDemo/lib folder and rename kaa-java-ep-sdk-&lt;SDK token&gt;.jar to the kaa-java-ep-sdk.jar. <br />
+12. Go to the JZeppelinDataAnalyticsDemo folder and start Zeppelin data analytics demo by executing command:
 <pre>
 $ mvn clean install exec:java
 </pre>
-9. Navigate to the Zeppelin by entering in your browser:
+13. Navigate to the Zeppelin by entering in your browser:
 <pre>
 YOUR-SANDBOX-IP:7080/#/
 </pre>

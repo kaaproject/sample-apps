@@ -67,6 +67,22 @@ configurationdemo:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
+verifiersdemo:
+  name: "Verifiers demo"
+  language:
+    c:
+      src: "verifiersdemo/source/c"
+      platform:
+        posix:
+          dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
+          buildcmd: "bash -c \"./build.sh build\""
+    cpp:
+      src: "verifiersdemo/source/cpp"
+      platform:
+        posix:
+          dependencies: [["common/build-scripts/build.sh", "."]]
+          buildcmd: "bash -c \"./build.sh build\""
+
 credentialsdemo:
   name: "Credentials demo"
   language:

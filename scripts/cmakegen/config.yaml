@@ -47,6 +47,14 @@ credentialsdemo:
     definitions:
         KAA_RUNTIME_KEY_GENERATION: 'OFF'
 
+verifiersdemo:
+    appname: 'VerifiersDemo'
+    languages: ['c', 'cpp']
+    features: ['events']
+    path: 'verifiersdemo/source/'
+    definitions:
+        DEMO_ACCESS_TOKEN: 'asscess_token'
+
 profilingdemo:
     appname: 'ProfilingDemo'
     features: ['configuration']

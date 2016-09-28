@@ -331,7 +331,10 @@ This demo <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-applicatio
 		  "fields" : [ {
 			"name" : "temperature",
 			"type" : "int"
-		  } ],
+		  }, {
+             "name" : "timeStamp",
+             "type" : "long"
+          } ],
 		  "displayName" : "org.kaaproject.kaa.schema.sample.DataCollection"
 		}
 	</pre>

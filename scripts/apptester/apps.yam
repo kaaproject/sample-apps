@@ -74,12 +74,14 @@ verifiersdemo:
       src: "verifiersdemo/source/c"
       platform:
         posix:
+          skip: "True"
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
       src: "verifiersdemo/source/cpp"
       platform:
         posix:
+          skip: "True"
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 

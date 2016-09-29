@@ -19,184 +19,118 @@
 #include <string.h>
 #include <time.h>
 
-#include <kaa/kaa_error.h>
-#include <kaa/kaa_context.h>
-#include <kaa/platform/kaa_client.h>
-#include <kaa/utilities/kaa_log.h>
-#include <kaa/utilities/kaa_mem.h>
+#include <kaa_error.h>
+#include <kaa_context.h>
+#include <platform/kaa_client.h>
+#include <utilities/kaa_log.h>
+#include <utilities/kaa_mem.h>
 #include <kaa_user.h>
-#include <kaa/gen/kaa_thermostat_event_class_family.h>
+#include <gen/kaa_chat.h>
+
+#include <pthread.h>
 
 
-
-#define KAA_USER_ID            "user@email.com"
+#define KAA_USER_ID            "userid"
 #define KAA_USER_ACCESS_TOKEN  "token"
 
-#define THERMO_REQUEST_FQN          "org.kaaproject.kaa.schema.sample.event.thermo.ThermostatInfoRequest"
-#define CHANGE_DEGREE_REQUEST_FQN   "org.kaaproject.kaa.schema.sample.event.thermo.ChangeDegreeRequest"
+#define CHAT_EVENT_FQN     "org.kaaproject.kaa.examples.event.ChatEvent"
+#define CHAT_MESSAGE_FQN   "org.kaaproject.kaa.examples.event.Message"
 
 
+char current_room[100];
+
+struct room {
+    char room_name[100];
+    struct room *next;
+};
+
+typedef struct room Room;
+
+struct list
+{
+    Room *head;
+    Room *tail;
+};
+
+typedef struct list List;
+
+List lst;
 
 static kaa_client_t *kaa_client = NULL;
-static bool is_shutdown = false;
 
-
-
-#define KAA_DEMO_UNUSED(x) (void)(x);
-
-#define KAA_DEMO_RETURN_IF_ERROR(error, message) \
-    if ((error)) { \
-        printf(message ", error code %d\n", (error)); \
-        return (error); \
-    }
-
-/*
- * Event callback-s.
- */
-
-void kaa_on_thermostat_info_request(void *context
-                                  , kaa_thermostat_event_class_family_thermostat_info_request_t *event
-                                  , kaa_endpoint_id_p source)
+void initializeList(List *lst)
 {
-    KAA_DEMO_UNUSED(context);
-    KAA_DEMO_UNUSED(source);
-
-    printf("ThermostatInfoRequest event received!\n");
-
-    kaa_thermostat_event_class_family_thermostat_info_response_t *response =
-            kaa_thermostat_event_class_family_thermostat_info_response_create();
-
-    response->thermostat_info = kaa_thermostat_event_class_family_union_thermostat_info_or_null_branch_0_create();
-
-    kaa_thermostat_event_class_family_thermostat_info_t *info = kaa_thermostat_event_class_family_thermostat_info_create();
-    response->thermostat_info->data = info;
-
-    int32_t *current_degree = (int32_t *) KAA_MALLOC(sizeof(int32_t));
-    *current_degree = -5;
-
-    int32_t *target_degree = (int32_t *) KAA_MALLOC(sizeof(int32_t));
-    *target_degree = 10;
-
-    info->degree = kaa_thermostat_event_class_family_union_int_or_null_branch_0_create();
-    info->degree->data = current_degree;
-
-    info->target_degree = kaa_thermostat_event_class_family_union_int_or_null_branch_0_create();
-    info->target_degree->data = target_degree;
-
-    info->is_set_manually = kaa_thermostat_event_class_family_union_boolean_or_null_branch_1_create();
-
-    kaa_event_manager_send_kaa_thermostat_event_class_family_thermostat_info_response(
-                                kaa_client_get_context(kaa_client)->event_manager, response, NULL);
-
-    response->destroy(response); // Destroying event that was successfully sent
-
-    event->destroy(event);
+    lst->head = NULL;
+    lst->tail = NULL;
 }
 
-
-void kaa_on_thermostat_info_response(void *context
-                                   , kaa_thermostat_event_class_family_thermostat_info_response_t *event
-                                   , kaa_endpoint_id_p source)
+void push(List *lst, char *room_name)
 {
-    KAA_DEMO_UNUSED(context);
-    KAA_DEMO_UNUSED(source);
-
-    printf("ThermostatInfoResponse event received!\n");
-
-    if (event->thermostat_info->type == KAA_THERMOSTAT_EVENT_CLASS_FAMILY_UNION_THERMOSTAT_INFO_OR_NULL_BRANCH_0) {
-        kaa_thermostat_event_class_family_thermostat_info_t *info =
-                (kaa_thermostat_event_class_family_thermostat_info_t *) event->thermostat_info->data;
-
-        if (info->degree->type == KAA_THERMOSTAT_EVENT_CLASS_FAMILY_UNION_INT_OR_NULL_BRANCH_0) {
-            int32_t *degree = (int32_t *) info->degree->data;
-            printf("Degree=%d\n", *degree);
-        }
-        if (info->target_degree->type == KAA_THERMOSTAT_EVENT_CLASS_FAMILY_UNION_INT_OR_NULL_BRANCH_0) {
-            int32_t *target_degree = (int32_t *) info->target_degree->data;
-            printf("Target degree=%d\n", *target_degree);
-        }
-        if (info->is_set_manually->type == KAA_THERMOSTAT_EVENT_CLASS_FAMILY_UNION_BOOLEAN_OR_NULL_BRANCH_0) {
-            int8_t *is_set_manually = (int8_t *) info->is_set_manually->data;
-            printf("Is_set_manually=%s\n", (*is_set_manually) ? "true" : "false");
-        }
+    Room *t = (Room *) malloc(sizeof(Room));
+    strcpy(t->room_name, room_name);
+    t->next = NULL;
+    if (lst->head == NULL)
+    {
+        lst->head = t;
+        lst->tail = t;
+        return;
     }
-
-    event->destroy(event);
+    lst->tail->next = t;
+    lst->tail = t;
 }
 
-void kaa_on_change_degree_request(void *context
-                                , kaa_thermostat_event_class_family_change_degree_request_t *event
-                                , kaa_endpoint_id_p source)
+void pop(List *lst, char *room_name)
 {
-    KAA_DEMO_UNUSED(context);
-    KAA_DEMO_UNUSED(source);
-
-    printf("ChangeDegreeRequest event received!\n");
-
-    if (event->degree->type == KAA_THERMOSTAT_EVENT_CLASS_FAMILY_UNION_INT_OR_NULL_BRANCH_0) {
-        int32_t *degree = (int32_t *) event->degree->data;
-        printf("Change temperature by %d degrees\n", *degree);
+    Room *tmp, *prev_tmp = NULL;
+    for (tmp = lst->head; tmp != NULL; prev_tmp = tmp, tmp = tmp->next) {
+        if (!strcmp(room_name, tmp->room_name )) {
+            if (tmp == lst->head && tmp == lst->tail) {
+                free(tmp);
+                initializeList(lst);
+                return;
+            }
+            if (prev_tmp != NULL && tmp != lst->tail) {
+                prev_tmp->next = tmp->next;
+                free(tmp);
+                return;
+            }
+            if (prev_tmp == NULL && tmp != lst->tail) {
+                lst->head = tmp->next;
+                free(tmp);
+                return;
+            }
+            if (tmp == lst->tail) {
+                lst->tail = prev_tmp;
+                prev_tmp->next = NULL;
+                free(tmp);
+                return;
+            }
+        }
     }
-
-    event->destroy(event);
 }
 
-
-
-/*
- * Callback-s which receive result of event listener requests.
- */
+void print_list(List *lst)
+{
+    printf("Available rooms:\n");
+    for (Room *tmp = lst->head; tmp; tmp = tmp->next)
+        printf("%s\n", tmp->room_name);
+}
 
 kaa_error_t kaa_on_event_listeners(void *context, const kaa_endpoint_id listeners[], size_t listeners_count)
 {
-    KAA_DEMO_UNUSED(context);
-    KAA_DEMO_UNUSED(listeners);
-
+    (void)context;
+    (void)listeners;
     printf("%zu event listeners received\n", listeners_count);
-
-    // Creating Change degree request
-    kaa_thermostat_event_class_family_change_degree_request_t *change_degree_request =
-            kaa_thermostat_event_class_family_change_degree_request_create();
-
-    change_degree_request->degree = kaa_thermostat_event_class_family_union_int_or_null_branch_0_create();
-    int32_t *new_degree = (int32_t *) KAA_MALLOC(sizeof(int32_t));
-    *new_degree = 10;
-    change_degree_request->degree->data = new_degree;
-
-    // Creating Thermo info request
-    kaa_thermostat_event_class_family_thermostat_info_request_t *info_request =
-            kaa_thermostat_event_class_family_thermostat_info_request_create();
-
-    // Creating and sending the event block which consists of 2 events
-    kaa_event_block_id trx_id = 0;
-    kaa_error_t error_code = kaa_event_create_transaction(kaa_client_get_context(kaa_client)->event_manager, &trx_id);
-    KAA_RETURN_IF_ERR(error_code);
-
-    error_code = kaa_event_manager_add_kaa_thermostat_event_class_family_change_degree_request_event_to_block(
-            kaa_client_get_context(kaa_client)->event_manager, change_degree_request, NULL, trx_id);
-    KAA_RETURN_IF_ERR(error_code);
-
-    change_degree_request->destroy(change_degree_request); // Destroying event that was successfully added
-
-    error_code = kaa_event_manager_add_kaa_thermostat_event_class_family_thermostat_info_request_event_to_block(
-            kaa_client_get_context(kaa_client)->event_manager, info_request, NULL, trx_id);
-    KAA_RETURN_IF_ERR(error_code);
-
-    info_request->destroy(info_request); // Destroying event that was successfully added
-
-    error_code = kaa_event_finish_transaction(kaa_client_get_context(kaa_client)->event_manager, trx_id);
-    KAA_RETURN_IF_ERR(error_code);
 
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_event_listeners_failed(void *context)
 {
-    KAA_DEMO_UNUSED(context);
+    (void)context;
     printf("Kaa Demo event listeners not found\n");
     return KAA_ERR_NONE;
 }
-
 
 
 /*
@@ -204,7 +138,7 @@ kaa_error_t kaa_on_event_listeners_failed(void *context)
  */
 kaa_error_t kaa_on_attached(void *context, const char *user_external_id, const char *endpoint_access_token)
 {
-    KAA_DEMO_UNUSED(context);
+    (void)context;
     printf("Kaa Demo attached to user %s, access token %s\n", user_external_id, endpoint_access_token);
     return KAA_ERR_NONE;
 }
@@ -212,19 +146,19 @@ kaa_error_t kaa_on_attached(void *context, const char *user_external_id, const c
 
 kaa_error_t kaa_on_detached(void *context, const char *endpoint_access_token)
 {
-    KAA_DEMO_UNUSED(context);
+    (void)context;
     printf("Kaa Demo detached from user access token %s\n", endpoint_access_token);
     return KAA_ERR_NONE;
 }
 
 kaa_error_t kaa_on_attach_success(void *context)
 {
-    KAA_DEMO_UNUSED(context);
+    (void)context;
 
     printf("Kaa Demo attach success\n");
 
-    const char *fqns[] = { THERMO_REQUEST_FQN
-                         , CHANGE_DEGREE_REQUEST_FQN };
+    const char *fqns[] = { CHAT_EVENT_FQN
+                         , CHAT_MESSAGE_FQN };
 
     kaa_event_listeners_callback_t listeners_callback = { NULL
                                                         , &kaa_on_event_listeners
@@ -240,12 +174,156 @@ kaa_error_t kaa_on_attach_success(void *context)
 
 kaa_error_t kaa_on_attach_failed(void *context, user_verifier_error_code_t error_code, const char *reason)
 {
-    KAA_DEMO_UNUSED(context);
+    (void)context;
 
     printf("Kaa Demo attach failed: error %d, reason '%s'\n", error_code, (reason ? reason : "null"));
 
-    is_shutdown = true;
     return KAA_ERR_NONE;
+}
+
+void kaa_on_change_chat(void *context,
+                        kaa_chat_chat_event_t *event,
+                        kaa_endpoint_id_p source)
+{
+    (void)context;
+    (void)source;
+
+    if (event->event_type == ENUM_CHAT_EVENT_TYPE_CREATE) {
+        push(&lst, event->chat_name->data);
+    }
+    else
+    {
+        pop(&lst, event->chat_name->data);
+    }
+}
+
+void kaa_on_receive_message(void *context,
+                    kaa_chat_message_t *event,
+                    kaa_endpoint_id_p source)
+{
+    if (!strcmp(current_room, event->chat_name->data)) {
+        puts(event->message->data);
+    }
+}
+
+void search_room(List *lst, char *room_name)
+{
+    for (Room *tmp = lst->head; tmp; tmp = tmp->next) {
+        if (!strcmp(room_name, tmp->room_name)) {
+            printf("Room %s was founded. Join to the room. Put /quit for leave this room.\n");
+            strcpy(current_room, room_name);
+            char message[100];
+            fflush(stdout);
+            fgets(message, 100, stdin);
+            while (strcmp(message, "/quit")) {
+                int len = strlen(message);
+                message[len - 1] = '\0';
+                kaa_chat_message_t *create_message = kaa_chat_message_create();
+                create_message->chat_name = kaa_string_copy_create(current_room);
+                create_message->message = kaa_string_copy_create(message);
+                kaa_event_manager_send_kaa_chat_message(kaa_client_get_context(kaa_client)->event_manager, create_message, NULL);
+                fgets(message, 100, stdin);
+            }
+            printf("Leave from room %s\n", current_room);
+            memset(current_room, NULL, 100);
+            return;
+        }
+    }
+    printf("Can`t find room with name %s\n", room_name);
+    return;
+}
+
+void command_join()
+{
+    printf("Enter chat room name:");
+    char room_name[256];
+    scanf("%s", room_name);
+    printf("%s", room_name);
+    search_room(&lst, room_name);
+    Menu();
+}
+
+void command_create()
+{
+    printf("Enter chat room name:");
+    char room_name[256];
+    scanf("%s", room_name);
+
+    kaa_chat_chat_event_t *create_room = kaa_chat_chat_event_create();
+    create_room->chat_name = kaa_string_copy_create(room_name);
+    create_room->event_type = ENUM_CHAT_EVENT_TYPE_CREATE;
+
+    kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, create_room, NULL);
+    push(&lst, room_name);
+
+    create_room->destroy(create_room);
+
+    printf("Room %s was successfully created.\n", room_name);
+    Menu();
+}
+
+void command_delete()
+{
+    printf("Enter chat room name:");
+    char room_name[256];
+    scanf("%s", room_name);
+
+    kaa_chat_chat_event_t *delete_room = kaa_chat_chat_event_create();
+    delete_room->chat_name = kaa_string_copy_create(room_name);
+    delete_room->event_type = ENUM_CHAT_EVENT_TYPE_DELETE;
+
+    kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, delete_room, NULL);
+    pop(&lst, room_name);
+
+    delete_room->destroy(delete_room);
+    printf("Room %s was successfully deleted.\n", room_name);
+    Menu();
+}
+
+void printRooms()
+{
+    print_list(&lst);
+    Menu();
+}
+
+void printHelp()
+{
+    printf("Available commands:\n");
+    printf("1. Join room\n");
+    printf("2. Create room\n");
+    printf("3. Delete room\n");
+    printf("4. List available rooms\n");
+    printf("5. Exit application\n");
+}
+
+void Menu()
+{
+    printHelp();
+
+    int answer;
+    scanf("%d", &answer);
+    switch(answer) {
+        case 1:
+            command_join();
+            break;
+        case 2:
+            command_create();
+            break;
+        case 3:
+            command_delete();
+            break;
+        case 4:
+            printRooms();
+            break;
+        case 5:
+            printf("Event demo stopped\n");
+            kaa_client_destroy(kaa_client);
+            return EXIT_SUCCESS;
+        default:
+            printf("Wrong command syntax\n");
+            Menu();
+            break;
+    }
 }
 
 int main(/*int argc, char *argv[]*/)
@@ -256,7 +334,10 @@ int main(/*int argc, char *argv[]*/)
      * Initialize Kaa client.
      */
     kaa_error_t error_code = kaa_client_create(&kaa_client, NULL);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed create Kaa client");
+    if (error_code) {
+        printf("Failed create Kaa client, error code %d\n");
+        return EXIT_FAILURE;
+    }
 
     kaa_attachment_status_listeners_t listeners = { NULL
                                                   , &kaa_on_attached
@@ -265,33 +346,62 @@ int main(/*int argc, char *argv[]*/)
                                                   , &kaa_on_attach_failed };
 
     error_code = kaa_user_manager_set_attachment_listeners(kaa_client_get_context(kaa_client)->user_manager, &listeners);
-    KAA_RETURN_IF_ERR(error_code);
+    if (error_code) {
+        printf ("Failed set attachment listeners, error code %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
+    }
 
     error_code = kaa_user_manager_default_attach_to_user(kaa_client_get_context(kaa_client)->user_manager
                                                        , KAA_USER_ID
                                                        , KAA_USER_ACCESS_TOKEN);
-    KAA_RETURN_IF_ERR(error_code);
+    if (error_code) {
+        printf("Failed default attach to user, error_code %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
+    }
 
-    error_code = kaa_event_manager_set_kaa_thermostat_event_class_family_change_degree_request_listener(kaa_client_get_context(kaa_client)->event_manager
-                                                                                                      , &kaa_on_change_degree_request
+    error_code = kaa_event_manager_set_kaa_chat_chat_event_listener(kaa_client_get_context(kaa_client)->event_manager
+                                                                                                      , &kaa_on_change_chat
                                                                                                       , NULL);
-    KAA_RETURN_IF_ERR(error_code);
+    if (error_code) {
+        printf("Failed set chat listener, error_code %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
+    }
 
-    error_code = kaa_event_manager_set_kaa_thermostat_event_class_family_thermostat_info_request_listener(kaa_client_get_context(kaa_client)->event_manager
-                                                                                                        , &kaa_on_thermostat_info_request
+    error_code = kaa_event_manager_set_kaa_chat_message_listener(kaa_client_get_context(kaa_client)->event_manager
+                                                                                                        , &kaa_on_receive_message
                                                                                                         , NULL);
-    KAA_RETURN_IF_ERR(error_code);
+    if (error_code) {
+        printf("Failed set message listener, error code %d\n",  error_code);
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
+    }
 
-    error_code = kaa_event_manager_set_kaa_thermostat_event_class_family_thermostat_info_response_listener(kaa_client_get_context(kaa_client)->event_manager
-                                                                                                         , &kaa_on_thermostat_info_response
-                                                                                                         , NULL);
-    KAA_RETURN_IF_ERR(error_code);
+    /**
+     * Obtain and display Endpoint Key Hash.
+     */
+    const uint8_t *endpoint_key_hash = NULL;
+    size_t endpoint_key_hash_length = 0;
+
+    ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
+
+    printf("Endpoint Key Hash: %.*s\n", (int)endpoint_key_hash_length, endpoint_key_hash);
+
+    initializeList(&lst);
+    pthread_t Menu_thread;
+    pthread_create(&Menu_thread, NULL, &Menu, NULL);
 
     /**
      * Start Kaa client main loop.
      */
     error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
-    KAA_DEMO_RETURN_IF_ERROR(error_code, "Failed to start Kaa main loop");
+    if (error_code) {
+        printf ("Failed to start Kaa main loop, error code %d\n", error_code);
+        kaa_client_destroy(kaa_client);
+        return EXIT_FAILURE;
+    }
 
     /**
      * Destroy Kaa client.
@@ -300,6 +410,5 @@ int main(/*int argc, char *argv[]*/)
 
     printf("Event demo stopped\n");
 
-    return error_code;
+    return EXIT_SUCCESS;
 }
-

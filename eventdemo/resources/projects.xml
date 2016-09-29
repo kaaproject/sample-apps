@@ -248,24 +248,79 @@ Try the following:
         <description>Kaa Event subsystem demo app based on Objective-C SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Event subsystem on the Objective-C SDK.
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+</p>
 
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
-<pre>
-$ ./build.sh
-</pre>
+<p>
+	The application first initializes the <code>ChatClientManager</code> class in the AppDelegate.h file.
+	<br />
+	Then <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa client</a> starts and attaches a new user.
+</p>
 
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Event Objective-C demo" app on one endpoint, it will send an event to another endpoint, thus demonstrating how devices can interoperate with each other.
+<p>
+	The <code>ChatClientManager</code> class handles the Kaa events.
+	<br />
+	When <code>ChatClientManager</code> receives an event from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>, it displays a notification about the changes.
+</p>
 
-Now it's time to test things out: start two application instances. By default, the application stores the state information in the same folder where the application was started. Therefore, you should start a new application instance from a different folder in order to avoid conflicts between the instances. Once the application instances are started, you will see them exchanging events. You can also start the "Event Objective-C demo" application on different platforms to verify that events are delivered across the platforms.<br/><br/>
+<h1>Launching</h1>
 
-Please note that all the features of Administration UI are also supported by REST API.
+<p>
+	Before launching the application, make sure you have the latest version of xCode and CocoaPods installed.
+</p>
 
-<h2>What's next?</h2>
+To launch this sample application on the Kaa Objective-C SDK:
 
-For more background on the Kaa Event subsystem please refer to the corresponding programming guide and design reference sections.
+<ol>
+	<li>
+		Prepare your Objective-C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		
+		<pre>
+			sh build.sh compile
+		</pre>
+		
+		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
+	</li>
+	<li>
+		Open the EventDemo.xcodeproj and click the <b>Play</b> button.
+		You should see the following console messages.
+		
+		<pre>
+			2016-09-09 11:38:51.964 EventDemo[2621:1000514] Kaa client started
+			2016-09-09 11:38:52.722 EventDemo[2621:1000528] Endpoint successfully attached!
+		</pre>
+	
+	</li>
+</ol>
+
+Now you can send messages, create and delete chat rooms.
+
+<br />
+<img src="https://raw.github.com/hunch7/sample-apps/app-290-events-objc/eventdemo/resources/pic/event-objc-1.png" /> <img src="https://raw.github.com/hunch7/sample-apps/app-290-events-objc/eventdemo/resources/pic/event-objc-2.png" />
+<br />
+<br />
+
+<br />
+<img src="https://raw.github.com/hunch7/sample-apps/app-290-events-objc/eventdemo/resources/pic/event-objc-3.png" /> <img src="https://raw.github.com/hunch7/sample-apps/app-290-events-objc/eventdemo/resources/pic/event-objc-4.png" />
+<br />
+<br />
+
+<h1>Troubleshooting</h1>
+
+<h2>Nothing happens after the "Build succeeded" message</h2>
+
+Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
             ]]>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>

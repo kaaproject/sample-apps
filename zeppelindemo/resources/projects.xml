@@ -48,7 +48,8 @@ The Apache Zeppelin is a web-based notebook that enables interactive data analyt
 documents with SQL, Scala and virtually any other language or data-processing-backend. <br />
 
 <h2>Installation</h2>
-1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
+1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. 
+After unpacking you can navigate into JZeppelinDataAnalyticsDemo folder for source code. <br />
 2. Connect to your Kaa Sandbox via ssh:
 <pre>
 $ ssh kaa@YOUR-SANDBOX-IP
@@ -76,7 +77,7 @@ into the zeppelin-env.sh file. <br />
 <pre>
 $ sudo /opt/zeppelin/bin/zeppelin-daemon.sh start
 </pre>
-6. Downgrade Cassandra version, since Zeppelin compatible only with not higher than 2.2 (by default on Sandbox Cassandra version 3.5 is installed). <br />
+6. Downgrade Cassandra version, since Zeppelin compatible only with not higher than 2.2 (by default Sandbox uses newer Cassandra version). <br />
 Add the DataStax Community repository to the /etc/apt/sources.list.d/cassandra.sources.list. <br />
 <pre>
 echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
@@ -128,22 +129,27 @@ use logs;
 CREATE OR REPLACE FUNCTION logs.timeFormat(time bigint) RETURNS NULL ON NULL INPUT RETURNS text LANGUAGE java AS $$ return new java.text.SimpleDateFormat("mm:ss").format(new java.util.Date(time));$$;
 CREATE OR REPLACE FUNCTION logs.timeDelta(arg bigint, delta bigint) RETURNS NULL ON NULL INPUT RETURNS bigint LANGUAGE java AS $$ return arg - delta;$$;
 </pre>
-9. Recover tables <b>"panel_per_row"</b> and <b>"zone_per_row"</b> in <b>"logs"</b> keyspace. 
-It will be created automatically, if you go to Kaa Admin UI and do empty-edit (just edit name and revert back) of both according appenders and click <b>Save</b> button. <br />
-10. Configure Cassandra log appenders.<br />
-Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window.
+9. Recover Cassandra log appenders.<br />
+Navigate to the Kaa server administrative interface by clicking the "Administration UI" link at the top of the Sandbox window.
 Log in as a tenant developer (devuser / devuser123), and navigate to the "Zeppelin data analytics demo" application, then select "Log appenders".
-From here you can manage two log appenders "Panel per row appender" and "Zone per row appender". Update appenders according to your
-Cassandra cluster configuration (<b>if you use Cassandra (downgraded) inside Kaa Sandbox then you don't need to change appender settings</b>). <br />
-11. On your host PC go to the JZeppelinDataAnalyticsDemo/lib folder and rename kaa-java-ep-sdk-&lt;SDK token&gt;.jar to the kaa-java-ep-sdk.jar. <br />
-12. Go to the JZeppelinDataAnalyticsDemo folder and start Zeppelin data analytics demo by executing command:
+From here you can manage two log appenders "Panel per row appender" and "Zone per row appender". It will be recovered automatically, 
+if you do empty-edit (just edit name and revert back) of both according appenders and click <b>Save</b> button. <br />
+10. On your host PC go to the JZeppelinDataAnalyticsDemo/lib folder and rename kaa-java-ep-sdk-&lt;SDK token&gt;.jar to the kaa-java-ep-sdk.jar. <br />
+11. Go to the JZeppelinDataAnalyticsDemo folder and start Zeppelin data analytics demo by executing command:
 <pre>
 $ mvn clean install exec:java
 </pre>
-13. Navigate to the Zeppelin by entering in your browser:
+12. Navigate to the Zeppelin by entering in your browser:
 <pre>
 YOUR-SANDBOX-IP:7080/#/
 </pre>
+By default Sandbox is in NAT networking mode, so you can use:
+<pre>
+localhost:7080/#/
+or
+127.0.0.1:7080/#/
+</pre>
+
 Then configure the Cassandra Zeppelin interpreter according to your Cassandra cluster configuration. More information about Apache Zeppelin you can find
 on <a href="http://zeppelin.incubator.apache.org/">site</a>. On the screens below you can see our custom notebook: <br />
 

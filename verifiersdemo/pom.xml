@@ -53,6 +53,11 @@
             <artifactId>gplus-verifier</artifactId>
             <version>${kaa.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.kaaproject.kaa.server.verifiers</groupId>
+            <artifactId>trustful-verifier</artifactId>
+            <version>${kaa.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -64,11 +69,32 @@
         </resources>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-logging-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeArtifactIds>logback-core,logback-classic,log4j-over-slf4j</includeArtifactIds>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
                         <descriptor>${project.basedir}/assembly/src.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>
+                        <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

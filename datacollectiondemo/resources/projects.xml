@@ -523,13 +523,16 @@ This demo <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-applicatio
 		  "type" : "record",
 		  "name" : "DataCollection",
 		  "namespace" : "org.kaaproject.kaa.schema.sample",
-		  "fields" : [ {
+		  "fields" : [
+		    {
 			"name" : "temperature",
 			"type" : "int"
-		  }, {
-             "name" : "timeStamp",
-             "type" : "long"
-          } ],
+		    },
+		    {
+			"name" : "timeStamp",
+			"type" : "long"
+		    }
+		  ],
 		  "displayName" : "org.kaaproject.kaa.schema.sample.DataCollection"
 		}
 	</pre>

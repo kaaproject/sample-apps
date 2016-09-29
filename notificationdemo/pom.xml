@@ -147,6 +147,9 @@
                         <exclude>source/android/import-summary.txt</exclude>
                         <exclude>source/android/*/.gitignore</exclude>
 
+                        <exclude>source/android/app/src/main/res/layout/toolbar.xml</exclude>
+                        <exclude>source/android/app/src/main/res/values/color.xml</exclude>
+
                         <!--XCode-->
                         <exclude>source/objc/*.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
                         <exclude>source/objc/*.xcworkspace/contents.xcworkspacedata</exclude>

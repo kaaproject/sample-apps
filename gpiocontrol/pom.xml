@@ -105,6 +105,37 @@
                 <version>${rat.version}</version>
                 <configuration>
                     <excludes>
+                        <!--Android Studio -->
+                        <exclude>source/android/gradlew</exclude>
+                        <exclude>source/android/gradlew.bat</exclude>
+                        <exclude>source/android/gradle.properties</exclude>
+                        <exclude>source/android/build.gradle</exclude>
+                        <exclude>source/android/settings.gradle</exclude>
+                        <exclude>source/android/local.properties</exclude>
+                        <exclude>source/android/gradle/wrapper/gradle-wrapper.properties</exclude>
+                        <exclude>source/android/*.iml</exclude>
+                        <exclude>source/android/app/app.iml</exclude>
+                        <exclude>source/android/app/proguard-rules.pro</exclude>
+                        <exclude>source/android/project.properties</exclude>
+                        <exclude>source/android/import-summary.txt</exclude>
+                        <exclude>source/android/*/.gitignore</exclude>
+
+                        <!--XCode-->
+                        <exclude>source/objc/*.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcodeproj/project.pbxproj</exclude>
+                        <exclude>source/objc/*/Info.plist</exclude>
+                        <exclude>source/objc/*/Base.lproj/Main.storyboard</exclude>
+                        <exclude>source/objc/*/Base.lproj/LaunchScreen.storyboard</exclude>
+                        <exclude>source/objc/*/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
+                        <exclude>source/objc/Podfile.lock</exclude>
+                        <exclude>source/objc/Podfile</exclude>
+
+                        <!--Common files-->
+                        <exclude>resources/*.avsc</exclude>
+                        <exclude>resources/*.json</exclude>
+                        <exclude>resources/*.txt</exclude>
+
                         <exclude>source/cc32xx/targets/cc32xx/app.ld</exclude>
                         <exclude>source/cc32xx/libs/kaa/PUT_SDK_HERE</exclude>
                         <exclude>source/esp8266/libs/kaa/PUT_SDK_HERE</exclude>
@@ -113,17 +144,6 @@
                         <exclude>source/esp8266/ld/</exclude>
 
                         <exclude>source/artik5/libs/kaa/PUT_SDK_HERE</exclude>
-
-                        <exclude>resources/remoteControlECF.json</exclude>
-
-                        <exclude>source/android/project.properties</exclude>
-
-                        <exclude>source/objc/GPIOControlDemo/Info.plist</exclude>
-                        <exclude>source/objc/GPIOControlDemo/Base.lproj/LaunchScreen.storyboard</exclude>
-                        <exclude>source/objc/GPIOControlDemo/Base.lproj/Main.storyboard</exclude>
-                        <exclude>source/objc/GPIOControlDemo/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
-                        <exclude>source/objc/GPIOControlDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
-                        <exclude>source/objc/GPIOControlDemo.xcodeproj/project.pbxproj</exclude>
                     </excludes>
                 </configuration>
             </plugin>

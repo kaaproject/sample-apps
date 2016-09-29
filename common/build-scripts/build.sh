@@ -48,11 +48,12 @@ build() {
 }
 
 run() {
-    ./"$PROJECT_HOME/build"
+    cd "$PROJECT_HOME/build"
+    ./demo_client
 }
 
 clean() {
-    rm -r "$PROJECT_HOME/build"
+    rm -rf "$PROJECT_HOME/build"
 }
 
 case "$1" in

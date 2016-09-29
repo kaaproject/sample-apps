@@ -16,6 +16,8 @@
 
 package org.kaaproject.kaa.demo.datacollection;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
@@ -179,7 +181,7 @@ public class DataCollectionDemo {
 
     private static DataCollection generateTemperatureSample() {
         Integer temperature = MIN_TEMPERATURE + rand.nextInt((MAX_TEMPERATURE - MIN_TEMPERATURE) + 1);
-        return new DataCollection(temperature);
+        return new DataCollection(temperature, System.currentTimeMillis());
     }
 
     private static void displayConfiguration(Configuration configuration) {

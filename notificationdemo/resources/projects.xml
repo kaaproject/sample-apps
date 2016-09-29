@@ -365,24 +365,119 @@ Try the following:
         <description>Kaa Notification subsystem demo app based on Objective-C SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Notification subsystem on the Objective-C SDK.
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications/" target="_blank">notifications</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This feature enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+</p>
 
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<p>
+	The sample application uses the following API call methods:
+	<ul>
+		<li>
+			<code>addNotificationDelegate:</code> method adds a new object to the delegates list when notified about a new message.
+		</li>
+		<li>
+			<code>addTopicListDelegate:</code> method adds a new object to the delegates list when notified about the topics list update.
+		</li>
+		<li>
+			<code>getTopics:</code> method returns an array of available topics.
+		</li>
+		<li>
+			<code>subscribeToTopicWithId:</code> method subscribes Kaa client to a certain notification topic if it's available.
+		</li>
+		<li>
+			<code>onListUpdated:</code> method calls upon update of the topics list.
+		</li>
+		<li>
+			<code>onNotification:withTopicId:</code> method calls upon receiving a notification.
+		</li>
+    </ul>
+</p>
+
+<h1>Launching</h1>
+
+<p>
+	Before launching the application, make sure you have the latest version of xCode and CocoaPods installed.
+</p>
+
+To launch this sample application on the Kaa Objective-C SDK:
+
+<ol>
+	<li>
+		Prepare your Objective-C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		
+		<pre>
+			sh build.sh compile
+		</pre>
+		
+		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
+	</li>
+	<li>
+		Open the NotificationDemo.xcodeproj file and click the <b>Play</b> button.
+		You should see the following console messages.
+		
+		<pre>
+			2016-07-29 18:30:39.249 NotificationDemo[21069:5316667] NotificationDemo started
+			2016-07-29 18:30:39.268 NotificationDemo[21069:5317199] Kaa client started
+			2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:1 name:Sample mandatory topic type: 0
+			2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:2 name:Sample optional topic type: 1
+		</pre>
+		
+	</li>
+</ol>
+
+To subscribe for an optional topic, enter the topic ID.
+
+<h1>Troubleshooting</h1>
+
+<h2>Running the build script returns an error message</h2>
+
 <pre>
-$ ./build.sh
+	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Notification Objective-C demo" app, you will receive two notification topics — one of which is mandatory and another is optional. Notifications on the mandatory topic will be delivered automatically. Notifications on optional topics require subscription, and this demo application will subscribe to the received optional topic automatically. Consequently, the application will receive notifications on the optional topic too.<br/><br/>
+<p>
+	This error can occur when using newer than version 1.0 of Cocoapods.
+</p>
 
-You can also create your own topics and send notifications. Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and navigate to the "Notification demo" application, then select "Notification topics". From here you can manage topics and send notifications. Do not forget to assign newly created topics to the "all" endpoint group - otherwise the endpoint will not be able to receive notifications on these topics.
+Try the following:
 
-Please note that all the features of Administration UI are also supported by REST API.
+<ol>
+	<li>
+		Run the following command from the ./libs/kaa-ep-sdk/ folder.
+		
+		<pre>
+			vim Podfile
+		</pre>
+		
+	</li>
+	<li>
+		Delete <b>:exclusive=>true</b>.
+	</li>
+	<li>
+		Run this command.
+		
+		<pre>
+			pod install
+		</pre>
+		
+	</li>
+</ol>
 
-<h2>What's next?</h2>
+Now you can open the NotificationDemo.xcodeproj file and run the build script.
 
-For more background on the Kaa Notification subsystem please refer to the corresponding programming guide and design reference sections.
+<h2>Nothing happens after the "Build succeeded" message</h2>
+
+Make sure that the build target is set to <b>NotificationDemo</b>, not <b>Kaa</b>.
             ]]>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>

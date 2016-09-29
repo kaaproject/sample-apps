@@ -16,98 +16,198 @@
 
 package org.kaaproject.kaa.demo.datacollection;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
+import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
 import org.kaaproject.kaa.client.logging.BucketInfo;
 import org.kaaproject.kaa.client.logging.RecordInfo;
 import org.kaaproject.kaa.client.logging.future.RecordFuture;
 import org.kaaproject.kaa.client.logging.strategies.RecordCountLogUploadStrategy;
-//import org.kaaproject.kaa.schema.sample.logging.Level;
-//import org.kaaproject.kaa.schema.sample.logging.LogData;
+import org.kaaproject.kaa.schema.sample.Configuration;
+import org.kaaproject.kaa.schema.sample.DataCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A demo application that shows how to use the Kaa logging API.
  */
 public class DataCollectionDemo {
 
-    private static final int LOGS_TO_SEND_COUNT = 5;
-
     private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemo.class);
+    private static final int LOGS_DEFAULT_THRESHOLD = 1;
+    private static final int MIN_TEMPERATURE = -25;
+    private static final int MAX_TEMPERATURE = 45;
+    private static final int MAX_SECONDS_TO_INIT_KAA = 2;
+    private static final int MAX_SECONDS_BEFORE_STOP = 3;
+
+    private static int samplePeriodInSeconds = 1;
+    private static volatile AtomicInteger sentRecordsCount = new AtomicInteger(0);
+    private static volatile AtomicInteger confirmationsCount = new AtomicInteger(0);
+
+    private static Random rand = new Random();
+    private static ScheduledExecutorService executor;
+    private static ScheduledFuture<?> executorHandle;
 
     public static void main(String[] args) {
-        LOG.info("Data collection demo started");
-        //Create a Kaa client with the Kaa desktop context.
+        LOG.info("--= Data collection demo started =--");
+
+        /*
+         * Create a Kaa client with the Kaa desktop context.
+         */
         KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), new SimpleKaaClientStateListener() {
             @Override
             public void onStarted() {
-                LOG.info("Kaa client started");
+                LOG.info("--= Kaa client started =--");
             }
 
             @Override
             public void onStopped() {
-                LOG.info("Kaa client stopped");
+                LOG.info("--= Kaa client stopped =--");
             }
         }, true);
 
-        // Set record count strategy for uploading logs with count threshold set to 1.
-        // Defined strategy configuration informs to upload every log record as soon as it is created.
-        // The default strategy uploads logs after either a threshold logs count
-        // or a threshold logs size has been reached.
-        kaaClient.setLogUploadStrategy(new RecordCountLogUploadStrategy(1));
-
-        // Start the Kaa client and connect it to the Kaa server.
-        kaaClient.start();
+        /*
+         * Set record count strategy for uploading every log record as soon as it is created.
+         */
+        kaaClient.setLogUploadStrategy(new RecordCountLogUploadStrategy(LOGS_DEFAULT_THRESHOLD));
 
         /*
-         Comment out this part in order to pass the Sandbox build process.
+         * Displays endpoint's configuration and change sampling period each time configuration will be updated.
          */
+        kaaClient.addConfigurationListener(new ConfigurationListener() {
+            @Override
+            public void onConfigurationUpdate(Configuration configuration) {
+                LOG.info("--= Endpoint configuration was updated =--");
+                displayConfiguration(configuration);
 
-        // Collect log record delivery futures and corresponding log record creation timestamps.
-//        Map<RecordFuture, Long> futuresMap = new HashMap<>();
-//
-//        // Send logs in a loop.
-//        for (LogData log : generateLogs(LOGS_TO_SEND_COUNT)) {
-//            futuresMap.put(kaaClient.addLogRecord(log), log.getTimeStamp());
-//            LOG.info("Log record {} sent", log.toString());
-//        }
-//
-//        // Iterate over log record delivery futures and wait for delivery
-//        // acknowledgment for each record.
-//        for (RecordFuture future : futuresMap.keySet()) {
-//            try {
-//                RecordInfo recordInfo = future.get();
-//                BucketInfo bucketInfo = recordInfo.getBucketInfo();
-//                Long timeSpent = (recordInfo.getRecordAddedTimestampMs() - futuresMap.get(future))
-//                        + recordInfo.getRecordDeliveryTimeMs();
-//                LOG.info(
-//                        "Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
-//                        bucketInfo.getBucketId(), timeSpent);
-//            } catch (Exception e) {
-//                LOG.error(
-//                        "Exception was caught while waiting for callback future",
-//                        e);
-//            }
-//        }
+                Integer newSamplePeriod = configuration.getSamplePeriod();
+                if ((newSamplePeriod != null) && (newSamplePeriod > 0)) {
+                    changeMeasurementPeriod(kaaClient, newSamplePeriod);
+                } else {
+                    LOG.warn("Sample period value (= {}) in updated configuration is wrong, so ignore it.", newSamplePeriod);
+                }
+            }
+        });
 
-        // Stop the Kaa client and release all the resources which were in use.
+        /*
+         * Start the Kaa client and connect it to the Kaa server.
+         */
+        kaaClient.start();
+        sleepForSeconds(MAX_SECONDS_TO_INIT_KAA);
+
+        /*
+         * Start periodical temperature value generating and sending results to Kaa node
+         */
+        startMeasurement(kaaClient);
+
+        LOG.info("*** Press Enter to stop sending log records ***");
+        waitForAnyInput();
+
+        /*
+         * Stop generating and sending data to Kaa node
+         */
+        stopMeasurement();
+
+        /*
+         * Stop the Kaa client and release all the resources which were in use.
+         */
         kaaClient.stop();
-        LOG.info("Data collection demo stopped");
+        displayResults();
+        LOG.info("--= Data collection demo stopped =--");
     }
 
-//    public static List<LogData> generateLogs(int logCount) {
-//        List<LogData> logs = new LinkedList<LogData>();
-//        for (int i = 0; i < logCount; i++) {
-//            logs.add(new LogData(Level.KAA_INFO, "TAG", "MESSAGE_" + i, System.currentTimeMillis()));
-//        }
-//        return logs;
-//    }
+    private static void startMeasurement(KaaClient kaaClient) {
+        executor = Executors.newSingleThreadScheduledExecutor();
+        executorHandle =  executor.scheduleAtFixedRate(new MeasureSender(kaaClient), 0, samplePeriodInSeconds, TimeUnit.SECONDS);
+        LOG.info("--= Temperature measurement is started =--");
+    }
+
+    private static class MeasureSender implements Runnable {
+        KaaClient kaaClient;
+
+        MeasureSender(KaaClient kaaClient) {
+            this.kaaClient = kaaClient;
+        }
+
+        @Override
+        public void run() {
+            sentRecordsCount.incrementAndGet();
+            DataCollection record = generateTemperatureSample();
+            RecordFuture future = kaaClient.addLogRecord(record); // submit log record for sending to Kaa node
+            LOG.info("Log record {} submitted for sending", record.toString());
+            try {
+                RecordInfo recordInfo = future.get(); // wait for log record delivery error
+                BucketInfo bucketInfo = recordInfo.getBucketInfo();
+                LOG.info("Received log record delivery info. Bucket Id [{}]. Record delivery time [{} ms].",
+                        bucketInfo.getBucketId(), recordInfo.getRecordDeliveryTimeMs());
+                confirmationsCount.incrementAndGet();
+            } catch (Exception e) {
+                LOG.error("Exception was caught while waiting for log's delivery report.", e);
+            }
+        }
+    }
+
+    private static void changeMeasurementPeriod(KaaClient kaaClient, Integer newPeriod) {
+        if (executorHandle != null) {
+            executorHandle.cancel(false);
+        }
+        samplePeriodInSeconds = newPeriod;
+        executorHandle =  executor.scheduleAtFixedRate(new MeasureSender(kaaClient), 0, samplePeriodInSeconds, TimeUnit.SECONDS);
+        LOG.info("Set new sample period = {} seconds.", samplePeriodInSeconds);
+    }
+
+    private static void stopMeasurement() {
+        LOG.info("Stopping measurements...");
+        try {
+            executor.awaitTermination(MAX_SECONDS_BEFORE_STOP, TimeUnit.SECONDS);
+            executor.shutdownNow();
+            LOG.info("--= Temperature measurement is finished =--");
+        } catch (InterruptedException e) {
+            LOG.warn("Can't stop temperature measurement correctly.", e);
+        }
+    }
+
+    private static DataCollection generateTemperatureSample() {
+        Integer temperature = MIN_TEMPERATURE + rand.nextInt((MAX_TEMPERATURE - MIN_TEMPERATURE) + 1);
+        return new DataCollection(temperature, System.currentTimeMillis());
+    }
+
+    private static void displayConfiguration(Configuration configuration) {
+        LOG.info("Configuration = {}", configuration.toString());
+    }
+
+    private static void sleepForSeconds(int seconds) {
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void waitForAnyInput() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            LOG.warn("Error happens when waiting for user input.", e);
+        }
+    }
+
+    private static void displayResults() {
+        LOG.info("--= Measurement summary =--");
+        LOG.info("Current sample period = {} seconds", samplePeriodInSeconds);
+        LOG.info("Total temperature samples sent = {}", sentRecordsCount);
+        LOG.info("Total confirmed = {}", confirmationsCount);
+    }
 }

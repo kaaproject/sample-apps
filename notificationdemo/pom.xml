@@ -134,36 +134,34 @@
                     <excludes>
                         <!--Android Studio -->
                         <exclude>source/android/gradlew</exclude>
+                        <exclude>source/android/gradlew.bat</exclude>
+                        <exclude>source/android/gradle.properties</exclude>
                         <exclude>source/android/build.gradle</exclude>
                         <exclude>source/android/settings.gradle</exclude>
-                        <exclude>source/android/gradlew.bat</exclude>
                         <exclude>source/android/local.properties</exclude>
                         <exclude>source/android/gradle/wrapper/gradle-wrapper.properties</exclude>
-                        <exclude>source/android/Notification.iml</exclude>
+                        <exclude>source/android/*.iml</exclude>
                         <exclude>source/android/app/app.iml</exclude>
+                        <exclude>source/android/app/proguard-rules.pro</exclude>
                         <exclude>source/android/project.properties</exclude>
+                        <exclude>source/android/import-summary.txt</exclude>
+                        <exclude>source/android/*/.gitignore</exclude>
+
                         <!--XCode-->
-                        <exclude>
-                            source/objc/NotificationDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata
-                        </exclude>
-                        <exclude>source/objc/NotificationDemo.xcodeproj/project.pbxproj</exclude>
-                        <exclude>source/objc/NotificationDemo/Info.plist</exclude>
-                        <exclude>source/objc/NotificationDemo/Base.lproj/Main.storyboard</exclude>
-                        <exclude>source/objc/NotificationDemo/Base.lproj/LaunchScreen.storyboard
-                        </exclude>
-                        <exclude>
-                            source/objc/NotificationDemo/Assets.xcassets/AppIcon.appiconset/Contents.json
-                        </exclude>
+                        <exclude>source/objc/*.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcodeproj/project.pbxproj</exclude>
+                        <exclude>source/objc/*/Info.plist</exclude>
+                        <exclude>source/objc/*/Base.lproj/Main.storyboard</exclude>
+                        <exclude>source/objc/*/Base.lproj/LaunchScreen.storyboard</exclude>
+                        <exclude>source/objc/*/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
+                        <exclude>source/objc/Podfile.lock</exclude>
+                        <exclude>source/objc/Podfile</exclude>
+
                         <!--Common files-->
-                        <exclude>resources/notification_demo_android/mandatory_notification.json
-                        </exclude>
-                        <exclude>resources/notification_demo_android/notification_schema.avsc
-                        </exclude>
-                        <exclude>resources/notification_demo_android/optional_notification.json
-                        </exclude>
-                        <exclude>resources/mandatory_notification.json</exclude>
-                        <exclude>resources/notification_schema.avsc</exclude>
-                        <exclude>resources/optional_notification.json</exclude>
+                        <exclude>resources/*.avsc</exclude>
+                        <exclude>resources/*.json</exclude>
+                        <exclude>resources/*.txt</exclude>
                     </excludes>
                 </configuration>
             </plugin>

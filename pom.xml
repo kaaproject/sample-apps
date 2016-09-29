@@ -220,6 +220,17 @@
                 <version>${rat.version}</version>
                 <configuration>
                     <excludes>
+                        <exclude>doc/**</exclude>
+                        <exclude>gh-pages-stub/index.md</exclude>
+                        <exclude>gh-pages-stub/_config.yml</exclude>
+                        <exclude>gh-pages-stub/public/js/jquery.csv.min.js</exclude>
+                        <exclude>gh-pages-stub/public/js/lunr.min.js</exclude>
+                        <exclude>gh-pages-stub/public/js/scripts.js</exclude>
+                        <exclude>gh-pages-stub/public/js/generateTable.js</exclude>
+                        <exclude>gh-pages-stub/_includes/variables.md</exclude>
+                        <exclude>gh-pages-stub/_includes/test.md</exclude>
+                        <exclude>gh-pages-stub/_data/permanent_config.yml</exclude>
+                        <exclude>gh-pages-stub/atom.xml</exclude>
                         <exclude>**/LaunchScreen.storyboard</exclude>
                         <exclude>**/Main.storyboard</exclude>
                         <exclude>**/*.json</exclude>

@@ -95,34 +95,36 @@
                 <configuration>
                     <useDefaultExcludes>false</useDefaultExcludes>
                     <excludes>
-                        <!-- Following excludes generated with Android Studio -->
-                        <exclude>source/android/gradlew.bat</exclude>
-                        <exclude>source/android/app/proguard-rules.pro</exclude>
-                        <exclude>source/android/gradle/</exclude>
-                        <exclude>source/android/app/build/</exclude>
-                        <exclude>source/android/local.properties</exclude>
-                        <exclude>source/android/app/app.iml</exclude>
-                        <exclude>source/android/gradlew.bat</exclude>
-                        <exclude>source/android/CellMonitor.iml</exclude>
-                        <exclude>source/android/gradle.properties</exclude>
+                        <!--Android Studio -->
                         <exclude>source/android/gradlew</exclude>
-                        <exclude>source/android/build/</exclude>
-                        <!-- Following excludes generated with XCode -->
-                        <exclude>
-                            source/objc/CellMonitorDemo.xcodeproj/project.xcworkspace/contents.xcworkspacedata
-                        </exclude>
-                        <exclude>source/objc/CellMonitorDemo.xcodeproj/project.pbxproj</exclude>
-                        <exclude>source/objc/CellMonitorDemo/Info.plist</exclude>
-                        <exclude>source/objc/CellMonitorDemo/Base.lproj/Main.storyboard</exclude>
-                        <exclude>source/objc/CellMonitorDemo/Base.lproj/LaunchScreen.storyboard
-                        </exclude>
-                        <exclude>
-                            source/objc/CellMonitorDemo/Assets.xcassets/AppIcon.appiconset/Contents.json
-                        </exclude>
-                        <!--Common excludes files -->
-                        <exclude>resources/cell_monitor_log.avsc</exclude>
-                        <exclude>resources/mongo_appender.json</exclude>
-                        <exclude>source/android/CellMonitor/.gitignore</exclude>
+                        <exclude>source/android/gradlew.bat</exclude>
+                        <exclude>source/android/gradle.properties</exclude>
+                        <exclude>source/android/build.gradle</exclude>
+                        <exclude>source/android/settings.gradle</exclude>
+                        <exclude>source/android/local.properties</exclude>
+                        <exclude>source/android/gradle/wrapper/gradle-wrapper.properties</exclude>
+                        <exclude>source/android/*.iml</exclude>
+                        <exclude>source/android/app/app.iml</exclude>
+                        <exclude>source/android/app/proguard-rules.pro</exclude>
+                        <exclude>source/android/project.properties</exclude>
+                        <exclude>source/android/import-summary.txt</exclude>
+                        <exclude>source/android/*/.gitignore</exclude>
+
+                        <!--XCode-->
+                        <exclude>source/objc/*.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcodeproj/project.pbxproj</exclude>
+                        <exclude>source/objc/*/Info.plist</exclude>
+                        <exclude>source/objc/*/Base.lproj/Main.storyboard</exclude>
+                        <exclude>source/objc/*/Base.lproj/LaunchScreen.storyboard</exclude>
+                        <exclude>source/objc/*/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
+                        <exclude>source/objc/Podfile.lock</exclude>
+                        <exclude>source/objc/Podfile</exclude>
+
+                        <!--Common files-->
+                        <exclude>resources/*.avsc</exclude>
+                        <exclude>resources/*.json</exclude>
+                        <exclude>resources/*.txt</exclude>
                     </excludes>
                 </configuration>
             </plugin>

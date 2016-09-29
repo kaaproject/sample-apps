@@ -59,7 +59,7 @@ static void send_temperature(kaa_client_t *kaa_client)
 {
     int32_t temp = rand() % 10 + 25;
     int64_t timestamp = time(NULL);
-    kaa_logging_data_t *log_record = kaa_logging_data_create();
+    kaa_logging_data_collection_t *log_record = kaa_logging_data_collection_create();
     if (!log_record) {
         demo_printf("Failed to create log record\r\n");
         error_cleanup(kaa_client);

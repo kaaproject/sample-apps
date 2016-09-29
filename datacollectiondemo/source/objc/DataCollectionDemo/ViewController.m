@@ -125,7 +125,7 @@ static const int32_t temperatureUpperLimit = 35;
 #pragma mark - Supporting methods
 
 - (void)generateAndSendLogRecord {
-    KAALoggingData *log = [[KAALoggingData alloc] init];
+    KAALoggingDataCollection *log = [[KAALoggingDataCollection alloc] init];
     log.temperature = (arc4random() % (temperatureUpperLimit - temperatureLowerLimit)) + temperatureLowerLimit;
     log.timeStamp = CACurrentMediaTime() * 1000;
     [self addLogWithText:[NSString stringWithFormat:@"Log sent with temperature: %d, timestamp: %lld", log.temperature, log.timeStamp]];

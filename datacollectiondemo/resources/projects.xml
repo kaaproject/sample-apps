@@ -24,77 +24,107 @@
     <project id="datacollection_demo_java">
         <name>Data collection Java demo</name>
         <description>Kaa Logging subsystem demo app based on Java SDK</description>
-        <details><![CDATA[
+        <details>
+        	<![CDATA[
 <p>
-This simple app demonstrates capabilities of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/">Kaa Logging subsystem</a> of the Java SDK.
-These features enable <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to send data (in the form of logs) to Kaa node.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a>.
+	In this sample application, the upload is initiated when the number of logs in the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-storage" target="_blank">log storage</a> reaches 5.
+</p>
+
+To implement this feature for Java SDK, the following API methods are used in this sample application:
+
+<ul>
+	<li>
+		<code>addLogRecord()</code> method submits new logs for further sending.
+	</li>
+	<li>
+		<code>addConfigurationListener()</code> method adds a configuration listener that enables managing the configuration parameters from the Administration UI.
+		As an example of such parameter, the sampling period value is used in this sample application.
+	</li>
+</ul>
+
+<h1>Launching</h1>
+
+<p>
+	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
 </p>
 
 <p>
-	The sample application uses three API call methods:
-	<ul>
-		<li>
-			<code><b>addLogRecord()</b></code> method submits new logs fir further sending.
-		</li>
-		<li>
-			<code><b>setLogUploadStrategy()</b></code> method sets the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies">upload strategy</a> for sending logs (logs can be sent by log count threshold, by timeout, etc.).
-		</li>
-		<li>
-			<code><b>addConfigurationListener()</b></code> method adds configuration listener which enables to manage demo working parameters from Admin UI (in our demo it is "log upload threshold").
-		</li>
-    </ul>
+	For sample applications that utilize Kaa Java SDK, both the binary files (.jar archive) and the source code (.tar.gz archive) are available for download.
+	If you want to only launch the sample application, download the binary files.
+	If you want to explore the source code of the sample application, download the source code archive.
 </p>
-For more details about <b>Kaa Java SDK</b> refer to <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa Java SDK</a> documentation page.
 
-<h2>Launching</h2>
+<h2>Install using the binary files</h2>
 
-First, make sure that you have Java installed on your device. Note that Data Collection Demo requires Java Development Kit 7+ version.
-<br/><br/>
+To install the sample application using the binary files:
+	
+<ol>
+	<li>
+		Click the <b>Binary</b> button.
+		A binary build window will open.
+		Click <b>Ok</b> and download the .jar file.
+	</li>
+	<li>
+		Run the following command from the directory containing the downloaded .jar archive.
+		
+		<pre>
+			$ java -jar DataCollectionDemo.jar
+		</pre>
+		
+		The sample application console will display the startup message.
+	</li>
+</ol>
 
-Second, make sure that the Kaa Sandbox is up and running.
-<br/><br/>
+<h2>Install using the source code</h2>
 
-To launch this demo you have two possibilities: download binary file and download sources.
-Sources are good opportunity to change code and try to check some needed functionality for your product, which based on our working example.
-Binary file is an example how it can works.
-<br/><br/>
+To install the sample application using the source code:
 
-So let's start. Download the <b>*.jar</b> file to your device by clicking the <b>Binary</b> button on the left.
-It is recommended to save every demo application in separate folder to prevent credentials conflict.
-Run the application using the following command in the console:
-<pre>
-$ java -jar DataCollectionDemo.jar
-</pre>
+<ol>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
+		To install Apache Ant, run the following command from the directory containing the unpacked sources.
+		
+		<pre>
+			$ ant debug
+		</pre>
+		
+		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
+		
+		<pre>
+			$ java -jar build/jar/DataCollectionDemo.jar
+		</pre>
+	</li>
+</ol>
 
-You will see expected output in terminal.
-<br/><br/>
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 
-By starting the "Data collection Java demo" app, you will trigger delivery of five log messages from the endpoint to the Kaa cluster.
-The Kaa cluster will persist those messages in a sandbox MongoDB database using a MongoDB appender.
-You can explore the collected data by querying the Sandbox MongoDB instance. To do it input following commands in Kaa Sandbox console:
-<pre>
-$ mongo kaa
-db.logs_$your_application_token$.find()
-</pre>
-<br/><br/>
+<h2>Manage log records</h2>
 
-In case, if you want to change code of the demo, change some configurations or check some other features, you must download sources.
-For this click <b>Sources</b> button and save archive to local folder, then unpack the archive.
-In order to build sources you need to have <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> to be installed on your computer.
-Navigate to folder with unpacked sources, launch CLI (command line, terminal) from this folder and consequently execute next commands:
-<pre>
-ant debug
-java -jar build/jar/DataCollectionDemo.jar
-</pre>
-You will see demo output in console. After you make some changes in source code you need to repeat these commands to launch changed application.
-<br/><br/>
+<p>
+	When you start the application, the last five log records will be sent from the endpoint to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a>.
+	The Kaa cluster will persist those records in the MongoDB database of the Sandbox using the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+</p>
 
-<h2>Playing around</h2>
-See on main demo page: <a href="/sandbox/#bundleId:bundleId=datacollection_demos">Data collection demo</a>
-
-
-<h2>What's next?</h2>
-For more background on the Kaa Logging subsystem, please refer to the corresponding <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/">Programming guide and design reference</a> sections.
+<p>
+	You can access the collected data by querying an instance of the MongoDB database in the Sandbox.
+	To do this, run the following commands in the Kaa Sandbox console.
+	
+	<pre>
+		$ mongo kaa
+		db.logs_$your_application_token$.find()
+	</pre>
+</p>
             ]]>
         </details>
         <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 

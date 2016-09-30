@@ -32,88 +32,23 @@
 
 #define KAA_USER_ID            "userid"
 #define KAA_USER_ACCESS_TOKEN  "token"
+#define KAA_STRING_MAX_LENGTH  100
+#define QUIT_MESSAGE           "/quit"
 
 #define CHAT_EVENT_FQN     "org.kaaproject.kaa.examples.event.ChatEvent"
 #define CHAT_MESSAGE_FQN   "org.kaaproject.kaa.examples.event.Message"
 
 
-char current_room[100];
+char current_room[KAA_STRING_MAX_LENGTH];
+pthread_mutex_t lock;
 
-struct room {
-    char room_name[100];
-    struct room *next;
-};
-
-typedef struct room Room;
-
-struct list
-{
-    Room *head;
-    Room *tail;
-};
-
-typedef struct list List;
-
-List lst;
+kaa_list_t *lst;
 
 static kaa_client_t *kaa_client = NULL;
 
-void initializeList(List *lst)
+static bool rooms_equal(char *node_1, char *node_2)
 {
-    lst->head = NULL;
-    lst->tail = NULL;
-}
-
-void push(List *lst, char *room_name)
-{
-    Room *t = (Room *) malloc(sizeof(Room));
-    strcpy(t->room_name, room_name);
-    t->next = NULL;
-    if (lst->head == NULL)
-    {
-        lst->head = t;
-        lst->tail = t;
-        return;
-    }
-    lst->tail->next = t;
-    lst->tail = t;
-}
-
-void pop(List *lst, char *room_name)
-{
-    Room *tmp, *prev_tmp = NULL;
-    for (tmp = lst->head; tmp != NULL; prev_tmp = tmp, tmp = tmp->next) {
-        if (!strcmp(room_name, tmp->room_name )) {
-            if (tmp == lst->head && tmp == lst->tail) {
-                free(tmp);
-                initializeList(lst);
-                return;
-            }
-            if (prev_tmp != NULL && tmp != lst->tail) {
-                prev_tmp->next = tmp->next;
-                free(tmp);
-                return;
-            }
-            if (prev_tmp == NULL && tmp != lst->tail) {
-                lst->head = tmp->next;
-                free(tmp);
-                return;
-            }
-            if (tmp == lst->tail) {
-                lst->tail = prev_tmp;
-                prev_tmp->next = NULL;
-                free(tmp);
-                return;
-            }
-        }
-    }
-}
-
-void print_list(List *lst)
-{
-    printf("Available rooms:\n");
-    for (Room *tmp = lst->head; tmp; tmp = tmp->next)
-        printf("%s\n", tmp->room_name);
+    return !strncmp(node_1, node_2, strnlen(node_2, KAA_STRING_MAX_LENGTH));
 }
 
 kaa_error_t kaa_on_event_listeners(void *context, const kaa_endpoint_id listeners[], size_t listeners_count)
@@ -131,7 +66,6 @@ kaa_error_t kaa_on_event_listeners_failed(void *context)
     printf("Kaa Demo event listeners not found\n");
     return KAA_ERR_NONE;
 }
-
 
 /*
  * Callback-s which receive endpoint attach status.
@@ -157,12 +91,11 @@ kaa_error_t kaa_on_attach_success(void *context)
 
     printf("Kaa Demo attach success\n");
 
-    const char *fqns[] = { CHAT_EVENT_FQN
-                         , CHAT_MESSAGE_FQN };
+    const char *fqns[] = { CHAT_EVENT_FQN, CHAT_MESSAGE_FQN };
 
-    kaa_event_listeners_callback_t listeners_callback = { NULL
-                                                        , &kaa_on_event_listeners
-                                                        , &kaa_on_event_listeners_failed };
+    kaa_event_listeners_callback_t listeners_callback = { NULL,
+        &kaa_on_event_listeners,
+        &kaa_on_event_listeners_failed };
 
     kaa_error_t error_code = kaa_event_manager_find_event_listeners(kaa_client_get_context(kaa_client)->event_manager, fqns, 2, &listeners_callback);
     if (error_code) {
@@ -181,112 +114,137 @@ kaa_error_t kaa_on_attach_failed(void *context, user_verifier_error_code_t error
     return KAA_ERR_NONE;
 }
 
-void kaa_on_change_chat(void *context,
-                        kaa_chat_chat_event_t *event,
-                        kaa_endpoint_id_p source)
+void kaa_on_change_chat(void *context, kaa_chat_chat_event_t *event, kaa_endpoint_id_p source)
 {
     (void)context;
     (void)source;
 
     if (event->event_type == ENUM_CHAT_EVENT_TYPE_CREATE) {
-        push(&lst, event->chat_name->data);
-    }
-    else
-    {
-        pop(&lst, event->chat_name->data);
+        pthread_mutex_lock(&lock);
+        kaa_list_push_back(lst, event->chat_name->data);
+        pthread_mutex_unlock(&lock);
+    } else {
+        pthread_mutex_lock(&lock);
+        kaa_list_remove_first(kaa_list_begin(&lst), &rooms_equal, event->chat_name->data, NULL);
+        pthread_mutex_unlock(&lock);
     }
 }
 
-void kaa_on_receive_message(void *context,
-                    kaa_chat_message_t *event,
-                    kaa_endpoint_id_p source)
+void kaa_on_receive_message(void *context, kaa_chat_message_t *event, kaa_endpoint_id_p source)
 {
-    if (!strcmp(current_room, event->chat_name->data)) {
+    if (!strncmp(current_room, event->chat_name->data, strnlen(current_room, KAA_STRING_MAX_LENGTH))) {
         puts(event->message->data);
     }
 }
 
-void search_room(List *lst, char *room_name)
+void search_room(char *room_name, size_t room_name_length)
 {
-    for (Room *tmp = lst->head; tmp; tmp = tmp->next) {
-        if (!strcmp(room_name, tmp->room_name)) {
-            printf("Room %s was founded. Join to the room. Put /quit for leave this room.\n");
-            strcpy(current_room, room_name);
-            char message[100];
-            fflush(stdout);
-            fgets(message, 100, stdin);
-            while (strcmp(message, "/quit")) {
-                int len = strlen(message);
-                message[len - 1] = '\0';
-                kaa_chat_message_t *create_message = kaa_chat_message_create();
-                create_message->chat_name = kaa_string_copy_create(current_room);
-                create_message->message = kaa_string_copy_create(message);
-                kaa_event_manager_send_kaa_chat_message(kaa_client_get_context(kaa_client)->event_manager, create_message, NULL);
-                fgets(message, 100, stdin);
-            }
-            printf("Leave from room %s\n", current_room);
-            memset(current_room, NULL, 100);
-            return;
-        }
+    pthread_mutex_lock(&lock);
+    kaa_list_node_t *room = kaa_list_find_next(kaa_list_begin(lst), &rooms_equal, room_name);
+    pthread_mutex_unlock(&lock);
+    if (!room) {
+        printf("Can`t find room with this name\n");
+        return;
     }
-    printf("Can`t find room with name %s\n", room_name);
-    return;
+    printf("Room was found. Join to the room. Put /quit for leave this room.\n");
+    strncpy(current_room, room_name, strnlen(room_name, KAA_STRING_MAX_LENGTH));
+    char message[KAA_STRING_MAX_LENGTH];
+    fflush(stdout);
+    if (fgets(message, KAA_STRING_MAX_LENGTH, stdin) == NULL) {
+        printf("Failed input a message\n");
+    } else {
+        while (strncmp(message, QUIT_MESSAGE, strnlen(QUIT_MESSAGE, KAA_STRING_MAX_LENGTH))) {
+            int len = strnlen(message, KAA_STRING_MAX_LENGTH);
+            message[len - 1] = '\0';
+            kaa_chat_message_t *create_message = kaa_chat_message_create();
+            create_message->chat_name = kaa_string_copy_create(current_room);
+            create_message->message = kaa_string_copy_create(message);
+            kaa_event_manager_send_kaa_chat_message(kaa_client_get_context(kaa_client)->event_manager, create_message, NULL);
+            fgets(message, KAA_STRING_MAX_LENGTH, stdin);
+        }
+    printf("Leave from room %s\n", current_room);
+    memset(current_room, 0, KAA_STRING_MAX_LENGTH);
+    }
 }
 
 void command_join()
 {
-    printf("Enter chat room name:");
-    char room_name[256];
-    scanf("%s", room_name);
-    printf("%s", room_name);
-    search_room(&lst, room_name);
-    Menu();
+    printf("Enter a chat room name:\n");
+    char room_name[KAA_STRING_MAX_LENGTH];
+    while (getchar() != '\n') {
+    }
+    if (fgets(room_name, KAA_STRING_MAX_LENGTH, stdin) == NULL) {
+        printf("Failed input a room name\n");
+    } else {
+        room_name[strnlen(room_name, KAA_STRING_MAX_LENGTH) - 1] = '\0';
+        search_room(room_name, strnlen(room_name, KAA_STRING_MAX_LENGTH));
+    }
+    menu();
 }
 
 void command_create()
 {
-    printf("Enter chat room name:");
-    char room_name[256];
-    scanf("%s", room_name);
+    printf("Enter chat room name:\n");
+    char room_name[KAA_STRING_MAX_LENGTH];
+    while(getchar() != '\n') {
+    }
+    if (fgets(room_name, KAA_STRING_MAX_LENGTH, stdin) == NULL) {
+        printf("Failed input a room name\n");
+    } else {
+        room_name[strnlen(room_name, KAA_STRING_MAX_LENGTH) - 1] = '\0';
 
-    kaa_chat_chat_event_t *create_room = kaa_chat_chat_event_create();
-    create_room->chat_name = kaa_string_copy_create(room_name);
-    create_room->event_type = ENUM_CHAT_EVENT_TYPE_CREATE;
+        kaa_chat_chat_event_t *create_room = kaa_chat_chat_event_create();
+        create_room->chat_name = kaa_string_copy_create(room_name);
+        create_room->event_type = ENUM_CHAT_EVENT_TYPE_CREATE;
 
-    kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, create_room, NULL);
-    push(&lst, room_name);
+        kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, create_room, NULL);
 
-    create_room->destroy(create_room);
+        create_room->destroy(create_room);
 
-    printf("Room %s was successfully created.\n", room_name);
-    Menu();
+        printf("Room %s was successfully created.\n", room_name);
+    }
+    menu();
 }
 
 void command_delete()
 {
     printf("Enter chat room name:");
-    char room_name[256];
-    scanf("%s", room_name);
+    char room_name[KAA_STRING_MAX_LENGTH];
+    while(getchar() != '\n') {
+    }
+    if (fgets(room_name, KAA_STRING_MAX_LENGTH, stdin) == NULL) {
+        printf("Failed input a room name.\n");
+    } else {
+        room_name[strnlen(room_name, KAA_STRING_MAX_LENGTH) - 1] = '\0';
 
-    kaa_chat_chat_event_t *delete_room = kaa_chat_chat_event_create();
-    delete_room->chat_name = kaa_string_copy_create(room_name);
-    delete_room->event_type = ENUM_CHAT_EVENT_TYPE_DELETE;
+        kaa_chat_chat_event_t *delete_room = kaa_chat_chat_event_create();
+        delete_room->chat_name = kaa_string_copy_create(room_name);
+        delete_room->event_type = ENUM_CHAT_EVENT_TYPE_DELETE;
 
-    kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, delete_room, NULL);
-    pop(&lst, room_name);
+        kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, delete_room, NULL);
 
-    delete_room->destroy(delete_room);
-    printf("Room %s was successfully deleted.\n", room_name);
-    Menu();
+        delete_room->destroy(delete_room);
+        printf("Room %s was successfully deleted.\n", room_name);
+    }
+    menu();
 }
 
-void printRooms()
+static void print_room(char *room_name, void *context)
 {
-    print_list(&lst);
-    Menu();
+    (void)context;
+    printf("%s\n", room_name);
 }
 
-void printHelp()
+void print_rooms()
+{
+    printf("Available rooms:\n");
+    pthread_mutex_lock(&lock);
+    kaa_list_for_each(kaa_list_begin(lst), kaa_list_back(lst), &print_room, NULL);
+    pthread_mutex_unlock(&lock);
+    menu();
+}
+
+void print_help()
 {
     printf("Available commands:\n");
     printf("1. Join room\n");
@@ -296,9 +254,9 @@ void printHelp()
     printf("5. Exit application\n");
 }
 
-void Menu()
+void menu()
 {
-    printHelp();
+    print_help();
 
     int answer;
     scanf("%d", &answer);
@@ -313,15 +271,16 @@ void Menu()
             command_delete();
             break;
         case 4:
-            printRooms();
+            print_rooms();
             break;
         case 5:
             printf("Event demo stopped\n");
+            kaa_list_destroy(lst, &kaa_data_destroy);
             kaa_client_destroy(kaa_client);
             return EXIT_SUCCESS;
         default:
             printf("Wrong command syntax\n");
-            Menu();
+            menu();
             break;
     }
 }
@@ -339,11 +298,11 @@ int main(/*int argc, char *argv[]*/)
         return EXIT_FAILURE;
     }
 
-    kaa_attachment_status_listeners_t listeners = { NULL
-                                                  , &kaa_on_attached
-                                                  , &kaa_on_detached
-                                                  , &kaa_on_attach_success
-                                                  , &kaa_on_attach_failed };
+    kaa_attachment_status_listeners_t listeners = { NULL,
+        &kaa_on_attached,
+        &kaa_on_detached,
+        &kaa_on_attach_success,
+        &kaa_on_attach_failed };
 
     error_code = kaa_user_manager_set_attachment_listeners(kaa_client_get_context(kaa_client)->user_manager, &listeners);
     if (error_code) {
@@ -352,9 +311,9 @@ int main(/*int argc, char *argv[]*/)
         return EXIT_FAILURE;
     }
 
-    error_code = kaa_user_manager_default_attach_to_user(kaa_client_get_context(kaa_client)->user_manager
-                                                       , KAA_USER_ID
-                                                       , KAA_USER_ACCESS_TOKEN);
+    error_code = kaa_user_manager_default_attach_to_user(kaa_client_get_context(kaa_client)->user_manager,
+        KAA_USER_ID,
+        KAA_USER_ACCESS_TOKEN);
     if (error_code) {
         printf("Failed default attach to user, error_code %d\n", error_code);
         kaa_client_destroy(kaa_client);
@@ -388,10 +347,14 @@ int main(/*int argc, char *argv[]*/)
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
 
     printf("Endpoint Key Hash: %.*s\n", (int)endpoint_key_hash_length, endpoint_key_hash);
-
-    initializeList(&lst);
-    pthread_t Menu_thread;
-    pthread_create(&Menu_thread, NULL, &Menu, NULL);
+ 
+    if (pthread_mutex_init(&lock, NULL) != 0) {
+        printf("Mutex init failed\n");
+        return EXIT_FAILURE;
+    }
+    lst = kaa_list_create();
+    pthread_t menu_thread;
+    pthread_create(&menu_thread, NULL, &menu, NULL);
 
     /**
      * Start Kaa client main loop.
@@ -402,6 +365,9 @@ int main(/*int argc, char *argv[]*/)
         kaa_client_destroy(kaa_client);
         return EXIT_FAILURE;
     }
+
+    pthread_join(menu_thread, NULL);
+    pthread_mutex_destroy(&lock);
 
     /**
      * Destroy Kaa client.

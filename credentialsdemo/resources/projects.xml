@@ -91,8 +91,8 @@ To install the Credentials management sample application using the source code:
 		Unpack the downloaded archive.
 	</li>
 	<li>
-		To build from new sources you need to have Apache Ant installed on your host machine.
-		To install Apache ant, run the following command from the directory containing the unpacked sources.
+		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
+		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
 		<pre>
 			$ ant debug
@@ -206,8 +206,8 @@ To install the Credentials management sample application using the source code:
 		Unpack the downloaded archive.
 	</li>
 	<li>
-		To build from new sources you need to have Apache Ant installed on your host machine.
-		To install Apache ant, run the following command from the directory containing the unpacked sources.
+		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
+		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
 		<pre>
 			$ ant debug
@@ -311,8 +311,8 @@ To install the Credentials management sample application using the source code:
 		Unpack the downloaded archive.
 	</li>
 	<li>
-		To build from new sources you need to have Apache Ant installed on your host machine.
-		To install Apache ant, run the following command from the directory containing the unpacked sources.
+		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
+		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 
 		<pre>
 			$ ant debug

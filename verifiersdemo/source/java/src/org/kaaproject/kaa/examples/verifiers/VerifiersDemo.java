@@ -23,16 +23,15 @@ import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.channel.failover.FailoverDecision;
 import org.kaaproject.kaa.client.channel.failover.FailoverStatus;
 import org.kaaproject.kaa.client.channel.failover.strategies.DefaultFailoverStrategy;
-import org.kaaproject.kaa.client.configuration.base.SimpleConfigurationStorage;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
-import org.kaaproject.kaa.client.profile.ProfileContainer;
+import org.kaaproject.kaa.client.event.registration.AttachEndpointToUserCallback;
+import org.kaaproject.kaa.client.logging.LogStorage;
 import org.kaaproject.kaa.demo.verifiersdemo.MessageEvent;
 import org.kaaproject.kaa.demo.verifiersdemo.VerifiersDemoEventClassFamily;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -62,9 +61,22 @@ public class VerifiersDemo {
 
         kaaClient.setFailoverStrategy(new CustomFailoverStrategy());
 
+        kaaClient.setAttachedListener(new AttachEndpointToUserCallback() {
+            @Override
+            public void onAttachedToUser(String userExternalId, String endpointAccessToken) {
+                LOG.info("--= Endpoint was attached to user. =--");
+                LOG.info("User external ID: {}, returned access token: {}", userExternalId, endpointAccessToken);
+                LOG.info("Access token of current endpoint: {}", kaaClient.getEndpointAccessToken());
+
+            }
+        });
+
         /*
          * Start the Kaa client and connect it to the Kaa server.
          */
+
+        addMessageListener();
+
         kaaClient.start();
 
         // await for client starting
@@ -73,20 +85,6 @@ public class VerifiersDemo {
         LOG.info("Endpoint access token:" + kaaClient.getEndpointAccessToken());
         LOG.info("Copy this token to mobile application in order to do assisted attach of this endpoint to user (current mobile application owner).");
 
-        //Obtain the event family factory, then event family
-        final EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
-        final VerifiersDemoEventClassFamily eventFamily = eventFamilyFactory.getVerifiersDemoEventClassFamily();
-
-        // Add event listeners to the family factory.
-        eventFamily.addListener(new VerifiersDemoEventClassFamily.Listener() {
-
-            @Override
-            public void onEvent(MessageEvent messageEvent, String senderId) {
-                LOG.info("MessageEvent event received! Message: {}", messageEvent.getMessage());
-            }
-
-        });
-
         readSymbol();
 
         LOG.info("Stopping client...");
@@ -94,6 +92,21 @@ public class VerifiersDemo {
          * Stop the Kaa client and connect it to the Kaa server.
          */
         kaaClient.stop();
+        kaaClient = null;
+    }
+
+    private static void addMessageListener() {
+        //Obtain the event family factory, then event family
+        final EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
+        final VerifiersDemoEventClassFamily eventFamily = eventFamilyFactory.getVerifiersDemoEventClassFamily();
+
+        // Add event listeners to the family factory.
+        eventFamily.addListener(new VerifiersDemoEventClassFamily.Listener() {
+            @Override
+            public void onEvent(MessageEvent messageEvent, String senderId) {
+                LOG.info("MessageEvent event received! Message: {}", messageEvent.getMessage());
+            }
+        });
     }
 
     private static void readSymbol() {

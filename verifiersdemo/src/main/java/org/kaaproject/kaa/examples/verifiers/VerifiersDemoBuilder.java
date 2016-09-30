@@ -29,6 +29,8 @@ import org.kaaproject.kaa.server.verifiers.facebook.config.FacebookVerifierConfi
 import org.kaaproject.kaa.server.verifiers.facebook.config.gen.FacebookAvroConfig;
 import org.kaaproject.kaa.server.verifiers.gplus.config.GplusVerifierConfig;
 import org.kaaproject.kaa.server.verifiers.gplus.config.gen.GplusAvroConfig;
+import org.kaaproject.kaa.server.verifiers.trustful.config.TrustfulVerifierConfig;
+import org.kaaproject.kaa.server.verifiers.trustful.config.gen.TrustfulAvroConfig;
 import org.kaaproject.kaa.server.verifiers.twitter.config.TwitterVerifierConfig;
 import org.kaaproject.kaa.server.verifiers.twitter.config.gen.TwitterAvroConfig;
 import org.slf4j.Logger;
@@ -50,6 +52,20 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
     private static final int MAX_PARALLEL_CONNECTIONS = 5;
     private static final int MIN_PARALLEL_CONNECTIONS = 2;
     private static final Long KEEP_ALIVE_MILLISECONDS = 60000L;
+
+    // method for fast builder testing
+    // just setup IP and port parameters
+    public static void main(String[] args) {
+        VerifiersDemoBuilder builder= new VerifiersDemoBuilder();
+        String kaaNodeIp = "10.2.3.18";
+        int kaaNodePort = 8080;
+        AdminClient client = new AdminClient(kaaNodeIp, kaaNodePort);
+        try {
+            builder.buildDemoApplicationImpl(client);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public VerifiersDemoBuilder() {
         super("demo/verifiers");
@@ -75,6 +91,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         addEventClassFamilyVersion(verifiersDemoEventClassFamily, client, verifiersApplication.getTenantId(), "verifiersDemoEventClassFamily.json");
         logger.info("Event class family was created");
 
+        sdkProfileDto.setName("Verifiers default SDK");
         sdkProfileDto.setApplicationId(verifiersApplication.getId());
         sdkProfileDto.setApplicationToken(verifiersApplication.getApplicationToken());
         sdkProfileDto.setProfileSchemaVersion(0);
@@ -83,8 +100,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        ApplicationEventFamilyMapDto verifiersDemoAefMap = mapEventClassFamily(client, verifiersApplication,
-                verifiersDemoEventClassFamily);
+        ApplicationEventFamilyMapDto verifiersDemoAefMap = mapEventClassFamily(client, verifiersApplication, verifiersDemoEventClassFamily);
         List<String> aefMapIds = new ArrayList<>();
         aefMapIds.add(verifiersDemoAefMap.getId());
         sdkProfileDto.setAefMapIds(aefMapIds);
@@ -148,6 +164,18 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         gplusUserVerifier.setJsonConfiguration(gplusAvroConfig.toString());
         logger.info("Google+ config: {} ", facebookAvroConfig.toString());
         gplusUserVerifier = client.editUserVerifierDto(gplusUserVerifier);
+
+        TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();
+        UserVerifierDto trustfulUserVerifierDto = new UserVerifierDto();
+        trustfulUserVerifierDto.setApplicationId(verifiersApplication.getId());
+        trustfulUserVerifierDto.setName("Trustful verifier");
+        trustfulUserVerifierDto.setPluginClassName(trustfulVerifierConfig.getPluginClassName());
+        trustfulUserVerifierDto.setPluginTypeName(trustfulVerifierConfig.getPluginTypeName());
+
+        TrustfulAvroConfig trustfulAvroConfig = new TrustfulAvroConfig();
+        trustfulUserVerifierDto.setJsonConfiguration(trustfulAvroConfig.toString());
+        logger.info("Trustful config: {} ", trustfulAvroConfig.toString());
+        trustfulUserVerifierDto = client.editUserVerifierDto(trustfulUserVerifierDto);
 
         logger.info("Getting endpoint group...");
         EndpointGroupDto baseEndpointGroup = null;

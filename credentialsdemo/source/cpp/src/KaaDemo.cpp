@@ -24,7 +24,13 @@ using namespace kaa;
 class FailoverStrategy: public DefaultFailoverStrategy
 {
 public:
-    virtual FailoverStrategyDecision onFailover(KaaFailoverReason reason)
+    FailoverStrategy(IKaaClientContext &clientContext):
+        DefaultFailoverStrategy(clientContext)
+    {}
+
+    ~FailoverStrategy() = default;
+
+    FailoverStrategyDecision onFailover(KaaFailoverReason reason) override
     {
         switch (reason) {
             case KaaFailoverReason::ENDPOINT_NOT_REGISTERED:
@@ -51,7 +57,7 @@ int main()
         /*
          * Set failover strategy
          */
-        kaaClient->setFailoverStrategy(std::make_shared<FailoverStrategy>());
+        kaaClient->setFailoverStrategy(std::make_shared<FailoverStrategy>(kaaClient->getKaaClientContext()));
 
         /*
          * Run the Kaa endpoint.
@@ -72,8 +78,8 @@ int main()
 
     } catch (KaaException &e) {
         std::cerr << e.what() << std::endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

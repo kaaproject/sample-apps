@@ -24,23 +24,16 @@ set(WITH_EXTENSION_EVENTS OFF)
 if (NOT DEFINED WIFI_SSID)
     set(WIFI_SSID "WiFi SSID")
 endif (NOT DEFINED WIFI_SSID)
-add_definitions(-DWIFI_SSID="${WIFI_SSID}")
-
+add_definitions(-DWIFI_SSID=${WIFI_SSID})
 if (NOT DEFINED WIFI_PWD)
     set(WIFI_PWD "Password")
 endif (NOT DEFINED WIFI_PWD)
-add_definitions(-DWIFI_PWD="${WIFI_PWD}")
-
-if (NOT DEFINED KAA_TARGET)
-    set(KAA_TARGET "posix")
-endif (NOT DEFINED KAA_TARGET)
-add_definitions(-DKAA_TARGET="${KAA_TARGET}")
-
-
+add_definitions(-DWIFI_PWD=${WIFI_PWD})
 
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-set(KAA_MAX_LOG_LEVEL 3)
+    set(KAA_MAX_LOG_LEVEL "3")
 endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
+
 
 if (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(libs/kaa)
@@ -53,8 +46,8 @@ endif (NOT DEFINED KAA_SDK_PATH)
 # The blank.c file is a placeholder for CMake's add_executable()
 # All the code (Kaa SDK, ESP8266 SDK and demo) is compiled as static libraries
 # and linked into that executable.
-add_subdirectory(targets/${KAA_TARGET})
-if("${KAA_TARGET}" STREQUAL "esp8266")
+add_subdirectory(targets/${KAA_PLATFORM})
+if("${KAA_PLATFORM}" STREQUAL "esp8266")
     add_library(demo_client_s STATIC src/kaa_demo.c)
     file(WRITE ${CMAKE_BINARY_DIR}/blank.c "")
     add_executable(demo_client ${CMAKE_BINARY_DIR}/blank.c)

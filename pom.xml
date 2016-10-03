@@ -297,7 +297,7 @@
                         <exclude>**/PUT_SDK_HERE</exclude>
                         <exclude>scripts/cmakegen/Posix.cmake</exclude>
                         <exclude>scripts/cmakegen/Embedded.cmake</exclude>
-                        <exclude>scripts/cmakegen/Definition.cmake</exclude>
+                        <exclude>scripts/cmakegen/Variable.cmake</exclude>
                         <exclude>scripts/cmakegen/README.md</exclude>
                     </excludes>
                 </configuration>

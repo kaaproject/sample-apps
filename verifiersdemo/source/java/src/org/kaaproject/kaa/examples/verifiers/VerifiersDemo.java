@@ -16,10 +16,7 @@
 
 package org.kaaproject.kaa.examples.verifiers;
 
-import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
-import org.kaaproject.kaa.client.Kaa;
-import org.kaaproject.kaa.client.KaaClient;
-import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
+import org.kaaproject.kaa.client.*;
 import org.kaaproject.kaa.client.channel.failover.FailoverDecision;
 import org.kaaproject.kaa.client.channel.failover.FailoverStatus;
 import org.kaaproject.kaa.client.channel.failover.strategies.DefaultFailoverStrategy;
@@ -39,13 +36,21 @@ import java.util.concurrent.TimeUnit;
  */
 public class VerifiersDemo {
     private static final Logger LOG = LoggerFactory.getLogger(VerifiersDemo.class);
+    private static final String KEYS_DIR = "verifiers_keys_for_java_demo";
+
     private static KaaClient kaaClient;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
+        /*
+         * Setup working directory for endpoint
+         */
+        KaaClientProperties endpointProperties = new KaaClientProperties();
+        endpointProperties.setWorkingDirectory(KEYS_DIR);
+
         /*
          * Create the Kaa desktop context for the application.
          */
-        DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext();
+        DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext(endpointProperties);
 
         /*
          * Create a Kaa client and add a listener which displays the Kaa client

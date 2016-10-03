@@ -16,7 +16,6 @@
 
 package org.kaaproject.kaa.examples.verifiers;
 
-import org.apache.commons.io.IOUtils;
 import org.kaaproject.kaa.common.dto.*;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
@@ -36,7 +35,6 @@ import org.kaaproject.kaa.server.verifiers.twitter.config.gen.TwitterAvroConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,6 +174,7 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
         trustfulUserVerifierDto.setJsonConfiguration(trustfulAvroConfig.toString());
         logger.info("Trustful config: {} ", trustfulAvroConfig.toString());
         trustfulUserVerifierDto = client.editUserVerifierDto(trustfulUserVerifierDto);
+        sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifierDto.getVerifierToken());
 
         logger.info("Getting endpoint group...");
         EndpointGroupDto baseEndpointGroup = null;

@@ -43,9 +43,8 @@ public class VerifiersDemoMobileSim {
     private static final String USER_EXTERNAL_ID = "user02@mail.com";
     private static final String USER_ACCESS_TOKEN = "token";
     //Directory where enpoint store its keys
-    private static final String WORKING_DIR_PREFIX = "kaa_endpoint_";
+    private static final String KEYS_DIR = "verifiers_keys_for_mobile_sim";
 
-    private KaaClientProperties endpointMainProperties;
     private KaaClient kaaClient;
 
     private static volatile CountDownLatch attachLatch;
@@ -57,55 +56,48 @@ public class VerifiersDemoMobileSim {
     }
 
     public void getThingsDone() throws Throwable {
-        endpointMainProperties = new KaaClientProperties();
-        endpointMainProperties.setWorkingDirectory(WORKING_DIR_PREFIX + "A");
+        KaaClientProperties endpointMainProperties = new KaaClientProperties();
+        endpointMainProperties.setWorkingDirectory(KEYS_DIR);
         kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(endpointMainProperties), new SimpleKaaClientStateListener() {
             @Override
             public void onStarted() {
-                LOG.info("Endpoint A started");
+                LOG.info("Endpoint 'Attacher' started");
             }
 
             @Override
             public void onStopped() {
-                LOG.info("Endpoint A stopped");
+                LOG.info("Endpoint 'Attacher' stopped");
             }
         }, true);
 
         kaaClient.start();
 
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(3);
 
         // Attach the endpoint running the Kaa client to the user by verifying
         // credentials sent by the endpoint against the user credentials
         // stored on the Kaa server.
         // This demo application uses a trustful verifier, therefore
         // any credentials sent by the endpoint are accepted as valid.
-        LOG.info("Attaching user...");
+        LOG.info("Attaching current endpoint [ID: {}] to user {} ...", kaaClient.getEndpointKeyHash(), USER_EXTERNAL_ID);
 
-        CountDownLatch attachLatch1  = new CountDownLatch(1);
-        kaaClient.attachUser("75083888349433448407", USER_EXTERNAL_ID, USER_ACCESS_TOKEN, new UserAttachCallback() {
+        CountDownLatch selfAttachLatch  = new CountDownLatch(1);
+        kaaClient.attachUser(USER_EXTERNAL_ID, USER_ACCESS_TOKEN, new UserAttachCallback() {
             @Override
             public void onAttachResult(UserAttachResponse response) {
-                LOG.info("User attach response: " + response.getResult());
+                LOG.info("'Attacher' self-attach to user response: " + response.getResult());
 
                 // Call attachEndpoint if the endpoint was successfully attached.
                 if (response.getResult() == SyncResponseResultType.SUCCESS) {
                     attachEndpoint();
                 }
 
-                // Shut down all the Kaa client tasks and release
-                // all network connections and application resources
-                // if the endpoint was not attached.
-                else {
-                    kaaClient.stop();
-                    LOG.info("Endpoint demo stopped");
-                }
-                attachLatch1.countDown();
+                selfAttachLatch.countDown();
             }
         });
 
         //waiting user attachment and attach of Endpoint B
-        attachLatch1.await();
+        selfAttachLatch.await();
 
         // Shut down all the Kaa client tasks and release
         // all network connections and application resources.
@@ -127,8 +119,8 @@ public class VerifiersDemoMobileSim {
                 kaaClient.attachEndpoint(accessToken, new OnAttachEndpointOperationCallback() {
                     @Override
                     public void onAttach(SyncResponseResultType result, EndpointKeyHash resultContext) {
-                        LOG.info("Endpoint attach result: {}, attached endpoint ID: ", result);
-                        LOG.info("Attached endpoint ID: ", resultContext.getKeyHash());
+                        LOG.info("Endpoint assisted attach result: {}", result);
+                        LOG.info("Attached endpoint ID: {}", resultContext.getKeyHash());
 
                         LOG.info("\n\nSending test message...");
                         sendTestMessage();
@@ -137,7 +129,7 @@ public class VerifiersDemoMobileSim {
 
                 //wait for attachment
                 //attachLatch.await(3, TimeUnit.SECONDS);
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(5);
 
                 sendTestMessage();
 

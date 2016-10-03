@@ -19,11 +19,8 @@ project(%APP_NAME %APP_LANG)
 
 # Disable unused features
 %KAA_FEATURES
-%DEMO_DEFINITIONS
-
-if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-set(KAA_MAX_LOG_LEVEL 3)
-endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
+%DEFINITIONS
+%VARIABLES
 
 if (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(libs/kaa)

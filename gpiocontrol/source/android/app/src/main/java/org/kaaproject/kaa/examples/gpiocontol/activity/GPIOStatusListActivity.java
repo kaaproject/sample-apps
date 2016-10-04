@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.examples.gpiocontol;
+package org.kaaproject.kaa.examples.gpiocontol.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

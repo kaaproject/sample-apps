@@ -29,15 +29,15 @@ import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest;
 import org.kaaproject.kaa.examples.gpiocontrol.RemoteControlECF;
 
-public class KaaProvider {
+public class KaaManager {
 
-    private static final String LOG_TAG = KaaProvider.class.getSimpleName();
+    private static final String LOG_TAG = KaaManager.class.getSimpleName();
 
     private static volatile KaaClient kaaClient;
 
     public static KaaClient getClient(Context context) {
         if (kaaClient == null) {
-            synchronized (KaaProvider.class) {
+            synchronized (KaaManager.class) {
                 if (kaaClient == null) {
                     kaaClient = Kaa.newClient(new AndroidKaaPlatformContext(context), new SimpleKaaClientStateListener(), true);
                 }

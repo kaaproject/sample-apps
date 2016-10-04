@@ -33,9 +33,9 @@ import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.registration.OnDetachEndpointOperationCallback;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
-import org.kaaproject.kaa.examples.gpiocontol.GPIOStatusListActivity;
+import org.kaaproject.kaa.examples.gpiocontol.activity.GPIOStatusListActivity;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
-import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
+import org.kaaproject.kaa.examples.gpiocontol.utils.KaaManager;
 import org.kaaproject.kaa.examples.gpiocontrol.R;
 
 import java.util.List;
@@ -102,7 +102,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        KaaClient kaaClient = KaaProvider.getClient(context);
+                        KaaClient kaaClient = KaaManager.getClient(context);
                         Log.d(TAG, "Going to detach....");
                         kaaClient.detachEndpoint(new EndpointKeyHash(endpointKey), new OnDetachEndpointOperationCallback() {
                             @Override

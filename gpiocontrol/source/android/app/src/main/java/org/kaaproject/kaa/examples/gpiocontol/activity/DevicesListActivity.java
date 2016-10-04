@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.examples.gpiocontol;
+package org.kaaproject.kaa.examples.gpiocontol.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -41,7 +41,7 @@ import org.kaaproject.kaa.client.event.registration.OnAttachEndpointOperationCal
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.examples.gpiocontol.adapters.DevicesAdapter;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
-import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
+import org.kaaproject.kaa.examples.gpiocontol.utils.KaaManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.NetworkUtils;
 import org.kaaproject.kaa.examples.gpiocontol.utils.PreferencesManager;
 import org.kaaproject.kaa.examples.gpiocontrol.DeviceInfoRequest;
@@ -54,6 +54,7 @@ import java.util.List;
 
 public class DevicesListActivity extends AppCompatActivity {
 
+    public static final String EXTERNAL_ID = "2";
     private final String TAG = DevicesListActivity.class.getSimpleName();
 
     private ProgressBar progressBar;
@@ -117,12 +118,12 @@ public class DevicesListActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        kaaClient = KaaProvider.getClient(this);
+        kaaClient = KaaManager.getClient(this);
         kaaClient.start();
         if (isFirstLaunch()) {
-            PreferencesManager.setUserExternalId(this, "2");
+            PreferencesManager.setUserExternalId(this, EXTERNAL_ID);
             Log.d(TAG, "Attaching user...");
-            KaaProvider.attachUser(DevicesListActivity.this);
+            KaaManager.attachUser(DevicesListActivity.this);
         }
         setUpEndpointListener();
 
@@ -138,7 +139,7 @@ public class DevicesListActivity extends AppCompatActivity {
             startKaa();
         }
 
-        KaaProvider.setUpEventListener(this, new RemoteControlECF.Listener() {
+        KaaManager.setUpEventListener(this, new RemoteControlECF.Listener() {
             @Override
             public void onEvent(DeviceInfoResponse deviceInfoResponse, String endpointId) {
                 Log.d(TAG, "Got DeviceInfoResponse");
@@ -184,7 +185,7 @@ public class DevicesListActivity extends AppCompatActivity {
                             }
                         });
 
-                        KaaProvider.sendDeviceInfoRequestToAll(DevicesListActivity.this);
+                        KaaManager.sendDeviceInfoRequestToAll(DevicesListActivity.this);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 })

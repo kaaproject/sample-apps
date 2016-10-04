@@ -31,7 +31,7 @@ import android.widget.TextView;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
 import org.kaaproject.kaa.examples.gpiocontol.model.Device;
-import org.kaaproject.kaa.examples.gpiocontol.utils.KaaProvider;
+import org.kaaproject.kaa.examples.gpiocontol.utils.KaaManager;
 import org.kaaproject.kaa.examples.gpiocontol.utils.NetworkUtils;
 import org.kaaproject.kaa.examples.gpiocontrol.GpioStatus;
 import org.kaaproject.kaa.examples.gpiocontrol.GpioToggleRequest;
@@ -84,7 +84,7 @@ public class GPIOAdapter extends RecyclerView.Adapter<GPIOAdapter.ViewHolder> {
 
                 gpioStatus.setStatus(isChecked);
 
-                KaaClient kaaClient = KaaProvider.getClient(holder.cardView.getContext());
+                KaaClient kaaClient = KaaManager.getClient(holder.cardView.getContext());
 
                 EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
                 final RemoteControlECF ecf = eventFamilyFactory.getRemoteControlECF();

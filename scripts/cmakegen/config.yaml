@@ -44,7 +44,7 @@ credentialsdemo:
     appname: 'CredentialsDemo'
     languages: ['c', 'cpp']
     path: 'credentialsdemo/source/'
-    definitions:
+    variables:
         KAA_RUNTIME_KEY_GENERATION: 'OFF'
 
 verifiersdemo:

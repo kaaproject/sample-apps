@@ -10,7 +10,7 @@ The scripts are generated from the following template files:
 * `Embedded.cmake` -- is used to define CMake target for multiplatform
  (posix + embedded targets) applications.
 * `Posix.cmake` -- is used to define CMake target for posix-only applications.
-* `Definition.cmake` -- Template for user-specified compile-time definitions.
+* `Variable.cmake` -- Template for user-specified CMake variables.
 
 # Template variables
 
@@ -20,7 +20,8 @@ The following variables are substituted by the generator:
 * `APP_NAME` -- The name of application.
 * `APP_LANG` -- `CXX` for C++ and `C` for C projects.
 * `KAA_FEATURES` -- configures Kaa SDK to disable unused features (see below).
-* `DEMO_DEFINITIONS` -- compile-time definitions specified by user (see below).
+* `DEFINITIONS` -- compile-time definitions specified by user (see below).
+* `VARIABLES` -- CMake variables specified by user (see below).
 * `DEFINE_EXECUTABLE` -- defines CMake target
 (includes and processes either `Posix.cmake` or `Embedded.cmake`).
 * `APP_SOURCES` -- list of application source files.
@@ -39,9 +40,10 @@ Possible values: `configuration`, `notification`, `logging`, `events`.
 * `path` -- The base path to application. The resulting `CMakeList.txt` will be placed in `path`/`language`/.
 * `build_embedded` -- `true` if application should support compilation for embedded targets,
 `false` otherwise. Not that in case of `true` the application source tree should contain the `targets` folder. (See `sample-apps/common/target`).
-* `definitions` -- dictionarty (map) of variable and it's default value. The user can override the default value by passing it to CMake.
+* `variables` -- dictionary (map) of variable and it's default value. The user can override the default value by passing it to CMake.
+* `definitions` -- Almost the same as `variables` but the variable is added to compile definitions (with `add_definitions()` command)
 
 # Usage
 
 Specify path to the `sample-apps` root directory as a first `cmakegen.py`'s argument.
-Note that `cmakegen` assumes that `config.yaml`, `CMakeLists.txt`, `Definition.cmake`, `Posix.cmake` and `Embedded.cmake` are located in the working directory.
+Note that `cmakegen` assumes that `config.yaml`, `CMakeLists.txt`, `Variable.cmake`, `Posix.cmake` and `Embedded.cmake` are located in the working directory.

@@ -109,6 +109,7 @@
                         <exclude>source/android/gradlew</exclude>
                         <exclude>source/android/gradlew.bat</exclude>
                         <exclude>source/android/gradle.properties</exclude>
+                        <exclude>source/android/app/build.gradle</exclude>
                         <exclude>source/android/build.gradle</exclude>
                         <exclude>source/android/settings.gradle</exclude>
                         <exclude>source/android/local.properties</exclude>

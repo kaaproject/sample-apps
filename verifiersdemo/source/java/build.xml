@@ -39,7 +39,7 @@
         <mkdir dir="src/build/classes"/>
         <mkdir dir="src/build/jar"/>
         <javac srcdir="src" destdir="src/build/classes" classpathref="classpath" includeantruntime="false"/>
-        <jar destfile="build/jar/JVerifiersDemo.jar">
+        <jar destfile="build/jar/VerifiersDemo.jar">
             <fileset file="res/logback.xml" />
             <fileset dir="src/build/classes">
                 <include name="**/*.class"/>

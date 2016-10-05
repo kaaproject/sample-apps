@@ -22,7 +22,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="verifiers_demo_android">
-        <name>User verifiers demo android</name>
+        <name>User verifiers demo Android</name>
         <description>Kaa user verifiers demo app for Android</description>
         <details>
             <![CDATA[
@@ -57,11 +57,32 @@ For more background on the user verification refer to the corresponding design r
         <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>BASIC</complexity>
+        <bundleId>verifiers_demos</bundleId>
         <sourceArchive>android/verifiers_demo.tar.gz</sourceArchive>
         <projectFolder>verifiers_demo/VerifiersDemo</projectFolder>
         <sdkLibDir>verifiers_demo/VerifiersDemo/libs</sdkLibDir>
         <destBinaryFile>verifiers_demo/VerifiersDemo/bin/VerifiersDemo-debug.apk</destBinaryFile>
     </project>
+
+    <project id="verifiers_demo_java">
+        <name>User verifiers demo Java</name>
+        <description>Kaa user verifiers demo for Java</description>
+        <details>
+            <![CDATA[
+This simple application demonstrates user verification flow in Kaa for Java and it is based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+            ]]>
+        </details>
+        <sdkLanguage>JAVA</sdkLanguage>
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
+        <features>USER_VERIFIER</features>
+        <complexity>REGULAR</complexity>
+        <bundleId>verifiers_demos</bundleId>
+        <sourceArchive>java/verifiers_demo.tar.gz</sourceArchive>
+        <projectFolder>JVerifiersDemo</projectFolder>
+        <sdkLibDir>JVerifiersDemo/lib</sdkLibDir>
+        <destBinaryFile>JVerifiersDemo/build/jar/VerifiersDemo.jar</destBinaryFile>
+    </project>
+
     <project id="verifiers_demo_objc">
         <name>Verifiers Objective-C demo</name>
         <description>Kaa user verifiers demo app based on Objective-C SDK</description>
@@ -115,33 +136,33 @@ To launch this sample application on the Kaa Objective-C SDK:
 	</li>
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-		
+
 		<pre>
 			sh build.sh compile
 		</pre>
-		
+
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
 	</li>
 	<li>
 		Open the EndpointOwnershipDemo.xcodeproj file and click the <b>Play</b> button.
 		You should see the following message.
-		
+
 		<br />
 		<img src="https://raw.github.com/hunch7/sample-apps/app-295-ownership-objc/verifiersdemo/resources/pic/ownership-objc-1.png" />
 		<br />
 		<br />
-		
+
 	</li>
 	<li>
 		Authorize through one of the social networks: Facebook, Twitter, Google+.
 		Upon response from the social network, Kaa client will use received credentials to attach the new user.
 		If the authorization is successful the following message will be displayed.
-		
+
 		<br />
 		<img src="https://raw.github.com/hunch7/sample-apps/app-295-ownership-objc/verifiersdemo/resources/pic/ownership-objc-2.png" />
 		<br />
 		<br />
-		
+
 		Use the <b>Message text</b> field to send your messages to the chat users.
 		<br />
 		To attach a new user to the current one, enter the endpoint access token and click <b>Attach</b>.
@@ -165,22 +186,22 @@ Try the following:
 <ol>
 	<li>
 		Run the following command from the ./libs/kaa-ep-sdk/ folder.
-		
+
 		<pre>
 			vim Podfile
 		</pre>
-		
+
 	</li>
 	<li>
 		Delete <b>:exclusive=>true</b>.
 	</li>
 	<li>
 		Run this command.
-		
+
 		<pre>
 			pod install
 		</pre>
-		
+
 	</li>
 </ol>
 
@@ -201,6 +222,7 @@ Make sure that the build target is set to <b>EndpointOwnershipDemo</b>, not <b>K
         <sdkLibDir></sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
     <project id="verifiers_demo_c">
         <name>User verifiers demo C</name>
         <description>Kaa user verifiers demo for C</description>
@@ -290,12 +312,13 @@ Try the following:
         <platforms></platforms>
         <features>USER_VERIFIER</features>
         <complexity>BASIC</complexity>
-        <bundleId>verifiers_demo</bundleId>
+        <bundleId>verifiers_demos</bundleId>
         <sourceArchive></sourceArchive>
         <projectFolder></projectFolder>
         <sdkLibDir></sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
     <project id="verifiers_demo_cpp">
         <name>User verifiers demo C++</name>
         <description>Kaa user verifiers demo for C++</description>
@@ -385,12 +408,13 @@ Try the following:
         <platforms></platforms>
         <features>USER_VERIFIER</features>
         <complexity>BASIC</complexity>
-        <bundleId>verifiers_demo</bundleId>
+        <bundleId>verifiers_demos</bundleId>
         <sourceArchive></sourceArchive>
         <projectFolder></projectFolder>
         <sdkLibDir></sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
     <project id="verifiers_demo_ios">
         <name>GPIO control iOS</name>
         <description>User verifiers demo iOS</description>
@@ -403,11 +427,22 @@ This simple app demonstrates a user verification flow in Kaa on iOS.
         <platforms>IOS</platforms>
         <features>USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
-        <bundleId>verifiers_demo</bundleId>
+        <bundleId>verifiers_demos</bundleId>
         <sourceArchive>objc/verifiers_demo.tar.gz</sourceArchive>
         <projectFolder>verifiers_demo</projectFolder>
         <sdkLibDir>verifiers_demo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
 
+    <bundle id="verifiers_demos">
+        <name>User verifiers demos (Endpoint ownership)</name>
+        <description>Kaa user verifiers subsystem demo applications bundle</description>
+        <details>
+            <![CDATA[
+<p>
+	This application bundle demonstrates the features of the Kaa <b>User verifiers</b> and <b>Endpoint ownership</b>.
+</p>
+            ]]>
+        </details>
+    </bundle>
 </projectsConfig>

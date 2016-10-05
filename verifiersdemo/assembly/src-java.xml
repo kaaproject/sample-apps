@@ -36,17 +36,4 @@
             <outputDirectory>JVerifiersDemo/lib</outputDirectory>
         </fileSet>
     </fileSets>
-    <dependencySets>
-        <dependencySet>
-            <useProjectArtifact>false</useProjectArtifact>
-            <outputDirectory>JVerifiersDemo/lib</outputDirectory>
-            <unpack>false</unpack>
-            <useTransitiveDependencies>true</useTransitiveDependencies>
-            <useTransitiveFiltering>true</useTransitiveFiltering>
-            <includes>
-                <include>org.kaaproject.kaa.server.common:admin-rest-client</include>
-                <include>org.kaaproject.kaa.common:core</include>
-            </includes>
-        </dependencySet>
-    </dependencySets>
 </assembly>

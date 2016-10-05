@@ -17,6 +17,10 @@
 package org.kaaproject.kaa.examples.verifiers;
 
 import org.kaaproject.kaa.client.*;
+import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
+import org.kaaproject.kaa.client.KaaClientProperties;
+import org.kaaproject.kaa.client.KaaClient;
+import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.channel.failover.FailoverDecision;
 import org.kaaproject.kaa.client.channel.failover.FailoverStatus;
 import org.kaaproject.kaa.client.channel.failover.strategies.DefaultFailoverStrategy;
@@ -71,8 +75,6 @@ public class VerifiersDemo {
             public void onAttachedToUser(String userExternalId, String endpointAccessToken) {
                 LOG.info("--= Endpoint was attached to user. =--");
                 LOG.info("User external ID: {}, returned access token: {}", userExternalId, endpointAccessToken);
-                LOG.info("Access token of current endpoint: {}", kaaClient.getEndpointAccessToken());
-
             }
         });
 

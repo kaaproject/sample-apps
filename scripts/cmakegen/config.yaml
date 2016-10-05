@@ -60,6 +60,8 @@ profilingdemo:
     features: ['configuration']
     languages: ['c', 'cpp']
     path: 'profilingdemo/source/'
+    definitions:
+        KAA_RUNTIME_KEY_GENERATION: 'ON'
 
 stormdemo:
     appname: 'StormDemo'

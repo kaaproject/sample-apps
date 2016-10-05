@@ -31,9 +31,9 @@ static kaa_client_t *kaa_client = NULL;
 
 void kaa_demo_print_configuration_message(const kaa_root_configuration_t *configuration)
 {
-    demo_printf("%s - %s - %s\n", configuration->audio_subscription_active ? "true" : "false",
-                                  configuration->vibro_subscription_active ? "true" : "false",
-                                  configuration->video_subscription_active ? "true" : "false");
+    printf("%s - %s - %s\n", configuration->audio_subscription_active ? "true" : "false",
+        configuration->vibro_subscription_active ? "true" : "false",
+        configuration->video_subscription_active ? "true" : "false");
 }
 
 kaa_error_t kaa_demo_configuration_receiver(void *context,

@@ -339,392 +339,364 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
         <details>
             <![CDATA[
 <p>
-    This application bundle demonstrates the ability to exchange messages
-    between endpoints through Kaa server, using Kaa
-    <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events" target="_blank">Events</a>
-    extension.
+    This application bundle demonstrates the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events" target="_blank">Event extension</a> that enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> to exchange messages with one another through <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <h1>Playing around</h1>
 
 <p>
-    The Kaa Event extension allows endpoints to exchange some events between each other.
-    The structure of events defined by the
-    <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-class-and-event-class-schema" target="_blank">Event Class (EC) schema</a>.
-    All Event classes are gathered into one
-    <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-class-families" target="_blank">Event Class Family (ECF)</a>.
-    In order to add <b>ECF</b> in the application you need to add
-    <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-family-mapping" target="_blank">Event Class Family Mapping (ECFM)</a>.
-    We prepared two <b>Event classes</b> for this demo: <b>ChatEvent</b> -
-    we will send this event when we want to create or delete some chat room and <b>Message</b> -
-    chat message by it self with the name of target chat room and message text.
-    Also, notice that we created also utility object (enumeration) that defines event types.
+    The event data structure is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-class-and-event-class-schema" target="_blank">Event Class (EC) schema</a>.
+    Event classes are grouped into <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-class-families" target="_blank">Event Class Family (ECF)</a>.
+    After you add an <b>ECF</b> in the application, you need to set up the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-family-mapping" target="_blank">ECF mapping</a>.
 </p>
 
 <p>
-    So in order to create such <b>ECF mapping</b> in the demo application we need to log-in into the
-    <b>Administrative console</b> as <b>tenant administrator</b> (admin/admin123).
-    Here you will find the <b>Event class families</b> tab.
+    This application bundle contains two ECs:
+    <ul>
+    	<li>
+    		<code>ChatEvent</code> class that sends an event when the user wants to create or delete a chat room.
+    	</li>
+    	<li>
+    		<code>Message</code> class that sends an event containing the name of the target chat room and the message text.
+    	</li>
+    </ul>
+    
+    The bundle also contains a utility object for enumeration that defines event types.
+</p>
 
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_00.png?raw=true" />
-    <br />
+<h2>Manage ECFs</h2>
+
+To view information about the ECFs:
+
+<ol>
+   	<li>
+   		Log in to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">Administration UI</a> as a tenant administrator using the default <b>admin</b> username and <b>admin123</b> password.
+   	</li>
+   	<li>
+   		Open the <b>Event class families</b> page.
+   		Here you can add an ECF or view details of the existing ECFs.
+	
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_00.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Select the <b>Chat</b> ECF that is used for this sample application bundle.
+		The <b>Event class family details</b> page will open.
+
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_0.png" />
+		<br />
+		<br />
+	</li>
+	<li>
+		Select the ECF version from the <b>Versions</b> section.
+		The <b>Family version</b> page will open containing the list of event classes.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_1.png" />
+		<br />
+		<br />
+		
+		To view EC details, select the EC from the list.
+		The <b>Event class details</b> page will open where you can see the schema used for specific EC.
+	</li>
+</ol>
+
+<p>
+    This is the JSON schema used for <code>ChatEvent</code> EC.
+    It includes a nested record with a special type named <b>ChatEventType</b>.
+
+	<pre>
+		{
+		  "type": "record",
+		  "name": "ChatEvent",
+		  "namespace": "org.kaaproject.kaa.examples.event",
+		  "fields": [
+			{
+			  "name": "ChatName",
+			  "type": {
+				"type": "string",
+				"avro.java.string": "String"
+			  }
+			},
+			{
+			  "name": "EventType",
+			  "type": {
+				"type": "enum",
+				"name": "ChatEventType",
+				"symbols": [
+				  "CREATE",
+				  "DELETE"
+				],
+				"classType": "object"
+			  }
+			}
+		  ],
+		  "description": "",
+		  "classType": "event"
+		}
+	</pre>
+
 </p>
 
 <p>
-    Here you can create a new <b>ECF</b> if you click on <b>"Add ECF"</b> button
-    or get details of present <b>ECF</b> if you click on the corresponding row,
-    select the <b>ECF</b> with <b>"Chat"</b> name,
-    <b>"org.kaaproject.kaa.samples.event"</b> namespace and <b>"Chat"</b>
-    class name.
+    This is the JSON schema used for <code>Message</code> EC.
 
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_0.png?raw=true" />
-    <br />
+	<pre>
+		{
+		  "type": "record",
+		  "name": "Message",
+		  "namespace": "org.kaaproject.kaa.examples.event",
+		  "fields": [
+			{
+			  "name": "ChatName",
+			  "type": {
+				"type": "string",
+				"avro.java.string": "String"
+			  }
+			},
+			{
+			  "name": "Message",
+			  "type": {
+				"type": "string",
+				"avro.java.string": "String"
+			  }
+			}
+		  ],
+		  "description": "",
+		  "classType": "event"
+		}
+	</pre>
+
 </p>
 
 <p>
-    Here you can find ECF details and also ECF scheme in the
-    <b>Add family version</b> section. There you can find ECF scheme that we
-    added for this demo application. You can examine this scheme if you click
-    on the corresponding row:
+	For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#manage-events-using-administration-ui" target="_blank">Manage events using Administration UI</a>.
+</p>
 
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_1.png?raw=true" />
-    <br />
+<h2>Set up ECF mapping</h2>
+
+To set up an ECF mapping:
+
+<ol>
+   	<li>
+   		Log in to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">Administration UI</a> as a tenant developer using the default <b>devuser</b> username and <b>devuser123</b> password.
+   	</li>
+   	<li>
+   		Click <b>Applications</b> > <b>Event demo</b> > <b>Event family mappings</b>.
+	
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_3.png" />
+		<br />
+		<br />
+		
+		You can select a mapping from the list to view the details.
+	</li>
+	<li>
+		Click <b>Add event family mapping</b>.
+		The <b>Event family mapping details</b> page will open.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_5.png" />
+		<br />
+		<br />
+		
+		Select the event class family.
+		Now you can edit the ECF mapping by changing the value in the <b>Action</b> column.
+		<br>
+		<br>
+		Note that an ECF mapping applies to a specific application.
+		This means that multiple applications can use the same ECF mapped differently for each application.
+	</li>
+</ol>
+
+<h2>Add user verifier</h2>
+
+<p>
+	Endpoints can exchange messages between one another, if they belong to the same user.
+	<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#owner-verifiers" target="_blank">User verifiers</a> are used in Kaa to check user credentials.
+	You can use a number of user verifiers, but for the purpose of this sample application a <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#trustful-owner-verifier" target="_blank">trustful user verifier</a> will be used.
+	This verifier will accept any user credentials.
 </p>
 
 <p>
-    This schemas looks like this in a JSON form:
+    To add a user verifier:
+    <ol>
+    	<li>
+    		Open the <b>User verifiers</b> page of the application and click <b>Add user verifier</b>.
+    		
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_6.png" />
+			<br />
+			<br />
+    		
+    	</li>
+    	<li>
+    		On the <b>User verifier details</b> page, enter a name and select the user verifier type.
+    		For this example, select the <b>Trustful verifier</b> type.
+    		
+    		<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_7.png" />
+			<br />
+			<br />
+    		
+			When you finish entering the user verifier details, click <b>Add</b>.
+    	</li>
+    </ol>
+
+<h2>Start application</h2>
+    
+<p>
+	Download the binaries/sources for the target platform and start the application.
+	To do this, choose the target platform below and follow the instructions on the dedicated page.
 </p>
 
 <p>
-    For <b>ChatEvent</b>:
-</p>
-
-<pre>
-    {
-      "type": "record",
-      "name": "ChatEvent",
-      "namespace": "org.kaaproject.kaa.examples.event",
-      "fields": [
-        {
-          "name": "ChatName",
-          "type": {
-            "type": "string",
-            "avro.java.string": "String"
-          }
-        },
-        {
-          "name": "EventType",
-          "type": {
-            "type": "enum",
-            "name": "ChatEventType",
-            "symbols": [
-              "CREATE",
-              "DELETE"
-            ],
-            "classType": "object"
-          }
-        }
-      ],
-      "description": "",
-      "classType": "event"
-    }
-</pre>
-
-
-<p>
-    For <b>Message</b>:
-</p>
-
-<pre>
-	{
-	  "type": "record",
-	  "name": "Message",
-	  "namespace": "org.kaaproject.kaa.examples.event",
-	  "fields": [
-	    {
-	      "name": "ChatName",
-	      "type": {
-	        "type": "string",
-	        "avro.java.string": "String"
-	      }
-	    },
-	    {
-	      "name": "Message",
-	      "type": {
-	        "type": "string",
-	        "avro.java.string": "String"
-	      }
-	    }
-	  ],
-	  "description": "",
-	  "classType": "event"
-	}
-</pre>
-
-<p>
-    Select <b>ChatEvent</b> field by clicking on the corresponding row.
-
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_2.png?raw=true" />
-    <br />
+	Note that you need to unpack the application files in three different folders, one for each of the three endpoints used in the example.
+	This is required to avoid overwriting the security files.
 </p>
 
 <p>
-    Here you can find details of a particular <b>Event class</b>,
-    <b>ChatEvent</b> in this case. Notice how we use nested record with special
-    type - <b>ChatEventType</b> in this <b>EC</b>.
+	Start your first endpoint.
+	The console will display the following messages.
+	
+	<pre>
+		2016-08-31 16:38:19,566 [main] INFO  o.k.kaa.demo.event.EventDemo - Event demo started
+		2016-08-31 16:38:21,639 [pool-2-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Kaa client started
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+		
+		"Living room"
+		"Guest room"
+		
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+		
+		1. Join chat room.
+		2. Create chat room.
+		3. Delete chat room.
+		4. Exit application.
+	</pre>
 </p>
 
 <p>
-    More details about operations with <b>EC</b> and <b>ECFs</b> in
-    <b>Administrative console</b> you can find in
-    <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#kaa-events-admin-ui" target="_blank">Events</a>
-    extension documentation.
+	To join a chat room, type <b>1</b> and press Enter.
+	Then, enter the name of the chat room you want to join and press Enter.
+
+	<pre>
+		...
+		1
+	
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter chat room name: Living room
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Joined "Living room" chat.
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Type message and press Enter to send it or type "quit" to leave this chat.
+	</pre>
+
+</p>
+	
+<p>
+    Now launch the second and third endpoints.
+    On the second endpoint, join the <b>Living room</b> chat, same as you did for your first endpoint.
+    On the third endpoint, join the <b>Guest room</b> chat.
 </p>
 
 <p>
-    Now we need to add <b>Event class family mapping</b> in our application.
-    In order to do this logout and login in a <b>tenant developer</b> (devuser/devuser123).
+    On the first endpoint, send a message in the <b>Living room</b> chat.
+    Notice that only the second endpoint received the chat message because it's in the same chat room as the first endpoint.
 </p>
 
 <p>
-    Navigate to <b>Event demo</b> application and then select
-    <b>Event family mappings</b> tab. Here you can find the list of available
-    ECFMs for your application.
-
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_3.png?raw=true" />
-    <br />
+	When you send a message from an endpoint, it uses the event listener to broadcast a <b>Message</b> event containing the message text and the name of the target chat room.
+	This event will be received by all endpoints registered under the same user, but the message text will only be displayed for the endpoints that are in the target chat room.
 </p>
 
 <p>
-    We added one - <b>Chat</b>. You can do this if click on
-    <b>Add event family mapping</b> button.
-
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_4.png?raw=true" />
-    <br />
+    On the first endpoint, leave the <b>Living room</b> chat and joint the <b>Guest room</b> chat and send a message.
+    Only the third endpoint will receive the message.
 </p>
 
 <p>
-    We selected required <b>ECF</b> from the list fo all available <b>ECFs</b>.
-    Notice very important thing few applications can utilize the same ECF,
-    so you can configure ECF mapping between applications,
-    for example one of them will be the <b>source</b> of events and other -
-    <b>sinks</b>.
+    Let's leave the chat room and create a new one.
+    See example below.
 
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_5.png?raw=true" />
-    <br />
+	<pre>
+		...
+		"quit"
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+	
+		"Living room"
+		"Guest room"
+	
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+	
+		1. Join chat room.
+		2. Create chat room.
+		3. Delete chat room.
+		4. Exit application.
+	
+		1
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter new chat name:
+	
+		Roof chat
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms updated.
+		016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+	
+		"Living room"
+		"Guest room"
+		"Roof chat"
+	
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+	
+		1. Join chat room.
+		2. Create chat room.
+		3. Delete chat room.
+		4. Exit application.
+	</pre>
+	
+	The list of available chat rooms will be updated on all endpoint.
 </p>
 
 <p>
-    Now when we finished with the <b>ECFs</b> we need to add a user verifier
-    for our application. As you already know endpoints can exchange messages
-    between each other only if they belong to the same user. Kaa server uses
-    <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#owner-verifiers" target="_blank">User verifiers</a>
-    in order to check provided user credentials. Kaa provides a set of user
-    verifiers (Twitter, G+) but for simplicity we use
-    <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#trustful-owner-verifier" target="_blank">Trustful user verifier</a>,
-    which accepts any credentials provided by the user.
+    Let's delete a chat room.
+    See example below.
+
+	<pre>
+		...
+		"quit"
+	
+		016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+	
+		"Living room"
+		"Guest room"
+		"Roof chat"
+	
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+	
+		1. Join chat room.
+		2. Create chat room.
+		3. Delete chat room.
+		4. Exit application.
+	
+		3
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter name of the chat you want to delete:
+	
+		Roof chat
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms updated.
+		016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+	
+		"Living room"
+		"Guest room"
+	
+		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+	
+		1. Join chat room.
+		2. Create chat room.
+		3. Delete chat room.
+		4. Exit application.
+	</pre>
 </p>
-
-<p>
-    In order to add <b>user verifier</b> into the application navigate to the
-    <b>User verifiers</b> tab and click on <b>Add user verifier</b> button.
-
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_6.png?raw=true" />
-    <br />
-</p>
-
-<p>
-    Give a name for the verifier, select it's type, <b>Trustful verifier</b>
-    in our case and click on <b>Add</b> button.
-
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_7.png?raw=true" />
-    <br />
-</p>
-
-<p>
-    Now the last step left - create SDK profile. Navigate to <b>SDK profiles</b>
-    tab - here you can find the list of available SDK profiles.
-
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_8.png?raw=true" />
-    <br />
-</p>
-
-<p>
-    In order to create new profile click on <b>Add SDK profile</b> button.
-
-    <br />
-    <img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_9.png?raw=true" />
-    <br />
-</p>
-
-<p>
-    Now let's start demo application. Download application binary and
-    copy-paste it into two more folders (each of endpoints must to be in it's
-    own folder to avoid security files overwrite). Now launch first endpoint.
-</p>
-
-<pre>
-	2016-08-31 16:38:19,566 [main] INFO  o.k.kaa.demo.event.EventDemo - Event demo started
-	2016-08-31 16:38:19,570 [main] INFO  o.k.kaa.demo.event.EventDemo - --= Press any key to exit =--
-	2016-08-31 16:38:21,639 [pool-2-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Kaa client started
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-
-	"Living room"
-	"Guest room"
-
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select one of options:
-
-	1. Join chat room
-	2. Create chat room
-	3. Delete chat room
-	4. Exit application
-</pre>
-
-<p>
-    Join the first chat room - <b>"Living room"</b>, in order to do this type
-    "1" in a console and then the name of chat room.
-</p>
-
-<pre>
-	...
-	1
-
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter chat room name:
-	Living room
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Joined "Living room" chat.
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Type message and press "Enter" to send it or type "quit" to live this chat.
-</pre>
-
-<p>
-    Now launch the second and third endpoints: in second application join same
-    <b>Living room</b> chat but in the third - join other <b>Guest room</b> chat.
-</p>
-
-<p>
-    Now type some message in the first client, for example, "Hello world!".
-    As you can see only second endpoint received the message because they are
-    in the same chat room (<font color="red">Actually every endpoint receives
-    all messages but we are filtering them by the chat room name</font>).
-</p>
-
-<p>
-    So how does it work? In this application we subscribe every endpoint to
-    the same user. If endpoint successfully registered on the Operations service
-    and attached to the user it will be able to send and receive events.
-    When you want to send message endpoint search for the event listeners and
-    broadcasts <b>Message</b> event with the message text and target chat
-    room name. All endpoints receive events and only endpoints within same
-    chat room print their messages.
-</p>
-
-<p>
-    Now If you leave <b>Living room</b> chat in the first application, join the
-    <b>Guest room</b> chat and send a message - it will be retrieved only on
-    the third endpoint.
-</p>
-
-<p>
-    Now let's leave the chat and create new one:
-</p>
-
-<pre>
-	...
-	"quit"
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-
-	"Living room"
-	"Guest room"
-
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select one of options:
-
-	1. Join chat room
-	2. Create chat room
-	3. Delete chat room
-	4. Exit application
-
-	1
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter new chat name:
-
-	Roof chat
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms have been updated.
-	016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-
-	"Living room"
-	"Guest room"
-	"Roof chat"
-
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select one of trhe options:
-
-	1. Join chat room
-	2. Create chat room
-	3. Delete chat room
-	4. Exit application
-</pre>
-
-<p>
-    You can observe the same on all endpoints.
-</p>
-
-<p>
-    Now let's join the new chat in the first and the second endpoints and
-    send some message to ensure that all works fine.
-</p>
-
-<p>
-    Now let's delete newly created chat. leave it in the first endpoint and
-    select delete option:
-</p>
-
-<pre>
-	...
-	"quit"
-
-	016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-
-	"Living room"
-	"Guest room"
-	"Roof chat"
-
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select one of the options:
-
-	1. Join chat room
-	2. Create chat room
-	3. Delete chat room
-	4. Exit application
-
-	3
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter new chat name:
-
-	Roof chat
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms have been updated.
-	016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-
-	"Living room"
-	"Guest room"
-
-	2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select one of the options:
-
-	1. Join chat room
-	2. Create chat room
-	3. Delete chat room
-	4. Exit application
-</pre>
-
-<p>
-    Now you can observe that on the other endpoints the list of chat rooms
-    updated too and also the second endpoint leave the deleted chat.
-</p>
-]]>
+            ]]>
         </details>
     </bundle>
 </projectsConfig>

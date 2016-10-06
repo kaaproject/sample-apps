@@ -28,7 +28,7 @@
         <fileSet>
             <directory>${project.basedir}/source/objc</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>verifiers_demo</outputDirectory>
+            <outputDirectory>ObjCVerifiersDemo</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

@@ -40,7 +40,7 @@ public class EventUtil {
         return userInput;
     }
 
-    public static String sleepForSeconds(int seconds) {
+    public static void sleepForSeconds(int seconds) {
         try {
             TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e) {

@@ -32,6 +32,7 @@ import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
 import org.kaaproject.kaa.client.transact.TransactionId;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
+import org.kaaproject.kaa.demo.event.utils.EventUtil;
 import org.kaaproject.kaa.schema.sample.event.thermo.ChangeDegreeRequest;
 import org.kaaproject.kaa.schema.sample.event.thermo.ThermostatEventClassFamily;
 import org.kaaproject.kaa.schema.sample.event.thermo.ThermostatInfoRequest;
@@ -47,73 +48,67 @@ public class EventDemo {
 
     private static final Logger LOG = LoggerFactory.getLogger(EventDemo.class);
 
-    //Credentials for attaching an endpoint to the user.
-    private static final String USER_EXTERNAL_ID = "user@email.com";
-    private static final String USER_ACCESS_TOKEN = "token";
     // A Kaa client.
     private static KaaClient kaaClient;
 
+    //Credentials for attaching an endpoint to the user.
+    private static final String USER_EXTERNAL_ID = "user@email.com";
+    private static final String USER_ACCESS_TOKEN = "token";
+
     public static void main(String[] args) {
         LOG.info("Event demo started");
-        LOG.info("--= Press any key to exit =--");
 
-        // Create a Kaa client and add a listener which creates a log record
-        // as soon as the Kaa client is started.  
-        kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), new SimpleKaaClientStateListener() {
-            @Override
-            public void onStarted() {
-                LOG.info("Kaa client started");
+        KaaChatManager chatManager = new KaaChatManager();
+        chatManager.start();
+        chatManager.attachToUser(USER_EXTERNAL_ID, USER_ACCESS_TOKEN);
+        chatManager.printAllChats();
+
+        // TODO: print available (hardcoded) chats
+
+        LOG.info("Choose action by entering corresponding number:");
+
+//        1. Join chat room
+//        2. Create chat room
+//        3. Delete chat room
+//        4. Exit application
+
+        while (true) {
+            LOG.info("\n1. Join chat room\n" +
+                    "2. Create chat room\n" +
+                    "3. Delete chat room\n" +
+                    "4. Exit application\n");
+            switch (EventUtil.getUserInput()) {
+                case "1":
+                    LOG.info("Going to \"Join chat room\".");
+                    chatManager.joinChatRoom();
+                    break;
+                case "2":
+                    LOG.info("Going to \"Create chat room\".");
+                    chatManager.createChatRoom();
+                    break;
+                case "3":
+                    LOG.info("Going to \"Delete chat room\".");
+                    chatManager.deleteChatRoom();
+                    break;
+                case "4":
+                    LOG.info("Going to \"Exit\". Have a nice day!");
+                    System.exit(0);
+                    break;
+                default:
+                    LOG.info("You input incorrect symbol. Please, try again.");
             }
-
-            @Override
-            public void onStopped() {
-                LOG.info("Kaa client stopped");
-            }
-        }, true);
-
-        //Start the Kaa client and connect it to the Kaa server.
-        kaaClient.start();
-
-        // Attach the endpoint running the Kaa client to the user by verifying 
-        // credentials sent by the endpoint against the user credentials
-        // stored on the Kaa server.
-        // This demo application uses a trustful verifier, therefore
-        // any credentials sent by the endpoint are accepted as valid. 
-        kaaClient.attachUser(USER_EXTERNAL_ID, USER_ACCESS_TOKEN, new UserAttachCallback() {
-            @Override
-            public void onAttachResult(UserAttachResponse response) {
-                LOG.info("Attach response {}", response.getResult());
-
-                // Call onUserAttached if the endpoint was successfully attached.
-                if (response.getResult() == SyncResponseResultType.SUCCESS) {
-                    onUserAttached();
-                }
-                
-                // Shut down all the Kaa client tasks and release 
-                // all network connections and application resources 
-                // if the endpoint was not attached.
-                else {
-                    kaaClient.stop();
-                    LOG.info("Event demo stopped");
-                }
-            }
-        });
-
-        try {
-         // wait for some input before exiting
-            System.in.read();
-        } catch (IOException e) {
-            LOG.error("IOException was caught", e);
         }
 
-        // Shut down all the Kaa client tasks and release
-        // all network connections and application resources.
-        kaaClient.stop();
+        chatManager.stop();
 
         LOG.info("Event demo stopped");
     }
 
 
+
+
+
+    // TODO: after all will works fine, delete this method
     public static void onUserAttached() {
 
         List<String> listenerFQNs = new LinkedList<>();

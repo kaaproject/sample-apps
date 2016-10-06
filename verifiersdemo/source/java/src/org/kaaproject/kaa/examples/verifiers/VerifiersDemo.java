@@ -70,6 +70,9 @@ public class VerifiersDemo {
 
         kaaClient.setFailoverStrategy(new CustomFailoverStrategy());
 
+        /*
+         * Set listener that listen for event when current endpoint will be attached to user.
+         */
         kaaClient.setAttachedListener(new AttachEndpointToUserCallback() {
             @Override
             public void onAttachedToUser(String userExternalId, String endpointAccessToken) {
@@ -79,29 +82,35 @@ public class VerifiersDemo {
         });
 
         /*
-         * Start the Kaa client and connect it to the Kaa server.
+         * Add message listener to receive test messages.
          */
-
         addMessageListener();
 
+        /*
+         * Start the Kaa client and connect it to the Kaa server. Then await for client starting
+         */
         kaaClient.start();
-
-        // await for client starting
         sleepForSeconds(5);
+
         LOG.info("Endpoint ID (key hash):" + kaaClient.getEndpointKeyHash());
         LOG.info("Endpoint access token:" + kaaClient.getEndpointAccessToken());
         LOG.info("Copy this token to mobile application in order to do assisted attach of this endpoint to user (current mobile application owner).");
 
+        /*
+         * Await for user press "Enter" key
+         */
         readSymbol();
 
-        LOG.info("Stopping client...");
         /*
          * Stop the Kaa client and connect it to the Kaa server.
          */
+        LOG.info("Stopping client...");
         kaaClient.stop();
-        kaaClient = null;
     }
 
+    /**
+     * Add message listener to receive messages in the form of events.
+     */
     private static void addMessageListener() {
         //Obtain the event family factory, then event family
         final EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
@@ -116,6 +125,9 @@ public class VerifiersDemo {
         });
     }
 
+    /**
+     * Awaits for any user input (actually for pressing "Enter" key).
+     */
     private static void readSymbol() {
         try {
             System.in.read();
@@ -124,7 +136,10 @@ public class VerifiersDemo {
         }
     }
 
-
+    /**
+     * Stops current thread for specified timeout.
+     * @param seconds timeout to wait in seconds.
+     */
     private static void sleepForSeconds(int seconds) {
         try {
             TimeUnit.SECONDS.sleep(seconds);

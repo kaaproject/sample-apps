@@ -26,54 +26,9 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/../thirdparty/android/appcompat_v7_22</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpiocontrol/appcompat_v7</outputDirectory>
-            <excludes>
-                <exclude>bin/</exclude>
-                <exclude>gen/</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>${project.basedir}/../thirdparty/android/recyclerview</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpiocontrol/recyclerview-v7</outputDirectory>
-            <excludes>
-                <exclude>bin/</exclude>
-                <exclude>gen/</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>${project.basedir}/../thirdparty/android/cardview</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpiocontrol/cardview-v7</outputDirectory>
-            <excludes>
-                <exclude>bin/</exclude>
-                <exclude>gen/</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>${project.basedir}/../thirdparty/android/snackbar</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpiocontrol/snackbar</outputDirectory>
-            <excludes>
-                <exclude>bin/</exclude>
-                <exclude>gen/</exclude>
-            </excludes>
-        </fileSet>
-	    <fileSet>
-            <directory>${project.basedir}/../thirdparty/android/floatingactionbutton</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpiocontrol/floatingactionbutton</outputDirectory>
-            <excludes>
-                <exclude>bin/</exclude>
-                <exclude>gen/</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
             <directory>${project.basedir}/source/android</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpiocontrol/gpiocontrol</outputDirectory>
+            <outputDirectory>gpiocontrol/GpioControl</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

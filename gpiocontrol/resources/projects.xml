@@ -55,9 +55,9 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
         <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
-        <projectFolder>gpiocontrol/gpiocontrol</projectFolder>
-        <sdkLibDir>gpiocontrol/gpiocontrol/libs</sdkLibDir>
-        <destBinaryFile>gpiocontrol/gpiocontrol/bin/gpiocontrol-debug.apk</destBinaryFile>
+        <projectFolder>gpiocontrol/GpioControl</projectFolder>
+        <sdkLibDir>gpiocontrol/GpioControl/app/libs</sdkLibDir>
+        <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
 
     <project id="gpio_slave_cc">

@@ -60,9 +60,9 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
 
-    <project id="gpio_slave_cc">
-        <name>GPIO control CC32XX</name>
-        <description>GPIO control CC3200 app that demonstrates capabilities of the Kaa Event subsystem</description>
+    <project id="gpio_slave_c">
+        <name>GPIO control C</name>
+        <description>GPIO control C app that demonstrates capabilities of the Kaa Event subsystem</description>
         <details>
             <![CDATA[
 <h2>Installation</h2>
@@ -82,44 +82,13 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
              
-        <platforms>CC32XX</platforms>
+        <platforms>CC32XX ESP8266</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
-        <sourceArchive>c/gpio-cc-client.tar.gz</sourceArchive>
-        <projectFolder>gpio-cc-client</projectFolder>
-        <sdkLibDir>gpio-cc-client/libs/kaa</sdkLibDir>
-        <destBinaryFile></destBinaryFile>
-    </project>
-    <project id="gpio_slave_esp">
-        <name>GPIO control ESP8266</name>
-        <description>GPIO control ESP8266 app that demonstrates capabilities of the Kaa Event subsystem</description>
-        <details>
-            <![CDATA[
-            <h2>Installation</h2>
-First, read our <a href="http://docs.kaaproject.org/display/KAA/ESP8266">documentation article</a> on how to integrate Kaa with ESP8266.
-<h2>Playing around</h2>
-After you successfully installed this app on your ESP8266 device, go to "GPIO control Android" Sandbox app and follow the steps described there.
-            ]]>
-        </details>
-        
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-             
-        <sdkLanguage>C</sdkLanguage>
-        
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
-             
-        <platforms>ESP8266</platforms>
-        <features>EVENT USER_VERIFIER</features>
-        <complexity>REGULAR</complexity>
-        <bundleId>gpio_control</bundleId>
-        <sourceArchive>c/gpio-esp-client.tar.gz</sourceArchive>
-        <projectFolder>gpio-esp-client</projectFolder>
-        <sdkLibDir>gpio-esp-client/libs/kaa</sdkLibDir>
+        <sourceArchive>c/gpio-c-client.tar.gz</sourceArchive>
+        <projectFolder>gpio-c-client</projectFolder>
+        <sdkLibDir>gpio-c-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="gpio_slave_artik5">

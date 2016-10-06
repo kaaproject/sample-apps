@@ -34,6 +34,7 @@ import org.kaaproject.kaa.server.common.core.configuration.RawData;
 import org.kaaproject.kaa.server.common.core.configuration.RawDataFactory;
 import org.kaaproject.kaa.server.common.core.schema.RawSchema;
 import org.kaaproject.kaa.server.verifiers.trustful.config.TrustfulVerifierConfig;
+import org.kaaproject.kaa.server.verifiers.trustful.config.gen.TrustfulAvroConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +45,20 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
     public EventDemoBuilder() {
         super("demo/event");
+    }
+
+    // method for fast builder testing
+    // just setup IP and port parameters
+    public static void main(String[] args) {
+        EventDemoBuilder builder = new EventDemoBuilder();
+        String kaaNodeIp = "10.2.3.18";
+        int kaaNodePort = 8080;
+        AdminClient client = new AdminClient(kaaNodeIp, kaaNodePort);
+        try {
+            builder.buildDemoApplicationImpl(client);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -57,12 +72,12 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         eventApplication = client.editApplication(eventApplication);
 
         EventClassFamilyDto thermoEventClassFamily = new EventClassFamilyDto();
-        thermoEventClassFamily.setName("Thermostat Event Class Family");
-        thermoEventClassFamily.setNamespace("org.kaaproject.kaa.schema.sample.event.thermo");
-        thermoEventClassFamily.setClassName("ThermostatEventClassFamily");
+        thermoEventClassFamily.setName("Chat Event Class Family");
+        thermoEventClassFamily.setNamespace("org.kaaproject.kaa.examples.event");
+        thermoEventClassFamily.setClassName("Chat");
         thermoEventClassFamily = client.editEventClassFamily(thermoEventClassFamily);
 
-        addEventClassFamilyVersion(thermoEventClassFamily, client, eventApplication.getTenantId(), "thermostatEventClassFamily.json");
+        addEventClassFamilyVersion(thermoEventClassFamily, client, eventApplication.getTenantId(), "chatEventClassFamily.json");
 
         sdkProfileDto.setApplicationId(eventApplication.getId());
         sdkProfileDto.setApplicationToken(eventApplication.getApplicationToken());
@@ -85,11 +100,17 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         trustfulUserVerifier.setName("Trustful verifier");
         trustfulUserVerifier.setPluginClassName(trustfulVerifierConfig.getPluginClassName());
         trustfulUserVerifier.setPluginTypeName(trustfulVerifierConfig.getPluginTypeName());
-        RawSchema rawSchema = new RawSchema(trustfulVerifierConfig.getPluginConfigSchema().toString());
-        DefaultRecordGenerationAlgorithm<RawData> algotithm =
-                new DefaultRecordGenerationAlgorithmImpl<>(rawSchema, new RawDataFactory());
-        RawData rawData = algotithm.getRootData();
-        trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());
+//        RawSchema rawSchema = new RawSchema(trustfulVerifierConfig.getPluginConfigSchema().toString());
+//        DefaultRecordGenerationAlgorithm<RawData> algotithm =
+//                new DefaultRecordGenerationAlgorithmImpl<>(rawSchema, new RawDataFactory());
+//        RawData rawData = algotithm.getRootData();
+//        trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());
+//        trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
+//        sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
+
+        TrustfulAvroConfig trustfulAvroConfig = new TrustfulAvroConfig();
+        trustfulUserVerifier.setJsonConfiguration(trustfulAvroConfig.toString());
+        logger.info("Trustful config: {} ", trustfulAvroConfig.toString());
         trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
         sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
 

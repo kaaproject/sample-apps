@@ -16,24 +16,17 @@
 
 package org.kaaproject.kaa.demo.event;
 
-import org.kaaproject.kaa.client.KaaClientProperties;
-import org.kaaproject.kaa.common.dto.ApplicationDto;
-import org.kaaproject.kaa.common.dto.admin.AuthResultDto;
-import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
-import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
-import org.kaaproject.kaa.demo.event.utils.EventUtil;
 import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
 import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
+import org.kaaproject.kaa.client.KaaClientProperties;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
-import org.kaaproject.kaa.client.event.EventListenersResolver;
-import org.kaaproject.kaa.client.event.FindEventListenersCallback;
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
-import org.kaaproject.kaa.client.transact.TransactionId;
+import org.kaaproject.kaa.common.dto.event.EventClassType;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
-
+import org.kaaproject.kaa.demo.event.utils.EventUtil;
 import org.kaaproject.kaa.examples.event.Chat;
 import org.kaaproject.kaa.examples.event.ChatEvent;
 import org.kaaproject.kaa.examples.event.ChatEventType;
@@ -41,18 +34,10 @@ import org.kaaproject.kaa.examples.event.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 public class KaaChatManager {
 
@@ -68,6 +53,7 @@ public class KaaChatManager {
     private static final String KEYS_DIR = "keys_for_java_event_demo";
 
     private KaaClient kaaClient;
+    private Chat chatEventFamily;
 
     public KaaChatManager() {
 
@@ -102,19 +88,16 @@ public class KaaChatManager {
             //Start the Kaa client and connect it to the Kaa server.
             kaaClient.start();
 
-            startupLatch.wait();
+            startupLatch.await();
             // EventUtil.sleepForSeconds(3);
-
-
-            // TODO: add event listener using 'currentChatName'
 
             //Obtain the event family factory.
             final EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
             //Obtain the concrete event family.
-            final Chat chat = eventFamilyFactory.getChat();
+            chatEventFamily = eventFamilyFactory.getChat();
 
             // Add event listeners to the family factory.
-            chat.addListener(new Chat.Listener() {
+            chatEventFamily.addListener(new Chat.Listener() {
 
                 @Override
                 public void onEvent(Message messageEvent, String senderId) {
@@ -129,25 +112,11 @@ public class KaaChatManager {
 
                     String chatName = chatEvent.getChatName().trim();
                     if (chatEvent.getEventType() == ChatEventType.CREATE) {
-                        if (chatList.contains(chatName)) {
-                            LOG.info("Chat \"{}\" is already exists. New chat not created.", chatName);
-                        } else {
-                            chatList.add(chatName);
-                            LOG.info("New chat \"{}\" was created.");
-                            LOG.info("The list of chat rooms have been updated.");
-                            printAllChats();
-                        }
+                        createChatLocal(chatName);
                     }
 
                     if (chatEvent.getEventType() == ChatEventType.DELETE) {
-                        if (!chatList.contains(chatName)) {
-                            LOG.info("Chat \"{}\" not found. Nothing to delete.", chatName);
-                        } else {
-                            chatList.remove(chatName);
-                            LOG.info("Chat \"{}\" was deleted.");
-                            LOG.info("The list of chat rooms have been updated.");
-                            printAllChats();
-                        }
+                        deleteChatLocal(chatName);
                     }
                 }
             });
@@ -178,7 +147,7 @@ public class KaaChatManager {
                 }
             });
 
-            attachLatch.wait();
+            attachLatch.await();
             // EventUtil.sleepForSeconds(3);
         } catch (InterruptedException e) {
             LOG.warn("Thread interrupted when wait for attach current endpoint to user", e);
@@ -186,11 +155,12 @@ public class KaaChatManager {
     }
 
     public void printAllChats() {
-        LOG.info("\n\nThe list of available chat rooms:\n\n");
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n\nThe list of available chat rooms:\n\n");
         for (String chatName: chatList) {
-            LOG.info("\"{}\"", chatName);
+            builder.append("\"").append(chatName).append("\"\n");
         }
-        LOG.info("\n");
+        LOG.info(builder.toString());
     }
 
     public void joinChatRoom() {
@@ -210,8 +180,7 @@ public class KaaChatManager {
                 if (!chatList.contains(chatName)) {
                     LOG.info("Chat \"{}\" has been DELETED. Return to main menu.", currentChatName);
                 } else {
-                    LOG.info("Simulate message sending ... Done )");
-                    // TODO: send 'message' event
+                    chatEventFamily.sendEventToAll(new Message(chatName, message));
                 }
 
 
@@ -223,16 +192,46 @@ public class KaaChatManager {
     public void createChatRoom() {
         LOG.info("Enter new chat name:\n");
         String chatName = EventUtil.getUserInput().trim();
-        LOG.info("Simulate CREATE event sending ... Done )");
-        // TODO: send 'create' event
+        LOG.info("Creating chat \"{}\" ...", chatName);
+
+        createChatLocal(chatName);
+
+        chatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.CREATE));
     }
 
     public void deleteChatRoom() {
         LOG.info("Enter chat name to delete:\n");
         String chatName = EventUtil.getUserInput().trim();
-        LOG.info("Simulate DELETE event sending ... Done )");
-        // TODO: send 'delete' event
+        LOG.info("Deleting chat \"{}\" ...", chatName);
+
+        deleteChatLocal(chatName);
+
+        chatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.DELETE));
     }
+
+    private void createChatLocal(String chatName) {
+        if (chatList.contains(chatName)) {
+            LOG.info("Chat \"{}\" is already exists. New chat not created.", chatName);
+        } else {
+            chatList.add(chatName);
+            LOG.info("New chat \"{}\" was created.");
+            LOG.info("The list of chat rooms have been updated.");
+            printAllChats();
+        }
+    }
+
+    private void deleteChatLocal(String chatName) {
+        if (!chatList.contains(chatName)) {
+            LOG.info("Chat \"{}\" not found. Nothing to delete.", chatName);
+        } else {
+            chatList.remove(chatName);
+            LOG.info("Chat \"{}\" was deleted.");
+            LOG.info("The list of chat rooms have been updated.");
+            printAllChats();
+        }
+    }
+
+
 
     public void stop() {
         kaaClient.stop();

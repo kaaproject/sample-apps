@@ -16,11 +16,28 @@
 
 package org.kaaproject.kaa.demo.event;
 
+import org.kaaproject.kaa.client.KaaClientProperties;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.admin.AuthResultDto;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
 import org.kaaproject.kaa.demo.event.utils.EventUtil;
+import org.kaaproject.kaa.client.DesktopKaaPlatformContext;
+import org.kaaproject.kaa.client.Kaa;
+import org.kaaproject.kaa.client.KaaClient;
+import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
+import org.kaaproject.kaa.client.event.EventFamilyFactory;
+import org.kaaproject.kaa.client.event.EventListenersResolver;
+import org.kaaproject.kaa.client.event.FindEventListenersCallback;
+import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
+import org.kaaproject.kaa.client.transact.TransactionId;
+import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
+import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
+
+import org.kaaproject.kaa.examples.event.Chat;
+import org.kaaproject.kaa.examples.event.ChatEvent;
+import org.kaaproject.kaa.examples.event.ChatEventType;
+import org.kaaproject.kaa.examples.event.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +73,7 @@ public class KaaChatManager {
 
     }
 
-    public void start() {
+    public void start() throws IOException {
         try {
 
             // Setup working directory for endpoint
@@ -101,18 +118,39 @@ public class KaaChatManager {
 
                 @Override
                 public void onEvent(Message messageEvent, String senderId) {
-                    LOG.info("{}", messageEvent.toString());
-
+                    if ((currentChatName != null) && (currentChatName.equals(messageEvent.getChatName()))) {
+                        LOG.info("{}", messageEvent.getMessage());
+                    }
                 }
 
                 @Override
                 public void onEvent(ChatEvent chatEvent, String senderId) {
                     LOG.info("ChatEvent event received! Sender ID: [{}]. Event: {}", chatEvent, senderId);
 
-                    // TODO: add handlers
+                    String chatName = chatEvent.getChatName().trim();
+                    if (chatEvent.getEventType() == ChatEventType.CREATE) {
+                        if (chatList.contains(chatName)) {
+                            LOG.info("Chat \"{}\" is already exists. New chat not created.", chatName);
+                        } else {
+                            chatList.add(chatName);
+                            LOG.info("New chat \"{}\" was created.");
+                            LOG.info("The list of chat rooms have been updated.");
+                            printAllChats();
+                        }
+                    }
+
+                    if (chatEvent.getEventType() == ChatEventType.DELETE) {
+                        if (!chatList.contains(chatName)) {
+                            LOG.info("Chat \"{}\" not found. Nothing to delete.", chatName);
+                        } else {
+                            chatList.remove(chatName);
+                            LOG.info("Chat \"{}\" was deleted.");
+                            LOG.info("The list of chat rooms have been updated.");
+                            printAllChats();
+                        }
+                    }
                 }
             });
-
 
         } catch (InterruptedException e) {
             LOG.warn("Thread interrupted when wait for attach current endpoint to user", e);
@@ -169,7 +207,14 @@ public class KaaChatManager {
             String message = "";
             while (!message.equals("quit")) {
                 message = EventUtil.getUserInput();
-                // TODO: send 'message' event
+                if (!chatList.contains(chatName)) {
+                    LOG.info("Chat \"{}\" has been DELETED. Return to main menu.", currentChatName);
+                } else {
+                    LOG.info("Simulate message sending ... Done )");
+                    // TODO: send 'message' event
+                }
+
+
             }
             currentChatName = null;
         }
@@ -178,19 +223,20 @@ public class KaaChatManager {
     public void createChatRoom() {
         LOG.info("Enter new chat name:\n");
         String chatName = EventUtil.getUserInput().trim();
-
+        LOG.info("Simulate CREATE event sending ... Done )");
         // TODO: send 'create' event
     }
 
     public void deleteChatRoom() {
         LOG.info("Enter chat name to delete:\n");
         String chatName = EventUtil.getUserInput().trim();
-
+        LOG.info("Simulate DELETE event sending ... Done )");
         // TODO: send 'delete' event
     }
 
     public void stop() {
         kaaClient.stop();
+        EventUtil.sleepForSeconds(5);
     }
 
 }

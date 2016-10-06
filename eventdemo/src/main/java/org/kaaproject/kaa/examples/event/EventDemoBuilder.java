@@ -60,6 +60,9 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         chatMessageEventClassFamily.setName("Chat Message Event Class Family");
         chatMessageEventClassFamily.setNamespace("org.kaaproject.kaa.examples.event");
         chatMessageEventClassFamily.setClassName("chatMessageEventClassFamily");
+        
+        loginTenantDeveloper(client);
+
         chatMessageEventClassFamily = client.editEventClassFamily(chatMessageEventClassFamily);
 
         addEventClassFamilyVersion(chatMessageEventClassFamily, client, eventApplication.getTenantId(), "chat_event_class_message.avsc");
@@ -84,6 +87,8 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         chatEventEventClassFamily = client.editEventClassFamily(chatEventEventClassFamily);
 
         addEventClassFamilyVersion(chatEventEventClassFamily, client, eventApplication.getTenantId(), "chat_event_class_event.avsc");
+        
+        loginTenantDeveloper(client);
         
         ApplicationEventFamilyMapDto chatEventAefMap = mapEventClassFamily(client, eventApplication, chatEventEventClassFamily);
         aefMapIds.add(chatEventAefMap.getId());

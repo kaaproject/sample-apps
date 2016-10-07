@@ -47,20 +47,6 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         super("demo/event");
     }
 
-    // method for fast builder testing
-    // just setup IP and port parameters
-    public static void main(String[] args) {
-        EventDemoBuilder builder = new EventDemoBuilder();
-        String kaaNodeIp = "10.2.3.18";
-        int kaaNodePort = 8080;
-        AdminClient client = new AdminClient(kaaNodeIp, kaaNodePort);
-        try {
-            builder.buildDemoApplicationImpl(client);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
         logger.info("Loading 'Event Demo Application' data...");
@@ -100,13 +86,6 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         trustfulUserVerifier.setName("Trustful verifier");
         trustfulUserVerifier.setPluginClassName(trustfulVerifierConfig.getPluginClassName());
         trustfulUserVerifier.setPluginTypeName(trustfulVerifierConfig.getPluginTypeName());
-//        RawSchema rawSchema = new RawSchema(trustfulVerifierConfig.getPluginConfigSchema().toString());
-//        DefaultRecordGenerationAlgorithm<RawData> algotithm =
-//                new DefaultRecordGenerationAlgorithmImpl<>(rawSchema, new RawDataFactory());
-//        RawData rawData = algotithm.getRootData();
-//        trustfulUserVerifier.setJsonConfiguration(rawData.getRawData());
-//        trustfulUserVerifier = client.editUserVerifierDto(trustfulUserVerifier);
-//        sdkProfileDto.setDefaultVerifierToken(trustfulUserVerifier.getVerifierToken());
 
         TrustfulAvroConfig trustfulAvroConfig = new TrustfulAvroConfig();
         trustfulUserVerifier.setJsonConfiguration(trustfulAvroConfig.toString());

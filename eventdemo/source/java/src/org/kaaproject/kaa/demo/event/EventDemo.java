@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * A demo application that shows how to send/receive events to/from endpoints using the Kaa event API. 
+ * A demo application that shows how to send/receive events to/from endpoints using the Kaa Event API.
  */
 public class EventDemo {
 
@@ -41,11 +41,19 @@ public class EventDemo {
         LOG.info("Event demo started");
 
         KaaChatManager chatManager = new KaaChatManager();
+
+        // start endpoint
         chatManager.start();
+
+        // attach endpoint to user - only endpoints attached to the same user
+        // can do events exchange among themselves
         chatManager.attachToUser(USER_EXTERNAL_ID, USER_ACCESS_TOKEN);
+
+        // print chat list
         chatManager.printAllChats();
 
 
+        // Print menu on screen and execute menu commands until user choose "exit" action
         while (true) {
             chatManager.printAllChats();
             LOG.info("Choose action by entering corresponding number:");

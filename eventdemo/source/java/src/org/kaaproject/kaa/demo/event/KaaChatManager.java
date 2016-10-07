@@ -57,6 +57,11 @@ public class KaaChatManager {
     public KaaChatManager() {
     }
 
+    /**
+     * Startup current endpoint and init event listeners for receiving chat user messages and
+     * events to manage chat list
+     * @throws IOException
+     */
     public void start() throws IOException {
         try {
 
@@ -129,6 +134,13 @@ public class KaaChatManager {
         }
     }
 
+    /**
+     * Attach endpoint to specified user.
+     * Only endpoints attached to the same user can do events exchange among themselves
+     *
+     * @param userAccessToken user access token that allows to do endpoint attach to this user
+     * @param userId user ID
+     */
     public void attachToUser(String userAccessToken,String userId) {
         try {
             // Attach the endpoint to the user
@@ -157,6 +169,9 @@ public class KaaChatManager {
         }
     }
 
+    /**
+     * Prints list of all chats for current endpoint.
+     */
     public void printAllChats() {
         StringBuilder builder = new StringBuilder();
         builder.append("\n\nThe list of available chat rooms:\n\n");
@@ -166,6 +181,10 @@ public class KaaChatManager {
         LOG.info(builder.toString());
     }
 
+    /**
+     * Joins current endpoint to chat that user will specify.
+     * Controls messages sending process.
+     */
     public void joinChatRoom() {
         LOG.info("Enter chat room name:\n");
         String chatName = EventUtil.getUserInput().trim();
@@ -186,7 +205,7 @@ public class KaaChatManager {
             String message = "";
             while (!message.equals("quit")) {
                 if (!chatList.contains(currentChatName)) {
-                    LOG.info("Chat \"{}\" has been DELETED.", currentChatName);
+                    LOG.info("Current chat \"{}\" has been DELETED.", currentChatName);
                     break;
                 } else {
                     if (!message.trim().isEmpty()) {
@@ -201,6 +220,9 @@ public class KaaChatManager {
         }
     }
 
+    /**
+     * Creates new chat with name that user will specify.
+     */
     public void createChatRoom() {
         LOG.info("Enter new chat name:\n");
         String chatName = EventUtil.getUserInput().trim();
@@ -212,6 +234,9 @@ public class KaaChatManager {
         }
     }
 
+    /**
+     * Deletes existing chat by the chat name that user will specify.
+     */
     public void deleteChatRoom() {
         LOG.info("Enter chat name to delete:\n");
         String chatName = EventUtil.getUserInput().trim();
@@ -243,6 +268,9 @@ public class KaaChatManager {
         }
     }
 
+    /**
+     * Stops current endpoint.
+     */
     public void stop() {
         kaaClient.stop();
         EventUtil.sleepForSeconds(5);

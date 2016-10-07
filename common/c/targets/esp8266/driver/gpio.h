@@ -95,7 +95,7 @@ typedef struct {
 } GPIO_ConfigTypeDef;
 
 #define GPIO_OUTPUT_SET(gpio_no, bit_value) do { \
-    gpio_output_conf((bit_value)<<(gpio_no), ((~(bit_value))&0x01)<<(gpio_no), 1<<(gpio_no), 0) \
+    gpio_output_conf((bit_value)<<(gpio_no), ((~(bit_value))&0x01)<<(gpio_no), 1<<(gpio_no), 0); \
     } while(0);
 
 #define GPIO_OUTPUT(gpio_bits, bit_value) do {\

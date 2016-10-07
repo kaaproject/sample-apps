@@ -31,7 +31,7 @@
 /* Demo print routine. printf implementation is available on this platform. */
 #define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
 
-#define  NUM_GPIO_LEDS 2
+#define NUM_GPIO_LEDS 2
 
 #define TARGET_DEVICE_NAME "ESP8266"
 #define TARGET_MODEL_NAME "01"
@@ -47,6 +47,7 @@ int target_initialize(void);
  * but it is required to read user input in some demos,
  * so it is implemented here.
  */
+#undef getchar
 int getchar(void);
 
 #endif //ESP8266_SUPPORT_H_

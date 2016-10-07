@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 #  Copyright 2014-2016 CyberVision, Inc.
 #
@@ -20,7 +20,7 @@ set -e
 
 RUN_DIR=`pwd`
 
-function help_message {
+help() {
     echo "Choose one of the following: {build|run|deploy|clean}"
     echo "Supported targets: cc32xx, esp8266"
     exit 1
@@ -28,7 +28,7 @@ function help_message {
 
 if [ $# -eq 0 ]
 then
-    help_message
+    help
 fi
 
 APP_NAME="demo_client"
@@ -54,12 +54,15 @@ echo " ACCESS TOKEN: " $DEMO_ACCESS_TOKEN
 echo "==================================="
 
 
-function select_arch {
+select_arch() {
     echo "Please enter a target:"
     read target
 
     # TODO: better case handling
     case "$target" in
+    "")
+        help
+        ;;
     posix)
         echo "posix platform is not supported by this demo"
         exit 0
@@ -68,14 +71,14 @@ function select_arch {
     *)
         # Interpret custom string as target name
         KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$target.cmake"
-        KAA_TARGET=${target}
+        KAA_TARGET=$target
         KAA_PRODUCE_BINARY=true
         KAA_REQUIRE_CREDENTIALS=true
         ;;
     esac
 }
 
-function unpack_sdk {
+unpack_sdk() {
     if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
     then
         KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
@@ -91,7 +94,7 @@ function unpack_sdk {
     fi
 }
 
-function build_app {
+build_app() {
     SSID=
     PASSWORD=
 
@@ -115,20 +118,20 @@ function build_app {
           -DWIFI_SSID=$SSID \
           -DWIFI_PASSWORD=$PASSWORD \
           -DCMAKE_BUILD_TYPE=MinSizeRel \
-          -DKAA_WITHOUT_CONFIGURATION=1 \
-          -DKAA_WITHOUT_NOTIFICATION=1 \
+          -DWITH_EXTENSION_CONFIGURATION=OFF \
+          -DWITH_EXTENSION_NOTIFICATION=OFF \
           -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN \
           -DKAA_MAX_LOG_LEVEL=3 \
           ${KAA_TOOLCHAIN_PATH_SDK} ..
     make
 }
 
-function clean {
+clean() {
     rm -rf "$KAA_LIB_PATH/$BUILD_DIR"
     rm -rf "$PROJECT_HOME/$BUILD_DIR"
 }
 
-function run {
+run() {
     cd "$PROJECT_HOME/$BUILD_DIR"
     ./$APP_NAME
 }

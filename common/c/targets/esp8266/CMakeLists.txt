@@ -22,16 +22,14 @@ endif()
 
 exec_program(xtensa-lx106-elf-gcc .
             ARGS -print-libgcc-file-name
-            OUTPUT_VARIABLE ESP8266_LIBGCC
-            )
+            OUTPUT_VARIABLE ESP8266_LIBGCC)
 
 add_library(target_support
             STATIC
             target.c
             target_gpio_led.c
             driver/uart.c
-            driver/gpio.c
-            )
+            driver/gpio.c)
 
 target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../common)
 target_include_directories(target_support PUBLIC driver)
@@ -49,16 +47,16 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.app.v6.ld ${CMAKE_BINARY_DIR
 
 # ESP8266 RTOS SDK dependencies
 target_link_libraries(target_support PUBLIC
-                      ${ESP_SDK_HOME}/lib/libfreertos.a
-                      ${ESP_SDK_HOME}/lib/libhal.a
-                      ${ESP_SDK_HOME}/lib/libpp.a
-                      ${ESP_SDK_HOME}/lib/libphy.a
-                      ${ESP_SDK_HOME}/lib/libnet80211.a
-                      ${ESP_SDK_HOME}/lib/libwpa.a
-                      ${ESP_SDK_HOME}/lib/liblwip.a
-                      ${ESP_SDK_HOME}/lib/libmain.a
-                      ${ESP_SDK_HOME}/lib/libssl.a
-                      ${ESP_TOOLCHAIN_LIBS_HOME}/libgcc.a
+                      ${ESP_RTOS_SDK}/lib/libfreertos.a
+                      ${ESP_RTOS_SDK}/lib/libhal.a
+                      ${ESP_RTOS_SDK}/lib/libpp.a
+                      ${ESP_RTOS_SDK}/lib/libphy.a
+                      ${ESP_RTOS_SDK}/lib/libnet80211.a
+                      ${ESP_RTOS_SDK}/lib/libwpa.a
+                      ${ESP_RTOS_SDK}/lib/liblwip.a
+                      ${ESP_RTOS_SDK}/lib/libmain.a
+                      ${ESP_RTOS_SDK}/lib/libssl.a
+                      ${ESP8266_LIBGCC}
                       -T${CMAKE_CURRENT_SOURCE_DIR}/ld/eagle.app.v6.ld
                       )
 

@@ -319,101 +319,101 @@ This simple application demonstrates user verification flow in Kaa for Java and 
         <!--<destBinaryFile></destBinaryFile>-->
     <!--</project>-->
 
-    <!--<project id="verifiers_demo_cpp">-->
-        <!--<name>User verifiers demo C++</name>-->
-        <!--<description>Kaa user verifiers demo for C++</description>-->
-        <!--<details>-->
-            <!--<![CDATA[-->
-<!--<p>-->
-	<!--This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.-->
-	<!--It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Users-management/" target="_blank">Users</a> management features.-->
-	<!--In this application, <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.-->
-<!--</p>-->
+    <project id="verifiers_demo_cpp">
+        <name>User verifiers demo C++</name>
+        <description>Kaa user verifiers demo for C++</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Users-management/" target="_blank">Users</a> management features.
+	In this application, <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
+</p>
 
-<!--<h1>Launching</h1>-->
+<h1>Launching</h1>
 
-<!--To launch this sample application on the Kaa C++ SDK:-->
+To launch this sample application on the Kaa C++ SDK:
 
-<!--<ol>-->
-	<!--<li>-->
-		<!--Prepare your C++ SDK environment.-->
-		<!--To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.-->
-	<!--</li>-->
-	<!--<li>-->
-		<!--Click the <b>Source</b> button.-->
-		<!--A project source download window will open.-->
-		<!--Click <b>Ok</b> and download the .tar.gz file.-->
-	<!--</li>-->
-	<!--<li>-->
-		<!--Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.-->
-			<!--<pre>-->
-				<!--./build.sh deploy-->
-			<!--</pre>-->
-	<!--</li>-->
-	<!--<li>-->
-		<!--The program will ask you to enter the target platform for your build.-->
-		<!--Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.-->
-		<!--The C SDK and the demo application are now built and the demo application is launched.-->
-	<!--</li>-->
-<!--</ol>-->
+<ol>
+	<li>
+		Prepare your C++ SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+			<pre>
+				./build.sh deploy
+			</pre>
+	</li>
+	<li>
+		The program will ask you to enter the target platform for your build.
+		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		The C SDK and the demo application are now built and the demo application is launched.
+	</li>
+</ol>
 
-<!--Once you built the application, you can start it at any time using the following command.-->
+Once you built the application, you can start it at any time using the following command.
 
-<!--<pre>-->
-	<!--./build.sh run-->
-<!--</pre>-->
+<pre>
+	./build.sh run
+</pre>
 
-<!--When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.-->
+When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.
 
-<!--If the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#assisted-attachment" target="_blank">assisted attachment</a> was successful, Kaa client will display the message previously sent from the mobile application.-->
+If the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#assisted-attachment" target="_blank">assisted attachment</a> was successful, Kaa client will display the message previously sent from the mobile application.
 
-<!--<h1>Troubleshooting</h1>-->
+<h1>Troubleshooting</h1>
 
-<!--<h2>Running the build.sh script returns an error message</h2>-->
+<h2>Running the build.sh script returns an error message</h2>
 
-<!--<pre>-->
-	<!--libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.-->
-<!--</pre>-->
+<pre>
+	libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.
+</pre>
 
-<!--<p>-->
-	<!--This means that no SDK tarball was found in the libs/kaa directory.-->
-<!--</p>-->
+<p>
+	This means that no SDK tarball was found in the libs/kaa directory.
+</p>
 
-<!--Try the following:-->
+Try the following:
 
-<!--<ul>-->
-	<!--<li>-->
-		<!--Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.-->
-		<!--To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.-->
-	<!--</li>-->
-	<!--<li>-->
-		<!--Download the SDK tarball for this sample application and put it in the libs/kaa folder.-->
-		<!--To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.-->
-	<!--</li>-->
-<!--</ul>-->
+<ul>
+	<li>
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+	</li>
+	<li>
+		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+	</li>
+</ul>
 
-<!--<h2>CMake returns an error message</h2>-->
+<h2>CMake returns an error message</h2>
 
-<!--<pre>-->
-	<!--CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)-->
-<!--</pre>-->
+<pre>
+	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+</pre>
 
-<!--<p>-->
-	<!--This means that CMake could not find the required libraries because they were not installed correctly.-->
-	<!--To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.-->
-<!--</p>-->
-            <!--]]>-->
-        <!--</details>-->
-        <!--<sdkLanguage>CPP</sdkLanguage>-->
-        <!--<platforms></platforms>-->
-        <!--<features>USER_VERIFIER</features>-->
-        <!--<complexity>BASIC</complexity>-->
-        <!--<bundleId>verifiers_demos</bundleId>-->
-        <!--<sourceArchive></sourceArchive>-->
-        <!--<projectFolder></projectFolder>-->
-        <!--<sdkLibDir></sdkLibDir>-->
-        <!--<destBinaryFile></destBinaryFile>-->
-    <!--</project>-->
+<p>
+	This means that CMake could not find the required libraries because they were not installed correctly.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+</p>
+            ]]>
+        </details>
+        <sdkLanguage>CPP</sdkLanguage>
+        <platforms>LINUX_X86</platforms>
+        <features>USER_VERIFIER</features>
+        <complexity>BASIC</complexity>
+        <bundleId>verifiers_demos</bundleId>
+        <sourceArchive>cpp/verifiers_demo.tar.gz</sourceArchive>
+        <projectFolder>CppVerifiersDemo</projectFolder>
+        <sdkLibDir>CppVerifiersDemo/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
 
     <!--<project id="verifiers_demo_ios">-->
         <!--<name>GPIO control iOS</name>-->

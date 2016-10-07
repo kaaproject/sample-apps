@@ -716,38 +716,19 @@ Make sure that the build target is set to <b>CredentialsDemo</b>, not <b>Kaa</b>
         <details>
             <![CDATA[
 <p>
-	The applications bundle uses the <b>Credentials management extension</b> for full-cycle management of credentials in the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-platform" target="_blank">Kaa platform</a>.
+	This application bundle uses the <b>Credentials management</b> extension for full-cycle management of credentials in the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-platform" target="_blank">Kaa platform</a>.
 	Consider a device that is preprogrammed by the manufacturer to use cloud services and comes with all the required credentials included.
 	The device does not need any additional registration and is usable right out of the box.
 	Should the device be lost or stolen, the user can revoke the credentials to prevent inappropriate use of the device.
 </p>
 
-<ul>
-	<li>
-		Generating the key pair.
-	</li>
-	<li>
-		Locating the keys in the device.
-	</li>
-	<li>
-		Authorizing the credentials in the cloud.
-	</li>
-	<li>
-		Revoking the credentials.
-	</li>
-	<li>
-		Credentials management and status check using REST API.
-	</li>
-</ul>
-
-For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Devices-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Devices-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
 
 <h1>Playing around</h1>
 
 <p>
-	This sample application comprises the client-side and server-side parts.
-	The application communicates with the internal <b>Credentials service</b> that accepts only previously registered (provisioned) credentials - the public key of the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a>.
-	The server-side application manages the endpoint credentials (generates, provisions and revokes them) and checks the credentials status (AVAILABLE, IN_USE, or REVOKED).
+	In this sample application, your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> uses the internal <b>Credentials service</b> that accepts only previously registered (provisioned) credentials - the public key of the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a>.
+	<a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> manages the endpoint credentials (generates, provisions and revokes them) and checks the credentials status (AVAILABLE, IN_USE, or REVOKED).
 	The client-side application creates the endpoint <b>key hash</b> (also called <b>endpoint ID</b>) to register one Kaa endpoint; displays the endpoint status (registered/unregistered).
 </p>
 <p>
@@ -763,11 +744,11 @@ For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programm
 
 	<pre>
 		2016-06-21 13:33:34,471 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Kaa client started
-		2016-06-21 13:33:34,488 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Cannot connect to server - no credentials found. Stopping application
+		2016-06-21 13:33:34,488 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Cannot connect to server - no credentials found. Stopping application.
 		2016-06-21 13:33:34,488 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Stopping application
 	</pre>
 
-	This means that the application cannot connect to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> because there are no credentials provided.
+	This means that the application cannot connect to the Kaa server because there are no credentials provided.
 </p>
 
 To generate the credentials:
@@ -779,13 +760,14 @@ To generate the credentials:
 	
 	<pre>
 		2016-06-21 14:28:03,219 [main] INFO  o.k.k.demo.activation.ActivationDemo - Activation demo started
-		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose action by entering corresponding number:
+		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
 		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - 
 		1. Generate endpoint credentials.
-		2. Provision endpoint credentials.
-		3. Revoke endpoint credentials.
-		4. Get credentials status.
-		5. Exit.
+		2. Provision key files for EP credentials.
+		3. Provision public key string for EP credentials.
+		4. Revoke endpoint credentials.
+		5. Get credentials status.
+		6. Exit.
 	</pre>
 	
 	</li>
@@ -794,7 +776,7 @@ To generate the credentials:
 		This generates new credentials: key.private and key.public files.
 	</li>
 	<li>
-		Exit from the application by typing <b>3</b> and pressing Enter.
+		Exit from the application by typing <b>6</b> and pressing Enter.
 	</li>
 	<li>
 		Copy the generated files to the client-side application folder.
@@ -826,13 +808,14 @@ To provision your new credentials:
 		
 		<pre>
 			2016-06-21 14:28:03,219 [main] INFO  o.k.k.demo.activation.ActivationDemo - Activation demo started
-			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose action by entering corresponding number:
-			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - 
+			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
+			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo -
 			1. Generate endpoint credentials.
-			2. Provision endpoint credentials.
-			3. Revoke endpoint credentials.
-			4. Get credentials status.
-			5. Exit.
+			2. Provision key files for EP credentials.
+			3. Provision public key string for EP credentials.
+			4. Revoke endpoint credentials.
+			5. Get credentials status.
+			6. Exit.
 		</pre>
 	</li>
 	<li>
@@ -841,13 +824,30 @@ To provision your new credentials:
 		Paste it from the Clipboard into the command prompt and press Enter.
 		
 		<pre>
-			2016-06-21 17:22:08,588 [main] INFO  o.k.k.demo.activation.ActivationDemo - Enter ID of credentials [???] that needs to be provisioned:
+			2016-06-21 17:22:08,588 [main] INFO  o.k.k.demo.activation.ActivationDemo - Enter ID of credentials to be provisioned:
 			g2o7GSuQS8xPfX0NW9M4aXb2xx4=
 			
-			2016-06-21 14:28:38,489 [main] INFO  o.k.k.demo.activation.ActivationDemo - Provisioning the credentials
+			2016-06-21 14:28:38,489 [main] INFO  o.k.k.demo.activation.ActivationDemo - Provisioning credentials...
 			2016-06-21 14:28:39,481 [main] INFO  o.k.k.d.a.utils.AdminClientManager - Credentials with ID=g2o7GSuQS8xPfX0NW9M4aXb2xx4= are now in status: AVAILABLE
 		</pre>
 			
+	</li>
+	<li>
+		Some platforms require using a public key string to secure the process of credentials provisioning.
+		And item 3 was added for this.
+		Type 3 and press Enter. The console will request the public key string. Copy paste it from your Kaa client to the command line and press Enter.
+		
+		<pre>
+			2016-10-03 13:46:35,623 [main] INFO  o.k.k.e.c.CredentialsAdminDemo - Provisioning endpoint credentials using public key string.
+			2016-10-03 13:46:35,623 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Enter public key string of endpoint to provision its credentials:
+			MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzLDPwbr/K5cRer51vmIPe7q1InPbAq9OgaBSgKDkrUDgmOPeekAkDLSVroeN9wZJU1HhgZk6RgaVhtjl4iTNgHhnsd
+			NqrA3qZYVMwL2W0YXFHanOSaRSpm+YX4UaCD8VNEr4alBvM4rYmRed1NIdyy2h+tDscrzRROKY66qVMY1rUjPDzY78ErK9EJxZV+Eo0Mq6ekXmx45ORYm4k/hn3eF/RyZK/yjt
+			fNqwqa6btx4Xk7udcm5gwcj3DJHEeL5DL52KNyOgqN9a9gYh5d/moPzfuMhDznFRQlWb1kVQ8pWNajRgJ3LD+3L8HCg1XNWJs6EOgSGTflKbfxJ3UHC/hQIDAQAB
+			2016-10-03 14:05:53,953 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Provisioning credentials with public key...
+			2016-10-03 14:05:54,412 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Credentials with ID=fACw1KJSq1NDcf1831eEYa/xflg= are now in status: AVAILABLE
+			2016-10-03 14:05:54,414 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Credentials are successfully provisioned!
+		</pre>
+		
 		The credentials are now provisioned to the Kaa server.
 	</li>
 	<li>
@@ -873,16 +873,17 @@ To provision your new credentials:
 
 	<pre>
 		2016-06-21 14:28:03,219 [main] INFO  o.k.k.demo.activation.ActivationDemo - Activation demo started
-		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose action by entering corresponding number:
-		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - 
+		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
+		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo -
 		1. Generate endpoint credentials.
-		2. Provision endpoint credentials.
-		3. Revoke endpoint credentials.
-		4. Get credentials status.
-		5. Exit.
+		2. Provision key files for EP credentials.
+		3. Provision public key string for EP credentials.
+		4. Revoke endpoint credentials.
+		5. Get credentials status.
+		6. Exit.
 		
-		4
-		2016-06-21 17:22:08,588 [main] INFO  o.k.k.demo.activation.ActivationDemo - Enter ID of credentials:
+		5
+		2016-06-21 17:22:08,588 [main] INFO  o.k.k.demo.activation.ActivationDemo - Enter credentials ID:
 		g2o7GSuQS8xPfX0NW9M4aXb2xx4=
 	</pre>
 	
@@ -890,7 +891,7 @@ To provision your new credentials:
 	The console then returns the credentials status.
 	
 	<pre>
-		2016-06-21 14:28:38,489 [main] INFO  o.k.k.demo.activation.ActivationDemo - Checking the credentials status
+		2016-06-21 14:28:38,489 [main] INFO  o.k.k.demo.activation.ActivationDemo - Checking credentials status
 		2016-06-21 14:28:39,481 [main] INFO  o.k.k.d.a.utils.AdminClientManager - Credentials with ID=g2o7GSuQS8xPfX0NW9M4aXb2xx4= are now in status: IN_USE
 	</pre>
 	
@@ -917,23 +918,24 @@ To revoke the credentials:
 		
 		<pre>
 			2016-06-21 14:28:03,219 [main] INFO  o.k.k.demo.activation.ActivationDemo - Activation demo started
-			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose action by entering corresponding number:
-			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - 
+			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
+			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo -
 			1. Generate endpoint credentials.
-			2. Provision endpoint credentials.
-			3. Revoke endpoint credentials.
-			4. Get credentials status.
-			5. Exit.
+			2. Provision key files for EP credentials.
+			3. Provision public key string for EP credentials.
+			4. Revoke endpoint credentials.
+			5. Get credentials status.
+			6. Exit.
 		</pre>
 	</li>
 	<li>
-		Choose the option <b>3</b> and enter the <i>endpoint ID</i> in the command prompt.
+		Choose the option <b>4</b> and enter the <i>endpoint ID</i> in the command prompt.
 		
 		<pre>
 			2016-06-21 17:22:08,588 [main] INFO  o.k.k.demo.activation.ActivationDemo - Enter ID of credentials you want to revoke:
 			g2o7GSuQS8xPfX0NW9M4aXb2xx4=
 			
-			2016-06-21 14:28:38,489 [main] INFO  o.k.k.demo.activation.ActivationDemo - Revoking the credentials
+			2016-06-21 14:28:38,489 [main] INFO  o.k.k.demo.activation.ActivationDemo - Revoking credentials
 			2016-06-21 14:28:39,481 [main] INFO  o.k.k.d.a.utils.AdminClientManager - Credentials with ID=g2o7GSuQS8xPfX0NW9M4aXb2xx4= are now in status: REVOKED
 		</pre>
 		
@@ -954,7 +956,7 @@ To revoke the credentials:
 		2016-06-21 18:09:53,614 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - No operation is performed according to fail-over strategy decision
 	</pre>
 	
-	The Client Application lost the server connection and stopped working.
+	Your Kaa client lost the server connection and stopped working.
 </p>
 <p>
 	If you try to launch the application again, the server will reject the connection request.

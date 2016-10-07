@@ -110,6 +110,7 @@
                     <descriptors>
                         <descriptor>assembly/src-android.xml</descriptor>
                         <!--<descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>-->
+                        <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
                     </descriptors>
                 </configuration>
@@ -405,8 +406,10 @@
                         </exclude>
                         <exclude>/source/objc/EndpointOwnershipDemo/GoogleService-Info.plist</exclude>
                         <exclude>/source/objc/EndpointOwnershipDemo.xcodeproj/project.pbxproj</exclude>
-                        <exclude>/resources/verifiersDemoEventClassFamily.json</exclude>
-                        <exclude>/resources/config_schema.avsc</exclude>
+
+                        <!--Common files-->
+                        <exclude>/resources/*.avsc</exclude>
+                        <exclude>/resources/*.json</exclude>
                     </excludes>
                 </configuration>
             </plugin>

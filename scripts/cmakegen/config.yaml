@@ -53,7 +53,7 @@ verifiersdemo:
     features: ['events']
     path: 'verifiersdemo/source/'
     definitions:
-        DEMO_ACCESS_TOKEN: 'asscess_token'
+        DEMO_ACCESS_TOKEN: 'access_token'
 
 profilingdemo:
     appname: 'ProfilingDemo'

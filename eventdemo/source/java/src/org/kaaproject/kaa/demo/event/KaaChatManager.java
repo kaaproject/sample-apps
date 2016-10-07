@@ -23,7 +23,6 @@ import org.kaaproject.kaa.client.KaaClientProperties;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
 import org.kaaproject.kaa.client.event.EventFamilyFactory;
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
-import org.kaaproject.kaa.common.dto.event.EventClassType;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
 import org.kaaproject.kaa.demo.event.utils.EventUtil;
@@ -56,7 +55,6 @@ public class KaaChatManager {
     private Chat chatEventFamily;
 
     public KaaChatManager() {
-
     }
 
     public void start() throws IOException {
@@ -102,21 +100,26 @@ public class KaaChatManager {
                 @Override
                 public void onEvent(Message messageEvent, String senderId) {
                     if ((currentChatName != null) && (currentChatName.equals(messageEvent.getChatName()))) {
-                        LOG.info("{}", messageEvent.getMessage());
+                        System.out.println(messageEvent.getMessage());
                     }
                 }
 
                 @Override
                 public void onEvent(ChatEvent chatEvent, String senderId) {
-                    LOG.info("ChatEvent event received! Sender ID: [{}]. Event: {}", chatEvent, senderId);
 
                     String chatName = chatEvent.getChatName().trim();
                     if (chatEvent.getEventType() == ChatEventType.CREATE) {
-                        createChatLocal(chatName);
+                        if (createChatLocal(chatName) == true) {
+                            LOG.info("The list of chat rooms has been updated.");
+                            LOG.info("New chat \"{}\" was CREATED.", chatName);
+                        }
                     }
 
                     if (chatEvent.getEventType() == ChatEventType.DELETE) {
-                        deleteChatLocal(chatName);
+                        if (deleteChatLocal(chatName) == true) {
+                            LOG.info("The list of chat rooms has been updated.");
+                            LOG.info("Chat \"{}\" was DELETED.", chatName);
+                        }
                     }
                 }
             });
@@ -169,22 +172,31 @@ public class KaaChatManager {
         if (!chatList.contains(chatName)) {
             LOG.info("Chat \"{}\" NOT FOUND. Return to main menu.", chatName);
         } else {
-            LOG.info("You have joined \"{}\" chat.", chatName);
+            String nickName = "";
+            while (nickName.isEmpty()) {
+                LOG.info("Enter your name:");
+                nickName = EventUtil.getUserInput();
+            }
+
+            LOG.info("You have joined \"{}\" chat as \"{}\".", chatName, nickName);
             LOG.info("Type message and press \"Enter\" to send it or type \"quit\" to live this chat.");
 
             currentChatName = chatName;
 
             String message = "";
             while (!message.equals("quit")) {
-                message = EventUtil.getUserInput();
-                if (!chatList.contains(chatName)) {
-                    LOG.info("Chat \"{}\" has been DELETED. Return to main menu.", currentChatName);
+                if (!chatList.contains(currentChatName)) {
+                    LOG.info("Chat \"{}\" has been DELETED.", currentChatName);
+                    break;
                 } else {
-                    chatEventFamily.sendEventToAll(new Message(chatName, message));
+                    if (!message.trim().isEmpty()) {
+                        chatEventFamily.sendEventToAll(new Message(currentChatName, nickName + ": " + message));
+                    }
                 }
-
-
+                message = EventUtil.getUserInput();
             }
+            LOG.info("You are leaving chat \"{}\". Return to main menu.", currentChatName);
+            chatEventFamily.sendEventToAll(new Message(currentChatName, "chat info: " + nickName + " has left the chat."));
             currentChatName = null;
         }
     }
@@ -194,9 +206,10 @@ public class KaaChatManager {
         String chatName = EventUtil.getUserInput().trim();
         LOG.info("Creating chat \"{}\" ...", chatName);
 
-        createChatLocal(chatName);
-
-        chatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.CREATE));
+        if (createChatLocal(chatName) == true) {
+            LOG.info("New chat \"{}\" was CREATED.", chatName);
+            chatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.CREATE));
+        }
     }
 
     public void deleteChatRoom() {
@@ -204,34 +217,31 @@ public class KaaChatManager {
         String chatName = EventUtil.getUserInput().trim();
         LOG.info("Deleting chat \"{}\" ...", chatName);
 
-        deleteChatLocal(chatName);
-
-        chatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.DELETE));
+        if (deleteChatLocal(chatName) == true) {
+            LOG.info("Chat \"{}\" was DELETED.", chatName);
+            chatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.DELETE));
+        }
     }
 
-    private void createChatLocal(String chatName) {
+    private boolean createChatLocal(String chatName) {
         if (chatList.contains(chatName)) {
             LOG.info("Chat \"{}\" is already exists. New chat not created.", chatName);
+            return false;
         } else {
             chatList.add(chatName);
-            LOG.info("New chat \"{}\" was created.");
-            LOG.info("The list of chat rooms have been updated.");
-            printAllChats();
+            return true;
         }
     }
 
-    private void deleteChatLocal(String chatName) {
+    private boolean deleteChatLocal(String chatName) {
         if (!chatList.contains(chatName)) {
-            LOG.info("Chat \"{}\" not found. Nothing to delete.", chatName);
+            LOG.info("Chat \"{}\" NOT FOUND. Nothing to delete.", chatName);
+            return false;
         } else {
             chatList.remove(chatName);
-            LOG.info("Chat \"{}\" was deleted.");
-            LOG.info("The list of chat rooms have been updated.");
-            printAllChats();
+            return true;
         }
     }
-
-
 
     public void stop() {
         kaaClient.stop();

@@ -45,13 +45,14 @@ public class EventDemo {
         chatManager.attachToUser(USER_EXTERNAL_ID, USER_ACCESS_TOKEN);
         chatManager.printAllChats();
 
-        LOG.info("Choose action by entering corresponding number:");
 
         while (true) {
+            chatManager.printAllChats();
+            LOG.info("Choose action by entering corresponding number:");
             LOG.info("\n1. Join chat room\n" +
                     "2. Create chat room\n" +
                     "3. Delete chat room\n" +
-                    "4. Exit application\n");
+                    "4. Exit application");
             switch (EventUtil.getUserInput()) {
                 case "1":
                     LOG.info("Going to \"Join chat room\".");
@@ -76,74 +77,4 @@ public class EventDemo {
             }
         }
     }
-
-
-
-
-
-    // TODO: after all will works fine, delete this method
-//    public static void onUserAttached() {
-//
-//        List<String> listenerFQNs = new LinkedList<>();
-//        listenerFQNs.add(ThermostatInfoRequest.class.getName());
-//        listenerFQNs.add(ChangeDegreeRequest.class.getName());
-//
-//        //Obtain the event family factory.
-//        final EventFamilyFactory eventFamilyFactory = kaaClient.getEventFamilyFactory();
-//        //Obtain the concrete event family.
-//        final ThermostatEventClassFamily tecf = eventFamilyFactory.getThermostatEventClassFamily();
-//
-//        // Broadcast the ChangeDegreeRequest event.
-//        tecf.sendEventToAll(new ChangeDegreeRequest(10));
-//        LOG.info("Broadcast ChangeDegreeRequest sent");
-//
-//        // Add event listeners to the family factory.
-//        tecf.addListener(new ThermostatEventClassFamily.Listener() {
-//
-//            @Override
-//            public void onEvent(ChangeDegreeRequest changeDegreeRequest, String senderId) {
-//                LOG.info("ChangeDegreeRequest event received! change temperature by {} degrees, sender: {}", changeDegreeRequest.getDegree(), senderId);
-//            }
-//
-//            @Override
-//            public void onEvent(ThermostatInfoResponse thermostatInfoResponse, String senderId) {
-//                LOG.info("ThermostatInfoResponse event received! thermostat info: {}, sender: {}", thermostatInfoResponse.getThermostatInfo(), senderId);
-//            }
-//
-//            @Override
-//            public void onEvent(ThermostatInfoRequest thermostatInfoRequest, String senderId) {
-//                LOG.info("ThermostatInfoRequest event received! sender: {}", senderId);
-//                tecf.sendEvent(new ThermostatInfoResponse(new ThermostatInfo(20, 10, true)), senderId);
-//            }
-//        });
-//
-//        //Find all the listeners listening to the events from the FQNs list.
-//        kaaClient.findEventListeners(listenerFQNs, new FindEventListenersCallback() {
-//
-//            // Perform any necessary actions with the obtained event listeners.
-//            @Override
-//            public void onEventListenersReceived(List<String> eventListeners) {
-//                LOG.info("{} event listeners received", eventListeners.size());
-//                for (String listener : eventListeners) {
-//                    TransactionId trxId = eventFamilyFactory.startEventsBlock();
-//                    // Add a targeted events to the block.
-//                    tecf.addEventToBlock(trxId, new ThermostatInfoRequest(), listener);
-//                    tecf.addEventToBlock(trxId, new ChangeDegreeRequest(-30), listener);
-//
-//                    // Send the added events in a batch.
-//                    eventFamilyFactory.submitEventsBlock(trxId);
-//                    LOG.info("ThermostatInfoRequest & ChangeDegreeRequest sent to endpoint with id {}", listener);
-//                    // Dismiss the event batch (if the batch was not submitted as shown in the previous line).
-//                    // eventFamilyFactory.removeEventsBlock(trxId);
-//                }
-//            }
-//
-//            // Perform any necessary actions in case of failure.
-//            @Override
-//            public void onRequestFailed() {
-//                LOG.info("Request failed");
-//            }
-//        });
-//    }
-
 }

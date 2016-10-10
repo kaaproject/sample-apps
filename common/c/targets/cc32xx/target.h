@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2014-2016 CyberVision, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,12 @@
  *  limitations under the License.
  */
 
-/*
+/**
+ * @file
+ *
  * This header provides several bindings for TI's cc32xx target that abstracts
  * an implementation of its features. Right now it contains only
- * console and target initialisation routines, but it must be extended
+ * console and target initialisation routines, but it can be extended
  * if required.
  *
  */

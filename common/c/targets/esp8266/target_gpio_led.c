@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2014-2016 CyberVision, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +14,6 @@
  *  limitations under the License.
  */
 
-/*
- * This header provides several bindings for TI's cc32xx target that abstracts
- * an implementation of its features. Right now it contains only
- * console and target initialisation routines, but it must be extended
- * if required.
- *
- */
-
 #include <stdint.h>
 
 #include "target.h"
@@ -32,16 +24,19 @@
 #define HIGH 1
 #define LOW 0
 
-void target_gpio_led_init(void) {
+void target_gpio_led_init(void)
+{
     GPIO_OUTPUT_SET(0, LOW);
     GPIO_OUTPUT_SET(2, LOW);
 }
 
-void target_gpio_led_toggle(int id, int status) {
-    if(id >= NUM_GPIO_LEDS || id < 0) {
+void target_gpio_led_toggle(uint32_t id, bool status)
+{
+    if (id >= NUM_GPIO_LEDS) {
         return;
     }
-    if(status) {
+
+    if (status) {
         GPIO_OUTPUT_SET(id, HIGH);
     } else {
         GPIO_OUTPUT_SET(id, LOW);

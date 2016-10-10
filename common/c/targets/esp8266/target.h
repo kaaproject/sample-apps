@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2014-2016 CyberVision, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,12 @@
  *  limitations under the License.
  */
 
-/*
+/**
+ * @file
+ *
  * This header provides several bindings for ESP8266 target that abstracts
  * an implementation of its features. Right now it contains only
- * console and target initialisation routines, but it must be extended
+ * console and target initialisation routines, but it can be extended
  * if required.
  *
  */
@@ -36,14 +38,17 @@
 #define TARGET_DEVICE_NAME "ESP8266"
 #define TARGET_MODEL_NAME "01"
 
-/* Initialises a target. Zero value means success, negative - errors.
+/**
+ * Initializes a target. 0 means success, negative values - errors.
  *
  * For this particular target this will eventually try to connect to
  * the WiFi spot using SSID and password supplied during build.
  */
 int target_initialize(void);
 
-/* The ESP8266 SDK does not define getchar() anywhere,
+/**
+ * The ESP8266 SDK does not define getchar() anywhere
+ * (except for useless chain of defines which does not work, however),
  * but it is required to read user input in some demos,
  * so it is implemented here.
  */

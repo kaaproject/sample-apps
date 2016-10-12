@@ -25,6 +25,7 @@ This module contains useful methods to operate with Kaa
 """
 
 import requests
+import time
 
 class KaaNodeError(Exception):
     pass
@@ -135,3 +136,26 @@ class KaaNode(object):
                                'Return code: %d'%req.status_code)
 
         return req.json()
+
+    def wait_for_server(self, timeout):
+        """Waits for Kaa REST server to be ready for operations.
+
+        :param timeout: Timeout in seconds.
+        :type timeout: integer
+        """
+
+        start = time.time()
+        while time.time() - start < timeout:
+            try:
+                # Performing REST request to the server.
+                # In case the server is ready it will respond with 401 (Unauthorized),
+                # otherwise, an exception will be thrown.
+
+                url = 'http://%s:%s/kaaAdmin/rest/api'%(self.host, self.port)
+                requests.get(url)
+
+                return
+            except requests.ConnectionError as ex:
+                time.sleep(1)
+
+        raise KaaNodeError("Timeout error")

@@ -260,6 +260,9 @@ def console_args_parser():
                         type=str, help='Kaa server address')
     parser.add_argument('-p', metavar='port',
                         type=str, help='Kaa server port')
+    parser.add_argument('--wait-timeout', metavar='wait_timeout',
+                        type=int, default=5,
+                        help='Waiting timeout for Kaa REST server (default: 5 seconds)')
 
     return parser
 
@@ -298,6 +301,8 @@ def main():
     builddir = config['builddir']
     # clear build directory
     rmtree(builddir, ignore_errors=True)
+
+    kaanode.wait_for_server(args.wait_timeout)
 
     tester = AppTesterFramework(appconfig_file, kaanode, kaauser,
                                 args.rootpath, builddir)

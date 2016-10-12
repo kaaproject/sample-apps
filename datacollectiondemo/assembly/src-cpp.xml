@@ -38,7 +38,7 @@
         <fileSet>
             <directory>${main.dir}/common/build-scripts/</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CppDatacollectionDemo</outputDirectory>
+            <outputDirectory>CppDataCollectionDemo</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

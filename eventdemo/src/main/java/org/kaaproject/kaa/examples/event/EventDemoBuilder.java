@@ -56,13 +56,13 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         eventApplication.setName("Event demo");
         eventApplication = client.editApplication(eventApplication);
 
-        EventClassFamilyDto thermoEventClassFamily = new EventClassFamilyDto();
-        thermoEventClassFamily.setName("Thermostat Event Class Family");
-        thermoEventClassFamily.setNamespace("org.kaaproject.kaa.schema.sample.event.thermo");
-        thermoEventClassFamily.setClassName("ThermostatEventClassFamily");
-        thermoEventClassFamily = client.editEventClassFamily(thermoEventClassFamily);
+        EventClassFamilyDto chatMessageEventClassFamily = new EventClassFamilyDto();
+        chatMessageEventClassFamily.setName("Chat Message Event Class Family");
+        chatMessageEventClassFamily.setNamespace("org.kaaproject.kaa.examples.event");
+        chatMessageEventClassFamily.setClassName("chatMessageEventClassFamily");
+        chatMessageEventClassFamily = client.editEventClassFamily(chatMessageEventClassFamily);
 
-        addEventClassFamilyVersion(thermoEventClassFamily, client, eventApplication.getTenantId(), "thermostatEventClassFamily.json");
+        addEventClassFamilyVersion(chatMessageEventClassFamily, client, eventApplication.getTenantId(), "chat_event_class_message.avsc");
 
         sdkProfileDto.setApplicationId(eventApplication.getId());
         sdkProfileDto.setApplicationToken(eventApplication.getApplicationToken());
@@ -73,10 +73,21 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
         loginTenantDeveloper(client);
 
-        ApplicationEventFamilyMapDto thermoAefMap = mapEventClassFamily(client, eventApplication, thermoEventClassFamily);
-
+        ApplicationEventFamilyMapDto chatMessageAefMap = mapEventClassFamily(client, eventApplication, chatMessageEventClassFamily);
         List<String> aefMapIds = new ArrayList<>();
-        aefMapIds.add(thermoAefMap.getId());
+        aefMapIds.add(chatMessageAefMap.getId());
+        
+        EventClassFamilyDto chatEventEventClassFamily = new EventClassFamilyDto();
+        chatEventEventClassFamily.setName("Chat Event Class Family");
+        chatEventEventClassFamily.setNamespace("org.kaaproject.kaa.examples.event");
+        chatEventEventClassFamily.setClassName("chatEventEventClassFamily");
+        chatEventEventClassFamily = client.editEventClassFamily(chatEventEventClassFamily);
+
+        addEventClassFamilyVersion(chatEventEventClassFamily, client, eventApplication.getTenantId(), "chat_event_class_event.avsc");
+        
+        ApplicationEventFamilyMapDto chatEventAefMap = mapEventClassFamily(client, eventApplication, chatEventEventClassFamily);
+        aefMapIds.add(chatEventAefMap.getId());
+        
         sdkProfileDto.setAefMapIds(aefMapIds);
 
         TrustfulVerifierConfig trustfulVerifierConfig = new TrustfulVerifierConfig();

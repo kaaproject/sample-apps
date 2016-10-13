@@ -736,7 +736,10 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 	<br />
 	<br />	
 	
-	Now you need to replace <i>%your_sandbox_instance_ip/host%</i> with the actual host/ip address of your Sandbox (in case with NAT, it will be <b>localhost</b> so the command will look like this: <code>$ ssh kaa@127.0.0.1 -p 2222</code>) and replace the <i>%data_collection_application_token%</i> with the actual <b>Data collection</b> <a href="http://kaaproject.github.io/kaa/docs/Glossary/#application-token" target="_blank">application token</a>.
+	Now you need to replace <i>%your_sandbox_instance_ip/host%</i> with the actual host/ip address of your Sandbox.
+	To do this, go to the Sandbox Management page and specify the real IP of your machine in the <b>Kaahost/IP</b> block.
+	Alternatively, you can use the following command: <code>$ ssh kaa@127.0.0.1 -p 2222</code>.
+	Then, replace the <i>%data_collection_application_token%</i> with the actual <b>Data collection</b> <a href="http://kaaproject.github.io/kaa/docs/Glossary/#application-token" target="_blank">application token</a>.
 	To view the application token, open the <b>Application details</b> page.
 	
 	<br />

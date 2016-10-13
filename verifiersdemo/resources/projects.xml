@@ -75,7 +75,7 @@ This simple application demonstrates user verification flow in Kaa for Java and 
         <sdkLanguage>JAVA</sdkLanguage>
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>USER_VERIFIER</features>
-        <complexity>REGULAR</complexity>
+        <complexity>BASIC</complexity>
         <bundleId>verifiers_demos</bundleId>
         <sourceArchive>java/verifiers_demo.tar.gz</sourceArchive>
         <projectFolder>JVerifiersDemo</projectFolder>
@@ -309,7 +309,7 @@ Try the following:
             ]]>
         </details>
         <sdkLanguage>C</sdkLanguage>
-        <platforms></platforms>
+        <platforms>LINUX_X86</platforms>
         <features>USER_VERIFIER</features>
         <complexity>BASIC</complexity>
         <bundleId>verifiers_demos</bundleId>

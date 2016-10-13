@@ -25,17 +25,17 @@ set(WITH_EXTENSION_EVENTS OFF)
 if (NOT DEFINED WIFI_SSID)
     set(WIFI_SSID "WiFi SSID")
 endif (NOT DEFINED WIFI_SSID)
-add_definitions(-DWIFI_SSID=${WIFI_SSID})
+add_definitions(-DWIFI_SSID="${WIFI_SSID}")
 
 if (NOT DEFINED WIFI_PWD)
     set(WIFI_PWD "Password")
 endif (NOT DEFINED WIFI_PWD)
-add_definitions(-DWIFI_PWD=${WIFI_PWD})
+add_definitions(-DWIFI_PWD="${WIFI_PWD}")
 
 if (NOT DEFINED KAA_TARGET)
     set(KAA_TARGET "posix")
 endif (NOT DEFINED KAA_TARGET)
-add_definitions(-DKAA_TARGET=${KAA_TARGET})
+add_definitions(-DKAA_TARGET="${KAA_TARGET}")
 
 
 

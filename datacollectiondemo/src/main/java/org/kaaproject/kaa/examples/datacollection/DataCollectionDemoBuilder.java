@@ -33,25 +33,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @KaaDemoBuilder
-public class DataCollectionDemoBuider extends AbstractDemoBuilder {
+public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemoBuider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemoBuilder.class);
 
-    // method for fast builder testing
-    // just setup IP and port parameters
-    public static void main(String[] args) {
-        DataCollectionDemoBuider pdb = new DataCollectionDemoBuider();
-        String kaaNodeIp = "10.2.3.18";
-        int kaaNodePort = 8080;
-        AdminClient client = new AdminClient(kaaNodeIp, kaaNodePort);
-        try {
-            pdb.buildDemoApplicationImpl(client);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public DataCollectionDemoBuider() {
+    public DataCollectionDemoBuilder() {
         super("demo/datacollection");
     }
 

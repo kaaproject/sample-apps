@@ -47,20 +47,6 @@ public class ProfilingDemoBuilder extends AbstractDemoBuilder {
         super("demo/profiling");
     }
 
-    // method for fast builder testing
-    // just setup IP and port parameters
-    public static void main(String[] args) {
-        ProfilingDemoBuilder pdb = new ProfilingDemoBuilder();
-        String kaaNodeIp = "10.2.3.18";
-        int kaaNodePort = 8080;
-        AdminClient client = new AdminClient(kaaNodeIp, kaaNodePort);
-        try {
-            pdb.buildDemoApplicationImpl(client);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 

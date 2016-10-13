@@ -51,20 +51,6 @@ public class VerifiersDemoBuilder extends AbstractDemoBuilder {
     private static final int MIN_PARALLEL_CONNECTIONS = 2;
     private static final Long KEEP_ALIVE_MILLISECONDS = 60000L;
 
-    // method for fast builder testing
-    // just setup IP and port parameters
-    public static void main(String[] args) {
-        VerifiersDemoBuilder builder= new VerifiersDemoBuilder();
-        String kaaNodeIp = "10.2.3.18";
-        int kaaNodePort = 8080;
-        AdminClient client = new AdminClient(kaaNodeIp, kaaNodePort);
-        try {
-            builder.buildDemoApplicationImpl(client);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public VerifiersDemoBuilder() {
         super("demo/verifiers");
     }

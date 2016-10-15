@@ -1,4 +1,4 @@
-/*
+/**
  *  Copyright 2014-2016 CyberVision, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,33 +14,29 @@
  *  limitations under the License.
  */
 
-/**
- * @file
+/*
+ * This header provides several bindings for TI's cc32xx target that abstracts
+ * an implementation of its features. Right now it contains only
+ * console and target initialisation routines, but it must be extended
+ * if required.
  *
- * This header defines generic API to access
- * GPIO LEDs on embedded targets.
  */
 
 #ifndef TARGET_GPIO_LED_H
 #define TARGET_GPIO_LED_H
 
-#include <stdbool.h>
-#include <stdint.h>
-
-/**
+/*
  * Platform-specific GPIO LEDs initalization.
  *
  */
 void target_gpio_led_init(void);
 
-/**
+/*
  * Toggles output for GPIO LED id.
  *
- * @param [in] id Id of the LED to toggle. Should be less that NUM_GPIO_LEDS.
- * @param [in] status Sets the status of the LED.
- *
+ * Zero status mewans LOW, positive status means HIGH
  */
-void target_gpio_led_toggle(uint32_t id, bool status);
+void target_gpio_led_toggle(int id, int status);
 
-#endif // TARGET_GPIO_LED_H
+#endif // TARGET_SUPPORT_H
 

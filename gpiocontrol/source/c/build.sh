@@ -40,23 +40,11 @@ KAA_C_LIB_HEADER_PATH="$KAA_LIB_PATH/src"
 KAA_CPP_LIB_HEADER_PATH="$KAA_LIB_PATH/kaa"
 KAA_SDK_TAR="kaa-c*.tar.gz"
 KAA_TOOLCHAIN_PATH_SDK=""
+# TODO: comment about inconvenience between KAA_TARGET and KAA_PLATFORM
 KAA_TARGET=
 KAA_PRODUCE_BINARY=
 KAA_REQUIRE_CREDENTIALS=
 DEMO_ACCESS_TOKEN=
-
-if [ ! -d "$KAA_C_LIB_HEADER_PATH" -a  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]; then
-    KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
-
-    if [ -z "$KAA_SDK_TAR_NAME" ]
-    then
-        echo "Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script."
-        exit 1
-    fi
-
-    mkdir -p $KAA_LIB_PATH
-    tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
-fi
 
 if [ -z ${DEMO_ACCESS_TOKEN} ]; then
     DEMO_ACCESS_TOKEN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)
@@ -70,6 +58,7 @@ select_arch() {
     echo "Please enter a target:"
     read target
 
+    # TODO: better case handling
     case "$target" in
     "")
         help
@@ -89,6 +78,22 @@ select_arch() {
     esac
 }
 
+unpack_sdk() {
+    if [[ ! -d "$KAA_C_LIB_HEADER_PATH" &&  ! -d "$KAA_CPP_LIB_HEADER_PATH" ]]
+    then
+        KAA_SDK_TAR_NAME=$(find $PROJECT_HOME -iname $KAA_SDK_TAR)
+
+        if [ -z "$KAA_SDK_TAR_NAME" ]
+        then
+            echo "Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script."
+            exit 1
+        fi
+
+        mkdir -p $KAA_LIB_PATH
+        tar -zxf $KAA_SDK_TAR_NAME -C $KAA_LIB_PATH
+    fi
+}
+
 build_app() {
     SSID=
     PASSWORD=
@@ -97,15 +102,18 @@ build_app() {
     mkdir -p "$PROJECT_HOME/$BUILD_DIR"
     cd $BUILD_DIR
 
-    if [ $KAA_REQUIRE_CREDENTIALS = true ]; then
+    if [[ $KAA_REQUIRE_CREDENTIALS = true ]]
+    then
         echo "Enter WiFi SSID:"
         read SSID
         echo "Enter WiFi Password:"
         read PASSWORD
     fi
 
+    # TODO: APP-63 comments about KAA_PLATFORM and KAA_TARGET
     cmake -DCMAKE_BUILD_TYPE=MinSizeRel \
           -DKAA_PLATFORM=$KAA_TARGET \
+          -DKAA_TARGET=$KAA_TARGET \
           -DKAA_PRODUCE_BINARY=$KAA_PRODUCE_BINARY \
           -DWIFI_SSID=$SSID \
           -DWIFI_PASSWORD=$PASSWORD \
@@ -128,9 +136,13 @@ run() {
     ./$APP_NAME
 }
 
-case "$1" in
+for cmd in $@
+do
+
+case "$cmd" in
     build)
         select_arch
+        unpack_sdk
         build_app
     ;;
 
@@ -141,6 +153,7 @@ case "$1" in
     deploy)
         clean
         select_arch
+        unpack_sdk
         build_app
         run
         ;;
@@ -150,6 +163,8 @@ case "$1" in
     ;;
 
     *)
-        help
+        help_message
     ;;
 esac
+
+done

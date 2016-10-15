@@ -231,7 +231,7 @@
                             /source/objc/Bolts.framework/Headers/BFExecutor.h
                         </exclude>
                         <exclude>
-                            /source/objc/Podfile
+                            /source/objc/Podfile*
                         </exclude>
                         <exclude>
                             /source/objc/Podfile.lock

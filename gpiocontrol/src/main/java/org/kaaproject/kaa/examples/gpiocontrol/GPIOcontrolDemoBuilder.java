@@ -50,8 +50,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
     private static final String GPIO_MASTER_ID = "gpio_master";
     private static final String GPIO_MASTER_OBJC_ID = "gpio_master_objc";
-    private static final String GPIO_CC32XX_ID = "gpio_slave_cc";
-    private static final String GPIO_ESP8266_ID = "gpio_slave_esp";
+    private static final String GPIO_C_ID = "gpio_slave_c";
     private static final String GPIO_ARTIK5_ID = "gpio_slave_artik5";
 
     private static final String REMOTE_CONTROL_ECF_NAME = "Remote Control Event Class Family";
@@ -145,8 +144,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
         sdkProfile.setAefMapIds(aefMapIds);
 
-        projectsSdkMap.put(GPIO_CC32XX_ID, sdkProfile); //TODO maybe just duplicate this line with "ESP8266 slave id"?
-        projectsSdkMap.put(GPIO_ESP8266_ID, sdkProfile);
+        projectsSdkMap.put(GPIO_C_ID, sdkProfile);
         projectsSdkMap.put(GPIO_ARTIK5_ID, sdkProfile);
     }
 

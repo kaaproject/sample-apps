@@ -31,11 +31,6 @@
             <outputDirectory>CGPIODemo</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>${main.dir}/common/nix/</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CGPIODemo</outputDirectory>
-        </fileSet>
-        <fileSet>
             <directory>${main.dir}/common/c/</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CGPIODemo</outputDirectory>

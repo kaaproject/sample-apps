@@ -1,4 +1,4 @@
-/*
+/**
  *  Copyright 2014-2016 CyberVision, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,8 +24,7 @@
 #include "hw_memmap.h"
 #include "rom_map.h"
 
-void target_gpio_led_init(void)
-{
+void target_gpio_led_init(void) {
     MAP_PRCMPeripheralClkEnable(PRCM_GPIOA1, PRCM_RUN_MODE_CLK);
     MAP_PinTypeGPIO(PIN_64, PIN_MODE_0, false);
     MAP_GPIODirModeSet(GPIOA1_BASE, 0x2, GPIO_DIR_MODE_OUT);
@@ -37,12 +36,10 @@ void target_gpio_led_init(void)
     GPIO_IF_LedOff(MCU_ALL_LED_IND);
 }
 
-void target_gpio_led_toggle(uint32_t id, bool status)
-{
-    if (id >= NUM_GPIO_LEDS) {
+void target_gpio_led_toggle(int id, int status) {
+    if(id >= NUM_GPIO_LEDS || id < 0) {
         return;
     }
-
     if (status) {
         GPIO_IF_LedOn(MCU_RED_LED_GPIO + id);
     } else {

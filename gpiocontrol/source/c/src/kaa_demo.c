@@ -51,7 +51,8 @@ static void kaa_device_info_request(void *context
     response->model       = kaa_string_copy_create(TARGET_MODEL_NAME);
     response->gpio_status = kaa_list_create();
 
-    for (int i = 0; i < NUM_GPIO_LEDS; ++i) {
+    int i = 0;
+    for (i = 0; i < NUM_GPIO_LEDS; ++i) {
         kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
         gio_status->id = i;
         gio_status->status = gpio_led[i];
@@ -75,7 +76,7 @@ static void kaa_GPIOToggle_info_request(void *context
 
     gpio_led[event->gpio->id] = event->gpio->status;
 
-    int gpio_id = (event->gpio->id >= NUM_GPIO_LEDS) ? NUM_GPIO_LEDS : event->gpio->id;
+    int gpio_id = event->gpio->id >= NUM_GPIO_LEDS?NUM_GPIO_LEDS:event->gpio->id;
 
     target_gpio_led_toggle(gpio_id, event->gpio->status);
     gpio_led[gpio_id] = event->gpio->status;

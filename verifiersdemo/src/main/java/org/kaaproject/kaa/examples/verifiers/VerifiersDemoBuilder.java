@@ -42,8 +42,8 @@ import java.util.List;
 public class VerifiersDemoBuilder extends AbstractDemoBuilder {
     private static final Logger logger = LoggerFactory.getLogger(VerifiersDemoBuilder.class);
 
-    private static final String TWITTER_CONSUMER_KEY = "f274syJgGxqlhK7AKt6tgmL4J";
-    private static final String TWITTER_CONSUMER_SECRET = "KRRck3X6KjElA6Jep8sVDseONawz9slDPAVaUMArtcbLVZwHVQ";
+    private static final String TWITTER_CONSUMER_KEY = "FTa2SbY4NlonklfkrlceR9UGw";
+    private static final String TWITTER_CONSUMER_SECRET = "bMUZIQgXMisr5ycgTdyTPMz1ONVRG9SicuJ9D0ybZqZcvDSQvg";
     private static final String FACEBOOK_APP_ID = "1704658276524522";
     private static final String FACEBOOK_APP_SECRET = "da42287d41454228894a393c0f9ea137";
     private static final String TWITTER_VERIFY_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";

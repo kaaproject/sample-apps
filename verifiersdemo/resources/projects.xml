@@ -55,7 +55,7 @@ For more background on the user verification refer to the corresponding design r
              see 'platform' type in demo_projects_schema.xsd schema) -->
         
         <platforms>ANDROID</platforms>
-        <features>EVENT USER_VERIFIER</features>
+        <features>USER_VERIFIER</features>
         <complexity>BASIC</complexity>
         <bundleId>verifiers_demos</bundleId>
         <sourceArchive>android/verifiers_demo.tar.gz</sourceArchive>
@@ -214,7 +214,7 @@ This simple application demonstrates user verification flow in Kaa for Java and 
         <!--</details>-->
         <!--<sdkLanguage>OBJC</sdkLanguage>-->
         <!--<platforms></platforms>-->
-        <!--<features>EVENT USER_VERIFIER</features>-->
+        <!--<features>USER_VERIFIER</features>-->
         <!--<complexity>BASIC</complexity>-->
         <!--<bundleId>verifiers_demos</bundleId>-->
         <!--<sourceArchive></sourceArchive>-->

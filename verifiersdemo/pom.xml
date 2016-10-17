@@ -108,7 +108,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>assembly/src-android.xml</descriptor>
+                        <!-- <descriptor>assembly/src-android.xml</descriptor>-->
                         <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
                         <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>

@@ -91,7 +91,7 @@ public:
         }
 
         nsChat::Message msg;
-        msg.message = message;
+        msg.Message = message;
         msg.ChatName = currentRoom_;
         eventFactory_.getChat().sendEventToAll(msg);
     }
@@ -114,7 +114,7 @@ public:
     {
         static_cast<void>(source);
         if (message.ChatName == currentRoom_) {
-            std::cout << message.message << std::endl;
+            std::cout << message.Message << std::endl;
         }
     }
 

@@ -117,7 +117,7 @@ $ java -jar target/storm-server-example.jar
 If no errors occurred, you’ve successfully started the Storm topology. <br />
 4. Configure Flume log appender via the
 <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a>
-of your Kaa Sandbox. As a tenant admin, go to the
+of your Kaa Sandbox. As a tenant developer, go to the
 "Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender"
 and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b>
 (<b>if you run Storm locally, this will be the external IP of your computer</b>). Click Save button. <br />
@@ -186,7 +186,7 @@ $ java -jar target/storm-server-example.jar
 If no errors occurred, you’ve successfully started the Storm topology. <br />
 4. Configure Flume log appender via the
 <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a>
-of your Kaa Sandbox. As a tenant admin, go to the
+of your Kaa Sandbox. As a tenant developer, go to the
 "Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender"
 and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b>
 (<b>if you run Storm locally, this will be the external IP of your computer</b>). Click Save button. <br />

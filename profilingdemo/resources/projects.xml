@@ -462,13 +462,13 @@ Try the following:
             ]]>
         </details>
         <sdkLanguage>C</sdkLanguage>
-        <platforms></platforms>
+        <platforms>LINUX_X86</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>profiling_demos</bundleId>
-        <sourceArchive></sourceArchive>
-        <projectFolder></projectFolder>
-        <sdkLibDir></sdkLibDir>
+        <sourceArchive>c/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>CProfilingDemo</projectFolder>
+        <sdkLibDir>CProfilingDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="profiling_demo_cpp">
@@ -576,13 +576,13 @@ Try the following:
             ]]>
         </details>
         <sdkLanguage>CPP</sdkLanguage>
-        <platforms></platforms>
+        <platforms>LINUX_X86</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>profiling_demos</bundleId>
-        <sourceArchive></sourceArchive>
-        <projectFolder></projectFolder>
-        <sdkLibDir></sdkLibDir>
+        <sourceArchive>cpp/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>CppProfilingDemo</projectFolder>
+        <sdkLibDir>CppProfilingDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <bundle id="profiling_demos">

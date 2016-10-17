@@ -47,7 +47,7 @@ For more background on user verification refer to the corresponding <a href="htt
              see 'platform' type in demo_projects_schema.xsd schema) -->
              
         <platforms>ANDROID</platforms>
-        <features></features>
+        <features>DATA_COLLECTION USER_VERIFIER</features>
         <complexity>BASIC</complexity>
         <sourceArchive>android/powerplant_android.tar.gz</sourceArchive>
         <projectFolder>powerplantandroid/PowerPlantAndroid</projectFolder>

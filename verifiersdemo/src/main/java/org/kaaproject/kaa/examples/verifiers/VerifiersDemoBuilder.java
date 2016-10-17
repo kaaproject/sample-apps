@@ -42,10 +42,10 @@ import java.util.List;
 public class VerifiersDemoBuilder extends AbstractDemoBuilder {
     private static final Logger logger = LoggerFactory.getLogger(VerifiersDemoBuilder.class);
 
-    private static final String TWITTER_CONSUMER_KEY = "01Y9gbsMeGPetye1w9kkNvNMi";
-    private static final String TWITTER_CONSUMER_SECRET = "g4Pwh51o7SQlhd3RL6inNF3VxixBURAJDZc494uSISF7yOyJjc";
-    private static final String FACEBOOK_APP_ID = "1557997434440423";
-    private static final String FACEBOOK_APP_SECRET = "8ff17981ea0cdad3fe387a55c91aa71b";
+    private static final String TWITTER_CONSUMER_KEY = "f274syJgGxqlhK7AKt6tgmL4J";
+    private static final String TWITTER_CONSUMER_SECRET = "KRRck3X6KjElA6Jep8sVDseONawz9slDPAVaUMArtcbLVZwHVQ";
+    private static final String FACEBOOK_APP_ID = "1704658276524522";
+    private static final String FACEBOOK_APP_SECRET = "da42287d41454228894a393c0f9ea137";
     private static final String TWITTER_VERIFY_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";
     private static final int MAX_PARALLEL_CONNECTIONS = 5;
     private static final int MIN_PARALLEL_CONNECTIONS = 2;

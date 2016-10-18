@@ -199,6 +199,10 @@ void command_create()
 
         kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, create_room, NULL);
 
+        pthread_mutex_lock(&lock);
+        kaa_list_push_back(lst, room_name);
+        pthread_mutex_unlock(&lock);
+
         create_room->destroy(create_room);
 
         printf("Room %s was successfully created.\n", room_name);
@@ -222,6 +226,10 @@ void command_delete()
         delete_room->event_type = ENUM_CHAT_EVENT_TYPE_DELETE;
 
         kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, delete_room, NULL);
+
+        pthread_mutex_lock(&lock);
+        kaa_list_remove_first(kaa_list_begin(&lst), &rooms_equal, room_name, NULL);
+        pthread_mutex_unlock(&lock);
 
         delete_room->destroy(delete_room);
         printf("Room %s was successfully deleted.\n", room_name);
@@ -276,7 +284,6 @@ void menu()
         case 5:
             printf("Event demo stopped\n");
             kaa_list_destroy(lst, &kaa_data_destroy);
-            kaa_client_destroy(kaa_client);
             return EXIT_SUCCESS;
         default:
             printf("Wrong command syntax\n");

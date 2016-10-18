@@ -259,6 +259,40 @@ Try the following:
         <sdkLibDir>CppNotificationDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <project id="notification_demo_android">
+        <name>Notification Android demo</name>
+        <description>Kaa Notification subsystem demo app based on Java SDK for Android</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
+</p>
+
+<h1>Launching</h1>
+            ]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>JAVA</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>ANDROID</platforms>
+        <features>NOTIFICATION</features>
+        <complexity>BASIC</complexity>
+        <bundleId>notification_demos</bundleId>
+        <sourceArchive>android/notification_demo.tar.gz</sourceArchive>
+        <projectFolder>AndroidNotificationDemo</projectFolder>
+        <sdkLibDir>AndroidNotificationDemo/libs</sdkLibDir>
+        <destBinaryFile>AndroidNotificationDemo/bin/AndroidNotificationDemo-debug.apk</destBinaryFile>
+    </project>
     <project id="notification_demo_c">
         <name>Notification C demo</name>
         <description>Kaa Notification subsystem demo app based on C SDK</description>

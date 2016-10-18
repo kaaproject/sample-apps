@@ -175,3 +175,18 @@ sparkdemo:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
+
+profilingdemo:
+  name: "Endpoint profiles and grouping demo"
+  language:
+    c:
+      src: "profilingdemo/source/c"
+      platform:
+        posix:
+          buildcmd: "bash -c \"./build.sh build\""
+    cpp:
+      src: "profilingdemo/source/cpp"
+      platform:
+        posix:
+          dependencies: [["common/build-scripts/build.sh", "."]]
+          buildcmd: "bash -c \"./build.sh build\""

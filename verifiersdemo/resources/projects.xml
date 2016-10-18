@@ -22,7 +22,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="verifiers_demo_android">
-        <name>User verifiers demo Android</name>
+        <name>Endpoint ownership Android demo</name>
         <description>Kaa user verifiers demo app for Android</description>
         <details>
             <![CDATA[
@@ -65,7 +65,7 @@ For more background on the user verification refer to the corresponding design r
     </project>
 
     <project id="verifiers_demo_java">
-        <name>User verifiers demo Java</name>
+        <name>Endpoint ownership Java demo</name>
         <description>Kaa user verifiers demo for Java</description>
         <details>
             <![CDATA[
@@ -84,7 +84,7 @@ This simple application demonstrates user verification flow in Kaa for Java and 
     </project>
 
     <!--<project id="verifiers_demo_objc">-->
-        <!--<name>Verifiers Objective-C demo</name>-->
+        <!--<name>Endpoint ownership Objective-C demo</name>-->
         <!--<description>Kaa user verifiers demo app based on Objective-C SDK</description>-->
         <!--<details>-->
             <!--<![CDATA[-->
@@ -224,7 +224,7 @@ This simple application demonstrates user verification flow in Kaa for Java and 
     <!--</project>-->
 
     <project id="verifiers_demo_c">
-        <name>User verifiers demo C</name>
+        <name>Endpoint ownership C demo</name>
         <description>Kaa user verifiers demo for C</description>
         <details>
             <![CDATA[
@@ -320,7 +320,7 @@ Try the following:
     </project>
 
     <project id="verifiers_demo_cpp">
-        <name>User verifiers demo C++</name>
+        <name>Endpoint ownership C++ demo</name>
         <description>Kaa user verifiers demo for C++</description>
         <details>
             <![CDATA[

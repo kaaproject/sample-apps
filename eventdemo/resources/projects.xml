@@ -26,23 +26,98 @@
         <description>Kaa Event subsystem demo app based on Java SDK</description>
         <details>
             <![CDATA[
-This simple app demonstrates capabilities of the Kaa Event subsystem on the Java SDK.
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+</p>
 
-<h2>Installation</h2>
-Download the jar file to your device by clicking the "Binary" button on the left. Make sure that you have Java installed on your device. Run the application using the following command in the console:
-<pre>
-$ java -jar EventDemo.jar
-</pre>
+To implement this feature for Java SDK, the following API methods are used in this sample application:
 
-<h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Event Java demo" app on one endpoint, it will send an event to another endpoint, thus demonstrating how devices can interoperate with each other.<br/><br/>
+<ul>
+	<li>
+		<code>KaaClient.attachUser()</code> method attaches current endpoint to the specified user.
+	</li>
+	<li>
+		<code>[family_name]EventFamily.addListener()</code> method sets a listener to catch events.
+		Only endpoints attached to the same user can exchange events with one another.
+	</li>
+	<li>
+		<code>[family_name]EventFamily.onEvent()</code> method receives events of particular type.
+		Every <code>onEvent()</code> method catches events of its own type.
+	</li>
+	<li>
+		<code>[family_name]EventFamily.sendEventToAll()</code> method broadcasts the event to all other endpoints.
+	</li>
+</ul>
 
-Now it's time to test things out: start two application instances. By default, the application stores the state information in the same folder where the application was started. Therefore, you should start a new application instance from a different folder in order to avoid conflicts between the instances. Once the application instances are started, you will see them exchanging events. You can also start the "Event Java demo" application on different platforms to verify that events are delivered across the platforms.<br/><br/>
+<blockquote>NOTE: <code>family_name</code> means real event family name, for example <code>ChatEventFamily</code>.</blockquote>
 
-Please note that all the features of Administration UI are also supported by REST API.
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa Java SDK</a>.
 
-<h2>What's next?</h2>
-For more background on the Kaa Event subsystem please refer to the corresponding programming guide and design reference sections.
+<h1>Launching</h1>
+
+<p>
+	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+</p>
+
+<p>
+	For sample applications that utilize Kaa Java SDK, both the binary files (.jar archive) and the source code (.tar.gz archive) are available for download.
+	If you want to only launch the sample application, download the binary files.
+	If you want to explore the source code of the sample application, download the source code archive.
+</p>
+
+<h2>Install using the binary files</h2>
+
+To install the sample application using the binary files:
+	
+<ol>
+	<li>
+		Click the <b>Binary</b> button.
+		A binary build window will open.
+		Click <b>Ok</b> and download the .jar file.
+	</li>
+	<li>
+		Run the following command from the directory containing the downloaded .jar archive.
+		
+		<pre>
+			$ java -jar EventDemo.jar
+		</pre>
+		
+		The sample application console will display the startup message.
+	</li>
+</ol>
+
+<h2>Install using the source code</h2>
+
+To install the sample application using the source code:
+
+<ol>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
+		To install Apache Ant, run the following command from the directory containing the unpacked sources.
+		
+		<pre>
+			$ ant debug
+		</pre>
+		
+		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
+		
+		<pre>
+			$ java -jar build/jar/EventDemo.jar
+		</pre>
+	</li>
+</ol>
+
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
         

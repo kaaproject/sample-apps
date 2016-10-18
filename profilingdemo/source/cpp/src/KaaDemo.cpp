@@ -34,9 +34,9 @@ public:
     ProfileData(bool audioSupport, bool videoSupport, 
             bool vibroSupport)
     {
-        profile_.audioSubscrpitionActive = audioSupport;
-        profile_.videoSubbscrptionActive = videoSupport;
-        profile_.vibroSubscriptionActive = vibroSupport;
+        profile_.audioSupport = audioSupport;
+        profile_.videoSupport = videoSupport;
+        profile_.vibroSupport = vibroSupport;
     }
 
     ~ProfileData() = default;
@@ -51,10 +51,9 @@ private:
 };
 
 static const std::vector<ProfileData> clientProfiles = {
-    ProfileData(true, false, true),
     ProfileData(false, false, true),
+    ProfileData(true, false, true),
     ProfileData(true, true, true),
-    ProfileData(true, true, false),
 };
 
 typedef std::shared_ptr<IKaaClient> IKaaClientPtr;
@@ -74,11 +73,10 @@ public:
 
     virtual void onConfigurationUpdated(const KaaRootConfiguration &configuration)
     {
-        // TODO: merge KAA-799
-        // std::cout << "Endpoint Key Hash: " << kaaClient_->getEndpointKeyHash() << std::endl;
+        std::cout << "Endpoint Key Hash: " << kaaClient_->getEndpointKeyHash() << std::endl;
         std::cout << "Audio Support: " << configuration.audioSubscriptionActive << std::endl;
         std::cout << "Video Support: " << configuration.videoSubscriptionActive << std::endl;
-        std::cout << "Vibro Support: " << configuration.vibroSuvscrpitionActive << std::endl;
+        std::cout << "Vibro Support: " << configuration.vibroSubscriptionActive << std::endl;
     }
 
 private:

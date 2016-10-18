@@ -22,7 +22,7 @@ set(KAA_WITHOUT_NOTIFICATIONS 1)
 set(KAA_WITHOUT_LOGGING 1)
 set(KAA_WITHOUT_EVENTS 1)
 
-
+find_package(Boost COMPONENTS filesystem REQURIED)
 
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
 set(KAA_MAX_LOG_LEVEL 3)
@@ -35,6 +35,6 @@ else (NOT DEFINED KAA_SDK_PATH)
 endif (NOT DEFINED KAA_SDK_PATH)
 
 add_executable(demo_client src/KaaDemo.cpp)
-target_link_libraries(demo_client kaacpp)
+target_link_libraries(demo_client kaacpp ${Boost_FILESYSTEM_LIBRARY})
 
 install(TARGETS demo_client DESTINATION bin)

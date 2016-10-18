@@ -32,8 +32,8 @@ static kaa_client_t *kaa_client = NULL;
 void kaa_demo_print_configuration_message(const kaa_root_configuration_t *configuration)
 {
     printf("%s - %s - %s\n", configuration->audio_subscription_active ? "true" : "false",
-        configuration->vibro_subscription_active ? "true" : "false",
-        configuration->video_subscription_active ? "true" : "false");
+        configuration->video_subscription_active ? "true" : "false",
+        configuration->vibro_subscription_active ? "true" : "false");
 }
 
 kaa_error_t kaa_demo_configuration_receiver(void *context,
@@ -67,7 +67,7 @@ bool set_client_parameter(char *parameter)
 int main(int argc, char *argv[])
 {   
     if (argc != 5) {
-        printf("Please, input + or - for audio, vibro and video supporting and directory for key storage. (Need 4 arguments)\n");
+        printf("Please, input + or - for audio, video and vibro supporting and directory for key storage. (Need 4 arguments)\n");
         exit(1);
     }
     
@@ -101,29 +101,29 @@ int main(int argc, char *argv[])
 
 
     profile->audio_support = set_client_parameter(argv[1]);
-    profile->vibro_support = set_client_parameter(argv[2]);
-    profile->video_support = set_client_parameter(argv[3]);
+    profile->video_support = set_client_parameter(argv[2]);
+    profile->vibro_support = set_client_parameter(argv[3]);
 
-    printf("Profiling body (have audio-, vibro-, video-support):\n");
+    printf("Profiling body (have audio-, video-, vibro-support):\n");
     printf("%s - %s - %s\n", profile->audio_support ? "true" : "false",
-                                  profile->vibro_support ? "true" : "false",
-                                  profile->video_support ? "true" : "false");
+        profile->video_support ? "true" : "false",
+        profile->vibro_support ? "true" : "false");
 
     error_code = kaa_profile_manager_update_profile(kaa_client_get_context(kaa_client)->profile_manager, profile);
     if (error_code) {
-        printf("Failed to update profile\n");
+        printf("Failed to update profile, error code %d", error_code);
         kaa_client_destroy(kaa_client);
         return EXIT_FAILURE;
     }
 
     kaa_configuration_root_receiver_t receiver = {
-            NULL,
-            &kaa_demo_configuration_receiver,
+        NULL,
+        &kaa_demo_configuration_receiver,
     };
 
     error_code = kaa_configuration_manager_set_root_receiver(
-            kaa_client_get_context(kaa_client)->configuration_manager,
-            &receiver);
+        kaa_client_get_context(kaa_client)->configuration_manager,
+        &receiver);
     if (error_code) {
         printf("Failed to add configuration receiver\n");
         kaa_client_destroy(kaa_client);
@@ -131,8 +131,8 @@ int main(int argc, char *argv[])
     }
     printf("Default configuration:\n");
     kaa_demo_print_configuration_message(
-            kaa_configuration_manager_get_configuration(
-                kaa_client_get_context(kaa_client)->configuration_manager));
+        kaa_configuration_manager_get_configuration(
+            kaa_client_get_context(kaa_client)->configuration_manager));
 
     /**
      * Start Kaa client main loop.

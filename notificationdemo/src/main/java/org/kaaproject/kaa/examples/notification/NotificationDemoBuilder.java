@@ -45,8 +45,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
     private static final String NOTIFICATION_DEMO_JAVA_ID = "notification_demo_java";
     private static final String NOTIFICATION_DEMO_CPP_ID = "notification_demo_cpp";
     private static final String NOTIFICATION_DEMO_C_ID = "notification_demo_c";
-    // TODO uncomment when APP-143 will be implemented
-    // private static final String NOTIFICATION_DEMO_ANDROID_ID = "notification_demo_android";
+    private static final String NOTIFICATION_DEMO_ANDROID_ID = "notification_demo_android";
     private static final String NOTIFICATION_DEMO_OBJC_ID = "notification_demo_objc";
 
     private static final Long NOTIFICATION_VERSION = 1L;
@@ -67,8 +66,7 @@ public class NotificationDemoBuilder extends AbstractDemoBuilder {
         projectsSdkMap.put(NOTIFICATION_DEMO_CPP_ID, sdkProfile);
         projectsSdkMap.put(NOTIFICATION_DEMO_C_ID, sdkProfile);
         projectsSdkMap.put(NOTIFICATION_DEMO_OBJC_ID, sdkProfile);
-        // TODO uncomment when APP-143 will be implemented
-        // projectsSdkMap.put(NOTIFICATION_DEMO_ANDROID_ID, sdkProfile);
+        projectsSdkMap.put(NOTIFICATION_DEMO_ANDROID_ID, sdkProfile);
     }
 
     private SdkProfileDto createNotificationApplication(AdminClient client, String appName, String notificationSchemaRes,

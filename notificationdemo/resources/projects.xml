@@ -289,9 +289,9 @@ Try the following:
         <complexity>BASIC</complexity>
         <bundleId>notification_demos</bundleId>
         <sourceArchive>android/notification_demo.tar.gz</sourceArchive>
-        <projectFolder>AndroidNotificationDemo</projectFolder>
-        <sdkLibDir>AndroidNotificationDemo/libs</sdkLibDir>
-        <destBinaryFile>AndroidNotificationDemo/bin/AndroidNotificationDemo-debug.apk</destBinaryFile>
+        <projectFolder>notification_demo/NotificationDemo</projectFolder>
+        <sdkLibDir>notification_demo/NotificationDemo/app/libs</sdkLibDir>
+        <destBinaryFile>notification_demo/NotificationDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
     <project id="notification_demo_c">
         <name>Notification C demo</name>

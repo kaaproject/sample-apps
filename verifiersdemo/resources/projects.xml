@@ -69,7 +69,93 @@ For more background on the user verification refer to the corresponding design r
         <description>Kaa user verifiers demo for Java</description>
         <details>
             <![CDATA[
-This simple application demonstrates user verification flow in Kaa for Java and it is based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+<p>
+	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/Administration-guide/Users-management/" target="_blank">Users</a> management features.
+	In this application, <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
+</p>
+
+To implement this feature for Java SDK, the following API methods are used in this sample application:
+
+<ul>
+	<li>
+		<code>getEndpointAccessToken()</code> method gets the access token of current endpoint to be used for assisted attach (class <code>org.kaaproject.kaa.client.KaaClient</code>).
+	</li>
+	<li>
+		<code>setAttachedListener()</code> method sets up a listener (callback) that will be called when current endpoint is attached to a user (class <code>org.kaaproject.kaa.client.KaaClient</code>).
+	</li>
+	<li>
+		<code>addListener()</code> method sets up a listener (callback) that will be called when current endpoint is attached to a user.
+		It uses the <code>class org.kaaproject.kaa.demo.verifiersdemo.VerifiersDemoEventClassFamily</code> that is auto-generated in SDK based on the event family settings for the application.
+	</li>
+</ul>
+
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa Java SDK</a>.
+
+<h1>Launching</h1>
+
+<p>
+	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+</p>
+
+<p>
+	For sample applications that utilize Kaa Java SDK, both the binary files (.jar archive) and the source code (.tar.gz archive) are available for download.
+	If you want to only launch the sample application, download the binary files.
+	If you want to explore the source code of the sample application, download the source code archive.
+</p>
+
+<h2>Install using the binary files</h2>
+
+To install the sample application using the binary files:
+	
+<ol>
+	<li>
+		Click the <b>Binary</b> button.
+		A binary build window will open.
+		Click <b>Ok</b> and download the .jar file.
+	</li>
+	<li>
+		Run the following command from the directory containing the downloaded .jar archive.
+		
+		<pre>
+			$ java -jar VerifiersDemo.jar
+		</pre>
+		
+		The sample application console will display the startup message.
+	</li>
+</ol>
+
+<h2>Install using the source code</h2>
+
+To install the sample application using the source code:
+
+<ol>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
+		To install Apache Ant, run the following command from the directory containing the unpacked sources.
+		
+		<pre>
+			$ ant debug
+		</pre>
+		
+		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
+		
+		<pre>
+			$ java -jar build/jar/VerifiersDemo.jar
+		</pre>
+	</li>
+</ol>
+
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
         <sdkLanguage>JAVA</sdkLanguage>

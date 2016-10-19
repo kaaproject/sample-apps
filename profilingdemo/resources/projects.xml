@@ -222,7 +222,7 @@ To avoid configuration conflicts, make sure you assign the weight values to the 
              see 'platform' type in demo_projects_schema.xsd schema) -->
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
 
-        <features>CONFIGURATION</features>
+        <features>PROFILING</features>
         <complexity>BASIC</complexity>
         <bundleId>profiling_demos</bundleId>
         <sourceArchive>java/profiling_demo.tar.gz</sourceArchive>
@@ -341,7 +341,7 @@ Make sure that the build target is set to <b>ProfilingDemo</b>, not <b>Kaa</b>.
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
         <platforms>IOS</platforms>
-        <features>CONFIGURATION</features>
+        <features>PROFILING</features>
         <complexity>BASIC</complexity>
         <bundleId>profiling_demos</bundleId>
         <sourceArchive>objc/profiling_demo.tar.gz</sourceArchive>
@@ -463,7 +463,7 @@ Try the following:
         </details>
         <sdkLanguage>C</sdkLanguage>
         <platforms>LINUX_X86</platforms>
-        <features>CONFIGURATION</features>
+        <features>PROFILING</features>
         <complexity>BASIC</complexity>
         <bundleId>profiling_demos</bundleId>
         <sourceArchive>c/profiling_demo.tar.gz</sourceArchive>
@@ -577,7 +577,7 @@ Try the following:
         </details>
         <sdkLanguage>CPP</sdkLanguage>
         <platforms>LINUX_X86</platforms>
-        <features>CONFIGURATION</features>
+        <features>PROFILING</features>
         <complexity>BASIC</complexity>
         <bundleId>profiling_demos</bundleId>
         <sourceArchive>cpp/profiling_demo.tar.gz</sourceArchive>

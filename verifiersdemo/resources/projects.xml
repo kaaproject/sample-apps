@@ -170,7 +170,7 @@ If you want to modify the sample application source code or create your own appl
     </project>
 
     <project id="verifiers_demo_objc">
-        <name>Verifiers Objective-C demo</name>
+        <name>Endpoint ownership Objective-C demo</name>
         <description>Kaa user verifiers demo app based on Objective-C SDK</description>
         <details>
             <![CDATA[

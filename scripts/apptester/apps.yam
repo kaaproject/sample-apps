@@ -68,7 +68,7 @@ configurationdemo:
           buildcmd: "bash -c \"./build.sh build\""
 
 verifiersdemo:
-  name: "Endpoint ownership demo"
+  name: "User verifiers demo"
   language:
     c:
       src: "verifiersdemo/source/c"

@@ -23,7 +23,7 @@
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="verifiers_demo_android">
         <name>Endpoint ownership Android demo</name>
-        <description>Kaa user verifiers demo app for Android</description>
+        <description>Kaa endpoint ownership demo app for Android</description>
         <details>
             <![CDATA[
 This simple app demonstrates a user verification flow in Kaa for Android.
@@ -66,7 +66,7 @@ For more background on the user verification refer to the corresponding design r
 
     <project id="verifiers_demo_java">
         <name>Endpoint ownership Java demo</name>
-        <description>Kaa user verifiers demo for Java</description>
+        <description>Kaa endpoint ownership demo for Java</description>
         <details>
             <![CDATA[
 <p>
@@ -311,7 +311,7 @@ Make sure that the build target is set to <b>EndpointOwnershipDemo</b>, not <b>K
 
     <project id="verifiers_demo_c">
         <name>Endpoint ownership C demo</name>
-        <description>Kaa user verifiers demo for C</description>
+        <description>Kaa endpoint ownership demo for C</description>
         <details>
             <![CDATA[
 <p>
@@ -407,7 +407,7 @@ Try the following:
 
     <project id="verifiers_demo_cpp">
         <name>Endpoint ownership C++ demo</name>
-        <description>Kaa user verifiers demo for C++</description>
+        <description>Kaa endpoint ownership demo for C++</description>
         <details>
             <![CDATA[
 <p>

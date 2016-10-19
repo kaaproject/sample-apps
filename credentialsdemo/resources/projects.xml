@@ -121,7 +121,7 @@ If you want to modify the sample application source code or create your own appl
              see 'platform' type in demo_projects_schema.xsd schema) -->
              
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
-        <features>CREDENTIALS</features>
+        <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
         <sourceArchive>java/credentials_demo.tar.gz</sourceArchive>
@@ -237,7 +237,7 @@ If you want to modify the sample application source code or create your own appl
              see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
-        <features>CREDENTIALS</features>
+        <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
         <sourceArchive>java-admin/credentials_demo.tar.gz</sourceArchive>
@@ -363,7 +363,7 @@ Try the following:
              see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
-        <features>CREDENTIALS</features>
+        <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
         <sourceArchive>cpp/credentials_demo.tar.gz</sourceArchive>
@@ -470,7 +470,7 @@ Try the following:
              see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>LINUX_X86</platforms>
-        <features>CREDENTIALS</features>
+        <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
         <sourceArchive>c/credentials_demo.tar.gz</sourceArchive>
@@ -598,7 +598,7 @@ Make sure that the build target is set to <b>CredentialsDemo</b>, not <b>Kaa</b>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
         <platforms>IOS</platforms>
-        <features>CREDENTIALS</features>
+        <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
         <sourceArchive></sourceArchive>

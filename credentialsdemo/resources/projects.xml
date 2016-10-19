@@ -121,7 +121,7 @@ If you want to modify the sample application source code or create your own appl
              see 'platform' type in demo_projects_schema.xsd schema) -->
              
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
-        <features>CREDENTIALS</features>
+        <features>CREDENTIALS_TEST</features>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
         <sourceArchive>java/credentials_demo.tar.gz</sourceArchive>

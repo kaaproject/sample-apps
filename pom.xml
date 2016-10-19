@@ -302,6 +302,27 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xml-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <validationSets>
+                        <validationSet>
+                            <dir>.</dir>
+                            <includes>*/resources/projects.xml</includes>
+                            <systemId>common/src/main/resources/demo/projects/demo_projects_schema.xsd</systemId>
+                        </validationSet>
+                    </validationSets>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

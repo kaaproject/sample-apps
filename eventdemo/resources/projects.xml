@@ -511,7 +511,7 @@ To view information about the ECFs:
    		Here you can add an ECF or view details of the existing ECFs.
 	
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_00.png" />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-274-events-bundle/eventdemo/resources/pic/event_demo_00.png" />
 		<br />
 		<br />
 		
@@ -521,7 +521,7 @@ To view information about the ECFs:
 		The <b>Event class family details</b> page will open.
 
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_0.png" />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-274-events-bundle/eventdemo/resources/pic/event_demo_0.png" />
 		<br />
 		<br />
 	</li>
@@ -530,7 +530,7 @@ To view information about the ECFs:
 		The <b>Family version</b> page will open containing the list of event classes.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_1.png" />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-274-events-bundle/eventdemo/resources/pic/event_demo_1.png" />
 		<br />
 		<br />
 		
@@ -623,7 +623,7 @@ To set up an ECF mapping:
    		Click <b>Applications</b> > <b>Event demo</b> > <b>Event family mappings</b>.
 	
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_3.png" />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-274-events-bundle/eventdemo/resources/pic/event_demo_3.png" />
 		<br />
 		<br />
 		
@@ -634,7 +634,7 @@ To set up an ECF mapping:
 		The <b>Event family mapping details</b> page will open.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_5.png" />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-274-events-bundle/eventdemo/resources/pic/event_demo_5.png" />
 		<br />
 		<br />
 		
@@ -663,7 +663,7 @@ To set up an ECF mapping:
     		Open the <b>User verifiers</b> page of the application and click <b>Add user verifier</b>.
     		
 			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_6.png" />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-274-events-bundle/eventdemo/resources/pic/event_demo_6.png" />
 			<br />
 			<br />
     		
@@ -673,7 +673,7 @@ To set up an ECF mapping:
     		For this example, select the <b>Trustful verifier</b> type.
     		
     		<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app_description/eventdemo/resources/pic/event_demo_7.png" />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-274-events-bundle/eventdemo/resources/pic/event_demo_7.png" />
 			<br />
 			<br />
     		

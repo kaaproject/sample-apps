@@ -63,7 +63,7 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <platforms>ANDROID</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
-        <bundleId>cell_monitor_demos</bundleId>
+        <bundleId>cellmonitor_demos</bundleId>
         <sourceArchive>android/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>cellmonitor_demo/CellMonitor</projectFolder>
         <sdkLibDir>cellmonitor_demo/CellMonitor/app/libs</sdkLibDir>
@@ -105,13 +105,13 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <platforms>IOS</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>REGULAR</complexity>
-        <bundleId>cell_monitor_demos</bundleId>
+        <bundleId>cellmonitor_demos</bundleId>
         <sourceArchive>objc/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>ObjCCellMonitor</projectFolder>
         <sdkLibDir>ObjCCellMonitor/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <bundle id="cell_monitor_demos">
+    <bundle id="cellmonitor_demos">
         <name>Cell Monitor demos</name>
         <description>Kaa Log collection subsystem demo applications bundle</description>
         <details>

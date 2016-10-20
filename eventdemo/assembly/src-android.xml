@@ -28,7 +28,7 @@
         <fileSet>
             <directory>${project.basedir}/source/android</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>events_demo/EventsDemo</outputDirectory>
+            <outputDirectory>event_demo/EventsDemo</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

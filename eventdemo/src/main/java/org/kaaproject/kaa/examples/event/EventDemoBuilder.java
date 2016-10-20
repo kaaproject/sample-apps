@@ -43,6 +43,8 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(EventDemoBuilder.class);
 
+    private static final String EVENT_DEMO_ANDROID_ID = "event_demo_android";
+
     public EventDemoBuilder() {
         super("demo/event");
     }

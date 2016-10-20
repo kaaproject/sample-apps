@@ -23,6 +23,12 @@
 #include <kaa_channel_manager.h>
 #include <platform/stdio.h>
 
+static void auth_success(void *context)
+{
+    printf("Successfully authorized.\n");
+    kaa_client_stop(context);
+}
+
 static void auth_failure_handler(kaa_auth_failure_reason reason, void *context)
 {
     printf("Authorization failed! Reason: ");
@@ -64,7 +70,7 @@ int main(/*int argc, char *argv[]*/)
     /**
      * Start Kaa client main loop.
      */
-    error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
+    error_code = kaa_client_start(kaa_client, auth_success, kaa_client, 5);
     if (error_code) {
         printf("Failed to start Kaa main loop\r\n");
         kaa_client_destroy(kaa_client);

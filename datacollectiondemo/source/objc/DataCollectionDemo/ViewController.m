@@ -139,7 +139,7 @@ static const int32_t temperatureUpperLimit = 35;
         [self.bucketRunnersQueue addOperationWithBlock:^{
             BucketRunner *runner = self.bucketRunnersDictionary[@(timeStamp)];
             BucketInfo *bucketInfo = [runner getValue];
-            int64_t timeSpent = bucketInfo.scheduledBucketTimestamp - timeStamp + bucketInfo.bucketDeliveryDuration;
+            int64_t timeSpent = bucketInfo.scheduledBucketRunnerTimestamp - timeStamp + bucketInfo.bucketDeliveryDuration;
             [self addLogWithText:[NSString stringWithFormat:@"Received log record delivery info. Bucket id [%d], delivery time [%lld ms]", bucketInfo.bucketId, timeSpent]];
         }];
     } @catch (NSException *exception) {

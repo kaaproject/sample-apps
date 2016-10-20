@@ -24,7 +24,7 @@ PODS:
     - CocoaLumberjack/Default
   - Kaa (0.9.0):
     - AFNetworking (~> 3.x)
-    - CocoaLumberjack
+    - CocoaLumberjack (= 2.3)
     - sqlite3
   - sqlite3 (3.14.2):
     - sqlite3/common (= 3.14.2)
@@ -35,12 +35,12 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Kaa:
-    :path: ./libs/kaa-ep-sdk
+    :path: "./libs/kaa-ep-sdk"
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
-  Kaa: 0fb8cae1282c99865a711b802669bb4f63e4ad7e
+  Kaa: 1bbe9b7ceb70cedf0d30b8d500899ef693fd2a75
   sqlite3: 0da4924a394eff8e354bb63138818c870b28b097
 
 PODFILE CHECKSUM: f8043142a0dc6d539b83d3edd9d5c5d1bd7fb7e1

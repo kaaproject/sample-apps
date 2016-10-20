@@ -502,7 +502,7 @@ Try the following:
     </project>
 
     <bundle id="verifiers_demos">
-        <name>Endpoint ownership</name>
+        <name>Endpoint ownership demos</name>
         <description>Kaa user verifiers and endpoint ownership subsystems demo applications bundle</description>
         <details>
             <![CDATA[

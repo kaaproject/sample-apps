@@ -22,7 +22,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="photoframe_demo">
-        <name>Photo frame</name>
+        <name>Photo frame demo</name>
         <description>Photo frame demo app for Android</description>
         <details>
             <![CDATA[

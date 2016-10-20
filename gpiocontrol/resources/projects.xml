@@ -221,7 +221,7 @@ For more background on the Kaa Event subsystem please refer to the corresponding
         <destBinaryFile></destBinaryFile>
     </project>
     <bundle id="gpio_control">
-        <name>GPIO control</name>
+        <name>GPIO control demos</name>
         <description>GPIO control applications bundle</description>
         <details>
             <![CDATA[

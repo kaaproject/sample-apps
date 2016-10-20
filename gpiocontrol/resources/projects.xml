@@ -212,7 +212,7 @@ For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
         <platforms>IOS</platforms>
-        <features>USER_VERIFIER</features>
+        <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
         <sourceArchive>objc/gpiocontrol.tar.gz</sourceArchive>

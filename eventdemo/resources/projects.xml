@@ -169,9 +169,6 @@ If you want to modify the sample application source code or create your own appl
         <complexity>BASIC</complexity>
         <bundleId>event_demos</bundleId>
         <sourceArchive>android/event_demo.tar.gz</sourceArchive>
-        <projectFolder>JEventDemo</projectFolder>
-        <sdkLibDir>JEventDemo/lib</sdkLibDir>
-        <destBinaryFile>JEventDemo/build/jar/EventDemo.jar</destBinaryFile>
         <projectFolder>events_demo/EventsDemo</projectFolder>
         <sdkLibDir>events_demo/EventsDemo/app/libs</sdkLibDir>
         <destBinaryFile>events_demo/EventsDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>

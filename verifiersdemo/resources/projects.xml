@@ -507,7 +507,204 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This application bundle demonstrates the features of the Kaa <b>User verifiers</b> and <b>Endpoint ownership</b>.
+	This application bundle demonstrates implementation of the Kaa <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/" target="_blank">Endpoint ownership</a> feature.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users management</a> features.
+	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
+</p>	
+
+<h1>Playing around</h1>
+
+<p>
+	To demonstrate the functionality of this application bundle, the Kaa client will be installed on the following two <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> used as an example:
+	<ul>
+		<li>
+			Mobile device supporting iOS and Android.
+		</li>
+		<li>
+			Personal computer with a x86 OS installed.
+			For this option, Kaa client can use C, C++, and Java SDKs.
+		</li>
+	</ul>
+	
+	Both clients will use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/#trustful-owner-verifier" target="_blank">trustful owner verifier</a> for simplicity.
+</p>
+
+The following <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-class-families">event family</a> schema is used for messaging.
+
+<pre>
+	[  
+	  {  
+		"type":"record",  
+		"name":"MessageEvent",  
+		"namespace":"org.kaaproject.kaa.demo.verifiersdemo",
+		"fields":[
+		  {
+			"name":"message",
+			"type":[
+			  {
+				"type":"string",
+				"avro.java.string":"String"
+			  },
+			  "null"
+			]
+		  }
+		],
+		"classType":"event"
+	  }
+	]
+</pre>
+
+Below is the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/#configuration-schemas">configuration schema</a> used for both endpoints.
+
+<pre>
+	{
+	  "type":"record",
+	  "name":"KaaVerifiersTokens",
+	  "namespace":"org.kaaproject.kaa.demo.verifiersdemo",
+	  "fields":[
+		{
+		  "name":"twitterKaaVerifierToken",
+		  "type":[
+			{
+			  "type":"string",
+			  "avro.java.string":"String"
+			},
+			"null"
+		  ]
+		},
+		{
+		  "name":"facebookKaaVerifierToken",
+		  "type":[
+			{
+			  "type":"string",
+			  "avro.java.string":"String"
+			},
+			"null"
+		  ]
+		},
+		{
+		  "name":"googleKaaVerifierToken",
+		  "type":[
+			{
+			  "type":"string",
+			  "avro.java.string":"String"
+			},
+			"null"
+		  ]
+		}
+	  ]
+	}
+</pre>
+
+<p>
+	To play around with the sample application:
+	<ol>
+		<li>
+			<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/#sandbox-installation">Install and run Kaa Sandbox</a>.
+		</li>
+		<li>
+			Download the binaries/sources for both endpoints and start the application.
+			To do this, choose the target platform below and follow the instructions on the dedicated page.
+		</li>
+	</ol>
+</p>
+
+<h2>Endpoint attachment</h2>
+
+To try the endpoint attachment feature:
+
+<ol>
+	<li>
+		Start the Kaa client on your mobile device and log in.
+		The mobile application will automatically attach to the specified Kaa owner.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-245-EPownership-bundle/verifiersdemo/resources/pic/iOS-screen2.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Now start the other Kaa client on your personal computer.
+		The client will generate an endpoint access token, publish it on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a>, and output it in the console.
+		
+		<pre>
+			16:55:40,259 [pool-2-thread-1] INFO  o.k.k.e.verifiers.VerifiersDemo - --= Kaa client started =--
+			16:55:45,258 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint ID (key hash):yZZjLs1Zkh9rLM97aA+oWROJuxc=
+			16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint access token:96c9b5ec-4786-4286-a953-ed50e6c75df0
+			16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Copy this token to mobile application in to perform assisted attachment of this endpoint to user (current application owner).
+		</pre>
+		
+	</li>
+	<li>
+		Copy the access token from the console message above, paste it in the <b>Type endpoint access token</b> field of your mobile Kaa client and click <b>Attach</b>.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-245-EPownership-bundle/verifiersdemo/resources/pic/iOS-screen3.png" />
+		<br />
+		<br />
+		
+		<blockquote>NOTE: If you type in the access token correctly but still receive error message, check if the access token is not expired.
+		It that is the case, Kaa client will output a new access token in the console.</blockquote>		
+	</li>
+</ol>
+<p>
+	When you successfully attached the endpoint, you can make them exchange messages between one another.
+	Type in your message in the <b>Message text</b> field and click <b>Send</b>.
+	
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-245-EPownership-bundle/verifiersdemo/resources/pic/iOS-screen5.png" />
+	<br />
+	<br />
+	
+	Your Kaa client on the personal computer will display the received message in the console.
+	
+	<pre>
+		16:59:27,829 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - MessageEvent event received! Message: Hello from mobile app!
+	</pre>
+	
+	<blockquote>NOTE: The event delivery may take up to several seconds depending on the network configuration and resources available to the Kaa cluster.</blockquote>
+</p>
+
+<h1>What's next?</h1>
+
+<p>
+	You can use the Administration UI page to check the endpoint settings.
+	
+	To do this:
+	<ol>
+		<li>
+			Log in to the Sandbox as a <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#tenant-developer">tenant developer</a>.
+		</li>
+		<li>
+			Open the <b>Endpoint profiles</b> page of the sample application to see the list of registered endpoints.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-245-EPownership-bundle/verifiersdemo/resources/pic/EP_ownership_EP_List.jpg" />
+			<br />
+			<br />
+										
+		</li>
+		<li>
+			Click the corresponding row to open the <b>Endpoint profile details</b> page of your mobile device endpoint to view the <b>User ID</b>.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-245-EPownership-bundle/verifiersdemo/resources/pic/EP_ownership_EP_attacher.jpg" />
+			<br />
+			<br />
+			
+		</li>
+		<li>
+			Now open the <b>Endpoint profile details</b> page of your personal computer endpoint.
+			It has the same <b>User ID</b> as the mobile device endpoint because you attached it to the same user.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-245-EPownership-bundle/verifiersdemo/resources/pic/EP_ownership_EP_being_attached.jpg" />
+			<br />
+			<br />
+			
+		</li>
+	</ol>
 </p>
             ]]>
         </details>

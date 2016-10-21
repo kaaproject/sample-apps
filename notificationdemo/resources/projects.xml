@@ -27,8 +27,8 @@
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 To implement that feature for Java SDK, the following classes and methods are used:
@@ -57,7 +57,7 @@ In this app we provide example for this action.
 
 <p>
 	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
-	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
 </p>
 
 <p>
@@ -117,7 +117,7 @@ To install the Notification sample application using the source code:
 	</li>
 </ol>
 	
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
 
@@ -146,8 +146,8 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <h1>Launching</h1>
@@ -157,7 +157,7 @@ To launch this sample application on the Kaa C++ SDK:
 <ol>
 	<li>
 		Prepare your C++ SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -182,7 +182,7 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C++ SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -218,12 +218,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -235,7 +235,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -265,8 +265,8 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification extension</b> based on <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Android</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <b>Notification extension</b> based on <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Android</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <h1>Launching</h1>
@@ -340,7 +340,7 @@ To install this sample application using the source code:
 	</li>
 </ol>
 	
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
 
@@ -369,9 +369,9 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
-	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
+	This sample application uses the <b>Notification extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#operations-service" target="_blank">Operations service</a> are available.
 </p>
 
 <h1>Launching</h1>
@@ -381,7 +381,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -396,7 +396,7 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -423,12 +423,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -440,7 +440,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -470,8 +470,8 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications/" target="_blank">notifications</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
-	This feature enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications/" target="_blank">notifications</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This feature enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <p>
@@ -509,7 +509,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <ol>
 	<li>
 		Prepare your Objective-C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -601,16 +601,16 @@ Make sure that the build target is set to <b>NotificationDemo</b>, not <b>Kaa</b
             <![CDATA[
 <p>
 	This application bundle demonstrates the features of the Kaa <b>Notification extension</b>.
-	This extension enables your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint device</a> to receive notifications from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
-	You can manage notifications using the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications/#notification-topics" target="_blank">notification topics</a>.
-	Each notification topic can be assigned to any number of <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-group" target="_blank">endpoint groups</a>.
+	This extension enables your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint device</a> to receive notifications from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	You can manage notifications using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications/#notification-topics" target="_blank">notification topics</a>.
+	Each notification topic can be assigned to any number of <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group" target="_blank">endpoint groups</a>.
 	An endpoint will receive a notification if the topic of that notification is assigned to the group that the endpoint is a member of.
 </p>	
 <p>
 	Notifications do not just transfer data to the endpoints, they make the endpoints perform actions.
-	For example, a notification can make a <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> display a message through the user interface.
-	Notifications can be sent from the Kaa server to the endpoints either by administrator using the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">administration UI</a> or by an application using the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-administrator" target="_blank">Kaa administrator</a> REST API.
-	For more information about notifications management, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications/" target="_blank">Notifications</a>.
+	For example, a notification can make a <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> display a message through the user interface.
+	Notifications can be sent from the Kaa server to the endpoints either by administrator using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">administration UI</a> or by an application using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-administrator" target="_blank">Kaa administrator</a> REST API.
+	For more information about notifications management, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications/" target="_blank">Notifications</a>.
 </p>
 
 <h1>Playing around</h1>
@@ -636,7 +636,7 @@ To manage notification schema details:
 	<li>
 		Click the <b>Applications</b> arrow to unfold the list.
 		Click <b>Notification demo</b> > <b>Schemas</b> > <b>Notification</b>.
-		You will see the list of all notifications schemas stored for your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-application" target="_blank">Kaa application</a>.
+		You will see the list of all notifications schemas stored for your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">Kaa application</a>.
 		
 		<br />
 		<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/notif_demo_1.png" />
@@ -655,7 +655,7 @@ To manage notification schema details:
 		
 		The <b>Security alert</b> schema is included in the Sandbox for demonstration purpose.
 		You can create, upload, and edit your own schemas.
-		For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Notifications/#notification-schema" target="_blank">Notifications schema</a>.
+		For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications/#notification-schema" target="_blank">Notifications schema</a>.
 	</li>
 </ol>
 
@@ -814,7 +814,7 @@ To do this:
 </ol>
 
 <p>
-	For more information about how to create and manage endpoint groups, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
+	For more information about how to create and manage endpoint groups, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
 </p>
 ]]>
         </details>

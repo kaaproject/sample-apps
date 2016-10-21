@@ -27,9 +27,9 @@
         <details>
         	<![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
-	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a>.
-	In this sample application, the upload is initiated when the number of logs in the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-storage" target="_blank">log storage</a> reaches 5.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a>.
+	In this sample application, the upload is initiated when the number of logs in the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-storage" target="_blank">log storage</a> reaches 5.
 </p>
 
 To implement this feature for Java SDK, the following API methods are used in this sample application:
@@ -48,7 +48,7 @@ To implement this feature for Java SDK, the following API methods are used in th
 
 <p>
 	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
-	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
 </p>
 
 <p>
@@ -107,13 +107,13 @@ To install the sample application using the source code:
 	</li>
 </ol>
 
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 
 <h2>Manage log records</h2>
 
 <p>
-	When you start the application, the last five log records will be sent from the endpoint to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a>.
-	The Kaa cluster will persist those records in the MongoDB database of the Sandbox using the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+	When you start the application, the last five log records will be sent from the endpoint to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a>.
+	The Kaa cluster will persist those records in the MongoDB database of the Sandbox using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
 </p>
 
 <p>
@@ -153,9 +153,9 @@ If you want to modify the sample application source code or create your own appl
         <details>
         	<![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
-	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a>.
-	In this sample application, the upload is initiated when the number of logs in the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-storage" target="_blank">log storage</a> reaches 5.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a>.
+	In this sample application, the upload is initiated when the number of logs in the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-storage" target="_blank">log storage</a> reaches 5.
 </p>
 
 <h1>Launching</h1>
@@ -165,7 +165,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -182,7 +182,7 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -197,8 +197,8 @@ Once you built the application, you can start it at any time using the following
 
 <h2>How do I check if the server received the log records?</h2>
 
-When <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> receives log records, it sends them to the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-appenders" target="_blank">log appender</a>.
-This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+When <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> receives log records, it sends them to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-appenders" target="_blank">log appender</a>.
+This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
 
 <p>
 	To check if the server received the log records, use the following commands.
@@ -223,12 +223,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -240,7 +240,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -271,9 +271,9 @@ Try the following:
         <details>
         	<![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
-	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a>.
-	In this sample application, the upload is initiated when the number of logs in the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-storage" target="_blank">log storage</a> reaches 5.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a>.
+	In this sample application, the upload is initiated when the number of logs in the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-storage" target="_blank">log storage</a> reaches 5.
 </p>
 
 <h1>Launching</h1>
@@ -283,7 +283,7 @@ To launch this sample application on the Kaa C++ SDK:
 <ol>
 	<li>
 		Prepare your C++ SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -308,7 +308,7 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C++ SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -332,8 +332,8 @@ Once you built the application, you can start it at any time using the following
 
 <h2>How do I check if the server received the log records?</h2>
 
-When <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> receives log records, it sends them to the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-appenders" target="_blank">log appender</a>.
-This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+When <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> receives log records, it sends them to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-appenders" target="_blank">log appender</a>.
+This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
 
 <p>
 	To check if the server received the log records, use the following commands.
@@ -358,12 +358,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -375,7 +375,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -406,12 +406,12 @@ Try the following:
         <details>
         	<![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
-	This feature enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to store collect log records, store them in the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a>, persist them on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>, and send them to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/" target="_blank">data collection</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This feature enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to store collect log records, store them in the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a>, persist them on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>, and send them to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#operations-service" target="_blank">Operations service</a>.
 </p>
 
 <p>
-	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a> set by the <code>setLogUploadStrategy:</code> method.
+	The log uploading process is defined by the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategy</a> set by the <code>setLogUploadStrategy:</code> method.
 	The <code>BucketRunner</code> feature is used to track the batch uploads.
 </p>
 
@@ -426,7 +426,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <ol>
 	<li>
 		Prepare your Objective-C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -524,18 +524,18 @@ Make sure that the build target is set to <b>DataCollectionDemo</b>, not <b>Kaa<
         <details>
             <![CDATA[
 <p>
-	This application bundle demonstrates the features of Kaa <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection" target="_blank">Data collection extension</a>.
-	This extension allows you to collect log records from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a>.
-	The log records are sent from the endpoints to <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations services</a> where they are either persisted on the server for further processing, or submitted for the immediate stream analysis.
+	This application bundle demonstrates the features of Kaa <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection" target="_blank">Data collection extension</a>.
+	This extension allows you to collect log records from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a>.
+	The log records are sent from the endpoints to <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#operations-service" target="_blank">Operations services</a> where they are either persisted on the server for further processing, or submitted for the immediate stream analysis.
 </p>
 <p>
-	For better illustration, the Data collection extension will be demonstrated in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration extension</a>.
+	For better illustration, the Data collection extension will be demonstrated in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration extension</a>.
 </p>
 <p>
 	This demonstration explains how you can record the readings of a temperature sensor to a database and configure the sampling period of the sensor.
 </p>
 <p>
-	See also <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+	See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 </p>
 
 <h1>Playing around</h1>
@@ -543,7 +543,7 @@ Make sure that the build target is set to <b>DataCollectionDemo</b>, not <b>Kaa<
 <h2>Log schema</h2>
 
 The structure of Kaa logs is defined by the chosen CT schema.
-This demo <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-application" target="_blank">application</a> will record the readings of the temperature sensors and save them to the MongoDB database.
+This demo <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">application</a> will record the readings of the temperature sensors and save them to the MongoDB database.
 
 <p>
 	The following schema is used to define the format of the log records.
@@ -570,7 +570,7 @@ This demo <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-applicatio
 </p>
 
 <p>
-	You can view and edit this schema using the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">Administration UI</a>.
+	You can view and edit this schema using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>.
 </p>
 
 To do this:
@@ -601,12 +601,12 @@ To do this:
 		
 		The <b>DataCollection</b> schema is included in the Sandbox for demonstration purpose.
 		You can create your own log schemas.
-		To do this, use the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Server-REST-APIs/#!/Logging/saveLogSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-client-side-EP-profile-schema" target="_blank">these instructions</a>for Administration UI.
+		To do this, use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#!/Logging/saveLogSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-client-side-EP-profile-schema" target="_blank">these instructions</a>for Administration UI.
 	</li>
 </ol>
 
 <p>
-	To configure the sampling period of the sensor, you need to change the default configuration of the endpoint initially received from the group <a href="http://kaaproject.github.io/kaa/docs/Glossary/#group-all" target="_blank">All</a>.
+	To configure the sampling period of the sensor, you need to change the default configuration of the endpoint initially received from the group <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#group-all" target="_blank">All</a>.
 	In this demo application, the following configuration schema is used to configure the sampling period of the sensor.
 	
 	<pre>
@@ -642,7 +642,7 @@ To do this:
 
 <h2>Log appenders</h2>
 
-To send the log records from the Operations service to the MongoDB database, Kaa uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+To send the log records from the Operations service to the MongoDB database, Kaa uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
 
 <p>
 	To view the list of log appenders, open the <b>Log appenders</b> page of the application.
@@ -697,7 +697,7 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 </p>
 
 <p>
-	To define the conditions under which the logs should be sent to the server, Kaa uses <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategies</a>.
+	To define the conditions under which the logs should be sent to the server, Kaa uses <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-upload-strategies" target="_blank">log upload strategies</a>.
 	This demo application uses the <b>Log count</b> strategy and uploads the logs upon reaching the set limit of log records number.
 	The default threshold value for this strategy is set to <b>1</b> which means that Kaa will send every log record separately.
 </p>
@@ -739,7 +739,7 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 	Now you need to replace <i>%your_sandbox_instance_ip/host%</i> with the actual host/ip address of your Sandbox.
 	To do this, go to the Sandbox Management page and specify the real IP of your machine in the <b>Kaahost/IP</b> block.
 	Alternatively, you can use the following command: <code>$ ssh kaa@127.0.0.1 -p 2222</code>.
-	Then, replace the <i>%data_collection_application_token%</i> with the actual <b>Data collection</b> <a href="http://kaaproject.github.io/kaa/docs/Glossary/#application-token" target="_blank">application token</a>.
+	Then, replace the <i>%data_collection_application_token%</i> with the actual <b>Data collection</b> <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#application-token" target="_blank">application token</a>.
 	To view the application token, open the <b>Application details</b> page.
 	
 	<br />
@@ -753,7 +753,7 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 
 Every endpoint, once registered, becomes a member of the default group <b>All</b> and receives its default configuration from that group.
 To change the configuration of the endpoint, you need to either make the endpoint a member of a different group, or change the default configuration values of the group <b>All</b>.
-See also <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
+See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
 
 <p>
 	To change a value in the default configuration:

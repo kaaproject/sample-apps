@@ -130,6 +130,7 @@
                         <exclude>source/objc/*/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
                         <exclude>source/objc/Podfile.lock</exclude>
                         <exclude>source/objc/Podfile</exclude>
+                        <exclude>source/objc/*/*.entitlements</exclude>
 
                         <!--Common files-->
                         <exclude>resources/*.avsc</exclude>

@@ -171,23 +171,18 @@ void command_join()
 {
     printf("Enter a chat room name:\n");
     char room_name[KAA_STRING_MAX_LENGTH];
-    while (getchar() != '\n') {
-    }
     if (fgets(room_name, KAA_STRING_MAX_LENGTH, stdin) == NULL) {
         printf("Failed input a room name\n");
     } else {
         room_name[strnlen(room_name, KAA_STRING_MAX_LENGTH) - 1] = '\0';
         search_room(room_name, strnlen(room_name, KAA_STRING_MAX_LENGTH));
     }
-    menu();
 }
 
 void command_create()
 {
     printf("Enter chat room name:\n");
     char room_name[KAA_STRING_MAX_LENGTH];
-    while(getchar() != '\n') {
-    }
     if (fgets(room_name, KAA_STRING_MAX_LENGTH, stdin) == NULL) {
         printf("Failed input a room name\n");
     } else {
@@ -200,22 +195,21 @@ void command_create()
         kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, create_room, NULL);
 
         pthread_mutex_lock(&lock);
-        kaa_list_push_back(lst, room_name);
+        char *rn = malloc(strnlen(room_name, KAA_STRING_MAX_LENGTH));
+        strcpy(rn, room_name);
+        kaa_list_push_back(lst, rn);
         pthread_mutex_unlock(&lock);
 
         create_room->destroy(create_room);
 
         printf("Room %s was successfully created.\n", room_name);
     }
-    menu();
 }
 
 void command_delete()
 {
     printf("Enter chat room name:");
     char room_name[KAA_STRING_MAX_LENGTH];
-    while(getchar() != '\n') {
-    }
     if (fgets(room_name, KAA_STRING_MAX_LENGTH, stdin) == NULL) {
         printf("Failed input a room name.\n");
     } else {
@@ -228,13 +222,17 @@ void command_delete()
         kaa_event_manager_send_kaa_chat_chat_event(kaa_client_get_context(kaa_client)->event_manager, delete_room, NULL);
 
         pthread_mutex_lock(&lock);
-        kaa_list_remove_first(kaa_list_begin(&lst), &rooms_equal, room_name, NULL);
+        kaa_error_t error_code = kaa_list_remove_first(kaa_list_begin(&lst), &rooms_equal, room_name, NULL);
+        if (error_code) {
+            printf("Failed delete a room with name %s\n", room_name);
+        }
+        else {
+            printf("Room %s was successfully deleted.\n", room_name);
+        }
         pthread_mutex_unlock(&lock);
 
         delete_room->destroy(delete_room);
-        printf("Room %s was successfully deleted.\n", room_name);
     }
-    menu();
 }
 
 static void print_room(char *room_name, void *context)
@@ -249,7 +247,6 @@ void print_rooms()
     pthread_mutex_lock(&lock);
     kaa_list_for_each(kaa_list_begin(lst), kaa_list_back(lst), &print_room, NULL);
     pthread_mutex_unlock(&lock);
-    menu();
 }
 
 void print_help()
@@ -264,31 +261,29 @@ void print_help()
 
 void menu()
 {
-    print_help();
+    char answer[KAA_STRING_MAX_LENGTH];
+    while (true) {
+        print_help();
 
-    int answer;
-    scanf("%d", &answer);
-    switch(answer) {
-        case 1:
+        scanf("%s", &answer);
+        while(getchar() != '\n') {
+        }
+
+        if (!strncmp(answer, "1", strnlen(answer, KAA_STRING_MAX_LENGTH))) {
             command_join();
-            break;
-        case 2:
+        } else if (!strncmp(answer, "2", strnlen(answer, KAA_STRING_MAX_LENGTH))) {
             command_create();
-            break;
-        case 3:
+        } else if (!strncmp(answer, "3", strnlen(answer, KAA_STRING_MAX_LENGTH))) {
             command_delete();
-            break;
-        case 4:
+        } else if (!strncmp(answer, "4", strnlen(answer, KAA_STRING_MAX_LENGTH))) {
             print_rooms();
-            break;
-        case 5:
+        } else if (!strncmp(answer, "5", strnlen(answer, KAA_STRING_MAX_LENGTH))) {
             printf("Event demo stopped\n");
             kaa_list_destroy(lst, &kaa_data_destroy);
             return EXIT_SUCCESS;
-        default:
+        } else {
             printf("Wrong command syntax\n");
-            menu();
-            break;
+        }
     }
 }
 

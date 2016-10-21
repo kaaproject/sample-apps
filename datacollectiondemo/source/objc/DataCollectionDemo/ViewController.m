@@ -66,7 +66,7 @@ static const int32_t temperatureUpperLimit = 35;
     self.bucketRunnersQueue = [[NSOperationQueue alloc] init];
     
     // Schedules timer to generate logs with delay, which was set in configuration.
-    self.logTimer = [NSTimer scheduledTimerWithTimeInterval:([self.kaaClient getConfiguration].samplePeriod / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
+    self.logTimer = [NSTimer scheduledTimerWithTimeInterval:([self.kaaClient getConfiguration].samplePeriod) target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
 }
 
 #pragma mark - KaaClientStateDelegate
@@ -118,7 +118,7 @@ static const int32_t temperatureUpperLimit = 35;
         self.logTimer = nil;
         
         // Schedules the new log timer with updated threshold.
-        self.logTimer = [NSTimer scheduledTimerWithTimeInterval:(configuration.samplePeriod / 1000) target:self selector:@selector(generateAndSendLogRecord) userInfo:self repeats:YES];
+        self.logTimer = [NSTimer scheduledTimerWithTimeInterval:(configuration.samplePeriod) target:self selector:@selector(generateAndSendLogRecord) userInfo:self repeats:YES];
     });
 }
 

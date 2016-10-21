@@ -89,13 +89,13 @@
 
 #pragma mark - ProfileContainer
 
-- (KAAPagerClientProfile *)getProfile {
-    return [[KAAPagerClientProfile alloc] initWithAudioSupport:NO videoSupport:NO vibroSupport:YES];
+- (KAAProfilePagerClientProfile *)getProfile {
+    return [[KAAProfilePagerClientProfile alloc] initWithAudioSupport:NO videoSupport:NO vibroSupport:YES];
 }
 
 #pragma mark - ConfigurationDelegate
 
-- (void)onConfigurationUpdate:(KAAPagerConfiguration *)configuration {
+- (void)onConfigurationUpdate:(KAAConfigurationPagerConfiguration *)configuration {
     [self addLogWithText:@"Configuration was updated"];
     [self displayConfiguration];
 }
@@ -103,7 +103,7 @@
 #pragma mark - Supporting methods
 
 - (void)displayConfiguration {
-    KAAPagerConfiguration *configuration = [self.kaaClient getConfiguration];
+    KAAConfigurationPagerConfiguration *configuration = [self.kaaClient getConfiguration];
     [self addLogWithText:[NSString stringWithFormat:@"Audio support enabled: %@, video support enabled: %@, vibro support enabled: %@", configuration.audioSubscriptionActive ? @"yes" : @"no", configuration.videoSubscriptionActive ? @"yes" : @"no", configuration.vibroSubscriptionActive ? @"yes" : @"no"]];
 }
 

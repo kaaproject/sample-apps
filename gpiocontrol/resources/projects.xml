@@ -132,7 +132,7 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <h2>Installation</h2>
-First, read our <a href="http://docs.kaaproject.org/display/KAA/Texas+Instruments+CC3200">documentation article</a> on how to integrate Kaa with CC3200.
+First, read our <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-TI-CC3200/" target="_blank">documentation section</a> on how to integrate Kaa with CC3200.
 <h2>Playing around</h2>
 After you successfully installed this app on your CC32XX device, go to "GPIO control Android" Sandbox app and follow the steps described there.
 ]]>
@@ -163,7 +163,7 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
         <details>
             <![CDATA[
             <h2>Installation</h2>
-First, read our <a href="http://docs.kaaproject.org/display/KAA/Samsung+Artik+5">documentation article</a> on how to integrate Kaa with Artik 5.
+First, read our <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/SDK-Samsung-Artik-5/" target="_blank">documentation article</a> on how to integrate Kaa with Artik 5.
 <h2>Playing around</h2>
 After you successfully installed this app on your Artik 5 device, go to "GPIO control Android" or "GPIO control iOS" Sandbox app and follow the steps described there.
             ]]>
@@ -203,11 +203,11 @@ $ ./build.sh
 <h2>Playing around</h2>
 Make sure that the Kaa Sandbox is up and running. You will need to install this application on at least one iOS device and one ESP8266- or CC32XX-powered device.
 
-After you have configured and started the application on ESP8266 or CC32XX (You can read about its installation in “GPIO control ESP8266” and “GPIO control CC32XX” Kaa Sandbox apps), start the application on the iOS device and press the "+" button on the right bottom of the screen. Enter the endpoint acess token (the default values are "cc3200" for CC3200 and "esp8266" for ESP8266). No other data is needed because <a href="http://docs.kaaproject.org/display/KAA/Attaching+endpoints+to+users#Attachingendpointstousers-Trustfuluserverifier">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
+After you have configured and started the application on ESP8266 or CC32XX (You can read about its installation in “GPIO control ESP8266” and “GPIO control CC32XX” Kaa Sandbox apps), start the application on the iOS device and press the "+" button on the right bottom of the screen. Enter the endpoint acess token (the default values are "cc3200" for CC3200 and "esp8266" for ESP8266). No other data is needed because <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/#trustful-owner-verifier" target="_blank">trustful user verifier</a> is used for demonstration purposes.<br/><br/>
 Then, click on the appeared device and try to toggle the switches.
-Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> are also supported by <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/" target="_blank">REST API</a>.
 <h2>What's next?</h2>
-For more background on the Kaa Event subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Messaging+across+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Events">design reference</a> sections.
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> documentation section.
 ]]>
         </details>
         <sdkLanguage>OBJC</sdkLanguage>
@@ -227,9 +227,9 @@ For more background on the Kaa Event subsystem please refer to the corresponding
             <![CDATA[
 This bundle contains applications that demonstrates capabilities of the Kaa Event subsystem.
 
-Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> are also supported by <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/" target="_blank">REST API</a>.
 <h2>What's next?</h2>
-For more background on the Kaa Event subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Messaging+across+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Events">design reference</a> sections.
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> documentation section.
 ]]>
         </details>
     </bundle>

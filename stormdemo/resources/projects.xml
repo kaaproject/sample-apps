@@ -44,7 +44,7 @@ $ java -jar target/storm-server-example.jar
 </pre>
 If no errors occurred, you’ve successfully started the Storm topology. <br />
 4. Configure Flume log appender via the
-<a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a>
+<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>
 of your Kaa Sandbox. As a tenant admin, go to the
 "Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender"
 and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b>
@@ -116,7 +116,7 @@ $ java -jar target/storm-server-example.jar
 </pre>
 If no errors occurred, you’ve successfully started the Storm topology. <br />
 4. Configure Flume log appender via the
-<a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a>
+<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>
 of your Kaa Sandbox. As a tenant developer, go to the
 "Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender"
 and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b>
@@ -185,7 +185,7 @@ $ java -jar target/storm-server-example.jar
 </pre>
 If no errors occurred, you’ve successfully started the Storm topology. <br />
 4. Configure Flume log appender via the
-<a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Flumelogappender">Administrative console</a>
+<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>
 of your Kaa Sandbox. As a tenant developer, go to the
 "Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender"
 and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b>
@@ -236,10 +236,10 @@ the endpoint in your server side application.
             <![CDATA[
 This bundle contains applications that demonstrate real-time data processing in Apache Storm using Kaa platform.
 
-Please note that all the features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported via the <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.
+Please note that all the features of <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> are also supported by <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/" target="_blank">REST API</a>.
 
 <h2>What's next?</h2>
-For more background on the Kaa Logging subsystem please refer to the corresponding <a href="http://docs.kaaproject.org/display/KAA/Collecting+data+from+endpoints">programming guide</a> and <a href="http://docs.kaaproject.org/display/KAA/Logging">design reference</a> sections.
+For more background on the Kaa Logging subsystem, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/" target="_blank">Data collection</a> documentation page.
 ]]>
         </details>
     </bundle>

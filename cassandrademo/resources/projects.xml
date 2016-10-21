@@ -29,7 +29,7 @@ Please review the webinar below for hands-on experience based on an earlier vers
 <iframe width="691" height="389" src="https://www.youtube.com/embed/VHwJLHQjl50" frameborder="0" allowfullscreen></iframe> <br />
 <h2>Installation</h2>
 1. Get <a href="https://en.wikipedia.org/wiki/Raspberry_Pi">Rasberry Pi 2 Model B</a>, <a href="http://www.dx.com/p/arduino-digital-temperature-humidity-sensor-module-121350#.Vp5Zoq996kB">DHT 11 sensor</a> and 3 Male-Male jumper wires. <br />
-2. Install third-party components for C SDK using this <a href="http://docs.kaaproject.org/display/KAA/Raspberry+Pi#RaspberryPi-Installingthird-partycomponentsforCSDK">steps</a>. <br />
+2. Install third-party components for C SDK using this <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/SDK-RPi/" target="_blank">guide</a>. <br />
 3. Install the <a href="http://wiringpi.com/">WiringPi</a> library. <br />
 <pre>
 $ git clone git://git.drogon.net/wiringPi

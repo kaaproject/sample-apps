@@ -27,12 +27,12 @@
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <p>
-	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
+	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#operations-service" target="_blank">Operations service</a> are available.
 	The latest configuration is stored locally in the configuration storage using <code>kaaClient.setConfigurationStorage( ... )</code> API call and can be obtained regardless of the Operations service availability.
 	This sample application stores the configuration in the saved_config.cfg file located in the sample application working directory.
 </p>
@@ -45,7 +45,7 @@
 
 <p>
 	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
-	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
 </p>
 
 <p>
@@ -115,7 +115,7 @@ To install the Configuration sample application using the source code:
 	</li>
 </ol>
 	
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
 
@@ -144,9 +144,9 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
-	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
+	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#operations-service" target="_blank">Operations service</a> are available.
 </p>
 
 <h1>Launching</h1>
@@ -156,7 +156,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -171,7 +171,7 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the posix platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify the posix platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -198,12 +198,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -215,7 +215,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -245,9 +245,9 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
-	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#operations-service" target="_blank">Operations service</a> are available.
+	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#operations-service" target="_blank">Operations service</a> are available.
 	The latest configuration is stored locally in the configuration storage and can be obtained regardless of the Operations service availability.
 	This sample application stores the configuration in the saved_config.cfg file located in the sample application working directory.
 	</p>
@@ -259,7 +259,7 @@ To launch this sample application on the Kaa C++ SDK:
 <ol>
 	<li>
 		Prepare your C++ SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -276,7 +276,7 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the posix platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify the posix platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C++ SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -303,12 +303,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -320,7 +320,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
 </p>
 
 <h2>Error during compilation</h2>
@@ -367,8 +367,8 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <b>Configuration extension</b> based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to update the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> configuration by receiving the data from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <p>
@@ -394,7 +394,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <ol>
 	<li>
 		Prepare your Objective-C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -487,13 +487,13 @@ Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</
             <![CDATA[
 <p>	
 	This application bundle demonstrates the features of the Kaa <b>Configuration extension</b>.
-	This extension allows you to configure the sampling period of your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> sensor.
-	To do this, you need to configure settings in the Kaa <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Sandbox</a>.
-	The settings will take effect after the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> of your endpoint device receives them from the Kaa Sandbox.
+	This extension allows you to configure the sampling period of your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> sensor.
+	To do this, you need to configure settings in the Kaa <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Sandbox</a>.
+	The settings will take effect after the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> of your endpoint device receives them from the Kaa Sandbox.
 </p>	
 <p>		
 	Configuration settings are vital to any device. Your endpoint device is preprogrammed with a default configuration.
-	Using this Configuration extension, you can register on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> and get a configuration update.
+	Using this Configuration extension, you can register on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> and get a configuration update.
 	You can manage configuration settings in the Kaa client of your endpoint device by making the necessary changes in the Sandbox.
 	When both the endpoint and Sandbox are online, you can change your configuration settings on the fly.
 	When either Sandbox or the endpoint is offline, the Kaa client stores the last known settings locally.
@@ -501,7 +501,7 @@ Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</
 </p>
 <p>
 	Using Kaa Sandbox, you can flexibly manage a number of endpoint devices. You can store multiple endpoint groups and manage their settings separately.
-	You can select a <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-group" target="_blank">group of endpoint devices</a> using filter parameters.
+	You can select a <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group" target="_blank">group of endpoint devices</a> using filter parameters.
 </p>
 
 <h1>Playing around</h1>
@@ -527,7 +527,7 @@ Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</
 
 <p>
 	In the example above, there is a default value specified for the sampling period.
-	This default configuration value is used by the Kaa client and <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-sdk" target="_blank">SDK of the endpoint device</a>.
+	This default configuration value is used by the Kaa client and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-sdk" target="_blank">SDK of the endpoint device</a>.
 	This means no connection to the server is required for your initial configuration.
 </p>
 <p>
@@ -550,8 +550,8 @@ Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</
 
 <p>
 	The messages above inform the user that Kaa client first applied the default value received from the SDK and the then updated it with the new value received from the server.
-	When Kaa client starts, it connects to the server and receives new configuration from the default, non-editable <a href="http://kaaproject.github.io/kaa/docs/Glossary/#group-all" target="_blank">group <i>all</i></a>.
-	For demonstration purpose, this group includes an <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-profile-client-side-server-side" target="_blank">endpoint profile</a> with <i>samplingPeriod</i> set to 10.
+	When Kaa client starts, it connects to the server and receives new configuration from the default, non-editable <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#group-all" target="_blank">group <i>all</i></a>.
+	For demonstration purpose, this group includes an <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-profile-client-side-server-side" target="_blank">endpoint profile</a> with <i>samplingPeriod</i> set to 10.
 </p>
 
 <pre>
@@ -641,7 +641,7 @@ To change the sampling period:
 <p>
 	You can add new endpoint groups and profiles. This allows you to manage your endpoint devices more effectively.
 	For example, some of your sensors require checking their readings every second, and some other - every 300 seconds.
-	To manage them separately, you can create two groups of sensors and set up an individual <a href="http://kaaproject.github.io/kaa/docs/Glossary/#profile-filter" target="_blank">profile filter</a> for each group.
+	To manage them separately, you can create two groups of sensors and set up an individual <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#profile-filter" target="_blank">profile filter</a> for each group.
 	To do this, you need to create a configuration schema and then create a group to be managed in accordance with that schema.
 	For this purpose, you can create a new configuration schema that looks like this.
 </p>
@@ -681,7 +681,7 @@ To change the sampling period:
 	<li>
 		Enter a name and description (optional) for your new schema.
 		You can create a new type of server-side profile schema or use an existing one.
-		For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Common-Type-Library/" target="_blank">Common Type Library (CTL)</a>.
+		For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Common-Type-Library/" target="_blank">Common Type Library (CTL)</a>.
 		Click <b>Create new type</b>.
 		
 		<br />
@@ -712,7 +712,7 @@ To create a new endpoint group:
 	</li>
 	<li>
 		Enter a name, weight, and description (optional) for your new endpoint group, and click <b>Add</b>.
-		For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups" target="_blank">Endpoint groups</a>.
+		For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups" target="_blank">Endpoint groups</a>.
 		
 		<br />
 		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_9.png" />
@@ -794,7 +794,7 @@ To add a group configuration:
 	</li>
 </ol>
 
-To see the list of all endpoints registered in your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-application" target="_blank">application</a>, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint profiles</b>.
+To see the list of all endpoints registered in your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">application</a>, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint profiles</b>.
 
 <br />
 <img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_13.png" />
@@ -834,22 +834,22 @@ For more information, see:
 
 <ul>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-profiles/" target="_blank">Endpoint profiles</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/" target="_blank">Endpoint profiles</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration management</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration management</a>.
 	</li>
 </ul>
             ]]>

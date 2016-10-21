@@ -27,8 +27,8 @@
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
-	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
 To implement this feature for Java SDK, the following API methods are used in this sample application:
@@ -52,13 +52,13 @@ To implement this feature for Java SDK, the following API methods are used in th
 
 <blockquote>NOTE: <code>family_name</code> means real event family name, for example <code>ChatEventFamily</code>.</blockquote>
 
-For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa Java SDK</a>.
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa Java SDK</a>.
 
 <h1>Launching</h1>
 
 <p>
 	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
-	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
 </p>
 
 <p>
@@ -117,7 +117,7 @@ To install the sample application using the source code:
 	</li>
 </ol>
 
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
         
@@ -146,8 +146,8 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
-	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
 <h1>Launching</h1>
@@ -157,7 +157,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -172,7 +172,7 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -183,9 +183,9 @@ Once you built the application, you can start it at any time using the following
 	./build.sh run
 </pre>
 
-When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.
+When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.
 
-If the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#assisted-attachment" target="_blank">assisted attachment</a> was successful, Kaa client will display the message previously sent from the mobile application.
+If the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/#assisted-attachment" target="_blank">assisted attachment</a> was successful, Kaa client will display the message previously sent from the mobile application.
 
 <h1>Troubleshooting</h1>
 
@@ -203,12 +203,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -220,7 +220,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -250,8 +250,8 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
-	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
 <h1>Launching</h1>
@@ -261,7 +261,7 @@ To launch this sample application on the Kaa C++ SDK:
 <ol>
 	<li>
 		Prepare your C++ SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -292,7 +292,7 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C++ SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -336,12 +336,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -353,7 +353,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -383,20 +383,20 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
-	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
 <p>
 	The application first initializes the <code>ChatClientManager</code> class in the AppDelegate.h file.
 	<br />
-	Then <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa client</a> starts and attaches a new user.
+	Then <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa client</a> starts and attaches a new user.
 </p>
 
 <p>
 	The <code>ChatClientManager</code> class handles the Kaa events.
 	<br />
-	When <code>ChatClientManager</code> receives an event from <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>, it displays a notification about the changes.
+	When <code>ChatClientManager</code> receives an event from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>, it displays a notification about the changes.
 </p>
 
 <h1>Launching</h1>
@@ -410,7 +410,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <ol>
 	<li>
 		Prepare your Objective-C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -473,15 +473,15 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
         <details>
             <![CDATA[
 <p>
-    This application bundle demonstrates the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events" target="_blank">Event extension</a> that enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> to exchange messages with one another through <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+    This application bundle demonstrates the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events" target="_blank">Event extension</a> that enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> to exchange messages with one another through <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <h1>Playing around</h1>
 
 <p>
-    The event data structure is defined by the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-class-and-event-class-schema" target="_blank">Event Class (EC) schema</a>.
-    Event classes are grouped into <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-class-families" target="_blank">Event Class Family (ECF)</a>.
-    After you add an <b>ECF</b> in the application, you need to set up the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#event-family-mapping" target="_blank">ECF mapping</a>.
+    The event data structure is defined by the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-class-and-event-class-schema" target="_blank">Event Class (EC) schema</a>.
+    Event classes are grouped into <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-class-families" target="_blank">Event Class Family (ECF)</a>.
+    After you add an <b>ECF</b> in the application, you need to set up the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-family-mapping" target="_blank">ECF mapping</a>.
 </p>
 
 <p>
@@ -504,7 +504,7 @@ To view information about the ECFs:
 
 <ol>
    	<li>
-   		Log in to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">Administration UI</a> as a tenant administrator using the default <b>admin</b> username and <b>admin123</b> password.
+   		Log in to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> as a tenant administrator using the default <b>admin</b> username and <b>admin123</b> password.
    	</li>
    	<li>
    		Open the <b>Event class families</b> page.
@@ -608,7 +608,7 @@ To view information about the ECFs:
 </p>
 
 <p>
-	For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/#manage-events-using-administration-ui" target="_blank">Manage events using Administration UI</a>.
+	For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#manage-events-using-administration-ui" target="_blank">Manage events using Administration UI</a>.
 </p>
 
 <h2>Set up ECF mapping</h2>
@@ -617,7 +617,7 @@ To set up an ECF mapping:
 
 <ol>
    	<li>
-   		Log in to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">Administration UI</a> as a tenant developer using the default <b>devuser</b> username and <b>devuser123</b> password.
+   		Log in to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> as a tenant developer using the default <b>devuser</b> username and <b>devuser123</b> password.
    	</li>
    	<li>
    		Click <b>Applications</b> > <b>Event demo</b> > <b>Event family mappings</b>.
@@ -651,8 +651,8 @@ To set up an ECF mapping:
 
 <p>
 	Endpoints can exchange messages between one another, if they belong to the same user.
-	<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#owner-verifiers" target="_blank">User verifiers</a> are used in Kaa to check user credentials.
-	You can use a number of user verifiers, but for the purpose of this sample application a <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-ownership/#trustful-owner-verifier" target="_blank">trustful user verifier</a> will be used.
+	<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/#owner-verifiers" target="_blank">User verifiers</a> are used in Kaa to check user credentials.
+	You can use a number of user verifiers, but for the purpose of this sample application a <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/#trustful-owner-verifier" target="_blank">trustful user verifier</a> will be used.
 	This verifier will accept any user credentials.
 </p>
 

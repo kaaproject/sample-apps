@@ -27,17 +27,17 @@
         <details>
             <![CDATA[
 <p>
-	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
 </p>
 
 The sample application uses the following methods to manage credentials:
 
 <ul>
 	<li>
-		<code>getEndpointKeyHash</code> method is used to retrieve the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> data used for connection to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+		<code>getEndpointKeyHash</code> method is used to retrieve the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> data used for connection to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 	</li>
 	<li>
-		<code>DefaultFailoverStrategy</code> class manages the application behavior when an error occurs outside the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">Kaa client</a>.
+		<code>DefaultFailoverStrategy</code> class manages the application behavior when an error occurs outside the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">Kaa client</a>.
 		For example, when no Bootstrap service or Operations service is found, no Internet connection, error while validating the endpoint credentials, etc.
 	</li>
 </ul>
@@ -46,7 +46,7 @@ The sample application uses the following methods to manage credentials:
 
 <p>
 	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
-	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
 </p>
 
 <p>
@@ -106,7 +106,7 @@ To install the Credentials management sample application using the source code:
 	</li>
 </ol>
 	
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 			]]>
         </details>
         
@@ -137,16 +137,16 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Kaa Java SDK</a>.
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Kaa Java SDK</a>.
 </p>
 
 The sample application uses the following methods of <b>org.kaaproject.kaa.server.common.admin.AdminClient</b> and other classes to manage credentials:
 
 <ul>
 	<li>
-		<code><b>java.security.KeyPairGenerator.genKeyPair()</b></code> method to generate new key pair for the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a>.
+		<code><b>java.security.KeyPairGenerator.genKeyPair()</b></code> method to generate new key pair for the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a>.
 	</li>
-	 data used for connection to the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>
+	 data used for connection to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>
 	<li>
 		<code><b>AdminClient.provisionCredentials()</b></code> method to provision endpoint credentials by application token and public key.
 	</li>
@@ -162,7 +162,7 @@ The sample application uses the following methods of <b>org.kaaproject.kaa.serve
 
 <p>
 	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
-	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
 </p>
 
 <p>
@@ -222,7 +222,7 @@ To install the Credentials management sample application using the source code:
 	</li>
 </ol>
 
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 			]]>
         </details>
 
@@ -253,8 +253,8 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
-	This feature is used to connect to <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> and authorize the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> upon <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> startup.
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	This feature is used to connect to <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> and authorize the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> upon <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> startup.
 </p>
 
 <p>
@@ -269,7 +269,7 @@ To launch this sample application on the Kaa C++ SDK:
 <ol>
 	<li>
 		Prepare your C++ SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -294,7 +294,7 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C++ SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -330,12 +330,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -347,7 +347,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -379,8 +379,8 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
-	This feature is used to connect to <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> and authorize the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> upon <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> startup.
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This feature is used to connect to <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> and authorize the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> upon <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> startup.
 </p>
 
 <p>
@@ -395,7 +395,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -410,7 +410,7 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify the POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
 		The C SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -437,12 +437,12 @@ Try the following:
 
 <ul>
 	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
 	</li>
 </ul>
 
@@ -454,7 +454,7 @@ Try the following:
 
 <p>
 	This means that CMake could not find the required libraries because they were not installed correctly.
-	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
 </p>
             ]]>
         </details>
@@ -484,8 +484,8 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
-	This feature is used to connect to <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> and authorize the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a> upon <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> startup.
+	This sample application uses the server-side <b>Credentials management</b> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This feature is used to connect to <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> and authorize the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> upon <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> startup.
 </p>
 
 <p>
@@ -516,7 +516,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <ol>
 	<li>
 		Prepare your Objective-C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -612,19 +612,19 @@ Make sure that the build target is set to <b>CredentialsDemo</b>, not <b>Kaa</b>
         <details>
             <![CDATA[
 <p>
-	This application bundle uses the <b>Credentials management</b> extension for full-cycle management of credentials in the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-platform" target="_blank">Kaa platform</a>.
+	This application bundle uses the <b>Credentials management</b> extension for full-cycle management of credentials in the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-platform" target="_blank">Kaa platform</a>.
 	Consider a device that is preprogrammed by the manufacturer to use cloud services and comes with all the required credentials included.
 	The device does not need any additional registration and is usable right out of the box.
 	Should the device be lost or stolen, the user can revoke the credentials to prevent inappropriate use of the device.
 </p>
 
-For more information, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Devices-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Devices-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
 
 <h1>Playing around</h1>
 
 <p>
-	In this sample application, your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-client" target="_blank">Kaa client</a> uses the internal <b>Credentials service</b> that accepts only previously registered (provisioned) credentials - the public key of the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoint</a>.
-	<a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a> manages the endpoint credentials (generates, provisions and revokes them) and checks the credentials status (AVAILABLE, IN_USE, or REVOKED).
+	In this sample application, your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> uses the internal <b>Credentials service</b> that accepts only previously registered (provisioned) credentials - the public key of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a>.
+	<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> manages the endpoint credentials (generates, provisions and revokes them) and checks the credentials status (AVAILABLE, IN_USE, or REVOKED).
 	The client-side application creates the endpoint <b>key hash</b> (also called <b>endpoint ID</b>) to register one Kaa endpoint; displays the endpoint status (registered/unregistered).
 </p>
 <p>
@@ -756,7 +756,7 @@ To provision your new credentials:
 		</pre>
 		
 		Your endpoint is now successfully registered and connected to the server.
-		You can find your current endpoint and the endpoint ID in the  <a href="http://kaaproject.github.io/kaa/docs/Glossary/#administration-ui" target="_blank">Administration UI</a>.
+		You can find your current endpoint and the endpoint ID in the  <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>.
 		Type any character and press Enter to shut down the application.
 	</li>
 </ol>
@@ -875,22 +875,22 @@ For more information, see:
 
 <ul>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Getting-started/" target="_blank">Getting started</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-profiles/" target="_blank">Endpoint profiles</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/" target="_blank">Endpoint profiles</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration management</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration management</a>.
 	</li>
 </ul>
             ]]>

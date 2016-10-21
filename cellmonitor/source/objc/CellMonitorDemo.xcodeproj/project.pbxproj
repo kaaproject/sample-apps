@@ -14,6 +14,7 @@
 		39B345BD1C11986D00184BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B345B41C11986D00184BE0 /* Main.storyboard */; };
 		39B345BF1C11986D00184BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B345B71C11986D00184BE0 /* main.m */; };
 		39B345C01C11986D00184BE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B345B91C11986D00184BE0 /* ViewController.m */; };
+		EBB564EB97DED2F18E7985AC /* Pods_CellMonitorDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3F29612773B16D61CA7EA7 /* Pods_CellMonitorDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,7 +40,11 @@
 		39B345B71C11986D00184BE0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		39B345B81C11986D00184BE0 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		39B345B91C11986D00184BE0 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		53373EC8E64B2266C6012620 /* Pods-CellMonitorDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CellMonitorDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CellMonitorDemo/Pods-CellMonitorDemo.release.xcconfig"; sourceTree = "<group>"; };
+		7D61CE9F6470AE8F3FEE28A2 /* Pods-CellMonitorDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CellMonitorDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CellMonitorDemo/Pods-CellMonitorDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B8B997501BE3FB9600C0ABCE /* CellMonitorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CellMonitorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC3F29612773B16D61CA7EA7 /* Pods_CellMonitorDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CellMonitorDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8466D701DBA11E5000BC032 /* CellMonitorDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CellMonitorDemo.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,15 +53,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				39796BF91C157D4E00BF91B2 /* CoreTelephony.framework in Frameworks */,
+				EBB564EB97DED2F18E7985AC /* Pods_CellMonitorDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32BECDE8026400DDA7A7DE6F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7D61CE9F6470AE8F3FEE28A2 /* Pods-CellMonitorDemo.debug.xcconfig */,
+				53373EC8E64B2266C6012620 /* Pods-CellMonitorDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		39B345AE1C11986D00184BE0 /* CellMonitorDemo */ = {
 			isa = PBXGroup;
 			children = (
+				E8466D701DBA11E5000BC032 /* CellMonitorDemo.entitlements */,
 				39B345AF1C11986D00184BE0 /* AppDelegate.h */,
 				39B345B01C11986D00184BE0 /* AppDelegate.m */,
 				39B345B81C11986D00184BE0 /* ViewController.h */,
@@ -70,12 +86,22 @@
 			path = CellMonitorDemo;
 			sourceTree = "<group>";
 		};
+		4BF4024A735CF7B81BCE607D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BC3F29612773B16D61CA7EA7 /* Pods_CellMonitorDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B8B997471BE3FB9600C0ABCE = {
 			isa = PBXGroup;
 			children = (
 				39796BF81C157D4E00BF91B2 /* CoreTelephony.framework */,
 				39B345AE1C11986D00184BE0 /* CellMonitorDemo */,
 				B8B997511BE3FB9600C0ABCE /* Products */,
+				32BECDE8026400DDA7A7DE6F /* Pods */,
+				4BF4024A735CF7B81BCE607D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,10 +120,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8B997671BE3FB9600C0ABCE /* Build configuration list for PBXNativeTarget "CellMonitorDemo" */;
 			buildPhases = (
+				05B6FBBCF08D32554E1184AD /* [CP] Check Pods Manifest.lock */,
 				B8B9974C1BE3FB9600C0ABCE /* Sources */,
 				B8B9974D1BE3FB9600C0ABCE /* Frameworks */,
 				B8B9974E1BE3FB9600C0ABCE /* Resources */,
 				C51867E91CBE86BA005165FE /* CopyFiles */,
+				FB7D545E9952A45DCB467E62 /* [CP] Embed Pods Frameworks */,
+				3B8D6AC8592AF792F917D030 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -119,6 +148,12 @@
 				TargetAttributes = {
 					B8B9974F1BE3FB9600C0ABCE = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = TVMFX8XPT9;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -152,6 +187,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		05B6FBBCF08D32554E1184AD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3B8D6AC8592AF792F917D030 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CellMonitorDemo/Pods-CellMonitorDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB7D545E9952A45DCB467E62 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CellMonitorDemo/Pods-CellMonitorDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B8B9974C1BE3FB9600C0ABCE /* Sources */ = {
@@ -270,13 +353,16 @@
 		};
 		B8B997681BE3FB9600C0ABCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D61CE9F6470AE8F3FEE28A2 /* Pods-CellMonitorDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CellMonitorDemo/CellMonitorDemo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = TVMFX8XPT9;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CellMonitorDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.CellMonitorDemo;
 				PRODUCT_NAME = CellMonitorDemo;
 			};
@@ -284,13 +370,16 @@
 		};
 		B8B997691BE3FB9600C0ABCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53373EC8E64B2266C6012620 /* Pods-CellMonitorDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CellMonitorDemo/CellMonitorDemo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = TVMFX8XPT9;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CellMonitorDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.CellMonitorDemo;
 				PRODUCT_NAME = CellMonitorDemo;
 			};

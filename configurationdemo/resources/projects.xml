@@ -110,7 +110,7 @@ To install the Configuration sample application using the source code:
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
 		<pre>
-			$ java -jar build/jar/Configuration.jar
+			$ java -jar build/jar/ConfigurationDemo.jar
 		</pre>
 	</li>
 </ol>

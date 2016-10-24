@@ -129,6 +129,15 @@
                 <configuration>
                     <excludes>
                         <!--XCode-->
+                        <exclude>source/objc/*.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcworkspace/contents.xcworkspacedata</exclude>
+                        <exclude>source/objc/*.xcodeproj/project.pbxproj</exclude>
+                        <exclude>source/objc/*/Info.plist</exclude>
+                        <exclude>source/objc/*/Base.lproj/Main.storyboard</exclude>
+                        <exclude>source/objc/*/Base.lproj/LaunchScreen.storyboard</exclude>
+                        <exclude>source/objc/*/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
+                        <exclude>source/objc/Podfile.lock</exclude>
+                        <exclude>source/objc/Podfile</exclude>
                         <exclude>source/objc/*/*.entitlements</exclude>
                     </excludes>
                 </configuration>

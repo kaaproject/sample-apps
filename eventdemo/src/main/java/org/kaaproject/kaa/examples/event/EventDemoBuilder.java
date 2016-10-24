@@ -43,6 +43,14 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(EventDemoBuilder.class);
 
+    private static final String EVENT_DEMO_JAVA_ID = "event_demo_java";
+    private static final String EVENT_DEMO_CPP_ID = "event_demo_cpp";
+    private static final String EVENT_DEMO_C_ID = "event_demo_c";
+    private static final String EVENT_DEMO_ANDROID_ID = "event_demo_android";
+    private static final String EVENT_DEMO_OBJC_ID = "event_demo_objc";
+
+    private Map<String, SdkProfileDto> projectsSdkMap = new HashMap<>();
+
     public EventDemoBuilder() {
         super("demo/event");
     }
@@ -72,6 +80,12 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setNotificationSchemaVersion(1);
         sdkProfileDto.setLogSchemaVersion(1);
 
+        projectsSdkMap.put(EVENT_DEMO_JAVA_ID, sdkProfileDto);
+        projectsSdkMap.put(EVENT_DEMO_CPP_ID, sdkProfileDto);
+        projectsSdkMap.put(EVENT_DEMO_C_ID, sdkProfileDto);
+        projectsSdkMap.put(EVENT_DEMO_OBJC_ID, sdkProfileDto);
+        projectsSdkMap.put(EVENT_DEMO_ANDROID_ID, sdkProfileDto);
+
         loginTenantDeveloper(client);
 
         ApplicationEventFamilyMapDto thermoAefMap = mapEventClassFamily(client, eventApplication, thermoEventClassFamily);
@@ -96,4 +110,13 @@ public class EventDemoBuilder extends AbstractDemoBuilder {
         logger.info("Finished loading 'Event Demo Application' data.");
     }
 
+    @Override
+    protected boolean isMultiApplicationProject() {
+        return true;
+    }
+
+    @Override
+    protected Map<String, SdkProfileDto> getProjectsSdkMap() {
+        return projectsSdkMap;
+    }
 }

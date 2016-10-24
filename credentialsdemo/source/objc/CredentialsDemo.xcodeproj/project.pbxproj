@@ -8,81 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		39BCA0C51D9027850044D968 /* CredentialsDemoFailoverStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BCA0C41D9027850044D968 /* CredentialsDemoFailoverStrategy.m */; };
-		C55252A61CC1381600C19145 /* Kaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C552529A1CC137E300C19145 /* Kaa.framework */; };
-		C55252A81CC1381F00C19145 /* Kaa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C552529A1CC137E300C19145 /* Kaa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E8290B251C0888DA00AA184A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290B1B1C0888DA00AA184A /* AppDelegate.m */; };
 		E8290B261C0888DA00AA184A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8290B1C1C0888DA00AA184A /* Assets.xcassets */; };
 		E8290B271C0888DA00AA184A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8290B1D1C0888DA00AA184A /* LaunchScreen.storyboard */; };
 		E8290B281C0888DA00AA184A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8290B1F1C0888DA00AA184A /* Main.storyboard */; };
 		E8290B2A1C0888DA00AA184A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290B221C0888DA00AA184A /* main.m */; };
 		E8290B2B1C0888DA00AA184A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8290B241C0888DA00AA184A /* ViewController.m */; };
+		F907D9FB6E63F2A216C044B1 /* Pods_CredentialsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC570E5B986CD59C8DBCFA9 /* Pods_CredentialsDemo.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B87824751C188B3400F12E02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B878246E1C188B3400F12E02 /* Kaa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B824A1F61B1452C50076C753;
-			remoteInfo = KaaTests;
-		};
-		B87824801C188B3800F12E02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5AFA7EB943BE65DACD46FD12799A24EE;
-			remoteInfo = AFNetworking;
-		};
-		B87824821C188B3800F12E02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5E76F92E686AF60EE76FB132C2F33FC8;
-			remoteInfo = CocoaLumberjack;
-		};
-		B87824841C188B3800F12E02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 83246490F3046E685E5BD9C12F52BCCB;
-			remoteInfo = OCHamcrest;
-		};
-		B87824861C188B3800F12E02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8727D40CE559D9A61946D066F7340A98;
-			remoteInfo = OCMockito;
-		};
-		B87824881C188B3800F12E02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2F9F2BD61CE8A92314B98E03BBAE1DDD;
-			remoteInfo = "Pods-KaaTests";
-		};
-		C55252991CC137E300C19145 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B878246E1C188B3400F12E02 /* Kaa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5AAD8891CB7DC710046AA91;
-			remoteInfo = Kaa;
-		};
-		C55252A21CC137E300C19145 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0B2AEF7928285B60CFB19219147BC376;
-			remoteInfo = "Pods-Kaa";
-		};
-		C55252A41CC137E300C19145 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A055D00B899A2917E39015C988A19A2C;
-			remoteInfo = sqlite3;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		C55252A71CC1381800C19145 /* CopyFiles */ = {
@@ -91,18 +24,19 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C55252A81CC1381F00C19145 /* Kaa.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		238A4F9EC07783EBA0BDA686 /* Pods-CredentialsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CredentialsDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CredentialsDemo/Pods-CredentialsDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		397017431DBE27B9002575A3 /* CredentialsDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CredentialsDemo.entitlements; sourceTree = "<group>"; };
 		39BCA0C31D9027850044D968 /* CredentialsDemoFailoverStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CredentialsDemoFailoverStrategy.h; sourceTree = "<group>"; };
 		39BCA0C41D9027850044D968 /* CredentialsDemoFailoverStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CredentialsDemoFailoverStrategy.m; sourceTree = "<group>"; };
-		B878246E1C188B3400F12E02 /* Kaa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kaa.xcodeproj; path = "libs/kaa-ep-sdk/Kaa.xcodeproj"; sourceTree = "<group>"; };
-		B87824771C188B3800F12E02 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "libs/kaa-ep-sdk/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
+		471E34B2AE678530E7CDAD21 /* Pods-CredentialsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CredentialsDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CredentialsDemo/Pods-CredentialsDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B8B997501BE3FB9600C0ABCE /* CredentialsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CredentialsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAC570E5B986CD59C8DBCFA9 /* Pods_CredentialsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CredentialsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8290B1A1C0888DA00AA184A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E8290B1B1C0888DA00AA184A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E8290B1C1C0888DA00AA184A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,43 +53,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C55252A61CC1381600C19145 /* Kaa.framework in Frameworks */,
+				F907D9FB6E63F2A216C044B1 /* Pods_CredentialsDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B878246F1C188B3400F12E02 /* Products */ = {
+		9122AA62D66E18F4AAA234A7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C552529A1CC137E300C19145 /* Kaa.framework */,
-				B87824761C188B3400F12E02 /* KaaTests.xctest */,
+				238A4F9EC07783EBA0BDA686 /* Pods-CredentialsDemo.debug.xcconfig */,
+				471E34B2AE678530E7CDAD21 /* Pods-CredentialsDemo.release.xcconfig */,
 			);
-			name = Products;
+			name = Pods;
 			sourceTree = "<group>";
 		};
-		B87824781C188B3800F12E02 /* Products */ = {
+		B22CBF90983132D1D09DA049 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B87824811C188B3800F12E02 /* libAFNetworking.a */,
-				B87824831C188B3800F12E02 /* libCocoaLumberjack.a */,
-				B87824851C188B3800F12E02 /* libOCHamcrest.a */,
-				B87824871C188B3800F12E02 /* libOCMockito.a */,
-				C55252A31CC137E300C19145 /* libPods-Kaa.a */,
-				B87824891C188B3800F12E02 /* libPods-KaaTests.a */,
-				C55252A51CC137E300C19145 /* libsqlite3.a */,
+				DAC570E5B986CD59C8DBCFA9 /* Pods_CredentialsDemo.framework */,
 			);
-			name = Products;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B8B997471BE3FB9600C0ABCE = {
 			isa = PBXGroup;
 			children = (
-				B878246E1C188B3400F12E02 /* Kaa.xcodeproj */,
-				B87824771C188B3800F12E02 /* Pods.xcodeproj */,
 				E8290B191C0888DA00AA184A /* CredentialsDemo */,
 				B8B997511BE3FB9600C0ABCE /* Products */,
+				9122AA62D66E18F4AAA234A7 /* Pods */,
+				B22CBF90983132D1D09DA049 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -170,6 +98,7 @@
 		E8290B191C0888DA00AA184A /* CredentialsDemo */ = {
 			isa = PBXGroup;
 			children = (
+				397017431DBE27B9002575A3 /* CredentialsDemo.entitlements */,
 				E8290B1A1C0888DA00AA184A /* AppDelegate.h */,
 				E8290B1B1C0888DA00AA184A /* AppDelegate.m */,
 				E8290B231C0888DA00AA184A /* ViewController.h */,
@@ -192,10 +121,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8B997671BE3FB9600C0ABCE /* Build configuration list for PBXNativeTarget "CredentialsDemo" */;
 			buildPhases = (
+				B843704603ED5ED83AC6EE88 /* [CP] Check Pods Manifest.lock */,
 				B8B9974C1BE3FB9600C0ABCE /* Sources */,
 				B8B9974D1BE3FB9600C0ABCE /* Frameworks */,
 				B8B9974E1BE3FB9600C0ABCE /* Resources */,
 				C55252A71CC1381800C19145 /* CopyFiles */,
+				4836F0BE5534A3678D3DDDA7 /* [CP] Embed Pods Frameworks */,
+				5B86435307796E492A69E1F2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,6 +150,11 @@
 					B8B9974F1BE3FB9600C0ABCE = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = TVMFX8XPT9;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -232,88 +169,12 @@
 			mainGroup = B8B997471BE3FB9600C0ABCE;
 			productRefGroup = B8B997511BE3FB9600C0ABCE /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B878246F1C188B3400F12E02 /* Products */;
-					ProjectRef = B878246E1C188B3400F12E02 /* Kaa.xcodeproj */;
-				},
-				{
-					ProductGroup = B87824781C188B3800F12E02 /* Products */;
-					ProjectRef = B87824771C188B3800F12E02 /* Pods.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B8B9974F1BE3FB9600C0ABCE /* CredentialsDemo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		B87824761C188B3400F12E02 /* KaaTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = KaaTests.xctest;
-			remoteRef = B87824751C188B3400F12E02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B87824811C188B3800F12E02 /* libAFNetworking.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAFNetworking.a;
-			remoteRef = B87824801C188B3800F12E02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B87824831C188B3800F12E02 /* libCocoaLumberjack.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaLumberjack.a;
-			remoteRef = B87824821C188B3800F12E02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B87824851C188B3800F12E02 /* libOCHamcrest.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libOCHamcrest.a;
-			remoteRef = B87824841C188B3800F12E02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B87824871C188B3800F12E02 /* libOCMockito.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libOCMockito.a;
-			remoteRef = B87824861C188B3800F12E02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B87824891C188B3800F12E02 /* libPods-KaaTests.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-KaaTests.a";
-			remoteRef = B87824881C188B3800F12E02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C552529A1CC137E300C19145 /* Kaa.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Kaa.framework;
-			remoteRef = C55252991CC137E300C19145 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C55252A31CC137E300C19145 /* libPods-Kaa.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-Kaa.a";
-			remoteRef = C55252A21CC137E300C19145 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C55252A51CC137E300C19145 /* libsqlite3.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libsqlite3.a;
-			remoteRef = C55252A41CC137E300C19145 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B8B9974E1BE3FB9600C0ABCE /* Resources */ = {
@@ -327,6 +188,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4836F0BE5534A3678D3DDDA7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CredentialsDemo/Pods-CredentialsDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B86435307796E492A69E1F2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CredentialsDemo/Pods-CredentialsDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B843704603ED5ED83AC6EE88 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B8B9974C1BE3FB9600C0ABCE /* Sources */ = {
@@ -450,14 +359,16 @@
 		};
 		B8B997681BE3FB9600C0ABCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 238A4F9EC07783EBA0BDA686 /* Pods-CredentialsDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CredentialsDemo/CredentialsDemo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = TVMFX8XPT9;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CredentialsDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.CredentialsDemo;
 				PRODUCT_NAME = CredentialsDemo;
 			};
@@ -465,14 +376,16 @@
 		};
 		B8B997691BE3FB9600C0ABCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 471E34B2AE678530E7CDAD21 /* Pods-CredentialsDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CredentialsDemo/CredentialsDemo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = TVMFX8XPT9;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/CredentialsDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaaproject.CredentialsDemo;
 				PRODUCT_NAME = CredentialsDemo;
 			};

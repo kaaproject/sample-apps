@@ -17,11 +17,9 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(%APP_NAME %APP_LANG)
 
-# Disable unused features
 %KAA_FEATURES
 %DEFINITIONS
 %VARIABLES
-
 if (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(libs/kaa)
 else (NOT DEFINED KAA_SDK_PATH)

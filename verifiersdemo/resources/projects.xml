@@ -70,7 +70,7 @@ For more background on the user verification refer to the corresponding design r
         <details>
             <![CDATA[
 <p>
-	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Java SDK</a>.
 	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
@@ -175,7 +175,7 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Objective-C SDK</a>.
 	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
@@ -315,7 +315,7 @@ Make sure that the build target is set to <b>EndpointOwnershipDemo</b>, not <b>K
         <details>
             <![CDATA[
 <p>
-	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C SDK</a>.
 	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
@@ -378,7 +378,7 @@ Try the following:
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
 	</li>
 </ul>
 
@@ -411,7 +411,7 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C++ SDK</a>.
 	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
@@ -474,7 +474,7 @@ Try the following:
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
 	</li>
 </ul>
 

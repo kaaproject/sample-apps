@@ -27,7 +27,7 @@
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Java SDK</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Java SDK</a>.
 	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
@@ -146,7 +146,7 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C SDK</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C SDK</a>.
 	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
@@ -208,7 +208,7 @@ Try the following:
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
 	</li>
 </ul>
 
@@ -250,7 +250,7 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa C++ SDK</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C++ SDK</a>.
 	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
@@ -341,7 +341,7 @@ Try the following:
 	</li>
 	<li>
 		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generating-sdk" target="_blank">Generating SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
 	</li>
 </ul>
 
@@ -383,7 +383,7 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Objective-C SDK</a>.
 	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
@@ -479,7 +479,7 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
 <h1>Playing around</h1>
 
 <p>
-    The event data structure is defined by the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-class-and-event-class-schema" target="_blank">Event Class (EC) schema</a>.
+    The event data structure is defined by the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-class" target="_blank">Event Class (EC) schema</a>.
     Event classes are grouped into <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-class-families" target="_blank">Event Class Family (ECF)</a>.
     After you add an <b>ECF</b> in the application, you need to set up the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-family-mapping" target="_blank">ECF mapping</a>.
 </p>

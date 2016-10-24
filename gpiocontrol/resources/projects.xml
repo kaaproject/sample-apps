@@ -27,8 +27,8 @@
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events" target="_blank">Events extension</a> based on <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Android</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> to exchange messages with one another through <a href="http://kaaproject.github.io/kaa/docs/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events" target="_blank">Events extension</a> based on <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#sdk-type" target="_blank">Android</a>.
+	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> to exchange messages with one another through <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 </p>
 
 <h1>Launching</h1>
@@ -102,7 +102,7 @@ To install this sample application using the source code:
 	</li>
 </ol>
 	
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
         

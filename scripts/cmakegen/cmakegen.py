@@ -39,12 +39,13 @@ class FeaturesGenerator:
     def generate(self, language):
         if self._features is None:
             return str()
-        template_c = 'set(WITH_EXTENSION_%extension OFF)\n'
-        template_cpp = 'set(KAA_WITHOUT_%extension 1)\n'
+        template_c = '\nset(WITH_EXTENSION_%extension OFF)'
+        template_cpp = '\nset(KAA_WITHOUT_%extension 1)'
+        comment = '# Disable unused features' if len(self._features) < 4 else str()
         if language == 'c':
-            return self._generate_from_template(template_c)
+            return comment+self._generate_from_template(template_c)
         elif language == 'cpp':
-            return self._generate_from_template(template_cpp)
+            return comment+self._generate_from_template(template_cpp)
         else:
             raise GeneratorException('Unknown language: '+language)
 
@@ -64,15 +65,15 @@ class VariablesGenerator:
         self._variables.update(kwargs)
 
     def generate(self):
-        out = str()
+        out = '# Set configuration variables\n' if len(self._variables) > 0 else str()
         for k, v in self._variables.iteritems():
             out = out + CMakeGenTemplate(VARIABLE_TEMPLATE).safe_substitute(variable=k, value=v)
         return out
 
 class DefinitionsGenerator(VariablesGenerator):
     def generate(self):
-        out = str()
-        template = VARIABLE_TEMPLATE + 'add_definitions(-D%variable=${%variable})\n'
+        out = '# Set compile definitions\n' if len(self._variables) > 0 else str()
+        template = VARIABLE_TEMPLATE + 'add_definitions(-D%variable="${%variable}")'
         for k, v in self._variables.iteritems():
             out = out + CMakeGenTemplate(template).safe_substitute(variable=k, value=v)
         return out
@@ -108,9 +109,10 @@ class Generator:
 
         if self._build_embedded and language == 'c':
             target_decl_template = EMBEDDED_TEMPLATE
-            definitions_generator.add_variables(
+            variables_generator.add_variables(
                     WIFI_SSID = 'WiFi SSID',
-                    WIFI_PWD = 'Password')
+                    WIFI_PASSWORD = 'Password')
+            variables_generator.add_variables(KAA_PLATFORM = 'posix')
         else:
             target_decl_template = POSIX_TEMPLATE
 
@@ -125,8 +127,8 @@ class Generator:
 
         section_params = {
             'KAA_FEATURES': features_generator.generate(language),
-            'DEFINITIONS': definitions_generator.generate(),
             'VARIABLES': variables_generator.generate(),
+            'DEFINITIONS': definitions_generator.generate(),
             'DEFINE_EXECUTABLE': CMakeGenTemplate(target_decl_template).safe_substitute(base_params)
         }
 

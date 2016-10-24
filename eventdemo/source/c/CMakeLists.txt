@@ -22,11 +22,12 @@ set(WITH_EXTENSION_CONFIGURATION OFF)
 set(WITH_EXTENSION_NOTIFICATIONS OFF)
 set(WITH_EXTENSION_LOGGING OFF)
 
-
+# Set configuration variables
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
     set(KAA_MAX_LOG_LEVEL "3")
 endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
+find_package(Threads REQUIRED)
 
 if (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(libs/kaa)
@@ -35,6 +36,6 @@ else (NOT DEFINED KAA_SDK_PATH)
 endif (NOT DEFINED KAA_SDK_PATH)
 
 add_executable(demo_client src/kaa_demo.c)
-target_link_libraries(demo_client kaac)
+target_link_libraries(demo_client kaac ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS demo_client DESTINATION bin)

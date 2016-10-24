@@ -14,12 +14,12 @@
 #  limitations under the License.
 #
 
-# TODO APP-63: this file must be reviewed and moved to common targets dir
-
 # Before this module is added, SDK path must be provided
 if(NOT EXISTS "${CC32XX_SDK}")
     message(FATAL_ERROR "CC32XX SDK path: ${CC32XX_SDK} not exist!")
 endif()
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 
 # Target support library that provides abstractions for cc32xx target.
 add_library(target_support

@@ -21,16 +21,15 @@ project(VerifiersDemo C)
 set(WITH_EXTENSION_CONFIGURATION OFF)
 set(WITH_EXTENSION_NOTIFICATIONS OFF)
 set(WITH_EXTENSION_LOGGING OFF)
-
+# Set compile definitions
 if (NOT DEFINED DEMO_ACCESS_TOKEN)
     set(DEMO_ACCESS_TOKEN "access_token")
 endif (NOT DEFINED DEMO_ACCESS_TOKEN)
-add_definitions(-DDEMO_ACCESS_TOKEN=${DEMO_ACCESS_TOKEN})
-
+add_definitions(-DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
+# Set configuration variables
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
     set(KAA_MAX_LOG_LEVEL "3")
 endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
-
 
 if (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(libs/kaa)

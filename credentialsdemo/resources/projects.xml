@@ -601,9 +601,9 @@ Make sure that the build target is set to <b>CredentialsDemo</b>, not <b>Kaa</b>
         <features>CREDENTIALS</features>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
-        <sourceArchive></sourceArchive>
-        <projectFolder></projectFolder>
-        <sdkLibDir></sdkLibDir>
+        <sourceArchive>objc/credentials_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCredentials</projectFolder>
+        <sdkLibDir>ObjCredentials/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <bundle id="credentials_demos">

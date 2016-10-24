@@ -278,10 +278,11 @@ To launch this sample application on the Kaa Objective-C SDK:
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
 		<pre>
-			sh build.sh compile
+			sh build.sh
 		</pre>
 		
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
+        <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
 	</li>
 	<li>
 		Open the ProfilingDemo.xcodeproj file and click the <b>Play</b> button.

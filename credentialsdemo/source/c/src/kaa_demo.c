@@ -68,7 +68,6 @@ int main(/*int argc, char *argv[]*/)
             kaa_client_get_context(kaa_client)->channel_manager,
             auth_failure_handler, kaa_client);
 
-
     /**
      * Obtain and display the Endpoint key hash.
      */

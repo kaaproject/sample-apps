@@ -603,8 +603,8 @@ Make sure that the build target is set to <b>CredentialsDemo</b>, not <b>Kaa</b>
         <complexity>BASIC</complexity>
         <bundleId>credentials_demos</bundleId>
         <sourceArchive>objc/credentials_demo.tar.gz</sourceArchive>
-        <projectFolder>ObjCredentials</projectFolder>
-        <sdkLibDir>ObjCredentials/libs</sdkLibDir>
+        <projectFolder>ObjCCredentialsDemo</projectFolder>
+        <sdkLibDir>ObjCCredentialsDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <bundle id="credentials_demos">

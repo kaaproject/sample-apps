@@ -468,6 +468,39 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
         <sdkLibDir>ObjCEventDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+    <project id="event_demo_android">
+        <name>Event Android demo</name>
+        <description>Kaa Event subsystem demo app based on Java SDK for Android</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK for Android</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+</p>
+
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+            ]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+
+        <sdkLanguage>JAVA</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+
+        <platforms>ANDROID</platforms>
+        <features>EVENT</features>
+        <complexity>BASIC</complexity>
+        <bundleId>event_demos</bundleId>
+        <sourceArchive>android/event_demo.tar.gz</sourceArchive>
+        <projectFolder>event_demo/EventDemo</projectFolder>
+        <sdkLibDir>event_demo/EventDemo/app/libs</sdkLibDir>
+        <destBinaryFile>event_demo/EventDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
+    </project>
     <bundle id="event_demos">
         <name>Event demos</name>
         <description>Kaa Event subsystem demo applications bundle</description>

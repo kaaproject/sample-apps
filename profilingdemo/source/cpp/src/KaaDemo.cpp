@@ -31,7 +31,7 @@ using namespace kaa;
 class ProfileData
 {
 public:
-    ProfileData(bool audioSupport, bool videoSupport, 
+    ProfileData(bool audioSupport, bool videoSupport,
             bool vibroSupport)
     {
         profile_.audioSupport = audioSupport;
@@ -56,14 +56,23 @@ static const std::vector<ProfileData> clientProfiles = {
     ProfileData(true, true, true),
 };
 
-typedef std::shared_ptr<IKaaClient> IKaaClientPtr;
+using IKaaClientPtr = std::shared_ptr<IKaaClient>;
+
+static void printConfiguration(const KaaRootConfiguration &config)
+{
+    std::cout << std::boolalpha;
+    std::cout << "Audio Support: " << config.audioSubscriptionActive << std::endl;
+    std::cout << "Video Support: " << config.videoSubscriptionActive << std::endl;
+    std::cout << "Vibro Support: " << config.vibroSubscriptionActive << std::endl;
+    std::cout << std::noboolalpha;
+}
 
 class ConfigurationListener: public IConfigurationReceiver
 {
 public:
     ConfigurationListener(IKaaClientPtr kaaClient):
         kaaClient_(kaaClient)
-    { 
+    {
         if (!kaaClient_) {
             throw std::invalid_argument("KaaClient is null");
         }
@@ -73,10 +82,10 @@ public:
 
     virtual void onConfigurationUpdated(const KaaRootConfiguration &configuration)
     {
+        std::cout << "Configuration updated!" << std::endl;
         std::cout << "Endpoint Key Hash: " << kaaClient_->getEndpointKeyHash() << std::endl;
-        std::cout << "Audio Support: " << configuration.audioSubscriptionActive << std::endl;
-        std::cout << "Video Support: " << configuration.videoSubscriptionActive << std::endl;
-        std::cout << "Vibro Support: " << configuration.vibroSubscriptionActive << std::endl;
+        printConfiguration(configuration);
+        std::cout << std::endl;
     }
 
 private:
@@ -97,15 +106,15 @@ public:
         }
     }
 
-    void spawnKaaClient(const KaaProfile &profile)
+    bool spawnKaaClient(const KaaProfile &profile)
     {
         std::string clientDir = "client" + std::to_string(kaaClients_.size());
+
         boost::filesystem::path dir(clientDir);
 
-        if (!boost::filesystem::create_directory(dir)) {
+        if (!boost::filesystem::exists(dir) && !boost::filesystem::create_directory(dir)) {
             std::cerr << "Failed to create directory " << dir.c_str() << std::endl;
-            kaaClients_.pop_back();
-            return;
+            return false;
         }
 
         IKaaClientPlatformContextPtr clientContext
@@ -116,18 +125,27 @@ public:
 
         auto kaaClient = Kaa::newClient(clientContext);
         kaaClients_.push_back(kaaClient);
-        
+
+        kaaClient->start();
+
         auto configurationListener =
             std::make_shared<ConfigurationListener>(ConfigurationListener(kaaClient));
         kaaClient->addConfigurationListener(*configurationListener);
         configurationListeners_.push_back(configurationListener);
 
-        kaaClient->start();
-        
+
         auto profileContainer =
             std::make_shared<DefaultProfileContainer>(DefaultProfileContainer(profile));
         kaaClient->setProfileContainer(profileContainer);
-        kaaClient->updateProfile();
+        return true;
+    }
+
+    void updateProfiles()
+    {
+        for ( auto client : kaaClients_)
+        {
+            client->updateProfile();
+        }
     }
 
 private:
@@ -140,8 +158,13 @@ int main()
     KaaClientManager clientManager;
 
     for (const auto &profile : clientProfiles) {
-        clientManager.spawnKaaClient(profile.getProfile());
+        if (!clientManager.spawnKaaClient(profile.getProfile())) {
+            std::cerr << "Failed to start Kaa client" << std::endl;
+            return EXIT_FAILURE;
+        }
     }
+
+    clientManager.updateProfiles();
 
     std::cout << "Spawned " << clientProfiles.size() << " clients" << std::endl;
 
@@ -149,5 +172,5 @@ int main()
 
     std::cin.get();
 
-    return 0;
+    return EXIT_SUCCESS;
 }

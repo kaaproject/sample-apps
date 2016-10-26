@@ -20,7 +20,7 @@ Copyright 2014-2016 CyberVision, Inc.
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="cassandra_demo_c">
+    <!-- <project id="cassandra_demo_c">
         <name>Cassandra data analytics demo</name>
         <description>Time series IoT data ingestion into Cassandra using the Kaa platform</description>
         <details><![CDATA[
@@ -79,15 +79,7 @@ Cassandra using Kaa IoT platform"</a>.
             ]]>
         </details>
 
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>C</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>RASPBERRY_PI</platforms>
         <features>DATA_COLLECTION</features>
@@ -96,5 +88,5 @@ Cassandra using Kaa IoT platform"</a>.
         <projectFolder>CCassandraDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CCassandraDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project>
+    </project> -->
 </projectsConfig>

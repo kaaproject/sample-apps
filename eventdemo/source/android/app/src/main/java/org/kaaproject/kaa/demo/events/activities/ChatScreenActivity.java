@@ -18,8 +18,8 @@ package org.kaaproject.kaa.demo.events.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,11 +27,9 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.kaaproject.kaa.demo.events.EventsDemoApp;
 import org.kaaproject.kaa.demo.events.R;
@@ -43,14 +41,16 @@ import org.kaaproject.kaa.examples.event.Message;
 
 public class ChatScreenActivity extends AppCompatActivity implements Chat.Listener {
 
-    private static final String ARGS_CHAT_NAME = "args_chat_name";
-
     Toolbar mToolbar;
     View mButtonSend;
     TextView mTextChatLogs;
     EditText mEditTextInputMessage;
 
+    private static final String ARGS_CHAT_NAME = "args_chat_name";
+
+    @ColorInt
     private static final int COLOR_OTHER = 0xff004600;
+    @ColorInt
     private static final int COLOR_YOU = 0xff322a61;
 
     private KaaChatManager mKaaChatManager;
@@ -95,13 +95,14 @@ public class ChatScreenActivity extends AppCompatActivity implements Chat.Listen
                 final String entry = mEditTextInputMessage.getText().toString();
                 mEditTextInputMessage.setText("");
 
-                appendChatEntry("You: " + entry, COLOR_YOU);
+                appendChatEntry(getString(R.string.activity_chat_template_you, entry), COLOR_YOU);
 
                 // send event to the subscribers
                 mKaaChatManager.sendEventToAll(
                         new Message(mChatName,
-                                EventsDemoApp.app(ChatScreenActivity.this)
-                                        .username() + ": " + entry));
+                                getString(R.string.activity_chat_template_other,
+                                        EventsDemoApp.app(ChatScreenActivity.this)
+                                                .username(), entry)));
             }
         });
 
@@ -124,8 +125,9 @@ public class ChatScreenActivity extends AppCompatActivity implements Chat.Listen
     @Override
     protected void onDestroy() {
         mKaaChatManager.sendEventToAll(new Message(
-                mChatName, "chat info: " + EventsDemoApp.app(ChatScreenActivity.this)
-                .username() + " has left the chat."));
+                mChatName, getString(R.string.activity_chat_chat_info_left_chat,
+                EventsDemoApp.app(ChatScreenActivity.this)
+                        .username())));
         super.onDestroy();
     }
 
@@ -147,7 +149,7 @@ public class ChatScreenActivity extends AppCompatActivity implements Chat.Listen
         }
     }
 
-    void appendChatEntry(final String entry, int color) {
+    void appendChatEntry(final String entry, @ColorInt int color) {
 
         final SpannableString coloredEntry = new SpannableString("\n" + entry);
         coloredEntry.setSpan(new ForegroundColorSpan(color),

@@ -47,19 +47,20 @@ public class EventsDemoApp extends Application {
         mKaaChatManager = new KaaChatManager(this);
 
         try {
-            mKaaChatManager.start();
+            mKaaChatManager.start(new Runnable() {
+                @Override
+                public void run() {
+                    // attach endpoint to user - only endpoints attached to the same user
+                    // can do events exchange among themselves
+                    mKaaChatManager.attachToUser(USER_EXTERNAL_ID, USER_ACCESS_TOKEN, null);
+                }
+            });
         } catch (IOException e) {
             Toast.makeText(
                     this,
-                    "Chat manager wasn't started successfully " + e.getMessage(),
+                    getString(R.string.events_demo_app_kaa_manager_start_error, e.getMessage()),
                     Toast.LENGTH_SHORT).show();
-
-            return;
         }
-
-        // attach endpoint to user - only endpoints attached to the same user
-        // can do events exchange among themselves
-        mKaaChatManager.attachToUser(USER_EXTERNAL_ID, USER_ACCESS_TOKEN);
     }
 
     public KaaChatManager getKaaChatManager() {

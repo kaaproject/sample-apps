@@ -19,7 +19,7 @@ package org.kaaproject.kaa.demo.events.utils;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import org.kaaproject.kaa.client.AndroidKaaPlatformContext;
@@ -31,6 +31,7 @@ import org.kaaproject.kaa.client.event.EventFamilyFactory;
 import org.kaaproject.kaa.client.event.registration.UserAttachCallback;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
 import org.kaaproject.kaa.common.endpoint.gen.UserAttachResponse;
+import org.kaaproject.kaa.demo.events.R;
 import org.kaaproject.kaa.examples.event.Chat;
 import org.kaaproject.kaa.examples.event.ChatEvent;
 import org.kaaproject.kaa.examples.event.ChatEventType;
@@ -39,7 +40,6 @@ import org.kaaproject.kaa.examples.event.Message;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Modified code from the Java event demo
@@ -75,95 +75,90 @@ public final class KaaChatManager {
      *
      * @throws IOException
      */
-    public void start() throws IOException {
-        try {
+    public void start(@Nullable final Runnable successCallback) throws IOException {
 
-            // Setup working directory for endpoint
-            final KaaClientProperties endpointProperties = new KaaClientProperties();
-            endpointProperties.setWorkingDirectory(KEYS_DIR);
+        // Setup working directory for endpoint
+        final KaaClientProperties endpointProperties = new KaaClientProperties();
+        endpointProperties.setWorkingDirectory(KEYS_DIR);
 
-            // Create the Kaa desktop context for the application
-            final AndroidKaaPlatformContext androidKaaPlatformContext =
-                    new AndroidKaaPlatformContext(mContext, endpointProperties);
+        // Create the Kaa desktop context for the application
+        final AndroidKaaPlatformContext androidKaaPlatformContext =
+                new AndroidKaaPlatformContext(mContext, endpointProperties);
 
-            // Create a Kaa client and add a listener which creates a log record
-            // as soon as the Kaa client is started.
-            final CountDownLatch startupLatch = new CountDownLatch(1);
-            mKaaClient = Kaa.newClient(androidKaaPlatformContext, new SimpleKaaClientStateListener() {
-                @Override
-                public void onStarted() {
-                    toast("Kaa client started");
-                    startupLatch.countDown();
-                }
+        // Create a Kaa client and add a listener which creates a log record
+        // as soon as the Kaa client is started.
+        mKaaClient = Kaa.newClient(androidKaaPlatformContext, new SimpleKaaClientStateListener() {
+            @Override
+            public void onStarted() {
+                toast(mContext.getString(R.string.kaa_manager_client_started));
 
-                @Override
-                public void onStopped() {
-                    toast("Kaa client stopped");
-                }
-            }, true);
+                //Obtain the event family factory.
+                final EventFamilyFactory eventFamilyFactory = mKaaClient.getEventFamilyFactory();
+                //Obtain the concrete event family.
+                mChatEventFamily = eventFamilyFactory.getChat();
 
-            //Start the Kaa client and connect it to the Kaa server.
-            mKaaClient.start();
+                // Add event listeners to the family factory.
+                mChatEventFamily.addListener(new Chat.Listener() {
 
-            startupLatch.await();
+                    @Override
+                    public void onEvent(final Message messageEvent, final String senderId) {
 
-            //Obtain the event family factory.
-            final EventFamilyFactory eventFamilyFactory = mKaaClient.getEventFamilyFactory();
-            //Obtain the concrete event family.
-            mChatEventFamily = eventFamilyFactory.getChat();
-
-            // Add event listeners to the family factory.
-            mChatEventFamily.addListener(new Chat.Listener() {
-
-                @Override
-                public void onEvent(final Message messageEvent, final String senderId) {
-
-                    mMainThreadHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (Chat.Listener listener : mChatListeners) {
-                                listener.onEvent(messageEvent, senderId);
-                            }
-                        }
-                    });
-                }
-
-                @Override
-                public void onEvent(final ChatEvent chatEvent, final String senderId) {
-
-                    boolean fireCallback = false; // fire callback only if something happened
-
-                    final String chatName = chatEvent.getChatName().trim();
-                    if (chatEvent.getEventType() == ChatEventType.CREATE) {
-                        if (createChatLocal(chatName)) {
-                            toast("New chat \"%s\" was CREATED.", chatName);
-                            fireCallback = true;
-                        }
-                    }
-
-                    if (chatEvent.getEventType() == ChatEventType.DELETE) {
-                        if (deleteChatLocal(chatName)) {
-                            toast("Chat \"%s\" was DELETED.", chatName);
-                            fireCallback = true;
-                        }
-                    }
-
-                    if (fireCallback) {
                         mMainThreadHandler.post(new Runnable() {
                             @Override
                             public void run() {
                                 for (Chat.Listener listener : mChatListeners) {
-                                    listener.onEvent(chatEvent, senderId);
+                                    listener.onEvent(messageEvent, senderId);
                                 }
                             }
                         });
                     }
-                }
-            });
 
-        } catch (InterruptedException e) {
-            toast("Thread interrupted when wait for attach current endpoint to user, %s", e.getMessage());
-        }
+                    @Override
+                    public void onEvent(final ChatEvent chatEvent, final String senderId) {
+
+                        boolean fireCallback = false; // fire callback only if something happened
+
+                        final String chatName = chatEvent.getChatName().trim();
+                        if (chatEvent.getEventType() == ChatEventType.CREATE) {
+                            if (createChatLocal(chatName)) {
+                                toast(mContext.getString(R.string.kaa_manager_chat_created, chatName));
+                                fireCallback = true;
+                            }
+                        }
+
+                        if (chatEvent.getEventType() == ChatEventType.DELETE) {
+                            if (deleteChatLocal(chatName)) {
+                                toast(mContext.getString(R.string.kaa_manager_chat_deleted, chatName));
+                                fireCallback = true;
+                            }
+                        }
+
+                        if (fireCallback) {
+                            mMainThreadHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    for (Chat.Listener listener : mChatListeners) {
+                                        listener.onEvent(chatEvent, senderId);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+                if (successCallback != null) {
+                    successCallback.run();
+                }
+            }
+
+            @Override
+            public void onStopped() {
+                toast(mContext.getString(R.string.kaa_manager_client_stopped));
+            }
+        }, true);
+
+        //Start the Kaa client and connect it to the Kaa server.
+        mKaaClient.start();
     }
 
     /**
@@ -173,31 +168,29 @@ public final class KaaChatManager {
      * @param userAccessToken user access token that allows to do endpoint attach to this user
      * @param userId          user ID
      */
-    public void attachToUser(String userAccessToken, final String userId) {
-        try {
-            // Attach the endpoint to the user
-            // This demo application uses a trustful verifier, therefore
-            // any user credentials sent by the endpoint are accepted as valid.
-            final CountDownLatch attachLatch = new CountDownLatch(1);
-            mKaaClient.attachUser(userId, userAccessToken, new UserAttachCallback() {
-                @Override
-                public void onAttachResult(UserAttachResponse response) {
-                    toast("Attach to user result: %s", response.getResult());
-                    if (response.getResult() == SyncResponseResultType.SUCCESS) {
-                        toast("Current endpoint have been successfully attached to user [ID=%s]!", userId);
-                    } else {
-                        toast("Attaching current endpoint to user [ID=%s] FAILED.", userId);
-                        toast("Attach response: %s", response);
-                        toast("Events exchange will be NOT POSSIBLE.");
-                    }
-                    attachLatch.countDown();
+    public void attachToUser(String userAccessToken,
+                             final String userId,
+                             @Nullable final UserAttachCallback callback) {
+        // Attach the endpoint to the user
+        // This demo application uses a trustful verifier, therefore
+        // any user credentials sent by the endpoint are accepted as valid.
+        mKaaClient.attachUser(userId, userAccessToken, new UserAttachCallback() {
+            @Override
+            public void onAttachResult(UserAttachResponse response) {
+                toast(mContext.getString(R.string.kaa_manager_attach_to_user_result, response.getResult()));
+                if (response.getResult() == SyncResponseResultType.SUCCESS) {
+                    toast(mContext.getString(R.string.kaa_manager_attach_to_user_success, userId));
+                } else {
+                    toast(mContext.getString(R.string.kaa_manager_attach_to_user_failed, userId));
+                    toast(mContext.getString(R.string.kaa_manager_attach_to_user_failed_response, response));
+                    toast(mContext.getString(R.string.kaa_manager_attach_to_user_note));
                 }
-            });
 
-            attachLatch.await();
-        } catch (InterruptedException e) {
-            toast("Thread interrupted when wait for attach current endpoint to user", e);
-        }
+                if (callback != null) {
+                    callback.onAttachResult(response);
+                }
+            }
+        });
     }
 
     /**
@@ -239,13 +232,11 @@ public final class KaaChatManager {
      * Creates new chat with name that user will specify.
      */
     public void createChatRoom(String chatName) {
-        toast("Creating chat \"%s\" ...", chatName);
-
         if (createChatLocal(chatName)) {
-            toast("New chat \"%s\" was CREATED.", chatName);
+            toast(mContext.getString(R.string.kaa_manager_chat_created, chatName));
             mChatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.CREATE));
         } else {
-            toast("Chat \"%s\" is already exists. New chat not created.", chatName);
+            toast(mContext.getString(R.string.kaa_manager_chat_exists, chatName));
         }
     }
 
@@ -254,10 +245,8 @@ public final class KaaChatManager {
      */
     public void deleteChatRoom(String chatName) {
         if (deleteChatLocal(chatName)) {
-            toast("Chat \"%s\" was DELETED.", chatName);
+            toast(mContext.getString(R.string.kaa_manager_chat_deleted, chatName));
             mChatEventFamily.sendEventToAll(new ChatEvent(chatName, ChatEventType.DELETE));
-        } else {
-            toast("Chat \"%s\" NOT FOUND. Nothing to delete.", chatName);
         }
     }
 
@@ -274,11 +263,11 @@ public final class KaaChatManager {
         return mChatList.remove(chatName);
     }
 
-    private void toast(final String toast, final Object... args) {
+    private void toast(final String toast) {
         mMainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(mContext, String.format(toast, args), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -468,7 +468,7 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
         <sdkLibDir>ObjCEventDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <project id="event_demo_android">
+    <!-- <project id="event_demo_android">
         <name>Event Android demo</name>
         <description>Kaa Event subsystem demo app based on Java SDK for Android</description>
         <details>
@@ -482,15 +482,7 @@ If you want to modify the sample application source code or create your own appl
             ]]>
         </details>
 
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>JAVA</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>ANDROID</platforms>
         <features>EVENT</features>
@@ -500,7 +492,7 @@ If you want to modify the sample application source code or create your own appl
         <projectFolder>event_demo/EventDemo</projectFolder>
         <sdkLibDir>event_demo/EventDemo/app/libs</sdkLibDir>
         <destBinaryFile>event_demo/EventDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
-    </project>
+    </project> -->
     <bundle id="event_demos">
         <name>Event demos</name>
         <description>Kaa Event subsystem demo applications bundle</description>

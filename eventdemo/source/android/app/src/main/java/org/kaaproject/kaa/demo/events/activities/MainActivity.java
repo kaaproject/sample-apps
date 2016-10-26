@@ -16,7 +16,14 @@
 
 package org.kaaproject.kaa.demo.events.activities;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,26 +33,22 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.events.EventsDemoApp;
 import org.kaaproject.kaa.demo.events.R;
-import org.kaaproject.kaa.demo.events.dialogfragments.InputTextDialogFragment;
 import org.kaaproject.kaa.demo.events.utils.KaaChatManager;
 import org.kaaproject.kaa.examples.event.Chat;
 import org.kaaproject.kaa.examples.event.ChatEvent;
 import org.kaaproject.kaa.examples.event.Message;
 
-public class MainActivity extends AppCompatActivity
-        implements InputTextDialogFragment.InputTextDialogListener, Chat.Listener {
+public class MainActivity extends AppCompatActivity implements Chat.Listener {
 
     Toolbar mToolbar;
 
     FloatingActionButton mFloatingActionButton;
     RecyclerView mRecyclerView;
-
-    private static final String NICKNAME_HINT = "Input new nickname";
-    private static final String CHAT_HINT = "Input chat name";
 
     private KaaChatManager mKaaChatManager;
     private ChatAdapter mChatAdapter;
@@ -68,8 +71,14 @@ public class MainActivity extends AppCompatActivity
 
                 switch (item.getItemId()) {
                     case R.id.edit_nickname:
-                        InputTextDialogFragment.newInstance(NICKNAME_HINT)
-                                .show(getSupportFragmentManager(), InputTextDialogFragment.TAG);
+                        showDialog(MainActivity.this, R.string.activity_main_edit_nickname_hint,
+                                new OnTextInputListener() {
+                                    @Override
+                                    public void onTextInput(String text) {
+                                        EventsDemoApp.app(MainActivity.this).newUsername(text);
+                                        mToolbar.setTitle(text);
+                                    }
+                                });
                         break;
                     default:
                         return false;
@@ -83,8 +92,15 @@ public class MainActivity extends AppCompatActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputTextDialogFragment.newInstance(CHAT_HINT)
-                        .show(getSupportFragmentManager(), InputTextDialogFragment.TAG);
+
+                showDialog(MainActivity.this, R.string.activity_main_new_chat_hint,
+                        new OnTextInputListener() {
+                            @Override
+                            public void onTextInput(String text) {
+                                mKaaChatManager.createChatRoom(text);
+                                mChatAdapter.notifyDataSetChanged();
+                            }
+                        });
             }
         });
 
@@ -109,22 +125,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinishInputTextDialog(String inputText, String hintText) {
-        switch (hintText) {
-            case NICKNAME_HINT:
-                EventsDemoApp.app(this).newUsername(inputText);
-                mToolbar.setTitle(inputText);
-                break;
-            case CHAT_HINT:
-                mKaaChatManager.createChatRoom(inputText);
-                mChatAdapter.notifyDataSetChanged();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
     public void onEvent(final ChatEvent chatEvent, String s) {
         switch (chatEvent.getEventType()) {
             case CREATE:
@@ -139,6 +139,51 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onEvent(Message message, String s) {
         // messages are ignored
+    }
+
+    static void showDialog(Context context,
+                           @StringRes int hint,
+                           @NonNull final OnTextInputListener callback) {
+        final View promptsView =
+                LayoutInflater.from(context).inflate(R.layout.dialog_input_text, null);
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        alertDialogBuilder.setView(promptsView);
+
+        final TextInputLayout textInputLayout =
+                (TextInputLayout) promptsView.findViewById(R.id.input_text_layout);
+        textInputLayout.setHint(context.getString(hint));
+
+        final EditText userInputEditText = (EditText) promptsView
+                .findViewById(R.id.input_text);
+
+        final DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case Dialog.BUTTON_POSITIVE:
+                        callback.onTextInput(userInputEditText.getText().toString());
+                        //fallthrough
+                    case Dialog.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        alertDialogBuilder
+                .setPositiveButton(R.string.input_text_dialog_ok, clickListener)
+                .setNegativeButton(R.string.input_text_dialog_cancel, clickListener);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+    }
+
+    interface OnTextInputListener {
+        void onTextInput(String text);
     }
 
     /**

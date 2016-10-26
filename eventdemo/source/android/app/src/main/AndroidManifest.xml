@@ -16,7 +16,7 @@
 
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.kaaproject.kaa.demo.events">
+          package="org.kaaproject.kaa.demo.events">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:name=".activities.ChatScreenActivity"
-            android:label="@string/title_activity_chat_screen"
+            android:label="@string/activity_chat_title"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

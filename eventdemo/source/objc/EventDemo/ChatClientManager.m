@@ -16,7 +16,7 @@
 
 #import "ChatClientManager.h"
 
-#define USER_EXTERNAL_ID    @"user@email.com"
+#define USER_EXTERNAL_ID    @"userid"
 #define USER_ACCESS_TOKEN   @"token"
 
 @interface ChatClientManager ()

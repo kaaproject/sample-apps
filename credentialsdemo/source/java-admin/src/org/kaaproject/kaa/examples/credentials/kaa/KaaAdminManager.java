@@ -89,7 +89,7 @@ public class KaaAdminManager {
             provideCredentials(APPLICATION_NAME, publicKey);
             LOG.info("Credentials is successfully provisioned!");
         } catch (NullPointerException | IOException | InvalidKeyException | NoSuchAlgorithmException e) {
-            LOG.error("Error in provisionKeys", e);
+            LOG.error("Provision credentials with public key failed. Please check if keys already generated.");
             e.printStackTrace();
         }
     }
@@ -110,7 +110,7 @@ public class KaaAdminManager {
 
             LOG.info("Credentials is successfully provisioned!");
         } catch (Exception e) {
-            LOG.error("Error in provisionKeys", e);
+            LOG.error("Provision credentials with public key failed. Please check your public key.");
             e.printStackTrace();
         }
     }
@@ -128,10 +128,10 @@ public class KaaAdminManager {
     public void revokeCredentials() {
         LOG.info("Enter endpoint ID which credentials needs to be revoked:");
         String endpointId = IOUtils.getUserInput().trim();
-        LOG.info("Going to revoke credentials");
+        LOG.info("Revoking credentials...");
         try {
             revokeCredentials(APPLICATION_NAME, endpointId);
-            LOG.info("Credentials for endpoint ID = {} successfully revoked.", endpointId);
+            LOG.info("Credentials for endpoint ID = {} are now in status: REVOKED", endpointId);
         } catch (Exception e) {
             LOG.error("Revoke credentials for endpoint ID = {} failed. Error: {}", endpointId, e.getMessage());
         }
@@ -147,16 +147,15 @@ public class KaaAdminManager {
      * Check credentials status for getting information
      * @return credential status
      */
-    public String getCredentialsStatusAsString() {
+    public void checkCredentialsStatus() {
         LOG.info("Enter endpoint ID:");
         String endpointId = IOUtils.getUserInput().trim();
-        LOG.info("Getting status...");
+        LOG.info("Getting credentials status...");
         try {
             CredentialsStatus status = getCredentialsStatus(APPLICATION_NAME, endpointId);
-            return status.toString();
+            LOG.info("Credentials for endpoint ID = {} are now in status: {}", endpointId, status.toString());
         } catch (Exception e) {
             LOG.error("Get credentials status for endpoint ID = {} failed. Error: {}", endpointId, e.getMessage());
-            return "Can't get credentials status for endpoint with ID = " + endpointId;
         }
     }
 

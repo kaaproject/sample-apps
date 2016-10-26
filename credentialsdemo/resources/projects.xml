@@ -22,7 +22,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
     <project id="credentials_demo_java">
-        <name>Credentials Client Java demo</name>
+        <name>Credentials Java Client demo</name>
         <description>Kaa Credentials management demo client app based on Java SDK</description>
         <details>
             <![CDATA[
@@ -132,7 +132,7 @@ If you want to modify the sample application source code or create your own appl
 
 
     <project id="credentials_demo_java_admin">
-        <name>Credentials Admin Java demo</name>
+        <name>Credentials Java Admin demo</name>
         <description>Kaa Credentials management admin demo app based on Kaa REST calls (wrapped with AdminClient class)</description>
         <details>
             <![CDATA[
@@ -660,8 +660,8 @@ To generate the credentials:
 		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
 		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - 
 		1. Generate endpoint credentials.
-		2. Provision key files for EP credentials.
-		3. Provision public key string for EP credentials.
+		2. Provision endpoint credentials using key files.
+		3. Provision endpoint credentials using public key string.
 		4. Revoke endpoint credentials.
 		5. Get credentials status.
 		6. Exit.
@@ -686,8 +686,8 @@ To generate the credentials:
 			2016-06-21 13:33:34,488 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Endpoint ID: g2o7GSuQS8xPfX0NW9M4aXb2xx4=
 			2016-06-21 13:33:35,943 [pool-6-thread-1] ERROR o.k.k.c.c.i.c.DefaultOperationTcpChannel - Connection for channel [default_operation_tcp_channel] was rejected: REFUSE_VERIFICATION_FAILED
 			2016-06-21 13:33:38,964 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - Loss of connectivity detected
-			VERIFICATION FAILED
-			2016-06-21 13:33:38,966 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - No operation is performed according to fail-over strategy decision
+			2016-06-21 13:33:38,969 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - VERIFICATION FAILED. Credentials is not provisioned!
+			2016-06-21 13:33:38,976 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - No operation is performed according to fail-over strategy decision
 		</pre>
 		
 		The messages above inform the user that the server rejected the credentials generated in the previous step.
@@ -708,31 +708,28 @@ To provision your new credentials:
 			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
 			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo -
 			1. Generate endpoint credentials.
-			2. Provision key files for EP credentials.
-			3. Provision public key string for EP credentials.
+			2. Provision endpoint credentials using key files.
+			3. Provision endpoint credentials using public key string.
 			4. Revoke endpoint credentials.
 			5. Get credentials status.
 			6. Exit.
 		</pre>
 	</li>
 	<li>
-		Type <b>2</b> and press Enter.
-		The console will request the <i>endpoint ID</i>.
-		Paste it from the Clipboard into the command prompt and press Enter.
+		Type <b>2</b> and press Enter. Admin application will try to provision credentials using key files generated with item <b>1</b>. You'll see the result in the console:
 		
 		<pre>
-			2016-06-21 17:22:08,588 [main] INFO  o.k.k.demo.activation.ActivationDemo - Enter ID of credentials to be provisioned:
-			g2o7GSuQS8xPfX0NW9M4aXb2xx4=
-			
-			2016-06-21 14:28:38,489 [main] INFO  o.k.k.demo.activation.ActivationDemo - Provisioning credentials...
-			2016-06-21 14:28:39,481 [main] INFO  o.k.k.d.a.utils.AdminClientManager - Credentials with ID=g2o7GSuQS8xPfX0NW9M4aXb2xx4= are now in status: AVAILABLE
+            2016-10-03 13:08:54,471 [main] INFO  o.k.k.e.c.CredentialsAdminDemo - Going to "Provision endpoint credentials using key files".
+            2016-10-03 13:08:54,471 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Going to provision credentials...
+            2016-10-03 13:08:55,220 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Credentials with ID = g2o7GSuQS8xPfX0NW9M4aXb2xx4= are now in status: AVAILABLE
+            2016-10-03 13:08:55,221 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Credentials is successfully provisioned!
 		</pre>
 			
 	</li>
 	<li>
 		Some platforms require using a public key string to secure the process of credentials provisioning.
-		And item 3 was added for this.
-		Type 3 and press Enter. The console will request the public key string. Copy paste it from your Kaa client to the command line and press Enter.
+		And item <b>3</b> was added for this.
+		Type <b>3</b>  and press Enter. The console will request the public key string. Copy paste it from your Kaa client to the command line and press Enter.
 		
 		<pre>
 			2016-10-03 13:46:35,623 [main] INFO  o.k.k.e.c.CredentialsAdminDemo - Provisioning endpoint credentials using public key string.
@@ -741,7 +738,7 @@ To provision your new credentials:
 			NqrA3qZYVMwL2W0YXFHanOSaRSpm+YX4UaCD8VNEr4alBvM4rYmRed1NIdyy2h+tDscrzRROKY66qVMY1rUjPDzY78ErK9EJxZV+Eo0Mq6ekXmx45ORYm4k/hn3eF/RyZK/yjt
 			fNqwqa6btx4Xk7udcm5gwcj3DJHEeL5DL52KNyOgqN9a9gYh5d/moPzfuMhDznFRQlWb1kVQ8pWNajRgJ3LD+3L8HCg1XNWJs6EOgSGTflKbfxJ3UHC/hQIDAQAB
 			2016-10-03 14:05:53,953 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Provisioning credentials with public key...
-			2016-10-03 14:05:54,412 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Credentials with ID=fACw1KJSq1NDcf1831eEYa/xflg= are now in status: AVAILABLE
+			2016-10-03 14:05:54,412 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Credentials with ID = g2o7GSuQS8xPfX0NW9M4aXb2xx4= are now in status: AVAILABLE
 			2016-10-03 14:05:54,414 [main] INFO  o.k.k.e.c.kaa.KaaAdminManager - Credentials are successfully provisioned!
 		</pre>
 		
@@ -765,7 +762,7 @@ To provision your new credentials:
 <h2>Check credentials status</h2>
 
 <p>
-	To check the status of your credentials, start the server-side application and choose option 4 in the console.
+	To check the status of your credentials, start the server-side application and choose option 5 in the console.
 	Enter the <i>endpoint ID</i> and press Enter.
 
 	<pre>
@@ -773,8 +770,8 @@ To provision your new credentials:
 		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
 		2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo -
 		1. Generate endpoint credentials.
-		2. Provision key files for EP credentials.
-		3. Provision public key string for EP credentials.
+		2. Provision endpoint credentials using key files.
+		3. Provision endpoint credentials using public key string.
 		4. Revoke endpoint credentials.
 		5. Get credentials status.
 		6. Exit.
@@ -818,8 +815,8 @@ To revoke the credentials:
 			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo - Choose your option:
 			2016-06-21 14:28:03,654 [main] INFO  o.k.k.demo.activation.ActivationDemo -
 			1. Generate endpoint credentials.
-			2. Provision key files for EP credentials.
-			3. Provision public key string for EP credentials.
+			2. Provision endpoint credentials using key files.
+			3. Provision endpoint credentials using public key string.
 			4. Revoke endpoint credentials.
 			5. Get credentials status.
 			6. Exit.
@@ -844,13 +841,11 @@ To revoke the credentials:
 	Now look at the client-side application command prompt.
 	
 	<pre>
-		2016-06-21 18:09:42,532 [pool-6-thread-1] ERROR o.k.k.c.c.i.c.DefaultOperationTcpChannel - Connection for channel [default_operation_tcp_channel] was rejected: REFUSE_SERVER_UNAVAILABLE
-		2016-06-21 18:09:45,542 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - Loss of connectivity detected
-		2016-06-21 18:09:45,544 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - Attempt to reconnect will be made in 5000 ms according to fail-over strategy decision
-		2016-06-21 18:09:50,611 [pool-6-thread-1] ERROR o.k.k.c.c.i.c.DefaultOperationTcpChannel - Connection for channel [default_operation_tcp_channel] was rejected: REFUSE_VERIFICATION_FAILED
-		2016-06-21 18:09:53,614 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - Loss of connectivity detected
-		VERIFICATION FAILED
-		2016-06-21 18:09:53,614 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - No operation is performed according to fail-over strategy decision
+        2016-06-21 15:51:15,778 [pool-6-thread-1] ERROR o.k.k.c.c.i.c.DefaultOperationTcpChannel - Connection for channel [default_operation_tcp_channel] was rejected: REFUSE_SERVER_UNAVAILABLE
+        2016-06-21 15:51:18,786 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - Loss of connectivity detected
+        2016-06-21 15:51:18,787 [pool-6-thread-1] INFO  o.k.k.e.credentials.CredentialsDemo - Failover happen. Status: NO_CONNECTIVITY
+        2016-06-21 15:51:18,789 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - Attempt to reconnect will be made in 5000 ms according to failover strategy decision
+        2016-06-21 15:51:23,840 [pool-6-thread-1] ERROR o.k.k.c.c.i.c.DefaultOperationTcpChannel - Connection for channel [default_operation_tcp_channel] was rejected: REFUSE_VERIFICATION_FAILED
 	</pre>
 	
 	Your Kaa client lost the server connection and stopped working.
@@ -861,12 +856,12 @@ To revoke the credentials:
 	<pre>
 		2016-06-21 18:25:15,721 [main] INFO  o.k.k.demo.activation.ActivationDemo - Activation demo started
 		2016-06-21 18:25:16,584 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Kaa client started
-		2016-06-21 13:33:34,488 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Endpoint ID: g2o7GSuQS8xPfX0NW9M4aXb2xx4=
+		2016-06-21 18:25:16,588 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Endpoint ID: g2o7GSuQS8xPfX0NW9M4aXb2xx4=
 		2016-06-21 18:25:16,594 [pool-2-thread-1] INFO  o.k.k.demo.activation.ActivationDemo - Device state: active
 		2016-06-21 18:25:16,746 [pool-6-thread-1] ERROR o.k.k.c.c.i.c.DefaultOperationTcpChannel - Connection for channel [default_operation_tcp_channel] was rejected: REFUSE_VERIFICATION_FAILED
 		2016-06-21 18:25:19,758 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - Loss of connectivity detected
-		VERIFICATION FAILED
-		2016-06-21 18:25:19,760 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - No operation is performed according to fail-over strategy decision
+		2016-06-21 18:25:19,761 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - VERIFICATION FAILED. Credentials is not provisioned!
+		2016-06-21 18:25:19,767 [pool-6-thread-1] WARN  o.k.k.c.c.i.c.DefaultOperationTcpChannel - No operation is performed according to fail-over strategy decision
 	</pre>
 </p>
 

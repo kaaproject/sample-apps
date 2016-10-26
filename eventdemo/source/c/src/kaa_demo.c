@@ -121,11 +121,15 @@ void kaa_on_change_chat(void *context, kaa_chat_chat_event_t *event, kaa_endpoin
 
     if (event->event_type == ENUM_CHAT_EVENT_TYPE_CREATE) {
         pthread_mutex_lock(&lock);
-        kaa_list_push_back(lst, event->chat_name->data);
+        if (!kaa_list_find_next(kaa_list_begin(lst), &rooms_equal, event->chat_name->data)) {
+            kaa_list_push_back(lst, event->chat_name->data);
+        }
         pthread_mutex_unlock(&lock);
     } else {
         pthread_mutex_lock(&lock);
-        kaa_list_remove_first(kaa_list_begin(&lst), &rooms_equal, event->chat_name->data, NULL);
+        if (kaa_list_find_next(kaa_list_begin(lst), &rooms_equal, event->chat_name->data)) {
+            kaa_list_remove_first(kaa_list_begin(&lst), &rooms_equal, event->chat_name->data, NULL);
+        }
         pthread_mutex_unlock(&lock);
     }
 }
@@ -197,7 +201,9 @@ void command_create()
         pthread_mutex_lock(&lock);
         char *rn = malloc(strnlen(room_name, KAA_STRING_MAX_LENGTH));
         strcpy(rn, room_name);
-        kaa_list_push_back(lst, rn);
+        if (!kaa_list_find_next(kaa_list_begin(lst), &rooms_equal, room_name)) {
+            kaa_list_push_back(lst, rn);
+        }
         pthread_mutex_unlock(&lock);
 
         create_room->destroy(create_room);

@@ -34,7 +34,7 @@ public class EventDemo {
     private static KaaClient kaaClient;
 
     //Credentials for attaching an endpoint to the user.
-    private static final String USER_EXTERNAL_ID = "user@email.com";
+    private static final String USER_EXTERNAL_ID = "userid";
     private static final String USER_ACCESS_TOKEN = "token";
 
     public static void main(String[] args) throws IOException {

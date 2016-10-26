@@ -168,8 +168,8 @@ public final class KaaChatManager {
      * @param userAccessToken user access token that allows to do endpoint attach to this user
      * @param userId          user ID
      */
-    public void attachToUser(String userAccessToken,
-                             final String userId,
+    public void attachToUser(final String userId,
+                             String userAccessToken,
                              @Nullable final UserAttachCallback callback) {
         // Attach the endpoint to the user
         // This demo application uses a trustful verifier, therefore

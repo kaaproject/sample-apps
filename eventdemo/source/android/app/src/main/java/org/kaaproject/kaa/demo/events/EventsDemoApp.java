@@ -29,7 +29,7 @@ import java.io.IOException;
 public class EventsDemoApp extends Application {
 
     // Credentials for attaching an endpoint to the user.
-    private static final String USER_EXTERNAL_ID = "user@email.com";
+    private static final String USER_EXTERNAL_ID = "userid";
     private static final String USER_ACCESS_TOKEN = "token";
 
     private static final String PREFS_USERNAME = "prefs_username";

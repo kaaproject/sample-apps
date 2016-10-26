@@ -16,7 +16,6 @@
 
 package org.kaaproject.kaa.examples.credentials;
 
-import org.kaaproject.kaa.common.dto.credentials.CredentialsStatus;
 import org.kaaproject.kaa.examples.credentials.kaa.KaaAdminManager;
 import org.kaaproject.kaa.examples.credentials.utils.IOUtils;
 import org.slf4j.Logger;
@@ -47,24 +46,19 @@ public class CredentialsAdminDemo {
                         "6. Exit");
             switch (IOUtils.getUserInput()) {
                 case "1":
-                    LOG.info("Going to \"Generate endpoint credentials\".");
                     adminManager.generateKeys();
                     break;
                 case "2":
-                    LOG.info("Going to \"Provision endpoint credentials using key files\".");
                     adminManager.provisionKeys();
                     break;
                 case "3":
-                    LOG.info("Going to \"Provision endpoint credentials using public key string\".");
                     adminManager.provisionWithKeyString();
                     break;
                 case "4":
-                    LOG.info("Going to \"Revoke endpoint credentials\".");
                     adminManager.revokeCredentials();
                     break;
                 case "5":
-                    LOG.info("Going to \"Get credentials status\".");
-                    LOG.info("Your credential status - " + adminManager.getCredentialsStatusAsString());
+                    adminManager.checkCredentialsStatus();
                     break;
                 case "6":
                     LOG.info("Going to \"Exit\". Have a good day!");

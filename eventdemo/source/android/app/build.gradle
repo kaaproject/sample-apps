@@ -17,17 +17,17 @@
 apply plugin: "com.android.application"
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "org.kaaproject.kaa.demo.events"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
     }
 }
 
 ext {
-    androidSupportVer = "24.2.1"
+    androidSupportVer = "25.0.0"
 }
 
 dependencies {

@@ -17,5 +17,28 @@
 -->
 <resources>
     <string name="app_name">EventsDemo</string>
-    <string name="title_activity_chat_screen">ChatScreen</string>
+
+    <string name="events_demo_app_kaa_manager_start_error">Chat manager wasn\'t started successfully %s</string>
+
+    <string name="input_text_dialog_ok">@android:string/ok</string>
+    <string name="input_text_dialog_cancel">@android:string/cancel</string>
+
+    <string name="activity_main_new_chat_hint">Input chat name</string>
+    <string name="activity_main_edit_nickname_hint">Input new nickname</string>
+
+    <string name="activity_chat_title">ChatScreen</string>
+    <string name="activity_chat_template_you">You: %s</string>
+    <string name="activity_chat_template_other">%1$s: %2$s</string>
+    <string name="activity_chat_chat_info_left_chat">Chat info: %s has left the chat</string>
+
+    <string name="kaa_manager_client_started">Kaa client started</string>
+    <string name="kaa_manager_client_stopped">Kaa client stopped</string>
+    <string name="kaa_manager_chat_created">New chat \"%s\" was CREATED.</string>
+    <string name="kaa_manager_chat_exists">Chat \"%s\" is already exists. New chat not created.</string>
+    <string name="kaa_manager_chat_deleted">Chat \"%s\" was DELETED.</string>
+    <string name="kaa_manager_attach_to_user_result">Attach to user result: %s</string>
+    <string name="kaa_manager_attach_to_user_success">Current endpoint have been successfully attached to user [ID=%s]!</string>
+    <string name="kaa_manager_attach_to_user_failed">Attaching current endpoint to user [ID=%s] FAILED.</string>
+    <string name="kaa_manager_attach_to_user_failed_response">Attach response: %s</string>
+    <string name="kaa_manager_attach_to_user_note">Events exchange will be NOT POSSIBLE.</string>
 </resources>

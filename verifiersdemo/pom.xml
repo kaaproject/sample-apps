@@ -408,6 +408,7 @@
                         </exclude>
                         <exclude>/source/objc/EndpointOwnershipDemo/GoogleService-Info.plist</exclude>
                         <exclude>/source/objc/EndpointOwnershipDemo.xcodeproj/project.pbxproj</exclude>
+                        <exclude>source/objc/*/*.entitlements</exclude>
 
                         <!--Common files-->
                         <exclude>/resources/*.avsc</exclude>

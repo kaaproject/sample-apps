@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "182711447959",
+    "project_id": "endpoint-ownership-demo"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182711447959:android:189dedd62a20847b",
+        "android_client_info": {
+          "package_name": "org.kaaproject.kaa.demo.verifiersdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182711447959-2c4meei5hpnb6aol4t432ago73isvsbp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.kaaproject.kaa.demo.verifiersdemo",
+            "certificate_hash": "C92F7F2A77FF531B5561808F3691A553C82D81D8"
+          }
+        },
+        {
+          "client_id": "182711447959-40ail2dbchk4k0a3kclhgbsmnih20lst.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.kaaproject.kaa.demo.verifiersdemo",
+            "certificate_hash": "38954094A62FDD610B0FD36204C2AF12398A531A"
+          }
+        },
+        {
+          "client_id": "182711447959-c1a5kefqeq5mv7o3f4j43a8igan7g9fl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0B4f57H2g9ZDq3YdZ8qBWjBrOWw9zAyY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

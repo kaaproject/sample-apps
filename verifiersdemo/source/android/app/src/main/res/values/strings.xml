@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+     Copyright 2014-2016 CyberVision, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+    <string name="app_name">KaaVerifiersDemo</string>
+    <string name="action_exit">Logout</string>
+
+    <!--Credentials-->
+    <string name="facebook_app_id">1704658276524522</string>
+    <string name="twitter_key">FTa2SbY4NlonklfkrlceR9UGw</string>
+    <string name="twitter_secret">bMUZIQgXMisr5ycgTdyTPMz1ONVRG9SicuJ9D0ybZqZcvDSQvg</string>
+
+    <string name="login_activity_event_message_hint">Enter event message…</string>
+    <string name="login_activity_event_send_button">Send</string>
+
+    <string name="kaa_manager_waiting_for_response">Waiting for Kaa response…</string>
+    <string name="kaa_manager_verification_success">Successful Kaa verification</string>
+    <string name="kaa_manager_verification_failed">ERROR: %1$s, %2$s, %3$s</string>
+    <string name="kaa_manager_event_listeners_received">Event listeners received: %s</string>
+    <string name="kaa_manager_event_listeners_failed">Find event listeners request has failed</string>
+    <string name="kaa_manager_user_detached">User was detached</string>
+
+    <string name="facebook_cancelled">Cancel in Facebook connection!</string>
+    <string name="facebook_error">Error in Facebook connection, %s</string>
+
+    <string name="google_plus_error">Error in Google authentication!</string>
+    <string name="google_plus_success_logout">Success logout!</string>
+    <string name="google_plus_error_connection">Error in Google connection!</string>
+
+    <string name="twitter_error">Error in Twitter: %s</string>
+
+    <string name="login_activity_error">Error: %s</string>
+    <string name="login_activity_attach_access_token">Attach access token: %1$s, endpoint key hash: %2$s</string>
+    <string name="login_activity_event_text">[%1$s]: %2$s, %3$s\n</string>
+    <string name="login_activity_enter_access_token_hint">Enter access token</string>
+    <string name="login_activity_attach_access_token_button">Send</string>
+    <string name="login_activity_greeting">[%1$s] Name: %2$s</string>
+    <string name="login_activity_id_text">Id: %s</string>
+
+</resources>

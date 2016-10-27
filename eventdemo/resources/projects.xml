@@ -468,7 +468,7 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
         <sdkLibDir>ObjCEventDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <!-- <project id="event_demo_android">
+    <project id="event_demo_android">
         <name>Event Android demo</name>
         <description>Kaa Event subsystem demo app based on Java SDK for Android</description>
         <details>
@@ -478,7 +478,72 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
 	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
-If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+<h1>Launching</h1>
+<p>
+	For sample applications that run on Android, both the binary files (.apk package) and the source code (.tar.gz archive) are available for download.
+	If you want to only launch the sample application, download the binary files.
+	If you want to explore the source code of the sample application, download the source code archive.
+</p>
+<h2>Install using the binary files</h2>
+To install this sample application using the binary files:
+	
+<ol>
+	<li>
+		Click the <b>Binary</b> button.
+		A binary build window will open.
+		Click <b>Ok</b> and download the .apk file.
+	</li>
+	<li>
+		<p>
+			<b>Android</b>
+			<br />
+			Copy the .apk file to your Android device and open it to install.
+			The sample application console will display the startup message.
+		</p>
+		<p>
+			<b>Windows</b>
+			<br />
+			Connect the Android device to your Windows machine and run the following command from the sdk/platform-tools directory.
+			<pre>
+				adb install <path_to_the_apk>/app-debug.apk
+			</pre>
+		</p>
+		<p>
+			<b>Linux</b>
+			<br />
+			Connect the Android device to your Linux machine and run the following command from the sdk/platform-tools directory.
+			<pre>
+				./adb install <path_to_the_apk>/app-debug.apk
+			</pre>
+		</p>
+	</li>
+</ol>
+<h2>Install using the source code</h2>
+To install this sample application using the source code:
+<ol>
+	<li>
+		Install Kaa SDK on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		
+		<pre>
+			./gradlew assembleDebug
+		</pre>
+		
+		The .apk file will be created in the app/build/outputs/apk/ directory.
+	</li>
+	<li>
+		Follow the installation instructions described in the <b>Install using the binary files</b> section.
+	</li>
+</ol>
+	
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
 
@@ -492,7 +557,7 @@ If you want to modify the sample application source code or create your own appl
         <projectFolder>event_demo/EventDemo</projectFolder>
         <sdkLibDir>event_demo/EventDemo/app/libs</sdkLibDir>
         <destBinaryFile>event_demo/EventDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
-    </project> -->
+    </project>
     <bundle id="event_demos">
         <name>Event demos</name>
         <description>Kaa Event subsystem demo applications bundle</description>

@@ -42,7 +42,7 @@ void kaa_message_receive(void *context,
     printf("Message was received!\n");
 
     if (event->message->type == KAA_VERIFIERS_DEMO_EVENT_CLASS_FAMILY_UNION_STRING_OR_NULL_BRANCH_0) {
-        kaa_verifiers_demo_event_class_family_message_event_t *message = (kaa_verifiers_demo_event_class_family_message_event_t *) event->message->data;
+        char *message = event->message->data;
         printf("Message: %s\n", message);
     }
 

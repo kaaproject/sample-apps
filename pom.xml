@@ -50,7 +50,7 @@
         <module>eventdemo</module>
         <module>cityguide</module>
         <module>cellmonitor</module>
-        <module>photoframe</module>
+        <!-- <module>photoframe</module> -->
         <module>verifiersdemo</module>
         <module>powerplant</module>
         <module>powerplant-dashboard</module>
@@ -63,10 +63,10 @@
         <module>powerplant-couchbase-proxy</module>
         <module>gpiocontrol</module>
         <module>ota</module>
-        <module>zeppelindemo</module>
-        <module>sparkdemo</module>
-        <module>cassandrademo</module>
-        <module>stormdemo</module>
+        <!-- <module>zeppelindemo</module> -->
+        <!-- <module>sparkdemo</module> -->
+        <!-- <module>cassandrademo</module> -->
+        <!-- <module>stormdemo</module> -->
         <module>profilingdemo</module>
     </modules>
 

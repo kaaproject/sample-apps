@@ -21,7 +21,7 @@
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="gpio_master">
+    <!-- <project id="gpio_master">
         <name>GPIO control Android</name>
         <description>GPIO control Android app</description>
         <details>
@@ -105,17 +105,7 @@ To install this sample application using the source code:
 If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>
-        
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-             
         <sdkLanguage>JAVA</sdkLanguage>
-        
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
-             
         <platforms>ANDROID</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
@@ -124,7 +114,7 @@ If you want to modify the sample application source code or create your own appl
         <projectFolder>gpiocontrol/GpioControl</projectFolder>
         <sdkLibDir>gpiocontrol/GpioControl/app/libs</sdkLibDir>
         <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/app-debug.apk</destBinaryFile>
-    </project>
+    </project> -->
 
     <project id="gpio_slave_c">
         <name>GPIO control C</name>
@@ -157,7 +147,7 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
         <sdkLibDir>gpio-c-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <project id="gpio_slave_artik5">
+    <!-- <project id="gpio_slave_artik5">
         <name>GPIO control Artik 5</name>
         <description>GPIO control Artik 5 app that demonstrates capabilities of the Kaa Event subsystem</description>
         <details>
@@ -168,16 +158,7 @@ First, read our <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programmin
 After you successfully installed this app on your Artik 5 device, go to "GPIO control Android" or "GPIO control iOS" Sandbox app and follow the steps described there.
             ]]>
         </details>
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-             
         <sdkLanguage>CPP</sdkLanguage>
-        
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
-             
         <platforms>ARTIK5</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
@@ -186,7 +167,7 @@ After you successfully installed this app on your Artik 5 device, go to "GPIO co
         <projectFolder>gpio-artik5-client</projectFolder>
         <sdkLibDir>gpio-artik5-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project>
+    </project> -->
     <project id="gpio_master_objc">
         <name>GPIO control iOS</name>
         <description>GPIO control iOS app</description>

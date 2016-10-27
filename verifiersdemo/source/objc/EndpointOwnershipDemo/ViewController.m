@@ -54,18 +54,19 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     [GIDSignIn sharedInstance].uiDelegate = self;
     [GIDSignIn sharedInstance].delegate = self;
     
-    self.twtrLogInButton.loginMethods = TWTRLoginMethodAll;
-    self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
-        if (session) {
-            NSLog(@"Signed in as %@", [session userName]);
-            self.user = [[User alloc] initWithUserId:session.userID
-                                               token:session.authToken
-                                   authorizedNetwork:AuthorizedNetworkTwitter];
-            [self updateSocialNetworkAuthorizationWithStatus:YES];
-        } else {
-            NSLog(@"error: %@", [error localizedDescription]);
-        }
-    };
+    self.twtrLogInButton.hidden = YES;
+//    self.twtrLogInButton.loginMethods = TWTRLoginMethodAll;
+//    self.twtrLogInButton.logInCompletion = ^(TWTRSession *session, NSError *error) {
+//        if (session) {
+//            NSLog(@"Signed in as %@", [session userName]);
+//            self.user = [[User alloc] initWithUserId:session.userID
+//                                               token:session.authToken
+//                                   authorizedNetwork:AuthorizedNetworkTwitter];
+//            [self updateSocialNetworkAuthorizationWithStatus:YES];
+//        } else {
+//            NSLog(@"error: %@", [error localizedDescription]);
+//        }
+//    };
     
     self.kaaManager = [KaaManager sharedInstance];
     [self.kaaManager startKaaClient];
@@ -76,14 +77,14 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     
     switch (self.user.network) {
         case AuthorizedNetworkFacebook:
-            self.twtrLogInButton.hidden = status;
+//            self.twtrLogInButton.hidden = status;
             self.googleLogInButton.hidden = status;
             break;
             
         case AuthorizedNetworkTwitter:
         case AuthorizedNetworkGoogle:
             self.fbLoginButton.hidden = status;
-            self.twtrLogInButton.hidden = status;
+//            self.twtrLogInButton.hidden = status;
             self.googleLogInButton.hidden = status;
             self.logOutButton.hidden = !status;
             break;

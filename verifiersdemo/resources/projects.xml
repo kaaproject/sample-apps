@@ -169,7 +169,7 @@ If you want to modify the sample application source code or create your own appl
         <destBinaryFile>JVerifiersDemo/build/jar/VerifiersDemo.jar</destBinaryFile>
     </project>
 
-<!--     <project id="verifiers_demo_objc">
+     <project id="verifiers_demo_objc">
         <name>Endpoint ownership Objective-C demo</name>
         <description>Kaa user verifiers demo app based on Objective-C SDK</description>
         <details>
@@ -308,7 +308,7 @@ Make sure that the build target is set to <b>EndpointOwnershipDemo</b>, not <b>K
         <projectFolder>ObjCVerifiersDemo</projectFolder>
         <sdkLibDir>ObjCVerifiersDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project> -->
+    </project>
 
     <project id="verifiers_demo_c">
         <name>Endpoint ownership C demo</name>

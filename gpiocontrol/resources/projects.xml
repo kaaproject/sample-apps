@@ -21,7 +21,7 @@
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <!-- <project id="gpio_master">
+    <project id="gpio_master">
         <name>GPIO control Android</name>
         <description>GPIO control Android app</description>
         <details>
@@ -114,7 +114,7 @@ If you want to modify the sample application source code or create your own appl
         <projectFolder>gpiocontrol/GpioControl</projectFolder>
         <sdkLibDir>gpiocontrol/GpioControl/app/libs</sdkLibDir>
         <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/app-debug.apk</destBinaryFile>
-    </project> -->
+    </project>
 
     <!-- <project id="gpio_slave_c">
         <name>GPIO control C</name>
@@ -160,7 +160,7 @@ After you successfully installed this app on your Artik 5 device, go to "GPIO co
         <sdkLibDir>gpio-artik5-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project> -->
-    <!-- <project id="gpio_master_objc">
+    <project id="gpio_master_objc">
         <name>GPIO control iOS</name>
         <description>GPIO control iOS app</description>
         <details>
@@ -192,7 +192,7 @@ For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/
         <projectFolder>gpiocontrol</projectFolder>
         <sdkLibDir>gpiocontrol/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project> -->
+    </project>
     <bundle id="gpio_control">
         <name>GPIO control demos</name>
         <description>GPIO control applications bundle</description>

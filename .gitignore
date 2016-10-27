@@ -160,3 +160,4 @@ xcuserdata/
 *.xcuserstate
 
 ##
+src/main/res/values-w820dp/

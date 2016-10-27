@@ -19,7 +19,7 @@ Copyright 2014-2016 CyberVision, Inc.
         xmlns="http://www.kaaproject.org"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="storm_demo_java">
+    <!-- <project id="storm_demo_java">
         <name>Storm data analytics Java demo</name>
         <description>IoT real-time data processing in Apache Storm using Kaa</description>
         <details><![CDATA[
@@ -72,16 +72,7 @@ Make sure that the Kaa Sandbox is up and running. After starting the "Storm data
 the endpoint in your server side application.
             ]]>
         </details>
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>JAVA</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
-
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
@@ -90,8 +81,8 @@ the endpoint in your server side application.
         <projectFolder>JStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>JStormDataAnalyticsDemo/lib</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project>
-    <project id="storm_demo_c">
+    </project> -->
+    <!-- <project id="storm_demo_c">
         <name>Storm data analytics C demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
@@ -141,15 +132,7 @@ the endpoint in your server side application.
             ]]>
         </details>
 
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>C</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>LINUX_X86</platforms>
         <features>DATA_COLLECTION</features>
@@ -159,8 +142,8 @@ the endpoint in your server side application.
         <projectFolder>CStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project>
-    <project id="storm_demo_cpp">
+    </project> -->
+    <!-- <project id="storm_demo_cpp">
         <name>Storm data analytics C++ demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
@@ -210,16 +193,7 @@ the endpoint in your server side application.
             ]]>
         </details>
 
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project 
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>CPP</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
-
         <platforms>LINUX_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
@@ -228,7 +202,7 @@ the endpoint in your server side application.
         <projectFolder>CppStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CppStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project>
+    </project> -->
     <bundle id="storm_demos">
         <name>Storm data analytics demos</name>
         <description>IoT real-time data processing in Storm using Kaa</description>

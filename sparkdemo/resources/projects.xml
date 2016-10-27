@@ -20,7 +20,7 @@ Copyright 2014-2016 CyberVision, Inc.
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="spark_demo_cpp">
+    <!-- <project id="spark_demo_cpp">
         <name>Spark data analytics demo</name>
         <description>IoT data ingestion in Spark Streaming using Kaa</description>
         <details><![CDATA[
@@ -172,15 +172,7 @@ using Kaa"</a>.
         </details>
 
 
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>CPP</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>LINUX_X86 INTEL_EDISON</platforms>
         <features>DATA_COLLECTION</features>
@@ -189,5 +181,5 @@ using Kaa"</a>.
         <projectFolder>CppSparkDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CppSparkDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project>
+    </project> -->
 </projectsConfig>

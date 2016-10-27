@@ -20,7 +20,7 @@ Copyright 2014-2016 CyberVision, Inc.
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="zeppelin_demo_java">
+    <!-- <project id="zeppelin_demo_java">
         <name>Zeppelin data analytics demo</name>
         <description>Real-time IoT data analytics and visualization with Kaa, Apache Cassandra, and Apache Zeppelin</description>
         <details><![CDATA[
@@ -176,15 +176,7 @@ visualization with Kaa, Apache Cassandra, and Apache Zeppelin"</a>.
         </details>
 
 
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>JAVA</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
 
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>DATA_COLLECTION</features>
@@ -193,5 +185,5 @@ visualization with Kaa, Apache Cassandra, and Apache Zeppelin"</a>.
         <projectFolder>JZeppelinDataAnalyticsDemo</projectFolder>
         <sdkLibDir>JZeppelinDataAnalyticsDemo/lib</sdkLibDir>
         <destBinaryFile></destBinaryFile>
-    </project>
+    </project> -->
 </projectsConfig>

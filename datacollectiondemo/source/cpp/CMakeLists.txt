@@ -23,7 +23,7 @@ set(KAA_WITHOUT_EVENTS 1)
 
 # Set configuration variables
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-    set(KAA_MAX_LOG_LEVEL "3")
+    set(KAA_MAX_LOG_LEVEL 3)
 endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
 if (NOT DEFINED KAA_SDK_PATH)

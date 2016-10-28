@@ -1,3 +1,3 @@
 if (NOT DEFINED %variable)
-    set(%variable "%value")
+    set(%variable %value)
 endif (NOT DEFINED %variable)

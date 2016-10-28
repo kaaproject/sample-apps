@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT =
             new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
-    //private TwitterHelper mTwitterHelper;
+    private TwitterHelper mTwitterHelper;
     private FacebookHelper mFacebookHelper;
     //private GplusHelper mGplusHelper;
 
@@ -142,8 +142,8 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * Twitter login button
          */
-        //final TwitterLoginButton twitterButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
-        //mTwitterHelper.initSignInButton(twitterButton);
+        final TwitterLoginButton twitterButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        mTwitterHelper.initSignInButton(twitterButton);
 
         /**
          * Google Plus login button
@@ -189,9 +189,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       // mTwitterHelper.onActivityResult(requestCode, resultCode, data);
+        mTwitterHelper.onActivityResult(requestCode, resultCode, data);
         mFacebookHelper.onActivityResult(requestCode, resultCode, data);
-       // mGplusHelper.onActivityResult(requestCode, resultCode, data);
+        //mGplusHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -238,13 +238,13 @@ public class LoginActivity extends AppCompatActivity {
     private void logout(UserVerifierApp.AccountType type) {
         switch (type) {
             case GOOGLE:
-               // mGplusHelper.logout();
+                //mGplusHelper.logout();
                 break;
             case FACEBOOK:
                 mFacebookHelper.logout();
                 break;
             case TWITTER:
-              //  mTwitterHelper.logout();
+                mTwitterHelper.logout();
                 break;
         }
 
@@ -309,12 +309,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initHelpers() {
-       // mGplusHelper = new GplusHelper(mEventBus, this);
+        //mGplusHelper = new GplusHelper(mEventBus, this);
         mFacebookHelper = new FacebookHelper(mEventBus, this);
-       // mTwitterHelper = new TwitterHelper(mEventBus, this);
+        mTwitterHelper = new TwitterHelper(mEventBus, this);
 
-       // mTwitterHelper.init();
-      //  mGplusHelper.init();
+        mTwitterHelper.init();
+        //mGplusHelper.init();
         mFacebookHelper.init();
     }
 }

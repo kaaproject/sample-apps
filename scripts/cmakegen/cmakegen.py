@@ -41,17 +41,16 @@ class FeaturesGenerator:
             return str()
         template_c = '\nset(WITH_EXTENSION_%extension OFF)'
         template_cpp = '\nset(KAA_WITHOUT_%extension 1)'
-        comment = '# Disable unused features' if len(self._features) < 4 else str()
         if language == 'c':
-            return comment+self._generate_from_template(template_c)
+            return self._generate_from_template(template_c)
         elif language == 'cpp':
-            return comment+self._generate_from_template(template_cpp)
+            return self._generate_from_template(template_cpp)
         else:
             raise GeneratorException('Unknown language: '+language)
 
     def _generate_from_template(self, template):
         features = ['configuration', 'notifications', 'logging', 'events']
-        output = ''
+        output = '# Disable unused features' if len(self._features) < 4 else ''
         for f in features:
             if not f in self._features:
                 output = output + CMakeGenTemplate(template).substitute(extension = f.upper())
@@ -59,20 +58,26 @@ class FeaturesGenerator:
 
 class VariablesGenerator:
     def __init__(self, variables):
-        self._variables = dict(variables) if variables else dict()
+        self._variables = dict(variables) if variables else {}
+        for k, v in self._variables.iteritems():
+            if isinstance(v, basestring):
+                self._variables[k] = '"' + v + '"'
 
     def add_variables(self, **kwargs):
+        for k, v in kwargs.iteritems():
+            if isinstance(v, basestring):
+                kwargs[k] = '"' + v + '"'
         self._variables.update(kwargs)
 
     def generate(self):
-        out = '# Set configuration variables\n' if len(self._variables) > 0 else str()
+        out = '# Set configuration variables\n' if len(self._variables) > 0 else ''
         for k, v in self._variables.iteritems():
             out = out + CMakeGenTemplate(VARIABLE_TEMPLATE).safe_substitute(variable=k, value=v)
         return out
 
 class DefinitionsGenerator(VariablesGenerator):
     def generate(self):
-        out = '# Set compile definitions\n' if len(self._variables) > 0 else str()
+        out = '# Set compile definitions\n' if len(self._variables) > 0 else ''
         template = VARIABLE_TEMPLATE + 'add_definitions(-D%variable="${%variable}")'
         for k, v in self._variables.iteritems():
             out = out + CMakeGenTemplate(template).safe_substitute(variable=k, value=v)

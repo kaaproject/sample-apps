@@ -25,6 +25,7 @@ import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -73,10 +74,11 @@ public class TwitterHelper extends SocialNetworkHelper {
                 // Twitter.getInstance().core.getSessionManager().getActiveSession()
                 final TwitterSession session = result.data;
 
+                final TwitterAuthToken authToken = session.getAuthToken();
                 final User user = new User(UserVerifierApp.AccountType.TWITTER,
                         String.valueOf(session.getUserId()),
                         session.getUserName(),
-                        session.getAuthToken().token);
+                        authToken.token + " " + authToken.secret);
 
                 mEventBus.obtainMessage(
                         LoginActivity.EVENT_ATTACH_USER, user).sendToTarget();

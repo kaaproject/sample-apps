@@ -66,7 +66,7 @@ public class GplusHelper extends SocialNetworkHelper implements GoogleApiClient.
         final GoogleSignInOptions googleSignInOptions =
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestScopes(new Scope(Scopes.PLUS_LOGIN))
-                        .requestServerAuthCode("182711447959-2c4meei5hpnb6aol4t432ago73isvsbp.apps.googleusercontent.com")
+                        .requestServerAuthCode("182711447959-c1a5kefqeq5mv7o3f4j43a8igan7g9fl.apps.googleusercontent.com", true)
                         .requestEmail()
                         .build();
 

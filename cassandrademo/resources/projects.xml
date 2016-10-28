@@ -24,6 +24,10 @@ Copyright 2014-2016 CyberVision, Inc.
         <name>Cassandra data analytics demo</name>
         <description>Time series IoT data ingestion into Cassandra using the Kaa platform</description>
         <details><![CDATA[
+<p>
+<b>WARNING: This application was last verified against Kaa platform version 0.9.0. Some functionality may be broken or unavailable. You are still welcome to download the sources, tinker with them, and <a href="http://kaaproject.github.io/kaa/docs/latest/Customization-guide/How-to-contribute/">contribute back</a> your bugfixes :)</b>
+</p>
+
 This sample application based on Raspberry Pi and DHT11 collects temperature measurements from a sensor and uploads it to Cassandra DB using Kaa. <br />
 Please review the webinar below for hands-on experience based on an earlier version of the Kaa platform. <br /> <br />
 <iframe width="691" height="389" src="https://www.youtube.com/embed/VHwJLHQjl50" frameborder="0" allowfullscreen></iframe> <br />

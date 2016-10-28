@@ -23,6 +23,10 @@ Copyright 2014-2016 CyberVision, Inc.
         <name>Storm data analytics Java demo</name>
         <description>IoT real-time data processing in Apache Storm using Kaa</description>
         <details><![CDATA[
+<p>
+<b>WARNING: This application was last verified against Kaa platform version 0.9.0. Some functionality may be broken or unavailable. You are still welcome to download the sources, tinker with them, and <a href="http://kaaproject.github.io/kaa/docs/latest/Customization-guide/How-to-contribute/">contribute back</a> your bugfixes :)</b>
+</p>
+
 This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa Java SDK-based client application. <br /> <br />
 Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
 To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
@@ -95,6 +99,10 @@ the endpoint in your server side application.
         <name>Storm data analytics C demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
+<p>
+<b>WARNING: This application was last verified against Kaa platform version 0.9.0. Some functionality may be broken or unavailable. You are still welcome to download the sources, tinker with them, and <a href="http://kaaproject.github.io/kaa/docs/latest/Customization-guide/How-to-contribute/">contribute back</a> your bugfixes :)</b>
+</p>
+
 This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С SDK-based client application. <br /> <br />
 Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
 To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
@@ -164,6 +172,10 @@ the endpoint in your server side application.
         <name>Storm data analytics C++ demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
+<p>
+<b>WARNING: This application was last verified against Kaa platform version 0.9.0. Some functionality may be broken or unavailable. You are still welcome to download the sources, tinker with them, and <a href="http://kaaproject.github.io/kaa/docs/latest/Customization-guide/How-to-contribute/">contribute back</a> your bugfixes :)</b>
+</p>
+
 This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С++ SDK-based client application. <br /> <br />
 Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
 To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official

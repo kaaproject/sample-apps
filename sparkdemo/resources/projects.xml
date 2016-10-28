@@ -24,6 +24,10 @@ Copyright 2014-2016 CyberVision, Inc.
         <name>Spark data analytics demo</name>
         <description>IoT data ingestion in Spark Streaming using Kaa</description>
         <details><![CDATA[
+<p>
+<b>WARNING: This application was last verified against Kaa platform version 0.9.0. Some functionality may be broken or unavailable. You are still welcome to download the sources, tinker with them, and <a href="http://kaaproject.github.io/kaa/docs/latest/Customization-guide/How-to-contribute/">contribute back</a> your bugfixes :)</b>
+</p>
+
 This sample application collects real-time data from Kaa endpoints into Apache Spark for stream processing using Kaa. <br /> <br />
 Please review the webinar below for hands-on experience based on an earlier version of the Kaa platform. <br /> <br />
 <iframe width="691" height="389" src="https://www.youtube.com/embed/a5Dw57Q-OIc" frameborder="0" allowfullscreen></iframe> <br />

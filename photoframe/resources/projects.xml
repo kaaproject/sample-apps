@@ -26,6 +26,10 @@
         <description>Photo frame demo app for Android</description>
         <details>
             <![CDATA[
+<p>
+<b>WARNING: This application was last verified against Kaa platform version 0.9.0. Some functionality may be broken or unavailable. You are still welcome to download the sources, tinker with them, and <a href="http://kaaproject.github.io/kaa/docs/latest/Customization-guide/How-to-contribute/">contribute back</a> your bugfixes :)</b>
+</p>
+
 This app demonstrates the capabilities of the Kaa Event subsystem for Android.
 
 <h2>Installation</h2>

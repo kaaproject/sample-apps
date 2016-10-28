@@ -24,6 +24,9 @@ Copyright 2014-2016 CyberVision, Inc.
         <name>Zeppelin data analytics demo</name>
         <description>Real-time IoT data analytics and visualization with Kaa, Apache Cassandra, and Apache Zeppelin</description>
         <details><![CDATA[
+<p>
+<b>WARNING: This application was last verified against Kaa platform version 0.9.0. Some functionality may be broken or unavailable. You are still welcome to download the sources, tinker with them, and <a href="http://kaaproject.github.io/kaa/docs/latest/Customization-guide/How-to-contribute/">contribute back</a> your bugfixes :)</b>
+</p>
 
 This sample Kaa application generates power measurements and uploads them to Cassandra for further processing. In the next step, by using Zeppelin notebook integrated with Cassandra, the user will be able to execute analytics queries against the collected data and generate insightful charts and reports. <br /> <br />
 
@@ -174,18 +177,7 @@ For more details, please refer to our webinar video embeded above <a href="https
 visualization with Kaa, Apache Cassandra, and Apache Zeppelin"</a>.
             ]]>
         </details>
-
-
-        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
-             (ex. JAVA, CPP, etc., to get list of all possible options
-             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
-
         <sdkLanguage>JAVA</sdkLanguage>
-
-        <!-- Specifies the target runtime platforms according to the instructions from the project details section
-             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
-             see 'platform' type in demo_projects_schema.xsd schema) -->
-
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>

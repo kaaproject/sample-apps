@@ -60,8 +60,8 @@ For more background on the user verification refer to the corresponding design r
         <bundleId>verifiers_demos</bundleId>
         <sourceArchive>android/verifiers_demo.tar.gz</sourceArchive>
         <projectFolder>verifiers_demo/VerifiersDemo</projectFolder>
-        <sdkLibDir>verifiers_demo/VerifiersDemo/libs</sdkLibDir>
-        <destBinaryFile>verifiers_demo/VerifiersDemo/bin/VerifiersDemo-debug.apk</destBinaryFile>
+        <sdkLibDir>verifiers_demo/VerifiersDemo/app/libs</sdkLibDir>
+        <destBinaryFile>verifiers_demo/VerifiersDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
 
     <project id="verifiers_demo_java">

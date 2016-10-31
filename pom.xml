@@ -120,7 +120,6 @@
                                 <include>**/*.bat</include>
                                 <include>**/*.yaml</include>
                                 <include>**/*.md</include>
-                                <include>**/*.xml</include>
                                 <include>**/*.html</include>
                                 <include>**/*.txt</include>
                                 <include>**/*.cmake</include>
@@ -140,6 +139,7 @@
                                 <exclude>**/thirdparty/**</exclude>
                                 <exclude>**/resources/**</exclude>
                                 <exclude>**/main/res/**</exclude>
+                                <exclude>**/*.xml</exclude>
                                 <exclude>README.md</exclude>
                             </excludes>
                         </configuration>

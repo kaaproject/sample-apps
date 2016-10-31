@@ -139,6 +139,7 @@
                             <excludes>
                                 <exclude>**/thirdparty/**</exclude>
                                 <exclude>**/resources/**</exclude>
+                                <exclude>**/main/res/**</exclude>
                                 <exclude>README.md</exclude>
                             </excludes>
                         </configuration>

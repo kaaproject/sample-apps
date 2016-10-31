@@ -17,34 +17,35 @@
 
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
+    android:orientation="vertical"
     android:paddingBottom="10dp"
-    android:orientation="vertical">
+    android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/albumTitle"
+        android:id="@+id/album_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="?android:attr/textColorPrimary"
-        android:singleLine="true" />
+        android:textColor="?android:attr/textColorPrimary"/>
 
     <TextView
-        android:id="@+id/imageCount"
+        android:id="@+id/image_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:singleLine="true" />
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <TextView
-        android:id="@+id/nowPlaying"
+        android:id="@+id/now_playing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="@string/view_holder_album_now_playing"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/now_playing"
-        android:singleLine="true"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </LinearLayout>

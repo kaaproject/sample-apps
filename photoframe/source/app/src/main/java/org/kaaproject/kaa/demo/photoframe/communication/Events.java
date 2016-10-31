@@ -18,8 +18,11 @@ package org.kaaproject.kaa.demo.photoframe.communication;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class Events {
+public final class Events {
 
+    private Events() {
+        throw new UnsupportedOperationException("No instances");
+    }
 
     /**
      * An event class which is used to notify UI components
@@ -54,11 +57,11 @@ public class Events {
 
         private String mErrorMessage;
 
-        public BasicEvent() {
+        BasicEvent() {
             super();
         }
 
-        public BasicEvent(String errorMessage) {
+        BasicEvent(String errorMessage) {
             mErrorMessage = errorMessage;
         }
 
@@ -75,20 +78,14 @@ public class Events {
 
         private final String mEndpointKey;
 
-        public BasicEndpointEvent(String endpointKey) {
+        BasicEndpointEvent(String endpointKey) {
             super();
-            mEndpointKey = endpointKey;
-        }
-
-        public BasicEndpointEvent(String endpointKey, String errorMessage) {
-            super(errorMessage);
             mEndpointKey = endpointKey;
         }
 
         public String getEndpointKey() {
             return mEndpointKey;
         }
-
     }
 
     /**
@@ -98,10 +95,6 @@ public class Events {
 
         public KaaStartedEvent() {
             super();
-        }
-
-        public KaaStartedEvent(String errorMessage) {
-            super(errorMessage);
         }
     }
 
@@ -120,7 +113,6 @@ public class Events {
         }
     }
 
-
     /**
      * An event class which is used to notify UI components
      * of the completion of the endpoint attach operation.
@@ -137,21 +129,14 @@ public class Events {
 
     }
 
-
     /**
      * An event class which is used to notify UI components
      * of the receipt of the information about a remote device.
      */
     public static class DeviceInfoEvent extends BasicEndpointEvent {
-
         public DeviceInfoEvent(String endpointKey) {
             super(endpointKey);
         }
-
-        public DeviceInfoEvent(String endpointKey, String errorMessage) {
-            super(endpointKey, errorMessage);
-        }
-
     }
 
     /**
@@ -159,30 +144,17 @@ public class Events {
      * the receipt of the information about the play status of a remote device.
      */
     public static class PlayInfoEvent extends BasicEndpointEvent {
-
         public PlayInfoEvent(String endpointKey) {
             super(endpointKey);
         }
-
-        public PlayInfoEvent(String endpointKey, String errorMessage) {
-            super(endpointKey, errorMessage);
-        }
-
     }
 
     /**
      * An event class which is used to notify UI components of the receipt of the albums list from a remote device.
      */
     public static class AlbumListEvent extends BasicEndpointEvent {
-
         public AlbumListEvent(String endpointKey) {
             super(endpointKey);
         }
-
-        public AlbumListEvent(String endpointKey, String errorMessage) {
-            super(endpointKey, errorMessage);
-        }
-
     }
-
 }

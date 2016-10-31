@@ -17,32 +17,33 @@
 
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:paddingTop="10dp"
-      android:paddingBottom="10dp"
-      android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/modelName"
+        android:id="@+id/model_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="?android:attr/textColorPrimary"
-        android:singleLine="true" />
+        android:textColor="?android:attr/textColorPrimary"/>
 
     <TextView
-        android:id="@+id/manufacturerName"
+        android:id="@+id/manufacturer_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:singleLine="true" />
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <TextView
-        android:id="@+id/playStatus"
+        android:id="@+id/play_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:singleLine="true" />
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 </LinearLayout>

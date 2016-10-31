@@ -17,9 +17,11 @@
 package org.kaaproject.kaa.demo.photoframe.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -35,47 +37,34 @@ import java.util.List;
  * The implementation of the {@link BaseAdapter} class. Used as an adapter class for the devices list view.
  * Provides list item views with the information about remote devices.
  */
-public class DevicesAdapter extends BaseAdapter {
+public class DevicesAdapter extends ArrayAdapter<DeviceInfo> {
 
     private Context mContext;
-    private KaaManager manager;
-    private List<DeviceInfo> devices;
+    private KaaManager mKaaManager;
+
+    private final LayoutInflater mLayoutInflater;
 
     public DevicesAdapter(Context context, KaaManager controller, List<DeviceInfo> devices) {
+        super(context, R.layout.device_list_item, devices);
         mContext = context;
-        manager = controller;
-        this.devices = devices;
+        mKaaManager = controller;
+
+        mLayoutInflater = LayoutInflater.from(mContext);
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return devices.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return devices.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        DeviceInfo deviceInfo = (DeviceInfo) getItem(position);
-        ViewHolder holder;
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        final DeviceInfo deviceInfo = getItem(position);
+        final ViewHolder holder;
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.device_list_item, null);
+            convertView = mLayoutInflater.inflate(R.layout.device_list_item, null);
 
             holder = new ViewHolder();
-            holder.modelNameView = (TextView) convertView.findViewById(R.id.modelName);
-            holder.manufacturerNameView = (TextView) convertView.findViewById(R.id.manufacturerName);
-            holder.playStatusView = (TextView) convertView.findViewById(R.id.playStatus);
+            holder.modelNameView = (TextView) convertView.findViewById(R.id.model_name);
+            holder.manufacturerNameView = (TextView) convertView.findViewById(R.id.manufacturer_name);
+            holder.playStatusView = (TextView) convertView.findViewById(R.id.play_status);
 
             convertView.setTag(holder);
         } else {
@@ -84,28 +73,30 @@ public class DevicesAdapter extends BaseAdapter {
 
         holder.modelNameView.setText(deviceInfo.getModel());
 
-        String byManufacturer = mContext.getString(R.string.by_pattern, deviceInfo.getManufacturer());
-        holder.manufacturerNameView.setText(byManufacturer);
+        holder.manufacturerNameView.setText(mContext.getString(
+                R.string.view_holder_device_made_by_patter, deviceInfo.getManufacturer()
+        ));
 
-        String endpointKey = manager.getRemoteDeviceEndpoint(position);
-        PlayInfo playInfo = manager.getRemoteDeviceStatus(endpointKey);
+        final PlayInfo playInfo = mKaaManager.getRemoteDeviceStatus(
+                mKaaManager.getRemoteDeviceEndpoint(position)
+        );
 
         if (playInfo == null) {
-            holder.playStatusView.setText(R.string.unknown);
+            holder.playStatusView.setText(R.string.view_holder_device_status_unknown);
             return convertView;
         }
 
         if (playInfo.getStatus() == PlayStatus.STOPPED) {
-            holder.playStatusView.setText(R.string.stopped);
+            holder.playStatusView.setText(R.string.view_holder_device_status_stopped);
         } else {
-            holder.playStatusView.setText(mContext.getString(R.string.playing,
+            holder.playStatusView.setText(mContext.getString(R.string.view_holder_device_playing_album_text,
                     playInfo.getCurrentAlbumInfo().getTitle()));
         }
 
         return convertView;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView modelNameView;
         TextView manufacturerNameView;
         TextView playStatusView;

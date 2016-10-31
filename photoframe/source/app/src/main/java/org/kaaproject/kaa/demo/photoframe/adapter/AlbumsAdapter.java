@@ -18,6 +18,8 @@ package org.kaaproject.kaa.demo.photoframe.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,30 +38,33 @@ import java.util.List;
  */
 public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
 
-    private Context mContext;
-    private PlayInfo playInfo;
+    private final Context mContext;
+    private final PlayInfo mPlayInfo;
+    private final LayoutInflater mLayoutInflater;
 
     public AlbumsAdapter(Context context, PlayInfo playInfo, List<AlbumInfo> albums) {
         super(context, R.layout.album_list_item, albums);
 
         mContext = context;
-        this.playInfo = playInfo;
+        mPlayInfo = playInfo;
+
+        mLayoutInflater = LayoutInflater.from(mContext);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        AlbumInfo albumInfo = getItem(position);
-        ViewHolder holder;
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        final AlbumInfo albumInfo = getItem(position);
+
+        final ViewHolder holder;
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.album_list_item, null);
+            convertView = mLayoutInflater.inflate(R.layout.album_list_item, null);
 
             holder = new ViewHolder();
-            holder.albumTitleView = (TextView) convertView.findViewById(R.id.albumTitle);
-            holder.imageCountView = (TextView) convertView.findViewById(R.id.imageCount);
-            holder.nowPlayingView = (TextView) convertView.findViewById(R.id.nowPlaying);
+            holder.albumTitleView = (TextView) convertView.findViewById(R.id.album_title);
+            holder.imageCountView = (TextView) convertView.findViewById(R.id.image_count);
+            holder.nowPlayingView = (TextView) convertView.findViewById(R.id.now_playing);
 
             convertView.setTag(holder);
         } else {
@@ -68,15 +73,14 @@ public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
 
         holder.albumTitleView.setText(albumInfo.getTitle());
 
-        String imageCountText = mContext.getString(R.string.image_count_pattern, albumInfo.getImageCount());
+        String imageCountText = mContext.getString(R.string.view_holder_album_image_count, albumInfo.getImageCount());
         holder.imageCountView.setText(imageCountText);
 
-
-        if (playInfo != null && playInfo.getCurrentAlbumInfo() != null &&
-                playInfo.getCurrentAlbumInfo().getBucketId().equals(albumInfo.getBucketId())) {
+        if (mPlayInfo != null && mPlayInfo.getCurrentAlbumInfo() != null &&
+                mPlayInfo.getCurrentAlbumInfo().getBucketId().equals(albumInfo.getBucketId())) {
 
             holder.nowPlayingView.setVisibility(View.VISIBLE);
-            convertView.setBackgroundColor(mContext.getResources().getColor(R.color.highlighted_text_material_light));
+            convertView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.highlighted_text_material_light));
         } else {
             holder.nowPlayingView.setVisibility(View.GONE);
             convertView.setBackgroundColor(Color.TRANSPARENT);
@@ -85,10 +89,9 @@ public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
         return convertView;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView albumTitleView;
         TextView imageCountView;
         TextView nowPlayingView;
-
     }
 }

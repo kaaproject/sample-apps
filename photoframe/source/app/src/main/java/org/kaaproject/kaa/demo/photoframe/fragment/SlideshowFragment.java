@@ -52,19 +52,32 @@ public class SlideshowFragment extends BaseFragment {
     private Handler mSlideshowHandler = new Handler();
     private String mBucketId;
 
+    private Runnable mSlideshowAction = new Runnable() {
+        @Override
+        public void run() {
+            final int count = mSlideShowPagerAdapter.getCount();
+            int position = mViewPager.getCurrentItem();
+            if (position == count - 1) {
+                position = 0;
+            } else {
+                position++;
+            }
+            mViewPager.setCurrentItem(position, true);
+
+            toastPageNumber(position + 1, count);
+            mSlideshowHandler.postDelayed(this, SLIDESHOW_INTERVAL_MS);
+        }
+
+    };
 
     public static SlideshowFragment newInstance(String bucketId) {
-        SlideshowFragment fragment = new SlideshowFragment();
+        final SlideshowFragment fragment = new SlideshowFragment();
 
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putString(BUCKET_ID, bucketId);
 
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    public SlideshowFragment() {
-        super();
     }
 
     @Override
@@ -79,21 +92,14 @@ public class SlideshowFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_slideshow, container, false);
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
         mSlideShowPagerAdapter = new SlideshowPageAdapter(getActivity(), mBucketId);
         mViewPager.setAdapter(mSlideShowPagerAdapter);
 
-        Toast.makeText(getActivity(), 1 + "/" + mSlideShowPagerAdapter.getCount(), Toast.LENGTH_SHORT).show();
+        toastPageNumber(1, mSlideShowPagerAdapter.getCount());
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        mActivity = (MainActivity) activity;
     }
 
     @Override
@@ -115,7 +121,7 @@ public class SlideshowFragment extends BaseFragment {
             mSlideShowPagerAdapter = new SlideshowPageAdapter(getActivity(), mBucketId);
             mViewPager.setAdapter(mSlideShowPagerAdapter);
             mSlideshowHandler.postDelayed(mSlideshowAction, SLIDESHOW_INTERVAL_MS);
-            manager.updateStatus(PlayStatus.PLAYING, mBucketId);
+            getKaaManager().updateStatus(PlayStatus.PLAYING, mBucketId);
         }
     }
 
@@ -129,7 +135,7 @@ public class SlideshowFragment extends BaseFragment {
 
         mActivity.setLightsOutMode(true);
         mSlideshowHandler.postDelayed(mSlideshowAction, SLIDESHOW_INTERVAL_MS);
-        manager.updateStatus(PlayStatus.PLAYING, mBucketId);
+        getKaaManager().updateStatus(PlayStatus.PLAYING, mBucketId);
     }
 
     @Override
@@ -142,7 +148,7 @@ public class SlideshowFragment extends BaseFragment {
 
         mActivity.setLightsOutMode(false);
         mSlideshowHandler.removeCallbacks(mSlideshowAction);
-        manager.updateStatus(PlayStatus.STOPPED, null);
+        getKaaManager().updateStatus(PlayStatus.STOPPED, null);
     }
 
     @Override
@@ -159,22 +165,8 @@ public class SlideshowFragment extends BaseFragment {
         return false;
     }
 
-
-    private Runnable mSlideshowAction = new Runnable() {
-        @Override
-        public void run() {
-            int count = mSlideShowPagerAdapter.getCount();
-            int position = mViewPager.getCurrentItem();
-            if (position == count - 1) {
-                position = 0;
-            } else {
-                position++;
-            }
-            mViewPager.setCurrentItem(position, true);
-
-            Toast.makeText(getActivity(), (position + 1) + "/" + count, Toast.LENGTH_SHORT).show();
-            mSlideshowHandler.postDelayed(this, SLIDESHOW_INTERVAL_MS);
-        }
-
-    };
+    private void toastPageNumber(int pageNum, int ofAll) {
+        Toast.makeText(getActivity(), String.valueOf(pageNum) + "/" + String.valueOf(ofAll),
+                Toast.LENGTH_SHORT).show();
+    }
 }

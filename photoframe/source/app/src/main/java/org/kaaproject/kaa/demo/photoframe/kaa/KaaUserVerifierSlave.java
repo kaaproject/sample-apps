@@ -29,35 +29,35 @@ import java.util.TimerTask;
  * Class, that control only user verifying feature.
  * More you can see at @see <a href="http://docs.kaaproject.org/display/KAA/Creating+custom+user+verifier">User verifier</a>
  */
-public class KaaUserVerifierSlave implements UserAttachCallback, OnDetachEndpointOperationCallback {
+final class KaaUserVerifierSlave implements UserAttachCallback, OnDetachEndpointOperationCallback {
 
+    private final KaaManager mManager;
     private boolean mUserAttached;
-    private KaaManager manager;
 
-    public KaaUserVerifierSlave(KaaManager manager) {
-        this.manager = manager;
+    KaaUserVerifierSlave(KaaManager manager) {
+        this.mManager = manager;
         mUserAttached = manager.getClient().isAttachedToUser();
     }
 
     /**
      * Attach the endpoint to the provided user using the default user verifier.
      */
-    public void login(String userExternalId, String userAccessToken) {
-        manager.getClient().attachUser(userExternalId, userAccessToken, this);
+    void login(String userExternalId, String userAccessToken) {
+        mManager.getClient().attachUser(userExternalId, userAccessToken, this);
     }
 
     /**
      * Detach the endpoint from the user.
      */
-    public void logout() {
-        EndpointKeyHash endpointKey = new EndpointKeyHash(manager.getClient().getEndpointKeyHash());
-        manager.getClient().detachEndpoint(endpointKey, this);
+    void logout() {
+        mManager.getClient().detachEndpoint(
+                new EndpointKeyHash(mManager.getClient().getEndpointKeyHash()), this);
     }
 
     /**
      * Check if the endpoint is already attached to the verified user.
      */
-    public boolean isUserAttached() {
+    boolean isUserAttached() {
         return mUserAttached;
     }
 
@@ -69,15 +69,9 @@ public class KaaUserVerifierSlave implements UserAttachCallback, OnDetachEndpoin
     public void onAttachResult(final UserAttachResponse response) {
         final SyncResponseResultType result = response.getResult();
 
-        // For showing WaitFragment
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                manager.onUserAttach(result == SyncResponseResultType.SUCCESS, response.getErrorReason());
-                mUserAttached = (result == SyncResponseResultType.SUCCESS);
-
-            }
-        }, 5000);
+        final boolean successResult = result == SyncResponseResultType.SUCCESS;
+        mManager.onUserAttach(successResult, response.getErrorReason());
+        mUserAttached = successResult;
     }
 
     /**
@@ -86,6 +80,6 @@ public class KaaUserVerifierSlave implements UserAttachCallback, OnDetachEndpoin
     @Override
     public void onDetach(SyncResponseResultType result) {
         mUserAttached = false;
-        manager.onUserDetach(result == SyncResponseResultType.SUCCESS);
+        mManager.onUserDetach(result == SyncResponseResultType.SUCCESS);
     }
 }

@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -60,16 +61,17 @@ public class LoginFragment extends BaseFragment implements TextWatcher, OnClickL
         return rootView;
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Events.UserAttachEvent kaaStarted) {
+
+        final String errorMessage = kaaStarted.getErrorMessage();
+        if (errorMessage != null) {
+            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         new DevicesFragment().move(getActivity());
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onKaaStarted(Events.UserAttachEvent kaaStarted) {
-        mLoginButton.setEnabled(true);
-    }
-
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

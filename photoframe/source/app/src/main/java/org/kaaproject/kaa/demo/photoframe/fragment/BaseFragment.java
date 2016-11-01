@@ -141,8 +141,9 @@ public abstract class BaseFragment extends Fragment {
 
     @Subscribe
     public void onEvent(Events.UserDetachEvent userDetachEvent) {
-        if (userDetachEvent.getErrorMessage() != null) {
-            Toast.makeText(getActivity(), userDetachEvent.getErrorMessage(), Toast.LENGTH_LONG).show();
+        final String errorMessage = userDetachEvent.getErrorMessage();
+        if (errorMessage != null) {
+            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
             return;
         }
         new LoginFragment().move(getActivity());

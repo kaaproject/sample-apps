@@ -56,6 +56,8 @@
 
 - (void)onStarted {
     [self addLogWithText:@"Kaa client started"];
+    [self addLogWithText:@"Endpoint #0 data:"];
+    [self addLogWithText:[NSString stringWithFormat:@"Endpoint ID (Endpoint Key Hash): %@", [self.kaaClient getEndpointKeyHash]]];
     [self displayConfiguration];
 }
 

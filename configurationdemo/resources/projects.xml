@@ -230,7 +230,7 @@ Try the following:
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
 
-        <platforms>LINUX_X86</platforms>
+        <platforms>LINUX_X86 CC32XX ESP8266</platforms>
         <features>CONFIGURATION</features>
         <complexity>BASIC</complexity>
         <bundleId>configuration_demos</bundleId>

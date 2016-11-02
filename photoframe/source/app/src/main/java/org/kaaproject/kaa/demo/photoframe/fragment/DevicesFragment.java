@@ -45,18 +45,16 @@ public class DevicesFragment extends BaseFragment {
     private TextView mNoData;
     private ListView mDevices;
     private DevicesAdapter adapter;
-    private SwipeRefreshLayout mSwipeRefresh;
 
     private List<DeviceInfo> devices = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_list_with_refresh_and_empty, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list_with_empty, container, false);
 
         mNoData = (TextView) rootView.findViewById(R.id.no_data_text);
         mDevices = (ListView) rootView.findViewById(R.id.list);
-        mSwipeRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
 
         mNoData.setText(getString(R.string.fragment_devices_no_data_text));
 
@@ -66,18 +64,8 @@ public class DevicesFragment extends BaseFragment {
         mDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String endpointKey = getKaaManager().getRemoteDeviceEndpoint(position);
+                final String endpointKey = getKaaManager().getRemoteDeviceEndpoint(position);
                 AlbumsFragment.newInstance(endpointKey).move(getActivity());
-            }
-        });
-
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeRefresh.setRefreshing(true);
-                updateInfo();
-
-                mSwipeRefresh.setRefreshing(false);
             }
         });
 

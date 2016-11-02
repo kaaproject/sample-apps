@@ -17,19 +17,19 @@
 package org.kaaproject.kaa.demo.photoframe.kaa;
 
 import android.content.Context;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.util.ArrayMap;
-import android.support.v4.util.SimpleArrayMap;
 
 import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
 import org.kaaproject.kaa.demo.photoframe.DeviceInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -57,12 +57,31 @@ final class KaaInfoSlave {
     private Map<String, PlayInfo> mRemotePlayInfoMap = new ArrayMap<>();
     private Map<String, List<AlbumInfo>> mRemoteAlbumsMap = new ArrayMap<>();
 
-    void initDeviceInfo(Context context) {
+    void initDeviceInfo(final Context context, final Runnable onAlbumListUpdated) {
         mDeviceInfo.setManufacturer(android.os.Build.MANUFACTURER);
         mDeviceInfo.setModel(android.os.Build.MODEL);
         mPlayInfo.setStatus(PlayStatus.STOPPED);
 
-        fetchAlbums(context);
+        final Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+
+        mAlbumsMap.putAll(fetchAlbums(context, uri));
+
+        /**
+         * Register content observer, to notify about updates
+         */
+        context.getContentResolver().registerContentObserver(uri, true,
+                new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        super.onChange(selfChange);
+
+                        mAlbumsMap.clear();
+                        mAlbumsMap.putAll(fetchAlbums(context, uri));
+
+                        onAlbumListUpdated.run();
+                    }
+                }
+        );
     }
 
     List<AlbumInfo> getRemoteDeviceAlbums(String endpointKey) {
@@ -101,15 +120,14 @@ final class KaaInfoSlave {
         mRemoteDevicesMap.clear();
     }
 
-    private void fetchAlbums(Context context) {
-        mAlbumsMap.clear();
+    private Map<String, AlbumInfo> fetchAlbums(Context context, Uri uri) {
 
-        final Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        final Map<String, AlbumInfo> albumInfoMap = new ArrayMap<>();
 
         final Cursor cursor = context.getContentResolver().query(uri, ALBUM_PROJECTION, null, null, null);
 
         if (cursor == null) {
-            return;
+            return Collections.emptyMap();
         }
 
         try {
@@ -117,14 +135,14 @@ final class KaaInfoSlave {
             final int titleIndex = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
             while (cursor.moveToNext()) {
                 final String id = cursor.getString(idIndex);
-                if (!mAlbumsMap.containsKey(id)) {
+                if (!albumInfoMap.containsKey(id)) {
                     final AlbumInfo album = new AlbumInfo();
                     album.setBucketId(id);
                     album.setTitle(cursor.getString(titleIndex));
                     album.setImageCount(1);
-                    mAlbumsMap.put(id, album);
+                    albumInfoMap.put(id, album);
                 } else {
-                    final AlbumInfo album = mAlbumsMap.get(id);
+                    final AlbumInfo album = albumInfoMap.get(id);
                     int imageCount = album.getImageCount();
                     album.setImageCount(++imageCount);
                 }
@@ -132,5 +150,7 @@ final class KaaInfoSlave {
         } finally {
             cursor.close();
         }
+
+        return albumInfoMap;
     }
 }

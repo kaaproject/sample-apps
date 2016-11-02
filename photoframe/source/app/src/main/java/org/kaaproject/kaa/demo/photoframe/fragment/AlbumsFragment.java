@@ -48,7 +48,6 @@ public class AlbumsFragment extends BaseFragment {
 
     TextView mNoDataTextView;
     ListView mAlbumsListView;
-    SwipeRefreshLayout mSwipeRefresh;
 
     private final List<AlbumInfo> mAlbums = new ArrayList<>();
 
@@ -82,16 +81,14 @@ public class AlbumsFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_list_with_refresh_and_empty, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_list_with_empty, container, false);
 
         mNoDataTextView = (TextView) rootView.findViewById(R.id.no_data_text);
         mAlbumsListView = (ListView) rootView.findViewById(R.id.list);
-        mSwipeRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
 
         mNoDataTextView.setText(getString(R.string.fragment_albums_no_data_text));
 
-        final PlayInfo playInfo = getKaaManager().getRemoteDeviceStatus(mEndpointKey);
-        mAdapter = new AlbumsAdapter(getActivity(), playInfo, mAlbums);
+        mAdapter = new AlbumsAdapter(getActivity(), mAlbums);
 
         mAlbumsListView.setAdapter(mAdapter);
 
@@ -105,16 +102,6 @@ public class AlbumsFragment extends BaseFragment {
                 getActivity().invalidateOptionsMenu();
 
                 updateAdapter();
-            }
-        });
-
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeRefresh.setRefreshing(true);
-                updateAdapter();
-
-                mSwipeRefresh.setRefreshing(false);
             }
         });
 
@@ -202,6 +189,10 @@ public class AlbumsFragment extends BaseFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                final PlayInfo playInfo = getKaaManager().getRemoteDeviceStatus(mEndpointKey);
+                mAdapter.setPlayInfo(playInfo);
+
                 mAlbums.clear();
                 mAlbums.addAll(getKaaManager().getRemoteDeviceAlbums(mEndpointKey));
 

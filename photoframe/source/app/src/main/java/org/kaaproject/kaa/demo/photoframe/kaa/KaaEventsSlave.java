@@ -16,6 +16,8 @@
 
 package org.kaaproject.kaa.demo.photoframe.kaa;
 
+import android.support.annotation.NonNull;
+
 import org.greenrobot.eventbus.EventBus;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
@@ -114,6 +116,11 @@ final class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
         mPhotoFrameEventClassFamily.sendEvent(albumListRequest, endpointKey);
     }
 
+    void notifyRemoteDevicesAboutAlbums() {
+        final AlbumListResponse albumListResponse = getAlbumListResponse();
+        mPhotoFrameEventClassFamily.sendEventToAll(albumListResponse);
+    }
+
     /**
      * Get the information about a remote device play status by
      * sending the PlayInfoRequest event to the target endpoint using its endpointKey.
@@ -172,9 +179,7 @@ final class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      */
     @Override
     public void onEvent(AlbumListRequest albumListRequest, String sourceEndpoint) {
-        final List<AlbumInfo> albums = new ArrayList<>(mInfoSlave.getAlbumsMap().values());
-        final AlbumListResponse albumListResponse = new AlbumListResponse();
-        albumListResponse.setAlbumList(albums);
+        final AlbumListResponse albumListResponse = getAlbumListResponse();
         mPhotoFrameEventClassFamily.sendEvent(albumListResponse, sourceEndpoint);
     }
 
@@ -225,5 +230,13 @@ final class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
     public void onEvent(PlayInfoResponse playInfoResponse, String sourceEndpoint) {
         mInfoSlave.getRemotePlayInfoMap().put(sourceEndpoint, playInfoResponse.getPlayInfo());
         mEventBus.post(new Events.PlayInfoEvent(sourceEndpoint));
+    }
+
+    @NonNull
+    private AlbumListResponse getAlbumListResponse() {
+        final List<AlbumInfo> albums = new ArrayList<>(mInfoSlave.getAlbumsMap().values());
+        final AlbumListResponse albumListResponse = new AlbumListResponse();
+        albumListResponse.setAlbumList(albums);
+        return albumListResponse;
     }
 }

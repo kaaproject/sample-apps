@@ -39,15 +39,13 @@ import java.util.List;
 public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
 
     private final Context mContext;
-    private final PlayInfo mPlayInfo;
     private final LayoutInflater mLayoutInflater;
+    private PlayInfo mPlayInfo;
 
-    public AlbumsAdapter(Context context, PlayInfo playInfo, List<AlbumInfo> albums) {
+    public AlbumsAdapter(Context context, List<AlbumInfo> albums) {
         super(context, R.layout.album_list_item, albums);
 
         mContext = context;
-        mPlayInfo = playInfo;
-
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
@@ -87,6 +85,10 @@ public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
         }
 
         return convertView;
+    }
+
+    public void setPlayInfo(PlayInfo playInfo) {
+        mPlayInfo = playInfo;
     }
 
     private static class ViewHolder {

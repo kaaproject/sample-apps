@@ -28,7 +28,6 @@ import org.kaaproject.kaa.demo.photoframe.DeviceInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
 import org.kaaproject.kaa.demo.photoframe.communication.Events;
-import org.kaaproject.kaa.demo.photoframe.fragment.BaseFragment;
 
 import java.util.List;
 import java.util.Map;
@@ -60,7 +59,15 @@ public class KaaManager extends SimpleKaaClientStateListener {
         final KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(ctx);
         mClient = Kaa.newClient(kaaClientContext, this, true);
 
-        mInfoSlave.initDeviceInfo(ctx);
+        mInfoSlave.initDeviceInfo(ctx, new Runnable() {
+            @Override
+            public void run() {
+                /**
+                 * Notify every device about album updates
+                 */
+                mEventsSlave.notifyRemoteDevicesAboutAlbums();
+            }
+        });
         mEventsSlave.init(mClient);
 
         mKaaUserVerifierSlave = new KaaUserVerifierSlave(this);
@@ -92,33 +99,34 @@ public class KaaManager extends SimpleKaaClientStateListener {
     /**
      * Events part
      */
-    public void updateStatus(PlayStatus playing, String mBucketId) {
-        mEventsSlave.updateStatus(playing, mBucketId);
+    public void updateStatus(PlayStatus playing, String bucketId) {
+        mEventsSlave.updateStatus(playing, bucketId);
     }
 
     public void discoverRemoteDevices() {
         mEventsSlave.discoverRemoteDevices();
     }
 
-    public void stopPlayRemoteDeviceAlbum(String mEndpointKey) {
-        mEventsSlave.stopPlayRemoteDeviceAlbum(mEndpointKey);
+    public void stopPlayRemoteDeviceAlbum(String endpointKey) {
+        mEventsSlave.stopPlayRemoteDeviceAlbum(endpointKey);
     }
 
-    public void requestRemoteDeviceInfo(String mEndpointKey) {
-        mEventsSlave.requestRemoteDeviceAlbums(mEndpointKey);
-        mEventsSlave.requestRemoteDeviceStatus(mEndpointKey);
+    public void requestRemoteDeviceInfo(String endpointKey) {
+        mEventsSlave.requestRemoteDeviceAlbums(endpointKey);
+        mEventsSlave.requestRemoteDeviceStatus(endpointKey);
     }
 
-    public void playRemoteDeviceAlbum(String mEndpointKey, String bucketId) {
-        mEventsSlave.playRemoteDeviceAlbum(mEndpointKey, bucketId);
+    public void playRemoteDeviceAlbum(String endpointKey, String bucketId) {
+        mEventsSlave.playRemoteDeviceAlbum(endpointKey, bucketId);
     }
 
     /**
      * Information part
      */
     public String getRemoteDeviceEndpoint(int position) {
-        if (mInfoSlave.getRemoteDevicesMap().keySet().toArray().length > position) {
-            return (String) mInfoSlave.getRemoteDevicesMap().keySet().toArray()[position];
+        final Object[] objects = mInfoSlave.getRemoteDevicesMap().keySet().toArray();
+        if (objects.length > position) {
+            return (String) objects[position];
         }
         return null;
     }
@@ -131,12 +139,12 @@ public class KaaManager extends SimpleKaaClientStateListener {
         return mInfoSlave.getRemoteDevicesMap();
     }
 
-    public String getRemoteDeviceModel(String mEndpointKey) {
-        return mInfoSlave.getRemoteDevicesMap().get(mEndpointKey).getModel();
+    public String getRemoteDeviceModel(String endpointKey) {
+        return mInfoSlave.getRemoteDevicesMap().get(endpointKey).getModel();
     }
 
-    public List<AlbumInfo> getRemoteDeviceAlbums(String mEndpointKey) {
-        return mInfoSlave.getRemoteDeviceAlbums(mEndpointKey);
+    public List<AlbumInfo> getRemoteDeviceAlbums(String endpointKey) {
+        return mInfoSlave.getRemoteDeviceAlbums(endpointKey);
     }
 
     /**
@@ -149,10 +157,6 @@ public class KaaManager extends SimpleKaaClientStateListener {
 
     @Override
     public void onStarted() {
-        /**
-         *  For showing WaitFragment
-         */
-
         mEventBus.postSticky(new Events.KaaStartedEvent());
     }
 

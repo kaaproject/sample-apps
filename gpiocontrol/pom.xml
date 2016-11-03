@@ -24,7 +24,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>gpiocontrol</artifactId>
+    <artifactId>gpiocontroldemo</artifactId>
     <packaging>jar</packaging>
 
     <name>GPIO control demo application</name>

@@ -24,7 +24,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>cityguide</artifactId>
+    <artifactId>cityguidedemo</artifactId>
     <packaging>jar</packaging>
 
     <name>City guide demo application</name>

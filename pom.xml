@@ -42,7 +42,7 @@
     <modules>
         <module>common</module>
         <module>iotworld</module>
-        <module>smarthousedemo</module>
+        <module>smarthouse</module>
         <module>configuration</module>
         <module>credentials</module>
         <module>notification</module>

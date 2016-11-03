@@ -47,7 +47,7 @@
 #      src: "myapplication/src/cpp"
 #      platform:
 #        posix:
-#          skip: "True"
+#          status: "EXEMPTED"/"SKIPPED"
 #          buildcmd: "bash build.sh build <<< posix"
 
 
@@ -74,14 +74,12 @@ verifiersdemo:
       src: "verifiersdemo/source/c"
       platform:
         posix:
-          skip: "False"
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
       src: "verifiersdemo/source/cpp"
       platform:
         posix:
-          skip: "False"
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
@@ -131,7 +129,6 @@ eventdemo:
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
-          skip: "False"
           buildcmd: "bash -c \"./build.sh build\""
 
 notificationdemo:

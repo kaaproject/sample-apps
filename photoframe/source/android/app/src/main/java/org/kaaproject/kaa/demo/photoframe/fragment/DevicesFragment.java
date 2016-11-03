@@ -45,58 +45,38 @@ public class DevicesFragment extends BaseFragment {
     private TextView mNoData;
     private ListView mDevices;
     private DevicesAdapter adapter;
-    private SwipeRefreshLayout mSwipeRefresh;
 
     private List<DeviceInfo> devices = new ArrayList<>();
-
-    public DevicesFragment() {
-        super();
-        setHasOptionsMenu(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_devices, container, false);
-        setupBaseViews(rootView);
+        View rootView = inflater.inflate(R.layout.fragment_list_with_empty, container, false);
 
-        mNoData = (TextView) rootView.findViewById(R.id.devices_no_data_text);
-        mDevices = (ListView) rootView.findViewById(R.id.devices_list);
-        mSwipeRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.devices_swiperefresh);
+        mNoData = (TextView) rootView.findViewById(R.id.no_data_text);
+        mDevices = (ListView) rootView.findViewById(R.id.list);
 
-        mNoData.setText(getString(R.string.no_devices));
+        mNoData.setText(getString(R.string.fragment_devices_no_data_text));
 
-        adapter = new DevicesAdapter(getActivity(), manager, devices);
+        adapter = new DevicesAdapter(getActivity(), getKaaManager(), devices);
         mDevices.setAdapter(adapter);
 
         mDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String endpointKey = manager.getRemoteDeviceEndpoint(position);
+                final String endpointKey = getKaaManager().getRemoteDeviceEndpoint(position);
                 AlbumsFragment.newInstance(endpointKey).move(getActivity());
             }
         });
 
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeRefresh.setRefreshing(true);
-                updateInfo();
-
-                mSwipeRefresh.setRefreshing(false);
-            }
-        });
-
-        showContentView();
-
         return rootView;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
         updateInfo();
     }
 
@@ -108,18 +88,18 @@ public class DevicesFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.item_refresh:
                 updateInfo();
                 break;
             case R.id.item_logout:
-                manager.logout();
+                getKaaManager().logout();
                 break;
+            default:
+                return false;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
@@ -141,7 +121,7 @@ public class DevicesFragment extends BaseFragment {
 
     @Override
     public String getTitle() {
-        return getString(R.string.devices);
+        return getString(R.string.fragment_devices_title);
     }
 
     @Override
@@ -165,7 +145,7 @@ public class DevicesFragment extends BaseFragment {
     }
 
     private void updateInfo() {
-        manager.discoverRemoteDevices();
+        getKaaManager().discoverRemoteDevices();
     }
 
     private void updateView() {
@@ -173,12 +153,11 @@ public class DevicesFragment extends BaseFragment {
             @Override
             public void run() {
                 devices.clear();
-                devices.addAll(manager.getRemoteDevicesMap().values());
+                devices.addAll(getKaaManager().getRemoteDevicesMap().values());
 
                 adapter.notifyDataSetChanged();
                 notifyView();
             }
         });
-
     }
 }

@@ -18,8 +18,7 @@
 
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    </style>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar" />
 
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="actionBarWidgetTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>

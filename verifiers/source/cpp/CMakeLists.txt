@@ -21,16 +21,14 @@ project(VerifiersDemo CXX)
 set(KAA_WITHOUT_CONFIGURATION 1)
 set(KAA_WITHOUT_NOTIFICATIONS 1)
 set(KAA_WITHOUT_LOGGING 1)
-
+# Set compile definitions
 if (NOT DEFINED DEMO_ACCESS_TOKEN)
     set(DEMO_ACCESS_TOKEN "access_token")
 endif (NOT DEFINED DEMO_ACCESS_TOKEN)
 add_definitions(-DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
-
-
-
+# Set configuration variables
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-set(KAA_MAX_LOG_LEVEL 3)
+    set(KAA_MAX_LOG_LEVEL 3)
 endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
 if (NOT DEFINED KAA_SDK_PATH)

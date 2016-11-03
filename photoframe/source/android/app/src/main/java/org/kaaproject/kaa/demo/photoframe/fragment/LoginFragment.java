@@ -27,8 +27,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.kaaproject.kaa.demo.photoframe.R;
 import org.kaaproject.kaa.demo.photoframe.communication.Events;
 
@@ -42,40 +44,32 @@ public class LoginFragment extends BaseFragment implements TextWatcher, OnClickL
     private EditText mPasswordInput;
     private Button mLoginButton;
 
-    public LoginFragment() {
-        super();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        setupBaseViews(rootView);
 
-        mUsernameInput = (EditText) rootView.findViewById(R.id.usernameInput);
-        mPasswordInput = (EditText) rootView.findViewById(R.id.passwordInput);
-        mLoginButton = (Button) rootView.findViewById(R.id.loginButton);
+        mUsernameInput = (EditText) rootView.findViewById(R.id.username_input);
+        mPasswordInput = (EditText) rootView.findViewById(R.id.password_input);
+        mLoginButton = (Button) rootView.findViewById(R.id.login_button);
 
         mUsernameInput.addTextChangedListener(this);
         mPasswordInput.addTextChangedListener(this);
         mLoginButton.setOnClickListener(this);
-
-        if (!manager.isKaaStarted()) {
-            showWaitView();
-        } else {
-            showContentView();
-        }
+        mLoginButton.setEnabled(false);
 
         return rootView;
     }
 
-    @Subscribe
-    public void onEvent(Events.KaaStartedEvent kaaStarted) {
-        showContentView();
-    }
-
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Events.UserAttachEvent kaaStarted) {
+
+        final String errorMessage = kaaStarted.getErrorMessage();
+        if (errorMessage != null) {
+            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         new DevicesFragment().move(getActivity());
     }
 
@@ -96,18 +90,17 @@ public class LoginFragment extends BaseFragment implements TextWatcher, OnClickL
 
     @Override
     public void onClick(View v) {
-        showWaitView();
-        manager.login(mUsernameInput.getText().toString(), "dummy");
+        getKaaManager().login(mUsernameInput.getText().toString(), "dummy");
         closeKeyboard(v);
     }
 
     private void closeKeyboard(View rootView) {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
     }
 
     public String getTitle() {
-        return getString(R.string.please_login);
+        return getString(R.string.fragment_login_title);
     }
 
     @Override
@@ -119,5 +112,4 @@ public class LoginFragment extends BaseFragment implements TextWatcher, OnClickL
     public String getFragmentTag() {
         return LoginFragment.class.getSimpleName();
     }
-
 }

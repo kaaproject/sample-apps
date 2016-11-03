@@ -23,6 +23,8 @@ import subprocess
 import yaml
 import argparse
 
+from terminaltables import AsciiTable
+
 from shutil import copytree
 from shutil import copy2
 from shutil import rmtree
@@ -31,13 +33,16 @@ from kaautils import KaaNode
 from kaautils import KaaUser
 from kaautils import KaaSDKLanguage
 
+
 CONFIGFILE = os.path.join(os.path.dirname(__file__), 'apptester.yam')
 
-class TestResult(object):
-    """Represents possible test and build results"""
+class TestStatus(object):
+    """Represents possible test and build results/status"""
+
     PASSED = 'PASSED'
     FAILED = 'FAILED'
     SKIPPED = 'SKIPPED'
+    EXEMPTED = 'EXEMPTED'
 
 class AppConfig(object):
     """Represents application build parameters"""
@@ -60,6 +65,7 @@ class Application(object):
         self.config = appconfig
         self.kaanode = kaanode
         self.kaauser = kaauser
+        self.status = None
 
         # Pieces of additional code that must be present in build directory.
         # Can be changed via set_dependencies
@@ -132,6 +138,12 @@ class Application(object):
         finally:
             os.chdir(cwd)
 
+    def set_exempted(self):
+        self.status = TestStatus.EXEMPTED
+
+    def set_skipped(self):
+        self.status = TestStatus.SKIPPED
+
     def test(self):
         # TODO APP-53 add tests
         pass
@@ -186,7 +198,7 @@ class AppTesterFramework(object):
                                            languages[language]['src'])
 
                     deps = platforms[platform].get('dependencies', None)
-                    skip = platforms[platform].get('skip', None)
+                    status = platforms[platform].get('status', None)
 
                     appconfig = AppConfig(name, lang, platform,
                                           srcpath, buildpath, buildcmd)
@@ -198,8 +210,12 @@ class AppTesterFramework(object):
                         application.set_dependencies(deps)
 
                     applications.append(application)
-                    if skip and skip != 'False':
-                        self.skipped.append(application)
+
+                    if status and status == TestStatus.EXEMPTED:
+                        application.set_exempted()
+
+                    if status and status == TestStatus.SKIPPED:
+                        application.set_skipped()
 
         return applications
 
@@ -210,17 +226,21 @@ class AppTesterFramework(object):
             if name and app.get_name() != name:
                 continue
             try:
-                if app in self.skipped:
-                    self.result_matrix[app] = TestResult.SKIPPED
+                if app.status == TestStatus.SKIPPED:
+                    self.result_matrix[app] = TestStatus.SKIPPED
                     continue
-                print 'Building %s (%s) for %s\n'%(app.get_name(),
-                                                   app.get_language(),
-                                                   app.get_platform())
-                app.build()
-                self.result_matrix[app] = TestResult.PASSED
+                else:
+                    print 'Building %s (%s) for %s\n'%(app.get_name(),
+                                                       app.get_language(),
+                                                       app.get_platform())
+                    app.build()
+                    self.result_matrix[app] = TestStatus.PASSED
             except Exception as ex:
                 traceback.print_exc(ex, file=sys.stdout)
-                self.result_matrix[app] = TestResult.FAILED
+                if app.status == TestStatus.EXEMPTED:
+                    self.result_matrix[app] = TestStatus.EXEMPTED
+                else:
+                    self.result_matrix[app] = TestStatus.FAILED
 
     def test_applications(self):
         # TODO APP-53 add testing
@@ -229,20 +249,19 @@ class AppTesterFramework(object):
     def process_results(self, output=False):
         passed = True
 
-        # TODO APP-53 Add test results and rework formatting
-        tabs = 50
-        if output:
-            print 'Application\tBuild'.expandtabs(tabs)
+        # TODO APP-53 Add test results
 
-        for app in self.result_matrix:    
-            if self.result_matrix[app] == TestResult.FAILED:
+        for app in self.result_matrix:
+            if self.result_matrix[app] == TestStatus.FAILED:
                 passed = False
             if output:
-                fmt = '%s (%s) for %s: \t%s'%(app.get_name(),
-                                              app.get_language(),
-                                              app.get_platform(),
-                                              self.result_matrix[app])
-                print fmt.expandtabs(tabs)
+                table_data = [['Application', 'Build', 'Test']]
+                for app in self.result_matrix:
+                    build_result = ['{} ({}) for {}:'.format(app.get_name(), app.get_language(),
+                                    app.get_platform()), self.result_matrix[app], 'N/A']
+                    table_data.append(build_result)
+            table = AsciiTable(table_data)
+        print table.table
 
         return passed
 
@@ -309,9 +328,9 @@ def main():
     tester.build_applications(name)
 
     if tester.process_results(True):
-       sys.exit(0)
+        sys.exit(0)
     else:
-       sys.exit(1)  
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

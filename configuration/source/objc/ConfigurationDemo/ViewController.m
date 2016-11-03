@@ -106,7 +106,7 @@
 
 - (void)displayConfiguration {
     KAAConfigurationConfiguration *configuration = [self.kaaClient getConfiguration];
-    [self addLogWithText:[NSString stringWithFormat:@"Sampling period is %d", configuration.samplePeriod]];
+    [self addLogWithText:[NSString stringWithFormat:@"Sampling period is now set to %d seconds", configuration.samplePeriod]];
 }
 
 - (void)addLogWithText:(NSString *)text {

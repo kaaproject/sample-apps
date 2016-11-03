@@ -36,7 +36,7 @@ datacollectiondemo:
 
 eventsdemo:
     appname: 'EventsDemo'
-    languages: ['c', 'cpp']
+    languages: ['cpp']
     features: ['events']
     path: 'eventdemo/source/'
 
@@ -44,7 +44,7 @@ credentialsdemo:
     appname: 'CredentialsDemo'
     languages: ['c', 'cpp']
     path: 'credentialsdemo/source/'
-    definitions:
+    variables:
         KAA_RUNTIME_KEY_GENERATION: 'OFF'
 
 verifiersdemo:
@@ -58,9 +58,9 @@ verifiersdemo:
 profilingdemo:
     appname: 'ProfilingDemo'
     features: ['configuration']
-    languages: ['c', 'cpp']
+    languages: ['c']
     path: 'profilingdemo/source/'
-    definitions:
+    variables:
         KAA_RUNTIME_KEY_GENERATION: 'ON'
 
 stormdemo:

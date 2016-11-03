@@ -46,26 +46,20 @@ public class AlbumsFragment extends BaseFragment {
 
     private static final String ENDPOINT_KEY = "endpointKey";
 
-    private TextView mNoData;
-    private ListView mAlbums;
-    private AlbumsAdapter adapter;
-    private SwipeRefreshLayout mSwipeRefresh;
+    TextView mNoDataTextView;
+    ListView mAlbumsListView;
 
-    private List<AlbumInfo> albums = new ArrayList<>();
+    private final List<AlbumInfo> mAlbums = new ArrayList<>();
+
+    private AlbumsAdapter mAdapter;
     private String mEndpointKey;
 
-    private boolean isPlaying;
-
-    public AlbumsFragment() {
-        super();
-
-        setHasOptionsMenu(true);
-    }
+    private boolean mIsPlaying;
 
     public static AlbumsFragment newInstance(String endpointKey) {
-        AlbumsFragment fragment = new AlbumsFragment();
+        final AlbumsFragment fragment = new AlbumsFragment();
 
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putString(ENDPOINT_KEY, endpointKey);
 
         fragment.setArguments(bundle);
@@ -80,52 +74,40 @@ public class AlbumsFragment extends BaseFragment {
             mEndpointKey = getArguments().getString(ENDPOINT_KEY);
         }
 
+        setHasOptionsMenu(true);
+
         requestInfo();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_albums, container, false);
-        setupBaseViews(rootView);
+        final View rootView = inflater.inflate(R.layout.fragment_list_with_empty, container, false);
 
-        mNoData = (TextView) rootView.findViewById(R.id.albums_no_data_text);
-        mAlbums = (ListView) rootView.findViewById(R.id.albums_list);
-        mSwipeRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.albums_swiperefresh);
+        mNoDataTextView = (TextView) rootView.findViewById(R.id.no_data_text);
+        mAlbumsListView = (ListView) rootView.findViewById(R.id.list);
 
-        mNoData.setText(getString(R.string.no_albums));
+        mNoDataTextView.setText(getString(R.string.fragment_albums_no_data_text));
 
-        PlayInfo playInfo = manager.getRemoteDeviceStatus(mEndpointKey);
-        adapter = new AlbumsAdapter(getActivity(), playInfo, albums);
+        mAdapter = new AlbumsAdapter(getActivity(), mAlbums);
 
-        mAlbums.setAdapter(adapter);
+        mAlbumsListView.setAdapter(mAdapter);
 
-        mAlbums.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAlbumsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlbumInfo album = manager.getRemoteDeviceAlbums(mEndpointKey).get(position);
-                manager.playRemoteDeviceAlbum(mEndpointKey, album.getBucketId());
+                AlbumInfo album = getKaaManager().getRemoteDeviceAlbums(mEndpointKey).get(position);
+                getKaaManager().playRemoteDeviceAlbum(mEndpointKey, album.getBucketId());
 
-                isPlaying = true;
+                mIsPlaying = true;
                 getActivity().invalidateOptionsMenu();
 
                 updateAdapter();
             }
         });
 
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeRefresh.setRefreshing(true);
-                updateAdapter();
-
-                mSwipeRefresh.setRefreshing(false);
-            }
-        });
-
         updateAdapter();
-        showContentView();
 
-        isPlaying = manager.getRemoteDeviceStatus(mEndpointKey).getStatus() == PlayStatus.PLAYING;
+        mIsPlaying = getKaaManager().getRemoteDeviceStatus(mEndpointKey).getStatus() == PlayStatus.PLAYING;
 
         return rootView;
     }
@@ -135,7 +117,7 @@ public class AlbumsFragment extends BaseFragment {
         menu.clear();
 
         getActivity().getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
-        menu.findItem(R.id.item_stop).setVisible(isPlaying);
+        menu.findItem(R.id.item_stop).setVisible(mIsPlaying);
     }
 
     @Override
@@ -145,16 +127,16 @@ public class AlbumsFragment extends BaseFragment {
                 popBackStack(getActivity());
                 break;
             case R.id.item_stop:
-                isPlaying = false;
+                mIsPlaying = false;
 
-                manager.stopPlayRemoteDeviceAlbum(mEndpointKey);
-                item.setVisible(isPlaying);
+                getKaaManager().stopPlayRemoteDeviceAlbum(mEndpointKey);
+                item.setVisible(mIsPlaying);
                 break;
             case R.id.item_refresh:
                 requestInfo();
                 break;
             case R.id.item_logout:
-                manager.logout();
+                getKaaManager().logout();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -176,9 +158,8 @@ public class AlbumsFragment extends BaseFragment {
 
     @Override
     public String getTitle() {
-        return manager.getRemoteDeviceModel(mEndpointKey);
+        return getKaaManager().getRemoteDeviceModel(mEndpointKey);
     }
-
 
     @Override
     public String getFragmentTag() {
@@ -191,16 +172,16 @@ public class AlbumsFragment extends BaseFragment {
     }
 
     private void requestInfo() {
-        manager.requestRemoteDeviceInfo(mEndpointKey);
+        getKaaManager().requestRemoteDeviceInfo(mEndpointKey);
     }
 
     private void notifyView() {
-        if (adapter.getCount() > 0) {
-            mNoData.setVisibility(View.GONE);
-            mAlbums.setVisibility(View.VISIBLE);
+        if (mAdapter.getCount() > 0) {
+            mNoDataTextView.setVisibility(View.GONE);
+            mAlbumsListView.setVisibility(View.VISIBLE);
         } else {
-            mAlbums.setVisibility(View.GONE);
-            mNoData.setVisibility(View.VISIBLE);
+            mAlbumsListView.setVisibility(View.GONE);
+            mNoDataTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -208,10 +189,14 @@ public class AlbumsFragment extends BaseFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                albums.clear();
-                albums.addAll(manager.getRemoteDeviceAlbums(mEndpointKey));
 
-                adapter.notifyDataSetChanged();
+                final PlayInfo playInfo = getKaaManager().getRemoteDeviceStatus(mEndpointKey);
+                mAdapter.setPlayInfo(playInfo);
+
+                mAlbums.clear();
+                mAlbums.addAll(getKaaManager().getRemoteDeviceAlbums(mEndpointKey));
+
+                mAdapter.notifyDataSetChanged();
 
                 notifyView();
             }

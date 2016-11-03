@@ -28,13 +28,9 @@ import org.kaaproject.kaa.demo.photoframe.DeviceInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
 import org.kaaproject.kaa.demo.photoframe.communication.Events;
-import org.kaaproject.kaa.demo.photoframe.fragment.BaseFragment;
-import org.kaaproject.kaa.demo.photoframe.util.PhotoFrameConstants;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Performs initialization of the application resources including initialization of the Kaa client.
@@ -47,37 +43,41 @@ import java.util.TimerTask;
  */
 public class KaaManager extends SimpleKaaClientStateListener {
 
-    private KaaClient mClient;
-    private EventBus mEventBus;
+    private final KaaClient mClient;
+    private final EventBus mEventBus;
 
-    private KaaInfoSlave infoSlave;
-    private KaaEventsSlave eventsSlave;
-    private KaaUserVerifierSlave userVerifierSlave;
+    private final KaaInfoSlave mInfoSlave;
+    private final KaaEventsSlave mEventsSlave;
+    private final KaaUserVerifierSlave mKaaUserVerifierSlave;
 
-    private boolean mKaaStarted;
-
-    public KaaManager() {
+    public KaaManager(Context ctx) {
         mEventBus = EventBus.getDefault();
 
-        infoSlave = new KaaInfoSlave();
-        eventsSlave = new KaaEventsSlave(infoSlave);
+        mInfoSlave = new KaaInfoSlave();
+        mEventsSlave = new KaaEventsSlave(mInfoSlave);
+
+        final KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(ctx);
+        mClient = Kaa.newClient(kaaClientContext, this, true);
+
+        mInfoSlave.initDeviceInfo(ctx, new Runnable() {
+            @Override
+            public void run() {
+                /**
+                 * Notify every device about album updates
+                 */
+                mEventsSlave.notifyRemoteDevicesAboutAlbums();
+            }
+        });
+        mEventsSlave.init(mClient);
+
+        mKaaUserVerifierSlave = new KaaUserVerifierSlave(this);
     }
 
     /**
      * Initialize the Kaa client using the Android context.
      * Start the Kaa client workflow.
-     *
-     * @param context
      */
-    public void start(Context context) {
-
-        KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
-        mClient = Kaa.newClient(kaaClientContext, this, true);
-
-        infoSlave.initDeviceInfo(context);
-        eventsSlave.init(mClient);
-        userVerifierSlave = new KaaUserVerifierSlave(this);
-
+    public void start() {
         mClient.start();
     }
 
@@ -85,83 +85,67 @@ public class KaaManager extends SimpleKaaClientStateListener {
      * User Verifier part
      */
     public void login(String userExternalId, String userAccessToken) {
-        userVerifierSlave.login(userExternalId, userAccessToken);
+        mKaaUserVerifierSlave.login(userExternalId, userAccessToken);
     }
 
     public boolean isUserAttached() {
-        return userVerifierSlave.isUserAttached();
+        return mKaaUserVerifierSlave.isUserAttached();
     }
 
     public void logout() {
-        userVerifierSlave.logout();
-    }//end user verifier part
+        mKaaUserVerifierSlave.logout();
+    }
 
     /**
      * Events part
      */
-    public void updateStatus(PlayStatus playing, String mBucketId) {
-        eventsSlave.updateStatus(playing, mBucketId);
+    public void updateStatus(PlayStatus playing, String bucketId) {
+        mEventsSlave.updateStatus(playing, bucketId);
     }
 
     public void discoverRemoteDevices() {
-        eventsSlave.discoverRemoteDevices();
+        mEventsSlave.discoverRemoteDevices();
     }
 
-    public void stopPlayRemoteDeviceAlbum(String mEndpointKey) {
-        eventsSlave.stopPlayRemoteDeviceAlbum(mEndpointKey);
+    public void stopPlayRemoteDeviceAlbum(String endpointKey) {
+        mEventsSlave.stopPlayRemoteDeviceAlbum(endpointKey);
     }
 
-    public void requestRemoteDeviceInfo(String mEndpointKey) {
-        eventsSlave.requestRemoteDeviceAlbums(mEndpointKey);
-        eventsSlave.requestRemoteDeviceStatus(mEndpointKey);
+    public void requestRemoteDeviceInfo(String endpointKey) {
+        mEventsSlave.requestRemoteDeviceAlbums(endpointKey);
+        mEventsSlave.requestRemoteDeviceStatus(endpointKey);
     }
 
-    public void playRemoteDeviceAlbum(String mEndpointKey, String bucketId) {
-        eventsSlave.playRemoteDeviceAlbum(mEndpointKey, bucketId);
-    } // end event slave part
+    public void playRemoteDeviceAlbum(String endpointKey, String bucketId) {
+        mEventsSlave.playRemoteDeviceAlbum(endpointKey, bucketId);
+    }
 
     /**
      * Information part
      */
     public String getRemoteDeviceEndpoint(int position) {
-        //DevicesMap().values().toArray()[position];
-        if (infoSlave.getRemoteDevicesMap().keySet().toArray().length > position)
-            return (String) infoSlave.getRemoteDevicesMap().keySet().toArray()[position];
+        final Object[] objects = mInfoSlave.getRemoteDevicesMap().keySet().toArray();
+        if (objects.length > position) {
+            return (String) objects[position];
+        }
         return null;
     }
 
-    public DeviceInfo getRemoteDevice(int position) {
-        return (DeviceInfo) infoSlave.getRemoteDevicesMap().values().toArray()[position];
-    }
-
     public PlayInfo getRemoteDeviceStatus(String endpointKey) {
-        return infoSlave.getRemoteDeviceStatus(endpointKey);
+        return mInfoSlave.getRemoteDeviceStatus(endpointKey);
     }
 
     public Map<String, DeviceInfo> getRemoteDevicesMap() {
-        return infoSlave.getRemoteDevicesMap();
+        return mInfoSlave.getRemoteDevicesMap();
     }
 
-    public String getRemoteDeviceModel(String mEndpointKey) {
-        return infoSlave.getRemoteDevicesMap().get(mEndpointKey).getModel();
+    public String getRemoteDeviceModel(String endpointKey) {
+        return mInfoSlave.getRemoteDevicesMap().get(endpointKey).getModel();
     }
 
-    public List<AlbumInfo> getRemoteDeviceAlbums(String mEndpointKey) {
-        return infoSlave.getRemoteDeviceAlbums(mEndpointKey);
-    } // end information part
-
-    /**
-     * EventBus part
-     */
-    public void registerEventBus(BaseFragment fragment) {
-        if (!mEventBus.isRegistered(fragment))
-            mEventBus.register(fragment);
+    public List<AlbumInfo> getRemoteDeviceAlbums(String endpointKey) {
+        return mInfoSlave.getRemoteDeviceAlbums(endpointKey);
     }
-
-    public void unregisterEventBus(BaseFragment fragment) {
-        if (mEventBus.isRegistered(fragment))
-            mEventBus.unregister(fragment);
-    } // end Eventbus part
 
     /**
      * Stop the Kaa client. Release all network connections and application
@@ -169,59 +153,38 @@ public class KaaManager extends SimpleKaaClientStateListener {
      */
     public void stop() {
         mClient.stop();
-
-        mKaaStarted = false;
-    }
-
-    public boolean isKaaStarted() {
-        return mKaaStarted;
     }
 
     @Override
     public void onStarted() {
-        PhotoFrameConstants.LOG.info("Kaa client started");
-
-        /*
-         *  For showing WaitFragment
-         */
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                mKaaStarted = true;
-                mEventBus.post(new Events.KaaStartedEvent());
-            }
-        }, 5000);
+        mEventBus.postSticky(new Events.KaaStartedEvent());
     }
 
     @Override
     public void onResume() {
-        PhotoFrameConstants.LOG.info("Kaa client resumed");
-
-        if (userVerifierSlave.isUserAttached()) {
-            eventsSlave.notifyRemoteDevices();
+        if (mKaaUserVerifierSlave.isUserAttached()) {
+            mEventsSlave.notifyRemoteDevices();
         }
     }
 
-    protected KaaClient getClient() {
+    KaaClient getClient() {
         return mClient;
     }
 
-    protected void onUserAttach(boolean successResult, String error) {
+    void onUserAttach(boolean successResult, String error) {
         if (successResult) {
-            eventsSlave.notifyRemoteDevices();
+            mEventsSlave.notifyRemoteDevices();
             mEventBus.post(new Events.UserAttachEvent());
         } else {
             mEventBus.post(new Events.UserAttachEvent(error));
         }
     }
 
-    protected void onUserDetach(boolean successResult) {
+    void onUserDetach(boolean successResult) {
         if (successResult) {
             mEventBus.post(new Events.UserDetachEvent());
         } else {
             mEventBus.post(new Events.UserDetachEvent("Failed to detach endpoint from user!"));
         }
     }
-
 }

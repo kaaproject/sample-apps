@@ -17,15 +17,11 @@
 
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_image_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@android:color/black">
+    android:background="@android:color/black"/>
 
-    <org.kaaproject.kaa.demo.photoframe.image.ProgressImageView
-        android:id="@+id/item_imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>

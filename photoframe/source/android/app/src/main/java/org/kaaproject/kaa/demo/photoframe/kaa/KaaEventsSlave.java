@@ -16,6 +16,8 @@
 
 package org.kaaproject.kaa.demo.photoframe.kaa;
 
+import android.support.annotation.NonNull;
+
 import org.greenrobot.eventbus.EventBus;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
@@ -38,14 +40,14 @@ import java.util.List;
  * Class, that control only user event feature.
  * More you can see at @see <a href="http://docs.kaaproject.org/display/KAA/Events">Events</a>
  */
-public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
+final class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
 
-    private KaaInfoSlave infoSlave;
+    private KaaInfoSlave mInfoSlave;
     private PhotoFrameEventClassFamily mPhotoFrameEventClassFamily;
     private EventBus mEventBus;
 
-    public KaaEventsSlave(KaaInfoSlave infoSlave) {
-        this.infoSlave = infoSlave;
+    KaaEventsSlave(KaaInfoSlave infoSlave) {
+        this.mInfoSlave = infoSlave;
         this.mEventBus = EventBus.getDefault();
     }
 
@@ -54,22 +56,21 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      * which is responsible for sending/receiving the declared family events.
      * Register a listener to receive the photo frame family events.
      */
-    public void init(KaaClient client) {
+    void init(KaaClient client) {
         mPhotoFrameEventClassFamily = client.getEventFamilyFactory().getPhotoFrameEventClassFamily();
         mPhotoFrameEventClassFamily.addListener(this);
     }
-
 
     /**
      * Notify all the user endpoints about the device availability and play status
      * by sending them the DeviceInfoResponse and PlayInfoResponse events.
      */
-    public void notifyRemoteDevices() {
+    void notifyRemoteDevices() {
         DeviceInfoResponse deviceInfoResponse = new DeviceInfoResponse();
-        deviceInfoResponse.setDeviceInfo(infoSlave.getDeviceInfo());
+        deviceInfoResponse.setDeviceInfo(mInfoSlave.getDeviceInfo());
         mPhotoFrameEventClassFamily.sendEventToAll(deviceInfoResponse);
         PlayInfoResponse playInfoResponse = new PlayInfoResponse();
-        playInfoResponse.setPlayInfo(infoSlave.getPlayInfo());
+        playInfoResponse.setPlayInfo(mInfoSlave.getPlayInfo());
         mPhotoFrameEventClassFamily.sendEventToAll(playInfoResponse);
     }
 
@@ -77,17 +78,17 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      * Update the current device status reflected in the PlayInfoResponse event,
      * send the event to all the user endpoints.
      */
-    public void updateStatus(PlayStatus status, String bucketId) {
+    void updateStatus(PlayStatus status, String bucketId) {
         AlbumInfo currentAlbumInfo = null;
         if (bucketId != null) {
-            currentAlbumInfo = infoSlave.getAlbumsMap().get(bucketId);
+            currentAlbumInfo = mInfoSlave.getAlbumsMap().get(bucketId);
         }
 
-        infoSlave.getPlayInfo().setCurrentAlbumInfo(currentAlbumInfo);
-        infoSlave.getPlayInfo().setStatus(status);
+        mInfoSlave.getPlayInfo().setCurrentAlbumInfo(currentAlbumInfo);
+        mInfoSlave.getPlayInfo().setStatus(status);
 
         PlayInfoResponse playInfoResponse = new PlayInfoResponse();
-        playInfoResponse.setPlayInfo(infoSlave.getPlayInfo());
+        playInfoResponse.setPlayInfo(mInfoSlave.getPlayInfo());
 
         mPhotoFrameEventClassFamily.sendEventToAll(playInfoResponse);
     }
@@ -99,8 +100,8 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      * Each operational device (endpoint) will send a reply with the DeviceInfoResponse
      * and PlayInfoResponse events to the current endpoint.
      */
-    public void discoverRemoteDevices() {
-        infoSlave.clearRemoteDevicesMap();
+    void discoverRemoteDevices() {
+        mInfoSlave.clearRemoteDevicesMap();
 
         mPhotoFrameEventClassFamily.sendEventToAll(new DeviceInfoRequest());
         mPhotoFrameEventClassFamily.sendEventToAll(new PlayInfoRequest());
@@ -110,16 +111,21 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      * Get the information about a remote device image albums by
      * sending the AlbumListRequest event to the target endpoint using its endpointKey.
      */
-    public void requestRemoteDeviceAlbums(String endpointKey) {
+    void requestRemoteDeviceAlbums(String endpointKey) {
         AlbumListRequest albumListRequest = new AlbumListRequest();
         mPhotoFrameEventClassFamily.sendEvent(albumListRequest, endpointKey);
+    }
+
+    void notifyRemoteDevicesAboutAlbums() {
+        final AlbumListResponse albumListResponse = getAlbumListResponse();
+        mPhotoFrameEventClassFamily.sendEventToAll(albumListResponse);
     }
 
     /**
      * Get the information about a remote device play status by
      * sending the PlayInfoRequest event to the target endpoint using its endpointKey.
      */
-    public void requestRemoteDeviceStatus(String endpointKey) {
+    void requestRemoteDeviceStatus(String endpointKey) {
         mPhotoFrameEventClassFamily.sendEvent(new PlayInfoRequest(), endpointKey);
     }
 
@@ -127,7 +133,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      * Send a command to a remote device to play the image album with the specified bucketId by
      * sending the PlayAlbumRequest event to the target endpoint using its endpointKey.
      */
-    public void playRemoteDeviceAlbum(String endpointKey, String bucketId) {
+    void playRemoteDeviceAlbum(String endpointKey, String bucketId) {
         PlayAlbumRequest playAlbumRequest = new PlayAlbumRequest();
         playAlbumRequest.setBucketId(bucketId);
         mPhotoFrameEventClassFamily.sendEvent(playAlbumRequest, endpointKey);
@@ -137,7 +143,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      * Send a command to a remote device to stop the image album playback by
      * sending the PlayAlbumRequest event to target endpoint using its endpointKey.
      */
-    public void stopPlayRemoteDeviceAlbum(String endpointKey) {
+    void stopPlayRemoteDeviceAlbum(String endpointKey) {
         StopRequest stopRequest = new StopRequest();
         mPhotoFrameEventClassFamily.sendEvent(stopRequest, endpointKey);
     }
@@ -150,7 +156,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
     @Override
     public void onEvent(DeviceInfoRequest deviceInfoRequest, String sourceEndpoint) {
         DeviceInfoResponse deviceInfoResponse = new DeviceInfoResponse();
-        deviceInfoResponse.setDeviceInfo(infoSlave.getDeviceInfo());
+        deviceInfoResponse.setDeviceInfo(mInfoSlave.getDeviceInfo());
         mPhotoFrameEventClassFamily.sendEvent(deviceInfoResponse, sourceEndpoint);
     }
 
@@ -160,9 +166,9 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      */
     @Override
     public void onEvent(DeviceInfoResponse deviceInfoResponse, String sourceEndpoint) {
-        infoSlave.getRemoteDevicesMap().put(sourceEndpoint, deviceInfoResponse.getDeviceInfo());
-        if (!infoSlave.getRemoteAlbumsMap().containsKey(sourceEndpoint)) {
-            infoSlave.getRemoteAlbumsMap().put(sourceEndpoint, new ArrayList<AlbumInfo>());
+        mInfoSlave.getRemoteDevicesMap().put(sourceEndpoint, deviceInfoResponse.getDeviceInfo());
+        if (!mInfoSlave.getRemoteAlbumsMap().containsKey(sourceEndpoint)) {
+            mInfoSlave.getRemoteAlbumsMap().put(sourceEndpoint, new ArrayList<AlbumInfo>());
         }
         mEventBus.post(new Events.DeviceInfoEvent(sourceEndpoint));
     }
@@ -173,9 +179,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      */
     @Override
     public void onEvent(AlbumListRequest albumListRequest, String sourceEndpoint) {
-        List<AlbumInfo> albums = new ArrayList<>(infoSlave.getAlbumsMap().values());
-        AlbumListResponse albumListResponse = new AlbumListResponse();
-        albumListResponse.setAlbumList(albums);
+        final AlbumListResponse albumListResponse = getAlbumListResponse();
         mPhotoFrameEventClassFamily.sendEvent(albumListResponse, sourceEndpoint);
     }
 
@@ -185,7 +189,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      */
     @Override
     public void onEvent(AlbumListResponse albumListResponse, String sourceEndpoint) {
-        infoSlave.getRemoteAlbumsMap().put(sourceEndpoint, albumListResponse.getAlbumList());
+        mInfoSlave.getRemoteAlbumsMap().put(sourceEndpoint, albumListResponse.getAlbumList());
         mEventBus.post(new Events.AlbumListEvent(sourceEndpoint));
     }
 
@@ -214,7 +218,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
     @Override
     public void onEvent(PlayInfoRequest playInfoRequest, String sourceEndpoint) {
         PlayInfoResponse playInfoResponse = new PlayInfoResponse();
-        playInfoResponse.setPlayInfo(infoSlave.getPlayInfo());
+        playInfoResponse.setPlayInfo(mInfoSlave.getPlayInfo());
         mPhotoFrameEventClassFamily.sendEvent(playInfoResponse, sourceEndpoint);
     }
 
@@ -224,8 +228,15 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      */
     @Override
     public void onEvent(PlayInfoResponse playInfoResponse, String sourceEndpoint) {
-        infoSlave.getRemotePlayInfoMap().put(sourceEndpoint, playInfoResponse.getPlayInfo());
+        mInfoSlave.getRemotePlayInfoMap().put(sourceEndpoint, playInfoResponse.getPlayInfo());
         mEventBus.post(new Events.PlayInfoEvent(sourceEndpoint));
     }
 
+    @NonNull
+    private AlbumListResponse getAlbumListResponse() {
+        final List<AlbumInfo> albums = new ArrayList<>(mInfoSlave.getAlbumsMap().values());
+        final AlbumListResponse albumListResponse = new AlbumListResponse();
+        albumListResponse.setAlbumList(albums);
+        return albumListResponse;
+    }
 }

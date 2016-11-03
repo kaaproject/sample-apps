@@ -21,7 +21,7 @@
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="smarthouse_demo">
+    <project id="smarthouse_demo_android">
         <name>Smart house</name>
         <description>Smart house demo app for Android</description>
         <details>

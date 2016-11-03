@@ -23,7 +23,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>vehicletelemetry</artifactId>
+    <artifactId>vehicletelemetrydemo</artifactId>
     <packaging>jar</packaging>
 
     <name>Kaa vehicle telemetry demo</name>

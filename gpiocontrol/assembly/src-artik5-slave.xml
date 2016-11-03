@@ -19,16 +19,16 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
-    <id>gpiocontrol-src-objc</id>
+    <id>gpiocontrol-src-artik5-slave</id>
     <formats>
         <format>tar.gz</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/source/objc</directory>
+            <directory>${project.basedir}/source/artik5</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpiocontrol</outputDirectory>
+            <outputDirectory>gpio-artik5-client</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

@@ -65,7 +65,7 @@
         <module>ota</module>
         <module>zeppelindemo</module>
         <module>sparkdemo</module>
-        <module>cassandrademo</module>
+        <module>cassandra</module>
         <module>stormdemo</module>
         <module>profilingdemo</module>
     </modules>

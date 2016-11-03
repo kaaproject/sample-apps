@@ -46,7 +46,7 @@
         <module>configuration</module>
         <module>credentials</module>
         <module>notificationdemo</module>
-        <module>datacollectiondemo</module>
+        <module>datacollection</module>
         <module>eventdemo</module>
         <module>cityguide</module>
         <module>cellmonitor</module>

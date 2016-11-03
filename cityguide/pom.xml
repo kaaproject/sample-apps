@@ -53,7 +53,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>${project.basedir}/assembly/src.xml</descriptor>
+                        <descriptor>assembly/src-android.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

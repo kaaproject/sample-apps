@@ -21,7 +21,7 @@
     xmlns="http://www.kaaproject.org"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="gpio_master">
+    <project id="gpiocontrol_demo_android_master">
         <name>GPIO control Android</name>
         <description>GPIO control Android app</description>
         <details>
@@ -126,7 +126,7 @@ If you want to modify the sample application source code or create your own appl
         <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/app-debug.apk</destBinaryFile>
     </project>
 
-    <project id="gpio_slave_c">
+    <project id="gpiocontrol_demo_c_slave">
         <name>GPIO control C</name>
         <description>GPIO control C app that demonstrates capabilities of the Kaa Event subsystem</description>
         <details>
@@ -157,7 +157,7 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
         <sdkLibDir>gpio-c-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <project id="gpio_slave_artik5">
+    <project id="gpiocontrol_demo_artik5_slave">
         <name>GPIO control Artik 5</name>
         <description>GPIO control Artik 5 app that demonstrates capabilities of the Kaa Event subsystem</description>
         <details>
@@ -187,7 +187,7 @@ After you successfully installed this app on your Artik 5 device, go to "GPIO co
         <sdkLibDir>gpio-artik5-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
-    <project id="gpio_master_objc">
+    <project id="gpiocontrol_demo_objc_master">
         <name>GPIO control iOS</name>
         <description>GPIO control iOS app</description>
         <details>

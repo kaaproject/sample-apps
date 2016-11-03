@@ -92,7 +92,7 @@ Cassandra using Kaa IoT platform"</a>.
         <platforms>RASPBERRY_PI</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
-        <sourceArchive>c/cassandra_data_analytics_demo.tar.gz</sourceArchive>
+        <sourceArchive>c/cassandra_demo.tar.gz</sourceArchive>
         <projectFolder>CCassandraDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CCassandraDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>

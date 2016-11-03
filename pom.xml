@@ -45,7 +45,7 @@
         <module>smarthousedemo</module>
         <module>configuration</module>
         <module>credentials</module>
-        <module>notificationdemo</module>
+        <module>notification</module>
         <module>datacollection</module>
         <module>event</module>
         <module>cityguide</module>

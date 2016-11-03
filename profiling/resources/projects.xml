@@ -350,6 +350,8 @@ Make sure that the build target is set to <b>ProfilingDemo</b>, not <b>Kaa</b>.
         <sdkLibDir>ObjCProfilingDemo/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
+
     <project id="profiling_demo_c">
         <name>Endpoint profiling C demo</name>
         <description>Endpoint grouping and profiling demo for C</description>
@@ -472,6 +474,8 @@ Try the following:
         <sdkLibDir>CProfilingDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
+
+
     <project id="profiling_demo_cpp">
         <name>Endpoint profiling C++ demo</name>
         <description>Endpoint grouping and profiling demo for C++</description>

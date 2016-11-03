@@ -23,7 +23,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>connectedcar</artifactId>
+    <artifactId>connectedcardemo</artifactId>
     <packaging>jar</packaging>
 
     <name>Kaa connected car demo</name>

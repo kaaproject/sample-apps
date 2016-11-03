@@ -63,7 +63,7 @@
         <module>powerplant-couchbase-proxy</module>
         <module>gpiocontrol</module>
         <module>ota</module>
-        <module>zeppelindemo</module>
+        <module>zeppelin</module>
         <module>spark</module>
         <module>cassandra</module>
         <module>storm</module>

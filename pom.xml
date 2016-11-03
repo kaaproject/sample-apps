@@ -44,7 +44,7 @@
         <module>iotworld</module>
         <module>smarthousedemo</module>
         <module>configuration</module>
-        <module>credentialsdemo</module>
+        <module>credentials</module>
         <module>notificationdemo</module>
         <module>datacollectiondemo</module>
         <module>eventdemo</module>

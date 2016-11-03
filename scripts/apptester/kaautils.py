@@ -159,3 +159,47 @@ class KaaNode(object):
                 time.sleep(1)
 
         raise KaaNodeError("Timeout error")
+
+class SandboxFrame(object):
+    """Allows to communicate with Kaa Sandbox via REST API."""
+
+    def __init__(self, host, port):
+        """
+        :param host: Sandbox IP address
+        :type host: string
+        :param port: Sandbox port
+        :type port: string or integer
+        """
+        self.host = str(host)
+        self.port = str(port)
+
+    def get_demo_projects(self):
+        """
+        """
+        url = 'http://{}:{}/sandbox/rest/api/demoProjects'.format(self.host, self.port)
+        req = requests.get(url)
+        if req.status_code != requests.codes.ok:
+            raise KaaSanboxError('Unable to get list of applications from Sandbox. ' \
+                                'Return code: %d'%req.status_code)
+        return req.json()
+
+    def is_binary(self, app_id):
+        """
+        """
+        url = 'http://{}:{}/sandbox/rest/api/isProjectDataExists?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)
+        req = requests.get(url)
+        if req.status_code != requests.codes.ok:
+            raise KaaSanboxError('Unable to check is it BINARY file in the Sandbox. ' \
+                                'Return code: %d'%req.status_code)
+        return req.content
+
+    def build_android_java_demo(self, app_id, dest_file):
+        """
+        """
+        url = 'http://{}:{}/sandbox/rest/api/buildProjectData?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)
+        header = 'Content-Type: application/json'
+        req = requests.post(url, header)
+        if req.status_code != requests.codes.ok:
+            raise KaaSanboxError('Can not build application {}'.format(app_id))
+        return req.content
+

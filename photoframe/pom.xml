@@ -24,7 +24,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>photoframe</artifactId>
+    <artifactId>photoframedemo</artifactId>
     <packaging>jar</packaging>
 
     <name>Photo frame demo application</name>
@@ -62,7 +62,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>${project.basedir}/assembly/src.xml</descriptor>
+                        <descriptor>assembly/src-android.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

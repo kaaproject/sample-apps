@@ -47,7 +47,7 @@
         <module>credentials</module>
         <module>notificationdemo</module>
         <module>datacollection</module>
-        <module>eventdemo</module>
+        <module>event</module>
         <module>cityguide</module>
         <module>cellmonitor</module>
         <module>photoframe</module>

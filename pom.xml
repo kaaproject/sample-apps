@@ -43,7 +43,7 @@
         <module>common</module>
         <module>iotworld</module>
         <module>smarthousedemo</module>
-        <module>configurationdemo</module>
+        <module>configuration</module>
         <module>credentialsdemo</module>
         <module>notificationdemo</module>
         <module>datacollectiondemo</module>

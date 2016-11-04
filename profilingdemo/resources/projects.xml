@@ -1077,7 +1077,7 @@ To do this:
 </p>
 
 <p>
-	Create a group named <b>Enable video if supported by device</b> and set its weight to <b>130</b>.
+	Create a group named <b>Enable video if supported by device</b> and set its weight to <b>120</b>.
 	Apply the following filter.
 	
 	<pre>
@@ -1097,7 +1097,7 @@ To do this:
 </p>
 
 <p>
-	Create a group named <b>Enable vibration if supported by device</b> and set its weight to <b>120</b>.
+	Create a group named <b>Enable vibration if supported by device</b> and set its weight to <b>130</b>.
 	Apply the following filter.
 	
 	<pre>

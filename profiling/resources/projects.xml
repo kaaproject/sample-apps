@@ -1,0 +1,1212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+     Copyright 2014-2016 CyberVision, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<projectsConfig
+        xmlns="http://www.kaaproject.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
+    <project id="profiling_demo_java">
+        <name>Endpoint profiling Java demo</name>
+        <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-profile-client-side-server-side">endpoint profiling</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group">grouping</a> features based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Java SDK</a>.
+	These features enable <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to set the default configuration and receive configuration updates from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> in compliance with profile and group settings.
+</p>
+
+To implement those features for Java SDK, the following API methods of the <code>org.kaaproject.kaa.client.KaaClient</code> class are used in this sample application:
+
+<ul>
+	<li>
+		<code>setProfileContainer()</code> method incorporates data changes to the client-side endpoint profile.
+		This sample application uses a class-based library to store the endpoint profile data on the client side.
+		You can also use a data storage of your preference.
+	</li>
+	<li>
+		<code>setConfigurationStorage()</code> method persists configuration in a local storage to avoid downloading it each time Kaa client starts.
+		Upon the application startup, a saved_config.cfg file is created locally to store the configuration data.
+	</li>
+	<li>
+		<code>addConfigurationListener()</code> method displays the Kaa client configuration each time it is updated.
+	</li>
+	<li>
+		<code>getConfiguration()</code> method gets current endpoint configuration.
+	</li>
+</ul>
+
+<p>
+	You can start multiple Kaa clients at the same time.
+	For this purpose, Kaa Java SDK uses <code>KaaClientProperties</code> class.
+	This class provides a separate working directory with multiple configuration files.
+</p>
+
+
+<h1>Launching</h1>
+
+<p>
+	To launch this sample application on the Kaa Java SDK, you need to prepare your Java SDK environment.
+	To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+</p>
+
+<p>
+	For sample applications that utilize Kaa Java SDK, both the binary files (.jar archive) and the source code (.tar.gz archive) are available for download.
+	If you want to only launch the sample application, download the binary files.
+	If you want to explore the source code of the sample application, download the source code archive.
+</p>
+
+<h2>Install using the binary files</h2>
+
+To install the sample application using the binary files:
+	
+<ol>
+	<li>
+		Click the <b>Binary</b> button.
+		A binary build window will open.
+		Click <b>Ok</b> and download the .jar file.
+	</li>
+	<li>
+		Run the following command from the directory containing the downloaded .jar archive.
+		
+		<pre>
+			$ java -jar ProfilingDemo.jar
+		</pre>
+		
+		The sample application console will display the startup message.
+	</li>
+</ol>
+
+<h2>Install using the source code</h2>
+
+To install the sample application using the source code:
+
+<ol>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
+		To install Apache Ant, run the following command from the directory containing the unpacked sources.
+		
+		<pre>
+			$ ant debug
+		</pre>
+		
+		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
+		
+		<pre>
+			$ java -jar build/jar/ProfilingDemo.jar
+		</pre>
+	</li>
+</ol>
+
+<h2>Manage endpoint profile</h2>
+
+<p>
+	When you start the application, the console will display the following messages.
+	
+	<pre>
+		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Profiling demo started
+		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint #2 data:
+		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint ID (Endpoint Key Hash): UIM/Vi5P5fRz37EdugNsSIA9kYM=
+		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Client-side endpoint profile (audio/video/vibro support): true - true - true
+		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Configuration (is audio/video/vibro subscription active): false - false - true
+	</pre>
+</p>
+
+<p>
+	To set up your client-side endpoint profile, use the following code.
+	
+	<pre>
+		// Client-side profiles list, for creating endpoints
+		private static List<PagerClientProfile> profiles = new ArrayList<>();
+		static {
+			profiles.add(new PagerClientProfile(false, false, true));
+			profiles.add(new PagerClientProfile(true, false, true));
+			profiles.add(new PagerClientProfile(true, true, true));
+		}
+		
+		. . .
+		
+		// Setup endpoint profile
+		kaaClient.setProfileContainer(new ProfileContainer() {
+			@Override
+			public PagerClientProfile getProfile() {
+				return profiles.get(endpointIndex);
+			}
+		});
+	</pre>
+	
+	To receive configuration updates from Kaa server, use the Kaa client listener.
+	
+	<pre>
+		//Add a listener to display endpoint's profile/configuration data each time configuration is updated.
+		kaaClient.addConfigurationListener(new ConfigurationListener() {
+			@Override
+			public void onConfigurationUpdate(PagerConfiguration configuration) {
+				displayConfiguration(endpointIndex);
+			}
+		});
+	</pre>	
+</p>
+
+If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
+
+<h1>Troubleshooting</h1>
+
+<h2>Endpoint profiles are not removed after closing a session</h2>
+
+<p>
+	When you restart the sample application with new keys, the application generates new endpoint profiles.
+	You can remove them manually.
+</p>
+
+To do this:
+
+<ol>
+	<li>
+		Open a terminal window from the Sandbox installation directory and run the following command.
+		
+		<pre>
+			mongo
+		</pre>
+		
+		A MongoDB console will open.
+	</li>
+	<li>
+		In the MongoDB console, run the following commands to delete the endpoint_profile table.
+		
+		<pre>
+			use kaa
+			show tables
+			db.endpoint_profile.remove({})
+		</pre>
+		
+		Now the endpoint profiles are deleted.
+</ol>
+
+<h2>Some of the filters you created result in a conflict between different configurations</h2>
+
+To avoid configuration conflicts, make sure you assign the weight values to the endpoint groups as per their preferred priority.
+            ]]>
+        </details>
+
+        <!-- Specifies the source code language of Kaa endpoint SDK which is used by this project
+             (ex. JAVA, CPP, etc., to get list of all possible options
+             see 'sdkLanguage' type in demo_projects_schema.xsd schema) -->
+        <sdkLanguage>JAVA</sdkLanguage>
+
+        <!-- Specifies the target runtime platforms according to the instructions from the project details section
+             (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
+             see 'platform' type in demo_projects_schema.xsd schema) -->
+        <platforms>LINUX_X86 WINDOWS_X86</platforms>
+
+        <features>PROFILING</features>
+        <complexity>BASIC</complexity>
+        <bundleId>profiling_demos</bundleId>
+        <sourceArchive>java/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>JProfilingDemo</projectFolder>
+        <sdkLibDir>JProfilingDemo/lib</sdkLibDir>
+        <destBinaryFile>JProfilingDemo/build/jar/ProfilingDemo.jar</destBinaryFile>
+    </project>
+    
+    <project id="profiling_demo_objc">
+        <name>Endpoint profiling Objective-C demo</name>
+        <description>Endpoint profiling and grouping application that demonstrates Kaa’s server profiling, grouping, and configuration management capabilities based on Objective-C SDK</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-profile-client-side-server-side">endpoint profiling</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group">grouping</a> features based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Objective-C SDK</a>.
+	These features enable <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to set the default configuration and receive configuration updates from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> in compliance with profile and group settings.
+</p>
+
+<p>
+	The sample application uses three API call methods:
+	<ul>
+		<li>
+			<code>addConfigurationDelegate:</code> method calls every time the configuration is updated.
+		</li>
+		<li>
+			<code>setConfigurationStorage:</code> method sets the configuration storage that will be used to persist configuration.
+		</li>
+		<li>
+			<code>setProfileContainer:</code> method changes the data in the client-side endpoint profile.
+		</li>
+    </ul>
+</p>
+
+<h1>Launching</h1>
+
+<p>
+	Before launching the application, make sure you have the latest version of xCode and CocoaPods installed.
+</p>
+
+To launch this sample application on the Kaa Objective-C SDK:
+
+<ol>
+	<li>
+		Prepare your Objective-C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Objective-C/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		
+		<pre>
+			sh build.sh
+		</pre>
+		
+		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
+        <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
+	</li>
+	<li>
+		Open the ProfilingDemo.xcodeproj file and click the <b>Play</b> button.
+		You should see the following console messages.
+		
+		<pre>
+			2016-09-07 14:46:14.053 ProfilingDemo[26391:4700219] ProfilingDemo started
+			2016-09-07 14:46:15.165 ProfilingDemo[26391:4700295] Kaa client started
+			2016-09-07 14:46:15.166 ProfilingDemo[26391:4700295] Audio support enabled: yes, video support enabled: yes, vibro support enabled: yes
+		</pre>
+		
+	</li>
+</ol>
+
+<h1>Troubleshooting</h1>
+
+<h2>Running the build script returns an error message</h2>
+
+<pre>
+	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
+</pre>
+
+<p>
+	This error can occur when using newer than version 1.0 of Cocoapods.
+</p>
+
+Try the following:
+
+<ol>
+	<li>
+		Run the following command from the ./libs/kaa-ep-sdk/ folder.
+		
+		<pre>
+			vim Podfile
+		</pre>
+		
+	</li>
+	<li>
+		Delete <b>:exclusive=>true</b>.
+	</li>
+	<li>
+		Run this command.
+		
+		<pre>
+			pod install
+		</pre>
+		
+	</li>
+</ol>
+
+Now you can open the ProfilingDemo.xcodeproj file and run the build script.
+
+<h2>Nothing happens after the "Build succeeded" message</h2>
+
+Make sure that the build target is set to <b>ProfilingDemo</b>, not <b>Kaa</b>.
+            ]]>
+        </details>
+        <sdkLanguage>OBJC</sdkLanguage>
+        <platforms>IOS</platforms>
+        <features>PROFILING</features>
+        <complexity>BASIC</complexity>
+        <bundleId>profiling_demos</bundleId>
+        <sourceArchive>objc/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>ObjCProfilingDemo</projectFolder>
+        <sdkLibDir>ObjCProfilingDemo/libs</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+
+
+    <project id="profiling_demo_c">
+        <name>Endpoint profiling C demo</name>
+        <description>Endpoint grouping and profiling demo for C</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-profile-client-side-server-side">endpoint profiling</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group">grouping</a> features based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C SDK</a>.
+	These features enable <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to set the default configuration and receive configuration updates from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> in compliance with profile and group settings.
+	The sample application contains multiple instances of Kaa client.
+	Each instance has a unique profile.
+</p>
+
+<h1>Launching</h1>
+
+To launch this sample application on the Kaa C SDK:
+
+<ol>
+	<li>
+		Prepare your C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+			<pre>
+				./build.sh deploy
+			</pre>
+	</li>
+	<li>
+		The program will ask you to enter the target platform for your build.
+		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		The C SDK and the demo application are now built and the demo application is launched.
+	</li>
+</ol>
+
+Once you built the application, you can start it at any time using the following command.
+
+<pre>
+	./build.sh run
+</pre>
+
+<h1>Troubleshooting</h1>
+
+<h2>Endpoint profiles are not removed after closing a session</h2>
+
+<p>
+	When you restart the sample application with new keys, the application generates new endpoint profiles.
+	You can remove them manually.
+</p>
+
+To do this:
+
+<ol>
+	<li>
+		Open a terminal window from the Sandbox installation directory and run the following command.
+		
+		<pre>
+			mongo
+		</pre>
+		
+		A MongoDB console will open.
+	</li>
+	<li>
+		In the MongoDB console, run the following commands to delete the endpoint_profile table.
+		<pre>
+			use kaa
+			show tables
+			db.endpoint_profile.remove({})
+		</pre>
+		
+		Now the endpoint profiles are deleted.
+</ol>		
+	
+<h2>Running the build.sh script returns an error message</h2>
+
+<pre>
+	Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+</pre>
+
+<p>
+	This means that no SDK tarball was found in the libs/kaa directory.
+</p>
+
+Try the following:
+
+<ul>
+	<li>
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
+	</li>
+	<li>
+		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
+	</li>
+</ul>
+
+<h2>CMake returns an error message</h2>
+
+<pre>
+	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+</pre>
+
+<p>
+	This means that CMake could not find the required libraries because they were not installed correctly.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">C SDK installation instructions</a>.
+</p>
+            ]]>
+        </details>
+        <sdkLanguage>C</sdkLanguage>
+        <platforms>LINUX_X86</platforms>
+        <features>PROFILING</features>
+        <complexity>BASIC</complexity>
+        <bundleId>profiling_demos</bundleId>
+        <sourceArchive>c/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>CProfilingDemo</projectFolder>
+        <sdkLibDir>CProfilingDemo/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+
+
+    <project id="profiling_demo_cpp">
+        <name>Endpoint profiling C++ demo</name>
+        <description>Endpoint grouping and profiling demo for C++</description>
+        <details>
+            <![CDATA[
+<p>
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-profile-client-side-server-side">endpoint profiling</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group">grouping</a> features based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C++ SDK</a>.
+	These features enable <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to set the default configuration and receive configuration updates from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> in compliance with profile and group settings.
+</p>
+
+<p>
+	To update your endpoint profile, specify <code>ProfileContainer</code> using the <code>IKaaClient::setProfileContainter</code> method.
+	For the sake of simplicity, the sample application uses the SDK-defined <code>DefaultProfileContainer</code> which accepts <code>KaaProfile</code>.
+</p>
+
+<h1>Launching</h1>
+
+To launch this sample application on the Kaa C++ SDK:
+
+<ol>
+	<li>
+		Prepare your C++ SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		
+		<p>
+			<b>Windows</b>
+			<pre>
+				build.bat deploy
+			</pre>
+		</p>
+		<p>
+			<b>Linux, OS X (macOS)</b>
+			<pre>
+				./build.sh deploy
+			</pre>
+		</p>
+	</li>
+	<li>
+		The program will ask you to enter the target platform for your build.
+		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		The C++ SDK and the demo application are now built and the demo application is launched.
+	</li>
+</ol>
+
+Once you built the application, you can start it at any time using the following command.
+
+<p>
+	<b>Windows</b>
+	<pre>
+		build.bat run
+	</pre>
+</p>
+<p>
+	<b>Linux, OS X (macOS)</b>
+	<pre>
+		./build.sh run
+	</pre>
+</p>
+	
+<h1>Troubleshooting</h1>
+
+<h2>Running the build.sh script returns an error message</h2>
+
+<pre>
+	Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+</pre>
+
+<p>
+	This means that no SDK tarball was found in the libs/kaa directory.
+</p>
+
+Try the following:
+
+<ul>
+	<li>
+		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
+	</li>
+	<li>
+		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
+	</li>
+</ul>
+
+<h2>CMake returns an error message</h2>
+
+<pre>
+	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+</pre>
+
+<p>
+	This means that CMake could not find the required libraries because they were not installed correctly.
+	To address this issue, check if you completed all the required steps of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">C++ SDK installation instructions</a>.
+</p>
+            ]]>
+        </details>
+        <sdkLanguage>CPP</sdkLanguage>
+        <platforms>LINUX_X86</platforms>
+        <features>PROFILING</features>
+        <complexity>BASIC</complexity>
+        <bundleId>profiling_demos</bundleId>
+        <sourceArchive>cpp/profiling_demo.tar.gz</sourceArchive>
+        <projectFolder>CppProfilingDemo</projectFolder>
+        <sdkLibDir>CppProfilingDemo/libs/kaa</sdkLibDir>
+        <destBinaryFile></destBinaryFile>
+    </project>
+    <bundle id="profiling_demos">
+        <name>Profiling and grouping demos</name>
+        <description>Kaa Profiling subsystem demo applications bundle</description>
+        <details>
+            <![CDATA[
+<p>
+	This application bundle demonstrates the features of Kaa <b>Grouping extension</b>.
+	The Grouping extension works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/">Profiling</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/">Configuration</a> extensions.
+</p>
+<p>
+	This demonstration uses pager as an example device that can produce signals such as video, audio, and vibration.
+</p>
+
+<h1>Playing around</h1>
+
+<h2>Endpoint profile schemas</h2>
+
+This demo <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">application</a> contains 3 instances of <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a>
+Each client instance has its own unique client-side <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-profile-client-side-server-side" target="_blank">endpoint (EP) profile</a>.
+The profile data structure is defined in the EP profile schema.
+The data values in the schema define which functions are supported by the endpoint device.
+In this example, the device will support audio, video and vibration signals.
+
+<p>
+	For this purpose, the following client-side EP profile schema is used in the sample application.
+	
+	<pre>
+		{
+		  "type" : "record",
+		  "name" : "PagerClientProfile",
+		  "namespace" : "org.kaaproject.examples.pager",
+		  "fields" : [ {
+			"name" : "audioSupport",
+			"type" : "boolean"
+		  }, {
+			"name" : "videoSupport",
+			"type" : "boolean"
+		  }, {
+			"name" : "vibroSupport",
+			"type" : "boolean"
+		  } ],
+		  "displayName" : "org.kaaproject.examples.pager.PagerClientProfile"
+		}
+	</pre>
+	
+</p>
+<p>
+	You can view and edit this schema using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>.
+</p>
+
+To do this:
+
+<ol>
+	<li>
+		Click the <b>Administration UI</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
+	</li>
+	<li>
+		Click the <b>Applications</b> arrow to unfold the list.
+		Click <b>Profiling demo</b> > <b>Schemas</b> > <b>Client-side EP profile</b>.
+		You will see the list of all client-side EP profile schemas stored for your application.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_0.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Select the <b>PagerClientProfile</b> schema by clicking on the corresponding row.
+		The <b>Client-side EP profile schema details</b> page will open.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_1.png" />
+		<br />
+		<br />
+		
+		The <b>PagerClientProfile</b> schema is included in the Sandbox for demonstration purpose.
+		You can create your own client-side EP profile schemas.
+		To do this, use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#!/Profiling/saveProfileSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-client-side-ep-profile-schema" target="_blank">these instructions</a>for Administration UI.
+	</li>
+</ol>
+
+<p>
+	The same data structure is used for the <b>server-side EP profile schema</b>.
+	The following server-side EP profile schema is used for this sample application.
+
+	<pre>
+		{
+		  "type" : "record",
+		  "name" : "PagerServerProfile",
+		  "namespace" : "org.kaaproject.examples.pager",
+		  "fields" : [ {
+			"name" : "audioSubscription",
+			"type" : "boolean"
+		  }, {
+			"name" : "videoSubscription",
+			"type" : "boolean"
+		  }, {
+			"name" : "vibroSubscription",
+			"type" : "boolean"
+		  } ],
+		  "displayName" : "org.kaaproject.examples.pager.PagerServerProfile"
+		}
+	</pre>
+</p>
+
+<p>
+	To view and edit this schema in the Administration UI, open the <b>Server-side EP profile</b> page under the <b>Schemas</b> section of your application and select the <b>PagerServerProfile</b> schema.
+</p>
+
+<p>
+	To create your own server-side EP profile schemas, use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#!/Profiling/saveServerProfileSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-server-side-ep-profile-schema" target="_blank">these instructions</a>for Administration UI.
+</p>
+
+<h2>Endpoint configuration schema</h2>
+
+Each EP can receive a configuration that defines which functions to enable for the EP device.
+The configuration data structure is defined in the <b>configuration schema</b>.
+The following configuration schema is used for this sample application.
+	
+<pre>
+	{
+	  "type" : "record",
+	  "name" : "PagerConfiguration",
+	  "namespace" : "org.kaaproject.examples.pager",
+	  "fields" : [ {
+		"name" : "audioSubscriptionActive",
+		"type" : "boolean",
+		"by_default" : false
+	  }, {
+		"name" : "videoSubscriptionActive",
+		"type" : "boolean",
+		"by_default" : false
+	  }, {
+		"name" : "vibroSubscriptionActive",
+		"type" : "boolean",
+		"by_default" : true
+	  } ],
+	  "displayName" : "org.kaaproject.examples.pager.PagerConfiguration"
+	}
+</pre>
+
+<p>
+	To view and edit this schema in the Administration UI, open the <b>Configuration</b> page under the <b>Schemas</b> section of your application and select the <b>PagerConfiguration</b> schema.
+</p>
+
+<p>
+	To create and edit your own server-side EP profile schemas, use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#!/Configuration/editConfiguration" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/#updating-configuration-data" target="_blank">these instructions</a>for Administration UI.
+</p>
+
+<h2>Endpoint groups</h2>
+
+Any endpoint can be a member of one or multiple <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group" target="_blank">groups</a>.
+The configuration data is sent from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group" target="_blank">Kaa server</a> to endpoint groups.
+This means that the endpoints receive their configuration based on the group membership.
+Every endpoint, once registered, automatically becomes a member of the default group <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group" target="_blank">All</a>.
+This means that once you start your endpoint, it will receive the default configuration from the group <b>All</b>.
+
+<p>
+	For any group, you can change the entire configuration data or override a particular value.
+	For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
+</p>
+
+<p>
+	This sample application contains these four groups: <b>Audio and vibration</b>, <b>Vibration only</b>, <b>All signals enabled</b>, and <b>Disable vibration if audio and video are supported</b>.
+	To view the list of endpoint groups, open the <b>Endpoint groups</b> page of the application.
+	
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_6.png" />
+	<br />
+	<br />
+	
+	Each of these groups has its own configuration that defines which functions the endpoint device will support.	
+</p>
+
+<p>
+	To play around with the sample application, download the binaries/sources for the target platform and start the application.
+	To do this, choose the target platform below and follow the instructions on the dedicated page.
+</p>
+
+<p>
+	When you start this demo application, the following console messages will be displayed.
+	
+	<pre>
+		016-08-08 13:20:28,272 [main] INFO  o.k.k.d.c.ConfigurationDemo - Profiling demo started
+		2016-08-08 13:20:29,399 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
+		2016-08-08 13:20:29,400 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: false, videoSupport: false, vibroSupport: true
+		2016-08-08 13:20:29,401 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: true
+		
+		2016-08-08 13:20:30,096 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+		2016-08-08 13:20:30,097 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
+		2016-08-08 13:20:30,097 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: false, video: false, vibration: true
+		
+		2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+		2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+		2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: false, video: false, vibration: true
+		
+		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
+		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
+		2016-08-08 13:20:30,391 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: true, video: false, vibration: true
+		
+		2016-08-08 13:20:30,468 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: true
+		
+		2016-08-08 13:20:33,248 [main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--
+	</pre>
+</p>
+
+<p>
+	As mentioned before, each of the three instances of Kaa client represents one endpoint.
+	The messages above inform the user about the supported set of functions defined for each endpoint in the client-side profile.
+	The first three message blocks inform about the default configuration received by the endpoints.
+	The last two message blocks report about the configuration changes made by Kaa server to two of the three endpoints (explained in the <b>Endpoint configuration update</b> section below).
+</p>
+<p>
+	All endpoints first received the same default configuration because they are members of the default group <i>all</i> and are not assigned to any other groups yet.
+	In this example, the default configuration for each endpoint is to have audio and video support disabled and vibration support enabled.
+</p>
+<p>
+	To change the default configuration of an endpoint, assign that endpoint to the group that has the needed configuration.
+	To do this, you need to set the profile filter for that group so that the endpoint in question becomes the member of that group based on your profile filter settings.
+</p>
+
+<h2>Manage groups based on client-side profile filters</h2>
+
+To manage profile filters for a group
+
+<ol>
+	<li>
+		Open the <b>Endpoint groups</b> page of the application.
+	</li>
+	<li>
+		Select the group by clicking the corresponding row in the list.
+		The <b>Endpoint group details</b> page will open.
+	
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_7.png" />
+		<br />
+		<br />
+	
+		In the <b>Profile filters</b> section of the page, you can see the list of profile filters that define which endpoints belong to this group.
+	</li>
+	<li>
+		Select the <b>Audio and vibration support</b> group created for this sample application.
+		The <b>Profile filter details</b> page will open.
+	
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_8.png" />
+		<br />
+		<br />	
+	
+		The <b>Filter body</b> block contains the filter definition.
+		</li>
+</ol>
+<p>
+	As mentioned before, there are four groups defined for this sample application.
+	Each group contains one filter that applies to the client-side EP profile.
+	
+	<pre>
+		// "Audio and vibration"
+		#cp.audioSupport == true && #cp.videoSupport == false && #cp.vibroSupport == true
+		
+		// "Vibration only"
+		#cp.audioSupport == false && #cp.videoSupport == false && #cp.vibroSupport == true
+		
+		// "All signals enabled"
+		#cp.audioSupport == true && #cp.videoSupport == true && #cp.vibroSupport == true
+		
+		// "Disable vibration if audio and video are supported"
+		#cp.audioSupport == true && #cp.videoSupport == true && #cp.vibroSupport == true
+	</pre>
+</p>
+<p>
+	When you start your application, each EP sends its client-side profile data to Kaa server for registration.
+	For more information about EP registration, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
+</p>
+<p>
+	Then Kaa server gets the list of the endpoint groups in the application and checks the group filters against the client and server side of the EP profiles.
+	The check is done in the ascending order of the group weight, starting from the lowest weight group <b>All</b>.
+	If the client-side and server-side of the EP profile matches the conditions of a group filter, the server assigns the endpoint to that group.
+	As a result, the server applies the configuration of that group to the endpoint by merging the changes in the base and override schemas.
+	<br />
+	<br />
+	For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/" target="_blank">Configuration management</a>.
+</p>
+
+<h2>Endpoint configuration update</h2>
+
+As shown in the <b>Endpoint groups</b> section above, when you start the application, the last two message blocks in the console will look like this.
+
+<pre>
+		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
+		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
+		2016-08-08 13:20:30,391 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: true, video: false, vibration: true
+		
+		2016-08-08 13:20:30,468 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: true
+</pre>
+
+This means that the endpoints #1 and #2 were updated with new configuration because the server found profile filters that match the client-side profile data of these two endpoints.
+
+<p>
+	Client-side profile of the endpoint #1 matches the profile filter from the <b>Audio and vibration</b> group, therefore the configuration of this group is applied to this endpoint.
+	In the same way, the endpoint #2 became a member of the <b>All signals enabled</b> group.
+</p>
+<p>
+	The configuration of this group has the <code>audioSubscriptionActive</code> property overridden to <b>true</b>.
+	Since the profile data of the endpoint does not match any other filter, its audio setting is overridden while other settings remain as per the default configuration.
+	As a result, endpoint #1 can now produce audio and vibration signals.
+</p>
+<p>
+	To view the the <b>Audio and vibration</b> group configuration, select this group on the <b>Endpoint groups</b> page and select the configuration from the <b>Configurations</b> section.
+
+	<br />
+	<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_10.png" />
+	<br />
+	<br />
+
+	Select the check box of the base configuration property that you want to override.
+	The base configuration is the one that has the same version in the group with the closest lower weight.
+	In this example, it is the group <b>All</b>.
+	See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/#base-schema" target="_blank">Base schema</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/#override-schema" target="_blank">Override schema</a>.
+</p>
+<p>
+	Now let's change the configuration of the endpoint #2 one more time:
+	
+	<ol>
+		<li>
+			Open the <b>Disable vibration if audio and video are supported</b> endpoint group.
+		</li>
+		<li>
+			Select the pre-configured filter in the <b>Profile filters</b> section.
+		</li>
+		<li>
+			On the <b>Profile filter details</b> page, select the <b>Draft</b> tab and click the <b>Activate</b> button.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_11.png" />
+			<br />
+			<br />
+			
+		</li>
+	</ol>
+</p>
+<p>
+	The following console messages will be displayed.
+
+	<pre>
+		...
+		2016-08-12 16:27:19,777 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - The configuration for the 2-th endpoint had been updated.
+		2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+		2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+		2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - 2-th endpoint configuration: audio: true, video: true, vibration: false.
+	</pre>
+
+	This means that the endpoint #2 became a member of the <b>Disable vibration if audio and video are supported</b> group, and the configuration of this endpoint changed accordingly.
+	Note that an endpoint can be assigned to groups only when the endpoint is online and has a connection to Kaa server.
+	As mentioned above, the endpoint #2 was initially a member of the default group <b>All</b>, then became a member of the <b>All signals support</b>.
+	When the endpoint #2 became a member of the <b>Disable vibration if audio and video are supported</b> group, the <code>vibroSubscriptionActive</code> parameter was overridden because this group has bigger weight and therefore higher priority.
+	As a result, the endpoint #2 can now produce audio and video signals only.
+</p>
+
+<h2>Manage groups based on sever-side profile filters</h2>
+
+Upon successful registration, every endpoint receives a default server-side profile from Kaa server.
+If you add your own versions of the server-side EP profile schema, the server will apply the latest version.
+In the default Server-side EP, as values of properties will be set default values for the type of specific schema property.
+See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-server-side-ep-profile-schema" target="_blank">Setting server-side EP profile schema</a>.
+
+<p>
+	For demonstration purpose, this demo application has a default server-side profile with all properties set to <b>false</b> and applied to all the three endpoints.
+	
+	<pre>
+		{
+		  "audioSubscription" : false,
+		  "videoSubscription" : false,
+		  "vibroSubscription" : false
+		}
+	</pre>
+	
+</p>
+<p>
+	Similar to applying profile filters to client-side EP profiles, you can also apply them to the server-side EP profile to create endpoint groups.
+</p>
+<p>
+	For example, let's disable all types of signals for all endpoints.
+</p>
+
+To do this:
+
+<ol>
+	<li>
+		Open the <b>Endpoint groups</b> page and create a <b>Disable all signals</b> group and set its <b>Weight</b> value to <b>100</b>.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_12.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Open the <b>Configuration</b> page and click <b>Add configuration</b>.
+		Select the appropriate <b>Schema version</b> (version <b>2</b> in this case).
+	</li>
+	<li>
+		In the <b>Draft</b> tab of the <b>Configuration details</b> page, edit the contents of the <b>Configuration body</b> block to look like this.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_13.png" />
+		<br />
+		<br />
+		
+		Make sure to select all three check boxes to override the corresponding base configuration properties.
+	</li>
+	<li>
+		Click <b>Save</b> to save the configuration, then click <b>Activate</b> to apply this configuration to the group.
+	</li>
+</ol>
+
+<p>
+	Add a profile filter to the <b>Disable all signals</b>.
+	
+	To do this:
+	<ol>
+		<li>
+			Open the <b>Endpoint group details</b> page and click <b>Add profile filter</b>.
+		</li>
+		<li>
+			Copy and paste this line into the <b>Filter body</b> block.
+		
+			<pre>
+				#sp.audioSubscription == false && #sp.videoSubscription == false && #sp.vibroSubscription == false
+			</pre>	
+		
+		</li>
+		<li>
+			Click <b>Save</b>, then click <b>Activate</b>.
+		</li>
+	</ol>
+	
+	The console will display the following messages.
+	
+	<pre>
+		...
+
+		2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
+		2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+		2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: false, video: false, vibration: false.
+		
+		2016-08-15 13:04:59,625 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 0-th endpoint had been updated.
+		2016-08-15 13:04:59,626 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
+		2016-08-15 13:04:59,629 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: false.
+		
+		2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+		2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+		2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: false, video: false, vibration: false.
+	</pre>
+	
+	All types of signals are now disabled for all the three endpoints.
+</p>
+<p>
+	Let's now override one configuration property so that the server-side EP data affects enabling or disabling the signal types for the endpoints.
+</p>
+<p>
+	Create a group named <b>Enable audio if supported by device</b> and set its weight to <b>110</b>.
+	Apply the following filter.
+	
+	<pre>
+		#cp.audioSupport == true && #sp.audioSubscription == true
+	</pre>
+	
+	Apply the following configuration.
+	
+	<pre>
+		{
+		  "audioSubscriptionActive" : true,
+		  "videoSubscriptionActive" : unchanged,
+		  "vibroSubscriptionActive" : unchanged
+		}
+	</pre>
+	
+	Note that <b>unchanged</b> means that you should leave the corresponding check box clear so that the base property will not be overridden.
+</p>
+
+<p>
+	Create a group named <b>Enable vibration if supported by device</b> and set its weight to <b>120</b>.
+	Apply the following filter.
+	
+	<pre>
+		#cp.videoSupport == true && #sp.videoSubscription == true
+	</pre>
+	
+	Apply the following configuration.
+	
+	<pre>
+		{
+		  "audioSubscriptionActive" : unchanged,
+		  "videoSubscriptionActive" : unchanged,
+		  "vibroSubscriptionActive" : true
+		}
+
+	</pre>
+</p>
+
+<p>
+	Create a group named <b>Enable video if supported by device</b> and set its weight to <b>130</b>.
+	Apply the following filter.
+	
+	<pre>
+		#cp.vibroSupport == true && #sp.vibroSubscription == true
+	</pre>
+	
+	Apply the following configuration.
+	
+	<pre>
+		{
+		  "audioSubscriptionActive" : unchanged,
+		  "videoSubscriptionActive" : true,
+		  "vibroSubscriptionActive" : unchanged
+		}
+
+	</pre>
+</p>
+
+<p>
+	Now your list of endpoint groups should look like this.
+	
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_15.png" />
+		<br />
+		<br />
+	
+</p>
+
+<p>
+	Let's enable vibration signal for endpoint #0.
+	
+	To do this:
+	<ol>
+		<li>
+			Open the <b>Endpoint profiles</b> page of the application.
+			
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_16.png" />
+			<br />
+			<br />
+						
+		</li>
+		<li>
+			See your console output to see which <b>Key hash</b> corresponds to the endpoint #0 and select it from the list.
+			The <b>Endpoint profile details</b> page will open.
+						
+			<br />
+			<img src="https://raw.github.com/hunch7/sample-apps/app-231-EpGroup-bundle/profilingdemo/resources/pic/profiling_demo_17.png" />
+			<br />
+			<br />
+						
+		</li>
+		<li>
+			In the <b>Server-side EP profile</b> section, click <b>Edit</b> and select the appropriate schema version (version <b>1</b> in this case).
+			Then select the <b>vibroSubscription</b> check box and click <b>Save</b> to apply changes.
+		</li>
+	</ol>
+	
+	The console will display the following messages.
+	
+	<pre>
+		2016-08-15 13:11:58,386 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 0-th endpoint had been updated.
+		2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
+		2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: false, videoSupport: false, vibroSupport: true
+		2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: true.
+	</pre>
+	
+	This means that the configuration of endpoint #0 changed and now it can produce vibration signal.
+</p>
+
+<h2>Manage groups based on both client- and sever-side profile filters</h2>
+
+You can create filters with conditions that apply to both client- and server-side of the EP profiles.
+
+<p>
+	As an example, you can create a group whose member endpoints will stop supporting vibration signal, if they have video and audio signals supported and enabled.
+	Set the weight of this group to <b>140</b> and apply the following filter conditions.
+	
+	<pre>
+		#cp.audioSupport == true && #sp.audioSubscription == true &&
+		#cp.videoSupport == true && #sp.videoSubscription == true 
+	</pre>
+	
+	Apply the following configuration.
+	
+	<pre>
+		{
+		  "audioSubscriptionActive" : unchanged,
+		  "videoSubscriptionActive" : unchanged,
+		  "vibroSubscriptionActive" : false
+		}
+	</pre>
+	
+	The console will display the following messages.
+	
+	<pre>
+		...
+		2016-08-15 13:13:17,372 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+		2016-08-15 13:13:17,373 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+		2016-08-15 13:13:17,373 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: false.
+	</pre>
+	
+	This means that the configuration of endpoint #2 changed and now it cannot produce vibration signal.
+</p>
+            ]]>
+        </details>
+    </bundle>
+</projectsConfig>

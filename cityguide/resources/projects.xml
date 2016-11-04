@@ -21,7 +21,7 @@
         xmlns="http://www.kaaproject.org"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.kaaproject.org ../../common/src/main/resources/demo/projects/demo_projects_schema.xsd">
-    <project id="cityguide_demo">
+    <project id="cityguide_demo_android">
         <name>City guide demo</name>
         <description>City guide Android app that demonstrates Kaa’s endpoint profiling, grouping, and configuration
             management capabilities

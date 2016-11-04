@@ -16,22 +16,30 @@
 
 apply plugin: "com.android.application"
 
+ext {
+    androidSupportVer = "25.0.0"
+
+    sampleAppName = "events"
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "org.kaaproject.kaa.demo.events"
+        applicationId "org.kaaproject.kaa.demo.${sampleAppName}"
         minSdkVersion 15
         targetSdkVersion 25
     }
-}
-
-ext {
-    androidSupportVer = "25.0.0"
 }
 
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:${androidSupportVer}"
     compile "com.android.support:design:${androidSupportVer}"
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        output.outputFile = new File(output.outputFile.parent, "${sampleAppName}.apk")
+    }
 }

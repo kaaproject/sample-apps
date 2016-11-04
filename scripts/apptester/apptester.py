@@ -253,16 +253,17 @@ class AppTesterFramework(object):
         for item in output:
             try:
                 if 'java' in item['id'] or 'android' in item['id']:
-                    build_app = self.sandboxframe.build_android_java_demo(item['id'], None)
-                    if 'build failed' in build_app.lower():
-                        self.result_matrix[item['name']] = TestStatus.FAILED
-                        print 'Building {}:\n{}'.format(item['name'], build_app)
-                    elif 'build successful' in build_app.lower():
-                        self.result_matrix[item['name']] = TestStatus.PASSED
-                        print 'Building {}:\n{}'.format(item['name'], build_app)
+                    if self.sandboxframe.is_binary(item['id']):
+                        build_app = self.sandboxframe.build_android_java_demo(item['id'], None)
+                        if 'build failed' in build_app.lower():
+                            self.result_matrix[item['name']] = TestStatus.FAILED
+                            print 'Building {}:\n{}'.format(item['name'], build_app)
+                        elif 'build successful' in build_app.lower():
+                            self.result_matrix[item['name']] = TestStatus.PASSED
+                            print 'Building {}:\n{}'.format(item['name'], build_app)
 
-                    else:
-                        print 'Unexpected result for {}'.format(item['name'])
+                        else:
+                            print 'Unexpected result for {}'.format(item['name'])
 
             except Exception as ex:
                 print type(ex), ex
@@ -300,10 +301,11 @@ class AppTesterFramework(object):
                 passed = False
             if output:
                 table_data = [['Application', 'Build', 'Test']]
-                build_result = [app, self.result_matrix[app], 'N/A']
-                table_data.append(build_result)
+                for app in self.result_matrix:
+                    build_result = [app, self.result_matrix[app], 'N/A']
+                    table_data.append(build_result)
             table = AsciiTable(table_data)
-            print table.table
+        print table.table
 
         return passed
 
@@ -318,7 +320,8 @@ def console_args_parser():
                         action='store_true')
     parser.add_argument('-a', metavar='application',
                         help='specify application')
-    parser.add_argument('-j', help='build java/android applications', action='store_true')
+    parser.add_argument('-j', help='build java/android applications', 
+                        action='store_true')
     parser.add_argument('-s', metavar='server',
                         type=str, help='Kaa server address')
     parser.add_argument('-p', metavar='port',
@@ -355,14 +358,16 @@ def main():
             print 'Application "%s" was not found'%args.a
             sys.exit(1)
         name = appconfig[args.a]['name']
-  
+
     host = args.s if args.s else config['host']
     port = args.p if args.p else config['port']
 
     kaauser = KaaUser(config['user'], config['password'])
     kaanode = KaaNode(host, port)
     builddir = config['builddir']
-    sandboxframe = SandboxFrame('10.2.2.56', 9080)
+
+    sandboxframe = SandboxFrame(host, 9080)
+
     # clear build directory
     rmtree(builddir, ignore_errors=True)
 
@@ -372,6 +377,10 @@ def main():
                                 args.rootpath, builddir, sandboxframe)
     if args.j:
         tester.build_android_java_demo()
+        if tester.process_results_ksf(True):
+            sys.exit(0)
+        else:
+            sys.exit(1)
     else:
         tester.build_applications(name)
         if tester.process_results(True):

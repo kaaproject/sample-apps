@@ -191,7 +191,7 @@ class SandboxFrame(object):
         if req.status_code != requests.codes.ok:
             raise KaaSanboxError('Unable to check is it BINARY file in the Sandbox. ' \
                                 'Return code: %d'%req.status_code)
-        return req.content
+        return req.json()
 
     def build_android_java_demo(self, app_id, dest_file):
         """

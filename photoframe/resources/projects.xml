@@ -60,6 +60,6 @@ For more background on Kaa Event subsystem please refer to the corresponding pro
         <sourceArchive>android/photoframe_demo.tar.gz</sourceArchive>
         <projectFolder>photoframe_demo/PhotoFrame</projectFolder>
         <sdkLibDir>photoframe_demo/PhotoFrame/app/libs</sdkLibDir>
-        <destBinaryFile>photoframe_demo/PhotoFrame/app/build/outputs/apk/app-debug.apk</destBinaryFile>
+        <destBinaryFile>photoframe_demo/PhotoFrame/app/build/outputs/apk/photoframe.apk</destBinaryFile>
     </project>
 </projectsConfig>

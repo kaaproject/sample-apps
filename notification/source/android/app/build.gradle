@@ -15,12 +15,18 @@
  */
 
 apply plugin: 'com.android.application'
+
+ext {
+    supportLibraryVersion = '23.4.0'
+    sampleAppName = "notification"
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "org.kaaproject.kaa.demo.notification"
+        applicationId "org.kaaproject.kaa.demo.${sampleAppName}"
         minSdkVersion 15
         targetSdkVersion 23
     }
@@ -39,13 +45,15 @@ android {
     }
 }
 
-ext {
-    supportLibraryVersion = '23.4.0'
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:cardview-v7:$supportLibraryVersion"
     compile 'com.google.code.gson:gson:2.6.2'
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        output.outputFile = new File(output.outputFile.parent, "${sampleAppName}.apk")
+    }
 }

@@ -70,6 +70,6 @@ For more background on the Kaa Configuration subsystem, please refer to the corr
         <sourceArchive>android/cityguide_demo.tar.gz</sourceArchive>
         <projectFolder>cityguide_demo/CityGuide</projectFolder>
         <sdkLibDir>cityguide_demo/CityGuide/app/libs</sdkLibDir>
-        <destBinaryFile>cityguide_demo/CityGuide/app/build/outputs/apk/app-debug.apk</destBinaryFile>
+        <destBinaryFile>cityguide_demo/CityGuide/app/build/outputs/apk/cityguide.apk</destBinaryFile>
     </project>
 </projectsConfig>

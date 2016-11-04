@@ -183,7 +183,7 @@ class SandboxFrame(object):
                                 'Return code: %d'%req.status_code)
         return req.json()
 
-    def is_binary(self, app_id):
+    def is_build_successful(self, app_id):
         """
         """
         url = 'http://{}:{}/sandbox/rest/api/isProjectDataExists?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)
@@ -193,7 +193,7 @@ class SandboxFrame(object):
                                 'Return code: %d'%req.status_code)
         return req.json()
 
-    def build_android_java_demo(self, app_id, dest_file):
+    def build_android_java_demo(self, app_id):
         """
         """
         url = 'http://{}:{}/sandbox/rest/api/buildProjectData?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)

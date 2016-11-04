@@ -253,13 +253,19 @@ class AppTesterFramework(object):
         for item in output:
             try:
                 if 'java' in item['id'] or 'android' in item['id']:
-                    if self.sandboxframe.is_binary(item['id']):
-                        build_app = self.sandboxframe.build_android_java_demo(item['id'], None)
-                        if 'build failed' in build_app.lower():
-                            self.result_matrix[item['name']] = TestStatus.FAILED
-                            print 'Building {}:\n{}'.format(item['name'], build_app)
-                        elif 'build successful' in build_app.lower():
+
+                    if item['destBinaryFile'] == '':
+                        continue
+
+                    else:
+                        build_app = self.sandboxframe.build_android_java_demo(item['id'])
+
+                        if self.sandboxframe.is_build_successful(item['id']):
                             self.result_matrix[item['name']] = TestStatus.PASSED
+                            print 'Building {}:\n{}'.format(item['name'], build_app)
+
+                        elif not self.sandboxframe.is_build_successful(item['id']):
+                            self.result_matrix[item['name']] = TestStatus.FAILED
                             print 'Building {}:\n{}'.format(item['name'], build_app)
 
                         else:
@@ -282,6 +288,7 @@ class AppTesterFramework(object):
                 passed = False
             if output:
                 table_data = [['Application', 'Build', 'Test']]
+
                 for app in self.result_matrix:
                     build_result = ['{} ({}) for {}:'.format(app.get_name(), app.get_language(),
                                     app.get_platform()), self.result_matrix[app], 'N/A']
@@ -293,14 +300,13 @@ class AppTesterFramework(object):
 
     def process_results_ksf(self, output=False):
         passed = True
-
-        # TODO APP-53 Add test results
-
         for app in self.result_matrix:
             if self.result_matrix[app] == TestStatus.FAILED:
                 passed = False
+
             if output:
                 table_data = [['Application', 'Build', 'Test']]
+
                 for app in self.result_matrix:
                     build_result = [app, self.result_matrix[app], 'N/A']
                     table_data.append(build_result)

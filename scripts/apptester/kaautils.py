@@ -79,13 +79,13 @@ class KaaNode(object):
         :type ofile: string
         """
 
-        url = 'http://%s:%s/kaaAdmin/rest/api/sdk?sdkProfileId=%s' \
-        '&targetPlatform=%s'%(self.host, self.port, str(profile_id), language)
+        url = 'http://{}:{}/kaaAdmin/rest/api/sdk?sdkProfileId={}' \
+        '&targetPlatform={}'.format(self.host, self.port, str(profile_id), language)
 
         req = requests.post(url, auth=(kaauser.name, kaauser.password))
         if req.status_code != requests.codes.ok:
             raise KaaNodeError('Unable to download SDK.' \
-                               'Return code: %d'%req.status_code)
+                               'Return code: {d}'.format(req.status_code))
 
         with open(ofile, 'w') as output_file:
             output_file.write(req.content)
@@ -97,13 +97,13 @@ class KaaNode(object):
         :type kaauser: KaaUser
         """
 
-        url = 'http://%s:%s/kaaAdmin/rest/api/applications'%(self.host,
+        url = 'http://{}:{}/kaaAdmin/rest/api/applications'.format(self.host,
                                                              self.port)
 
         req = requests.get(url, auth=(kaauser.name, kaauser.password))
         if req.status_code != requests.codes.ok:
             raise KaaNodeError('Unable to get list of applications. ' \
-                               'Return code: %d'%req.status_code)
+                               'Return code: {d}'.format(req.status_code))
 
         return req.json()
 
@@ -124,16 +124,16 @@ class KaaNode(object):
                 break
 
         if not token:
-            raise KaaNodeError('Application: "%s" was not found'%appname)
+            raise KaaNodeError('Application: "{}" was not found'.format(appname))
 
-        url = 'http://%s:%s/kaaAdmin/rest/api/sdkProfiles/%s'%(self.host,
+        url = 'http://{}:{}/kaaAdmin/rest/api/sdkProfiles/{}'.fromat(self.host,
                                                                self.port,
                                                                str(token))
 
         req = requests.get(url, auth=(kaauser.name, kaauser.password))
         if req.status_code != requests.codes.ok:
             raise KaaNodeError('Unable to get SDK profiles. '\
-                               'Return code: %d'%req.status_code)
+                               'Return code: {d}'.format(req.status_code))
 
         return req.json()
 
@@ -151,7 +151,7 @@ class KaaNode(object):
                 # In case the server is ready it will respond with 401 (Unauthorized),
                 # otherwise, an exception will be thrown.
 
-                url = 'http://%s:%s/kaaAdmin/rest/api'%(self.host, self.port)
+                url = 'http://{}:{}/kaaAdmin/rest/api'.format(self.host, self.port)
                 requests.get(url)
 
                 return
@@ -174,31 +174,37 @@ class SandboxFrame(object):
         self.port = str(port)
 
     def get_demo_projects(self):
-        """
-        """
+        """Gets the list for Kaa application from sandbox. Returns result in JSON format."""
         url = 'http://{}:{}/sandbox/rest/api/demoProjects'.format(self.host, self.port)
         req = requests.get(url)
         if req.status_code != requests.codes.ok:
             raise KaaSanboxError('Unable to get list of applications from Sandbox. ' \
-                                'Return code: %d'%req.status_code)
+                                'Return code: {}'.format(req.status_code))
+
         return req.json()
 
-    def is_binary(self, app_id):
-        """
+    def is_build_successful(self, app_id):
+        """Gets application build result. Returns True or False.
+        :param app_id: name of application on sandbox.
+        :type app_id: string.
         """
         url = 'http://{}:{}/sandbox/rest/api/isProjectDataExists?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)
         req = requests.get(url)
         if req.status_code != requests.codes.ok:
             raise KaaSanboxError('Unable to check is it BINARY file in the Sandbox. ' \
-                                'Return code: %d'%req.status_code)
-        return req.content
+                                'Return code: {d}'.format(req.status_code))
 
-    def build_android_java_demo(self, app_id, dest_file):
-        """
+        return req.json()
+
+    def build_android_java_demo(self, app_id):
+        """Build demo applications from sandbox. Returns logs of build in JSON format.
+        :param app_id: name of application on sandbox.
+        :type app_id: string.
         """
         url = 'http://{}:{}/sandbox/rest/api/buildProjectData?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)
         header = 'Content-Type: application/json'
         req = requests.post(url, header)
         if req.status_code != requests.codes.ok:
             raise KaaSanboxError('Can not build application {}'.format(app_id))
+
         return req.content

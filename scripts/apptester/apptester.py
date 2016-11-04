@@ -50,14 +50,13 @@ class AppConfig(object):
     """Represents application build parameters"""
 
     def __init__(self, name, language, platform, srcpath, buildpath, buildcmd,
-                 testcmd, runcmd=None, testmodule=None):
+                runcmd=None, testmodule=None):
         self.name = name
         self.language = language
         self.platform = platform
         self.srcpath = srcpath
         self.buildpath = buildpath
         self.buildcmd = buildcmd
-        self.testcmd = testcmd
         self.runcmd = runcmd
         self.testmodule = testmodule
 
@@ -194,7 +193,6 @@ class AppTesterFramework(object):
                 # for all supported platforms
                 for platform in platforms:
                     buildcmd = platforms[platform]['buildcmd']
-                    testcmd = platforms[platform]['testcmd']
 
                     # TODO APP-53 Add runcmd and testmodule
                     buildpath = os.path.join(self.testdir, app,
@@ -206,7 +204,7 @@ class AppTesterFramework(object):
                     status = platforms[platform].get('status', None)
 
                     appconfig = AppConfig(name, lang, platform,
-                                          srcpath, buildpath, buildcmd, testcmd)
+                                          srcpath, buildpath, buildcmd)
                     application = Application(appconfig,
                                               self.kaanode, self.kaauser)
                     if deps:
@@ -235,7 +233,7 @@ class AppTesterFramework(object):
                     self.result_matrix[app] = TestStatus.SKIPPED
                     continue
                 else:
-                    print 'Building %s (%s) for %s\n'%(app.get_name(),
+                    print 'Building{} ({}) for {}\n'.format(app.get_name(),
                                                        app.get_language(),
                                                        app.get_platform())
                     app.build()
@@ -255,17 +253,16 @@ class AppTesterFramework(object):
         for item in output:
             try:
                 if 'java' in item['id'] or 'android' in item['id']:
-                    if self.sandboxframe.is_binary(item['id']) == 'true':
-                        build_app = self.sandboxframe.build_android_java_demo(item['id'], None)
-                        if 'build failed' in build_app.lower():
-                            self.result_matrix[item['name']] = TestStatus.FAILED
-                            print 'Building {}:\n{}'.format(item['name'], build_app)
-                        elif 'build successful' in build_app.lower():
-                            self.result_matrix[item['name']] = TestStatus.PASSED
-                            print 'Building {}:\n{}'.format(item['name'], build_app)
+                    build_app = self.sandboxframe.build_android_java_demo(item['id'], None)
+                    if 'build failed' in build_app.lower():
+                        self.result_matrix[item['name']] = TestStatus.FAILED
+                        print 'Building {}:\n{}'.format(item['name'], build_app)
+                    elif 'build successful' in build_app.lower():
+                        self.result_matrix[item['name']] = TestStatus.PASSED
+                        print 'Building {}:\n{}'.format(item['name'], build_app)
 
-                        else:
-                            print 'Unexpected result for {}'.format(item['name'])
+                    else:
+                        print 'Unexpected result for {}'.format(item['name'])
 
             except Exception as ex:
                 print type(ex), ex
@@ -303,11 +300,10 @@ class AppTesterFramework(object):
                 passed = False
             if output:
                 table_data = [['Application', 'Build', 'Test']]
-                for app in self.result_matrix:
-                    build_result = ['{}'.format(app), self.result_matrix[app], 'N/A']
-                    table_data.append(build_result)
+                build_result = [app, self.result_matrix[app], 'N/A']
+                table_data.append(build_result)
             table = AsciiTable(table_data)
-        print table.table
+            print table.table
 
         return passed
 
@@ -322,7 +318,7 @@ def console_args_parser():
                         action='store_true')
     parser.add_argument('-a', metavar='application',
                         help='specify application')
-    parser.add_argument('-j', help='help to understand', action='store_true')
+    parser.add_argument('-j', help='build java/android applications', action='store_true')
     parser.add_argument('-s', metavar='server',
                         type=str, help='Kaa server address')
     parser.add_argument('-p', metavar='port',
@@ -376,10 +372,6 @@ def main():
                                 args.rootpath, builddir, sandboxframe)
     if args.j:
         tester.build_android_java_demo()
-        if tester.process_results_ksf(True):
-            sys.exit(0)
-        else:
-            sys.exit(1)
     else:
         tester.build_applications(name)
         if tester.process_results(True):

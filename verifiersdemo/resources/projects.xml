@@ -61,7 +61,7 @@ For more background on the user verification refer to the corresponding design r
         <sourceArchive>android/verifiers_demo.tar.gz</sourceArchive>
         <projectFolder>verifiers_demo/VerifiersDemo</projectFolder>
         <sdkLibDir>verifiers_demo/VerifiersDemo/app/libs</sdkLibDir>
-        <destBinaryFile>verifiers_demo/VerifiersDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
+        <destBinaryFile>verifiers_demo/VerifiersDemo/app/build/outputs/apk/verifiersdemo.apk</destBinaryFile>
     </project>
 
     <project id="verifiers_demo_java">

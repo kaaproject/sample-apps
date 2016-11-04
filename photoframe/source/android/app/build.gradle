@@ -16,12 +16,16 @@
 
 apply plugin: 'com.android.application'
 
+ext {
+    sampleAppName = "photoframe"
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "org.kaaproject.kaa.demo.photoframe"
+        applicationId "org.kaaproject.kaa.demo.${sampleAppName}"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -34,6 +38,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        output.outputFile = new File(output.outputFile.parent, "${sampleAppName}.apk")
+    }
 }
 
 

@@ -123,7 +123,7 @@ If you want to modify the sample application source code or create your own appl
         <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
         <projectFolder>gpiocontrol/GpioControl</projectFolder>
         <sdkLibDir>gpiocontrol/GpioControl/app/libs</sdkLibDir>
-        <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/app-debug.apk</destBinaryFile>
+        <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/gpiocontrol.apk</destBinaryFile>
     </project>
 
     <project id="gpiocontrol_demo_c_slave">

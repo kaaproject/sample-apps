@@ -361,7 +361,7 @@ If you want to modify the sample application source code or create your own appl
         <sourceArchive>android/notification_demo.tar.gz</sourceArchive>
         <projectFolder>notification_demo/NotificationDemo</projectFolder>
         <sdkLibDir>notification_demo/NotificationDemo/app/libs</sdkLibDir>
-        <destBinaryFile>notification_demo/NotificationDemo/app/build/outputs/apk/app-debug.apk</destBinaryFile>
+        <destBinaryFile>notification_demo/NotificationDemo/app/build/outputs/apk/notification.apk</destBinaryFile>
     </project>
     <project id="notification_demo_c">
         <name>Notification C demo</name>

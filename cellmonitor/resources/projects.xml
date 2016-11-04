@@ -67,7 +67,7 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <sourceArchive>android/cellmonitor_demo.tar.gz</sourceArchive>
         <projectFolder>cellmonitor_demo/CellMonitor</projectFolder>
         <sdkLibDir>cellmonitor_demo/CellMonitor/app/libs</sdkLibDir>
-        <destBinaryFile>cellmonitor_demo/CellMonitor/app/build/outputs/apk/app-debug.apk</destBinaryFile>
+        <destBinaryFile>cellmonitor_demo/CellMonitor/app/build/outputs/apk/cellmonitor.apk</destBinaryFile>
     </project>
     <project id="cellmonitor_demo_objc">
         <name>Cell monitor iOS</name>

@@ -51,33 +51,33 @@
 #          buildcmd: "bash build.sh build <<< posix"
 
 
-configurationdemo:
+configuration:
   name: "Configuration demo"
   language:
     c:
-      src: "configurationdemo/source/c"
+      src: "configuration/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "configurationdemo/source/cpp"
+      src: "configuration/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-verifiersdemo:
+verifiers:
   name: "User verifiers demo"
   language:
     c:
-      src: "verifiersdemo/source/c"
+      src: "verifiers/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "verifiersdemo/source/cpp"
+      src: "verifiers/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]

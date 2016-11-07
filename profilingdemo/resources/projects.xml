@@ -502,67 +502,56 @@ To launch this sample application on the Kaa C++ SDK:
 		Click <b>Ok</b> and download the .tar.gz file.
 	</li>
 	<li>
-		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-		
-		<p>
-			<b>Windows</b>
-			<pre>
-				build.bat deploy
-			</pre>
-		</p>
-		<p>
-			<b>Linux, OS X (macOS)</b>
-			<pre>
-				./build.sh deploy
-			</pre>
-		</p>
+		Unpack the downloaded archive.
 	</li>
-	<li>
-		The program will ask you to enter the target platform for your build.
-		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
-		The C++ SDK and the demo application are now built and the demo application is launched.
-	</li>
+    <li>
+        Unpack the SDK archive.
+        <pre>
+            tar -zxf libs/kaa/kaa* -C libs/kaa
+        </pre>
+    </li>
+    <li>
+        Run the following commands:
+        <p>
+            <b>Windows</b>
+            <pre>
+                mkdir build
+                cd build
+                cmake -G "Nmake Makefiles" ..
+                nmake
+            </pre>
+        </p>
+        <p>
+            <b>Linux, OS X (macOS)</b>
+            <pre>
+                mkdir build \
+                && cd build \
+                && cmake .. \
+                && make
+            </pre>
+            By default the project is generated for Posix target.
+            To generate and build project for other supported targets,
+            refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
+        </p>
+    </li>
+    <li>
+        To run demo, execute:
+        <p>
+            <b>Windows</b>
+            <pre>
+                build/demo_client.exe
+            </pre>
+        </p>
+        <p>
+            <b>Linux</b>
+            <pre>
+                ./build/demo_client
+            </pre>
+        </p>
+    </li>
 </ol>
-
-Once you built the application, you can start it at any time using the following command.
-
-<p>
-	<b>Windows</b>
-	<pre>
-		build.bat run
-	</pre>
-</p>
-<p>
-	<b>Linux, OS X (macOS)</b>
-	<pre>
-		./build.sh run
-	</pre>
-</p>
 	
 <h1>Troubleshooting</h1>
-
-<h2>Running the build.sh script returns an error message</h2>
-
-<pre>
-	Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
-</pre>
-
-<p>
-	This means that no SDK tarball was found in the libs/kaa directory.
-</p>
-
-Try the following:
-
-<ul>
-	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
-	</li>
-	<li>
-		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
-	</li>
-</ul>
 
 <h2>CMake returns an error message</h2>
 
@@ -1077,7 +1066,7 @@ To do this:
 </p>
 
 <p>
-	Create a group named <b>Enable vibration if supported by device</b> and set its weight to <b>120</b>.
+	Create a group named <b>Enable video if supported by device</b> and set its weight to <b>120</b>.
 	Apply the following filter.
 	
 	<pre>
@@ -1089,15 +1078,15 @@ To do this:
 	<pre>
 		{
 		  "audioSubscriptionActive" : unchanged,
-		  "videoSubscriptionActive" : unchanged,
-		  "vibroSubscriptionActive" : true
+		  "videoSubscriptionActive" : true,
+		  "vibroSubscriptionActive" : unchanged
 		}
 
 	</pre>
 </p>
 
 <p>
-	Create a group named <b>Enable video if supported by device</b> and set its weight to <b>130</b>.
+	Create a group named <b>Enable vibration if supported by device</b> and set its weight to <b>130</b>.
 	Apply the following filter.
 	
 	<pre>
@@ -1109,8 +1098,8 @@ To do this:
 	<pre>
 		{
 		  "audioSubscriptionActive" : unchanged,
-		  "videoSubscriptionActive" : true,
-		  "vibroSubscriptionActive" : unchanged
+		  "videoSubscriptionActive" : unchanged,
+		  "vibroSubscriptionActive" : true
 		}
 
 	</pre>

@@ -255,8 +255,9 @@ class AppTesterFramework(object):
         output = self.sandboxframe.get_demo_projects()
         for item in output:
             try:
-                if 'java' in item['id'] or 'android' in item['id']:                    
-                    if item['destBinaryFile'] == '':
+                if 'java' in item['id'] or 'android' in item['id']:
+                    destBinaryFile = item.get('destBinaryFile', None)
+                    if not destBinaryFile:
                         continue
                     else:
                         build_app = self.sandboxframe.build_android_java_demo(item['id'])
@@ -295,7 +296,7 @@ class AppTesterFramework(object):
         for app in self.result_matrix:
             if self.result_matrix[app] == TestStatus.FAILED:
                 passed = False
-            if output:                   
+            if output:
                 table = AsciiTable(self.table_data)
         print table.table
 
@@ -313,8 +314,6 @@ def console_args_parser():
     parser.add_argument('-a', metavar='application',
                         help='specify application')
     parser.add_argument('-j', help='build java/android applications', 
-                        action='store_true')
-    parser.add_argument('-c', help='build c/cpp applications',
                         action='store_true')
     parser.add_argument('-s', metavar='server',
                         type=str, help='Kaa server address')
@@ -349,7 +348,7 @@ def main():
     # user specify an application to test
     if args.a:
         if args.a not in appconfig:
-            print 'Application "%s" was not found'%args.a
+            print 'Application "{}" was not found'.format(args.a)
             sys.exit(1)
         name = appconfig[args.a]['name']
 
@@ -371,11 +370,8 @@ def main():
                                 args.rootpath, builddir, sandboxframe)
     if args.j:
         tester.build_android_java_demo()
-    elif args.c:
-        tester.build_applications(name)
     else:
         tester.build_applications(name)
-        tester.build_android_java_demo()
 
     if tester.process_results(True):
         sys.exit(0)

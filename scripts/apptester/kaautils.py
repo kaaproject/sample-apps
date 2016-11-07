@@ -126,10 +126,10 @@ class KaaNode(object):
         if not token:
             raise KaaNodeError('Application: "{}" was not found'.format(appname))
 
-        url = 'http://{}:{}/kaaAdmin/rest/api/sdkProfiles/{}'.fromat(self.host,
+        url = 'http://{}:{}/kaaAdmin/rest/api/sdkProfiles/{}'.format(self.host,
                                                                self.port,
                                                                str(token))
-
+        
         req = requests.get(url, auth=(kaauser.name, kaauser.password))
         if req.status_code != requests.codes.ok:
             raise KaaNodeError('Unable to get SDK profiles. '\

@@ -14,9 +14,8 @@
   limitations under the License.
 -->
 
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
@@ -24,10 +23,10 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>photoframe</artifactId>
+    <artifactId>smarthousedemo</artifactId>
     <packaging>jar</packaging>
 
-    <name>Photo frame demo application</name>
+    <name>Smarthouse demo application</name>
     <url>http://kaaproject.org</url>
 
     <properties>
@@ -85,8 +84,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>
-                                ${project.build.directory}/generated-resources/demo/photoframe
+                            <outputDirectory>${project.build.directory}/generated-resources/demo/smarthouse
                             </outputDirectory>
                             <resources>
                                 <resource>
@@ -96,28 +94,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.rat</groupId>
-                <artifactId>apache-rat-plugin</artifactId>
-                <configuration>
-                    <useDefaultExcludes>true</useDefaultExcludes>
-                    <excludes>
-                        <!--Android Studio-->
-                        <exclude>source/gradlew</exclude>
-                        <exclude>source/build.gradle</exclude>
-                        <exclude>source/settings.gradle</exclude>
-                        <exclude>source/gradlew.bat</exclude>
-                        <exclude>source/app/proguard-rules.pro</exclude>
-                        <exclude>source/local.properties</exclude>
-                        <exclude>source/app/app.iml</exclude>
-                        <exclude>source/gradle/wrapper/gradle-wrapper.properties</exclude>
-                        <exclude>source/PhotoFrame.iml</exclude>
-                        <exclude>source/gradle.properties</exclude>
-                        <!--Common files-->
-                        <exclude>resources/photoFrameEventClassFamily.json</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>

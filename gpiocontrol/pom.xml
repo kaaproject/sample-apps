@@ -24,7 +24,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>gpiocontrol</artifactId>
+    <artifactId>gpiocontroldemo</artifactId>
     <packaging>jar</packaging>
 
     <name>GPIO control demo application</name>
@@ -62,10 +62,10 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>${project.basedir}/assembly/src-android.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-artik5.xml</descriptor>
+                        <descriptor>assembly/src-android-master.xml</descriptor>
+                        <descriptor>assembly/src-objc-master.xml</descriptor>
+                        <descriptor>assembly/src-c-slave.xml</descriptor>
+                        <descriptor>assembly/src-artik5-slave.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

@@ -42,16 +42,16 @@
     <modules>
         <module>common</module>
         <module>iotworld</module>
-        <module>smarthousedemo</module>
-        <module>configurationdemo</module>
-        <module>credentialsdemo</module>
-        <module>notificationdemo</module>
-        <module>datacollectiondemo</module>
-        <module>eventdemo</module>
+        <module>smarthouse</module>
+        <module>configuration</module>
+        <module>credentials</module>
+        <module>notification</module>
+        <module>datacollection</module>
+        <module>event</module>
         <module>cityguide</module>
         <module>cellmonitor</module>
         <module>photoframe</module>
-        <module>verifiersdemo</module>
+        <module>verifiers</module>
         <module>powerplant</module>
         <module>powerplant-dashboard</module>
         <module>econais</module>
@@ -63,11 +63,11 @@
         <module>powerplant-couchbase-proxy</module>
         <module>gpiocontrol</module>
         <module>ota</module>
-        <module>zeppelindemo</module>
-        <module>sparkdemo</module>
-        <module>cassandrademo</module>
-        <module>stormdemo</module>
-        <module>profilingdemo</module>
+        <module>zeppelin</module>
+        <module>spark</module>
+        <module>cassandra</module>
+        <module>storm</module>
+        <module>profiling</module>
     </modules>
 
     <profiles>

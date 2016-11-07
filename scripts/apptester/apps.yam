@@ -83,106 +83,106 @@ verifiersdemo:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-credentialsdemo:
+credentials:
   name: "Credentials demo"
   language:
     c:
-      src: "credentialsdemo/source/c"
+      src: "credentials/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "credentialsdemo/source/cpp"
+      src: "credentials/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-datacollectiondemo:
+datacollection:
   name: "Data collection demo"
   language:
     c:
-      src: "datacollectiondemo/source/c"
+      src: "datacollection/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "datacollectiondemo/source/cpp"
+      src: "datacollection/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-eventdemo:
+event:
   name: "Event demo"
   language:
     c:
-      src: "eventdemo/source/c"
+      src: "event/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "eventdemo/source/cpp"
+      src: "event/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-notificationdemo:
+notification:
   name: "Notification demo"
   language:
     c:
-      src: "notificationdemo/source/c"
+      src: "notification/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "notificationdemo/source/cpp"
+      src: "notification/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-stormdemo:
+storm:
   name: "Storm data analytics demo"
   language:
     c:
-      src: "stormdemo/source/c"
+      src: "storm/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "stormdemo/source/cpp"
+      src: "storm/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-sparkdemo:
+spark:
   name: "Spark data analytics demo"
   language:
     cpp:
-      src: "sparkdemo/source/cpp"
+      src: "spark/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
 
-profilingdemo:
+profiling:
   name: "Endpoint profiles and grouping demo"
   language:
     c:
-      src: "profilingdemo/source/c"
+      src: "profiling/source/c"
       platform:
         posix:
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "profilingdemo/source/cpp"
+      src: "profiling/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]

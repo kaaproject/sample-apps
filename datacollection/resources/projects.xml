@@ -692,7 +692,7 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 	</pre>
 	
 	You can access the collected data directly from the database using the MongoDB CLI tool.
-	To do this, access Sandbox virtual machine over ssh using the username <b>kaa</b> and password <b>kaa123</b> or use the virtual machine to run a Mongo client application for the MongoDB database.
+	To do this, access Sandbox virtual machine over ssh with the username <b>kaa</b> and password <b>kaa</b>, or use the virtual machine to run a Mongo client application for the MongoDB database.
 	
 	<pre>
 		 $ ssh kaa@%your_sandbox_instance_ip/host%

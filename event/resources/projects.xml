@@ -455,8 +455,8 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/Glossary/#sdk-type" target="_blank">Kaa Java SDK for Android</a>.
-	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Java SDK</a> for Android.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
 <h1>Launching</h1>
@@ -465,6 +465,7 @@ Make sure that the build target is set to <b>EventDemo</b>, not <b>Kaa</b>.
 	If you want to only launch the sample application, download the binary files.
 	If you want to explore the source code of the sample application, download the source code archive.
 </p>
+
 <h2>Install using the binary files</h2>
 To install this sample application using the binary files:
 	
@@ -499,6 +500,7 @@ To install this sample application using the binary files:
 		</p>
 	</li>
 </ol>
+
 <h2>Install using the source code</h2>
 To install this sample application using the source code:
 <ol>

@@ -85,7 +85,7 @@ class KaaNode(object):
         req = requests.post(url, auth=(kaauser.name, kaauser.password))
         if req.status_code != requests.codes.ok:
             raise KaaNodeError('Unable to download SDK.' \
-                               'Return code: {d}'.format(req.status_code))
+                               'Return code: {}'.format(req.status_code))
 
         with open(ofile, 'w') as output_file:
             output_file.write(req.content)
@@ -103,7 +103,7 @@ class KaaNode(object):
         req = requests.get(url, auth=(kaauser.name, kaauser.password))
         if req.status_code != requests.codes.ok:
             raise KaaNodeError('Unable to get list of applications. ' \
-                               'Return code: {d}'.format(req.status_code))
+                               'Return code: {}'.format(req.status_code))
 
         return req.json()
 
@@ -129,11 +129,11 @@ class KaaNode(object):
         url = 'http://{}:{}/kaaAdmin/rest/api/sdkProfiles/{}'.format(self.host,
                                                                self.port,
                                                                str(token))
-        
+
         req = requests.get(url, auth=(kaauser.name, kaauser.password))
         if req.status_code != requests.codes.ok:
             raise KaaNodeError('Unable to get SDK profiles. '\
-                               'Return code: {d}'.format(req.status_code))
+                               'Return code: {}'.format(req.status_code))
 
         return req.json()
 
@@ -192,7 +192,7 @@ class SandboxFrame(object):
         req = requests.get(url)
         if req.status_code != requests.codes.ok:
             raise KaaSanboxError('Unable to check is it BINARY file in the Sandbox. ' \
-                                'Return code: {d}'.format(req.status_code))
+                                'Return code: {}'.format(req.status_code))
 
         return req.json()
 

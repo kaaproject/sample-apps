@@ -254,12 +254,12 @@ class AppTesterFramework(object):
     def build_android_java_demo(self):
         output = self.sandboxframe.get_demo_projects()
         for item in output:
-            try:
-                if 'java' in item['id'] or 'android' in item['id']:
-                    destBinaryFile = item.get('destBinaryFile', None)
-                    if not destBinaryFile:
-                        continue
-                    else:
+            if 'java' in item['id'] or 'android' in item['id']:
+                destBinaryFile = item.get('destBinaryFile', None)
+                if not destBinaryFile:
+                    continue
+                else:
+                    try:
                         build_app = self.sandboxframe.build_android_java_demo(item['id'])
                         build_app_result = self.sandboxframe.is_build_successful(item['id'])
 
@@ -267,22 +267,17 @@ class AppTesterFramework(object):
                             self.result_matrix[item['name']] = TestStatus.PASSED
                             print 'Building {}:\n{}'.format(item['name'], build_app)
 
-                        elif not build_app_result:
+                        else:
                             self.result_matrix[item['name']] = TestStatus.FAILED
                             print 'Building {}:\n{}'.format(item['name'], build_app)
-
-                        else:
-                            print 'Unexpected result for {}'.format(item['name'])
-
-            except Exception as ex:
-                print type(ex), ex
+                    
+                    except Exception as ex:
+                        traceback.print_exc(ex)
+                        self.result_matrix[item['name']] = TestStatus.FAILED
 
         for app in self.result_matrix:
-            if isinstance(app, Application):
-                continue
-            else:
-                build_result = [app, self.result_matrix[app], 'N/A']
-                self.table_data.append(build_result)
+            build_result = [app, self.result_matrix[app], 'N/A']
+            self.table_data.append(build_result)
 
     def test_applications(self):
         # TODO APP-53 add testing
@@ -307,13 +302,13 @@ def console_args_parser():
 
     #added default value of current directory.
     parser.add_argument('rootpath',
-                        help='path to sample applications repository', nargs='?') 
+                        help='path to sample applications repository', nargs='?')
     parser.add_argument('-l',
                         '--list', help='show available applications and exit',
                         action='store_true')
     parser.add_argument('-a', metavar='application',
                         help='specify application')
-    parser.add_argument('-j', help='build java/android applications', 
+    parser.add_argument('-j', help='build java/android applications',
                         action='store_true')
     parser.add_argument('-s', metavar='server',
                         type=str, help='Kaa server address')
@@ -377,7 +372,6 @@ def main():
         sys.exit(0)
     else:
         sys.exit(1)
- 
 
 if __name__ == "__main__":
     main()

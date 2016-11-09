@@ -564,7 +564,7 @@ If you want to modify the sample application source code or create your own appl
         <sourceArchive>android/event_demo.tar.gz</sourceArchive>
         <projectFolder>event_demo/EventDemo</projectFolder>
         <sdkLibDir>event_demo/EventDemo/app/libs</sdkLibDir>
-        <destBinaryFile>event_demo/EventDemo/app/build/outputs/apk/events.apk</destBinaryFile>
+        <destBinaryFile>event_demo/EventDemo/app/build/outputs/apk/event.apk</destBinaryFile>
     </project>
     <bundle id="event_demos">
         <name>Event demos</name>

@@ -19,7 +19,7 @@ apply plugin: "com.android.application"
 ext {
     androidSupportVer = "25.0.0"
 
-    sampleAppName = "events"
+    sampleAppName = "event"
 }
 
 android {

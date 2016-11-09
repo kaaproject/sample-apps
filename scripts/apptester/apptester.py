@@ -105,7 +105,7 @@ class Application(object):
 
         # currently SDK path is hardcoded in application's cmake file
         sdkdir = os.path.join(self.config.buildpath, 'libs/kaa')
-        sdkfile = os.path.join(sdkdir, 'kaa-%s-sdk.tar.gz'% \
+        sdkfile = os.path.join(sdkdir, 'kaa-{}-sdk.tar.gz'.format \
                                (self.config.language.lower()))
         os.makedirs(sdkdir)
 
@@ -160,6 +160,7 @@ class AppTesterFramework(object):
         self.rootpath = rootpath
         self.sandboxframe = sandboxframe
         self.result_matrix = {}
+        self.table_data = [['Application', 'Build', 'Test']]
 
         # list of applications that must be skipped during building ant testing
         self.skipped = []
@@ -188,7 +189,7 @@ class AppTesterFramework(object):
                 elif language == 'objc':
                     lang = KaaSDKLanguage.OBJECTIVE_C
                 else:
-                    raise ValueError('Unrecognized SDK language: "%s"'%language)
+                    raise ValueError('Unrecognized SDK language: "{}"'.format(language))
 
                 # for all supported platforms
                 for platform in platforms:
@@ -223,7 +224,6 @@ class AppTesterFramework(object):
         return applications
 
     def build_applications(self, name=None):
-        self.result_matrix = {}
         for app in self.applications:
             # build only specific application
             if name and app.get_name() != name:
@@ -245,26 +245,29 @@ class AppTesterFramework(object):
                 else:
                     self.result_matrix[app] = TestStatus.FAILED
 
+        for app in self.result_matrix:
+            app_data = '{} ({}) for {}:'.format(app.get_name(), app.get_language(),
+                        app.get_platform())
+            build_result = [app_data, self.result_matrix[app], 'N/A']
+            self.table_data.append(build_result)
+
     def build_android_java_demo(self):
-        """
-        """
-        self.result_matrix = {}
         output = self.sandboxframe.get_demo_projects()
         for item in output:
             try:
                 if 'java' in item['id'] or 'android' in item['id']:
-
-                    if item['destBinaryFile'] == '':
+                    destBinaryFile = item.get('destBinaryFile', None)
+                    if not destBinaryFile:
                         continue
-
                     else:
                         build_app = self.sandboxframe.build_android_java_demo(item['id'])
+                        build_app_result = self.sandboxframe.is_build_successful(item['id'])
 
-                        if self.sandboxframe.is_build_successful(item['id']):
+                        if build_app_result:
                             self.result_matrix[item['name']] = TestStatus.PASSED
                             print 'Building {}:\n{}'.format(item['name'], build_app)
 
-                        elif not self.sandboxframe.is_build_successful(item['id']):
+                        elif not build_app_result:
                             self.result_matrix[item['name']] = TestStatus.FAILED
                             print 'Building {}:\n{}'.format(item['name'], build_app)
 
@@ -273,6 +276,13 @@ class AppTesterFramework(object):
 
             except Exception as ex:
                 print type(ex), ex
+
+        for app in self.result_matrix:
+            if isinstance(app, Application):
+                continue
+            else:
+                build_result = [app, self.result_matrix[app], 'N/A']
+                self.table_data.append(build_result)
 
     def test_applications(self):
         # TODO APP-53 add testing
@@ -287,30 +297,7 @@ class AppTesterFramework(object):
             if self.result_matrix[app] == TestStatus.FAILED:
                 passed = False
             if output:
-                table_data = [['Application', 'Build', 'Test']]
-
-                for app in self.result_matrix:
-                    build_result = ['{} ({}) for {}:'.format(app.get_name(), app.get_language(),
-                                    app.get_platform()), self.result_matrix[app], 'N/A']
-                    table_data.append(build_result)
-            table = AsciiTable(table_data)
-        print table.table
-
-        return passed
-
-    def process_results_ksf(self, output=False):
-        passed = True
-        for app in self.result_matrix:
-            if self.result_matrix[app] == TestStatus.FAILED:
-                passed = False
-
-            if output:
-                table_data = [['Application', 'Build', 'Test']]
-
-                for app in self.result_matrix:
-                    build_result = [app, self.result_matrix[app], 'N/A']
-                    table_data.append(build_result)
-            table = AsciiTable(table_data)
+                table = AsciiTable(self.table_data)
         print table.table
 
         return passed
@@ -361,7 +348,7 @@ def main():
     # user specify an application to test
     if args.a:
         if args.a not in appconfig:
-            print 'Application "%s" was not found'%args.a
+            print 'Application "{}" was not found'.format(args.a)
             sys.exit(1)
         name = appconfig[args.a]['name']
 
@@ -383,16 +370,13 @@ def main():
                                 args.rootpath, builddir, sandboxframe)
     if args.j:
         tester.build_android_java_demo()
-        if tester.process_results_ksf(True):
-            sys.exit(0)
-        else:
-            sys.exit(1)
     else:
         tester.build_applications(name)
-        if tester.process_results(True):
-            sys.exit(0)
-        else:
-            sys.exit(1)
+
+    if tester.process_results(True):
+        sys.exit(0)
+    else:
+        sys.exit(1)
  
 
 if __name__ == "__main__":

@@ -17,11 +17,8 @@
 #
 
 """
-
 kaautils.py
-
 This module contains useful methods to operate with Kaa
-
 """
 
 import requests
@@ -67,7 +64,6 @@ class KaaNode(object):
 
     def download_sdk(self, profile_id, language, kaauser, ofile):
         """Downloads specific SDK from Kaa server and writes it to a file.
-
         :param profile_id: Kaa SDK profile ID.
         :type profile_id: integer
         :param language: Represents SKD language.
@@ -92,7 +88,6 @@ class KaaNode(object):
 
     def get_applications(self, kaauser):
         """Gets the list for Kaa application. Returns result in JSON format.
-
         :param kaauser:  The Kaa user.
         :type kaauser: KaaUser
         """
@@ -109,7 +104,6 @@ class KaaNode(object):
 
     def get_sdk_profiles(self, appname, kaauser):
         """Gets the SDK profiles for application. Returns result in JSON format.
-
         :param appname: The name of the application.
         :type appname: string
         :param kaauser: The Kaa server IP address.
@@ -139,7 +133,6 @@ class KaaNode(object):
 
     def wait_for_server(self, timeout):
         """Waits for Kaa REST server to be ready for operations.
-
         :param timeout: Timeout in seconds.
         :type timeout: integer
         """

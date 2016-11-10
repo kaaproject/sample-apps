@@ -112,8 +112,11 @@ build_app() {
           -DCMAKE_BUILD_TYPE=MinSizeRel \
           -DWITH_EXTENSION_CONFIGURATION=OFF \
           -DWITH_EXTENSION_NOTIFICATION=OFF \
+          -DWITH_EXTENSION_LOGGING=OFF \
+          -DWITH_EXTENSION_USER=OFF \
           -DDEMO_ACCESS_TOKEN=$DEMO_ACCESS_TOKEN \
-          -DKAA_MAX_LOG_LEVEL=3 \
+          -DWITH_ENCRYPTION=OFF \
+          -DKAA_MAX_LOG_LEVEL=0 \
           ${KAA_TOOLCHAIN_PATH_SDK} ..
     make
 }

@@ -151,11 +151,11 @@ After you installed the above software:
 
 3. Click **File**->**Import** to import the project.
 
-4. Select **General**->**Existing projects into workspace**
+4. Select **General**->**Existing projects into workspace**.
 
 5. Navigate to your build tree and select the root directory.
 Make sure the **Copy projects into workspace** check box is clear.
 
-To build a project, click **Project**->**Build Project**
+To build a project, click **Project**->**Build Project**.
 
 See also [Eclipse CDT4 Generator](https://cmake.org/Wiki/Eclipse_CDT4_Generator).

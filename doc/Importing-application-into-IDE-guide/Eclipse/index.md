@@ -28,7 +28,7 @@ If you want to build on OS X (macOS), your Eclipse application must be executed 
 	
 3. Enter your project name.  
 Clear the **Use default location** check box and enter the path to the directory containing the source files (or click **Browse...** to navigate to it).  
-In the **Project type** section, select **Executable**->**Empty project** and pick any toolchain.  
+In the **Project type** section, select **Executable** > **Empty project** and pick any toolchain.  
 Click **Next**.
 	![](images/eclipse_ide_import_003.png)
 	
@@ -111,7 +111,7 @@ After you installed the "gdb-apple" package, manage its code signing certificate
 
 2. In the **Keychain Access** window, select the **login** keychain from the **Keychains** list.
 
-3. Click **Certificate Assistant**->**Create a Certificate...** and make the following settings.
+3. Click **Certificate Assistant** > **Create a Certificate...** and make the following settings.
 	
 		Name = gdb-apple_codesign
 		Identity Type = Self Signed Root
@@ -149,13 +149,13 @@ After you installed the above software:
 
 		cmake -G"Eclipse CDT4 - Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -D_ECLIPSE_VERSION=4.6 <Path to source files>
 
-3. Click **File**->**Import** to import the project.
+3. Click **File** > **Import** to import the project.
 
-4. Select **General**->**Existing projects into workspace**.
+4. Select **General** > **Existing projects into workspace**.
 
 5. Navigate to your build tree and select the root directory.
 Make sure the **Copy projects into workspace** check box is clear.
 
-To build a project, click **Project**->**Build Project**.
+To build a project, click **Project** > **Build Project**.
 
 See also [Eclipse CDT4 Generator](https://cmake.org/Wiki/Eclipse_CDT4_Generator).

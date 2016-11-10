@@ -78,7 +78,7 @@ You can acess your application output from the **Console** window.
 
 > **NOTE:** If you use OS X (macOS):  
 >First install the "gdb-apple" debugger from [Macports](https://www.macports.org/install.php) and add a code sign certificate for it.
->See [Install "gdb-apple" on OS X (macOS)]({{root_url}}Importing-application-into-IDE-guide/Eclipse/#install-gdb-apple-on-os-x-macos).  
+>See [OS X (macOS) instructions]({{root_url}}Importing-application-into-IDE-guide/Eclipse/#os-x-macos-instructions).  
 >If your run target is already set up, only perform step 4.
 {:.note}
 

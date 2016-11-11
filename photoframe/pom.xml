@@ -24,7 +24,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>photoframe</artifactId>
+    <artifactId>photoframedemo</artifactId>
     <packaging>jar</packaging>
 
     <name>Photo frame demo application</name>

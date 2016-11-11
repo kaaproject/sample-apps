@@ -22,6 +22,9 @@ import os
 import subprocess
 import yaml
 import argparse
+import requests
+
+from terminaltables import AsciiTable
 
 from shutil import copytree
 from shutil import copy2
@@ -30,20 +33,24 @@ from shutil import rmtree
 from kaautils import KaaNode
 from kaautils import KaaUser
 from kaautils import KaaSDKLanguage
+from kaautils import SandboxFrame
+
 
 CONFIGFILE = os.path.join(os.path.dirname(__file__), 'apptester.yam')
 
-class TestResult(object):
-    """Represents possible test and build results"""
+class TestStatus(object):
+    """Represents possible test and build results/status"""
+
     PASSED = 'PASSED'
     FAILED = 'FAILED'
     SKIPPED = 'SKIPPED'
+    EXEMPTED = 'EXEMPTED'
 
 class AppConfig(object):
     """Represents application build parameters"""
 
     def __init__(self, name, language, platform, srcpath, buildpath, buildcmd,
-                 runcmd=None, testmodule=None):
+                runcmd=None, testmodule=None):
         self.name = name
         self.language = language
         self.platform = platform
@@ -60,6 +67,7 @@ class Application(object):
         self.config = appconfig
         self.kaanode = kaanode
         self.kaauser = kaauser
+        self.status = None
 
         # Pieces of additional code that must be present in build directory.
         # Can be changed via set_dependencies
@@ -132,19 +140,25 @@ class Application(object):
         finally:
             os.chdir(cwd)
 
+    def set_exempted(self):
+        self.status = TestStatus.EXEMPTED
+
+    def set_skipped(self):
+        self.status = TestStatus.SKIPPED
+
     def test(self):
-        # TODO APP-53 add tests
         pass
 
 class AppTesterFramework(object):
     """Simple test framework for Kaa sample applications"""
 
-    def __init__(self, config_file, kaanode, kaauser, rootpath, testdir):
+    def __init__(self, config_file, kaanode, kaauser, rootpath, testdir, sandboxframe):
 
         self.kaanode = kaanode
         self.kaauser = kaauser
         self.testdir = testdir
         self.rootpath = rootpath
+        self.sandboxframe = sandboxframe
         self.result_matrix = {}
 
         # list of applications that must be skipped during building ant testing
@@ -179,6 +193,7 @@ class AppTesterFramework(object):
                 # for all supported platforms
                 for platform in platforms:
                     buildcmd = platforms[platform]['buildcmd']
+
                     # TODO APP-53 Add runcmd and testmodule
                     buildpath = os.path.join(self.testdir, app,
                                              language, platform)
@@ -186,7 +201,7 @@ class AppTesterFramework(object):
                                            languages[language]['src'])
 
                     deps = platforms[platform].get('dependencies', None)
-                    skip = platforms[platform].get('skip', None)
+                    status = platforms[platform].get('status', None)
 
                     appconfig = AppConfig(name, lang, platform,
                                           srcpath, buildpath, buildcmd)
@@ -198,8 +213,12 @@ class AppTesterFramework(object):
                         application.set_dependencies(deps)
 
                     applications.append(application)
-                    if skip and skip != 'False':
-                        self.skipped.append(application)
+
+                    if status and status == TestStatus.EXEMPTED:
+                        application.set_exempted()
+
+                    if status and status == TestStatus.SKIPPED:
+                        application.set_skipped()
 
         return applications
 
@@ -210,17 +229,50 @@ class AppTesterFramework(object):
             if name and app.get_name() != name:
                 continue
             try:
-                if app in self.skipped:
-                    self.result_matrix[app] = TestResult.SKIPPED
+                if app.status == TestStatus.SKIPPED:
+                    self.result_matrix[app] = TestStatus.SKIPPED
                     continue
-                print 'Building %s (%s) for %s\n'%(app.get_name(),
-                                                   app.get_language(),
-                                                   app.get_platform())
-                app.build()
-                self.result_matrix[app] = TestResult.PASSED
+                else:
+                    print 'Building{} ({}) for {}\n'.format(app.get_name(),
+                                                       app.get_language(),
+                                                       app.get_platform())
+                    app.build()
+                    self.result_matrix[app] = TestStatus.PASSED
             except Exception as ex:
                 traceback.print_exc(ex, file=sys.stdout)
-                self.result_matrix[app] = TestResult.FAILED
+                if app.status == TestStatus.EXEMPTED:
+                    self.result_matrix[app] = TestStatus.EXEMPTED
+                else:
+                    self.result_matrix[app] = TestStatus.FAILED
+
+    def build_android_java_demo(self):
+        """
+        """
+        self.result_matrix = {}
+        output = self.sandboxframe.get_demo_projects()
+        for item in output:
+            try:
+                if 'java' in item['id'] or 'android' in item['id']:
+
+                    if item['destBinaryFile'] == '':
+                        continue
+
+                    else:
+                        build_app = self.sandboxframe.build_android_java_demo(item['id'])
+
+                        if self.sandboxframe.is_build_successful(item['id']):
+                            self.result_matrix[item['name']] = TestStatus.PASSED
+                            print 'Building {}:\n{}'.format(item['name'], build_app)
+
+                        elif not self.sandboxframe.is_build_successful(item['id']):
+                            self.result_matrix[item['name']] = TestStatus.FAILED
+                            print 'Building {}:\n{}'.format(item['name'], build_app)
+
+                        else:
+                            print 'Unexpected result for {}'.format(item['name'])
+
+            except Exception as ex:
+                print type(ex), ex
 
     def test_applications(self):
         # TODO APP-53 add testing
@@ -229,33 +281,53 @@ class AppTesterFramework(object):
     def process_results(self, output=False):
         passed = True
 
-        # TODO APP-53 Add test results and rework formatting
-        tabs = 50
-        if output:
-            print 'Application\tBuild'.expandtabs(tabs)
+        # TODO APP-53 Add test results
 
-        for app in self.result_matrix:    
-            if self.result_matrix[app] == TestResult.FAILED:
+        for app in self.result_matrix:
+            if self.result_matrix[app] == TestStatus.FAILED:
                 passed = False
             if output:
-                fmt = '%s (%s) for %s: \t%s'%(app.get_name(),
-                                              app.get_language(),
-                                              app.get_platform(),
-                                              self.result_matrix[app])
-                print fmt.expandtabs(tabs)
+                table_data = [['Application', 'Build', 'Test']]
+
+                for app in self.result_matrix:
+                    build_result = ['{} ({}) for {}:'.format(app.get_name(), app.get_language(),
+                                    app.get_platform()), self.result_matrix[app], 'N/A']
+                    table_data.append(build_result)
+            table = AsciiTable(table_data)
+        print table.table
+
+        return passed
+
+    def process_results_ksf(self, output=False):
+        passed = True
+        for app in self.result_matrix:
+            if self.result_matrix[app] == TestStatus.FAILED:
+                passed = False
+
+            if output:
+                table_data = [['Application', 'Build', 'Test']]
+
+                for app in self.result_matrix:
+                    build_result = [app, self.result_matrix[app], 'N/A']
+                    table_data.append(build_result)
+            table = AsciiTable(table_data)
+        print table.table
 
         return passed
 
 def console_args_parser():
     parser = argparse.ArgumentParser(description='Sample Application tester')
 
+    #added default value of current directory.
     parser.add_argument('rootpath',
-                        help='path to sample applications repository', nargs='?')
+                        help='path to sample applications repository', nargs='?') 
     parser.add_argument('-l',
                         '--list', help='show available applications and exit',
                         action='store_true')
     parser.add_argument('-a', metavar='application',
                         help='specify application')
+    parser.add_argument('-j', help='build java/android applications', 
+                        action='store_true')
     parser.add_argument('-s', metavar='server',
                         type=str, help='Kaa server address')
     parser.add_argument('-p', metavar='port',
@@ -299,19 +371,29 @@ def main():
     kaauser = KaaUser(config['user'], config['password'])
     kaanode = KaaNode(host, port)
     builddir = config['builddir']
+
+    sandboxframe = SandboxFrame(host, 9080)
+
     # clear build directory
     rmtree(builddir, ignore_errors=True)
 
     kaanode.wait_for_server(args.wait_timeout)
 
     tester = AppTesterFramework(appconfig_file, kaanode, kaauser,
-                                args.rootpath, builddir)
-    tester.build_applications(name)
-
-    if tester.process_results(True):
-       sys.exit(0)
+                                args.rootpath, builddir, sandboxframe)
+    if args.j:
+        tester.build_android_java_demo()
+        if tester.process_results_ksf(True):
+            sys.exit(0)
+        else:
+            sys.exit(1)
     else:
-       sys.exit(1)  
+        tester.build_applications(name)
+        if tester.process_results(True):
+            sys.exit(0)
+        else:
+            sys.exit(1)
+ 
 
 if __name__ == "__main__":
     main()

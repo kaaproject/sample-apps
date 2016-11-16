@@ -24,7 +24,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 
@@ -74,7 +73,7 @@ public class SlideshowPageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        final View itemView = mLayoutInflater.inflate(R.layout.slide_item, container, false);
+        final View itemView = mLayoutInflater.inflate(R.layout.slide_pager_item, container, false);
 
         final ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image_view);
 
@@ -89,6 +88,6 @@ public class SlideshowPageAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((View) object);
     }
 }

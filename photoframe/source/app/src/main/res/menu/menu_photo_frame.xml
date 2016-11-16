@@ -23,19 +23,19 @@
 
     <item
         android:id="@+id/item_stop"
-        android:title="@string/stopPlay"
+        android:title="@string/menu_photo_frame_stop_play"
         android:visible="false"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/item_refresh"
-        android:title="@string/refresh"
+        android:title="@string/menu_photo_frame_refresh"
         android:visible="true"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/item_logout"
-        android:title="@string/logOut"
+        android:title="@string/menu_photo_frame_log_out"
         android:visible="true"
         app:showAsAction="ifRoom" />
 

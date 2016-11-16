@@ -23,10 +23,13 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import org.kaaproject.kaa.demo.photoframe.R;
-import org.kaaproject.kaa.demo.photoframe.image.ProgressImageView;
+
+import java.io.File;
 
 /**
  * The implementation of the {@link PagerAdapter} class. Used as an adapter class for the images slideshow view.
@@ -35,20 +38,27 @@ import org.kaaproject.kaa.demo.photoframe.image.ProgressImageView;
  */
 public class SlideshowPageAdapter extends PagerAdapter {
 
-    private Context context;
-    private Cursor mCursor;
-    private int mDataIndex;
+    private final Context mContext;
+    private final Cursor mCursor;
+    private final int mDataIndex;
+
+    private final LayoutInflater mLayoutInflater;
 
     public SlideshowPageAdapter(Context context, String bucketId) {
-        this.context = context;
+        mContext = context;
 
-        mCursor = context.getContentResolver().query(
+        mCursor = mContext.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 new String[]{MediaStore.Images.Media.DATA},
                 MediaStore.Images.Media.BUCKET_ID + "=? ",
                 new String[]{bucketId}, null);
 
+        if (mCursor == null) {
+            throw new NullPointerException("Cursor is null");
+        }
         mDataIndex = mCursor.getColumnIndex(MediaStore.MediaColumns.DATA);
+
+        mLayoutInflater = LayoutInflater.from(mContext);
     }
 
     @Override
@@ -63,15 +73,14 @@ public class SlideshowPageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        LayoutInflater mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = mLayoutInflater.inflate(R.layout.slide_item, container, false);
+        final View itemView = mLayoutInflater.inflate(R.layout.slide_pager_item, container, false);
 
-        ProgressImageView imageView = (ProgressImageView) itemView.findViewById(R.id.item_imageView);
+        final ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image_view);
 
         mCursor.moveToPosition(position);
-        String imagePath = mCursor.getString(mDataIndex);
+        final String imagePath = mCursor.getString(mDataIndex);
 
-        imageView.setImage(imagePath);
+        Picasso.with(mContext).load(new File(imagePath)).into(imageView);
 
         container.addView(itemView);
         return itemView;
@@ -79,7 +88,6 @@ public class SlideshowPageAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((View) object);
     }
-
 }

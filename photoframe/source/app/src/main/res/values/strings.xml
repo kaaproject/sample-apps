@@ -19,25 +19,31 @@
 <resources>
 
     <string name="app_name">Photo Frame</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="please_wait">Please wait...</string>
-    <string name="please_login">Please login</string>
-    <string name="username_email">Username/Email</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="unexpected_error">Unexpected error occurred!</string>
-    <string name="devices">Devices</string>
-    <string name="no_devices">No devices</string>
-    <string name="no_albums">No albums</string>
-    <string name="by_pattern">by %1$s</string>
-    <string name="image_count_pattern">%1$d images</string>
-    <string name="refresh">Refresh</string>
-    <string name="playing">Playing album \'%1$s\'</string>
-    <string name="now_playing">Now playing</string>
-    <string name="stopped">Stopped</string>
-    <string name="unknown">Unknown</string>
-    <string name="stopPlay">Stop play</string>
-    <string name="logOut">Log out</string>
-    <string name="logout_interaction_event">Another device want to interact with you. Login, please!</string>
+
+    <string name="activity_main_kaa_started">Kaa is started</string>
+    <string name="activity_main_give_permission">You have to give access, to make app work</string>
+
+    <string name="fragment_login_title">Please login</string>
+    <string name="fragment_login_username_email_hint">Username/Email</string>
+    <string name="fragment_login_password_hint">Password</string>
+    <string name="fragment_login_button_login_text">Login</string>
+
+    <string name="fragment_devices_title">Devices</string>
+    <string name="fragment_devices_no_data_text">No devices</string>
+
+    <string name="fragment_albums_no_data_text">No albums</string>
+
+    <string name="fragment_base_interaction_event_text">Another device want to interact with you. Login, please!</string>
+
+    <string name="view_holder_device_made_by_patter">by %1$s</string>
+    <string name="view_holder_device_playing_album_text">Playing album \'%1$s\'</string>
+    <string name="view_holder_device_status_stopped">Stopped</string>
+    <string name="view_holder_device_status_unknown">Unknown</string>
+
+    <string name="view_holder_album_image_count">%1$d images</string>
+    <string name="view_holder_album_now_playing">Now playing</string>
+
+    <string name="menu_photo_frame_refresh">Refresh</string>
+    <string name="menu_photo_frame_stop_play">Stop play</string>
+    <string name="menu_photo_frame_log_out">Log out</string>
 </resources>

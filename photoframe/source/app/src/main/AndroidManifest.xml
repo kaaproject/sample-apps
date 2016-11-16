@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-
+<?xml version="1.0" encoding="utf-8"?>
+<!--
      Copyright 2014-2016 CyberVision, Inc.
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,40 +13,40 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
-
 -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.kaaproject.kaa.demo.photoframe"
-    android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="1.0">
+          package="org.kaaproject.kaa.demo.photoframe"
+          android:installLocation="auto">
 
-    <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="22" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name="org.kaaproject.kaa.demo.photoframe.PhotoFrameApplication"
+        android:name=".PhotoFrameApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
+        android:theme="@style/AppTheme"
+        >
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activities.AlbumsActivity">
+        </activity>
+        <activity android:name=".activities.DevicesActivity">
+        </activity>
+        <activity
+            android:name=".activities.SlideshowActivity"
+            android:theme="@style/SlideshowTheme"
+            >
+        </activity>
     </application>
-
 </manifest>

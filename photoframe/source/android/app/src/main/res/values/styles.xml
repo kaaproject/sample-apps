@@ -24,4 +24,8 @@
         <item name="actionBarWidgetTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
     </style>
 
+    <style name="SlideshowTheme" parent="AppBaseTheme">
+        <item name="actionBarWidgetTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
+    </style>
+
 </resources>

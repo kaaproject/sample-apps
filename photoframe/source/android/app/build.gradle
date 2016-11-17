@@ -35,7 +35,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files("libs/kaa-android-ep-sdk-nhkTjTVCja4vMRJsuZnCOA_Inv0.jar")
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'

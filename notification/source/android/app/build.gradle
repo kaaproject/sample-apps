@@ -17,18 +17,18 @@
 apply plugin: 'com.android.application'
 
 ext {
-    supportLibraryVersion = '23.4.0'
+    supportLibraryVersion = '25.0.0'
     sampleAppName = "notification"
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "org.kaaproject.kaa.demo.${sampleAppName}"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
     }
 
     buildTypes {

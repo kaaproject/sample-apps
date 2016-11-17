@@ -14,70 +14,26 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
+project(GpioSlaveDemo CXX)
 
-project (Cpp-SDK-event-sample)
-enable_language(CXX)
+# Set configuration variables
+if (NOT DEFINED KAA_MAX_LOG_LEVEL)
+    set(KAA_MAX_LOG_LEVEL 3)
+endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 
-# Path to CMake's scripts.
-set(CMAKE_MODULE_PATH 
-	 ${CMAKE_MODULE_PATH}
-	 ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/Modules
-    )
+if (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(libs/kaa)
+else (NOT DEFINED KAA_SDK_PATH)
+    add_subdirectory(${KAA_SDK_PATH})
+endif (NOT DEFINED KAA_SDK_PATH)
 
-if(MSVC)   
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -Wno-unused-parameter -Wno-type-limits")
-endif()
+if (NOT DEFINED DEMO_ACCESS_TOKEN)
+    set(DEMO_ACCESS_TOKEN "access_token")
+endif (NOT DEFINED DEMO_ACCESS_TOKEN)
+add_definitions(-DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
 
-if (CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++0x")
-endif()
+add_executable(demo_client src/KaaDemo.cpp)
+target_link_libraries(demo_client kaacpp)
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -stdlib=libc++")
-endif()
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEMO_ACCESS_TOKEN='\"${DEMO_ACCESS_TOKEN}\"' ")
-
-find_package (Boost 1.55 REQUIRED COMPONENTS log thread system)
-find_package (Avro REQUIRED)
-find_package (Botan REQUIRED)
-
-if (WIN32 AND NOT CYGWIN AND NOT MSYS)
-add_definitions (/EHs)
-add_definitions (
-    -DBOOST_REGEX_DYN_LINK
-    -DBOOST_FILESYSTEM_DYN_LINK
-    -DBOOST_SYSTEM_DYN_LINK
-    -DBOOST_PROGRAM_OPTIONS_DYN_LINK
-    -DBOOST_LOG_DYN_LINK
-    -DBOOST_ALL_NO_LIB)
-endif()
-
-include_directories(${Boost_INCLUDE_DIRS}
-                    ${AVRO_INCLUDE_DIRS}
-                    ${BOTAN_INCLUDE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/src
-                    ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa)
-
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
-
-set (SAMPLE_SOURCE_FILES
-            src/KaaDemo.cpp
-)
-
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-
-if (CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} pthread)
-endif()
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES})
-endif()
-
-if (MSVC)
-    target_link_libraries(${APP_NAME} kaacpp ${BOTAN_LIBRARY} ${AVRO_LIBRARIES} ${Boost_LIBRARIES} dbghelp)
-endif()
+install(TARGETS demo_client DESTINATION bin)

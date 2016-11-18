@@ -120,7 +120,7 @@ If you want to modify the sample application source code or create your own appl
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
-        <sourceArchive>android/gpiocontrol.tar.gz</sourceArchive>
+        <sourceArchive>android-master/gpiocontrol_demo.tar.gz</sourceArchive>
         <projectFolder>gpiocontrol/GpioControl</projectFolder>
         <sdkLibDir>gpiocontrol/GpioControl/app/libs</sdkLibDir>
         <destBinaryFile>gpiocontrol/GpioControl/app/build/outputs/apk/gpiocontrol.apk</destBinaryFile>
@@ -152,7 +152,7 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
-        <sourceArchive>c/gpio-c-client.tar.gz</sourceArchive>
+        <sourceArchive>c-slave/gpiocontrol_demo.tar.gz</sourceArchive>
         <projectFolder>gpio-c-client</projectFolder>
         <sdkLibDir>gpio-c-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
@@ -182,7 +182,7 @@ After you successfully installed this app on your Artik 5 device, go to "GPIO co
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
-        <sourceArchive>cpp/gpio-artik5-client.tar.gz</sourceArchive>
+        <sourceArchive>artik5-slave/gpiocontrol_demo.tar.gz</sourceArchive>
         <projectFolder>gpio-artik5-client</projectFolder>
         <sdkLibDir>gpio-artik5-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
@@ -215,7 +215,7 @@ For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
-        <sourceArchive>objc/gpiocontrol.tar.gz</sourceArchive>
+        <sourceArchive>objc-master/gpiocontrol_demo.tar.gz</sourceArchive>
         <projectFolder>gpiocontrol</projectFolder>
         <sdkLibDir>gpiocontrol/libs</sdkLibDir>
         <destBinaryFile></destBinaryFile>

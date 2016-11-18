@@ -37,6 +37,19 @@
         <jetty.version>9.2.2.v20140723</jetty.version>
         <rat.version>0.10</rat.version>
         <grizzly.version>2.3.22</grizzly.version>
+	<excludeSamples>
+	    iotworld,
+	    smarthouse,
+	    citylights-controller,
+	    econais,
+	    connectedcar,
+	    powerplant,
+	    powerplant-android,
+	    powerplant-couchbase-proxy,
+	    powerplant-dashboard,
+	    twitterled,
+	    vehicletelemetry
+	</excludeSamples>
     </properties>
 
     <modules>
@@ -69,7 +82,6 @@
         <module>storm</module>
         <module>profiling</module>
     </modules>
-
     <profiles>
         <profile>
             <id>default</id>

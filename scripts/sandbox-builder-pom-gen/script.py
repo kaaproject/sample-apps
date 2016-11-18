@@ -149,9 +149,9 @@ def parse_sample_apps(path):
             print('[INFO] Directory: %s' % dirpath)
 
             demo_projects_dependencies.append(etree.Comment(
-                '[INFO] Generated dependencies for %s demo' % name))
+                'Generated dependencies for %s demo' % name))
             demo_projects_artifact_items.append(etree.Comment(
-                '[INFO] Generated artifact items for %s demo' % name))
+                'Generated artifact items for %s demo' % name))
 
             bundle_dependencies = []
 

@@ -294,7 +294,7 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">supported platforms</a> and press Enter.
 		The C++ SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -410,7 +410,7 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify the POSIX (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">supported platforms</a> and press Enter.
 		The C SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>
@@ -619,7 +619,7 @@ Make sure that the build target is set to <b>CredentialsDemo</b>, not <b>Kaa</b>
 	Should the device be lost or stolen, the user can revoke the credentials to prevent inappropriate use of the device.
 </p>
 
-For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
+For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Devices-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
 
 <h1>Playing around</h1>
 
@@ -877,7 +877,7 @@ For more information, see:
 		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
 	</li>
 	<li>
-		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Devices-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
 	</li>
 	<li>
 		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/" target="_blank">Endpoint profiles</a>.

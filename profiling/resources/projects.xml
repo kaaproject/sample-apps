@@ -386,7 +386,7 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
+		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">supported platforms</a> and press Enter.
 		The C SDK and the demo application are now built and the demo application is launched.
 	</li>
 </ol>

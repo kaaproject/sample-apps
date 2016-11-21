@@ -17,6 +17,7 @@
 package org.kaaproject.kaa.demo.photoframe.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -64,8 +65,8 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
-    public static void logout(Context context) {
-        context.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+    public static void logout(Activity activity) {
+        activity.startActivity(new Intent(activity, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
     @Override
@@ -121,10 +122,10 @@ public class LoginActivity extends BaseActivity {
 
         final KaaManager kaaManager = getKaaManager();
 
-        if(!kaaManager.isInited()) {
+        if (!kaaManager.isInited()) {
             kaaManager.init(this);
 
-            if(kaaManager.isUserAttached()) {
+            if (kaaManager.isUserAttached()) {
                 DevicesActivity.start(this);
             }
 

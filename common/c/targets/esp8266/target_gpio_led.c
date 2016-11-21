@@ -43,18 +43,17 @@ void target_gpio_led_toggle(unsigned int led, bool status);
     }
 }
 
-
 bool target_gpio_led_get_state(unsigned int led)
 {
-/*It is necessary to realize the reading of the list of leds  */
-return false;
+    /*It is necessary to realize the reading of the list of leds  */
+    return false;
 }
 unsigned int target_gpio_led_get_count(void )
 {
-return NUM_GPIO_LEDS;
+    return NUM_GPIO_LEDS;
 }
 gpio_port_t *target_get_gpio_port( unsigned int led )
 {
-/*It is necessary to realize the reading of the list of leds  */
-return NULL;
+    /*It is necessary to realize the reading of the list of leds  */
+    return NULL;
 }

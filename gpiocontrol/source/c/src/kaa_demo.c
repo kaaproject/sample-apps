@@ -134,7 +134,6 @@ int main(void)
     /**
      * Start Kaa client main loop.
      */
-//    demo_printf( "static kaa_client_t", kaa_client-> )
     demo_printf("ACCESS_TOKEN :%s\r\n", DEMO_ACCESS_TOKEN);
     error_code = kaa_client_start(kaa_client, kaa_external_process_fn, NULL, 0);
     if (error_code) {

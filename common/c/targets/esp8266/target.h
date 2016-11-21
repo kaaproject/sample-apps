@@ -55,4 +55,7 @@ int target_initialize(void);
 #undef getchar
 int getchar(void);
 
+
+int target_wifi_reconnect_if_disconected(void);
+
 #endif //ESP8266_SUPPORT_H_

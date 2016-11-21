@@ -40,8 +40,6 @@
 
 #define demo_printf(msg, ...) UART_PRINT((msg), ##__VA_ARGS__)
 
-//#define NUM_GPIO_LEDS 5
-//extern const char *led_name[NUM_GPIO_LEDS];
 
 #define TARGET_DEVICE_NAME "CC3200"
 #define TARGET_MODEL_NAME "LaunchPad"

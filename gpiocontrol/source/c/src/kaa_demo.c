@@ -15,7 +15,6 @@
  */
 
 #include <target.h>
-#include <target_gpio_led.h>
 
 #include <kaa_error.h>
 #include <kaa_context.h>
@@ -24,12 +23,13 @@
 #include <utilities/kaa_mem.h>
 #include <gen/kaa_remote_control_ecf.h>
 #include <kaa_profile.h>
+#include <target_gpio_led.h>
+
 
 // TODO APP-63: abstract gpio functions into separate target driver
 
 static kaa_client_t *kaa_client = NULL;
 
-static int gpio_led[NUM_GPIO_LEDS];
 
 /*
  * Event callback-s.
@@ -43,21 +43,22 @@ static void kaa_device_info_request(void *context
     (void)source;
 
     demo_printf("Device info request received\r\n");
-
     kaa_remote_control_ecf_device_info_response_t *response = kaa_remote_control_ecf_device_info_response_create();
 
     response->device_name = kaa_string_copy_create(TARGET_DEVICE_NAME);
     response->model       = kaa_string_copy_create(TARGET_MODEL_NAME);
     response->gpio_status = kaa_list_create();
-
-    for (int i = 0; i < NUM_GPIO_LEDS; ++i) {
-        kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
-        gio_status->id = i;
-        gio_status->status = gpio_led[i];
-        kaa_list_push_back(response->gpio_status, (void*)gio_status);
+    for (int i = 0; i < target_gpio_led_get_count(); ++i) {
+    	gpio_port_t *gpio_led = target_get_gpio_port( i );
+    	if(gpio_led){
+			kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
+			gio_status->id = i;
+			gio_status->status = gpio_led->state;
+			gio_status->type = kaa_string_copy_create( gpio_led->id );
+			kaa_list_push_back(response->gpio_status, (void*)gio_status);
+    	}
     }
-
-    kaa_event_manager_send_kaa_remote_control_ecf_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response, NULL);
+    kaa_error_t err = kaa_event_manager_send_kaa_remote_control_ecf_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response, NULL);
 
     response->destroy(response); // Destroying event that was successfully sent
     event->destroy(event);
@@ -72,14 +73,16 @@ static void kaa_GPIOToggle_info_request(void *context
 
     demo_printf("Toggling GPIO...\r\n");
 
-    gpio_led[event->gpio->id] = event->gpio->status;
-
-    int gpio_id = (event->gpio->id >= NUM_GPIO_LEDS) ? NUM_GPIO_LEDS : event->gpio->id;
-
-    target_gpio_led_toggle(gpio_id, event->gpio->status);
-    gpio_led[gpio_id] = event->gpio->status;
+    target_gpio_led_toggle(event->gpio->id, event->gpio->status);
 
     event->destroy(event);
+}
+
+
+void kaa_external_process_fn(void *context)
+{
+
+	target_wifi_reconnect_if_disconected();
 }
 
 int main(void)
@@ -103,27 +106,25 @@ int main(void)
     }
 
     error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager,
-            DEMO_ACCESS_TOKEN);
+    		DEMO_ACCESS_TOKEN);
 
     if (error_code) {
         demo_printf("Failed to set access token: %i\r\n", error_code);
         return 3;
     }
 
-
     error_code = kaa_event_manager_set_kaa_remote_control_ecf_device_info_request_listener(kaa_client_get_context(kaa_client)->event_manager,
             kaa_device_info_request,
             NULL);
-
     if (error_code) {
         demo_printf("Unable to set remote control listener: %i\r\n", error_code);
         return 4;
     }
 
+
     error_code = kaa_event_manager_set_kaa_remote_control_ecf_gpio_toggle_request_listener(kaa_client_get_context(kaa_client)->event_manager,
             kaa_GPIOToggle_info_request,
             NULL);
-
     if (error_code) {
         demo_printf("Unable to set GPIO listener: %i\r\n", error_code);
         return 5;
@@ -132,7 +133,9 @@ int main(void)
     /**
      * Start Kaa client main loop.
      */
-    error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
+//    demo_printf( "static kaa_client_t", kaa_client-> )
+    demo_printf("ACCESS_TOKEN :%s\r\n", DEMO_ACCESS_TOKEN);
+    error_code = kaa_client_start(kaa_client, kaa_external_process_fn, NULL, 0);
     if (error_code) {
         demo_printf("Unable to start Kaa client: %i\r\n", error_code);
         return 6;

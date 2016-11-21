@@ -38,15 +38,13 @@ import java.util.List;
  */
 public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
 
-    private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private PlayInfo mPlayInfo;
 
     public AlbumsAdapter(Context context, List<AlbumInfo> albums) {
         super(context, R.layout.album_list_item, albums);
 
-        mContext = context;
-        mLayoutInflater = LayoutInflater.from(mContext);
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     @NonNull
@@ -60,6 +58,7 @@ public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
             convertView = mLayoutInflater.inflate(R.layout.album_list_item, null);
 
             holder = new ViewHolder();
+            holder.contentView = convertView;
             holder.albumTitleView = (TextView) convertView.findViewById(R.id.album_title);
             holder.imageCountView = (TextView) convertView.findViewById(R.id.image_count);
             holder.nowPlayingView = (TextView) convertView.findViewById(R.id.now_playing);
@@ -69,20 +68,7 @@ public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.albumTitleView.setText(albumInfo.getTitle());
-
-        String imageCountText = mContext.getString(R.string.view_holder_album_image_count, albumInfo.getImageCount());
-        holder.imageCountView.setText(imageCountText);
-
-        if (mPlayInfo != null && mPlayInfo.getCurrentAlbumInfo() != null &&
-                mPlayInfo.getCurrentAlbumInfo().getBucketId().equals(albumInfo.getBucketId())) {
-
-            holder.nowPlayingView.setVisibility(View.VISIBLE);
-            convertView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.highlighted_text_material_light));
-        } else {
-            holder.nowPlayingView.setVisibility(View.GONE);
-            convertView.setBackgroundColor(Color.TRANSPARENT);
-        }
+        holder.bind(albumInfo, mPlayInfo);
 
         return convertView;
     }
@@ -92,8 +78,31 @@ public class AlbumsAdapter extends ArrayAdapter<AlbumInfo> {
     }
 
     private static class ViewHolder {
+        View contentView;
         TextView albumTitleView;
         TextView imageCountView;
         TextView nowPlayingView;
+
+        void bind(AlbumInfo albumInfo, PlayInfo playInfo) {
+
+            final Context context = contentView.getContext();
+
+            albumTitleView.setText(albumInfo.getTitle());
+
+            String imageCountText = context.getString(
+                    R.string.view_holder_album_image_count, albumInfo.getImageCount());
+            imageCountView.setText(imageCountText);
+
+            if (playInfo != null && playInfo.getCurrentAlbumInfo() != null &&
+                    playInfo.getCurrentAlbumInfo().getBucketId().equals(albumInfo.getBucketId())) {
+
+                nowPlayingView.setVisibility(View.VISIBLE);
+                contentView.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.highlighted_text_material_light));
+            } else {
+                nowPlayingView.setVisibility(View.GONE);
+                contentView.setBackgroundColor(Color.TRANSPARENT);
+            }
+        }
     }
 }

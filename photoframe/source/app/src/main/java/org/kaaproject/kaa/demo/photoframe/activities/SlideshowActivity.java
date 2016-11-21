@@ -17,7 +17,7 @@
 package org.kaaproject.kaa.demo.photoframe.activities;
 
 import android.annotation.TargetApi;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,7 +36,6 @@ import org.kaaproject.kaa.demo.photoframe.communication.Events;
 
 public class SlideshowActivity extends BaseActivity {
 
-
     private static final String BUCKET_ID = "bucketId";
     private static final int SLIDESHOW_INTERVAL_MS = 5000;
 
@@ -44,10 +43,10 @@ public class SlideshowActivity extends BaseActivity {
 
     private SlideshowPageAdapter mSlideShowPagerAdapter;
 
-    private Handler mSlideshowHandler = new Handler();
+    private final Handler mSlideshowHandler = new Handler();
     private String mBucketId;
 
-    private Runnable mSlideshowAction = new Runnable() {
+    private final Runnable mSlideshowAction = new Runnable() {
         @Override
         public void run() {
             final int count = mSlideShowPagerAdapter.getCount();
@@ -65,8 +64,8 @@ public class SlideshowActivity extends BaseActivity {
 
     };
 
-    public static void start(Context context, String bucketId) {
-        context.startActivity(new Intent(context, SlideshowActivity.class).putExtra(BUCKET_ID, bucketId));
+    public static void start(Activity activity, String bucketId) {
+        activity.startActivity(new Intent(activity, SlideshowActivity.class).putExtra(BUCKET_ID, bucketId));
     }
 
     @Override

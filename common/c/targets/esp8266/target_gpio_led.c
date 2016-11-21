@@ -30,15 +30,31 @@ void target_gpio_led_init(void)
     GPIO_OUTPUT_SET(2, LOW);
 }
 
-void target_gpio_led_toggle(uint32_t id, bool status)
+void target_gpio_led_toggle(unsigned int led, bool status);
 {
-    if (id >= NUM_GPIO_LEDS) {
+    if (led >= NUM_GPIO_LEDS) {
         return;
     }
 
     if (status) {
-        GPIO_OUTPUT_SET(id, HIGH);
+        GPIO_OUTPUT_SET(led, HIGH);
     } else {
-        GPIO_OUTPUT_SET(id, LOW);
+        GPIO_OUTPUT_SET(led, LOW);
     }
+}
+
+
+bool target_gpio_led_get_state(unsigned int led)
+{
+/*It is necessary to realize the reading of the list of leds  */
+return false;
+}
+unsigned int target_gpio_led_get_count(void )
+{
+return NUM_GPIO_LEDS;
+}
+gpio_port_t *target_get_gpio_port( unsigned int led )
+{
+/*It is necessary to realize the reading of the list of leds  */
+return NULL;
 }

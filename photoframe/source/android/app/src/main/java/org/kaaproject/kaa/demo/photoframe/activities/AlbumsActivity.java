@@ -17,6 +17,7 @@
 
 package org.kaaproject.kaa.demo.photoframe.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,8 +55,8 @@ public class AlbumsActivity extends BaseActivity {
 
     private boolean mIsPlaying;
 
-    public static void start(Context context, String endpointKey) {
-        context.startActivity(new Intent(context, AlbumsActivity.class).putExtra(ENDPOINT_KEY, endpointKey));
+    public static void start(Activity activity, String endpointKey) {
+        activity.startActivity(new Intent(activity, AlbumsActivity.class).putExtra(ENDPOINT_KEY, endpointKey));
     }
 
     @Override
@@ -67,10 +68,9 @@ public class AlbumsActivity extends BaseActivity {
 
         final ActionBar actionBar = getSupportActionBar();
 
-        int options = ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_HOME_AS_UP;
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
-        actionBar.setDisplayOptions(options, ActionBar.DISPLAY_HOME_AS_UP
-                | ActionBar.DISPLAY_SHOW_TITLE);
         try {
             actionBar.setTitle(getKaaManager().getRemoteDeviceModel(mEndpointKey));
         } catch (IllegalStateException e) {
@@ -78,9 +78,6 @@ public class AlbumsActivity extends BaseActivity {
             finish();
             return;
         }
-
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
 
 
         mNoDataTextView = (TextView) findViewById(R.id.no_data_text);

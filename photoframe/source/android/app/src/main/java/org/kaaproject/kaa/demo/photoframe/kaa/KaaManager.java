@@ -23,7 +23,6 @@ import org.kaaproject.kaa.client.Kaa;
 import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.KaaClientPlatformContext;
 import org.kaaproject.kaa.client.SimpleKaaClientStateListener;
-import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
 import org.kaaproject.kaa.demo.photoframe.DeviceInfo;
 import org.kaaproject.kaa.demo.photoframe.PlayInfo;

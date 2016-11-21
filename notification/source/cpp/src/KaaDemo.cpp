@@ -15,6 +15,7 @@
  */
 
 #include <memory>
+#include <condition_variable>
 
 #include <kaa/Kaa.hpp>
 #include <kaa/logging/Log.hpp>
@@ -63,23 +64,80 @@ static std::string alertTypeToString(const kaa_notification::AlertType alertType
 
 class NotificationListener : public INotificationListener {
 public:
-    virtual void onNotification(const int64_t topicId, const KaaNotification &notification)
+    NotificationListener(std::shared_ptr<IKaaClient> kaaClient, bool &quitFlag,
+            std::condition_variable &doQuit, std::mutex &quitMutex):
+        kaaClient_(kaaClient), quitFlag_(quitFlag), doQuit_(doQuit), quitMutex_(quitMutex)
+    {}
+
+    void onNotification(const int64_t topicId, const KaaNotification &notification) override
     {
-        std::cout << (boost::format("Notification for topic id '%1%' received") % topicId) << std::endl;
+        auto topics = kaaClient_->getTopics();
+        const auto &topic = std::find_if(topics.begin(), topics.end(),
+                [topicId](const Topic &t) { return t.id == topicId; });
+        std::cout << (boost::format("Notification for topic id '%1%' and name '%2%' received") % topicId % topic->name) << std::endl;
         std::cout << (boost::format("Alert type %1%, Alert message %2%") %
                 alertTypeToString(notification.alertType) %
                 (notification.alertMessage.empty() ? "Body is empty" : notification.alertMessage)) << std::endl;
+        if (topic->subscriptionType == SubscriptionType::OPTIONAL_SUBSCRIPTION) {
+            std::unique_lock<std::mutex> lock(quitMutex_);
+            quitFlag_ = true;
+            doQuit_.notify_one();
+        }
     }
+
+private:
+    std::shared_ptr<IKaaClient> kaaClient_;
+    bool &quitFlag_;
+    std::condition_variable &doQuit_;
+    std::mutex &quitMutex_;
 };
 
 class TopicListListener : public INotificationTopicListListener {
 public:
 
-    virtual void onListUpdated(const Topics& topics)
+    TopicListListener(std::shared_ptr<IKaaClient> kaaClient, bool &quitFlag,
+            std::condition_variable &doQuit, std::mutex &quitMutex):
+        kaaClient_(kaaClient), quitFlag_(quitFlag), doQuit_(doQuit), quitMutex_(quitMutex)
+    {}
+
+    void onListUpdated(const Topics& topics) override
     {
-        std::cout << ("Topic list was updated") << std::endl;
+        std::cout << "Topic list was updated" << std::endl;
         showTopicList(topics);
         optionalTopicsList_ = extractOptionalTopicIds(topics);
+        while (true) {
+            std::cout << "Enter topic id to subscribe to" << std::endl;
+            std::cout << "Enter 'quit' to exit" << std::endl;
+            std::cin.clear();
+
+            int64_t topicId;
+            std::string input;
+            std::cin >> input;
+
+            if (input == "quit") {
+                std::unique_lock<std::mutex> lock(quitMutex_);
+                quitFlag_ = true;
+                doQuit_.notify_one();
+                return;
+            }
+
+            try {
+                topicId = std::stoll(input);
+            } catch (std::exception& e) {
+                std::cout << (boost::format("Incorrect topicId: '%1%'") % input) << std::endl;
+                continue;
+            }
+
+            try {
+                kaaClient_->subscribeToTopic(topicId);
+                kaaClient_->syncTopicSubscriptions();
+                std::cout << (boost::format("Subscribed to topic '%1%'") % topicId) << std::endl;
+                return;
+            } catch (KaaException &e) {
+                std::cout << (boost::format("Topic '%1%' is unavailable, can't subscribe") % topicId) << std::endl;
+                continue;
+            }
+        }
     }
 
     std::list<int64_t> getOptionalTopicList() const
@@ -89,33 +147,35 @@ public:
 
 private:
     std::list<int64_t> optionalTopicsList_;
+    std::shared_ptr<IKaaClient> kaaClient_;
+    bool &quitFlag_;
+    std::condition_variable &doQuit_;
+    std::mutex &quitMutex_;
 };
 
 int main()
 {
     auto kaaClient = Kaa::newClient();
 
-    kaaClient->start();
+    bool quitFlag = false;
+    std::condition_variable doQuit;
+    std::mutex quitMutex;
 
-    TopicListListener topicListListener;
+    TopicListListener topicListListener(kaaClient, quitFlag, doQuit, quitMutex);
     kaaClient->addTopicListListener(topicListListener);
 
-    NotificationListener notificationListener;
+    NotificationListener notificationListener(kaaClient, quitFlag, doQuit, quitMutex);
     kaaClient->addNotificationListener(notificationListener);
+    
+    kaaClient->start();
 
-    std::cout << "Press Enter to subscribe to optional topics" << std::endl;
-    std::cin.clear();
-    std::cin.get();
+    std::cout << "Notification demo started" << std::endl;
 
-    try {
-        kaaClient->subscribeToTopics(topicListListener.getOptionalTopicList());
-    } catch (UnavailableTopicException& e) {
-        std::cout << (boost::format("Topic is unavailable, can't subscribe: %1%") % e.what()) << std::endl;
+    {
+        std::unique_lock<std::mutex> lock(quitMutex);
+        doQuit.wait(lock, [&quitFlag] { return quitFlag; });
     }
 
-    std::cout << "Press Enter to exit" << std::endl;
-
-    std::cin.get();
     kaaClient->stop();
 
     return 0;

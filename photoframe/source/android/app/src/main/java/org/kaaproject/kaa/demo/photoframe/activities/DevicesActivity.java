@@ -17,6 +17,7 @@
 
 package org.kaaproject.kaa.demo.photoframe.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,8 +48,8 @@ public class DevicesActivity extends BaseActivity {
 
     private List<DeviceInfo> mDeviceInfos = new ArrayList<>();
 
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, DevicesActivity.class));
+    public static void start(Activity activity) {
+        activity.startActivity(new Intent(activity, DevicesActivity.class));
     }
 
     @Override

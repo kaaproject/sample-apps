@@ -29,17 +29,15 @@
 
 
 typedef struct some_struct{
-	const char *id;
-	const unsigned int number;
-	const unsigned int pin_spec;
-	const unsigned int OpenDrain;
+    const char *id;
+    const unsigned int number;
+    const unsigned int pin_spec;
+    const unsigned int OpenDrain;
 
-	unsigned int  port;
-	unsigned char bit;
-	unsigned char state;
+    unsigned int  port;
+    unsigned char bit;
+    unsigned char state;
 } gpio_port_t;
-
-
 
 /**
  * Platform-specific GPIO LEDs initalization.
@@ -58,7 +56,6 @@ void target_gpio_led_toggle(unsigned int led, bool status);
 bool target_gpio_led_get_state(unsigned int led);
 unsigned int target_gpio_led_get_count(void );
 gpio_port_t *target_get_gpio_port( unsigned int led );
-
 
 #endif // TARGET_GPIO_LED_H
 

@@ -25,7 +25,6 @@
 #include <kaa_profile.h>
 #include <target_gpio_led.h>
 
-
 // TODO APP-63: abstract gpio functions into separate target driver
 
 static kaa_client_t *kaa_client = NULL;
@@ -49,14 +48,14 @@ static void kaa_device_info_request(void *context
     response->model       = kaa_string_copy_create(TARGET_MODEL_NAME);
     response->gpio_status = kaa_list_create();
     for (int i = 0; i < target_gpio_led_get_count(); ++i) {
-    	gpio_port_t *gpio_led = target_get_gpio_port( i );
-    	if(gpio_led){
-			kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
-			gio_status->id = i;
-			gio_status->status = gpio_led->state;
-			gio_status->type = kaa_string_copy_create( gpio_led->id );
-			kaa_list_push_back(response->gpio_status, (void*)gio_status);
-    	}
+        gpio_port_t *gpio_led = target_get_gpio_port( i );
+        if (gpio_led) {
+            kaa_remote_control_ecf_gpio_status_t *gio_status = kaa_remote_control_ecf_gpio_status_create();
+            gio_status->id = i;
+            gio_status->status = gpio_led->state;
+            gio_status->type = kaa_string_copy_create( gpio_led->id );
+            kaa_list_push_back(response->gpio_status, (void*)gio_status);
+        }
     }
     kaa_error_t err = kaa_event_manager_send_kaa_remote_control_ecf_device_info_response(kaa_client_get_context(kaa_client)->event_manager, response, NULL);
 
@@ -81,8 +80,7 @@ static void kaa_GPIOToggle_info_request(void *context
 
 void kaa_external_process_fn(void *context)
 {
-
-	target_wifi_reconnect_if_disconected();
+    target_wifi_reconnect_if_disconected();
 }
 
 int main(void)
@@ -106,7 +104,7 @@ int main(void)
     }
 
     error_code = kaa_profile_manager_set_endpoint_access_token(kaa_client_get_context(kaa_client)->profile_manager,
-    		DEMO_ACCESS_TOKEN);
+        DEMO_ACCESS_TOKEN);
 
     if (error_code) {
         demo_printf("Failed to set access token: %i\r\n", error_code);
@@ -121,7 +119,6 @@ int main(void)
         return 4;
     }
 
-
     error_code = kaa_event_manager_set_kaa_remote_control_ecf_gpio_toggle_request_listener(kaa_client_get_context(kaa_client)->event_manager,
             kaa_GPIOToggle_info_request,
             NULL);
@@ -130,11 +127,11 @@ int main(void)
         return 5;
     }
 
+    demo_printf("ACCESS_TOKEN :%s\r\n", DEMO_ACCESS_TOKEN);
+
     /**
      * Start Kaa client main loop.
      */
-//    demo_printf( "static kaa_client_t", kaa_client-> )
-    demo_printf("ACCESS_TOKEN :%s\r\n", DEMO_ACCESS_TOKEN);
     error_code = kaa_client_start(kaa_client, kaa_external_process_fn, NULL, 0);
     if (error_code) {
         demo_printf("Unable to start Kaa client: %i\r\n", error_code);

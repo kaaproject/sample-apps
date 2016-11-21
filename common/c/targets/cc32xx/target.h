@@ -33,9 +33,15 @@
 
 #include <stdlib.h>
 
+
+
+
+
+
 #define demo_printf(msg, ...) UART_PRINT((msg), ##__VA_ARGS__)
 
-#define NUM_GPIO_LEDS 3
+//#define NUM_GPIO_LEDS 5
+//extern const char *led_name[NUM_GPIO_LEDS];
 
 #define TARGET_DEVICE_NAME "CC3200"
 #define TARGET_MODEL_NAME "LaunchPad"
@@ -46,5 +52,6 @@
  * the WiFi spot using SSID and password supplied during build.
  */
 int target_initialize(void);
+int target_wifi_reconnect_if_disconected(void);
 
 #endif //CC32XX_SUPPORT_H_

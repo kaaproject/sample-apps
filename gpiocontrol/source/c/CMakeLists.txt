@@ -47,9 +47,11 @@ else()
 endif()
 
 # For most embedded targets binary stripping is required.
-if(${KAA_PRODUCE_BINARY})
-    add_custom_command(TARGET ${APP_NAME} POST_BUILD
-            COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
+if("${KAA_PLATFORM}" STREQUAL “posix”)
+    if(${KAA_PRODUCE_BINARY})
+        add_custom_command(TARGET ${APP_NAME} POST_BUILD
+                COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
+    endif()
 endif()
 
 install(TARGETS ${APP_NAME} DESTINATION bin)

@@ -20,8 +20,10 @@
 #include <platform/kaa_client.h>
 #include <utilities/kaa_log.h>
 #include <kaa_notification_manager.h>
+#include <string.h>
 
 static kaa_client_t *kaa_client = NULL;
+kaa_list_t *topic_list = NULL;
 
 enum color {RED, YELLOW, GREEN};
 
@@ -57,7 +59,26 @@ static int read_topic_id(void)
     }
 
     input[input_length] = '\0';
+    if (strcmp(input, "quit") == 0) {
+        exit(EXIT_SUCCESS);
+    }
     return atoi(input);
+}
+
+static kaa_topic_t *find_topic(uint64_t topic_id)
+{
+    if (!topic_list || !kaa_list_get_size(topic_list)) {
+        return NULL;
+    }
+    kaa_list_node_t *it = kaa_list_begin(topic_list);
+    while (it) {
+        kaa_topic_t *t = (kaa_topic_t *)kaa_list_get_data(it);
+        if (t->id == topic_id) {
+            return t;
+        }
+        it = kaa_list_next(it);
+    }
+    return NULL;
 }
 
 static void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *notification)
@@ -71,6 +92,11 @@ static void on_notification(void *context, uint64_t *topic_id, kaa_notification_
     } else {
         demo_printf("Error: Received notification's body is null\r\n");
     }
+
+    kaa_topic_t *topic = find_topic(*topic_id);
+    if (topic && topic->subscription_type == OPTIONAL_SUBSCRIPTION) {
+        exit(EXIT_SUCCESS);
+    }
 }
 
 static void show_topics(kaa_list_t *topics)
@@ -79,6 +105,8 @@ static void show_topics(kaa_list_t *topics)
         demo_printf("Topic list is empty");
         return;
     }
+
+    topic_list = topics;
 
     kaa_list_node_t *it = kaa_list_begin(topics);
     while (it) {
@@ -98,19 +126,21 @@ void on_topics_received(void *context, kaa_list_t *topics)
     demo_printf("Topic list was updated\r\n");
     show_topics(topics);
 
-    demo_printf("Type topic ID in order to subscribe on one:");
-    size_t topic_id = read_topic_id();
+    demo_printf("Enter topic id to subscribe to:\n");
+    demo_printf("Enter 'quit' to exit\n");
+    int topic_id = read_topic_id();
 
     kaa_error_t err = KAA_ERR_NONE;
     kaa_client_t *client = (kaa_client_t *)context;
     kaa_list_node_t *it = kaa_list_begin(topics);
     while (it) {
-        kaa_topic_t *topic = (kaa_topic_t *) kaa_list_get_data(it);
+        kaa_topic_t *topic = (kaa_topic_t *)kaa_list_get_data(it);
         if (topic->subscription_type == OPTIONAL_SUBSCRIPTION && topic->id == topic_id) {
-            demo_printf("Subscribing to optional topic '%lu'\r\n", topic->id);
             err = kaa_subscribe_to_topic(kaa_client_get_context(client)->notification_manager, &topic->id, false);
             if (err) {
                 demo_printf("Failed to subscribe.\r\n");
+            } else {
+                demo_printf("Subscribed to optional topic '%lu'\r\n", topic->id);
             }
         }
         it = kaa_list_next(it);

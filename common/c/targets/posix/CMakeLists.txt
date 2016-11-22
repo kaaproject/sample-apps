@@ -15,5 +15,14 @@
 #
 
 # Target support library that provides abstractions for posix target.
-add_library(target_support INTERFACE)
-target_include_directories(target_support INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(target_support 
+	    STATIC
+	    target_gpio_led.c)
+
+target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../common)
+
+# Expose WiFi credentials
+target_compile_definitions(target_support
+        INTERFACE
+        -DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")

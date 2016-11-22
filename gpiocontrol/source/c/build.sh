@@ -75,10 +75,10 @@ select_arch() {
         help
         ;;
     posix)
-        echo "posix platform is not supported by this demo"
-        exit 0
+        KAA_TARGET=$target
+        KAA_PRODUCE_BINARY=true
+        KAA_REQUIRE_CREDENTIALS=false
         ;;
-
     *)
         # Interpret custom string as target name
         KAA_TOOLCHAIN_PATH_SDK="-DCMAKE_TOOLCHAIN_FILE=$RUN_DIR/libs/kaa/toolchains/$target.cmake"

@@ -46,7 +46,7 @@ static const char *color_to_str(enum color code_color)
 
 #define INPUT_LENGTH 8
 
-static int read_topic_id(void)
+static uint64_t read_topic_id(void)
 {
     char input[INPUT_LENGTH+1];
     int input_length = 0;
@@ -62,7 +62,7 @@ static int read_topic_id(void)
     if (strcmp(input, "quit") == 0) {
         exit(EXIT_SUCCESS);
     }
-    return atoi(input);
+    return (unsigned long long)atoll(input);
 }
 
 static kaa_topic_t *find_topic(uint64_t topic_id)
@@ -86,7 +86,7 @@ static void on_notification(void *context, uint64_t *topic_id, kaa_notification_
     (void)context;
     if (notification->alert_message) {
         kaa_string_t *message = (kaa_string_t *)notification->alert_message;
-        demo_printf("Notification for topic id '%lu' received\r\n", *topic_id);
+        demo_printf("Notification for topic id '%llu' received\r\n", *topic_id);
         demo_printf("Notification body: %s\r\n", message->data);
         demo_printf("Message alert type: %s\r\n", color_to_str(notification->alert_type));
     } else {
@@ -111,7 +111,7 @@ static void show_topics(kaa_list_t *topics)
     kaa_list_node_t *it = kaa_list_begin(topics);
     while (it) {
         kaa_topic_t *topic = (kaa_topic_t *)kaa_list_get_data(it);
-        demo_printf("Topic: id '%lu', name: %s, type: ", topic->id, topic->name);
+        demo_printf("Topic: id '%llu', name: %s, type: ", topic->id, topic->name);
         if (topic->subscription_type == MANDATORY_SUBSCRIPTION) {
             demo_printf("MANDATORY\r\n");
         } else {
@@ -128,7 +128,7 @@ void on_topics_received(void *context, kaa_list_t *topics)
 
     demo_printf("Enter topic id to subscribe to:\n");
     demo_printf("Enter 'quit' to exit\n");
-    int topic_id = read_topic_id();
+    uint64_t topic_id = read_topic_id();
 
     kaa_error_t err = KAA_ERR_NONE;
     kaa_client_t *client = (kaa_client_t *)context;
@@ -140,7 +140,7 @@ void on_topics_received(void *context, kaa_list_t *topics)
             if (err) {
                 demo_printf("Failed to subscribe.\r\n");
             } else {
-                demo_printf("Subscribed to optional topic '%lu'\r\n", topic->id);
+                demo_printf("Subscribed to optional topic '%llu'\r\n", topic->id);
             }
         }
         it = kaa_list_next(it);

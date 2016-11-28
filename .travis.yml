@@ -21,8 +21,8 @@ jdk:
 
 before_install:
   - sudo apt-get install python3 python3-lxml
+  - python3 scripts/sandbox-builder-pom-gen/script.py . ./sandbox-builder-parent/template_pom.xml ./sandbox-builder-parent/pom.xml
 
 script:
-  - python3 scripts/sandbox-builder-pom-gen/script.py . ./sandbox-builder-parent/template_pom.xml ./sandbox-builder-parent/pom.xml
   - mvn test
   - mvn apache-rat:check

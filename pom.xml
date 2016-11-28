@@ -82,6 +82,8 @@
         <module>storm</module>
         <module>profiling</module>
 
+        <!-- dummy for sandbox-builder -->
+        <module>dummy</module>
         <!-- parent pom for the sandbox builder -->
         <module>sandbox-builder-parent</module>
     </modules>

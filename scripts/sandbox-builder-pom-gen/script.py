@@ -25,23 +25,23 @@ ASSEMBLY_ID = 'id'
 
 
 def insert_comment(element, comment_str):
-    '''
+    """
     Inserts comment in the element
-    '''
+    """
 
     comment = etree.Comment(' ' + comment_str + ' ')
     element.append(comment)
 
 
 def dependency_bundle(name):
-    '''
+    """
     Generates dependency tag like this:
     <dependency>
         <groupId>org.kaaproject.kaa.examples</groupId>
         <artifactId>cellmonitordemo</artifactId>
         <version>${kaa-sample-apps.version}</version>
     </dependency>
-    '''
+    """
     print('[INFO] Creating new dependency tag for bundle=%s' % name)
 
     return E.dependency(
@@ -53,7 +53,7 @@ def dependency_bundle(name):
 
 
 def dependency(name, suffix):
-    '''
+    """
     Generates dependency tag like this:
     <dependency>
         <groupId>org.kaaproject.kaa.examples</groupId>
@@ -63,7 +63,7 @@ def dependency(name, suffix):
         <type>tar.gz</type>
         <scope>provided</scope>
     </dependency>
-    '''
+    """
 
     print('[INFO] Creating new dependency tag for name=%s, suffix=%s' %
           (name, suffix))
@@ -80,7 +80,7 @@ def dependency(name, suffix):
 
 
 def artifact_item(name, suffix):
-    '''
+    """
     Creates simple artifactItem tag like this:
     <artifactItem>
         <groupId>org.kaaproject.kaa.examples</groupId>
@@ -92,7 +92,7 @@ def artifact_item(name, suffix):
         <outputDirectory>${base.path}/demo_projects/objc</outputDirectory>
         <destFileName>profiling_demo.tar.gz</destFileName>
     </artifactItem>
-    '''
+    """
 
     print('[INFO] Creating new artifactItem tag for name=%s, suffix=%s' %
           (name, suffix))
@@ -114,14 +114,14 @@ def parse_sample_apps(path):
 
     sample_apps_tree = etree.parse(os.path.join(path, 'pom.xml'))
 
-    excludeSamples = sample_apps_tree.xpath('//*[contains(local-name(), "properties")]' +
+    exclude_samples = sample_apps_tree.xpath('//*[contains(local-name(), "properties")]' +
                                             '/*[contains(local-name(), "excludeSamples")]')[0] \
         .text \
         .split(',')
 
-    excludeSamples = [x.strip() for x in excludeSamples]
+    exclude_samples = [x.strip() for x in exclude_samples]
 
-    print('[INFO] Exclude: %s' % excludeSamples)
+    print('[INFO] Exclude: %s' % exclude_samples)
 
     demo_projects_dependencies = []
     demo_projects_artifact_items = []
@@ -139,78 +139,96 @@ def parse_sample_apps(path):
 
         name = dirpath.split(os.sep)[-1]
 
-        if name in excludeSamples:
+        if name in exclude_samples:
             print('[WARN] Sample %s is excluded!' % name)
             continue
 
         print('[INFO] Name: %s' % name)
 
         if ASSEMBLY_DIRECTORY in sub_directories:
-            print('[INFO] Directory: %s' % dirpath)
-
-            demo_projects_dependencies.append(etree.Comment(
-                'Generated dependencies for %s demo' % name))
-            demo_projects_artifact_items.append(etree.Comment(
-                'Generated artifact items for %s demo' % name))
-
-            bundle_dependencies = []
-
-            assembly_files_dir = os.path.join(dirpath, ASSEMBLY_DIRECTORY)
-            for assembly_file in os.listdir(assembly_files_dir):
-
-                assembly_file_path = os.path.join(
-                    assembly_files_dir, assembly_file)
-
-                # filter not files
-                if not os.path.isfile(assembly_file_path):
+            print('[INFO] Assembly directory is found')
+            parse_assembly_dir(demo_projects_artifact_items, demo_projects_dependencies, dirpath, name)
+        else:
+            print('[INFO] We need to go deeper.jpg')
+            for sub_directory in sub_directories:
+                sub_dir_path = os.path.join(dirpath, sub_directory)
+                print('[INFO] Parsing %s' % sub_dir_path)
+                if not os.path.isdir(sub_dir_path):  # filter files
+                    print('[INFO] Not directory, skip')
+                    continue
+                if directory[0] == '.':  # filter .idea, .git etc.
+                    print('[INFO] Directory starts with ".", skip')
                     continue
 
-                # filter files without 'src' in name
-                if not ASSEMBLY_FILE_NAME_SRC in assembly_file:
-                    continue
-
-                if ASSEMBLY_FILE_SEPARATOR in assembly_file:
-
-                    # cut off .xml
-                    assembly_file_name = assembly_file.split('.')[0]
-
-                    splitted = assembly_file_name.split(
-                        ASSEMBLY_FILE_SEPARATOR, 1)
-
-                    try:
-                        index_of_suffix = splitted.index(
-                            ASSEMBLY_FILE_NAME_SRC) + 1
-                    except ValueError:
-                        error = '[ERROR] Wrong format: %s' % assembly_file_name
-                        print(error)
-                        sys.exit(error)
-
-                    suffix = splitted[index_of_suffix]
-
-                    print('[INFO] Assembly demo (' + assembly_file_name + '): ' + suffix)
-
-                    bundle_dependencies.append(dependency(name, suffix))
-                    demo_projects_artifact_items.append(
-                        artifact_item(name, suffix))
-
+                sub_sub_directories = os.listdir(sub_dir_path)
+                if ASSEMBLY_DIRECTORY in sub_sub_directories:
+                    print('[INFO] Assembly directory is found')
+                    parse_assembly_dir(demo_projects_artifact_items, demo_projects_dependencies, sub_dir_path, name)
                 else:
-                    error = '[ERROR] No separator(\' - \') in the assembly file'
-                    print(error)
-                    sys.exit(error)
+                    print('[WARN] Assembly directory isn\'t found')
 
-            print('[INFO] Appending bundle dependency for %s' % name)
-            demo_projects_dependencies.append(dependency_bundle(name))
+    return demo_projects_dependencies, demo_projects_artifact_items
 
-            demo_projects_dependencies.extend(bundle_dependencies)
 
-    return (demo_projects_dependencies, demo_projects_artifact_items)
+def parse_assembly_dir(demo_projects_artifact_items, demo_projects_dependencies, dirpath, name):
+    print('[INFO] Directory: %s' % dirpath)
+    demo_projects_dependencies.append(etree.Comment(
+        '[INFO] Generated dependencies for %s demo' % name))
+    demo_projects_artifact_items.append(etree.Comment(
+        '[INFO] Generated artifact items for %s demo' % name))
+    bundle_dependencies = []
+    assembly_files_dir = os.path.join(dirpath, ASSEMBLY_DIRECTORY)
+    for assembly_file in os.listdir(assembly_files_dir):
+
+        assembly_file_path = os.path.join(
+            assembly_files_dir, assembly_file)
+
+        # filter not files
+        if not os.path.isfile(assembly_file_path):
+            continue
+
+        # filter files without 'src' in name
+        if not ASSEMBLY_FILE_NAME_SRC in assembly_file:
+            continue
+
+        if ASSEMBLY_FILE_SEPARATOR in assembly_file:
+
+            # cut off .xml
+            assembly_file_name = assembly_file.split('.')[0]
+
+            splitted = assembly_file_name.split(
+                ASSEMBLY_FILE_SEPARATOR, 1)
+
+            try:
+                index_of_suffix = splitted.index(
+                    ASSEMBLY_FILE_NAME_SRC) + 1
+            except ValueError:
+                error = '[ERROR] Wrong format: %s' % assembly_file_name
+                print(error)
+                sys.exit(error)
+
+            suffix = splitted[index_of_suffix]
+
+            print('[INFO] Assembly demo (' + assembly_file_name + '): ' + suffix)
+
+            bundle_dependencies.append(dependency(name, suffix))
+            demo_projects_artifact_items.append(
+                artifact_item(name, suffix))
+
+        else:
+            error = '[ERROR] No separator(\' - \') in the assembly file'
+            print(error)
+            sys.exit(error)
+    print('[INFO] Appending bundle dependency for %s' % name)
+    demo_projects_dependencies.append(dependency_bundle(name))
+    demo_projects_dependencies.extend(bundle_dependencies)
 
 
 def insert_dependencies_into_pom(pom_tree, dependencies):
     print('[INFO] Inserting dependencies')
 
     dependencies_elements = pom_tree.xpath(
-        '//*[contains(local-name(), "dependencies")]') # take first dependencies tag
+        '//*[contains(local-name(), "dependencies")]')  # take first dependencies tag
 
     dependencies_element = dependencies_elements[0]
 
@@ -226,17 +244,17 @@ def insert_artifact_items_into_pom(pom_tree, artifact_items):
     # since there is prefixes and namespaces
     # and name won't be equals, it just contains some word
     artifact_items_elements = pom_tree.xpath(
-        '//*[contains(local-name(), "build")]' + # build
-        '/*[contains(local-name(), "plugins")]' + # plugins
+        '//*[contains(local-name(), "build")]' +  # build
+        '/*[contains(local-name(), "plugins")]' +  # plugins
         # plugin (with tag groupId=org.apache.maven.plugins and tag=artifactId=maven-dependency-plugin)
         '/*[contains(local-name(), "plugin")][*[contains(local-name(), "groupId")][text()="org.apache.maven.plugins"] and *[contains(local-name(), "artifactId")][text()="maven-dependency-plugin"]]' + # too long line
-        '/*[contains(local-name(), "executions")]' + # executions
+        '/*[contains(local-name(), "executions")]' +  # executions
         # execution (with tag id=copy)
         '/*[contains(local-name(), "execution")][*[contains(local-name(), "id")][text()="copy"]]' +
-        '/*[contains(local-name(), "configuration")]' + # configuration
-        '/*[contains(local-name(), "artifactItems")]') # finally, artifactItems
+        '/*[contains(local-name(), "configuration")]' +  # configuration
+        '/*[contains(local-name(), "artifactItems")]')  # finally, artifactItems
 
-    artifact_items_element = artifact_items_elements[0] # take first
+    artifact_items_element = artifact_items_elements[0]  # take first
 
     for element in artifact_items:
         artifact_items_element.append(element)

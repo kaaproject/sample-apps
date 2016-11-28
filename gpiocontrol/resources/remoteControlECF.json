@@ -10,10 +10,6 @@
                 "type":"int"
             },
             {
-                "name":"type",
-                "type":"string"
-            },
-            {
                 "name":"status",
                 "type":"boolean"
             }

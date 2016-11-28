@@ -28,6 +28,7 @@
     <properties>
         <main.dir>${basedir}</main.dir>
         <kaa.version>0.11.0-SNAPSHOT</kaa.version>
+
         <jackson.version>2.4.1</jackson.version>
         <avro.version>1.7.5</avro.version>
         <junit.version>4.11</junit.version>
@@ -37,6 +38,8 @@
         <jetty.version>9.2.2.v20140723</jetty.version>
         <rat.version>0.10</rat.version>
         <grizzly.version>2.3.22</grizzly.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
+        <spring-data-cassandra.version>1.5.0.M1</spring-data-cassandra.version>
     </properties>
 
     <modules>
@@ -398,6 +401,16 @@
                 <groupId>org.glassfish.grizzly</groupId>
                 <artifactId>grizzly-http-server</artifactId>
                 <version>${grizzly.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-cassandra</artifactId>
+                <version>${spring-data-cassandra.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

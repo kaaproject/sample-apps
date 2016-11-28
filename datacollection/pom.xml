@@ -17,150 +17,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.kaaproject.kaa</groupId>
         <version>2.1.0-SNAPSHOT</version>
         <artifactId>examples</artifactId>
     </parent>
+
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>datacollectiondemo</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>datacollection</artifactId>
+    <packaging>pom</packaging>
+    <name>Kaa Data Collection</name>
 
-    <name>Kaa data collection demo</name>
-    <url>http://kaaproject.org</url>
+    <modules>
+        <module>datacollection-demo</module>
+        <module>telemetry-monitor</module>
+    </modules>
 
-    <properties>
-        <main.dir>${basedir}/..</main.dir>
-    </properties>
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.kaaproject.kaa.examples</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-        </dependency>
-    </dependencies>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>${project.build.directory}/generated-resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-logging-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <includeArtifactIds>logback-core,logback-classic,log4j-over-slf4j</includeArtifactIds>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>${project.basedir}/assembly/src-c.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-cpp.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-java.xml</descriptor>
-                        <descriptor>${project.basedir}/assembly/src-objc.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/generated-resources/demo/datacollection
-                            </outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>resources</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.rat</groupId>
-                <artifactId>apache-rat-plugin</artifactId>
-                <version>${rat.version}</version>
-                <configuration>
-                    <excludes>
-                        <!--Android Studio -->
-                        <exclude>source/android/gradlew</exclude>
-                        <exclude>source/android/gradlew.bat</exclude>
-                        <exclude>source/android/gradle.properties</exclude>
-                        <exclude>source/android/build.gradle</exclude>
-                        <exclude>source/android/settings.gradle</exclude>
-                        <exclude>source/android/local.properties</exclude>
-                        <exclude>source/android/gradle/wrapper/gradle-wrapper.properties</exclude>
-                        <exclude>source/android/*.iml</exclude>
-                        <exclude>source/android/app/app.iml</exclude>
-                        <exclude>source/android/app/proguard-rules.pro</exclude>
-                        <exclude>source/android/project.properties</exclude>
-                        <exclude>source/android/import-summary.txt</exclude>
-                        <exclude>source/android/*/.gitignore</exclude>
-
-                        <!--XCode-->
-                        <exclude>source/objc/*.xcodeproj/project.xcworkspace/contents.xcworkspacedata</exclude>
-                        <exclude>source/objc/*.xcworkspace/contents.xcworkspacedata</exclude>
-                        <exclude>source/objc/*.xcodeproj/project.pbxproj</exclude>
-                        <exclude>source/objc/*/Info.plist</exclude>
-                        <exclude>source/objc/*/Base.lproj/Main.storyboard</exclude>
-                        <exclude>source/objc/*/Base.lproj/LaunchScreen.storyboard</exclude>
-                        <exclude>source/objc/*/Assets.xcassets/AppIcon.appiconset/Contents.json</exclude>
-                        <exclude>source/objc/Podfile.lock</exclude>
-                        <exclude>source/objc/Podfile</exclude>
-                        <exclude>source/objc/*/*.entitlements</exclude>
-
-                        <!--Common files-->
-                        <exclude>resources/*.avsc</exclude>
-                        <exclude>resources/*.json</exclude>
-                        <exclude>resources/*.txt</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

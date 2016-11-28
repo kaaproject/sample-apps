@@ -1,24 +1,23 @@
 /**
- *  Copyright 2014-2016 CyberVision, Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Copyright 2014-2016 CyberVision, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.kaaproject.kaa.examples.datacollection;
 
 
-import java.util.Arrays;
-
+import org.apache.commons.lang3.tuple.Pair;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
@@ -27,15 +26,24 @@ import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
 import org.kaaproject.kaa.common.dto.logs.LogSchemaDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
+import org.kaaproject.kaa.examples.util.cmd.CommandLine;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 @KaaDemoBuilder
 public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemoBuilder.class);
+
+    private static final String DATA_COLLECTION_TAR_PATH = "/usr/lib/kaa-sandbox/demo_projects/java/datacollection_demo.tar.gz";
+    private static final String KAA_NODE_LIB_PATH = "/usr/lib/kaa-node/lib/";
+    private static final String ADDITIONAL_LIBS_IN_TAR_PATH = "JDataCollectionDemo/lib/kaa-node-lib/";
+    private static final String EXTRACT_ADDITIONAL_LIBS_PARAMS = "-xvf " + DATA_COLLECTION_TAR_PATH + " -C " + KAA_NODE_LIB_PATH + " " + ADDITIONAL_LIBS_IN_TAR_PATH + " --strip-components=3";
 
     public DataCollectionDemoBuilder() {
         super("demo/datacollection");
@@ -97,7 +105,7 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
         dataCollectionLogAppender.setMinLogSchemaVersion(1);
         dataCollectionLogAppender.setMaxLogSchemaVersion(Integer.MAX_VALUE);
         dataCollectionLogAppender.setConfirmDelivery(true);
-        dataCollectionLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.KEYHASH, 
+        dataCollectionLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.KEYHASH,
                 LogHeaderStructureDto.TIMESTAMP, LogHeaderStructureDto.TOKEN, LogHeaderStructureDto.VERSION));
         dataCollectionLogAppender.setPluginTypeName("MongoDB");
         dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.mongo.appender.MongoDbLogAppender");
@@ -107,4 +115,9 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
         LOG.info("Finished loading 'Data Collection Demo Application' data.");
     }
 
+
+    @Override
+    public Stream<Pair<CommandLine, String>> getAdditionalCommandsAndParams() {
+        return Stream.of(Pair.of(CommandLine.TAR, EXTRACT_ADDITIONAL_LIBS_PARAMS));
+    }
 }

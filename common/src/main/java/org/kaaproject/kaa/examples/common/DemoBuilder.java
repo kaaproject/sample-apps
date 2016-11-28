@@ -16,13 +16,21 @@
 
 package org.kaaproject.kaa.examples.common;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.kaaproject.kaa.examples.common.projects.ProjectsConfig;
+import org.kaaproject.kaa.examples.util.cmd.CommandLine;
 import org.kaaproject.kaa.server.common.admin.AdminClient;
+
+import java.util.stream.Stream;
 
 public interface DemoBuilder {
 
     void buildDemoApplication(AdminClient client) throws Exception;
 
     ProjectsConfig getProjectConfigs();
+
+    default Stream<Pair<CommandLine, String>> getAdditionalCommandsAndParams() {
+        return Stream.empty();
+    }
     
 }

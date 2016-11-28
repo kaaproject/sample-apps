@@ -233,7 +233,7 @@ class AppTesterFramework(object):
                     self.result_matrix[app] = TestStatus.SKIPPED
                     continue
                 else:
-                    print 'Building{} ({}) for {}\n'.format(app.get_name(),
+                    print 'Building {} ({}) for {}\n'.format(app.get_name(),
                                                        app.get_language(),
                                                        app.get_platform())
                     app.build()

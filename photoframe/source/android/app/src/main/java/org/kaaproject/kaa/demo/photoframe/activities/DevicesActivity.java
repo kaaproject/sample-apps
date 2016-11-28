@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.photoframe.fragment;
 
+package org.kaaproject.kaa.demo.photoframe.activities;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.kaaproject.kaa.demo.photoframe.DeviceInfo;
 import org.kaaproject.kaa.demo.photoframe.R;
@@ -36,54 +39,51 @@ import org.kaaproject.kaa.demo.photoframe.communication.Events;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The implementation of the {@link BaseFragment} class.
- * Represents a view with a list of remote devices.
- */
-public class DevicesFragment extends BaseFragment {
+public class DevicesActivity extends BaseActivity {
+
 
     private TextView mNoData;
     private ListView mDevices;
-    private DevicesAdapter adapter;
+    private DevicesAdapter mAdapter;
 
-    private List<DeviceInfo> devices = new ArrayList<>();
+    private List<DeviceInfo> mDeviceInfos = new ArrayList<>();
+
+    public static void start(Activity activity) {
+        activity.startActivity(new Intent(activity, DevicesActivity.class));
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_list_with_empty);
 
-        View rootView = inflater.inflate(R.layout.fragment_list_with_empty, container, false);
+        setTitle(R.string.fragment_devices_title);
 
-        mNoData = (TextView) rootView.findViewById(R.id.no_data_text);
-        mDevices = (ListView) rootView.findViewById(R.id.list);
+        mNoData = (TextView) findViewById(R.id.no_data_text);
+        mDevices = (ListView) findViewById(R.id.list);
 
         mNoData.setText(getString(R.string.fragment_devices_no_data_text));
 
-        adapter = new DevicesAdapter(getActivity(), getKaaManager(), devices);
-        mDevices.setAdapter(adapter);
+        mAdapter = new DevicesAdapter(this, getKaaManager(), mDeviceInfos);
+        mDevices.setAdapter(mAdapter);
 
         mDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String endpointKey = getKaaManager().getRemoteDeviceEndpoint(position);
-                AlbumsFragment.newInstance(endpointKey).move(getActivity());
+                AlbumsActivity.start(DevicesActivity.this, endpointKey);
             }
         });
 
-        return rootView;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setHasOptionsMenu(true);
         updateInfo();
+
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        getActivity().getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
-        super.onPrepareOptionsMenu(menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
+        return true;
     }
 
     @Override
@@ -93,6 +93,7 @@ public class DevicesFragment extends BaseFragment {
                 updateInfo();
                 break;
             case R.id.item_logout:
+                LoginActivity.logout(this);
                 getKaaManager().logout();
                 break;
             default:
@@ -119,23 +120,9 @@ public class DevicesFragment extends BaseFragment {
         updateView();
     }
 
-    @Override
-    public String getTitle() {
-        return getString(R.string.fragment_devices_title);
-    }
-
-    @Override
-    public String getFragmentTag() {
-        return DevicesFragment.class.getSimpleName();
-    }
-
-    @Override
-    protected boolean displayHomeAsUp() {
-        return false;
-    }
 
     private void notifyView() {
-        if (adapter.getCount() > 0) {
+        if (mAdapter.getCount() > 0) {
             mNoData.setVisibility(View.GONE);
             mDevices.setVisibility(View.VISIBLE);
         } else {
@@ -149,13 +136,13 @@ public class DevicesFragment extends BaseFragment {
     }
 
     private void updateView() {
-        getActivity().runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                devices.clear();
-                devices.addAll(getKaaManager().getRemoteDevicesMap().values());
+                mDeviceInfos.clear();
+                mDeviceInfos.addAll(getKaaManager().getRemoteDevicesMap().values());
 
-                adapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
                 notifyView();
             }
         });

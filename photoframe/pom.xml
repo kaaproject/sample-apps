@@ -24,7 +24,7 @@
         <artifactId>examples</artifactId>
     </parent>
     <groupId>org.kaaproject.kaa.examples</groupId>
-    <artifactId>photoframe</artifactId>
+    <artifactId>photoframedemo</artifactId>
     <packaging>jar</packaging>
 
     <name>Photo frame demo application</name>
@@ -104,14 +104,14 @@
                     <useDefaultExcludes>true</useDefaultExcludes>
                     <excludes>
                         <!--Android Studio-->
-                        <exclude>source/gradlew</exclude>
-                        <exclude>source/build.gradle</exclude>
-                        <exclude>source/settings.gradle</exclude>
-                        <exclude>source/gradlew.bat</exclude>
+                        <exclude>source/android/gradlew</exclude>
+                        <exclude>source/android/build.gradle</exclude>
+                        <exclude>source/android/settings.gradle</exclude>
+                        <exclude>source/android/gradlew.bat</exclude>
                         <exclude>source/app/proguard-rules.pro</exclude>
                         <exclude>source/local.properties</exclude>
                         <exclude>source/app/app.iml</exclude>
-                        <exclude>source/gradle/wrapper/gradle-wrapper.properties</exclude>
+                        <exclude>source/android/gradle/wrapper/gradle-wrapper.properties</exclude>
                         <exclude>source/PhotoFrame.iml</exclude>
                         <exclude>source/gradle.properties</exclude>
                         <!--Common files-->

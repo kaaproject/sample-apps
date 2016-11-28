@@ -28,7 +28,6 @@
     <properties>
         <main.dir>${basedir}</main.dir>
         <kaa.version>0.11.0-SNAPSHOT</kaa.version>
-
         <jackson.version>2.4.1</jackson.version>
         <avro.version>1.7.5</avro.version>
         <junit.version>4.11</junit.version>
@@ -40,6 +39,19 @@
         <grizzly.version>2.3.22</grizzly.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <spring-data-cassandra.version>1.5.0.M1</spring-data-cassandra.version>
+	<excludeSamples>
+	    iotworld,
+	    smarthouse,
+	    citylights-controller,
+	    econais,
+	    connectedcar,
+	    powerplant,
+	    powerplant-android,
+	    powerplant-couchbase-proxy,
+	    powerplant-dashboard,
+	    twitterled,
+	    vehicletelemetry
+	</excludeSamples>
     </properties>
 
     <modules>
@@ -72,7 +84,6 @@
         <module>storm</module>
         <module>profiling</module>
     </modules>
-
     <profiles>
         <profile>
             <id>default</id>

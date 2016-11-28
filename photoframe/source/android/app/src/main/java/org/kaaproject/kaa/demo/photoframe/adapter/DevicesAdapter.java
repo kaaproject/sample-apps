@@ -18,6 +18,7 @@ package org.kaaproject.kaa.demo.photoframe.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,17 +40,15 @@ import java.util.List;
  */
 public class DevicesAdapter extends ArrayAdapter<DeviceInfo> {
 
-    private Context mContext;
     private KaaManager mKaaManager;
 
     private final LayoutInflater mLayoutInflater;
 
     public DevicesAdapter(Context context, KaaManager controller, List<DeviceInfo> devices) {
         super(context, R.layout.device_list_item, devices);
-        mContext = context;
         mKaaManager = controller;
 
-        mLayoutInflater = LayoutInflater.from(mContext);
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     @NonNull
@@ -63,7 +62,8 @@ public class DevicesAdapter extends ArrayAdapter<DeviceInfo> {
 
             holder = new ViewHolder();
             holder.modelNameView = (TextView) convertView.findViewById(R.id.model_name);
-            holder.manufacturerNameView = (TextView) convertView.findViewById(R.id.manufacturer_name);
+            holder.manufacturerNameView =
+                    (TextView) convertView.findViewById(R.id.manufacturer_name);
             holder.playStatusView = (TextView) convertView.findViewById(R.id.play_status);
 
             convertView.setTag(holder);
@@ -71,27 +71,9 @@ public class DevicesAdapter extends ArrayAdapter<DeviceInfo> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.modelNameView.setText(deviceInfo.getModel());
-
-        holder.manufacturerNameView.setText(mContext.getString(
-                R.string.view_holder_device_made_by_patter, deviceInfo.getManufacturer()
-        ));
-
-        final PlayInfo playInfo = mKaaManager.getRemoteDeviceStatus(
+        holder.bind(deviceInfo, mKaaManager.getRemoteDeviceStatus(
                 mKaaManager.getRemoteDeviceEndpoint(position)
-        );
-
-        if (playInfo == null) {
-            holder.playStatusView.setText(R.string.view_holder_device_status_unknown);
-            return convertView;
-        }
-
-        if (playInfo.getStatus() == PlayStatus.STOPPED) {
-            holder.playStatusView.setText(R.string.view_holder_device_status_stopped);
-        } else {
-            holder.playStatusView.setText(mContext.getString(R.string.view_holder_device_playing_album_text,
-                    playInfo.getCurrentAlbumInfo().getTitle()));
-        }
+        ));
 
         return convertView;
     }
@@ -100,5 +82,28 @@ public class DevicesAdapter extends ArrayAdapter<DeviceInfo> {
         TextView modelNameView;
         TextView manufacturerNameView;
         TextView playStatusView;
+
+        void bind(DeviceInfo deviceInfo, @Nullable PlayInfo playInfo) {
+
+            final Context context = modelNameView.getContext();
+
+            modelNameView.setText(deviceInfo.getModel());
+
+            manufacturerNameView.setText(context.getString(
+                    R.string.view_holder_device_made_by_patter, deviceInfo.getManufacturer()
+            ));
+
+            if (playInfo == null) {
+                playStatusView.setText(R.string.view_holder_device_status_unknown);
+            } else {
+                if (playInfo.getStatus() == PlayStatus.STOPPED) {
+                    playStatusView.setText(R.string.view_holder_device_status_stopped);
+                } else {
+                    playStatusView.setText(
+                            context.getString(R.string.view_holder_device_playing_album_text,
+                                    playInfo.getCurrentAlbumInfo().getTitle()));
+                }
+            }
+        }
     }
 }

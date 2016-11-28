@@ -22,7 +22,6 @@
 #include <platform/kaa_client.h>
 #include <utilities/kaa_log.h>
 #include <utilities/kaa_mem.h>
-#include <kaa_user.h>
 #include <gen/kaa_remote_control_ecf.h>
 #include <kaa_profile.h>
 

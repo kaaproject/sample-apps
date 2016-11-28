@@ -14,44 +14,40 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.photoframe.fragment;
 
-import android.content.Context;
+package org.kaaproject.kaa.demo.photoframe.activities;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.kaaproject.kaa.demo.photoframe.MainActivity;
 import org.kaaproject.kaa.demo.photoframe.PlayStatus;
 import org.kaaproject.kaa.demo.photoframe.R;
 import org.kaaproject.kaa.demo.photoframe.adapter.SlideshowPageAdapter;
 import org.kaaproject.kaa.demo.photoframe.communication.Events;
 
-/**
- * The implementation of the {@link Fragment} class.
- * Represents a view pager displaying views with images from the album identified by the bucketId.
- * Handles the image view switching with the constant {@link #SLIDESHOW_INTERVAL_MS} interval.
- */
-public class SlideshowFragment extends BaseFragment {
+public class SlideshowActivity extends BaseActivity {
 
     private static final String BUCKET_ID = "bucketId";
     private static final int SLIDESHOW_INTERVAL_MS = 5000;
 
-    private MainActivity mActivity;
+    ViewPager mViewPager;
 
-    private ViewPager mViewPager;
     private SlideshowPageAdapter mSlideShowPagerAdapter;
 
-    private Handler mSlideshowHandler = new Handler();
+    private final Handler mSlideshowHandler = new Handler();
     private String mBucketId;
 
-    private Runnable mSlideshowAction = new Runnable() {
+    private final Runnable mSlideshowAction = new Runnable() {
         @Override
         public void run() {
             final int count = mSlideShowPagerAdapter.getCount();
@@ -69,55 +65,43 @@ public class SlideshowFragment extends BaseFragment {
 
     };
 
-    public static SlideshowFragment newInstance(String bucketId) {
-        final SlideshowFragment fragment = new SlideshowFragment();
-
-        final Bundle bundle = new Bundle();
-        bundle.putString(BUCKET_ID, bucketId);
-
-        fragment.setArguments(bundle);
-        return fragment;
+    public static void start(Activity activity, String bucketId) {
+        activity.startActivity(new Intent(activity, SlideshowActivity.class).putExtra(BUCKET_ID, bucketId));
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_slideshow);
 
-        if (getArguments() != null) {
-            mBucketId = getArguments().getString(BUCKET_ID);
-        }
-    }
+        mBucketId = getIntent().getStringExtra(BUCKET_ID);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        final View rootView = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
-        mSlideShowPagerAdapter = new SlideshowPageAdapter(getActivity(), mBucketId);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mSlideShowPagerAdapter = new SlideshowPageAdapter(this, mBucketId);
         mViewPager.setAdapter(mSlideShowPagerAdapter);
 
         toastPageNumber(1, mSlideShowPagerAdapter.getCount());
 
-        return rootView;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        mActivity = (MainActivity) context;
     }
 
     @Subscribe
     public void onEvent(Events.StopPlayEvent stopPlayEvent) {
-        popBackStack(getActivity());
+        finish();
+    }
+
+    @Override
+    protected void loadSlideshow(Events.PlayAlbumEvent playAlbumEvent) {
+        /**
+         * no call for super, just update this one
+         */
+        updateBucketId(playAlbumEvent.getBucketId());
     }
 
     public void updateBucketId(String bucketId) {
         if (!mBucketId.equals(bucketId)) {
             mSlideshowHandler.removeCallbacks(mSlideshowAction);
             mBucketId = bucketId;
-            mSlideShowPagerAdapter = new SlideshowPageAdapter(getActivity(), mBucketId);
+            mSlideShowPagerAdapter = new SlideshowPageAdapter(this, mBucketId);
             mViewPager.setAdapter(mSlideShowPagerAdapter);
             mSlideshowHandler.postDelayed(mSlideshowAction, SLIDESHOW_INTERVAL_MS);
             getKaaManager().updateStatus(PlayStatus.PLAYING, mBucketId);
@@ -128,11 +112,7 @@ public class SlideshowFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        if (mActivity.getSupportActionBar() != null) {
-            mActivity.getSupportActionBar().hide();
-        }
-
-        mActivity.setLightsOutMode(true);
+        setLightsOutMode(true);
         mSlideshowHandler.postDelayed(mSlideshowAction, SLIDESHOW_INTERVAL_MS);
         getKaaManager().updateStatus(PlayStatus.PLAYING, mBucketId);
     }
@@ -141,31 +121,29 @@ public class SlideshowFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
 
-        if (mActivity.getSupportActionBar() != null) {
-            mActivity.getSupportActionBar().show();
-        }
-
-        mActivity.setLightsOutMode(false);
+        setLightsOutMode(false);
         mSlideshowHandler.removeCallbacks(mSlideshowAction);
         getKaaManager().updateStatus(PlayStatus.STOPPED, null);
     }
 
-    @Override
-    public String getTitle() {
-        return "";
-    }
-
-    public String getFragmentTag() {
-        return SlideshowFragment.class.getSimpleName() + mBucketId;
-    }
-
-    @Override
-    protected boolean displayHomeAsUp() {
-        return false;
-    }
-
     private void toastPageNumber(int pageNum, int ofAll) {
-        Toast.makeText(getActivity(), String.valueOf(pageNum) + "/" + String.valueOf(ofAll),
+        Toast.makeText(this, String.valueOf(pageNum) + "/" + String.valueOf(ofAll),
                 Toast.LENGTH_SHORT).show();
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void setLightsOutMode(boolean enabled) {
+        final Window window = getWindow();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            if (enabled) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+                window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            } else {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+            }
+        } else {
+            window.getDecorView().setSystemUiVisibility(enabled ? View.SYSTEM_UI_FLAG_FULLSCREEN : 0);
+        }
     }
 }

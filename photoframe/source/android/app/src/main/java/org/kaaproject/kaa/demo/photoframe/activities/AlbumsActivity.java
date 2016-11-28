@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.photoframe.fragment;
 
+package org.kaaproject.kaa.demo.photoframe.activities;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.kaaproject.kaa.demo.photoframe.AlbumInfo;
@@ -38,11 +41,7 @@ import org.kaaproject.kaa.demo.photoframe.communication.Events;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The implementation of the {@link BaseFragment} class.
- * Represents a view with a list of remote device albums.
- */
-public class AlbumsFragment extends BaseFragment {
+public class AlbumsActivity extends BaseActivity {
 
     private static final String ENDPOINT_KEY = "endpointKey";
 
@@ -56,39 +55,37 @@ public class AlbumsFragment extends BaseFragment {
 
     private boolean mIsPlaying;
 
-    public static AlbumsFragment newInstance(String endpointKey) {
-        final AlbumsFragment fragment = new AlbumsFragment();
-
-        final Bundle bundle = new Bundle();
-        bundle.putString(ENDPOINT_KEY, endpointKey);
-
-        fragment.setArguments(bundle);
-        return fragment;
+    public static void start(Activity activity, String endpointKey) {
+        activity.startActivity(new Intent(activity, AlbumsActivity.class).putExtra(ENDPOINT_KEY, endpointKey));
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_list_with_empty);
 
-        if (getArguments() != null) {
-            mEndpointKey = getArguments().getString(ENDPOINT_KEY);
+        mEndpointKey = getIntent().getStringExtra(ENDPOINT_KEY);
+
+        final ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+        try {
+            actionBar.setTitle(getKaaManager().getRemoteDeviceModel(mEndpointKey));
+        } catch (IllegalStateException e) {
+            Toast.makeText(this, "Cannot open this device. App was closed.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
-        setHasOptionsMenu(true);
 
-        requestInfo();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_list_with_empty, container, false);
-
-        mNoDataTextView = (TextView) rootView.findViewById(R.id.no_data_text);
-        mAlbumsListView = (ListView) rootView.findViewById(R.id.list);
+        mNoDataTextView = (TextView) findViewById(R.id.no_data_text);
+        mAlbumsListView = (ListView) findViewById(R.id.list);
 
         mNoDataTextView.setText(getString(R.string.fragment_albums_no_data_text));
 
-        mAdapter = new AlbumsAdapter(getActivity(), mAlbums);
+        mAdapter = new AlbumsAdapter(this, mAlbums);
 
         mAlbumsListView.setAdapter(mAdapter);
 
@@ -99,7 +96,7 @@ public class AlbumsFragment extends BaseFragment {
                 getKaaManager().playRemoteDeviceAlbum(mEndpointKey, album.getBucketId());
 
                 mIsPlaying = true;
-                getActivity().invalidateOptionsMenu();
+                invalidateOptionsMenu();
 
                 updateAdapter();
             }
@@ -109,26 +106,32 @@ public class AlbumsFragment extends BaseFragment {
 
         mIsPlaying = getKaaManager().getRemoteDeviceStatus(mEndpointKey).getStatus() == PlayStatus.PLAYING;
 
-        return rootView;
+        requestInfo();
+
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
+        return true;
+    }
 
-        getActivity().getMenuInflater().inflate(R.menu.menu_photo_frame, menu);
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.item_stop).setVisible(mIsPlaying);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                popBackStack(getActivity());
+                finish();
                 break;
             case R.id.item_stop:
                 mIsPlaying = false;
-
                 getKaaManager().stopPlayRemoteDeviceAlbum(mEndpointKey);
                 item.setVisible(mIsPlaying);
                 break;
@@ -136,10 +139,13 @@ public class AlbumsFragment extends BaseFragment {
                 requestInfo();
                 break;
             case R.id.item_logout:
+                LoginActivity.logout(this);
                 getKaaManager().logout();
                 break;
+            default:
+                return false;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Subscribe
@@ -156,25 +162,6 @@ public class AlbumsFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public String getTitle() {
-        return getKaaManager().getRemoteDeviceModel(mEndpointKey);
-    }
-
-    @Override
-    public String getFragmentTag() {
-        return AlbumsFragment.class.getSimpleName() + mEndpointKey;
-    }
-
-    @Override
-    protected boolean displayHomeAsUp() {
-        return true;
-    }
-
-    private void requestInfo() {
-        getKaaManager().requestRemoteDeviceInfo(mEndpointKey);
-    }
-
     private void notifyView() {
         if (mAdapter.getCount() > 0) {
             mNoDataTextView.setVisibility(View.GONE);
@@ -186,7 +173,7 @@ public class AlbumsFragment extends BaseFragment {
     }
 
     private void updateAdapter() {
-        getActivity().runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
@@ -201,5 +188,9 @@ public class AlbumsFragment extends BaseFragment {
                 notifyView();
             }
         });
+    }
+
+    private void requestInfo() {
+        getKaaManager().requestRemoteDeviceInfo(mEndpointKey);
     }
 }

@@ -25,38 +25,16 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/toolbar_color"
-        android:padding="8dp"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content"
+        app:theme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/reload_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_action_refresh1"
-                android:contentDescription="@string/reload_button"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/reload_button"
-                android:text="@string/app_name"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.Toolbar>
+    <TextView
+        android:layout_margin="16dp"
+        android:id="@+id/endpoints_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:text="Endpoints:"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -64,9 +42,9 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/endpoints_text_view"
         android:animateLayoutChanges="false"
-        android:padding="8dp"
+        android:padding="16dp"
         android:scrollbars="vertical"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -77,8 +55,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_24dp"/>
 
     <TextView

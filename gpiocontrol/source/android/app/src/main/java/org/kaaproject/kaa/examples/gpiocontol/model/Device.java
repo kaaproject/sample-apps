@@ -18,28 +18,37 @@ package org.kaaproject.kaa.examples.gpiocontol.model;
 
 import org.kaaproject.kaa.examples.gpiocontrol.GpioStatus;
 
-import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-public class Device implements Serializable {
+public class Device {
 
-    private String model;
-    private String deviceName;
+    private String mModel;
+    private String mDeviceName;
 
-    /*
-        Because GpioStatus isn't serializable we need HashMap to persist it
-     */
-    private Map<Integer, Boolean> gpioStatuses;
-    private String kaaEndpointId;
+    private List<GpioStatus> mGpioStatuses;
+    private String mKaaEndpointId;
 
     public Device(String model, String deviceName, List<GpioStatus> gpioStatusList, String kaaEndpointId) {
-        this.model = model;
-        this.deviceName = deviceName;
-        setGpioStatuses(gpioStatusList);
-        this.kaaEndpointId = kaaEndpointId;
+        mModel = model;
+        mDeviceName = deviceName;
+        mGpioStatuses = gpioStatusList;
+        mKaaEndpointId = kaaEndpointId;
+    }
+
+    public String getModel() {
+        return mModel;
+    }
+
+    public String getDeviceName() {
+        return mDeviceName;
+    }
+
+    public List<GpioStatus> getGpioStatuses() {
+        return mGpioStatuses;
+    }
+
+    public String getKaaEndpointId() {
+        return mKaaEndpointId;
     }
 
     @Override
@@ -49,50 +58,19 @@ public class Device implements Serializable {
 
         Device device = (Device) o;
 
-        if (model != null ? !model.equals(device.model) : device.model != null)
-            return false;
-        if (deviceName != null ? !deviceName.equals(device.deviceName) : device.deviceName != null)
-            return false;
-        if (gpioStatuses != null ? !gpioStatuses.equals(device.gpioStatuses) : device.gpioStatuses != null)
-            return false;
-        return !(kaaEndpointId != null ? !kaaEndpointId.equals(device.kaaEndpointId) : device.kaaEndpointId != null);
-    }
-
-    private void setGpioStatuses(List<GpioStatus> gpioStatusList) {
-        gpioStatuses = new LinkedHashMap<>();
-        for (GpioStatus gpioStatus : gpioStatusList) {
-            this.gpioStatuses.put(gpioStatus.getId(), gpioStatus.getStatus());
-        }
+        return mModel != null ? mModel.equals(device.mModel) : device.mModel == null &&
+                (mDeviceName != null ?
+                        mDeviceName.equals(device.mDeviceName) : device.mDeviceName == null &&
+                        (mKaaEndpointId != null ?
+                                mKaaEndpointId.equals(device.mKaaEndpointId) : device.mKaaEndpointId == null));
     }
 
     @Override
     public int hashCode() {
-        int result = model != null ? model.hashCode() : 0;
-        result = 31 * result + (deviceName != null ? deviceName.hashCode() : 0);
-        result = 31 * result + (gpioStatuses != null ? gpioStatuses.hashCode() : 0);
-        result = 31 * result + (kaaEndpointId != null ? kaaEndpointId.hashCode() : 0);
+        int result = mModel != null ? mModel.hashCode() : 0;
+        result = 31 * result + (mDeviceName != null ? mDeviceName.hashCode() : 0);
+        result = 31 * result + (mKaaEndpointId != null ? mKaaEndpointId.hashCode() : 0);
         return result;
     }
-
-    public String getModel() {
-        return model;
-    }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public List<GpioStatus> getGpioStatuses() {
-        List<GpioStatus> gpioStatusList = new LinkedList<>();
-        for (Map.Entry<Integer, Boolean> gpio : gpioStatuses.entrySet()) {
-            gpioStatusList.add(new GpioStatus(gpio.getKey(), gpio.getValue()));
-        }
-        return gpioStatusList;
-    }
-
-    public String getKaaEndpointId() {
-        return kaaEndpointId;
-    }
-
 }
 

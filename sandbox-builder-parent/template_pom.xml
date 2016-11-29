@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.kaaproject.kaa.examples</groupId>
+    <artifactId>sandbox-builder-parent</artifactId>
+         
+    <packaging>pom</packaging>
+
+    <version>2.1.0-SNAPSHOT</version>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>repository</id>
+            <distributionManagement>
+                <repository>
+                    <id>kaa.release</id>
+                    <url>http://repository.kaaproject.org/repository/internal/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>kaa.snapshots</id>
+                    <url>http://repository.kaaproject.org/repository/snapshots/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
+    <properties>
+        <base.path>${project.build.directory}/sandbox</base.path>
+        <kaa-sample-apps.version>2.1.0-SNAPSHOT</kaa-sample-apps.version>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>kaaproject.dummy</groupId>
+                                    <artifactId>dummy</artifactId>
+                                    <version>0</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${distro.path}</outputDirectory>
+                                    <destFileName>dummy</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

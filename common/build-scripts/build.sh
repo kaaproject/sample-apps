@@ -43,7 +43,7 @@ fi
 build() {
     mkdir -p "$PROJECT_HOME/build"
     cd "$PROJECT_HOME/build"
-    cmake ..
+    cmake -DBUILD_TESTING=OFF ..
     make
 }
 

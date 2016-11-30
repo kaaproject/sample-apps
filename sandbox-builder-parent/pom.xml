@@ -59,7 +59,7 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>kaaproject.dummy</groupId>
+                                    <groupId>org.kaaproject.kaa.examples</groupId>
                                     <artifactId>dummy</artifactId>
                                     <version>0</version>
                                     <overWrite>true</overWrite>

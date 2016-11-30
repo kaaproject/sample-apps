@@ -13,7 +13,8 @@ ln -s /usr/local/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/mvn
 echo "#!/bin/bash" > ${MAVEN_EXECUTOR}
 echo "set -ev" >> ${MAVEN_EXECUTOR}
 echo "export M2_HOME=/usr/local/apache-maven-${MAVEN_VERSION}" >> ${MAVEN_EXECUTOR}
-echo "mvn" -Dmaven.multiModuleProjectDirectory="/usr/local/apache-maven-${MAVEN_VERSION}" "\"\$@\"" >> ${MAVEN_EXECUTOR}
+echo "export MAVEN_BASEDIR=/usr/local/apache-maven-${MAVEN_VERSION}" >> ${MAVEN_EXECUTOR}
+echo "mvn" "\"\$@\"" >> ${MAVEN_EXECUTOR}
 
 chmod +x ${MAVEN_EXECUTOR}
 

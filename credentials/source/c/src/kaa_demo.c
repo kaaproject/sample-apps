@@ -69,14 +69,14 @@ int main(/*int argc, char *argv[]*/)
             auth_failure_handler, kaa_client);
 
     /**
-     * Obtain and display the Endpoint key hash.
+     * Obtain and display the endpoint ID (represented by the EP key hash).
      */
     const uint8_t *endpoint_key_hash = NULL;
     size_t endpoint_key_hash_length = 0;
 
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
 
-    printf("Endpoint Key Hash: %.*s\n", (int)endpoint_key_hash_length,
+    printf("Endpoint ID: %.*s\n", (int)endpoint_key_hash_length,
                 endpoint_key_hash);
 
     /**

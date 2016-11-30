@@ -58,7 +58,7 @@ public class VerifiersDemo {
 
         /*
          * Create a Kaa client and add a listener which displays the Kaa client
-         * endpoint key hash, when the Kaa client is started.
+         * endpoint ID (represented by EP key hash), when the Kaa client is started.
          */
         kaaClient = Kaa.newClient(desktopKaaPlatformContext, new SimpleKaaClientStateListener() {
             @Override
@@ -92,7 +92,7 @@ public class VerifiersDemo {
         kaaClient.start();
         sleepForSeconds(5);
 
-        LOG.info("Endpoint ID (key hash):" + kaaClient.getEndpointKeyHash());
+        LOG.info("Endpoint ID:" + kaaClient.getEndpointKeyHash());
         LOG.info("Endpoint access token:" + kaaClient.getEndpointAccessToken());
         LOG.info("Copy this token to mobile application in order to do assisted attach of this endpoint to user (current mobile application owner).");
 

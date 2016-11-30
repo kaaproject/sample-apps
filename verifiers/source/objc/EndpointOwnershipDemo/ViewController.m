@@ -234,7 +234,7 @@ typedef NS_ENUM(int, AuthorizationLabel) {
     dispatch_async(dispatch_get_main_queue(), ^{
         switch (result) {
             case SYNC_RESPONSE_RESULT_TYPE_SUCCESS:
-                self.chatTextView.text = [NSString stringWithFormat:@"Endpoint with key hash %@ joined chat\n%@", endpointKeyHash.keyHash, self.chatTextView.text];
+                self.chatTextView.text = [NSString stringWithFormat:@"Endpoint ID %@ joined chat\n%@", endpointKeyHash.keyHash, self.chatTextView.text];
                 break;
                 
             case SYNC_RESPONSE_RESULT_TYPE_FAILURE:

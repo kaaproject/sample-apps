@@ -49,9 +49,9 @@ int main()
     kaaClient->setConfigurationStorage(storage);
 
     /*
-     * Display Endpoint Key Hash
+     * Display endpoint ID (represented by the EP key hash)
      */
-    std::cout << "Endpoint Key Hash: " << kaaClient->getEndpointKeyHash() << std::endl;
+    std::cout << "Endpoint ID: " << kaaClient->getEndpointKeyHash() << std::endl;
 
     /*
      * Set configuration update receiver.

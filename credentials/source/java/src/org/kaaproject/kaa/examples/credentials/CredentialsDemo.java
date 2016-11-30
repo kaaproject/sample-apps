@@ -50,7 +50,7 @@ public class CredentialsDemo {
         try {
         /*
          * Create a Kaa client and add a listener which displays the Kaa client
-         * endpoint key hash, when the Kaa client is started.
+         * endpoint ID (represented by the EP key hash), when the Kaa client is started.
          */
             kaaClient = Kaa.newClient(desktopKaaPlatformContext, new SimpleKaaClientStateListener() {
                 @Override

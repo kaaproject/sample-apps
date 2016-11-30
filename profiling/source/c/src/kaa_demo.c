@@ -47,7 +47,7 @@ kaa_error_t kaa_demo_configuration_receiver(void *context,
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
 
     printf("- - -\n");
-    printf("Endpoint Key Hash %.*s\n", (int)endpoint_key_hash_length,
+    printf("Endpoint ID %.*s\n", (int)endpoint_key_hash_length,
                 endpoint_key_hash);
 
     printf("Configuration was succesfully edited:\n");
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
 
     printf("- - -\n");
-    printf("Endpoint Key Hash %.*s\n", (int)endpoint_key_hash_length,
+    printf("Endpoint ID %.*s\n", (int)endpoint_key_hash_length,
                 endpoint_key_hash);
 
 

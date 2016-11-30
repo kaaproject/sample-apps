@@ -631,7 +631,7 @@ To try the endpoint attachment feature:
 		
 		<pre>
 			16:55:40,259 [pool-2-thread-1] INFO  o.k.k.e.verifiers.VerifiersDemo - --= Kaa client started =--
-			16:55:45,258 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint ID (key hash):yZZjLs1Zkh9rLM97aA+oWROJuxc=
+			16:55:45,258 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint ID:yZZjLs1Zkh9rLM97aA+oWROJuxc=
 			16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint access token:96c9b5ec-4786-4286-a953-ed50e6c75df0
 			16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Copy this token to mobile application in to perform assisted attachment of this endpoint to user (current application owner).
 		</pre>

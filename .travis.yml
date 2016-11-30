@@ -21,8 +21,12 @@ jdk:
 
 before_install:
   - sudo apt-get install python3 python3-lxml
+  - sudo apt-get purge -y maven
+  - sudo ./.travis.install-dependencies.sh
   - python3 scripts/sandbox-builder-pom-gen/script.py . ./sandbox-builder-parent/template_pom.xml ./sandbox-builder-parent/pom.xml
 
+install: ./.travis.maven.sh install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
 script:
-  - mvn test
-  - mvn apache-rat:check
+  - ./.travis.maven.sh test -B -V
+  - ./.travis.maven.sh apache-rat:check -B -V

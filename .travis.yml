@@ -28,5 +28,5 @@ before_install:
 install: ./.travis.maven.sh install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - ./.travis.maven.sh test
-  - ./.travis.maven.sh apache-rat:check
+  - ./.travis.maven.sh test -B -V
+  - ./.travis.maven.sh apache-rat:check -B -V

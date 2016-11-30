@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ev
+set -e
 
 MAVEN_VERSION=3.3.9
 MAVEN_EXECUTOR="./.travis.maven.sh"
@@ -13,7 +13,7 @@ ln -s /usr/local/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/mvn
 echo "#!/bin/bash" > ${MAVEN_EXECUTOR}
 echo "set -ev" >> ${MAVEN_EXECUTOR}
 echo "export M2_HOME=/usr/local/apache-maven-${MAVEN_VERSION}" >> ${MAVEN_EXECUTOR}
-echo "mvn" "\$@" >> ${MAVEN_EXECUTOR}
+echo "mvn" "\"\$@\"" >> ${MAVEN_EXECUTOR}
 
 chmod +x ${MAVEN_EXECUTOR}
 

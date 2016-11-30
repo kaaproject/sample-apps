@@ -21,6 +21,8 @@ jdk:
 
 before_install:
   - sudo apt-get install python3 python3-lxml
+  - sudo apt-get purge -y maven
+  - sudo .travis.install-dependencies.sh
   - python3 scripts/sandbox-builder-pom-gen/script.py . ./sandbox-builder-parent/template_pom.xml ./sandbox-builder-parent/pom.xml
 
 script:

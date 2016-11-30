@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+#!/bin/bash
+set -ev
 
 MAVEN_VERSION=3.3.9
 

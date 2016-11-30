@@ -103,13 +103,13 @@ datacollection:
   name: "Data collection demo"
   language:
     c:
-      src: "datacollection/source/c"
+      src: "datacollection/datacollection-demo/source/c"
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/build.sh", "."]]
           buildcmd: "bash -c \"./build.sh build\""
     cpp:
-      src: "datacollection/source/cpp"
+      src: "datacollection/datacollection-demo/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/build.sh", "."]]

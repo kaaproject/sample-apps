@@ -14,7 +14,7 @@ echo "#!/bin/bash" > ${MAVEN_EXECUTOR}
 echo "set -ev" >> ${MAVEN_EXECUTOR}
 echo "export M2_HOME=/usr/local/apache-maven-${MAVEN_VERSION}" >> ${MAVEN_EXECUTOR}
 echo "export MAVEN_BASEDIR=/usr/local/apache-maven-${MAVEN_VERSION}" >> ${MAVEN_EXECUTOR}
-echo "mvn" "\"\$@\"" >> ${MAVEN_EXECUTOR}
+echo "/usr/bin/mvn" "\"\$@\"" >> ${MAVEN_EXECUTOR}
 
 chmod +x ${MAVEN_EXECUTOR}
 

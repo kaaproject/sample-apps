@@ -46,7 +46,7 @@
     <string name="twitter_error">Error in Twitter: %s</string>
 
     <string name="login_activity_error">Error: %s</string>
-    <string name="login_activity_attach_access_token">Attach access token: %1$s, endpoint key hash: %2$s</string>
+    <string name="login_activity_attach_access_token">Attach access token: %1$s, endpoint ID: %2$s</string>
     <string name="login_activity_event_text">[%1$s]: %2$s, %3$s\n</string>
     <string name="login_activity_enter_access_token_hint">Enter access token</string>
     <string name="login_activity_attach_access_token_button">Send</string>

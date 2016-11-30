@@ -315,7 +315,7 @@ int main(int argc, char *argv[])
     kaaClient->getEventFamilyFactory().getChat().addEventFamilyListener(chat);
     kaaClient->attachUser(KAA_USER_ID, KAA_USER_ACCESS_TOKEN, std::make_shared<UserAttachCallback>(*kaaClient));
 
-    std::cout << "Endpoint key hash: " << kaaClient->getEndpointKeyHash() << '\n';
+    std::cout << "Endpoint ID: " << kaaClient->getEndpointKeyHash() << '\n';
 
 
     ChatMenu menu(chat);

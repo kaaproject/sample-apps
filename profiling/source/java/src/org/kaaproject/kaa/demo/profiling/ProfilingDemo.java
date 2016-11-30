@@ -150,7 +150,7 @@ public class ProfilingDemo {
         if (kaaClient != null) {
 
             LOG.info("Endpoint #{} data:", index);
-            LOG.info("Endpoint ID (Endpoint Key Hash): {}", kaaClient.getEndpointKeyHash());
+            LOG.info("Endpoint ID (Endpoint ID): {}", kaaClient.getEndpointKeyHash());
 
             PagerClientProfile profile = profiles.get(index);
             LOG.info("Client-side endpoint profile (audio/video/vibro support): {} - {} - {}",

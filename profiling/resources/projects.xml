@@ -129,7 +129,7 @@ To install the sample application using the source code:
 	<pre>
 		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Profiling demo started
 		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint #2 data:
-		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint ID (Endpoint Key Hash): UIM/Vi5P5fRz37EdugNsSIA9kYM=
+		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint ID: UIM/Vi5P5fRz37EdugNsSIA9kYM=
 		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Client-side endpoint profile (audio/video/vibro support): true - true - true
 		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Configuration (is audio/video/vibro subscription active): false - false - true
 	</pre>
@@ -1134,7 +1134,7 @@ To do this:
 						
 		</li>
 		<li>
-			See your console output to see which <b>Key hash</b> corresponds to the endpoint #0 and select it from the list.
+			See your console output to see which <b>endpoint ID</b> corresponds to the endpoint #0 and select it from the list.
 			The <b>Endpoint profile details</b> page will open.
 						
 			<br />

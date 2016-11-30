@@ -24,17 +24,13 @@ static bool gpio_led_status[NUM_GPIO_LEDS];
 
 void target_gpio_led_init(void)
 {
-    int n;
-    
-    for (n = 0; n < NUM_GPIO_LEDS; n++) {
+    for (int n = 0; n < NUM_GPIO_LEDS; n++) {
         gpio_led_status[n] = false;
     }
 }
 
 void target_gpio_led_toggle(uint32_t id, bool status)
 {
-    int n;
-    
     if (id >= NUM_GPIO_LEDS) {
         return;
     }
@@ -43,7 +39,7 @@ void target_gpio_led_toggle(uint32_t id, bool status)
     
     demo_printf("GPIO LED status: ");
     
-    for (n = 0; n < NUM_GPIO_LEDS; n++) {
+    for (int n = 0; n < NUM_GPIO_LEDS; n++) {
         demo_printf("%d", (int)gpio_led_status[n]);
     }
     

@@ -76,7 +76,7 @@ select_arch() {
         ;;
     posix)
         KAA_TARGET=$target
-        KAA_PRODUCE_BINARY=true
+        KAA_PRODUCE_BINARY=false
         KAA_REQUIRE_CREDENTIALS=false
         ;;
     *)

@@ -25,9 +25,8 @@ before_install:
   - sudo ./.travis.install-dependencies.sh
   - python3 scripts/sandbox-builder-pom-gen/script.py . ./sandbox-builder-parent/template_pom.xml ./sandbox-builder-parent/pom.xml
 
-install:
+install: ./.travis.maven.sh install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - ./.travis.maven.sh install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - ./.travis.maven.sh test
   - ./.travis.maven.sh apache-rat:check

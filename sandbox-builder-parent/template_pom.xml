@@ -50,6 +50,7 @@
 
     <properties>
         <base.path>${project.build.directory}/sandbox</base.path>
+        <rat.version>0.10</rat.version>
         <kaa-sample-apps.version>2.1.0-SNAPSHOT</kaa-sample-apps.version>
     </properties>
 

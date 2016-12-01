@@ -250,6 +250,9 @@
                         <exclude>gh-pages-stub/_includes/test.md</exclude>
                         <exclude>gh-pages-stub/_data/permanent_config.yml</exclude>
                         <exclude>gh-pages-stub/atom.xml</exclude>
+                        <exclude>.travis.install-dependencies.sh</exclude>
+                        <exclude>.travis.maven.sh</exclude>
+                        <exclude>scripts/sandbox-builder-pom-gen/script.py</exclude>
                         <exclude>**/LaunchScreen.storyboard</exclude>
                         <exclude>**/Main.storyboard</exclude>
                         <exclude>**/*.json</exclude>

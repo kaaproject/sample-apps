@@ -186,3 +186,10 @@ int getchar(void)
     return uart_getchar();
 }
 
+
+int target_wifi_reconnect_if_disconected(void)
+{
+    return 0;
+}
+
+

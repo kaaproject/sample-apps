@@ -20,6 +20,7 @@ package org.kaaproject.kaa.examples.datacollection;
 import org.apache.commons.lang3.tuple.Pair;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
 import org.kaaproject.kaa.common.dto.ConfigurationSchemaDto;
+import org.kaaproject.kaa.common.dto.ServerProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
 import org.kaaproject.kaa.common.dto.logs.LogAppenderDto;
 import org.kaaproject.kaa.common.dto.logs.LogHeaderStructureDto;
@@ -32,6 +33,7 @@ import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -82,6 +84,19 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
         LOG.info("Configuration schema was created.");
 
+
+        LOG.info("Data collection demo: Creating server profile schema for telemetry monitor...");
+        CTLSchemaDto serverProfileCtlSchema = saveCTLSchemaWithAppToken(client, "telemetry_monitor_server_profile.avsc", dataCollectionApplication);
+        ServerProfileSchemaDto serverProfileSchemaDto = new ServerProfileSchemaDto();
+        serverProfileSchemaDto.setApplicationId(dataCollectionApplication.getId());
+        serverProfileSchemaDto.setName("TelemetryMonitorServerProfile");
+        serverProfileSchemaDto.setVersion(serverProfileCtlSchema.getVersion());
+        serverProfileSchemaDto.setCtlSchemaId(serverProfileCtlSchema.getId());
+        serverProfileSchemaDto.setDescription("Telemetry Monitor Server Profile");
+        serverProfileSchemaDto = client.saveServerProfileSchema(serverProfileSchemaDto);
+        LOG.info("Telemetry Monitor Server Profile schema was created: [{}]", serverProfileSchemaDto);
+
+
         LOG.info("Data collection demo: Creating log schema...");
         LogSchemaDto logSchemaDto = new LogSchemaDto();
         logSchemaDto.setApplicationId(dataCollectionApplication.getId());
@@ -95,7 +110,15 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
         sdkProfileDto.setLogSchemaVersion(logSchemaDto.getVersion());
         LOG.info("Log schema was created.");
 
-        LOG.info("Data collection demo: Creating Log appender...");
+        LOG.info("Data collection demo: Creating Log appenders...");
+        LOG.info("Creating MongoDb Log Appender");
+        client.editLogAppenderDto(createMongoDbLogAppender(dataCollectionApplication));
+        LOG.info("Creating Telemetry Monitor Appender");
+        client.editLogAppenderDto(createTelemetryMonitorAppender(dataCollectionApplication));
+        LOG.info("Finished loading 'Data Collection Demo Application' data.");
+    }
+
+    private LogAppenderDto createMongoDbLogAppender(ApplicationDto dataCollectionApplication) throws IOException {
         LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();
         dataCollectionLogAppender.setName("Data collection log appender");
         dataCollectionLogAppender.setDescription("Log appender used to deliver log records from data collection application to local mongo db instance");
@@ -110,9 +133,24 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
         dataCollectionLogAppender.setPluginTypeName("MongoDB");
         dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.mongo.appender.MongoDbLogAppender");
         dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("mongo_appender.json")));
-        client.editLogAppenderDto(dataCollectionLogAppender);
+        return dataCollectionLogAppender;
+    }
 
-        LOG.info("Finished loading 'Data Collection Demo Application' data.");
+    private  LogAppenderDto createTelemetryMonitorAppender(ApplicationDto dataCollectionApplication) throws IOException {
+        LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();
+        dataCollectionLogAppender.setName("Telemetry Monitor");
+        dataCollectionLogAppender.setDescription("Log appender for detecting, processing and saving specific threshold values to the database and save the statistics to the server profile.");
+        dataCollectionLogAppender.setApplicationId(dataCollectionApplication.getId());
+        dataCollectionLogAppender.setApplicationToken(dataCollectionApplication.getApplicationToken());
+        dataCollectionLogAppender.setTenantId(dataCollectionApplication.getTenantId());
+        dataCollectionLogAppender.setMinLogSchemaVersion(1);
+        dataCollectionLogAppender.setMaxLogSchemaVersion(Integer.MAX_VALUE);
+        dataCollectionLogAppender.setConfirmDelivery(true);
+        dataCollectionLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.TIMESTAMP, LogHeaderStructureDto.TOKEN));
+        dataCollectionLogAppender.setPluginTypeName("TelemetryMonitor");
+        dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.telemetry.appender.TelemetryMonitor");
+        dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("telemetry_monitor_appender.json")));
+        return dataCollectionLogAppender;
     }
 
 

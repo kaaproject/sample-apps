@@ -1,0 +1,21 @@
+{
+  "type" : "record",
+  "name" : "TelemetryMonitorServerProfile",
+  "namespace" : "org.kaaproject.kaa.schema.sample.profile",
+  "fields" : [ {
+    "name" : "failureCounter",
+    "type" : "int",
+    "displayName" : "Failed values count"
+  }, {
+    "name" : "timeInFailure",
+    "type" : "long",
+    "displayName" : "Tatal failure duration (ms)"
+  }, {
+    "name" : "lastFailure",
+    "type" : "long",
+    "displayName" : "Last failure (Unix, ms)"
+  } ],
+  "version" : 1,
+  "dependencies" : [ ],
+  "displayName" : "Server Profile for Telemetry Monitor"
+}

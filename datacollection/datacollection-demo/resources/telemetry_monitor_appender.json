@@ -1,0 +1,20 @@
+{
+  "cassandraServers": [
+    {
+      "host": "localhost",
+      "port": 9042
+    }
+  ],
+  "cassandraCredential": null,
+  "keySpace": "kaa",
+  "monitoringValuesTableName": "logs_monitoring_values",
+  "threshold": 20,
+  "minLogSchemaVersion": 1,
+  "maxLogSchemaVersion": 2147483647,
+  "pluginTypeName": "TelemetryMonitor",
+  "pluginClassName": "org.kaaproject.kaa.server.appenders.telemetry.appender.TelemetryMonitor",
+  "headerStructure": [
+    "Timestamp",
+    "Applicationtoken"
+  ]
+}

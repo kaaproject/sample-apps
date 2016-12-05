@@ -654,7 +654,7 @@ To do this:
 		
 	</li>
 	<li>
-		Select the <b>Endpoint client profile schema</b> by clicking on the corresponding row.
+		Select the <b>client-side profile schema of the endpoint</b> by clicking on the corresponding row.
 		The <b>Client-side EP profile schema details</b> page will open.
 		
 		<br />
@@ -662,14 +662,14 @@ To do this:
 		<br />
 		<br />
 		
-		The <b>Endpoint client profile schema</b> is included in the Sandbox for demonstration purpose.
+		The <b>client-side profile schema of the endpoint</b> is included in the Sandbox for demonstration purpose.
 		You can create your own client-side EP profile schemas.
 		To do this, use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#!/Profiling/saveProfileSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-client-side-ep-profile-schema" target="_blank">these instructions</a>for Administration UI.
 	</li>
 </ol>
 
 <p>
-	The same data structure is used for the <b>endpoint server profile schema</b>.
+	The same data structure is used for the <b>server-side profile schema of the endpoint</b>.
 	The following server-side EP profile schema is used for this sample application.
 
 	<pre>
@@ -729,7 +729,7 @@ The following configuration schema is used for this sample application.
 </pre>
 
 <p>
-	To view and edit this schema in the Administration UI, open the <b>Configuration</b> page under the <b>Schemas</b> section of your application and select the <b>Configuration schema</b>.
+	To view and edit this schema in the Administration UI, open the <b>Configuration</b> page under the <b>Schemas</b> section of your application and select the <b>configuration schema</b>.
 </p>
 
 <p>

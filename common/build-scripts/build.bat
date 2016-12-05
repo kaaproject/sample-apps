@@ -50,7 +50,7 @@ if /i %1 == clean goto clean
 
 goto help
 
-:build_app
+:build
     IF NOT EXIST %KAA_C_LIB_HEADER_PATH%\NUL (
        IF NOT EXIST %KAA_CPP_LIB_HEADER_PATH%\NUL (
         for /R %PROJECT_HOME% %%f in (kaa-c*.tar.gz) do (

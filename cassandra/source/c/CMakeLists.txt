@@ -29,6 +29,10 @@ set(CMAKE_C_FLAGS "${CMAKE_CFLAGS} -std=c99 -g -Wall -Wextra")
 
 set(SAMPLE_SOURCE_FILES src/kaa_demo.c src/dht11/dht11.c)
 
+set(WITH_EXTENSION_EVENT OFF)
+set(WITH_EXTENSION_NOTIFICATION OFF)
+set(WITH_EXTENSION_CONFIGURATION OFF)
+
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}
                  ${CMAKE_CURRENT_BINARY_DIR}/${KAA_SDK_DIR}/build)
 

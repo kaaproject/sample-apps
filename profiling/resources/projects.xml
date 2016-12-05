@@ -371,7 +371,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa C SDK</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -379,23 +379,33 @@ To launch this sample application on the Kaa C SDK:
 		Click <b>Ok</b> and download the .tar.gz file.
 	</li>
 	<li>
-		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-			<pre>
-				./build.sh deploy
-			</pre>
+		Unpack the downloaded archive.
 	</li>
 	<li>
-		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">supported platforms</a> and press Enter.
-		The C SDK and the demo application are now built and the demo application is launched.
+		Unpack the SDK archive.
+        <pre>
+            tar -zxf libs/kaa/kaa* -C libs/kaa
+        </pre>
 	</li>
+	<li>
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+        <pre>
+            mkdir -p build \
+            && cd build \
+            && cmake .. \
+            && make
+        </pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+    </li>
+    <li>
+        Run your sample application.
+        <pre>
+            ./build/demo_client
+        </pre>
+    </li>
 </ol>
-
-Once you built the application, you can start it at any time using the following command.
-
-<pre>
-	./build.sh run
-</pre>
 
 <h1>Troubleshooting</h1>
 
@@ -508,50 +518,50 @@ To launch this sample application on the Kaa C++ SDK:
 	<li>
 		Unpack the downloaded archive.
 	</li>
+	<li>
+		Unpack the SDK archive.
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+	</li>
+	<li>
+		Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+		<p>
+			<b>Windows</b>
+<pre>
+mkdir build
+cd build
+cmake -G "Nmake Makefiles" ..
+nmake
+</pre>
+		</p>
+		<p>
+			<b>Linux, OS X (macOS)</b>
+<pre>
+mkdir build \
+&& cd build
+&& cmake .. \
+&& make
+</pre>
+            By default, the project is generated for POSIX platform.
+            To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+		</p>
+	</li>
     <li>
-        Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
-    </li>
-    <li>
-        Run the following commands:
-        <p>
+        Run your sample application.
+		<p>
             <b>Windows</b>
-            <pre>
-                mkdir build
-                cd build
-                cmake -G "Nmake Makefiles" ..
-                nmake
-            </pre>
-        </p>
-        <p>
-            <b>Linux, OS X (macOS)</b>
-            <pre>
-                mkdir build \
-                && cd build \
-                && cmake .. \
-                && make
-            </pre>
-            By default the project is generated for Posix target.
-            To generate and build project for other supported targets,
-            refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
-        </p>
-    </li>
-    <li>
-        To run demo, execute:
-        <p>
-            <b>Windows</b>
-            <pre>
-                build/demo_client.exe
-            </pre>
-        </p>
-        <p>
-            <b>Linux</b>
-            <pre>
-                ./build/demo_client
-            </pre>
-        </p>
+<pre>
+build/demo_client.exe
+</pre>
+		</p>
+		<p>
+			<b>Linux</b>
+<pre>
+./build/demo_client
+</pre>
+		</p>
     </li>
 </ol>
 	

@@ -58,17 +58,17 @@ To install this sample application using the binary files:
 			<b>Windows</b>
 			<br />
 			Connect the Android device to your Windows machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 		<p>
 			<b>Linux</b>
 			<br />
 			Connect the Android device to your Linux machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				./adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+./adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 	</li>
 </ol>
@@ -88,10 +88,10 @@ To install this sample application using the source code:
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		Note that <b>%PATH_TO_ANDROID_SDK%</b> should be replaced by the Android SDK installation path.
 
-		<pre>
-			export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
-			./gradlew assembleDebug
-		</pre>
+<pre>
+export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
+./gradlew assembleDebug
+</pre>
 
 		The .apk file will be created in the app/build/outputs/apk/ directory.
 	</li>
@@ -168,9 +168,9 @@ To install the sample application using the binary files:
 	<li>
 		Run the following command from the directory containing the downloaded .jar archive.
 		
-		<pre>
-			$ java -jar VerifiersDemo.jar
-		</pre>
+<pre>
+$ java -jar VerifiersDemo.jar
+</pre>
 		
 		The sample application console will display the startup message.
 	</li>
@@ -193,15 +193,15 @@ To install the sample application using the source code:
 		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
 		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
-		<pre>
-			$ ant debug
-		</pre>
+<pre>
+$ ant debug
+</pre>
 		
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
-		<pre>
-			$ java -jar build/jar/VerifiersDemo.jar
-		</pre>
+<pre>
+$ java -jar build/jar/VerifiersDemo.jar
+</pre>
 	</li>
 </ol>
 
@@ -273,9 +273,9 @@ To launch this sample application on the Kaa Objective-C SDK:
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 
-		<pre>
-			sh build.sh
-		</pre>
+<pre>
+sh build.sh
+</pre>
 
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
         <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
@@ -311,7 +311,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <h2>Running the build script returns an error message</h2>
 
 <pre>
-	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
+[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
 <p>
@@ -324,9 +324,9 @@ Try the following:
 	<li>
 		Run the following command from the ./libs/kaa-ep-sdk/ folder.
 
-		<pre>
-			vim Podfile
-		</pre>
+<pre>
+vim Podfile
+</pre>
 
 	</li>
 	<li>
@@ -335,9 +335,9 @@ Try the following:
 	<li>
 		Run this command.
 
-		<pre>
-			pod install
-		</pre>
+<pre>
+pod install
+</pre>
 
 	</li>
 </ol>
@@ -387,9 +387,9 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-			<pre>
-				./build.sh deploy
-			</pre>
+<pre>
+./build.sh deploy
+</pre>
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
@@ -401,7 +401,7 @@ To launch this sample application on the Kaa C SDK:
 Once you built the application, you can start it at any time using the following command.
 
 <pre>
-	./build.sh run
+./build.sh run
 </pre>
 
 When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.
@@ -413,7 +413,7 @@ If the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/K
 <h2>Running the build.sh script returns an error message</h2>
 
 <pre>
-	libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.
+libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.
 </pre>
 
 <p>
@@ -435,8 +435,8 @@ Try the following:
 
 <<h2>CMake returns an error message</h2>
 
-<<pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+<pre>
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -483,9 +483,9 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-			<pre>
-				./build.sh deploy
-			</pre>
+<pre>
+./build.sh deploy
+</pre>
 	</li>
 	<li>
 		The program will ask you to enter the target platform for your build.
@@ -497,7 +497,7 @@ To launch this sample application on the Kaa C++ SDK:
 Once you built the application, you can start it at any time using the following command.
 
 <pre>
-	./build.sh run
+./build.sh run
 </pre>
 
 When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.
@@ -509,7 +509,7 @@ If the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/K
 <h2>Running the build.sh script returns an error message</h2>
 
 <pre>
-	libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.
+libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.
 </pre>
 
 <p>
@@ -532,7 +532,7 @@ Try the following:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -583,68 +583,68 @@ Try the following:
 The following <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/#event-class-families">event family</a> schema is used for messaging.
 
 <pre>
-	[  
-	  {  
-		"type":"record",  
-		"name":"MessageEvent",  
-		"namespace":"org.kaaproject.kaa.demo.verifiersdemo",
-		"fields":[
+[
+  {
+	"type":"record",
+	"name":"MessageEvent",
+	"namespace":"org.kaaproject.kaa.demo.verifiersdemo",
+	"fields":[
+	  {
+		"name":"message",
+		"type":[
 		  {
-			"name":"message",
-			"type":[
-			  {
-				"type":"string",
-				"avro.java.string":"String"
-			  },
-			  "null"
-			]
-		  }
-		],
-		"classType":"event"
+			"type":"string",
+			"avro.java.string":"String"
+		  },
+		  "null"
+		]
 	  }
-	]
+	],
+	"classType":"event"
+  }
+]
 </pre>
 
 Below is the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Configuration-management/#configuration-schemas">configuration schema</a> used for both endpoints.
 
 <pre>
+{
+  "type":"record",
+  "name":"KaaVerifiersTokens",
+  "namespace":"org.kaaproject.kaa.demo.verifiersdemo",
+  "fields":[
 	{
-	  "type":"record",
-	  "name":"KaaVerifiersTokens",
-	  "namespace":"org.kaaproject.kaa.demo.verifiersdemo",
-	  "fields":[
+	  "name":"twitterKaaVerifierToken",
+	  "type":[
 		{
-		  "name":"twitterKaaVerifierToken",
-		  "type":[
-			{
-			  "type":"string",
-			  "avro.java.string":"String"
-			},
-			"null"
-		  ]
+		  "type":"string",
+		  "avro.java.string":"String"
 		},
+		"null"
+	  ]
+	},
+	{
+	  "name":"facebookKaaVerifierToken",
+	  "type":[
 		{
-		  "name":"facebookKaaVerifierToken",
-		  "type":[
-			{
-			  "type":"string",
-			  "avro.java.string":"String"
-			},
-			"null"
-		  ]
+		  "type":"string",
+		  "avro.java.string":"String"
 		},
+		"null"
+	  ]
+	},
+	{
+	  "name":"googleKaaVerifierToken",
+	  "type":[
 		{
-		  "name":"googleKaaVerifierToken",
-		  "type":[
-			{
-			  "type":"string",
-			  "avro.java.string":"String"
-			},
-			"null"
-		  ]
-		}
+		  "type":"string",
+		  "avro.java.string":"String"
+		},
+		"null"
 	  ]
 	}
+  ]
+}
 </pre>
 
 <p>
@@ -679,12 +679,12 @@ To try the endpoint attachment feature:
 		Now start the other Kaa client on your personal computer.
 		The client will generate an endpoint access token, publish it on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a>, and output it in the console.
 		
-		<pre>
-			16:55:40,259 [pool-2-thread-1] INFO  o.k.k.e.verifiers.VerifiersDemo - --= Kaa client started =--
-			16:55:45,258 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint ID:yZZjLs1Zkh9rLM97aA+oWROJuxc=
-			16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint access token:96c9b5ec-4786-4286-a953-ed50e6c75df0
-			16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Copy this token to mobile application in to perform assisted attachment of this endpoint to user (current application owner).
-		</pre>
+<pre>
+16:55:40,259 [pool-2-thread-1] INFO  o.k.k.e.verifiers.VerifiersDemo - --= Kaa client started =--
+16:55:45,258 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint ID:yZZjLs1Zkh9rLM97aA+oWROJuxc=
+16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Endpoint access token:96c9b5ec-4786-4286-a953-ed50e6c75df0
+16:55:45,259 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - Copy this token to mobile application in to perform assisted attachment of this endpoint to user (current application owner).
+</pre>
 		
 	</li>
 	<li>
@@ -710,9 +710,9 @@ To try the endpoint attachment feature:
 	
 	Your Kaa client on the personal computer will display the received message in the console.
 	
-	<pre>
-		16:59:27,829 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - MessageEvent event received! Message: Hello from mobile app!
-	</pre>
+<pre>
+16:59:27,829 [main] INFO  o.k.k.e.verifiers.VerifiersDemo - MessageEvent event received! Message: Hello from mobile app!
+</pre>
 	
 	<blockquote>NOTE: The event delivery may take up to several seconds depending on the network configuration and resources available to the Kaa cluster.</blockquote>
 </p>

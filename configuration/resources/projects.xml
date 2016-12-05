@@ -67,21 +67,21 @@ To install the Configuration sample application using the binary files:
 	<li>
 		Run the following command from the directory containing the downloaded .jar archive.
 		
-		<pre>
-			$ java -jar ConfigurationDemo.jar
-		</pre>
+<pre>
+$ java -jar ConfigurationDemo.jar
+</pre>
 		
 		The sample application console will show the following messages.
 		
-		<pre>
-			[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
-			[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
-			[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Getting sampling period value from default configuration
-			[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 1 seconds
-			[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
-			[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 10 seconds
-			[main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--=
-		</pre>
+<pre>
+[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
+[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
+[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Getting sampling period value from default configuration
+[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 1 seconds
+[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
+[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 10 seconds
+[main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--=
+</pre>
 		
 	</li>
 </ol>
@@ -103,15 +103,15 @@ To install the Configuration sample application using the source code:
 		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
 		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
-		<pre>
-			$ ant debug
-		</pre>
+<pre>
+$ ant debug
+</pre>
 		
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
-		<pre>
-			$ java -jar build/jar/ConfigurationDemo.jar
-		</pre>
+<pre>
+$ java -jar build/jar/ConfigurationDemo.jar
+</pre>
 	</li>
 </ol>
 	
@@ -168,27 +168,27 @@ To launch this sample application on the Kaa C SDK:
 	</li>
 	<li>
 		Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
 	</li>
 	<li>
         Install CMake.
         To do this, run the following commands (copy and paste them to the terminal all at once).
-        <pre>
-            mkdir -p build \
-            && cd build \
-            && cmake .. \
-            && make
-        </pre>
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
         By default, the project is generated for POSIX platform.
         To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
         Run your sample application.
-        <pre>
-            ./build/demo_client
-        </pre>
+<pre>
+./build/demo_client
+</pre>
     </li>
 </ol>
 
@@ -197,7 +197,7 @@ To launch this sample application on the Kaa C SDK:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -308,7 +308,7 @@ build/demo_client.exe
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -319,7 +319,7 @@ build/demo_client.exe
 <h2>Error during compilation</h2>
 
 <pre>
-	c++: Internal compiler error: Killed (program cc1plus)
+c++: Internal compiler error: Killed (program cc1plus)
 </pre>
 
 <p>
@@ -397,9 +397,9 @@ To launch this sample application on the Kaa Objective-C SDK:
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
-		<pre>
-			sh build.sh
-		</pre>
+<pre>
+sh build.sh
+</pre>
 		
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
         <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
@@ -408,13 +408,13 @@ To launch this sample application on the Kaa Objective-C SDK:
 		Open the ConfigurationDemo.xcodeproj file and click the <b>Play</b> button.
 		You should see the following console messages.
 		
-		<pre>
-			2016-08-02 10:25:55.131 ConfigurationDemo[29486:7687014] ConfigurationDemo started
-			2016-08-02 10:25:55.155 ConfigurationDemo[29486:7687534] Kaa client started
-			2016-08-02 10:25:55.157 ConfigurationDemo[29486:7687534] Endpoint ID: 8cnSqxdiSjmkGbNdy5kC9hJIumE=
-			2016-08-02 10:25:55.157 ConfigurationDemo[29486:7687534] Configuration before updating
-			2016-08-02 10:25:55.158 ConfigurationDemo[29486:7687534] Sampling period is 1
-		</pre>
+<pre>
+2016-08-02 10:25:55.131 ConfigurationDemo[29486:7687014] ConfigurationDemo started
+2016-08-02 10:25:55.155 ConfigurationDemo[29486:7687534] Kaa client started
+2016-08-02 10:25:55.157 ConfigurationDemo[29486:7687534] Endpoint ID: 8cnSqxdiSjmkGbNdy5kC9hJIumE=
+2016-08-02 10:25:55.157 ConfigurationDemo[29486:7687534] Configuration before updating
+2016-08-02 10:25:55.158 ConfigurationDemo[29486:7687534] Sampling period is 1
+</pre>
 		
 	</li>
 </ol>
@@ -426,7 +426,7 @@ If you have not yet updated your configuration, the sampling period will be set 
 <h2>Running the build script returns an error message</h2>
 
 <pre>
-	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
+[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
 <p>
@@ -439,9 +439,9 @@ Try the following:
 	<li>
 		Run the following command from the ./libs/kaa-ep-sdk/ folder.
 		
-		<pre>
-			vim Podfile
-		</pre>
+<pre>
+vim Podfile
+</pre>
 		
 	</li>
 	<li>
@@ -450,9 +450,9 @@ Try the following:
 	<li>
 		Run this command.
 		
-		<pre>
-			pod install
-		</pre>
+<pre>
+pod install
+</pre>
 		
 	</li>
 </ol>
@@ -505,18 +505,18 @@ Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</
 </p>
 
 <pre>
-	{
-		"type": "record",
-		"name": "Configuration",
-		"namespace": "org.kaaproject.kaa.schema.sample",
-		"fields": [
-			{
-				"name": "samplingPeriod",
-				"type": "int",
-				"by_default": "1"
-			}
-		]
-	}
+{
+	"type": "record",
+	"name": "Configuration",
+	"namespace": "org.kaaproject.kaa.schema.sample",
+	"fields": [
+		{
+			"name": "samplingPeriod",
+			"type": "int",
+			"by_default": "1"
+		}
+	]
+}
 </pre>
 
 <p>
@@ -533,13 +533,13 @@ Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</
 </p>
 
 <pre>
-	[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
-	[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
-	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Getting sampling period value from default configuration
-	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 1 second
-	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
-	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 10 seconds
-	[main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--
+[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
+[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
+[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Getting sampling period value from default configuration
+[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 1 second
+[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
+[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 10 seconds
+[main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--
 </pre>
 
 <p>
@@ -549,9 +549,9 @@ Make sure that the build target is set to <b>ConfigurationDemo</b>, not <b>Kaa</
 </p>
 
 <pre>
-	{
-	  "samplingPeriod" : 10
-	}
+{
+  "samplingPeriod" : 10
+}
 </pre>
 
 <h2>Change sampling period</h2>
@@ -612,8 +612,8 @@ To change the sampling period:
 </p>
 
 <pre>
-	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
-	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
+[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
+[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
 </pre>
 
 <p>
@@ -621,13 +621,13 @@ To change the sampling period:
 </p>
 
 <pre>
-	[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
-	[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
-	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
-	...
-	[pool-1-thread-1] WARN  o.k.k.c.c.impl.DefaultChannelManager - Attempt to connect to the next bootstrap server will be made in 2000 ms, according to failover strategy decision
-	[pool-1-thread-1] WARN  o.k.k.c.b.DefaultBootstrapManager - Trying to switch to the next bootstrap server according to failover strategy decision
-	...
+[main] INFO  o.k.k.d.c.ConfigurationDemo - Configuration demo started
+[main] INFO  o.k.k.d.c.ConfigurationDemo - Endpoint ID: sObsTu7g696tYc2wBpIYtO9NQgk=
+[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 144 seconds
+...
+[pool-1-thread-1] WARN  o.k.k.c.c.impl.DefaultChannelManager - Attempt to connect to the next bootstrap server will be made in 2000 ms, according to failover strategy decision
+[pool-1-thread-1] WARN  o.k.k.c.b.DefaultBootstrapManager - Trying to switch to the next bootstrap server according to failover strategy decision
+...
 </pre>
 
 <h2>Add endpoint profiles and groups</h2>
@@ -641,17 +641,17 @@ To change the sampling period:
 </p>
 
 <pre>
-	{
-	  "type" : "record",
-	  "name" : "SamplingServerSideSchema",
-	  "namespace" : "org.kaaproject.kaa.schema.sample",
-	  "fields" : [ {
-		"name" : "enableDetailedSampling",
-		"type" : "boolean"
-	  } ],
-	  "displayName" : "Sampling server side schema",
-	  "description" : ""
-	}
+{
+  "type" : "record",
+  "name" : "SamplingServerSideSchema",
+  "namespace" : "org.kaaproject.kaa.schema.sample",
+  "fields" : [ {
+	"name" : "enableDetailedSampling",
+	"type" : "boolean"
+  } ],
+  "displayName" : "Sampling server side schema",
+  "description" : ""
+}
 </pre>
 
 <p>
@@ -753,9 +753,9 @@ To create an endpoint profile filter:
 		Copy the line below and paste it into the <b>Filter body</b> field of the <b>Draft</b> tab.
 	</li>
 	
-		<pre>
-			#sp.enableDetailedSampling == true
-		</pre>
+<pre>
+#sp.enableDetailedSampling == true
+</pre>
 	
 	<li>
 		Click <b>Activate</b>.
@@ -815,9 +815,9 @@ Click <b>Edit</b> and enable the <b>enableDetailedSampling</b> option.
 Kaa client will output the message below.
 
 <pre>
-	...
-	[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
-	[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 3 seconds
+...
+[pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Configuration was updated
+[pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Sampling period is now set to 3 seconds
 </pre>
 
 This means that your endpoint now belongs to the new group you created. To see the list of groups , click <b>Administration UI</b> > <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint groups</b>.

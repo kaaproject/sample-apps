@@ -79,9 +79,9 @@ To install the Notification sample application using the binary files:
 	<li>
 		Run the following command from the directory containing the downloaded .jar archive.
 		
-		<pre>
-			$ java -jar NotificationDemo.jar
-		</pre>
+<pre>
+$ java -jar NotificationDemo.jar
+</pre>
 		
 		The sample application console will display the startup message.
 								
@@ -105,15 +105,15 @@ To install the Notification sample application using the source code:
 		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
 		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
-		<pre>
-			$ ant debug
-		</pre>
+<pre>
+$ ant debug
+</pre>
 		
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
-		<pre>
-			$ java -jar build/jar/Notification.jar
-		</pre>
+<pre>
+$ java -jar build/jar/Notification.jar
+</pre>
 	</li>
 </ol>
 	
@@ -219,7 +219,7 @@ build/demo_client.exe
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -287,17 +287,17 @@ To install this sample application using the binary files:
 			<b>Windows</b>
 			<br />
 			Connect the Android device to your Windows machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 		<p>
 			<b>Linux</b>
 			<br />
 			Connect the Android device to your Linux machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				./adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+./adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 	</li>
 </ol>
@@ -319,10 +319,10 @@ To install this sample application using the source code:
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		Note that <b>%PATH_TO_ANDROID_SDK%</b> should be replaced by the Android SDK installation path.
 		
-		<pre>
-			export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
-			./gradlew assembleDebug
-		</pre>
+<pre>
+export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
+./gradlew assembleDebug
+</pre>
 		
 		The .apk file will be created in the app/build/outputs/apk/ directory.
 	</li>
@@ -384,27 +384,27 @@ To launch this sample application on the Kaa C SDK:
     </li>
     <li>
         Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
     </li>
 	<li>
         Install CMake.
         To do this, run the following commands (copy and paste them to the terminal all at once).
-        <pre>
-            mkdir -p build \
-            && cd build \
-            && cmake .. \
-            && make
-        </pre>
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
         By default, the project is generated for POSIX platform.
         To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
         Run your sample application.
-        <pre>
-            ./build/demo_client
-        </pre>
+<pre>
+./build/demo_client
+</pre>
     </li>
 </ol>
 
@@ -413,7 +413,7 @@ To launch this sample application on the Kaa C SDK:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -497,9 +497,9 @@ To launch this sample application on the Kaa Objective-C SDK:
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
-		<pre>
-			sh build.sh
-		</pre>
+<pre>
+sh build.sh
+</pre>
 		
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
         <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
@@ -508,12 +508,12 @@ To launch this sample application on the Kaa Objective-C SDK:
 		Open the NotificationDemo.xcodeproj file and click the <b>Play</b> button.
 		You should see the following console messages.
 		
-		<pre>
-			2016-07-29 18:30:39.249 NotificationDemo[21069:5316667] NotificationDemo started
-			2016-07-29 18:30:39.268 NotificationDemo[21069:5317199] Kaa client started
-			2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:1 name:Sample mandatory topic type: 0
-			2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:2 name:Sample optional topic type: 1
-		</pre>
+<pre>
+2016-07-29 18:30:39.249 NotificationDemo[21069:5316667] NotificationDemo started
+2016-07-29 18:30:39.268 NotificationDemo[21069:5317199] Kaa client started
+2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:1 name:Sample mandatory topic type: 0
+2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:2 name:Sample optional topic type: 1
+</pre>
 		
 	</li>
 </ol>
@@ -525,7 +525,7 @@ To subscribe for an optional topic, enter the topic ID.
 <h2>Running the build script returns an error message</h2>
 
 <pre>
-	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
+[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
 <p>
@@ -538,9 +538,9 @@ Try the following:
 	<li>
 		Run the following command from the ./libs/kaa-ep-sdk/ folder.
 		
-		<pre>
-			vim Podfile
-		</pre>
+<pre>
+vim Podfile
+</pre>
 		
 	</li>
 	<li>
@@ -549,9 +549,9 @@ Try the following:
 	<li>
 		Run this command.
 		
-		<pre>
-			pod install
-		</pre>
+<pre>
+pod install
+</pre>
 		
 	</li>
 </ol>
@@ -660,16 +660,16 @@ To create a notification topic:
 		
 		If you start your Kaa client, the console will display the following message.
 		
-		<pre>
-			2016-05-31 13:23:52,645 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
-			2016-05-31 13:23:52,647 [main] INFO  o.k.k.d.n.NotificationDemo - --= Press any key to exit =--
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
-			2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
-			2016-05-31 13:23:54,106 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed to topics:
-			2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
-		</pre>
+<pre>
+2016-05-31 13:23:52,645 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
+2016-05-31 13:23:52,647 [main] INFO  o.k.k.d.n.NotificationDemo - --= Press any key to exit =--
+2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
+2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+2016-05-31 13:23:54,106 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed to topics:
+2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+</pre>
 		
 		The message above informs the user which topics the endpoint is subscribed to and which are available for subscription.
 	
@@ -755,13 +755,13 @@ To configure and send a notification:
 		In the <b>Notification body</b> section, enter a message you want to send with the notification and click <b>Send</b>.
 		If you start your Kaa client, the console will display the following message.
 		
-		<pre>
-			...
-			2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
-			2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster, Notification alert type: Code green
-			...
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
-		</pre>
+<pre>
+...
+2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
+2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster, Notification alert type: Code green
+...
+2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+</pre>
 		
 		The console message above informs the user about the notification message and notification topic ID.
 	</li>
@@ -773,12 +773,12 @@ To configure and send a notification:
 </p>
 
 <pre>
-	...
-	2016-05-31 13:23:54,107 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
-	2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [251] received.
-	2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: This is sample notification for optional topic. Client should subscribe to optional topics in order to receive notifications. This application subscribes to optional topics automatically.
-	...
-	2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+...
+2016-05-31 13:23:54,107 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
+2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [251] received.
+2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: This is sample notification for optional topic. Client should subscribe to optional topics in order to receive notifications. This application subscribes to optional topics automatically.
+...
+2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
 </pre>
 
 <p>	
@@ -789,13 +789,13 @@ To configure and send a notification:
 	For example, you can set it for 1 minute for the notification topic ID 251 above.
 	After 1 minute, the client console will stop receiving messages from notification topic ID 251 and will continue displaying other messages.
 	
-	<pre>
-		...
-		2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
-		2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: message, Message alert type: Code green
-		...
-		2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
-	</pre>
+<pre>
+...
+2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
+2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: message, Message alert type: Code green
+...
+2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+</pre>
 	
 </p>
             ]]>

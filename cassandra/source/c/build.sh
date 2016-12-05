@@ -38,6 +38,7 @@ build_app() {
     cmake -DAPP_NAME=$APP_NAME \
           -DKAA_MAX_LOG_LEVEL=3 \
           -DCMAKE_BUILD_TYPE=Debug \
+          -DBUILD_TESTING=OFF \
           -DWITH_EXTENSION_EVENT=OFF \
           -DWITH_EXTENSION_NOTIFICATION=OFF \
           -DWITH_EXTENSION_CONFIGURATION=OFF ..

@@ -265,12 +265,11 @@ Try the following:
         <details>
             <![CDATA[
 <p>
-	This sample application uses the <b>Notification extension</b> based on <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Android</a>.
-	This extension enables <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> to receive <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications" target="_blank">notifications</a> from <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Java SDK</a> for Android.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
 <h1>Launching</h1>
-
 <p>
 	For sample applications that run on Android, both the binary files (.apk package) and the source code (.tar.gz archive) are available for download.
 	If you want to only launch the sample application, download the binary files.
@@ -278,7 +277,6 @@ Try the following:
 </p>
 
 <h2>Install using the binary files</h2>
-
 To install this sample application using the binary files:
 	
 <ol>
@@ -314,12 +312,10 @@ To install this sample application using the binary files:
 </ol>
 
 <h2>Install using the source code</h2>
-
 To install this sample application using the source code:
-
 <ol>
 	<li>
-		Install Kaa SDK on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
+		Install Android SDK on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -328,18 +324,20 @@ To install this sample application using the source code:
 	</li>
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-		
+		Note that <b>%PATH_TO_ANDROID_SDK%</b> should be replaced by the Android SDK installation path.
+
 		<pre>
+			export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
 			./gradlew assembleDebug
 		</pre>
-		
+
 		The .apk file will be created in the app/build/outputs/apk/ directory.
 	</li>
 	<li>
 		Follow the installation instructions described in the <b>Install using the binary files</b> section.
 	</li>
 </ol>
-	
+
 If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
             ]]>
         </details>

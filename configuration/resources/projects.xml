@@ -156,7 +156,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa C SDK</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa C SDK</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -173,20 +173,19 @@ To launch this sample application on the Kaa C SDK:
         </pre>
 	</li>
 	<li>
-        Execute the following script:
-        (Note this should be copy-pasted to the terminal all at once)
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
         <pre>
             mkdir -p build \
             && cd build \
             && cmake .. \
             && make
         </pre>
-        By default the project is generated for Posix target.
-        To generate and build project for other supported targets,
-        refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
-        To run demo, execute:
+        Run your sample application.
         <pre>
             ./build/demo_client
         </pre>
@@ -238,7 +237,7 @@ To launch this sample application on the Kaa C SDK:
 	The default configuration is statically stored in the Kaa SDK and is used in case no updates from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#operations-service" target="_blank">Operations service</a> are available.
 	The latest configuration is stored locally in the configuration storage and can be obtained regardless of the Operations service availability.
 	This sample application stores the configuration in the saved_config.cfg file located in the sample application working directory.
-	</p>
+</p>
 
 <h1>Launching</h1>
 
@@ -247,7 +246,7 @@ To launch this sample application on the Kaa C++ SDK:
 <ol>
 	<li>
 		Prepare your C++ SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa C++ SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C++/" target="_blank">Using Kaa C++ SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -259,47 +258,47 @@ To launch this sample application on the Kaa C++ SDK:
 	</li>
 	<li>
 		Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
 	</li>
 	<li>
-		Run the following commands:
+		Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
 		<p>
 			<b>Windows</b>
-			<pre>
-				mkdir build
-				cd build
-				cmake -G "Nmake Makefiles" ..
-				nmake
-			</pre>
+<pre>
+mkdir build
+cd build
+cmake -G "Nmake Makefiles" ..
+nmake
+</pre>
 		</p>
 		<p>
 			<b>Linux, OS X (macOS)</b>
-			<pre>
-				mkdir build \
-				&& cd build
-				&& cmake .. \
-				&& make
-			</pre>
-            By default the project is generated for Posix target.
-            To generate and build project for other supported targets,
-            refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
+<pre>
+mkdir build \
+&& cd build
+&& cmake .. \
+&& make
+</pre>
+            By default, the project is generated for POSIX platform.
+            To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
 		</p>
 	</li>
     <li>
-        To run demo, execute:
+        Run your sample application.
 		<p>
             <b>Windows</b>
-            <pre>
-                build/demo_client.exe
-            </pre>
+<pre>
+build/demo_client.exe
+</pre>
 		</p>
 		<p>
 			<b>Linux</b>
-            <pre>
-                ./build/demo_client
-            </pre>
+<pre>
+./build/demo_client
+</pre>
 		</p>
     </li>
 </ol>

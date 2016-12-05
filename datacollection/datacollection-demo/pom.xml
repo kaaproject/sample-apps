@@ -29,7 +29,7 @@
     <url>http://kaaproject.org</url>
 
     <properties>
-        <main.dir>${basedir}/..</main.dir>
+        <main.dir>${basedir}/../..</main.dir>
     </properties>
 
     <dependencies>

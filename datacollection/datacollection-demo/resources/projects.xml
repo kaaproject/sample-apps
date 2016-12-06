@@ -778,6 +778,175 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 	
 	This means that the sampling period has been changed in the default configuration, and now the application sends the log records every 5 seconds.
 </p>
+
+<h1>Telemetry monitor</h1>
+
+The <b>Telemetry monitor</b> is a custom log appender for <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/" target="_blank">Data collection</a> extension that allows users to detect, process, and save specific threshold values to the database and save statistics to the server profile.
+
+<h2>Install to Sandbox</h2>
+
+<ol>
+	<li>
+		Build the appender modules using <a href="https://maven.apache.org/" target="_blank">Maven</a>.
+		Run the following command from the <code>sample-apps</code> directory.
+<pre>
+mvn clean install
+</pre>
+	</li>
+	<li>
+		Copy the <code>datacollection/telemetry-monitor/target/telemetry-monitor-<version>.jar</code> to the <code>/tmp</code> directory of the Sandbox.
+		Run the below from the <code>sample-apps</code> directory using <b>kaa</b> as password.
+<pre>
+sudo scp -P 2222 datacollection/telemetry-monitor/target/telemetry-monitor*.jar kaa@localhost:/tmp
+</pre>
+		Connect to the Sandbox using ssh with default <b>kaa</b> username and <b>kaa</b> password.
+<pre>
+ssh kaa@localhost -p 2222
+</pre>
+		Copy the <code>telemetry-monitor-<version>.jar</code> to this directory: <code>/usr/lib/kaa-node/lib/</code>.
+<pre>
+sudo mv /tmp/telemetry-monitor-*.jar /usr/lib/kaa-node/lib/
+</pre>
+	</li>
+	<li>
+		Copy the Kaa <code>admin-rest-client</code>, <code>spring-data-cassandra</code> and <code>spring-cql</code> libraries to the <code>/usr/lib/kaa-node/lib/</code> directory of the Sandbox.
+<pre>sudo wget -P /usr/lib/kaa-node/lib/ http://repository.kaaproject.org/repository/internal/org/kaaproject/kaa/server/common/admin-rest-client/0.10.0/admin-rest-client-0.10.0.jar</pre>
+<pre>sudo wget -P /usr/lib/kaa-node/lib/ https://artifacts.alfresco.com/nexus/content/repositories/public/org/springframework/data/spring-data-cassandra/1.5.0.M1/spring-data-cassandra-1.5.0.M1.jar</pre>
+<pre>sudo wget -P /usr/lib/kaa-node/lib/ https://artifacts.alfresco.com/nexus/content/repositories/public/org/springframework/data/spring-cql/1.5.0.M1/spring-cql-1.5.0.M1.jar</pre>
+	</li>
+	<li>
+		Restart the <code>kaa-node</code> service from Sandbox.
+<pre>
+sudo service kaa-node restart
+</pre>
+	</li>
+</ol>
+
+<h2>Create Telemetry monitor in Administration UI</h2>
+
+To create a Telemetry monitor log appender in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>.
+
+<ol>
+	<li>
+		Log in to the Administration UI as a <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#tenant-developer" target="_blank">tenant developer</a> using the default <b>devuser</b> username and <b>devuser123</b> password.
+	</li>
+	<li>
+		Open the <b>Log appenders</b> page of the sample application and click <b>Add new log appender</b> button.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/01_add_new_log_appender.png" />
+		<br />
+		<br />
+	</li>
+	<li>
+		On the <b>Log appender details</b> page, fill in the required fields and set the <b>Type</b> field to <b>Telemetry monitor</b>.
+		In the <b>Configuration</b> section, change the default values as required.
+		Monitoring values that exceed the value specified in the <b>Threshold value</b> field will be saved to a separate table named as specified in the <b>Table name for monitoring values</b>.
+
+   		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/02_setup_log_appender.png" />
+		<br />
+		<br />
+		
+		When you are done setting the log appender, click the <b>Add</b> button to apply changes.
+   </li>
+</ol>
+
+<h2>Configure server profile</h2>
+
+To configure the server profile:
+
+<ol>
+	<li>
+		Log in to the Administration UI as a tenant developer.
+	</li>
+	<li>
+		Unfold the <b>Schemas</b> list of the sample application, select the <b>Server-side EP profile</b> page, and click <b>Add schema</b>.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/03_add_server_schema.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		On the <b>Server-side EP profile schema details</b> page, click <b>Create new type</b>.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/04_create_server_schema_type.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		On the <b>Common type details</b> page, fill in the required fields and use the <b>Upload from file</b> option to upload <a href="https://github.com/kaaproject/sample-apps/blob/master/datacollection/datacollection-demo/resources/telemetry_monitor_server_profile.avsc">this sample Avro schema</a>.
+		Click <b>Add</b> to apply changes.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/05_configure_server_schema.png" />
+		<br />
+		<br />
+		
+		Your schema will appear on the <b>Server-side EP profile schemas</b> list with a version number.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/06_verify_schema_version.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		If the version of your new schema is other than <b>1</b>, open <a href="https://github.com/kaaproject/sample-apps/blob/master/datacollection/datacollection-demo/src/main/java/org/kaaproject/kaa/server/appenders/telemetry/appender/TelemetryMonitor.java" target="_blank">this file</a> from the <code>telemetry-monitor</code> directory and change the schema version in it.
+	
+<pre>
+private static final int SCHEMA_VERSION = 1;
+</pre>
+
+	Run the following command from the <code>telemetry-monitor</code> directory.
+
+<pre>
+mvn clean install
+</pre>
+
+Copy the <code>telemetry-monitor-<version>.jar</code> file to this Sanbox directory: <code>/usr/lib/kaa-node/lib/</code> and restart the <code>kaa-node</code> service.
+
+	</li>
+</ol>	
+
+<h2>Use with Data collection application</h2>
+
+To verify the functioning of the Telemetry monitor log appender:
+
+<ol>
+	<li>
+		Run the <b>Data collection</b> sample application from Sandbox.
+	</li>
+	<li>
+		Run the <code>cqlsh</code> command from the <code>/usr/lib/kaa-node/lib/</code> directory, then run the below command.
+		
+<pre>
+SELECT * FROM kaa.logs_monitoring_values ;
+</pre>
+		The console will display the output similar to the one below.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/07_cqlsh.png" />
+		<br />
+		<br />
+	
+	</li>
+	<li>
+		Check the exceeded values statistics.
+		To do this, open the <b>Endpoint profiles</b> page of the sample application and select the profile with the appropriate schema version.
+		The statistics is displayed in the <b>Sever-side EP profile</b> section.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/08_statistics.png" />
+		<br />
+		<br />
+		
+	</li>
+</ol>
             ]]>
         </details>
     </bundle>

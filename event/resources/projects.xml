@@ -80,9 +80,9 @@ To install the sample application using the binary files:
 	<li>
 		Run the following command from the directory containing the downloaded .jar archive.
 		
-		<pre>
-			$ java -jar EventDemo.jar
-		</pre>
+<pre>
+$ java -jar EventDemo.jar
+</pre>
 		
 		The sample application console will display the startup message.
 	</li>
@@ -105,15 +105,15 @@ To install the sample application using the source code:
 		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
 		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
-		<pre>
-			$ ant debug
-		</pre>
+<pre>
+$ ant debug
+</pre>
 		
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
-		<pre>
-			$ java -jar build/jar/EventDemo.jar
-		</pre>
+<pre>
+$ java -jar build/jar/EventDemo.jar
+</pre>
 	</li>
 </ol>
 
@@ -141,8 +141,8 @@ If you want to modify the sample application source code or create your own appl
         <details>
             <![CDATA[
 <p>
-    This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/latest/Glossary/#kaa-sdk-type" target="_blank">Kaa C SDK</a>.
-	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/latest/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
+    This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">events</a> feature based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C SDK</a>.
+	You can use this application to define your own events and have your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoints</a> exchange them with one another.
 </p>
 
 <h1>Launching</h1>
@@ -152,7 +152,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -164,26 +164,27 @@ To launch this sample application on the Kaa C SDK:
     </li>
     <li>
         Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+    </li>
+	<li>
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
-        Execute the following script:
-        (Note this should be copy-pasted to the terminal all at once)
-        <pre>
-            mkdir -p build \
-            && cd build \
-            && cmake .. \
-            && make
-        </pre>
-        By default the project is generated for Posix target.
-        To generate and build project for other supported targets,
-        refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
-    </li>
-    <li>
-        To run demo, execute:
-        ./build/demo_client
+        Run your sample application.
+<pre>
+./build/demo_client
+</pre>
     </li>
 </ol>
 
@@ -196,7 +197,7 @@ If the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/K
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -245,58 +246,69 @@ To launch this sample application on the Kaa C++ SDK:
 		Click <b>Ok</b> and download the .tar.gz file.
 	</li>
 	<li>
-		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-		
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		Unpack the SDK archive.
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+	</li>
+	<li>
+		Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
 		<p>
 			<b>Windows</b>
-			<pre>
-				mkdir build
-				cd build
-				cmake -G "Nmake Makefiles" ..
-				nmake
-			</pre>
+<pre>
+mkdir build
+cd build
+cmake -G "Nmake Makefiles" ..
+nmake
+</pre>
 		</p>
 		<p>
 			<b>Linux, OS X (macOS)</b>
-			<pre>
-				mkdir build \
-				&& cd build \
-				&& cmake .. \
-				&& make \
-			</pre>
+<pre>
+mkdir build \
+&& cd build
+&& cmake .. \
+&& make
+</pre>
+            By default, the project is generated for POSIX platform.
+            To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
 		</p>
 	</li>
-</ol>
-
-Once you built the application, you can start it at any time using the following command.
-
-<p>
-	<b>Windows</b>
-	<pre>
-		demo_client.exe
-	</pre>
-</p>
-<p>
-	<b>Linux, OS X (macOS)</b>
-	<pre>
-		./demo_client
-	</pre>
-</p>
-<p>
-	To launch a separate instance of the application, run it from another working directory.
+    <li>
+        Run your sample application.
+		<p>
+            <b>Windows</b>
+<pre>
+build/demo_client.exe
+</pre>
+		</p>
+		<p>
+			<b>Linux</b>
+<pre>
+./build/demo_client
+</pre>
+		</p>
+		<p>
+		To launch a separate instance of the application, run it from another working directory.
 	
-	<pre>
-		cd ..
-		./build/demo_client
-	</pre>
-</p>
+<pre>
+cd ..
+./build/demo_client
+</pre>
+		</p>
+    </li>
+</ol>
 
 <h1>Troubleshooting</h1>
 
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The source directory /.../CppEventDemo/libs/kaa does not contain a CMakeLists.txt file.
+CMake error: The source directory /.../CppEventDemo/libs/kaa does not contain a CMakeLists.txt file.
 </pre>
 
 <p>
@@ -319,7 +331,7 @@ Try the following:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -386,9 +398,9 @@ To launch this sample application on the Kaa Objective-C SDK:
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
-		<pre>
-			sh build.sh
-		</pre>
+<pre>
+sh build.sh
+</pre>
 		
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
         <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
@@ -397,10 +409,10 @@ To launch this sample application on the Kaa Objective-C SDK:
 		Open the EventDemo.xcodeproj and click the <b>Play</b> button.
 		You should see the following console messages.
 		
-		<pre>
-			2016-09-09 11:38:51.964 EventDemo[2621:1000514] Kaa client started
-			2016-09-09 11:38:52.722 EventDemo[2621:1000528] Endpoint successfully attached!
-		</pre>
+<pre>
+2016-09-09 11:38:51.964 EventDemo[2621:1000514] Kaa client started
+2016-09-09 11:38:52.722 EventDemo[2621:1000528] Endpoint successfully attached!
+</pre>
 	
 	</li>
 </ol>
@@ -471,17 +483,17 @@ To install this sample application using the binary files:
 			<b>Windows</b>
 			<br />
 			Connect the Android device to your Windows machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 		<p>
 			<b>Linux</b>
 			<br />
 			Connect the Android device to your Linux machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				./adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+./adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 	</li>
 </ol>
@@ -501,10 +513,10 @@ To install this sample application using the source code:
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		Note that <b>%PATH_TO_ANDROID_SDK%</b> should be replaced by the Android SDK installation path.
 		
-		<pre>
-			export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
-			./gradlew assembleDebug
-		</pre>
+<pre>
+export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
+./gradlew assembleDebug
+</pre>
 		
 		The .apk file will be created in the app/build/outputs/apk/ directory.
 	</li>
@@ -612,67 +624,67 @@ To view information about the ECFs:
     This is the JSON schema used for <code>ChatEvent</code> EC.
     It includes a nested record with a special type named <b>ChatEventType</b>.
 
-	<pre>
-		{
-		  "type": "record",
-		  "name": "ChatEvent",
-		  "namespace": "org.kaaproject.kaa.examples.event",
-		  "fields": [
-			{
-			  "name": "ChatName",
-			  "type": {
-				"type": "string",
-				"avro.java.string": "String"
-			  }
-			},
-			{
-			  "name": "EventType",
-			  "type": {
-				"type": "enum",
-				"name": "ChatEventType",
-				"symbols": [
-				  "CREATE",
-				  "DELETE"
-				],
-				"classType": "object"
-			  }
-			}
-		  ],
-		  "description": "",
-		  "classType": "event"
-		}
-	</pre>
+<pre>
+{
+  "type": "record",
+  "name": "ChatEvent",
+  "namespace": "org.kaaproject.kaa.examples.event",
+  "fields": [
+	{
+	  "name": "ChatName",
+	  "type": {
+		"type": "string",
+		"avro.java.string": "String"
+	  }
+	},
+	{
+	  "name": "EventType",
+	  "type": {
+		"type": "enum",
+		"name": "ChatEventType",
+		"symbols": [
+		  "CREATE",
+		  "DELETE"
+		],
+		"classType": "object"
+	  }
+	}
+  ],
+  "description": "",
+  "classType": "event"
+}
+</pre>
 
 </p>
 
 <p>
     This is the JSON schema used for <code>Message</code> EC.
 
-	<pre>
-		{
-		  "type": "record",
-		  "name": "Message",
-		  "namespace": "org.kaaproject.kaa.examples.event",
-		  "fields": [
-			{
-			  "name": "ChatName",
-			  "type": {
-				"type": "string",
-				"avro.java.string": "String"
-			  }
-			},
-			{
-			  "name": "Message",
-			  "type": {
-				"type": "string",
-				"avro.java.string": "String"
-			  }
-			}
-		  ],
-		  "description": "",
-		  "classType": "event"
-		}
-	</pre>
+<pre>
+{
+  "type": "record",
+  "name": "Message",
+  "namespace": "org.kaaproject.kaa.examples.event",
+  "fields": [
+	{
+	  "name": "ChatName",
+	  "type": {
+		"type": "string",
+		"avro.java.string": "String"
+	  }
+	},
+	{
+	  "name": "Message",
+	  "type": {
+		"type": "string",
+		"avro.java.string": "String"
+	  }
+	}
+  ],
+  "description": "",
+  "classType": "event"
+}
+</pre>
 
 </p>
 
@@ -766,35 +778,35 @@ To set up an ECF mapping:
 	Start your first endpoint.
 	The console will display the following messages.
 	
-	<pre>
-		2016-08-31 16:38:19,566 [main] INFO  o.k.kaa.demo.event.EventDemo - Event demo started
-		2016-08-31 16:38:21,639 [pool-2-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Kaa client started
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-		
-		"Living room"
-		"Guest room"
-		
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
-		
-		1. Join chat room.
-		2. Create chat room.
-		3. Delete chat room.
-		4. Exit application.
-	</pre>
+<pre>
+2016-08-31 16:38:19,566 [main] INFO  o.k.kaa.demo.event.EventDemo - Event demo started
+2016-08-31 16:38:21,639 [pool-2-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Kaa client started
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+
+"Living room"
+"Guest room"
+
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+
+1. Join chat room.
+2. Create chat room.
+3. Delete chat room.
+4. Exit application.
+</pre>
 </p>
 
 <p>
 	To join a chat room, type <b>1</b> and press Enter.
 	Then, enter the name of the chat room you want to join and press Enter.
 
-	<pre>
-		...
-		1
-	
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter chat room name: Living room
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Joined "Living room" chat.
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Type message and press Enter to send it or type "quit" to leave this chat.
-	</pre>
+<pre>
+...
+1
+
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter chat room name: Living room
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Joined "Living room" chat.
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Type message and press Enter to send it or type "quit" to leave this chat.
+</pre>
 
 </p>
 	
@@ -823,39 +835,39 @@ To set up an ECF mapping:
     Let's leave the chat room and create a new one.
     See example below.
 
-	<pre>
-		...
-		"quit"
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-	
-		"Living room"
-		"Guest room"
-	
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
-	
-		1. Join chat room.
-		2. Create chat room.
-		3. Delete chat room.
-		4. Exit application.
-	
-		1
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter new chat name:
-	
-		Roof chat
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms updated.
-		016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-	
-		"Living room"
-		"Guest room"
-		"Roof chat"
-	
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
-	
-		1. Join chat room.
-		2. Create chat room.
-		3. Delete chat room.
-		4. Exit application.
-	</pre>
+<pre>
+...
+"quit"
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+
+"Living room"
+"Guest room"
+
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+
+1. Join chat room.
+2. Create chat room.
+3. Delete chat room.
+4. Exit application.
+
+1
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter new chat name:
+
+Roof chat
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms updated.
+016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+
+"Living room"
+"Guest room"
+"Roof chat"
+
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+
+1. Join chat room.
+2. Create chat room.
+3. Delete chat room.
+4. Exit application.
+</pre>
 	
 	The list of available chat rooms will be updated on all endpoint.
 </p>
@@ -864,40 +876,40 @@ To set up an ECF mapping:
     Let's delete a chat room.
     See example below.
 
-	<pre>
-		...
-		"quit"
-	
-		016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-	
-		"Living room"
-		"Guest room"
-		"Roof chat"
-	
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
-	
-		1. Join chat room.
-		2. Create chat room.
-		3. Delete chat room.
-		4. Exit application.
-	
-		3
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter name of the chat you want to delete:
-	
-		Roof chat
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms updated.
-		016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
-	
-		"Living room"
-		"Guest room"
-	
-		2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
-	
-		1. Join chat room.
-		2. Create chat room.
-		3. Delete chat room.
-		4. Exit application.
-	</pre>
+<pre>
+...
+"quit"
+
+016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+
+"Living room"
+"Guest room"
+"Roof chat"
+
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+
+1. Join chat room.
+2. Create chat room.
+3. Delete chat room.
+4. Exit application.
+
+3
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Enter name of the chat you want to delete:
+
+Roof chat
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of chat rooms updated.
+016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - The list of available chat rooms:
+
+"Living room"
+"Guest room"
+
+2016-08-31 16:38:22,764 [pool-4-thread-1] INFO  o.k.kaa.demo.event.EventDemo - Select your option:
+
+1. Join chat room.
+2. Create chat room.
+3. Delete chat room.
+4. Exit application.
+</pre>
 </p>
             ]]>
         </details>

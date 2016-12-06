@@ -70,9 +70,9 @@ To install the sample application using the binary files:
 	<li>
 		Run the following command from the directory containing the downloaded .jar archive.
 		
-		<pre>
-			$ java -jar DataCollectionDemo.jar
-		</pre>
+<pre>
+$ java -jar DataCollectionDemo.jar
+</pre>
 		
 		The sample application console will display the startup message.
 	</li>
@@ -95,15 +95,15 @@ To install the sample application using the source code:
 		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
 		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
-		<pre>
-			$ ant debug
-		</pre>
+<pre>
+$ ant debug
+</pre>
 		
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
-		<pre>
-			$ java -jar build/jar/DataCollectionDemo.jar
-		</pre>
+<pre>
+$ java -jar build/jar/DataCollectionDemo.jar
+</pre>
 	</li>
 </ol>
 
@@ -120,10 +120,10 @@ If you want to modify the sample application source code or create your own appl
 	You can access the collected data by querying an instance of the MongoDB database in the Sandbox.
 	To do this, run the following commands in the Kaa Sandbox console.
 	
-	<pre>
-		$ mongo kaa
-		db.logs_$your_application_token$.find()
-	</pre>
+<pre>
+$ mongo kaa
+db.logs_$your_application_token$.find()
+</pre>
 </p>
             ]]>
         </details>
@@ -177,26 +177,27 @@ To launch this sample application on the Kaa C SDK:
     </li>
     <li>
         Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+    </li>
+	<li>
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
-        Execute the following script:
-        (Note this should be copy-pasted to the terminal all at once)
-        <pre>
-            mkdir -p build \
-            && cd build \
-            && cmake .. \
-            && make
-        </pre>
-        By default the project is generated for Posix target.
-        To generate and build project for other supported targets,
-        refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
-    </li>
-    <li>
-        To run demo, execute:
-        ./build/demo_client
+        Run your sample application.
+<pre>
+./build/demo_client
+</pre>
     </li>
 </ol>
 
@@ -210,16 +211,16 @@ This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v
 <p>
 	To check if the server received the log records, use the following commands.
 	
-	<pre>
-		$ mongo kaa
-		> db.logs_$YOUR_APPLICATION_TOKEN.find()
-	</pre>
+<pre>
+$ mongo kaa
+> db.logs_$YOUR_APPLICATION_TOKEN.find()
+</pre>
 </p>
 
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -277,50 +278,52 @@ To launch this sample application on the Kaa C++ SDK:
     <li>
         Unpack the downloaded archive.
     </li>
+	<li>
+		Unpack the SDK archive.
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+	</li>
+	<li>
+		Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+		<p>
+			<b>Windows</b>
+<pre>
+mkdir build
+cd build
+cmake -G "Nmake Makefiles" ..
+nmake
+</pre>
+		</p>
+		<p>
+			<b>Linux, OS X (macOS)</b>
+<pre>
+mkdir build \
+&& cd build
+&& cmake .. \
+&& make
+</pre>
+            By default, the project is generated for POSIX platform.
+            To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+		</p>
+	</li>
     <li>
-        Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
-    </li>
-    <li>
-        Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-        <p>
+        Run your sample application.
+		<p>
             <b>Windows</b>
-            <pre>
-                mkdir build
-                cd build
-                cmake -G "Nmake Makefiles" ..
-                nmake
-            </pre>
-        </p>
-        <p>
-            <b>Linux, OS X (macOS)</b>
-            (Note this should be copy-pasted to the terminal all at once)
-            <pre>
-                mkdir build \
-                && cd build \
-                && cmake .. \
-                && make
-            </pre>
-        </p>
+<pre>
+build/demo_client.exe
+</pre>
+		</p>
+		<p>
+			<b>Linux</b>
+<pre>
+./build/demo_client
+</pre>
+		</p>
     </li>
 </ol>
-
-Once you built the application, you can start it at any time using the following command.
-
-<p>
-	<b>Windows</b>
-	<pre>
-		demo_client.exe
-	</pre>
-</p>
-<p>
-	<b>Linux, OS X (macOS)</b>
-	<pre>
-		./demo_client
-	</pre>
-</p>
 
 <h1>Troubleshooting</h1>
 
@@ -332,16 +335,16 @@ This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v
 <p>
 	To check if the server received the log records, use the following commands.
 	
-	<pre>
-		$ mongo kaa
-		> db.logs_$YOUR_APPLICATION_TOKEN.find()
-	</pre>
+<pre>
+$ mongo kaa
+> db.logs_$YOUR_APPLICATION_TOKEN.find()
+</pre>
 </p>
 
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -407,9 +410,9 @@ To launch this sample application on the Kaa Objective-C SDK:
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
-		<pre>
-			sh build.sh
-		</pre>
+<pre>
+sh build.sh
+</pre>
 		
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
         <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
@@ -418,20 +421,20 @@ To launch this sample application on the Kaa Objective-C SDK:
 		Open the DataCollectionDemo.xcodeproj file and click the <b>Play</b> button.
 		You should see the following console messages.
 		
-		<pre>
-			2016-08-30 11:45:01.754 DataCollectionDemo[77224:13403075] DataCollectionDemo started
-			2016-08-30 11:45:02.080 DataCollectionDemo[77224:13403521] Kaa client started
-			2016-08-30 11:45:03.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 28, timestamp: 149909177
-			2016-08-30 11:45:03.104 DataCollectionDemo[77224:13403449] Received log record delivery info. Bucket id [0], delivery time [23 ms]
-			2016-08-30 11:45:04.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 29, timestamp: 149910177
-			2016-08-30 11:45:04.107 DataCollectionDemo[77224:13403448] Received log record delivery info. Bucket id [1], delivery time [26 ms]
-			2016-08-30 11:45:05.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 30, timestamp: 149911177
-			2016-08-30 11:45:05.095 DataCollectionDemo[77224:13403521] Received log record delivery info. Bucket id [2], delivery time [14 ms]
-			2016-08-30 11:45:06.080 DataCollectionDemo[77224:13403075] Log sent with temperature: 27, timestamp: 149912176
-			2016-08-30 11:45:06.102 DataCollectionDemo[77224:13403521] Received log record delivery info. Bucket id [3], delivery time [22 ms]
-			2016-08-30 11:45:07.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 30, timestamp: 149913177
-			2016-08-30 11:45:07.094 DataCollectionDemo[77224:13403449] Received log record delivery info. Bucket id [4], delivery time [13 ms]
-		</pre>
+<pre>
+2016-08-30 11:45:01.754 DataCollectionDemo[77224:13403075] DataCollectionDemo started
+2016-08-30 11:45:02.080 DataCollectionDemo[77224:13403521] Kaa client started
+2016-08-30 11:45:03.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 28, timestamp: 149909177
+2016-08-30 11:45:03.104 DataCollectionDemo[77224:13403449] Received log record delivery info. Bucket id [0], delivery time [23 ms]
+2016-08-30 11:45:04.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 29, timestamp: 149910177
+2016-08-30 11:45:04.107 DataCollectionDemo[77224:13403448] Received log record delivery info. Bucket id [1], delivery time [26 ms]
+2016-08-30 11:45:05.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 30, timestamp: 149911177
+2016-08-30 11:45:05.095 DataCollectionDemo[77224:13403521] Received log record delivery info. Bucket id [2], delivery time [14 ms]
+2016-08-30 11:45:06.080 DataCollectionDemo[77224:13403075] Log sent with temperature: 27, timestamp: 149912176
+2016-08-30 11:45:06.102 DataCollectionDemo[77224:13403521] Received log record delivery info. Bucket id [3], delivery time [22 ms]
+2016-08-30 11:45:07.081 DataCollectionDemo[77224:13403075] Log sent with temperature: 30, timestamp: 149913177
+2016-08-30 11:45:07.094 DataCollectionDemo[77224:13403449] Received log record delivery info. Bucket id [4], delivery time [13 ms]
+</pre>
 		
 	</li>
 </ol>
@@ -441,7 +444,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <h2>Running the build script returns an error message</h2>
 
 <pre>
-	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
+[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
 <p>
@@ -454,9 +457,9 @@ Try the following:
 	<li>
 		Run the following command from the ./libs/kaa-ep-sdk/ folder.
 		
-		<pre>
-			vim Podfile
-		</pre>
+<pre>
+vim Podfile
+</pre>
 		
 	</li>
 	<li>
@@ -465,9 +468,9 @@ Try the following:
 	<li>
 		Run this command.
 		
-		<pre>
-			pod install
-		</pre>
+<pre>
+pod install
+</pre>
 		
 	</li>
 </ol>
@@ -520,24 +523,24 @@ This demo <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-ap
 <p>
 	The following schema is used to define the format of the log records.
 	
-	<pre>
-		{
-		  "type" : "record",
-		  "name" : "DataCollection",
-		  "namespace" : "org.kaaproject.kaa.schema.sample",
-		  "fields" : [
-		    {
-			"name" : "temperature",
-			"type" : "int"
-		    },
-		    {
-			"name" : "timeStamp",
-			"type" : "long"
-		    }
-		  ],
-		  "displayName" : "org.kaaproject.kaa.schema.sample.DataCollection"
-		}
-	</pre>
+<pre>
+{
+  "type" : "record",
+  "name" : "DataCollection",
+  "namespace" : "org.kaaproject.kaa.schema.sample",
+  "fields" : [
+	{
+	"name" : "temperature",
+	"type" : "int"
+	},
+	{
+	"name" : "timeStamp",
+	"type" : "long"
+	}
+  ],
+  "displayName" : "org.kaaproject.kaa.schema.sample.DataCollection"
+}
+</pre>
 	
 </p>
 
@@ -581,19 +584,19 @@ To do this:
 	To configure the sampling period of the sensor, you need to change the default configuration of the endpoint initially received from the group <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#group-all" target="_blank">All</a>.
 	In this demo application, the following configuration schema is used to configure the sampling period of the sensor.
 	
-	<pre>
-		{
-		  "type" : "record",
-		  "name" : "Configuration",
-		  "namespace" : "org.kaaproject.kaa.schema.sample",
-		  "fields" : [ {
-			"name" : "samplePeriod",
-			"type" : "int",
-			"by_default" : 1
-		  } ],
-		  "displayName" : "org.kaaproject.kaa.schema.sample.Configuration"
-		}
-	</pre>
+<pre>
+{
+  "type" : "record",
+  "name" : "Configuration",
+  "namespace" : "org.kaaproject.kaa.schema.sample",
+  "fields" : [ {
+	"name" : "samplePeriod",
+	"type" : "int",
+	"by_default" : 1
+  } ],
+  "displayName" : "org.kaaproject.kaa.schema.sample.Configuration"
+}
+</pre>
 	
 	To view the list of configuration schemas, open the <b>Configuration</b> page under the <b>Schemas</b> section of the application.
 	
@@ -630,42 +633,42 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 <p>
 	This demo application uses the following log appender definition.
 	
-	<pre>
-		{
-		   "mongoServers":[
-			  {
-				 "host":"localhost",
-				 "port":27017
-			  }
-		   ],
-		   "mongoCredentials":[
-		
-		   ],
-		   "dbName":"kaa",
-		   "connectionsPerHost":{
-			  "int":30
-		   },
-		   "maxWaitTime":{
-			  "int":120000
-		   },
-		   "connectionTimeout":{
-			  "int":5000
-		   },
-		   "socketTimeout":{
-			  "int":0
-		   },
-		   "socketKeepalive":{
-			  "boolean":false
-		   },
-		   "includeClientProfile":{
-			  "boolean":false
-		   },
-		   "includeServerProfile":{
-			  "boolean":false
-		   }
-		}
-	</pre>
-	
+<pre>
+{
+   "mongoServers":[
+	  {
+		 "host":"localhost",
+		 "port":27017
+	  }
+   ],
+   "mongoCredentials":[
+
+   ],
+   "dbName":"kaa",
+   "connectionsPerHost":{
+	  "int":30
+   },
+   "maxWaitTime":{
+	  "int":120000
+   },
+   "connectionTimeout":{
+	  "int":5000
+   },
+   "socketTimeout":{
+	  "int":0
+   },
+   "socketKeepalive":{
+	  "boolean":false
+   },
+   "includeClientProfile":{
+	  "boolean":false
+   },
+   "includeServerProfile":{
+	  "boolean":false
+   }
+}
+</pre>
+
 </p>
 
 <p>
@@ -677,29 +680,29 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 <p>
 	If you start your demo application, the console will display report the sampling period value and the sensor readings.
 	
-	<pre>
-		2016-08-22 13:54:40,897 [main] INFO  o.k.k.d.d.DataCollectionDemo - DataCollectionDemo app starting!
-		2016-08-22 13:54:41,996 [main] INFO  o.k.k.d.d.DataCollectionDemo - --= Press any key to exit =--
-		2016-08-22 13:54:41,997 [pool-3-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Kaa client started
-		2016-08-22 13:54:42,015 [pool-3-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Default sample period: 1
-		2016-08-22 13:54:57,519 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 38
-		2016-08-22 13:55:02,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 34
-		2016-08-22 13:55:07,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 37
-		2016-08-22 13:55:12,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 40
-		2016-08-22 13:55:17,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 35
-		2016-08-22 13:55:22,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 32
-		...
-	</pre>
+<pre>
+2016-08-22 13:54:40,897 [main] INFO  o.k.k.d.d.DataCollectionDemo - DataCollectionDemo app starting!
+2016-08-22 13:54:41,996 [main] INFO  o.k.k.d.d.DataCollectionDemo - --= Press any key to exit =--
+2016-08-22 13:54:41,997 [pool-3-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Kaa client started
+2016-08-22 13:54:42,015 [pool-3-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Default sample period: 1
+2016-08-22 13:54:57,519 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 38
+2016-08-22 13:55:02,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 34
+2016-08-22 13:55:07,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 37
+2016-08-22 13:55:12,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 40
+2016-08-22 13:55:17,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 35
+2016-08-22 13:55:22,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 32
+...
+</pre>
 	
 	You can access the collected data directly from the database using the MongoDB CLI tool.
 	To do this, access Sandbox virtual machine over ssh with the username <b>kaa</b> and password <b>kaa</b>, or use the virtual machine to run a Mongo client application for the MongoDB database.
 	
-	<pre>
-		 $ ssh kaa@%your_sandbox_instance_ip/host%
+<pre>
+ $ ssh kaa@%your_sandbox_instance_ip/host%
 
-		 $ mongo kaa
-		 > db.logs_%data_collection_application_token%.find()
-	</pre>
+ $ mongo kaa
+ > db.logs_%data_collection_application_token%.find()
+</pre>
 	
 	You will see the following output.
 	
@@ -767,14 +770,14 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 <p>
 	If you now start the application, the console will display the following messages.
 	
-	<pre>
-		...
-		2016-08-22 13:54:42,934 [pool-5-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Received configuration data. New sample period: 5
-		2016-08-22 13:54:57,519 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 38
-		2016-08-22 13:55:02,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 34
-		2016-08-22 13:55:07,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 37
-		2016-08-22 13:55:12,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 40
-	</pre>
+<pre>
+...
+2016-08-22 13:54:42,934 [pool-5-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Received configuration data. New sample period: 5
+2016-08-22 13:54:57,519 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 38
+2016-08-22 13:55:02,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 34
+2016-08-22 13:55:07,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 37
+2016-08-22 13:55:12,517 [pool-1-thread-1] INFO  o.k.k.d.d.DataCollectionDemo - Sampled Temperature: 40
+</pre>
 	
 	This means that the sampling period has been changed in the default configuration, and now the application sends the log records every 5 seconds.
 </p>

@@ -72,23 +72,23 @@ Follow the steps below to install this sample application on the Kaa Java SDK.
 	<li>
 		Connect to your Kaa Sandbox through ssh by running the following command from the JZeppelinDataAnalyticsDemo directory.
 		
-		<pre>
-			ssh kaa@YOUR-SANDBOX-IP
-			password: kaa
-		</pre>
+<pre>
+ssh kaa@YOUR-SANDBOX-IP
+password: kaa
+</pre>
 		
 	</li>
 	<li>
 		Download Apache Zeppelin and install it to your Sandbox.
 				
-		<pre>
-			cd /opt
-			sudo wget http://archive.apache.org/dist/zeppelin/zeppelin-0.6.1/zeppelin-0.6.1-bin-all.tgz
-			sudo tar -xzvf zeppelin-0.6.1-bin-all.tgz
-			sudo ln -s /opt/zeppelin-0.6.1-bin-all /opt/zeppelin
-			cd ./zeppelin/conf
-			sudo cp ./zeppelin-env.sh.template  ./zeppelin-env.sh
-		</pre>
+<pre>
+cd /opt
+sudo wget http://archive.apache.org/dist/zeppelin/zeppelin-0.6.1/zeppelin-0.6.1-bin-all.tgz
+sudo tar -xzvf zeppelin-0.6.1-bin-all.tgz
+sudo ln -s /opt/zeppelin-0.6.1-bin-all /opt/zeppelin
+cd ./zeppelin/conf
+sudo cp ./zeppelin-env.sh.template  ./zeppelin-env.sh
+</pre>
 		
 		<p>
 			If the download link does not work, you can download the archive directly from the <a href="http://zeppelin.apache.org/download.html" target="_blank">official page</a>.
@@ -97,17 +97,17 @@ Follow the steps below to install this sample application on the Kaa Java SDK.
 			If your port 8080 is not in use, Zeppelin will use it by default.
 			To change the default Zeppelin port, add the following line into the zeppelin-env.sh file.
 				
-			<pre>
-				export ZEPPELIN_PORT=7080
-			</pre>
+<pre>
+export ZEPPELIN_PORT=7080
+</pre>
 						
 	</li>
 	<li>
 		Start Zeppelin.
 		
-		<pre>
-			sudo /opt/zeppelin/bin/zeppelin-daemon.sh start
-		</pre>
+<pre>
+sudo /opt/zeppelin/bin/zeppelin-daemon.sh start
+</pre>
 		
 		<p>
 			Zeppelin is compatible with Cassandra version 2.2 and earlier.
@@ -116,74 +116,74 @@ Follow the steps below to install this sample application on the Kaa Java SDK.
 		
 		Add the DataStax Community repository to the /etc/apt/sources.list.d/cassandra.sources.list file.
 		
-		<pre>
-			echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
-			curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
-		</pre>
+<pre>
+echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+</pre>
 	</li>
 	<li>
 		Install Cassandra 2.2.5.
 
-		<pre>
-			sudo apt-get update
-			sudo apt-get install cassandra=2.2.5
-		</pre>
+<pre>
+sudo apt-get update
+sudo apt-get install cassandra=2.2.5
+</pre>
 		
 		If you receive the following console messages, use the default answer to avoid compatibility issues.
 
-		<pre>
-			Configuration file '/etc/cassandra/cassandra.yaml'
-			 ==> Modified (by you or by a script) after installation.
-			 ==> Package distributor has shipped an updated version.
-			   Choose an option:
-				Y or I  : install the package maintainer's version
-				N or O  : keep your currently installed version
-				  D     : show differences between the versions
-				  Z     : start a shell to examine the situation
-			 The default action is to keep your current version.
-			*** cassandra.yaml (Y/I/N/O/D/Z) [default=N] ?
-			N
-		</pre>
+<pre>
+Configuration file '/etc/cassandra/cassandra.yaml'
+ ==> Modified (by you or by a script) after installation.
+ ==> Package distributor has shipped an updated version.
+   Choose an option:
+	Y or I  : install the package maintainer's version
+	N or O  : keep your currently installed version
+	  D     : show differences between the versions
+	  Z     : start a shell to examine the situation
+ The default action is to keep your current version.
+*** cassandra.yaml (Y/I/N/O/D/Z) [default=N] ?
+N
+</pre>
 		
 		Run the following command to check if the Cassandra service is running.
 		
-		<pre>
-			sudo netstat -ntlp | grep 9042
-		</pre>
+<pre>
+sudo netstat -ntlp | grep 9042
+</pre>
 	</li>
 	<li>
 		Install Java Native Access (JNA).
 		
-		<pre>
-			sudo apt-get install libjna-java
-		</pre>
+<pre>
+sudo apt-get install libjna-java
+</pre>
 		
 		Reboot Cassandra cluster.
 		
-		<pre>
-			sudo cassandra
-		</pre>
+<pre>
+sudo cassandra
+</pre>
 		
 		Check cassandra cql shell.
 		
-		<pre>
-			cqlsh
-			Connected to Test Cluster at 127.0.0.1:9042.
-			[cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
-			Use HELP for help.
-			cqlsh>
-		</pre>
+<pre>
+cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
+Use HELP for help.
+cqlsh>
+</pre>
 		
 	</li>
 	<li>
 		Add initial data into Cassandra cluster from "cqlsh" shell.
 	
-		<pre>
-			CREATE KEYSPACE logs WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
-			use logs;
-			CREATE OR REPLACE FUNCTION logs.timeFormat(time bigint) RETURNS NULL ON NULL INPUT RETURNS text LANGUAGE java AS $$ return new java.text.SimpleDateFormat("mm:ss").format(new java.util.Date(time));$$;
-			CREATE OR REPLACE FUNCTION logs.timeDelta(arg bigint, delta bigint) RETURNS NULL ON NULL INPUT RETURNS bigint LANGUAGE java AS $$ return arg - delta;$$;
-		</pre>
+<pre>
+CREATE KEYSPACE logs WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+use logs;
+CREATE OR REPLACE FUNCTION logs.timeFormat(time bigint) RETURNS NULL ON NULL INPUT RETURNS text LANGUAGE java AS $$ return new java.text.SimpleDateFormat("mm:ss").format(new java.util.Date(time));$$;
+CREATE OR REPLACE FUNCTION logs.timeDelta(arg bigint, delta bigint) RETURNS NULL ON NULL INPUT RETURNS bigint LANGUAGE java AS $$ return arg - delta;$$;
+</pre>
 	</li>
 	<li>
 		Recover Cassandra log appenders.
@@ -201,17 +201,17 @@ Follow the steps below to install this sample application on the Kaa Java SDK.
 	<li>
 		Run the following command from the JZeppelinDataAnalyticsDemo directory to start Zeppelin data analytics demo.
 
-		<pre>
-			mvn clean install exec:java
-		</pre>
+<pre>
+mvn clean install exec:java
+</pre>
 		
 	</li>
 	<li>
 		Enter the following address in your browser to open your Zeppelin.
 		
-		<pre>
-			YOUR-SANDBOX-IP:7080/#/
-		</pre>
+<pre>
+YOUR-SANDBOX-IP:7080/#/
+</pre>
 
 		You can also use <a href="http://localhost:7080/#/">this link</a> when accessing from the same host machine the Sandbox is running on.
 	</li>

@@ -45,4 +45,9 @@ static inline int target_initialize(void)
     return 0;
 }
 
+static inline int target_wifi_reconnect_if_disconected(void)
+{
+    return 0;
+}
+
 #endif // POSIX_SUPPORT_H

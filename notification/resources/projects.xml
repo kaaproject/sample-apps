@@ -308,7 +308,7 @@ To install this sample application using the source code:
 
 <ol>
 	<li>
-		Install Kaa SDK on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
+		Install Android SDK version 25.0.0 on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -317,8 +317,10 @@ To install this sample application using the source code:
 	</li>
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		Note that <b>%PATH_TO_ANDROID_SDK%</b> should be replaced by the Android SDK installation path.
 		
 		<pre>
+			export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
 			./gradlew assembleDebug
 		</pre>
 		
@@ -658,14 +660,14 @@ To create a notification topic:
 		If you start your Kaa client, the console will display the following message.
 		
 		<pre>
-			2016-05-31 13:23:52,645 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
-			2016-05-31 13:23:52,647 [main] INFO  o.k.k.d.n.NotificationDemo - --= Press any key to exit =--
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
-			2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
-			2016-05-31 13:23:54,106 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed to topics:
-			2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+            2016-12-05 17:29:55,931 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
+            2016-12-05 17:29:56,702 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed on topics:
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo -
+            Please, type topic ID in order to subscribe to ones or type any text to exit:
 		</pre>
 		
 		The message above informs the user which topics the endpoint is subscribed to and which are available for subscription.
@@ -753,11 +755,13 @@ To configure and send a notification:
 		If you start your Kaa client, the console will display the following message.
 		
 		<pre>
-			...
-			2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
-			2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster, Notification alert type: Code green
-			...
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification from the topic with id [250] and name [Sample mandatory topic] received.
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster
+
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification alert type: CodeGreen
+
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo -
+            Please, type topic ID in order to subscribe to ones or type any text to exit:
 		</pre>
 		
 		The console message above informs the user about the notification message and notification topic ID.
@@ -770,12 +774,15 @@ To configure and send a notification:
 </p>
 
 <pre>
-	...
-	2016-05-31 13:23:54,107 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
-	2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [251] received.
-	2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: This is sample notification for optional topic. Client should subscribe to optional topics in order to receive notifications. This application subscribes to optional topics automatically.
-	...
-	2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+    2016-12-05 17:57:18,918 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed on topics:
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo -
+    Please, type topic ID in order to subscribe to ones or type any text to exit:
 </pre>
 
 <p>	
@@ -787,11 +794,13 @@ To configure and send a notification:
 	After 1 minute, the client console will stop receiving messages from notification topic ID 251 and will continue displaying other messages.
 	
 	<pre>
-		...
-		2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
-		2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: message, Message alert type: Code green
-		...
-		2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+        2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification from the topic with id [250] and name [Sample mandatory topic] received.
+        2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification body: Message
+
+        2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification alert type: CodeGreen
+
+		2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo -
+        Please, type topic ID in order to subscribe to ones or type any text to exit:
 	</pre>
 	
 </p>

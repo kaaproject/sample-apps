@@ -52,6 +52,8 @@ unsigned long  g_ulIpAddr = 0;
 
 extern void (* const g_pfnVectors[])(void);
 
+static int wlan_connect(const char *ssid, const char *pass, unsigned char sec_type);
+
 void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
 {
     UART_PRINT("SimpleLinkWlanEventHandler\r\n");
@@ -88,7 +90,7 @@ void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
                         pWlanEvent->EventData.STAandP2PModeWlanConnected.ssid_name);
             } else {
                 UART_PRINT("[WLAN ERROR]Device disconnected from the AP AP: %s\r\n",
-                        pWlanEvent->EventData.STAandP2PModeWlanConnected.ssid_name);
+                    pWlanEvent->EventData.STAandP2PModeWlanConnected.ssid_name);
             }
         }
         break;
@@ -319,5 +321,18 @@ int target_initialize(void)
     sl_Start(0, 0, 0);
     // Both SSID and PASSWORD must be defined externally.
     wlan_connect(WIFI_SSID, WIFI_PASSWORD, SL_SEC_TYPE_WPA_WPA2);
+
+    return 0;
+}
+
+int target_wifi_reconnect_if_disconected(void)
+{
+    if (!IS_CONNECTED(g_ulStatus)) {
+        UART_PRINT("Reconnect .....\r\n");
+        // Both SSID and PASSWORD must be defined externally.
+        wlan_connect(WIFI_SSID, WIFI_PASSWORD, SL_SEC_TYPE_WPA_WPA2);
+    }
+
+    return 0;
 }
 

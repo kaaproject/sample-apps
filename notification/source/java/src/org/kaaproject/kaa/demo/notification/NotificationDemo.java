@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -90,7 +91,6 @@ public class NotificationDemo {
         while (scanner.hasNextLong()) {
             long topicId = scanner.nextLong();
             if (getTopic(topicId) != null) {
-                LOG.info("Subscribing to optional topic {}", topicId);
                 subscribeTopic(topicId);
             } else {
                 LOG.info("There is no input topic id. Please, input existing topic id.");
@@ -151,13 +151,20 @@ public class NotificationDemo {
     }
 
     private static void subscribeTopic(long topicId) {
-        try {
-            subscribedTopics.add(getTopic(topicId));
-            kaaClient.subscribeToTopic(topicId, true);
-        } catch (UnavailableTopicException e) {
-            e.printStackTrace();
+        Optional<Topic> existingTopic = subscribedTopics.stream().filter(topic -> topic.getId().equals(topicId)).findFirst();
+        if (existingTopic.isPresent()) {
+            LOG.info("Already subscribed on topic with id: [{}] and name: [{}]", existingTopic.get().getId(), existingTopic.get().getName());
+        } else {
+            LOG.info("Subscribing to optional topic {}", topicId);
+            try {
+                subscribedTopics.add(getTopic(topicId));
+                kaaClient.subscribeToTopic(topicId, true);
+            } catch (UnavailableTopicException e) {
+                e.printStackTrace();
+            }
         }
-        inputTopicIdMessage();
+
+        showTopics();
     }
 
     private static Topic getTopic(long id) {

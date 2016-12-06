@@ -81,7 +81,7 @@ To install this sample application using the source code:
 
 <ol>
 	<li>
-		Install Kaa SDK on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
+		Install Android SDK version 25.0.0 on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -90,8 +90,10 @@ To install this sample application using the source code:
 	</li>
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		Note that <b>%PATH_TO_ANDROID_SDK%</b> should be replaced by the Android SDK installation path.
 		
 		<pre>
+			export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
 			./gradlew assembleDebug
 		</pre>
 		
@@ -148,7 +150,7 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
              (ex. LINUX_X86, ANDROID, IOS, ESP8266, etc., to get list of all possible options
              see 'platform' type in demo_projects_schema.xsd schema) -->
              
-        <platforms>CC32XX ESP8266</platforms>
+        <platforms>LINUX_X86 CC32XX ESP8266</platforms>
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>

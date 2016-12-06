@@ -9,7 +9,7 @@
   }, {
     "name" : "timeInFailure",
     "type" : "long",
-    "displayName" : "Tatal failure duration (ms)"
+    "displayName" : "Total failure duration (ms)"
   }, {
     "name" : "lastFailure",
     "type" : "long",

@@ -43,23 +43,25 @@ import java.util.Map;
  */
 public class KaaManager extends SimpleKaaClientStateListener {
 
-    private final KaaClient mClient;
-    private final EventBus mEventBus;
+    private KaaClient mClient;
+    private EventBus mEventBus;
 
-    private final KaaInfoSlave mInfoSlave;
-    private final KaaEventsSlave mEventsSlave;
-    private final KaaUserVerifierSlave mKaaUserVerifierSlave;
+    private KaaInfoSlave mInfoSlave;
+    private KaaEventsSlave mEventsSlave;
+    private KaaUserVerifierSlave mKaaUserVerifierSlave;
 
-    public KaaManager(Context ctx) {
+    private boolean mIsInited = false;
+
+    public void init(Context context) {
         mEventBus = EventBus.getDefault();
 
         mInfoSlave = new KaaInfoSlave();
         mEventsSlave = new KaaEventsSlave(mInfoSlave);
 
-        final KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(ctx);
+        final KaaClientPlatformContext kaaClientContext = new AndroidKaaPlatformContext(context);
         mClient = Kaa.newClient(kaaClientContext, this, true);
 
-        mInfoSlave.initDeviceInfo(ctx, new Runnable() {
+        mInfoSlave.initDeviceInfo(context, new Runnable() {
             @Override
             public void run() {
                 /**
@@ -71,6 +73,12 @@ public class KaaManager extends SimpleKaaClientStateListener {
         mEventsSlave.init(mClient);
 
         mKaaUserVerifierSlave = new KaaUserVerifierSlave(this);
+
+        mIsInited = true;
+    }
+
+    public boolean isInited() {
+        return mIsInited;
     }
 
     /**
@@ -139,8 +147,12 @@ public class KaaManager extends SimpleKaaClientStateListener {
         return mInfoSlave.getRemoteDevicesMap();
     }
 
-    public String getRemoteDeviceModel(String endpointKey) {
-        return mInfoSlave.getRemoteDevicesMap().get(endpointKey).getModel();
+    public String getRemoteDeviceModel(String endpointKey) throws IllegalStateException {
+        try {
+            return mInfoSlave.getRemoteDevicesMap().get(endpointKey).getModel();
+        } catch (NullPointerException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     public List<AlbumInfo> getRemoteDeviceAlbums(String endpointKey) {
@@ -186,5 +198,13 @@ public class KaaManager extends SimpleKaaClientStateListener {
         } else {
             mEventBus.post(new Events.UserDetachEvent("Failed to detach endpoint from user!"));
         }
+    }
+
+    public void resume() {
+        mClient.resume();
+    }
+
+    public void pause() {
+        mClient.pause();
     }
 }

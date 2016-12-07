@@ -84,9 +84,9 @@ To install the sample application using the binary files:
 	<li>
 		Run the following command from the directory containing the downloaded .jar archive.
 		
-		<pre>
-			$ java -jar ProfilingDemo.jar
-		</pre>
+<pre>
+$ java -jar ProfilingDemo.jar
+</pre>
 		
 		The sample application console will display the startup message.
 	</li>
@@ -109,15 +109,15 @@ To install the sample application using the source code:
 		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
 		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
-		<pre>
-			$ ant debug
-		</pre>
+<pre>
+$ ant debug
+</pre>
 		
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
-		<pre>
-			$ java -jar build/jar/ProfilingDemo.jar
-		</pre>
+<pre>
+$ java -jar build/jar/ProfilingDemo.jar
+</pre>
 	</li>
 </ol>
 
@@ -126,49 +126,49 @@ To install the sample application using the source code:
 <p>
 	When you start the application, the console will display the following messages.
 	
-	<pre>
-		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Profiling demo started
-		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint #2 data:
-		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint ID (Endpoint Key Hash): UIM/Vi5P5fRz37EdugNsSIA9kYM=
-		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Client-side endpoint profile (audio/video/vibro support): true - true - true
-		INFO  o.k.kaa.demo.profiling.ProfilingDemo - Configuration (is audio/video/vibro subscription active): false - false - true
-	</pre>
+<pre>
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Profiling demo started
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint #2 data:
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Endpoint ID: UIM/Vi5P5fRz37EdugNsSIA9kYM=
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Client-side endpoint profile (audio/video/vibro support): true - true - true
+INFO  o.k.kaa.demo.profiling.ProfilingDemo - Configuration (is audio/video/vibro subscription active): false - false - true
+</pre>
 </p>
 
 <p>
 	To set up your client-side endpoint profile, use the following code.
 	
-	<pre>
-		// Client-side profiles list, for creating endpoints
-		private static List<PagerClientProfile> profiles = new ArrayList<>();
-		static {
-			profiles.add(new PagerClientProfile(false, false, true));
-			profiles.add(new PagerClientProfile(true, false, true));
-			profiles.add(new PagerClientProfile(true, true, true));
-		}
-		
-		. . .
-		
-		// Setup endpoint profile
-		kaaClient.setProfileContainer(new ProfileContainer() {
-			@Override
-			public PagerClientProfile getProfile() {
-				return profiles.get(endpointIndex);
-			}
-		});
-	</pre>
+<pre>
+// Client-side profiles list, for creating endpoints
+private static List<PagerClientProfile> profiles = new ArrayList<>();
+static {
+	profiles.add(new PagerClientProfile(false, false, true));
+	profiles.add(new PagerClientProfile(true, false, true));
+	profiles.add(new PagerClientProfile(true, true, true));
+}
+
+. . .
+
+// Setup endpoint profile
+kaaClient.setProfileContainer(new ProfileContainer() {
+	@Override
+	public PagerClientProfile getProfile() {
+		return profiles.get(endpointIndex);
+	}
+});
+</pre>
 	
 	To receive configuration updates from Kaa server, use the Kaa client listener.
 	
-	<pre>
-		//Add a listener to display endpoint's profile/configuration data each time configuration is updated.
-		kaaClient.addConfigurationListener(new ConfigurationListener() {
-			@Override
-			public void onConfigurationUpdate(PagerConfiguration configuration) {
-				displayConfiguration(endpointIndex);
-			}
-		});
-	</pre>	
+<pre>
+//Add a listener to display endpoint's profile/configuration data each time configuration is updated.
+kaaClient.addConfigurationListener(new ConfigurationListener() {
+	@Override
+	public void onConfigurationUpdate(PagerConfiguration configuration) {
+		displayConfiguration(endpointIndex);
+	}
+});
+</pre>	
 </p>
 
 If you want to modify the sample application source code or create your own applications using the Kaa platform, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/" target="_blank">Your first Kaa application</a>.
@@ -188,20 +188,20 @@ To do this:
 	<li>
 		Open a terminal window from the Sandbox installation directory and run the following command.
 		
-		<pre>
-			mongo
-		</pre>
+<pre>
+mongo
+</pre>
 		
 		A MongoDB console will open.
 	</li>
 	<li>
 		In the MongoDB console, run the following commands to delete the endpoint_profile table.
 		
-		<pre>
-			use kaa
-			show tables
-			db.endpoint_profile.remove({})
-		</pre>
+<pre>
+use kaa
+show tables
+db.endpoint_profile.remove({})
+</pre>
 		
 		Now the endpoint profiles are deleted.
 </ol>
@@ -277,9 +277,9 @@ To launch this sample application on the Kaa Objective-C SDK:
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
-		<pre>
-			sh build.sh
-		</pre>
+<pre>
+sh build.sh
+</pre>
 		
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
         <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
@@ -288,11 +288,11 @@ To launch this sample application on the Kaa Objective-C SDK:
 		Open the ProfilingDemo.xcodeproj file and click the <b>Play</b> button.
 		You should see the following console messages.
 		
-		<pre>
-			2016-09-07 14:46:14.053 ProfilingDemo[26391:4700219] ProfilingDemo started
-			2016-09-07 14:46:15.165 ProfilingDemo[26391:4700295] Kaa client started
-			2016-09-07 14:46:15.166 ProfilingDemo[26391:4700295] Audio support enabled: yes, video support enabled: yes, vibro support enabled: yes
-		</pre>
+<pre>
+2016-09-07 14:46:14.053 ProfilingDemo[26391:4700219] ProfilingDemo started
+2016-09-07 14:46:15.165 ProfilingDemo[26391:4700295] Kaa client started
+2016-09-07 14:46:15.166 ProfilingDemo[26391:4700295] Audio support enabled: yes, video support enabled: yes, vibro support enabled: yes
+</pre>
 		
 	</li>
 </ol>
@@ -302,7 +302,7 @@ To launch this sample application on the Kaa Objective-C SDK:
 <h2>Running the build script returns an error message</h2>
 
 <pre>
-	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
+[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
 <p>
@@ -315,9 +315,9 @@ Try the following:
 	<li>
 		Run the following command from the ./libs/kaa-ep-sdk/ folder.
 		
-		<pre>
-			vim Podfile
-		</pre>
+<pre>
+vim Podfile
+</pre>
 		
 	</li>
 	<li>
@@ -326,9 +326,9 @@ Try the following:
 	<li>
 		Run this command.
 		
-		<pre>
-			pod install
-		</pre>
+<pre>
+pod install
+</pre>
 		
 	</li>
 </ol>
@@ -371,7 +371,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa C SDK</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -379,23 +379,33 @@ To launch this sample application on the Kaa C SDK:
 		Click <b>Ok</b> and download the .tar.gz file.
 	</li>
 	<li>
-		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
-			<pre>
-				./build.sh deploy
-			</pre>
+		Unpack the downloaded archive.
 	</li>
 	<li>
-		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Supported-platforms/" target="_blank">supported platforms</a> and press Enter.
-		The C SDK and the demo application are now built and the demo application is launched.
-	</li>
-</ol>
-
-Once you built the application, you can start it at any time using the following command.
-
+		Unpack the SDK archive.
 <pre>
-	./build.sh run
+tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
+	</li>
+	<li>
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+    </li>
+    <li>
+        Run your sample application.
+<pre>
+./build/demo_client
+</pre>
+    </li>
+</ol>
 
 <h1>Troubleshooting</h1>
 
@@ -412,19 +422,19 @@ To do this:
 	<li>
 		Open a terminal window from the Sandbox installation directory and run the following command.
 		
-		<pre>
-			mongo
-		</pre>
+<pre>
+mongo
+</pre>
 		
 		A MongoDB console will open.
 	</li>
 	<li>
 		In the MongoDB console, run the following commands to delete the endpoint_profile table.
-		<pre>
-			use kaa
-			show tables
-			db.endpoint_profile.remove({})
-		</pre>
+<pre>
+use kaa
+show tables
+db.endpoint_profile.remove({})
+</pre>
 		
 		Now the endpoint profiles are deleted.
 </ol>		
@@ -432,7 +442,7 @@ To do this:
 <h2>Running the build.sh script returns an error message</h2>
 
 <pre>
-	Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
+Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
 </pre>
 
 <p>
@@ -455,7 +465,7 @@ Try the following:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -508,50 +518,50 @@ To launch this sample application on the Kaa C++ SDK:
 	<li>
 		Unpack the downloaded archive.
 	</li>
+	<li>
+		Unpack the SDK archive.
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+	</li>
+	<li>
+		Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+		<p>
+			<b>Windows</b>
+<pre>
+mkdir build
+cd build
+cmake -G "Nmake Makefiles" ..
+nmake
+</pre>
+		</p>
+		<p>
+			<b>Linux, OS X (macOS)</b>
+<pre>
+mkdir build \
+&& cd build
+&& cmake .. \
+&& make
+</pre>
+            By default, the project is generated for POSIX platform.
+            To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+		</p>
+	</li>
     <li>
-        Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
-    </li>
-    <li>
-        Run the following commands:
-        <p>
+        Run your sample application.
+		<p>
             <b>Windows</b>
-            <pre>
-                mkdir build
-                cd build
-                cmake -G "Nmake Makefiles" ..
-                nmake
-            </pre>
-        </p>
-        <p>
-            <b>Linux, OS X (macOS)</b>
-            <pre>
-                mkdir build \
-                && cd build \
-                && cmake .. \
-                && make
-            </pre>
-            By default the project is generated for Posix target.
-            To generate and build project for other supported targets,
-            refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
-        </p>
-    </li>
-    <li>
-        To run demo, execute:
-        <p>
-            <b>Windows</b>
-            <pre>
-                build/demo_client.exe
-            </pre>
-        </p>
-        <p>
-            <b>Linux</b>
-            <pre>
-                ./build/demo_client
-            </pre>
-        </p>
+<pre>
+build/demo_client.exe
+</pre>
+		</p>
+		<p>
+			<b>Linux</b>
+<pre>
+./build/demo_client
+</pre>
+		</p>
     </li>
 </ol>
 	
@@ -560,7 +570,7 @@ To launch this sample application on the Kaa C++ SDK:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -605,24 +615,24 @@ In this example, the device will support audio, video and vibration signals.
 <p>
 	For this purpose, the following client-side EP profile schema is used in the sample application.
 	
-	<pre>
-		{
-		  "type" : "record",
-		  "name" : "PagerClientProfile",
-		  "namespace" : "org.kaaproject.examples.pager",
-		  "fields" : [ {
-			"name" : "audioSupport",
-			"type" : "boolean"
-		  }, {
-			"name" : "videoSupport",
-			"type" : "boolean"
-		  }, {
-			"name" : "vibroSupport",
-			"type" : "boolean"
-		  } ],
-		  "displayName" : "org.kaaproject.examples.pager.PagerClientProfile"
-		}
-	</pre>
+<pre>
+{
+  "type" : "record",
+  "name" : "PagerClientProfile",
+  "namespace" : "org.kaaproject.examples.pager",
+  "fields" : [ {
+	"name" : "audioSupport",
+	"type" : "boolean"
+  }, {
+	"name" : "videoSupport",
+	"type" : "boolean"
+  }, {
+	"name" : "vibroSupport",
+	"type" : "boolean"
+  } ],
+  "displayName" : "org.kaaproject.examples.pager.PagerClientProfile"
+}
+</pre>
 	
 </p>
 <p>
@@ -665,24 +675,24 @@ To do this:
 	The same data structure is used for the <b>server-side EP profile schema</b>.
 	The following server-side EP profile schema is used for this sample application.
 
-	<pre>
-		{
-		  "type" : "record",
-		  "name" : "PagerServerProfile",
-		  "namespace" : "org.kaaproject.examples.pager",
-		  "fields" : [ {
-			"name" : "audioSubscription",
-			"type" : "boolean"
-		  }, {
-			"name" : "videoSubscription",
-			"type" : "boolean"
-		  }, {
-			"name" : "vibroSubscription",
-			"type" : "boolean"
-		  } ],
-		  "displayName" : "org.kaaproject.examples.pager.PagerServerProfile"
-		}
-	</pre>
+<pre>
+{
+  "type" : "record",
+  "name" : "PagerServerProfile",
+  "namespace" : "org.kaaproject.examples.pager",
+  "fields" : [ {
+	"name" : "audioSubscription",
+	"type" : "boolean"
+  }, {
+	"name" : "videoSubscription",
+	"type" : "boolean"
+  }, {
+	"name" : "vibroSubscription",
+	"type" : "boolean"
+  } ],
+  "displayName" : "org.kaaproject.examples.pager.PagerServerProfile"
+}
+</pre>
 </p>
 
 <p>
@@ -700,25 +710,25 @@ The configuration data structure is defined in the <b>configuration schema</b>.
 The following configuration schema is used for this sample application.
 	
 <pre>
-	{
-	  "type" : "record",
-	  "name" : "PagerConfiguration",
-	  "namespace" : "org.kaaproject.examples.pager",
-	  "fields" : [ {
-		"name" : "audioSubscriptionActive",
-		"type" : "boolean",
-		"by_default" : false
-	  }, {
-		"name" : "videoSubscriptionActive",
-		"type" : "boolean",
-		"by_default" : false
-	  }, {
-		"name" : "vibroSubscriptionActive",
-		"type" : "boolean",
-		"by_default" : true
-	  } ],
-	  "displayName" : "org.kaaproject.examples.pager.PagerConfiguration"
-	}
+{
+  "type" : "record",
+  "name" : "PagerConfiguration",
+  "namespace" : "org.kaaproject.examples.pager",
+  "fields" : [ {
+	"name" : "audioSubscriptionActive",
+	"type" : "boolean",
+	"by_default" : false
+  }, {
+	"name" : "videoSubscriptionActive",
+	"type" : "boolean",
+	"by_default" : false
+  }, {
+	"name" : "vibroSubscriptionActive",
+	"type" : "boolean",
+	"by_default" : true
+  } ],
+  "displayName" : "org.kaaproject.examples.pager.PagerConfiguration"
+}
 </pre>
 
 <p>
@@ -762,32 +772,32 @@ This means that once you start your endpoint, it will receive the default config
 <p>
 	When you start this demo application, the following console messages will be displayed.
 	
-	<pre>
-		016-08-08 13:20:28,272 [main] INFO  o.k.k.d.c.ConfigurationDemo - Profiling demo started
-		2016-08-08 13:20:29,399 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
-		2016-08-08 13:20:29,400 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: false, videoSupport: false, vibroSupport: true
-		2016-08-08 13:20:29,401 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: true
-		
-		2016-08-08 13:20:30,096 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
-		2016-08-08 13:20:30,097 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
-		2016-08-08 13:20:30,097 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: false, video: false, vibration: true
-		
-		2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
-		2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
-		2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: false, video: false, vibration: true
-		
-		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
-		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
-		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
-		2016-08-08 13:20:30,391 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: true, video: false, vibration: true
-		
-		2016-08-08 13:20:30,468 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
-		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
-		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
-		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: true
-		
-		2016-08-08 13:20:33,248 [main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--
-	</pre>
+<pre>
+016-08-08 13:20:28,272 [main] INFO  o.k.k.d.c.ConfigurationDemo - Profiling demo started
+2016-08-08 13:20:29,399 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
+2016-08-08 13:20:29,400 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: false, videoSupport: false, vibroSupport: true
+2016-08-08 13:20:29,401 [pool-2-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: true
+
+2016-08-08 13:20:30,096 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+2016-08-08 13:20:30,097 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
+2016-08-08 13:20:30,097 [pool-8-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: false, video: false, vibration: true
+
+2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+2016-08-08 13:20:30,249 [pool-14-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: false, video: false, vibration: true
+
+2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
+2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
+2016-08-08 13:20:30,391 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: true, video: false, vibration: true
+
+2016-08-08 13:20:30,468 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: true
+
+2016-08-08 13:20:33,248 [main] INFO  o.k.k.d.c.ConfigurationDemo - --= Press any key to exit =--
+</pre>
 </p>
 
 <p>
@@ -840,19 +850,19 @@ To manage profile filters for a group
 	As mentioned before, there are four groups defined for this sample application.
 	Each group contains one filter that applies to the client-side EP profile.
 	
-	<pre>
-		// "Audio and vibration"
-		#cp.audioSupport == true && #cp.videoSupport == false && #cp.vibroSupport == true
-		
-		// "Vibration only"
-		#cp.audioSupport == false && #cp.videoSupport == false && #cp.vibroSupport == true
-		
-		// "All signals enabled"
-		#cp.audioSupport == true && #cp.videoSupport == true && #cp.vibroSupport == true
-		
-		// "Disable vibration if audio and video are supported"
-		#cp.audioSupport == true && #cp.videoSupport == true && #cp.vibroSupport == true
-	</pre>
+<pre>
+// "Audio and vibration"
+#cp.audioSupport == true && #cp.videoSupport == false && #cp.vibroSupport == true
+
+// "Vibration only"
+#cp.audioSupport == false && #cp.videoSupport == false && #cp.vibroSupport == true
+
+// "All signals enabled"
+#cp.audioSupport == true && #cp.videoSupport == true && #cp.vibroSupport == true
+
+// "Disable vibration if audio and video are supported"
+#cp.audioSupport == true && #cp.videoSupport == true && #cp.vibroSupport == true
+</pre>
 </p>
 <p>
 	When you start your application, each EP sends its client-side profile data to Kaa server for registration.
@@ -873,15 +883,15 @@ To manage profile filters for a group
 As shown in the <b>Endpoint groups</b> section above, when you start the application, the last two message blocks in the console will look like this.
 
 <pre>
-		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
-		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
-		2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
-		2016-08-08 13:20:30,391 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: true, video: false, vibration: true
-		
-		2016-08-08 13:20:30,468 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
-		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
-		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
-		2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: true
+2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
+2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+2016-08-08 13:20:30,390 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: false, vibroSupport: true
+2016-08-08 13:20:30,391 [pool-10-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: true, video: false, vibration: true
+
+2016-08-08 13:20:30,468 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+2016-08-08 13:20:30,469 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: true
 </pre>
 
 This means that the endpoints #1 and #2 were updated with new configuration because the server found profile filters that match the client-side profile data of these two endpoints.
@@ -932,13 +942,13 @@ This means that the endpoints #1 and #2 were updated with new configuration beca
 <p>
 	The following console messages will be displayed.
 
-	<pre>
-		...
-		2016-08-12 16:27:19,777 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - The configuration for the 2-th endpoint had been updated.
-		2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
-		2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
-		2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - 2-th endpoint configuration: audio: true, video: true, vibration: false.
-	</pre>
+<pre>
+...
+2016-08-12 16:27:19,777 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - The configuration for the 2-th endpoint had been updated.
+2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - Client EP - audioSupport: true, videoSupport: true, vibroSupport: true
+2016-08-12 16:27:19,778 [pool-16-thread-1] INFO  o.k.k.d.c.ProfilingDemo - 2-th endpoint configuration: audio: true, video: true, vibration: false.
+</pre>
 
 	This means that the endpoint #2 became a member of the <b>Disable vibration if audio and video are supported</b> group, and the configuration of this endpoint changed accordingly.
 	Note that an endpoint can be assigned to groups only when the endpoint is online and has a connection to Kaa server.
@@ -957,13 +967,13 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 <p>
 	For demonstration purpose, this demo application has a default server-side profile with all properties set to <b>false</b> and applied to all the three endpoints.
 	
-	<pre>
-		{
-		  "audioSubscription" : false,
-		  "videoSubscription" : false,
-		  "vibroSubscription" : false
-		}
-	</pre>
+<pre>
+{
+  "audioSubscription" : false,
+  "videoSubscription" : false,
+  "vibroSubscription" : false
+}
+</pre>
 	
 </p>
 <p>
@@ -1015,9 +1025,9 @@ To do this:
 		<li>
 			Copy and paste this line into the <b>Filter body</b> block.
 		
-			<pre>
-				#sp.audioSubscription == false && #sp.videoSubscription == false && #sp.vibroSubscription == false
-			</pre>	
+<pre>
+#sp.audioSubscription == false && #sp.videoSubscription == false && #sp.vibroSubscription == false
+</pre>	
 		
 		</li>
 		<li>
@@ -1027,21 +1037,21 @@ To do this:
 	
 	The console will display the following messages.
 	
-	<pre>
-		...
+<pre>
+...
 
-		2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
-		2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
-		2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: false, video: false, vibration: false.
-		
-		2016-08-15 13:04:59,625 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 0-th endpoint had been updated.
-		2016-08-15 13:04:59,626 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
-		2016-08-15 13:04:59,629 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: false.
-		
-		2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
-		2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
-		2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: false, video: false, vibration: false.
-	</pre>
+2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 1-th endpoint had been updated.
+2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - HCSG8+xLPouhS8ffLSVKrK/ND/k=
+2016-08-15 13:04:59,621 [pool-9-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 1-th endpoint configuration: audio: false, video: false, vibration: false.
+
+2016-08-15 13:04:59,625 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 0-th endpoint had been updated.
+2016-08-15 13:04:59,626 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
+2016-08-15 13:04:59,629 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: false.
+
+2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+2016-08-15 13:04:59,694 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: false, video: false, vibration: false.
+</pre>
 	
 	All types of signals are now disabled for all the three endpoints.
 </p>
@@ -1052,19 +1062,19 @@ To do this:
 	Create a group named <b>Enable audio if supported by device</b> and set its weight to <b>110</b>.
 	Apply the following filter.
 	
-	<pre>
-		#cp.audioSupport == true && #sp.audioSubscription == true
-	</pre>
+<pre>
+#cp.audioSupport == true && #sp.audioSubscription == true
+</pre>
 	
 	Apply the following configuration.
 	
-	<pre>
-		{
-		  "audioSubscriptionActive" : true,
-		  "videoSubscriptionActive" : unchanged,
-		  "vibroSubscriptionActive" : unchanged
-		}
-	</pre>
+<pre>
+{
+  "audioSubscriptionActive" : true,
+  "videoSubscriptionActive" : unchanged,
+  "vibroSubscriptionActive" : unchanged
+}
+</pre>
 	
 	Note that <b>unchanged</b> means that you should leave the corresponding check box clear so that the base property will not be overridden.
 </p>
@@ -1073,40 +1083,38 @@ To do this:
 	Create a group named <b>Enable video if supported by device</b> and set its weight to <b>120</b>.
 	Apply the following filter.
 	
-	<pre>
-		#cp.videoSupport == true && #sp.videoSubscription == true
-	</pre>
+<pre>
+#cp.videoSupport == true && #sp.videoSubscription == true
+</pre>
 	
 	Apply the following configuration.
 	
-	<pre>
-		{
-		  "audioSubscriptionActive" : unchanged,
-		  "videoSubscriptionActive" : true,
-		  "vibroSubscriptionActive" : unchanged
-		}
-
-	</pre>
+<pre>
+{
+  "audioSubscriptionActive" : unchanged,
+  "videoSubscriptionActive" : true,
+  "vibroSubscriptionActive" : unchanged
+}
+</pre>
 </p>
 
 <p>
 	Create a group named <b>Enable vibration if supported by device</b> and set its weight to <b>130</b>.
 	Apply the following filter.
 	
-	<pre>
-		#cp.vibroSupport == true && #sp.vibroSubscription == true
-	</pre>
+<pre>
+#cp.vibroSupport == true && #sp.vibroSubscription == true
+</pre>
 	
 	Apply the following configuration.
 	
-	<pre>
-		{
-		  "audioSubscriptionActive" : unchanged,
-		  "videoSubscriptionActive" : unchanged,
-		  "vibroSubscriptionActive" : true
-		}
-
-	</pre>
+<pre>
+{
+  "audioSubscriptionActive" : unchanged,
+  "videoSubscriptionActive" : unchanged,
+  "vibroSubscriptionActive" : true
+}
+</pre>
 </p>
 
 <p>
@@ -1134,7 +1142,7 @@ To do this:
 						
 		</li>
 		<li>
-			See your console output to see which <b>Key hash</b> corresponds to the endpoint #0 and select it from the list.
+			See your console output to see which <b>endpoint ID</b> corresponds to the endpoint #0 and select it from the list.
 			The <b>Endpoint profile details</b> page will open.
 						
 			<br />
@@ -1151,12 +1159,12 @@ To do this:
 	
 	The console will display the following messages.
 	
-	<pre>
-		2016-08-15 13:11:58,386 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 0-th endpoint had been updated.
-		2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
-		2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: false, videoSupport: false, vibroSupport: true
-		2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: true.
-	</pre>
+<pre>
+2016-08-15 13:11:58,386 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 0-th endpoint had been updated.
+2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - Vbm/biBNcKTNSplA5qaPkBhRyTU=
+2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - Client EP - audioSupport: false, videoSupport: false, vibroSupport: true
+2016-08-15 13:11:58,387 [pool-4-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 0-th endpoint configuration: audio: false, video: false, vibration: true.
+</pre>
 	
 	This means that the configuration of endpoint #0 changed and now it can produce vibration signal.
 </p>
@@ -1169,29 +1177,29 @@ You can create filters with conditions that apply to both client- and server-sid
 	As an example, you can create a group whose member endpoints will stop supporting vibration signal, if they have video and audio signals supported and enabled.
 	Set the weight of this group to <b>140</b> and apply the following filter conditions.
 	
-	<pre>
-		#cp.audioSupport == true && #sp.audioSubscription == true &&
-		#cp.videoSupport == true && #sp.videoSubscription == true 
-	</pre>
+<pre>
+#cp.audioSupport == true && #sp.audioSubscription == true &&
+#cp.videoSupport == true && #sp.videoSubscription == true
+</pre>
 	
 	Apply the following configuration.
 	
-	<pre>
-		{
-		  "audioSubscriptionActive" : unchanged,
-		  "videoSubscriptionActive" : unchanged,
-		  "vibroSubscriptionActive" : false
-		}
-	</pre>
+<pre>
+{
+  "audioSubscriptionActive" : unchanged,
+  "videoSubscriptionActive" : unchanged,
+  "vibroSubscriptionActive" : false
+}
+</pre>
 	
 	The console will display the following messages.
 	
-	<pre>
-		...
-		2016-08-15 13:13:17,372 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
-		2016-08-15 13:13:17,373 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
-		2016-08-15 13:13:17,373 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: false.
-	</pre>
+<pre>
+...
+2016-08-15 13:13:17,372 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - The configuration for the 2-th endpoint had been updated.
+2016-08-15 13:13:17,373 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - KeyHash   - FbeamiaBVnuvCorEbw3mVjSD6NI=
+2016-08-15 13:13:17,373 [pool-16-thread-1] INFO  o.k.k.d.c.ConfigurationDemo - 2-th endpoint configuration: audio: true, video: true, vibration: false.
+</pre>
 	
 	This means that the configuration of endpoint #2 changed and now it cannot produce vibration signal.
 </p>

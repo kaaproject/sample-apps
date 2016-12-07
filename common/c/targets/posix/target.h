@@ -33,6 +33,11 @@
 /* Demo print routine. Default printf exists for posix target. */
 #define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
 
+#define NUM_GPIO_LEDS 4
+
+#define TARGET_DEVICE_NAME "POSIX"
+#define TARGET_MODEL_NAME "01"
+
 /* Initialises a target. Zero value means success, negative - errors. */
 static inline int target_initialize(void)
 {
@@ -40,5 +45,9 @@ static inline int target_initialize(void)
     return 0;
 }
 
-#endif // POSIX_SUPPORT_H
+static inline int target_wifi_reconnect_if_disconected(void)
+{
+    return 0;
+}
 
+#endif // POSIX_SUPPORT_H

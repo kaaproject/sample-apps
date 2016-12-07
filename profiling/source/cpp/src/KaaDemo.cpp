@@ -83,7 +83,7 @@ public:
     virtual void onConfigurationUpdated(const KaaRootConfiguration &configuration)
     {
         std::cout << "Configuration updated!" << std::endl;
-        std::cout << "Endpoint Key Hash: " << kaaClient_->getEndpointKeyHash() << std::endl;
+        std::cout << "Endpoint ID: " << kaaClient_->getEndpointKeyHash() << std::endl;
         printConfiguration(configuration);
         std::cout << std::endl;
     }

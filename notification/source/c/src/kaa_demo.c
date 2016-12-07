@@ -20,8 +20,15 @@
 #include <platform/kaa_client.h>
 #include <utilities/kaa_log.h>
 #include <kaa_notification_manager.h>
+#include <string.h>
+#include <inttypes.h>
+#include <time.h>
+
+#define PROMPT_TIMEOUT 1
 
 static kaa_client_t *kaa_client = NULL;
+static kaa_list_t *topic_list = NULL;
+time_t last_prompt;
 
 enum color {RED, YELLOW, GREEN};
 
@@ -44,20 +51,67 @@ static const char *color_to_str(enum color code_color)
 
 #define INPUT_LENGTH 8
 
-static int read_topic_id(void)
+static uint64_t read_topic_id(void)
 {
     char input[INPUT_LENGTH+1];
     int input_length = 0;
-    while (input_length < INPUT_LENGTH) {
-        input[input_length] = getchar();
-        if (input[input_length] == '\n') {
-            break;
+    do {
+        while (input_length < INPUT_LENGTH) {
+            input[input_length] = getchar();
+            if (input[input_length] == '\n') {
+                break;
+            }
+            input_length++;
         }
-        input_length++;
-    }
 
-    input[input_length] = '\0';
-    return atoi(input);
+        input[input_length] = '\0';
+    } while (strlen(input) == 0);
+    if (strcmp(input, "quit") == 0) {
+        kaa_client_stop(kaa_client);
+        kaa_client_destroy(kaa_client);
+        exit(EXIT_SUCCESS);
+    }
+    return (unsigned long long)atoll(input);
+}
+
+static bool find_topic_predicate(void *data, void *context)
+{
+    kaa_topic_t *t = (kaa_topic_t *)data;
+    return t->id == *(uint64_t*)context;
+}
+
+static void subscribe_to_topic(void *data, void *context)
+{
+    kaa_topic_t *topic = (kaa_topic_t *)data;
+    uint64_t topic_id = *(uint64_t*)context;
+    if (topic_id == topic->id) {
+        if (topic->subscription_type == OPTIONAL_SUBSCRIPTION) {
+            kaa_error_t err = kaa_subscribe_to_topic(kaa_client_get_context(kaa_client)->notification_manager, &topic->id, false);
+            if (err) {
+                demo_printf("Failed to subscribe.\r\n");
+            } else {
+                demo_printf("Subscribed to optional topic '%llu'\r\n", topic->id);
+            }
+        } else {
+            demo_printf("Topic %llu is MANDATORY cannot subscribe\r\n", topic->id);
+        }
+        kaa_error_t err = kaa_sync_topic_subscriptions(kaa_client_get_context(kaa_client)->notification_manager);
+        if (err) {
+            demo_printf("Failed to sync subscriptions\r\n");
+        }
+    }
+}
+
+static void process_user_command()
+{
+    if (topic_list != NULL) {
+        demo_printf("Enter topic id to subscribe to:\n");
+    }
+    demo_printf("Enter 'quit' to exit\n");
+    uint64_t topic_id = read_topic_id();
+
+    kaa_list_for_each(kaa_list_begin(topic_list), kaa_list_back(topic_list), subscribe_to_topic, &topic_id);
+    last_prompt = time(NULL);
 }
 
 static void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *notification)
@@ -65,60 +119,44 @@ static void on_notification(void *context, uint64_t *topic_id, kaa_notification_
     (void)context;
     if (notification->alert_message) {
         kaa_string_t *message = (kaa_string_t *)notification->alert_message;
-        demo_printf("Notification for topic id '%lu' received\r\n", *topic_id);
+        demo_printf("Notification for topic id '%llu' received\r\n", *topic_id);
         demo_printf("Notification body: %s\r\n", message->data);
         demo_printf("Message alert type: %s\r\n", color_to_str(notification->alert_type));
     } else {
         demo_printf("Error: Received notification's body is null\r\n");
     }
+
+    kaa_list_node_t *t = kaa_list_find_next(kaa_list_begin(topic_list), find_topic_predicate, topic_id);
+    kaa_topic_t *topic = kaa_list_get_data(t);
+    if (topic && topic->subscription_type == OPTIONAL_SUBSCRIPTION) {
+        process_user_command();
+    }
 }
 
-static void show_topics(kaa_list_t *topics)
+static void show_topics(void *data, void *context)
 {
-    if (!topics || !kaa_list_get_size(topics)) {
-        demo_printf("Topic list is empty");
-        return;
+    kaa_topic_t *topic = (kaa_topic_t *)data;
+    demo_printf("Topic: id '%llu', name: %s, type: ", topic->id, topic->name);
+    if (topic->subscription_type == MANDATORY_SUBSCRIPTION) {
+        demo_printf("MANDATORY\r\n");
+    } else {
+        demo_printf("OPTIONAL\r\n");
     }
+}
 
-    kaa_list_node_t *it = kaa_list_begin(topics);
-    while (it) {
-        kaa_topic_t *topic = (kaa_topic_t *)kaa_list_get_data(it);
-        demo_printf("Topic: id '%lu', name: %s, type: ", topic->id, topic->name);
-        if (topic->subscription_type == MANDATORY_SUBSCRIPTION) {
-            demo_printf("MANDATORY\r\n");
-        } else {
-            demo_printf("OPTIONAL\r\n");
-        }
-        it = kaa_list_next(it);
+void timeout_prompt(void *context)
+{
+    if (time(NULL) - last_prompt > PROMPT_TIMEOUT) {
+        process_user_command();
     }
 }
 
 void on_topics_received(void *context, kaa_list_t *topics)
 {
     demo_printf("Topic list was updated\r\n");
-    show_topics(topics);
-
-    demo_printf("Type topic ID in order to subscribe on one:");
-    size_t topic_id = read_topic_id();
-
-    kaa_error_t err = KAA_ERR_NONE;
-    kaa_client_t *client = (kaa_client_t *)context;
-    kaa_list_node_t *it = kaa_list_begin(topics);
-    while (it) {
-        kaa_topic_t *topic = (kaa_topic_t *) kaa_list_get_data(it);
-        if (topic->subscription_type == OPTIONAL_SUBSCRIPTION && topic->id == topic_id) {
-            demo_printf("Subscribing to optional topic '%lu'\r\n", topic->id);
-            err = kaa_subscribe_to_topic(kaa_client_get_context(client)->notification_manager, &topic->id, false);
-            if (err) {
-                demo_printf("Failed to subscribe.\r\n");
-            }
-        }
-        it = kaa_list_next(it);
-    }
-    err = kaa_sync_topic_subscriptions(kaa_client_get_context(kaa_client)->notification_manager);
-    if (err) {
-        demo_printf("Failed to sync subscriptions\r\n");
-    }
+    kaa_list_for_each(kaa_list_begin(topics), kaa_list_back(topics), show_topics, NULL);
+    topic_list = topics;
+    process_user_command();
 }
 
 int main(void)
@@ -171,7 +209,8 @@ int main(void)
     /*
      * Start Kaa client main loop.
      */
-    error_code = kaa_client_start(kaa_client, NULL, NULL, 0);
+    last_prompt = time(NULL);
+    error_code = kaa_client_start(kaa_client, timeout_prompt, NULL, PROMPT_TIMEOUT);
     if (error_code) {
         demo_printf("Failed to start Kaa main loop %d\r\n", error_code);
         kaa_client_destroy(kaa_client);

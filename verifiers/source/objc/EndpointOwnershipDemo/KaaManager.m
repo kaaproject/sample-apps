@@ -68,7 +68,7 @@
  */
 
 - (void)detachEndpoitWithDelegate:(id<OnDetachEndpointOperationDelegate>)delegate {
-    NSLog(@"Detaching endpoint with key hash %@", [self.kaaClient getEndpointKeyHash]);
+    NSLog(@"Detaching endpoint ID %@", [self.kaaClient getEndpointKeyHash]);
     EndpointKeyHash *keyHash = [[EndpointKeyHash alloc] initWithKeyHash:[self.kaaClient getEndpointKeyHash]];
     [self.kaaClient detachEndpointWithKeyHash:keyHash delegate:delegate];
 }

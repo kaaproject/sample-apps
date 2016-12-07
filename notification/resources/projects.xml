@@ -79,9 +79,9 @@ To install the Notification sample application using the binary files:
 	<li>
 		Run the following command from the directory containing the downloaded .jar archive.
 		
-		<pre>
-			$ java -jar NotificationDemo.jar
-		</pre>
+<pre>
+$ java -jar NotificationDemo.jar
+</pre>
 		
 		The sample application console will display the startup message.
 								
@@ -105,15 +105,15 @@ To install the Notification sample application using the source code:
 		To build from new sources, you need to have the <a href="http://ant.apache.org/" target="_blank">Apache Ant</a> installed on your host machine.
 		To install Apache Ant, run the following command from the directory containing the unpacked sources.
 		
-		<pre>
-			$ ant debug
-		</pre>
+<pre>
+$ ant debug
+</pre>
 		
 		To launch the sample application from the previously built sources run the following command from the directory containing the sources.
 		
-		<pre>
-			$ java -jar build/jar/Notification.jar
-		</pre>
+<pre>
+$ java -jar build/jar/Notification.jar
+</pre>
 	</li>
 </ol>
 	
@@ -164,53 +164,53 @@ To launch this sample application on the Kaa C++ SDK:
 		A project source download window will open.
 		Click <b>Ok</b> and download the .tar.gz file.
 	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		Unpack the SDK archive.
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+	</li>
+	<li>
+		Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+		<p>
+			<b>Windows</b>
+<pre>
+mkdir build
+cd build
+cmake -G "Nmake Makefiles" ..
+nmake
+</pre>
+		</p>
+		<p>
+			<b>Linux, OS X (macOS)</b>
+<pre>
+mkdir build \
+&& cd build
+&& cmake .. \
+&& make
+</pre>
+            By default, the project is generated for POSIX platform.
+            To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+		</p>
+	</li>
     <li>
-        Unpack the downloaded archive.
-    </li>
-    <li>
-        Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
-    </li>
-    <li>
-        Run the following commands:
-        <p>
+        Run your sample application.
+		<p>
             <b>Windows</b>
-            <pre>
-                mkdir build
-                cd build
-                cmake -G "Nmake Makefiles" ..
-                nmake
-            </pre>
-        </p>
-        <p>
-            <b>Linux, OS X (macOS)</b>
-            <pre>
-                && mkdir build \
-                && cd build \
-                && cmake .. \
-                && make
-            </pre>
-            By default the project is generated for Posix target.
-            To generate and build project for other supported targets,
-            refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
-        </p>
-    </li>
-    <li>
-        To run demo, execute:
-        <p>
-            <b>Windows</b>
-            <pre>
-                build/demo_client.exe
-            </pre>
-        </p>
-        <p>
-            <b>Linux</b>
-            <pre>
-                ./build/demo_client
-            </pre>
-        </p>
+<pre>
+build/demo_client.exe
+</pre>
+		</p>
+		<p>
+			<b>Linux</b>
+<pre>
+./build/demo_client
+</pre>
+		</p>
     </li>
 </ol>
 	
@@ -219,7 +219,7 @@ To launch this sample application on the Kaa C++ SDK:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -287,17 +287,17 @@ To install this sample application using the binary files:
 			<b>Windows</b>
 			<br />
 			Connect the Android device to your Windows machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 		<p>
 			<b>Linux</b>
 			<br />
 			Connect the Android device to your Linux machine and run the following command from the sdk/platform-tools directory.
-			<pre>
-				./adb install <path_to_the_apk>/app-debug.apk
-			</pre>
+<pre>
+./adb install <path_to_the_apk>/app-debug.apk
+</pre>
 		</p>
 	</li>
 </ol>
@@ -308,7 +308,7 @@ To install this sample application using the source code:
 
 <ol>
 	<li>
-		Install Kaa SDK on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
+		Install Android SDK version 25.0.0 on your host machine using <a href="https://developer.android.com/studio/index.html#downloads" target="_blank">Android Studio</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -317,10 +317,12 @@ To install this sample application using the source code:
 	</li>
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+		Note that <b>%PATH_TO_ANDROID_SDK%</b> should be replaced by the Android SDK installation path.
 		
-		<pre>
-			./gradlew assembleDebug
-		</pre>
+<pre>
+export ANDROID_HOME=%PATH_TO_ANDROID_SDK%
+./gradlew assembleDebug
+</pre>
 		
 		The .apk file will be created in the app/build/outputs/apk/ directory.
 	</li>
@@ -370,7 +372,7 @@ To launch this sample application on the Kaa C SDK:
 <ol>
 	<li>
 		Prepare your C SDK environment.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa endpoint SDKs</a>.
 	</li>
 	<li>
 		Click the <b>Source</b> button.
@@ -382,26 +384,27 @@ To launch this sample application on the Kaa C SDK:
     </li>
     <li>
         Unpack the SDK archive.
-        <pre>
-            tar -zxf libs/kaa/kaa* -C libs/kaa
-        </pre>
+<pre>
+tar -zxf libs/kaa/kaa* -C libs/kaa
+</pre>
+    </li>
+	<li>
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
-        Execute the following script:
-        (Note this should be copy-pasted to the terminal all at once)
-        <pre>
-            mkdir -p build \
-            && cd build \
-            && cmake .. \
-            && make
-        </pre>
-        By default the project is generated for Posix target.
-        To generate and build project for other supported targets,
-        refer to the <a href="http://kaaproject.github.io/kaa/docs/latest/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">documentation pages</a>.
-    </li>
-    <li>
-        To run demo, execute:
-        ./build/demo_client
+        Run your sample application.
+<pre>
+./build/demo_client
+</pre>
     </li>
 </ol>
 
@@ -410,7 +413,7 @@ To launch this sample application on the Kaa C SDK:
 <h2>CMake returns an error message</h2>
 
 <pre>
-	CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
+CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
 </pre>
 
 <p>
@@ -494,9 +497,9 @@ To launch this sample application on the Kaa Objective-C SDK:
 	<li>
 		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
 		
-		<pre>
-			sh build.sh
-		</pre>
+<pre>
+sh build.sh
+</pre>
 		
 		The build script will extract the Kaa SDK, install dependencies with CocoaPods and build the SDK.
         <blockquote>NOTE: The build script will also install CocoaPods master repository, which may take a few minutes.</blockquote>
@@ -505,12 +508,12 @@ To launch this sample application on the Kaa Objective-C SDK:
 		Open the NotificationDemo.xcodeproj file and click the <b>Play</b> button.
 		You should see the following console messages.
 		
-		<pre>
-			2016-07-29 18:30:39.249 NotificationDemo[21069:5316667] NotificationDemo started
-			2016-07-29 18:30:39.268 NotificationDemo[21069:5317199] Kaa client started
-			2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:1 name:Sample mandatory topic type: 0
-			2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:2 name:Sample optional topic type: 1
-		</pre>
+<pre>
+2016-07-29 18:30:39.249 NotificationDemo[21069:5316667] NotificationDemo started
+2016-07-29 18:30:39.268 NotificationDemo[21069:5317199] Kaa client started
+2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:1 name:Sample mandatory topic type: 0
+2016-07-29 18:30:39.268 NotificationDemo[21069:5316667] Topic id:2 name:Sample optional topic type: 1
+</pre>
 		
 	</li>
 </ol>
@@ -522,7 +525,7 @@ To subscribe for an optional topic, enter the topic ID.
 <h2>Running the build script returns an error message</h2>
 
 <pre>
-	[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
+[!] Invalid `Podfile` file: [!] Unsupported options `{:exclusive=>true}` for target `KaaTests`.
 </pre>
 
 <p>
@@ -535,9 +538,9 @@ Try the following:
 	<li>
 		Run the following command from the ./libs/kaa-ep-sdk/ folder.
 		
-		<pre>
-			vim Podfile
-		</pre>
+<pre>
+vim Podfile
+</pre>
 		
 	</li>
 	<li>
@@ -546,9 +549,9 @@ Try the following:
 	<li>
 		Run this command.
 		
-		<pre>
-			pod install
-		</pre>
+<pre>
+pod install
+</pre>
 		
 	</li>
 </ol>
@@ -576,8 +579,8 @@ Make sure that the build target is set to <b>NotificationDemo</b>, not <b>Kaa</b
         <details>
             <![CDATA[
 <p>
-	This application bundle demonstrates the features of the Kaa <b>Notification extension</b>.
-	This extension enables your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint device</a> to receive notifications from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
+	This application bundle demonstrates the features of the Kaa <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications/" target="_blank">Notifications</a> extension.
+	This extension enables your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-ep" target="_blank">endpoint</a> device to receive notifications from the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a>.
 	You can manage notifications using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications/#notification-topics" target="_blank">notification topics</a>.
 	Each notification topic can be assigned to any number of <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#endpoint-group" target="_blank">endpoint groups</a>.
 	An endpoint will receive a notification if the topic of that notification is assigned to the group that the endpoint is a member of.
@@ -585,8 +588,7 @@ Make sure that the build target is set to <b>NotificationDemo</b>, not <b>Kaa</b
 <p>
 	Notifications do not just transfer data to the endpoints, they make the endpoints perform actions.
 	For example, a notification can make a <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> display a message through the user interface.
-	Notifications can be sent from the Kaa server to the endpoints either by administrator using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">administration UI</a> or by an application using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-administrator" target="_blank">Kaa administrator</a> REST API.
-	For more information about notifications management, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Notifications/" target="_blank">Notifications</a>.
+	To send the notifications from the Kaa server to the endpoints, you can use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> or the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#resource_Notifications" target="_blank">server REST API</a>.
 </p>
 
 <h1>Playing around</h1>
@@ -594,7 +596,7 @@ Make sure that the build target is set to <b>NotificationDemo</b>, not <b>Kaa</b
 <p>
 	This sample application enables the Kaa client to receive notifications of predefined structure.
 	The structure of a notification is defined in the notification schema.
-	You can create and manage notifications schemas using the <b>Administration</b> page.
+	You can create and manage notifications schemas using the <b>Administration UI</b> page.
 </p>
 <p>
 	To play around with the sample application, download the binaries/sources for the target platform and start the application.
@@ -607,11 +609,10 @@ To manage notification schema details:
 
 <ol>
 	<li>
-		Click the <b>Administration</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
+		Click the <b>Administration UI</b> button, enter username <b>devuser</b> and password <b>devuser123</b>.
 	</li>
 	<li>
-		Click the <b>Applications</b> arrow to unfold the list.
-		Click <b>Notification demo</b> > <b>Schemas</b> > <b>Notification</b>.
+		Click <b>Applications</b> > <b>Notification demo</b> > <b>Schemas</b> > <b>Notification</b>.
 		You will see the list of all notifications schemas stored for your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">Kaa application</a>.
 		
 		<br />
@@ -635,7 +636,7 @@ To manage notification schema details:
 	</li>
 </ol>
 
-<h2>Create notification topics</h2>
+<h2>Manage notification topics</h2>
 
 <p>
 	Use notification topics to configure and send notifications to endpoint groups.
@@ -649,7 +650,7 @@ To create a notification topic:
 
 <ol>
 	<li>
-		Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
+		Click <b>Administration UI</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
 		The page will display the list of available topics.
 		
 		<br />
@@ -660,14 +661,14 @@ To create a notification topic:
 		If you start your Kaa client, the console will display the following message.
 		
 		<pre>
-			2016-05-31 13:23:52,645 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
-			2016-05-31 13:23:52,647 [main] INFO  o.k.k.d.n.NotificationDemo - --= Press any key to exit =--
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
-			2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
-			2016-05-31 13:23:54,106 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed to topics:
-			2016-05-31 13:23:54,105 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Topic ID: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+            2016-12-05 17:29:55,931 [main] INFO  o.k.k.d.n.NotificationDemo - Notification demo started
+            2016-12-05 17:29:56,702 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed on topics:
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+            2016-12-05 17:29:56,703 [main] INFO  o.k.k.d.n.NotificationDemo -
+            Please, type topic ID in order to subscribe to ones or type any text to exit:
 		</pre>
 		
 		The message above informs the user which topics the endpoint is subscribed to and which are available for subscription.
@@ -693,11 +694,43 @@ To create a notification topic:
 	</li>
 </ol>
 
+To subscribe endpoint groups to notification topics:
+
+<ol>
+	<li>
+		Click <b>Administration UI</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Endpoint groups</b>.
+		Select a group by clicking the corresponding row.
+		The <b>Endpoint group details</b> page will open.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/endpoint-group-details.png" />
+		<br />
+		<br />
+		
+	</li>
+	<li>
+		Under the <b>Notification topics</b> section, click the <b>Add notification topic</b> button, and select the notification topic.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/add-notification-topic-to-group.png" />
+		<br />
+		<br />
+		
+		The notification topics you assigned to the group are displayed in the <b>Notification topics</b> list.
+		
+		<br />
+		<img src="https://raw.github.com/hunch7/sample-apps/app-188-notification-bundle/notificationdemo/resources/pic/notification-topic-added.png" />
+		<br />
+		<br />
+	
+	</li>
+</ol>
+
 To configure and send a notification:
 
 <ol>
 	<li>
-		Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
+		Click <b>Administration UI</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Notification topic</b>.
 	</li>
 	<li>
 		Select a notification topic by clicking on the corresponding row.
@@ -723,11 +756,13 @@ To configure and send a notification:
 		If you start your Kaa client, the console will display the following message.
 		
 		<pre>
-			...
-			2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
-			2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster, Notification alert type: Code green
-			...
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification from the topic with id [250] and name [Sample mandatory topic] received.
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification body: Hello from Kaa Cluster
+
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification alert type: CodeGreen
+
+            2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo -
+            Please, type topic ID in order to subscribe to ones or type any text to exit:
 		</pre>
 		
 		The console message above informs the user about the notification message and notification topic ID.
@@ -740,59 +775,37 @@ To configure and send a notification:
 </p>
 
 <pre>
-	...
-	2016-05-31 13:23:54,107 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
-	2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [251] received.
-	2016-05-31 13:23:54,153 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: This is sample notification for optional topic. Client should subscribe to optional topics in order to receive notifications. This application subscribes to optional topics automatically.
-	...
-	2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
+    2016-12-05 17:57:18,918 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribing to optional topic 251
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Available topics:
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Subscribed on topics:
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 250, name: Sample mandatory topic, type: MANDATORY_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo - Topic id: 251, name: Sample optional topic, type: OPTIONAL_SUBSCRIPTION
+    2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo -
+    Please, type topic ID in order to subscribe to ones or type any text to exit:
 </pre>
 
-	<p>	
-		The console will only display the notifications that are not expired.
-	</p>
-	<p>				
-		To test this, you can set a value in the <b>Expires at</b> field of the <b>Notification details</b> page.
-		For example, you can set it for 1 minute for the notification topic ID 251 above.
-		After 1 minute, the client console will stop receiving messages from notification topic ID 251 and will continue displaying other messages.
-		
-		<pre>
-			...
-			2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification for topic ID [250] received.
-			2016-05-31 13:23:54,109 [pool-4-thread-1] INFO  o.k.k.d.n.NotificationDemo - Notification body: message, Message alert type: Code green
-			...
-			2016-05-31 13:23:53,519 [main] INFO  o.k.k.d.n.NotificationDemo - Type topic ID to subscribe
-		</pre>
-		
-	</p>
+<p>	
+	The console will only display the notifications that are not expired.
+</p>
+<p>				
+	To test this, you can set a value in the <b>Expires at</b> field of the <b>Notification details</b> page.
+	For example, you can set it for 1 minute for the notification topic ID 251 above.
+	After 1 minute, the client console will stop receiving messages from notification topic ID 251 and will continue displaying other messages.
 	
-<h1>What's next?</h1>
+	<pre>
+        2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification from the topic with id [250] and name [Sample mandatory topic] received.
+        2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification body: Message
 
-<p>
-	You can use the <b>Administration</b> page to assign notification topics to endpoint groups.
+        2016-12-05 17:33:21,809 [pool-4-thread-2] INFO  o.k.k.d.n.NotificationDemo - Notification alert type: CodeGreen
+
+		2016-12-05 17:57:18,919 [main] INFO  o.k.k.d.n.NotificationDemo -
+        Please, type topic ID in order to subscribe to ones or type any text to exit:
+	</pre>
+	
 </p>
-
-To do this:
-
-<ol>
-	<li>
-		Click <b>Administration</b> > <b>Applications</b> > <b>Notification demo</b> > <b>Endpoint groups</b>.
-		Select a group by clicking the corresponding row.
-		The <b>Endpoint group details</b> page will open.
-	</li>
-	<li>
-		Under the <b>Notification topic</b> section, click the <b>Add notification topic</b> button.
-	</li>
-	<li>
-		In the <b>Add topic to endpoint group</b> window, select a notification topic and click <b>Add</b>.
-		The selected notification topic will appear in the <b>Notification topics</b> section list.
-	</li>
-</ol>
-
-<p>
-	For more information about how to create and manage endpoint groups, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups/" target="_blank">Endpoint groups</a>.
-</p>
-]]>
+            ]]>
         </details>
     </bundle>
 </projectsConfig>

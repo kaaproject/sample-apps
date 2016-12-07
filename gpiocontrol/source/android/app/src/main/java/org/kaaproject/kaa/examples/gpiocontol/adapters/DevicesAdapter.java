@@ -18,8 +18,6 @@ package org.kaaproject.kaa.examples.gpiocontol.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.kaaproject.kaa.client.KaaClient;
 import org.kaaproject.kaa.client.event.EndpointKeyHash;
 import org.kaaproject.kaa.client.event.registration.OnDetachEndpointOperationCallback;
 import org.kaaproject.kaa.common.endpoint.gen.SyncResponseResultType;
@@ -43,14 +40,14 @@ import java.util.List;
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder> {
 
     private static final String TAG = DevicesAdapter.class.getSimpleName();
-    private static final String DEVICE = "device";
 
-    private List<Device> devicesDataset;
-    private Context context;
+    private final KaaManager mKaaManager;
 
-    public DevicesAdapter(List<Device> devicesDataset, Context context) {
-        this.devicesDataset = devicesDataset;
-        this.context = context;
+    private final Context mContext;
+
+    public DevicesAdapter(Context context, KaaManager kaaManager) {
+        mKaaManager = kaaManager;
+        mContext = context;
     }
 
     @Override
@@ -62,13 +59,13 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Device device = devicesDataset.get(position);
-        int gpioStatusesSize = devicesDataset.get(position).getGpioStatuses().size();
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final Device device = mKaaManager.getDevices().get(position);
+        final int gpioStatusesSize = device.getGpioStatuses().size();
 
         holder.modelName.setText(device.getModel());
         holder.deviceName.setText(device.getDeviceName());
-        holder.gpioCount.setText(context.getString(R.string.gpio_count_device_adapter, gpioStatusesSize));
+        holder.gpioCount.setText(mContext.getString(R.string.gpio_count_device_adapter, gpioStatusesSize));
 
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -81,11 +78,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, GPIOStatusListActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(DEVICE, device);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                GPIOStatusListActivity.start(mContext, position);
             }
         });
 
@@ -93,25 +86,29 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return devicesDataset.size();
+        return mKaaManager.getDevices().size();
+    }
+
+    public void reset() {
+        mKaaManager.getDevices().clear();
+        notifyDataSetChanged();
     }
 
     private void showDeleteEndpointDialog(final String endpointKey, final int position) {
-        new AlertDialog.Builder(context)
-                .setMessage(context.getString(R.string.endpoint_delete))
+        new AlertDialog.Builder(mContext)
+                .setMessage(mContext.getString(R.string.endpoint_delete))
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        KaaClient kaaClient = KaaManager.getClient(context);
                         Log.d(TAG, "Going to detach....");
-                        kaaClient.detachEndpoint(new EndpointKeyHash(endpointKey), new OnDetachEndpointOperationCallback() {
+                        mKaaManager.detachEndpoint(new EndpointKeyHash(endpointKey), new OnDetachEndpointOperationCallback() {
                             @Override
                             public void onDetach(SyncResponseResultType syncResponseResultType) {
                                 Log.d(TAG, syncResponseResultType.name());
                                 if (syncResponseResultType == SyncResponseResultType.SUCCESS) {
-                                    devicesDataset.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, devicesDataset.size());
+                                    final List<Device> devices = mKaaManager.getDevices();
+                                    devices.remove(position);
+                                    notifyDataSetChanged();
                                 }
                             }
 
@@ -125,6 +122,20 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                             }
                         })
                 .show();
+    }
+
+    public void addDevice(Device device) {
+
+        final List<Device> devices = mKaaManager.getDevices();
+
+        if (devices.contains(device)) {
+            final int index = devices.indexOf(device);
+            devices.set(index, device);
+            notifyItemChanged(index);
+        } else {
+            devices.add(device);
+            notifyItemInserted(getItemCount() - 1);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

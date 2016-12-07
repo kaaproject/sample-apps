@@ -51,7 +51,12 @@ static kaa_error_t configuration_update(void *context,
 
     printf("Received new sample period: %d\n", configuration->sample_period);
     temperature_sensor_context *sensor_context = context;
-    sensor_context->sample_period = configuration->sample_period;
+
+    if (configuration->sample_period > 0) {
+        sensor_context->sample_period = configuration->sample_period;
+    } else {
+        demo_printf("Sample period value in updated configuration is wrong, so ignore it.\r\n");
+    }
     return KAA_ERR_NONE;
 }
 

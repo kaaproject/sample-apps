@@ -115,9 +115,6 @@ static const int32_t temperatureUpperLimit = 35;
 - (void)onConfigurationUpdate:(KAAConfigurationConfiguration *)configuration {
     [self addLogWithText:[NSString stringWithFormat:@"Configuration update received. New log threshold is %d", configuration.samplePeriod]];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.logTimer invalidate];
-        self.logTimer = nil;
-        
         // Schedules the new log timer with updated threshold.
         [self repeatedTimerWithTimeInterval:configuration.samplePeriod];
     });
@@ -129,6 +126,10 @@ static const int32_t temperatureUpperLimit = 35;
     if (timeInterval <= 0) {
         [self addLogWithText:[NSString stringWithFormat:@"Sample period value %f in updated configuration is wrong, so ignore it.", timeInterval]];
     } else {
+        if (self.logTimer) {
+            [self.logTimer invalidate];
+            self.logTimer = nil;
+        }
         self.logTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
     }
 }

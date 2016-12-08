@@ -21,7 +21,7 @@
 
     <groupId>org.kaaproject.examples</groupId>
     <artifactId>storm</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1-SNAPSHOT</version>
 
     <build>
         <finalName>storm-client-example</finalName>

@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.kaaproject.kaa.examples</groupId>
-        <version>2.1.0-SNAPSHOT</version>
+        <version>${kaa-sample-apps.version}</version>
         <artifactId>datacollection</artifactId>
     </parent>
     <artifactId>datacollectiondemo</artifactId>

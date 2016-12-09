@@ -18,7 +18,6 @@
 #include <memory>
 #include <thread>
 #include <cstdint>
-#include <cstdio>
 #include <iostream>
 
 #include <kaa/Kaa.hpp>
@@ -30,6 +29,7 @@
 using namespace kaa;
 
 #define NUM_GPIO_LEDS 4
+
 
 class ECFListener: public RemoteControlECF::RemoteControlECFListener
 {
@@ -59,12 +59,12 @@ public:
     void onEvent(const nsRemoteControlECF::GpioToggleRequest& event, const std::string& source)
     {
         if (event.gpio.status) {
-            setLedStatus(event.gpio.id, true);
+            _setLedStatus(event.gpio.id, true);
         } else {
-            setLedStatus(event.gpio.id, false);
+            _setLedStatus(event.gpio.id, false);
         }
         
-        printLedStatus();
+        _printLedStatus();
     }
 
 protected:
@@ -72,7 +72,7 @@ protected:
     std::vector<nsRemoteControlECF::GpioStatus> leds;
 
 private:
-    void setLedStatus(int id, bool status)
+    void _setLedStatus(int id, bool status)
     {
         for (std::size_t i = 0; i < leds.size(); ++i) {
             if (leds[i].id == id) {
@@ -82,17 +82,18 @@ private:
         }
     }
     
-    void printLedStatus(void)
+    void _printLedStatus()
     {
-        printf("GPIO LED status: ");
+        std::cout << "GPIO LED status: ";
         
         for (std::size_t i = 0; i < leds.size(); ++i) {
-            printf("%d", (int)leds[i].status);
+            std::cout << leds[i].status;
         }
         
-        printf("\n");
+        std::cout << std::endl;
     }
 };
+
 
 int main()
 {
@@ -110,6 +111,7 @@ int main()
      */
     kaaClient->start();
 
+    std::cout << "GPIO demo started" << std::endl;
 
     while (true) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -120,5 +122,5 @@ int main()
      */
     kaaClient->stop();
 
-    return 0;
+    return EXIT_SUCCESS;
 }

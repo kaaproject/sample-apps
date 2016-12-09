@@ -14,8 +14,6 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.8)
-
 project(C-SDK-sample C)
 
 # Our application name.
@@ -24,8 +22,6 @@ set(APP_NAME demo_client)
 # Target-independent flags.
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -Wextra")
 
-# Path to the Kaa SDK.
-add_subdirectory(libs/kaa)
 # Directory containing target support library.
 add_subdirectory(targets/${KAA_PLATFORM})
 add_subdirectory(targets/common)
@@ -51,5 +47,3 @@ if(${KAA_PRODUCE_BINARY})
     add_custom_command(TARGET ${APP_NAME} POST_BUILD
             COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME} ${APP_NAME}.bin)
 endif()
-
-install(TARGETS ${APP_NAME} DESTINATION bin)

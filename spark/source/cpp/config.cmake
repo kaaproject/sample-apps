@@ -14,7 +14,6 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.12)
 project(SparkDemo CXX)
 
 # Disable unused features
@@ -22,18 +21,5 @@ set(KAA_WITHOUT_CONFIGURATION 1)
 set(KAA_WITHOUT_NOTIFICATIONS 1)
 set(KAA_WITHOUT_EVENTS 1)
 
-# Set configuration variables
-if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-    set(KAA_MAX_LOG_LEVEL 3)
-endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
-
-if (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(libs/kaa)
-else (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(${KAA_SDK_PATH})
-endif (NOT DEFINED KAA_SDK_PATH)
-
 add_executable(demo_client src/KaaDemo.cpp)
 target_link_libraries(demo_client kaacpp)
-
-install(TARGETS demo_client DESTINATION bin)

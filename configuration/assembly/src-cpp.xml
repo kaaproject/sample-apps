@@ -37,6 +37,9 @@
         </fileSet>
         <fileSet>
             <directory>${main.dir}/common/build-scripts/</directory>
+            <includes>
+                <include>CMakeLists.txt</include>
+            </includes>
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CppConfigurationDemo</outputDirectory>
         </fileSet>

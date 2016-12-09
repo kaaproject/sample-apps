@@ -15,12 +15,14 @@
 #
 
 cmake_minimum_required(VERSION 2.8.12)
-project(NotificationDemo C)
+project(ConfigurationDemo C)
 
 # Disable unused features
-set(WITH_EXTENSION_CONFIGURATION OFF)
-set(WITH_EXTENSION_LOGGING OFF)
-set(WITH_EXTENSION_EVENTS OFF)
+set(WITH_EXTENSION_NOTIFICATION OFF CACHE BOOL "")
+set(WITH_EXTENSION_LOGGING OFF CACHE BOOL "")
+set(WITH_EXTENSION_EVENT OFF CACHE BOOL "")
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 
 # Set configuration variables
 if (NOT DEFINED KAA_PLATFORM)
@@ -29,18 +31,9 @@ endif (NOT DEFINED KAA_PLATFORM)
 if (NOT DEFINED WIFI_SSID)
     set(WIFI_SSID "WiFi SSID")
 endif (NOT DEFINED WIFI_SSID)
-if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-    set(KAA_MAX_LOG_LEVEL 3)
-endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 if (NOT DEFINED WIFI_PASSWORD)
     set(WIFI_PASSWORD "Password")
 endif (NOT DEFINED WIFI_PASSWORD)
-
-if (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(libs/kaa)
-else (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(${KAA_SDK_PATH})
-endif (NOT DEFINED KAA_SDK_PATH)
 
 # This is required for ESP8266 platform
 # due to it's specific requirements regarding linked executable.

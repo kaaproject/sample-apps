@@ -23,7 +23,6 @@
 
 #include <kaa_error.h>
 #include <platform/kaa_client.h>
-#include <kaa_configuration_manager.h>
 #include <kaa_user.h>
 #include <kaa_profile.h>
 #include <gen/kaa_verifiers_demo_event_class_family.h>

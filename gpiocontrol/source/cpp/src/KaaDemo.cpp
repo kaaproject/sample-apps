@@ -74,9 +74,9 @@ protected:
 private:
     void _setLedStatus(int id, bool status)
     {
-        for (std::size_t i = 0; i < leds.size(); ++i) {
-            if (leds[i].id == id) {
-                leds[i].status = status;
+        for (auto &led : leds) {
+            if (led.id == id) {
+                led.status = status;
                 return;
             }
         }
@@ -86,8 +86,8 @@ private:
     {
         std::cout << "GPIO LED status: ";
         
-        for (std::size_t i = 0; i < leds.size(); ++i) {
-            std::cout << leds[i].status;
+        for (auto &led : leds) {
+            std::cout << led.status;
         }
         
         std::cout << std::endl;

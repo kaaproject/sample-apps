@@ -14,13 +14,14 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.12)
-project(ConfigurationDemo C)
+project(NotificationDemo C)
 
 # Disable unused features
-set(WITH_EXTENSION_NOTIFICATIONS OFF)
-set(WITH_EXTENSION_LOGGING OFF)
-set(WITH_EXTENSION_EVENTS OFF)
+set(WITH_EXTENSION_CONFIGURATION OFF CACHE BOOL "")
+set(WITH_EXTENSION_LOGGING OFF CACHE BOOL "")
+set(WITH_EXTENSION_EVENT OFF CACHE BOOL "")
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 
 # Set configuration variables
 if (NOT DEFINED KAA_PLATFORM)
@@ -29,18 +30,9 @@ endif (NOT DEFINED KAA_PLATFORM)
 if (NOT DEFINED WIFI_SSID)
     set(WIFI_SSID "WiFi SSID")
 endif (NOT DEFINED WIFI_SSID)
-if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-    set(KAA_MAX_LOG_LEVEL 3)
-endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
 if (NOT DEFINED WIFI_PASSWORD)
     set(WIFI_PASSWORD "Password")
 endif (NOT DEFINED WIFI_PASSWORD)
-
-if (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(libs/kaa)
-else (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(${KAA_SDK_PATH})
-endif (NOT DEFINED KAA_SDK_PATH)
 
 # This is required for ESP8266 platform
 # due to it's specific requirements regarding linked executable.
@@ -58,5 +50,3 @@ else()
     add_executable(demo_client src/kaa_demo.c)
     target_link_libraries(demo_client kaac target_support)
 endif()
-
-install(TARGETS demo_client DESTINATION bin)

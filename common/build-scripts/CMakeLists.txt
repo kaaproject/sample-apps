@@ -15,29 +15,18 @@
 #
 
 cmake_minimum_required(VERSION 2.8.12)
-project(ProfilingDemo C)
+include(config.cmake)
 
-# Disable unused features
-set(WITH_EXTENSION_NOTIFICATIONS OFF)
-set(WITH_EXTENSION_LOGGING OFF)
-set(WITH_EXTENSION_EVENTS OFF)
-
-# Set configuration variables
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)
     set(KAA_MAX_LOG_LEVEL 3)
 endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
-if (NOT DEFINED KAA_RUNTIME_KEY_GENERATION)
-    set(KAA_RUNTIME_KEY_GENERATION "ON")
-endif (NOT DEFINED KAA_RUNTIME_KEY_GENERATION)
-add_definitions(-DKAA_RUNTIME_KEY_GENERATION="${KAA_RUNTIME_KEY_GENERATION}")
+
+set(BUILD_TESTING OFF CACHE BOOL "")
 
 if (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(libs/kaa)
 else (NOT DEFINED KAA_SDK_PATH)
     add_subdirectory(${KAA_SDK_PATH})
 endif (NOT DEFINED KAA_SDK_PATH)
-
-add_executable(demo_client src/kaa_demo.c)
-target_link_libraries(demo_client kaac)
 
 install(TARGETS demo_client DESTINATION bin)

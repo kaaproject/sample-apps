@@ -43,7 +43,7 @@
         <fileSet>
             <directory>${main.dir}/common/build-scripts/</directory>
             <includes>
-                <include>build.sh</include>
+                <include>CMakeLists.txt</include>
             </includes>
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CDataCollectionDemo</outputDirectory>

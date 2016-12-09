@@ -14,28 +14,12 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.12)
-project(EventsDemo C)
+project(StormDemo C)
 
 # Disable unused features
-set(WITH_EXTENSION_CONFIGURATION OFF)
-set(WITH_EXTENSION_NOTIFICATIONS OFF)
-set(WITH_EXTENSION_LOGGING OFF)
-
-# Set configuration variables
-if (NOT DEFINED KAA_MAX_LOG_LEVEL)
-    set(KAA_MAX_LOG_LEVEL "3")
-endif (NOT DEFINED KAA_MAX_LOG_LEVEL)
-
-find_package(Threads REQUIRED)
-
-if (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(libs/kaa)
-else (NOT DEFINED KAA_SDK_PATH)
-    add_subdirectory(${KAA_SDK_PATH})
-endif (NOT DEFINED KAA_SDK_PATH)
+set(WITH_EXTENSION_CONFIGURATION OFF CACHE BOOL "")
+set(WITH_EXTENSION_NOTIFICATION OFF CACHE BOOL "")
+set(WITH_EXTENSION_EVENT OFF CACHE BOOL "")
 
 add_executable(demo_client src/kaa_demo.c)
-target_link_libraries(demo_client kaac ${CMAKE_THREAD_LIBS_INIT})
-
-install(TARGETS demo_client DESTINATION bin)
+target_link_libraries(demo_client kaac)

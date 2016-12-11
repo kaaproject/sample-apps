@@ -187,7 +187,7 @@ After you successfully installed this app on your device, go to "GPIO control An
         <features>EVENT USER_VERIFIER</features>
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
-        <sourceArchive>cpp-slave/gpiocontrol_demo.tar.gz/sourceArchive>
+        <sourceArchive>cpp-slave/gpiocontrol_demo.tar.gz</sourceArchive>
         <projectFolder>gpio-cpp-client</projectFolder>
         <sdkLibDir>gpio-cpp-client/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>

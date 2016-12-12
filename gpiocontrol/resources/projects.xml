@@ -167,7 +167,7 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
 <h2>Installation</h2>
 Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
 <pre>
-$ ./build.sh
+$ cmake ..
 </pre>
 <h2>Playing around</h2>
 After you successfully installed this app on your device, go to "GPIO control Android" or "GPIO control iOS" Sandbox app and follow the steps described there.

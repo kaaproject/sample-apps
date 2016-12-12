@@ -27,8 +27,13 @@
     <fileSets>
         <fileSet>
             <directory>${project.basedir}/source/cpp</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>CppGPIODemo</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${main.dir}/common/build-scripts/</directory>
             <includes>
-                <include>build.sh</include>
+                <include>CMakeLists.txt</include>
             </includes>
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>CppGPIODemo</outputDirectory>

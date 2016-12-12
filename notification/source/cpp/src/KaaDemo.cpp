@@ -25,6 +25,8 @@
 
 using namespace kaa;
 
+static constexpr auto TOPIC_LIST_UPDATE_TIMEOUT = 3;
+
 static void showTopicList(const Topics &topics)
 {
     if (topics.empty()) {
@@ -64,9 +66,8 @@ static std::string alertTypeToString(const kaa_notification::AlertType alertType
 
 class NotificationListener : public INotificationListener {
 public:
-    NotificationListener(std::shared_ptr<IKaaClient> kaaClient, bool &quitFlag,
-            std::condition_variable &doQuit, std::mutex &quitMutex):
-        kaaClient_(kaaClient), quitFlag_(quitFlag), doQuit_(doQuit), quitMutex_(quitMutex)
+    NotificationListener(std::shared_ptr<IKaaClient> kaaClient):
+        kaaClient_(kaaClient)
     {}
 
     void onNotification(const int64_t topicId, const KaaNotification &notification) override
@@ -78,26 +79,18 @@ public:
         std::cout << (boost::format("Alert type %1%, Alert message %2%") %
                 alertTypeToString(notification.alertType) %
                 (notification.alertMessage.empty() ? "Body is empty" : notification.alertMessage)) << std::endl;
-        if (topic->subscriptionType == SubscriptionType::OPTIONAL_SUBSCRIPTION) {
-            std::unique_lock<std::mutex> lock(quitMutex_);
-            quitFlag_ = true;
-            doQuit_.notify_one();
-        }
     }
 
 private:
     std::shared_ptr<IKaaClient> kaaClient_;
-    bool &quitFlag_;
-    std::condition_variable &doQuit_;
-    std::mutex &quitMutex_;
 };
 
 class TopicListListener : public INotificationTopicListListener {
 public:
 
-    TopicListListener(std::shared_ptr<IKaaClient> kaaClient, bool &quitFlag,
-            std::condition_variable &doQuit, std::mutex &quitMutex):
-        kaaClient_(kaaClient), quitFlag_(quitFlag), doQuit_(doQuit), quitMutex_(quitMutex)
+    TopicListListener(std::shared_ptr<IKaaClient> kaaClient, bool &updatedFlag,
+            std::condition_variable &updatedVar, std::mutex &updatedMutex):
+        kaaClient_(kaaClient), updatedFlag_(updatedFlag), updatedVar_(updatedVar), updatedMutex_(updatedMutex)
     {}
 
     void onListUpdated(const Topics& topics) override
@@ -105,39 +98,9 @@ public:
         std::cout << "Topic list was updated" << std::endl;
         showTopicList(topics);
         optionalTopicsList_ = extractOptionalTopicIds(topics);
-        while (true) {
-            std::cout << "Enter topic id to subscribe to" << std::endl;
-            std::cout << "Enter 'quit' to exit" << std::endl;
-            std::cin.clear();
-
-            int64_t topicId;
-            std::string input;
-            std::cin >> input;
-
-            if (input == "quit") {
-                std::unique_lock<std::mutex> lock(quitMutex_);
-                quitFlag_ = true;
-                doQuit_.notify_one();
-                return;
-            }
-
-            try {
-                topicId = std::stoll(input);
-            } catch (std::exception& e) {
-                std::cout << (boost::format("Incorrect topicId: '%1%'") % input) << std::endl;
-                continue;
-            }
-
-            try {
-                kaaClient_->subscribeToTopic(topicId);
-                kaaClient_->syncTopicSubscriptions();
-                std::cout << (boost::format("Subscribed to topic '%1%'") % topicId) << std::endl;
-                return;
-            } catch (KaaException &e) {
-                std::cout << (boost::format("Topic '%1%' is unavailable, can't subscribe") % topicId) << std::endl;
-                continue;
-            }
-        }
+        std::unique_lock<std::mutex> lock(updatedMutex_);
+        updatedFlag_ = true;
+        updatedVar_.notify_one();
     }
 
     std::list<int64_t> getOptionalTopicList() const
@@ -148,36 +111,71 @@ public:
 private:
     std::list<int64_t> optionalTopicsList_;
     std::shared_ptr<IKaaClient> kaaClient_;
-    bool &quitFlag_;
-    std::condition_variable &doQuit_;
-    std::mutex &quitMutex_;
+    bool &updatedFlag_;
+    std::condition_variable &updatedVar_;
+    std::mutex &updatedMutex_;
 };
 
 int main()
 {
     auto kaaClient = Kaa::newClient();
 
-    bool quitFlag = false;
-    std::condition_variable doQuit;
-    std::mutex quitMutex;
+    bool updatedFlag = false;
+    std::condition_variable updatedVar;
+    std::mutex updatedMutex;
 
-    TopicListListener topicListListener(kaaClient, quitFlag, doQuit, quitMutex);
+    TopicListListener topicListListener(kaaClient, updatedFlag, updatedVar, updatedMutex);
     kaaClient->addTopicListListener(topicListListener);
 
-    NotificationListener notificationListener(kaaClient, quitFlag, doQuit, quitMutex);
+    NotificationListener notificationListener(kaaClient);
     kaaClient->addNotificationListener(notificationListener);
-    
+
     kaaClient->start();
 
     std::cout << "Notification demo started" << std::endl;
 
     {
-        std::unique_lock<std::mutex> lock(quitMutex);
-        doQuit.wait(lock, [&quitFlag] { return quitFlag; });
+        std::unique_lock<std::mutex> lock(updatedMutex);
+        if (!updatedVar.wait_for(lock, std::chrono::seconds(TOPIC_LIST_UPDATE_TIMEOUT),
+                    [&updatedFlag] { return updatedFlag; })) {
+            std::cout << "Timed out waiting for topic list update" << std::endl;
+            kaaClient->stop();
+            return EXIT_SUCCESS;
+        }
+    }
+
+    while (true) {
+        std::cout << "Enter topic id to subscribe to" << std::endl;
+        std::cout << "Enter 'quit' to exit" << std::endl;
+        std::cin.clear();
+
+        int64_t topicId;
+        std::string input;
+        std::cin >> input;
+
+        if (input == "quit") {
+            break;
+        }
+
+        try {
+            topicId = std::stoll(input);
+        } catch (const std::exception& e) {
+            std::cout << (boost::format("Incorrect topicId: '%1%'") % input) << std::endl;
+            continue;
+        }
+
+        try {
+            kaaClient->subscribeToTopic(topicId);
+            kaaClient->syncTopicSubscriptions();
+            std::cout << (boost::format("Subscribed to topic '%1%'") % topicId) << std::endl;
+        } catch (const KaaException &e) {
+            std::cout << (boost::format("Topic '%1%' is unavailable, can't subscribe") % topicId) << std::endl;
+            continue;
+        }
     }
 
     kaaClient->stop();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 

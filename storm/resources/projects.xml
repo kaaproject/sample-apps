@@ -86,7 +86,7 @@ the endpoint in your server side application.
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
         <bundleId>storm_demos</bundleId>
-        <sourceArchive>java/storm_data_analytics_demo.tar.gz</sourceArchive>
+        <sourceArchive>java/storm_demo.tar.gz</sourceArchive>
         <projectFolder>JStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>JStormDataAnalyticsDemo/lib</sdkLibDir>
         <destBinaryFile></destBinaryFile>
@@ -155,7 +155,7 @@ the endpoint in your server side application.
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
         <bundleId>storm_demos</bundleId>
-        <sourceArchive>c/storm_data_analytics_demo.tar.gz</sourceArchive>
+        <sourceArchive>c/storm_demo.tar.gz</sourceArchive>
         <projectFolder>CStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
@@ -224,7 +224,7 @@ the endpoint in your server side application.
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
         <bundleId>storm_demos</bundleId>
-        <sourceArchive>cpp/storm_data_analytics_demo.tar.gz</sourceArchive>
+        <sourceArchive>cpp/storm_demo.tar.gz</sourceArchive>
         <projectFolder>CppStormDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CppStormDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>

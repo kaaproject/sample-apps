@@ -257,7 +257,7 @@ and panel_id={{panel_id='Panel 0'}} and timestamp > logs.timeDelta(toUnixTimesta
         <platforms>LINUX_X86 WINDOWS_X86</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
-        <sourceArchive>java/zeppelin_data_analytics_demo.tar.gz</sourceArchive>
+        <sourceArchive>java/zeppelin_demo.tar.gz</sourceArchive>
         <projectFolder>JZeppelinDataAnalyticsDemo</projectFolder>
         <sdkLibDir>JZeppelinDataAnalyticsDemo/lib</sdkLibDir>
         <destBinaryFile></destBinaryFile>

@@ -66,7 +66,8 @@ static const int32_t temperatureUpperLimit = 35;
     self.bucketRunnersQueue = [[NSOperationQueue alloc] init];
     
     // Schedules timer to generate logs with delay, which was set in configuration.
-    self.logTimer = [NSTimer scheduledTimerWithTimeInterval:([self.kaaClient getConfiguration].samplePeriod) target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
+    [self repeatedTimerWithTimeInterval:1];
+    [self repeatedTimerWithTimeInterval:[self.kaaClient getConfiguration].samplePeriod];
 }
 
 #pragma mark - KaaClientStateDelegate
@@ -114,15 +115,24 @@ static const int32_t temperatureUpperLimit = 35;
 - (void)onConfigurationUpdate:(KAAConfigurationConfiguration *)configuration {
     [self addLogWithText:[NSString stringWithFormat:@"Configuration update received. New log threshold is %d", configuration.samplePeriod]];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.logTimer invalidate];
-        self.logTimer = nil;
-        
         // Schedules the new log timer with updated threshold.
-        self.logTimer = [NSTimer scheduledTimerWithTimeInterval:(configuration.samplePeriod) target:self selector:@selector(generateAndSendLogRecord) userInfo:self repeats:YES];
+        [self repeatedTimerWithTimeInterval:configuration.samplePeriod];
     });
 }
 
 #pragma mark - Supporting methods
+
+- (void)repeatedTimerWithTimeInterval:(NSTimeInterval)timeInterval {
+    if (timeInterval <= 0) {
+        [self addLogWithText:[NSString stringWithFormat:@"Sample period value %f in updated configuration is wrong, so ignore it.", timeInterval]];
+    } else {
+        if (self.logTimer) {
+            [self.logTimer invalidate];
+            self.logTimer = nil;
+        }
+        self.logTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(generateAndSendLogRecord) userInfo:nil repeats:YES];
+    }
+}
 
 - (void)generateAndSendLogRecord {
     KAALoggingDataCollection *log = [[KAALoggingDataCollection alloc] init];

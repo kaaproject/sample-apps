@@ -106,10 +106,14 @@ private:
 
     void onConfigurationUpdated(const KaaRootConfiguration &configuration)
     {
-        samplePeriod_ = configuration.samplePeriod;
         std::lock_guard<std::mutex> guard(iostream_mutex_);
-        std::cout << "Received configuration data. New sample period: "
-            << configuration.samplePeriod << " seconds" << "\n";
+	if (configuration.samplePeriod > 0) {
+            samplePeriod_ = configuration.samplePeriod;
+            std::cout << "Received configuration data. New sample period: "
+                << configuration.samplePeriod << " seconds" << "\n";
+        } else {
+            std::cout << "Sample period value in updated configuration is wrong, so ignore it" << std::endl;
+        }
     }
 };
 

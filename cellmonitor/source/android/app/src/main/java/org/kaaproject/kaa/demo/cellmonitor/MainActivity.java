@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         kaaManager = new KaaManager(cellCallback);
+        kaaManager.start(this);
 
         updateContent();
         initActionBar();

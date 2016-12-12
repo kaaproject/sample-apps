@@ -117,17 +117,17 @@ static void process_user_command()
 static void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *notification)
 {
     (void)context;
+    kaa_list_node_t *t = kaa_list_find_next(kaa_list_begin(topic_list), find_topic_predicate, topic_id);
+    kaa_topic_t *topic = kaa_list_get_data(t);
     if (notification->alert_message) {
         kaa_string_t *message = (kaa_string_t *)notification->alert_message;
-        demo_printf("Notification for topic id '%llu' received\r\n", *topic_id);
+        demo_printf("Notification for topic id '%llu', name '%s' received\r\n", *topic_id, topic->name);
         demo_printf("Notification body: %s\r\n", message->data);
         demo_printf("Message alert type: %s\r\n", color_to_str(notification->alert_type));
     } else {
         demo_printf("Error: Received notification's body is null\r\n");
     }
 
-    kaa_list_node_t *t = kaa_list_find_next(kaa_list_begin(topic_list), find_topic_predicate, topic_id);
-    kaa_topic_t *topic = kaa_list_get_data(t);
     if (topic && topic->subscription_type == OPTIONAL_SUBSCRIPTION) {
         process_user_command();
     }

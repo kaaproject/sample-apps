@@ -112,27 +112,26 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
 
         LOG.info("Data collection demo: Creating Log appenders...");
         LOG.info("Creating MongoDb Log Appender");
-        client.editLogAppenderDto(createMongoDbLogAppender(dataCollectionApplication));
+        client.editLogAppenderDto(createCassandraLogAppender(dataCollectionApplication));
         LOG.info("Creating Telemetry Monitor Appender");
         client.editLogAppenderDto(createTelemetryMonitorAppender(dataCollectionApplication));
         LOG.info("Finished loading 'Data Collection Demo Application' data.");
     }
 
-    private LogAppenderDto createMongoDbLogAppender(ApplicationDto dataCollectionApplication) throws IOException {
+    private LogAppenderDto createCassandraLogAppender(ApplicationDto dataCollectionApplication) throws IOException {
         LogAppenderDto dataCollectionLogAppender = new LogAppenderDto();
         dataCollectionLogAppender.setName("Data collection log appender");
-        dataCollectionLogAppender.setDescription("Log appender used to deliver log records from data collection application to local mongo db instance");
+        dataCollectionLogAppender.setDescription("Log appender used to deliver log records from data collection application to cassandra database");
         dataCollectionLogAppender.setApplicationId(dataCollectionApplication.getId());
         dataCollectionLogAppender.setApplicationToken(dataCollectionApplication.getApplicationToken());
         dataCollectionLogAppender.setTenantId(dataCollectionApplication.getTenantId());
         dataCollectionLogAppender.setMinLogSchemaVersion(1);
         dataCollectionLogAppender.setMaxLogSchemaVersion(Integer.MAX_VALUE);
         dataCollectionLogAppender.setConfirmDelivery(true);
-        dataCollectionLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.KEYHASH,
-                LogHeaderStructureDto.TIMESTAMP, LogHeaderStructureDto.TOKEN, LogHeaderStructureDto.VERSION));
-        dataCollectionLogAppender.setPluginTypeName("MongoDB");
-        dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.mongo.appender.MongoDbLogAppender");
-        dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("mongo_appender.json")));
+        dataCollectionLogAppender.setHeaderStructure(Arrays.asList(LogHeaderStructureDto.TIMESTAMP, LogHeaderStructureDto.TOKEN));
+        dataCollectionLogAppender.setPluginTypeName("Cassandra");
+        dataCollectionLogAppender.setPluginClassName("org.kaaproject.kaa.server.appenders.cassandra.appender.CassandraLogAppender");
+        dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("cassandra_appender.json")));
         return dataCollectionLogAppender;
     }
 
@@ -152,7 +151,6 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
         dataCollectionLogAppender.setJsonConfiguration(FileUtils.readResource(getResourcePath("telemetry_monitor_appender.json")));
         return dataCollectionLogAppender;
     }
-
 
     @Override
     public Stream<Pair<CommandLine, String>> getAdditionalCommandsAndParams() {

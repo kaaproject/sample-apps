@@ -1,0 +1,60 @@
+{
+  "cassandraServers": [
+    {
+      "host": "localhost",
+      "port": 9042
+    }
+  ],
+  "cassandraCredential": null,
+  "keySpace": "kaa",
+  "tableNamePattern": "logs_datacollection_samples",
+  "columnMapping": [
+    {
+      "type": "EVENT_FIELD",
+      "value": {
+        "string": "temperature"
+      },
+      "columnName": "temperature_field",
+      "columnType": "INT",
+      "partitionKey": false,
+      "clusteringKey": false
+    },
+    {
+      "type": "EVENT_FIELD",
+      "value": {
+        "string": "timeStamp"
+      },
+      "columnName": "timeStamp_field",
+      "columnType": "BIGINT",
+      "partitionKey": false,
+      "clusteringKey": true
+    },
+    {
+      "type": "TS",
+      "value": {
+        "string": "yyyy-MM-dd-'Time':HH:mm:ss.SS"
+      },
+      "columnName": "date",
+      "columnType": "TEXT",
+      "partitionKey": true,
+      "clusteringKey": false
+    }
+  ],
+  "clusteringMapping": [],
+  "cassandraBatchType": {
+    "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraBatchType": "UNLOGGED"
+  },
+  "cassandraSocketOption": null,
+  "executorThreadPoolSize": 1,
+  "callbackThreadPoolSize": 2,
+  "dataTTL": 0,
+  "cassandraWriteConsistencyLevel": {
+    "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraWriteConsistencyLevel": "ONE"
+  },
+  "cassandraCompression": {
+    "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraCompression": "NONE"
+  },
+  "cassandraExecuteRequestType": {
+    "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraExecuteRequestType": "SYNC"
+  }
+}

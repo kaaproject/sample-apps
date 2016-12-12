@@ -164,8 +164,9 @@ class AppTesterFramework(object):
 
         # list of applications that must be skipped during building ant testing
         self.skipped = []
-
         self.applications = self._create_applications(config_file)
+        self.BINARY = 'BINARY'
+        self.SOURCE = 'SOURCE'
 
     def _create_applications(self, config_file):
         """All the parsing of the configuration file is done here"""
@@ -251,33 +252,41 @@ class AppTesterFramework(object):
             build_result = [app_data, self.result_matrix[app], 'N/A']
             self.table_data.append(build_result)
 
-    def build_android_java_demo(self):
+
+    def execute_build(self, app_data, file_type):
+        try:
+            build_app = self.sandboxframe.build_demo(app_data['id'], file_type)
+            build_app_result = self.sandboxframe.is_build_successful(app_data['id'], file_type)
+
+            if build_app_result:
+                self.result_matrix[app_data['name']] = TestStatus.PASSED
+                print 'Building {}:\n{}'.format(app_data['name'], build_app)
+
+            else:
+                self.result_matrix[app_data['name']] = TestStatus.FAILED
+                print 'Building {}:\n{}'.format(app_data['name'], build_app)
+
+        except Exception as ex:
+            traceback.print_exc(ex)
+            self.result_matrix[app_data['name']] = TestStatus.FAILED
+
+    def build_java_android_demo(self):
         output = self.sandboxframe.get_demo_projects()
         for item in output:
             if 'java' in item['id'] or 'android' in item['id']:
                 destBinaryFile = item.get('destBinaryFile', None)
+
                 if not destBinaryFile:
                     continue
                 else:
-                    try:
-                        build_app = self.sandboxframe.build_android_java_demo(item['id'])
-                        build_app_result = self.sandboxframe.is_build_successful(item['id'])
+                    self.execute_build(item, self.BINARY)
 
-                        if build_app_result:
-                            self.result_matrix[item['name']] = TestStatus.PASSED
-                            print 'Building {}:\n{}'.format(item['name'], build_app)
-
-                        else:
-                            self.result_matrix[item['name']] = TestStatus.FAILED
-                            print 'Building {}:\n{}'.format(item['name'], build_app)
-                    
-                    except Exception as ex:
-                        traceback.print_exc(ex)
-                        self.result_matrix[item['name']] = TestStatus.FAILED
-
-        for app in self.result_matrix:
-            build_result = [app, self.result_matrix[app], 'N/A']
-            self.table_data.append(build_result)
+    def build_all_demo(self):
+        output = self.sandboxframe.get_demo_projects()
+        for item in output:
+            sourceFile = item.get('sourceArchive', None)
+            if sourceFile:
+                self.execute_build(item, self.SOURCE)
 
     def test_applications(self):
         # TODO APP-53 add testing
@@ -287,6 +296,9 @@ class AppTesterFramework(object):
         passed = True
 
         # TODO APP-53 Add test results
+        for app in self.result_matrix:
+            build_result = [app, self.result_matrix[app], 'N/A']
+            self.table_data.append(build_result)
 
         for app in self.result_matrix:
             if self.result_matrix[app] == TestStatus.FAILED:
@@ -309,6 +321,8 @@ def console_args_parser():
     parser.add_argument('-a', metavar='application',
                         help='specify application')
     parser.add_argument('-j', help='build java/android applications',
+                        action='store_true')
+    parser.add_argument('-c', help='build all source applications.',
                         action='store_true')
     parser.add_argument('-s', metavar='server',
                         type=str, help='Kaa server address')
@@ -364,7 +378,9 @@ def main():
     tester = AppTesterFramework(appconfig_file, kaanode, kaauser,
                                 args.rootpath, builddir, sandboxframe)
     if args.j:
-        tester.build_android_java_demo()
+        tester.build_java_android_demo()
+    elif args.c:
+        tester.build_all_demo()
     else:
         tester.build_applications(name)
 

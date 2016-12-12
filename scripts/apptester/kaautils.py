@@ -26,6 +26,7 @@ This module contains useful methods to operate with Kaa
 
 import requests
 import time
+import json
 
 class KaaNodeError(Exception):
     pass
@@ -64,6 +65,7 @@ class KaaNode(object):
 
         self.host = str(host)
         self.port = str(port)
+        self.header = {'Content-Type':'application/json', 'Accept':'application/json'}
 
     def download_sdk(self, profile_id, language, kaauser, ofile):
         """Downloads specific SDK from Kaa server and writes it to a file.
@@ -137,6 +139,103 @@ class KaaNode(object):
 
         return req.json()
 
+    def create_configuration(self, kaauser, configuration):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/configuration'.format(self.host, self.port)
+        req = requests.post(url, auth=(kaauser.name, kaauser.password), data=json.dumps(configuration), headers=self.header)
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to create configuration.'\
+                                'Return code: {}'.format(req.status_code))
+        return req.json()
+
+    def save_configuration_schema(self, kaauser, configuration):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/saveConfigurationSchema'.format(self.host, self.port)
+        req = requests.post(url, auth=(kaauser.name, kaauser.password), data=configuration, headers=self.header)
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to save configuration schema.'\
+                                'Return code: {}'.format(req.status_code))
+        return req.json()
+
+    def activate_configuration(self, kaauser, configuration):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/activateConfiguration'.format(self.host, self.port)
+        req = requests.post(url, auth=(kaauser.name, kaauser.password), data=configuration, headers=self.header)
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to activate configuration.'\
+                                'Return code: {}'.format(req.status_code))
+        return req.json()
+
+    def get_endpoint_groups(self, kaauser, application_token):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/endpointGroups/{}'.format(self.host, self.port, application_token)
+        req = requests.get(url, auth=(kaauser.name, kaauser.password))
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to get endpoint groups.'\
+                                'Return code: {}'.format(req.status_code))
+
+        return req.json()
+
+    def get_endpoint_profiles(self, kaauser, group_id):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/endpointProfileBodyByGroupId?endpointGroupId={}'.format(self.host, self.port, str(group_id))
+        req = requests.get(url, auth=(kaauser.name, kaauser.password))
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to get endpoint profiles. '\
+                                'Return code: {}'.format(req.status_code))
+        return req.json()
+
+    def get_configuration_record_body(self, kaauser,schema_id, group_id):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/configurationRecordBody?schemaId={}&endpointGroupId={}'.format(self.host, self.port,\
+                                                                                                        str(schema_id), str(group_id))
+        req = requests.get(url, auth=(kaauser.name, kaauser.password))
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to get configuration record body. '\
+                                'Return code: {}'.format(req.status_code))
+        return req.json()
+
+    def get_configuration_record(self, kaauser, schema_id, endpoint_id):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/configurationRecord?schemaId={}&endpointGroupId={}'.format(self.host, self.port,\
+                                                                                                    str(schema_id), str(endpoint_id))
+        req = requests.get(url, auth=(kaauser.name, kaauser.password))
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to get configuration record.'\
+                                'Return code: {}'.format(req.status_code))
+
+        return req.json()
+
+    def get_all_config_records(self, kaauser, group_id, deprecated_in=True):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/configurationRecords?endpointGroupId={}&includeDeprecated={}'.format(self.host, self.port,\
+                                                                                                            str(group_id), deprecated_in)
+        req = requests.get(url, auth=(kaauser.name, kaauser.password))
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to get all configuration records.'\
+                                'Return code: {}'.format(req.status_code))
+
+        return req.json()
+
+    def get_all_users(self, kaauser):
+        """
+        """
+        url = 'http://{}:{}/kaaAdmin/rest/api/users'.format(self.host, self.port)
+        req = requests.get(url, auth=(kaauser.name, kaauser.password))
+        if req.status_code != requests.codes.ok:
+            raise KaaNodeError('Unable to get all users.'\
+                            'Return code: {}'.format(req.status_code))
+
+        return req.json()
+
     def wait_for_server(self, timeout):
         """Waits for Kaa REST server to be ready for operations.
 
@@ -178,33 +277,33 @@ class SandboxFrame(object):
         url = 'http://{}:{}/sandbox/rest/api/demoProjects'.format(self.host, self.port)
         req = requests.get(url)
         if req.status_code != requests.codes.ok:
-            raise KaaSanboxError('Unable to get list of applications from Sandbox. ' \
+            raise KaaSandboxError('Unable to get list of applications from Sandbox. ' \
                                 'Return code: {}'.format(req.status_code))
 
         return req.json()
 
-    def is_build_successful(self, app_id):
+    def is_build_successful(self, app_id, file_type):
         """Gets application build result. Returns True or False.
         :param app_id: name of application on sandbox.
         :type app_id: string.
         """
-        url = 'http://{}:{}/sandbox/rest/api/isProjectDataExists?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)
+        url = 'http://{}:{}/sandbox/rest/api/isProjectDataExists?projectId={}&dataType={}'.format(self.host, self.port, app_id, file_type)
         req = requests.get(url)
         if req.status_code != requests.codes.ok:
-            raise KaaSanboxError('Unable to check is it BINARY file in the Sandbox. ' \
-                                'Return code: {}'.format(req.status_code))
+            raise KaaSandboxError('Unable to check is it {} file in the Sandbox. ' \
+                                'Return code: {}'.format(file_type, req.status_code))
 
         return req.json()
 
-    def build_android_java_demo(self, app_id):
+    def build_demo(self, app_id, file_type):
         """Build demo applications from sandbox. Returns logs of build in JSON format.
         :param app_id: name of application on sandbox.
         :type app_id: string.
         """
-        url = 'http://{}:{}/sandbox/rest/api/buildProjectData?projectId={}&dataType=BINARY'.format(self.host, self.port, app_id)
+        url = 'http://{}:{}/sandbox/rest/api/buildProjectData?projectId={}&dataType={}'.format(self.host, self.port, app_id, file_type)
         header = 'Content-Type: application/json'
         req = requests.post(url, header)
         if req.status_code != requests.codes.ok:
-            raise KaaSanboxError('Can not build application {}'.format(app_id))
+            raise KaaSandboxError('Can not build application {}'.format(app_id))
 
         return req.content

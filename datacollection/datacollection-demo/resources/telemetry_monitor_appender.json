@@ -7,7 +7,7 @@
   ],
   "cassandraCredential": null,
   "keySpace": "kaa",
-  "monitoringValuesTableName": "logs_monitoring_values",
+  "monitoringValuesTableName": "logs_datacollection_monitoring_values",
   "threshold": 20,
   "minLogSchemaVersion": 1,
   "maxLogSchemaVersion": 2147483647,

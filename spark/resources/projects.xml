@@ -185,7 +185,7 @@ using Kaa"</a>.
         <platforms>LINUX_X86 INTEL_EDISON</platforms>
         <features>DATA_COLLECTION</features>
         <complexity>ADVANCED</complexity>
-        <sourceArchive>cpp/spark_data_analytics_demo.tar.gz</sourceArchive>
+        <sourceArchive>cpp/spark_demo.tar.gz</sourceArchive>
         <projectFolder>CppSparkDataAnalyticsDemo</projectFolder>
         <sdkLibDir>CppSparkDataAnalyticsDemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>

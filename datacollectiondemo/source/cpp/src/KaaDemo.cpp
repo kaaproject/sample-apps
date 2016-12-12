@@ -63,7 +63,12 @@ public:
     {
         // Run the Kaa endpoint.
         kaaClient_->start();
-        samplePeriod_ = kaaClient_->getConfiguration().samplePeriod;
+        if (kaaClient_->getConfiguration().samplePeriod <= 0) {
+            std::cout << "Started configuration is wrong, so use sample period = 1" << std::endl;
+            samplePeriod_ = 1;
+        } else {
+            samplePeriod_ = kaaClient_->getConfiguration().samplePeriod;
+        }
         timer_.async_wait(boost::bind(&TemperatureSensor::sendTemperature, this));
         timer_.expires_from_now(boost::posix_time::seconds(samplePeriod_));
         service_.run();

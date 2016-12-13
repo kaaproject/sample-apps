@@ -46,6 +46,12 @@ class TestStatus(object):
     SKIPPED = 'SKIPPED'
     EXEMPTED = 'EXEMPTED'
 
+class AppFormat(object):
+    """Represents possible application formats."""
+
+    BINARY = 'BINARY'
+    SOURCE = 'SOURCE'
+
 class AppConfig(object):
     """Represents application build parameters"""
 
@@ -164,7 +170,6 @@ class AppTesterFramework(object):
 
         # list of applications that must be skipped during building ant testing
         self.skipped = []
-
         self.applications = self._create_applications(config_file)
 
     def _create_applications(self, config_file):
@@ -251,29 +256,45 @@ class AppTesterFramework(object):
             build_result = [app_data, self.result_matrix[app], 'N/A']
             self.table_data.append(build_result)
 
-    def build_android_java_demo(self):
+
+    def execute_build(self, app_data, file_type):
+        try:
+            build_app = self.sandboxframe.build_demo(app_data['id'], file_type)
+            build_app_result = self.sandboxframe.is_build_successful(app_data['id'], file_type)
+
+            if build_app_result:
+                self.result_matrix[app_data['name']] = TestStatus.PASSED
+                print 'Building {}:\n{}'.format(app_data['name'], build_app)
+
+            else:
+                self.result_matrix[app_data['name']] = TestStatus.FAILED
+                print 'Building {}:\n{}'.format(app_data['name'], build_app)
+
+        except Exception as ex:
+            traceback.print_exc(ex)
+            self.result_matrix[app_data['name']] = TestStatus.FAILED
+
+    def execute_remote_build(self):
         output = self.sandboxframe.get_demo_projects()
         for item in output:
             if 'java' in item['id'] or 'android' in item['id']:
                 destBinaryFile = item.get('destBinaryFile', None)
+
                 if not destBinaryFile:
                     continue
                 else:
-                    try:
-                        build_app = self.sandboxframe.build_android_java_demo(item['id'])
-                        build_app_result = self.sandboxframe.is_build_successful(item['id'])
+                    self.execute_build(item, AppFormat.BINARY)
 
-                        if build_app_result:
-                            self.result_matrix[item['name']] = TestStatus.PASSED
-                            print 'Building {}:\n{}'.format(item['name'], build_app)
+        for app in self.result_matrix:
+            build_result = [app, self.result_matrix[app], 'N/A']
+            self.table_data.append(build_result)
 
-                        else:
-                            self.result_matrix[item['name']] = TestStatus.FAILED
-                            print 'Building {}:\n{}'.format(item['name'], build_app)
-                    
-                    except Exception as ex:
-                        traceback.print_exc(ex)
-                        self.result_matrix[item['name']] = TestStatus.FAILED
+    def verify_src_archives(self):
+        output = self.sandboxframe.get_demo_projects()
+        for item in output:
+            sourceFile = item.get('sourceArchive', None)
+            if sourceFile:
+                self.execute_build(item, AppFormat.SOURCE)
 
         for app in self.result_matrix:
             build_result = [app, self.result_matrix[app], 'N/A']
@@ -287,7 +308,6 @@ class AppTesterFramework(object):
         passed = True
 
         # TODO APP-53 Add test results
-
         for app in self.result_matrix:
             if self.result_matrix[app] == TestStatus.FAILED:
                 passed = False
@@ -308,7 +328,9 @@ def console_args_parser():
                         action='store_true')
     parser.add_argument('-a', metavar='application',
                         help='specify application')
-    parser.add_argument('-j', help='build java/android applications',
+    parser.add_argument('-j', help='show results of remote build java/android applications',
+                        action='store_true')
+    parser.add_argument('-c', help='check all source archives.',
                         action='store_true')
     parser.add_argument('-s', metavar='server',
                         type=str, help='Kaa server address')
@@ -364,7 +386,9 @@ def main():
     tester = AppTesterFramework(appconfig_file, kaanode, kaauser,
                                 args.rootpath, builddir, sandboxframe)
     if args.j:
-        tester.build_android_java_demo()
+        tester.execute_remote_build()
+    elif args.c:
+        tester.verify_src_archives()
     else:
         tester.build_applications(name)
 

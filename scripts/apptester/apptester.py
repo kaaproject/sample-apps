@@ -342,6 +342,8 @@ def console_args_parser():
 
     return parser
 
+
+
 def main():
 
     config = yaml.load(open(CONFIGFILE).read())

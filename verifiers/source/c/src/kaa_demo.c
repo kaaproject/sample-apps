@@ -41,8 +41,8 @@ void kaa_message_receive(void *context,
     printf("Message was received!\n");
 
     if (event->message->type == KAA_VERIFIERS_DEMO_EVENT_CLASS_FAMILY_UNION_STRING_OR_NULL_BRANCH_0) {
-        char *message = event->message->data;
-        printf("Message: %s\n", message);
+        kaa_string_t *message = (kaa_string_t *)event->message->data;
+        printf("Message: %s\n", message->data);
     }
 
     event->destroy(event); 

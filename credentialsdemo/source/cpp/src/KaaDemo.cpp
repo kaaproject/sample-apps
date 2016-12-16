@@ -45,6 +45,17 @@ public:
     }
 };
 
+class StateListener : public KaaClientStateListener
+{
+public:
+    void onConnectionEstablished(const EndpointConnectionInfo& connection) override
+    {
+        if (connection.connectionAccepted_) {
+            std::cout <<"Device state: REGISTERED" << std::endl;
+        }
+    }
+};
+
 int main()
 {
     try {
@@ -52,7 +63,7 @@ int main()
         /*
          * Initialize the Kaa endpoint.
          */
-        auto kaaClient = Kaa::newClient();
+        auto kaaClient = Kaa::newClient(std::make_shared<KaaClientPlatformContext>(), std::make_shared<StateListener>());
 
         /*
          * Set failover strategy
@@ -63,8 +74,6 @@ int main()
          * Run the Kaa endpoint.
          */
         kaaClient->start();
-
-        std::cout << "Successfullly authorized. Press Enter to exit" << std::endl;
 
         /*
          * Wait for the Enter key before exiting.

@@ -178,7 +178,7 @@ int main(void)
      * Start Kaa client main loop.
      */
     error = kaa_client_start(kaa_client, temperature_update,
-            &sensor_context, sensor_context.sample_period);
+            &sensor_context, 1);
 
     if (error) {
         demo_printf("Failed to start Kaa client, error code %d\r\n", error);

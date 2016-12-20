@@ -568,7 +568,7 @@ To change the sampling period:
 		You will see the list of all groups that your endpoint belongs to.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_2.png?raw=true" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_2.png" />
 		<br />
 		<br />
 		
@@ -578,7 +578,7 @@ To change the sampling period:
 		The <b>Endpoint group details</b> page will open.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_3.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_3.png" />
 		<br />
 		<br />
 		
@@ -591,7 +591,7 @@ To change the sampling period:
 		Select the <b>Draft</b> tab and enter a new <i>samplingPeriod</i> value.
 	
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_4.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_4.png" />
 		<br />
 		<br />
 		
@@ -600,7 +600,7 @@ To change the sampling period:
 		Click <b>Save</b> to save the changes, then click <b>Activate</b> to activate the configuration.
 	
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_5.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_5.png" />
 		<br />
 		<br />
 		
@@ -667,7 +667,7 @@ To change the sampling period:
 		Click the <b>Add schema</b> button.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_6.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_6.png" />
 		<br />
 		<br />
 		
@@ -679,7 +679,7 @@ To change the sampling period:
 		Click <b>Create new type</b>.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_7.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_7.png" />
 		<br />
 		<br />
 		
@@ -689,7 +689,7 @@ To change the sampling period:
 		After you created or uploaded a new schema, click <b>Add</b>.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_8.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_8.png" />
 		<br />
 		<br />
 		
@@ -709,7 +709,7 @@ To create a new endpoint group:
 		For more information, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-groups" target="_blank">Endpoint groups</a>.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_9.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_9.png" />
 		<br />
 		<br />
 		
@@ -719,7 +719,7 @@ To create a new endpoint group:
 		On this page, you can add profile filters, configurations, and notification topics.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_10.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_10.png" />
 		<br />
 		<br />
 		
@@ -744,7 +744,7 @@ To create an endpoint profile filter:
 		Select corresponding version of the Server-side EP profile schema.
 	
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_11.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_11.png" />
 		<br />
 		<br />
 		
@@ -781,7 +781,7 @@ To add a group configuration:
 		Now, every endpoint included in this group will have the sampling period value set to 3 seconds.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_12.png" />
+		<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_12.png" />
 		<br />
 		<br />
 		
@@ -791,7 +791,7 @@ To add a group configuration:
 To see the list of all endpoints registered in your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">application</a>, click <b>Applications</b> > <b>Configuration demo</b> > <b>Endpoint profiles</b>.
 
 <br />
-<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_13.png" />
+<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_13.png" />
 <br />
 
 <p>
@@ -805,11 +805,11 @@ To see the list of all endpoints registered in your <a href="http://kaaproject.g
 Click <b>Edit</b> and enable the <b>enableDetailedSampling</b> option.
 
 <br />
-<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_14.png" />
+<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_14.png" />
 <br />
 
 <br />
-<img src="https://raw.github.com/hunch7/sample-apps/app_description/configurationdemo/resources/pic/config_demo_15.png" />
+<img src="http://localhost:9080/sandbox/resources/configuration/config_demo_15.png" />
 <br />
 
 Kaa client will output the message below.

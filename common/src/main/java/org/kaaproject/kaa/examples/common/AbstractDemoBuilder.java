@@ -16,22 +16,10 @@
 
 package org.kaaproject.kaa.examples.common;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.iharder.Base64;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.kaaproject.kaa.common.dto.ApplicationDto;
@@ -41,13 +29,7 @@ import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
 import org.kaaproject.kaa.common.dto.admin.SdkTokenDto;
 import org.kaaproject.kaa.common.dto.admin.UserDto;
 import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
-import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
-import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
-import org.kaaproject.kaa.common.dto.event.ApplicationEventMapDto;
-import org.kaaproject.kaa.common.dto.event.EventClassDto;
-import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
-import org.kaaproject.kaa.common.dto.event.EventClassFamilyVersionDto;
-import org.kaaproject.kaa.common.dto.event.EventClassType;
+import org.kaaproject.kaa.common.dto.event.*;
 import org.kaaproject.kaa.examples.common.projects.Bundle;
 import org.kaaproject.kaa.examples.common.projects.Project;
 import org.kaaproject.kaa.examples.common.projects.ProjectsConfig;
@@ -55,6 +37,16 @@ import org.kaaproject.kaa.server.common.admin.AdminClient;
 import org.kaaproject.kaa.server.common.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractDemoBuilder implements DemoBuilder {
 
@@ -170,11 +162,13 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         
         Map<SdkTokenDto, String> sdkProfiles = new HashMap<>(); 
         for (Project projectConfig : projectConfigs.getProjects()) {
+            logger.debug("Processing projectConfig with id = [{}]", projectConfig.getId());
             String iconBase64 = loadIconBase64(projectConfig.getId());
             projectConfig.setIconBase64(iconBase64);
             SdkProfileDto sdkProfileDto = this.sdkProfileDto;
             if (isMultiApplicationProject()) {
                 Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
+                logger.debug("Processing multi application project, projectsSdkMap = [{}]", projectsSdkMap);
                 sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
             }
             SdkTokenDto sdkProfileToken = sdkProfileDto.toSdkTokenDto();

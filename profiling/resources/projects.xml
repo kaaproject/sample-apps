@@ -866,7 +866,7 @@ To manage profile filters for a group
 </p>
 <p>
 	When you start your application, each EP sends its client-side profile data to Kaa server for registration.
-	For more information about EP registration, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
+	For more information about EP registration, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Devices-provisioning-and-registration/" target="_blank">Endpoint provisioning and registration</a>.
 </p>
 <p>
 	Then Kaa server gets the list of the endpoint groups in the application and checks the group filters against the client and server side of the EP profiles.

@@ -121,7 +121,7 @@ If you want to modify the sample application source code or create your own appl
             <![CDATA[
 <p>
 	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Java SDK</a>.
-	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/User-management/" target="_blank">User management</a> features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
 
@@ -226,7 +226,7 @@ If you want to modify the sample application source code or create your own appl
             <![CDATA[
 <p>
 	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa Objective-C SDK</a>.
-	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/User-management/" target="_blank">User management</a> features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
 
@@ -367,7 +367,7 @@ Make sure that the build target is set to <b>EndpointOwnershipDemo</b>, not <b>K
             <![CDATA[
 <p>
 	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C SDK</a>.
-	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/User-management/" target="_blank">User management</a> features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
 
@@ -463,7 +463,7 @@ CMake error: The following variables are used in this project, but they are set 
             <![CDATA[
 <p>
 	This sample application is based on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sdk-type" target="_blank">Kaa C++ SDK</a>.
-	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users</a> management features.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/User-management/" target="_blank">User management</a> features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>
 
@@ -559,7 +559,7 @@ CMake error: The following variables are used in this project, but they are set 
             <![CDATA[
 <p>
 	This application bundle demonstrates implementation of the Kaa <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/" target="_blank">Endpoint ownership</a> feature.
-	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/Users-management/" target="_blank">Users management</a> features.
+	It works in conjunction with the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Events/" target="_blank">Events</a> and <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Administration-guide/User-management/" target="_blank">User management</a> features.
 	In this application, <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-client" target="_blank">Kaa client</a> registers its endpoint <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#access-token" target="_blank">access token</a> and creates an event listener.
 </p>	
 

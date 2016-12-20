@@ -616,7 +616,7 @@ To manage notification schema details:
 		You will see the list of all notifications schemas stored for your <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">Kaa application</a>.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/notif_demo_1.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/notif_demo_1.png" />
 		<br />
 		<br />
 		
@@ -626,7 +626,7 @@ To manage notification schema details:
 		The <b>Notification schema details</b> page will open.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/notif_demo_2.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/notif_demo_2.png" />
 		<br />
 		<br />
 		
@@ -654,7 +654,7 @@ To create a notification topic:
 		The page will display the list of available topics.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/notif_demo_3.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/notif_demo_3.png" />
 		<br />
 		<br />
 		
@@ -679,7 +679,7 @@ To create a notification topic:
 		The <b>Notification topic details</b> page will open.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/notif_demo_4.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/notif_demo_4.png" />
 		<br />
 		<br />
 		
@@ -703,7 +703,7 @@ To subscribe endpoint groups to notification topics:
 		The <b>Endpoint group details</b> page will open.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/endpoint-group-details.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/endpoint-group-details.png" />
 		<br />
 		<br />
 		
@@ -712,14 +712,14 @@ To subscribe endpoint groups to notification topics:
 		Under the <b>Notification topics</b> section, click the <b>Add notification topic</b> button, and select the notification topic.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/add-notification-topic-to-group.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/add-notification-topic-to-group.png" />
 		<br />
 		<br />
 		
 		The notification topics you assigned to the group are displayed in the <b>Notification topics</b> list.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/notification-topic-added.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/notification-topic-added.png" />
 		<br />
 		<br />
 	
@@ -741,7 +741,7 @@ To configure and send a notification:
 		The <b>Notification details</b> page will open.
 		
 		<br />
-		<img src="https://raw.githubusercontent.com/kaaproject/sample-apps/release-2.1/notification/resources/pic/notif_demo_5.png" />
+		<img src="http://localhost:9080/sandbox/resources/notification/notif_demo_5.png" />
 		<br />
 		<br />
 		

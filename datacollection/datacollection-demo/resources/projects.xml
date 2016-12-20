@@ -560,7 +560,7 @@ To do this:
 		You will see the list of all log schemas stored for your application.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_6.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_6.png" />
 		<br />
 		<br />
 		
@@ -570,7 +570,7 @@ To do this:
 		The <b>Log schema details</b> page will open.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_7.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_7.png" />
 		<br />
 		<br />
 		
@@ -601,14 +601,14 @@ To do this:
 	To view the list of configuration schemas, open the <b>Configuration</b> page under the <b>Schemas</b> section of the application.
 	
 	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_8.png" />
+	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_8.png" />
 	<br />
 	<br />	
 	
 	To edit a configuration schema, click the corresponding row to open the <b>Configuration schema details</b> page.
 	
 	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_9.png" />
+	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_9.png" />
 	<br />
 	<br />	
 	
@@ -623,7 +623,7 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 	To view the list of log appenders, open the <b>Log appenders</b> page of the application.
 	
 	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_10.png" />
+	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_10.png" />
 	<br />
 	<br />	
 	
@@ -707,7 +707,7 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 	You will see the following output.
 	
 	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_0.png" />
+	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_0.png" />
 	<br />
 	<br />	
 	
@@ -718,7 +718,7 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 	To view the application token, open the <b>Application details</b> page.
 	
 	<br />
-	<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_1.png" />
+	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_1.png" />
 	<br />
 	<br />
 	
@@ -739,7 +739,7 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 			The <b>Endpoint group details</b> page will open.
 			
 			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_2.png" />
+			<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_2.png" />
 			<br />
 			<br />
 			
@@ -748,7 +748,7 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 			In the <b>Configurations</b> section, select the current configuration (the one that has the latest version).
 			
 			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_3.png" />
+			<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_3.png" />
 			<br />
 			<br />
 			
@@ -758,7 +758,7 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 			For example, set it to <b>5</b>
 			
 			<br />
-			<img src="https://raw.github.com/hunch7/sample-apps/app-228-DataColl-bundle/datacollectiondemo/resources/pic/collection_demo_5.png" />
+			<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_5.png" />
 			<br />
 			<br />
 			
@@ -837,7 +837,7 @@ To create a Telemetry monitor log appender in <a href="http://kaaproject.github.
 		Open the <b>Log appenders</b> page of the sample application and click <b>Add new log appender</b> button.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/01_add_new_log_appender.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/01_add_new_log_appender.png" />
 		<br />
 		<br />
 	</li>
@@ -847,7 +847,7 @@ To create a Telemetry monitor log appender in <a href="http://kaaproject.github.
 		Monitoring values that exceed the value specified in the <b>Threshold value</b> field will be saved to a separate table named as specified in the <b>Table name for monitoring values</b>.
 
    		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/02_setup_log_appender.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/02_setup_log_appender.png" />
 		<br />
 		<br />
 		
@@ -867,7 +867,7 @@ To configure the server profile:
 		Unfold the <b>Schemas</b> list of the sample application, select the <b>Server-side EP profile</b> page, and click <b>Add schema</b>.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/03_add_server_schema.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/03_add_server_schema.png" />
 		<br />
 		<br />
 		
@@ -876,7 +876,7 @@ To configure the server profile:
 		On the <b>Server-side EP profile schema details</b> page, click <b>Create new type</b>.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/04_create_server_schema_type.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/04_create_server_schema_type.png" />
 		<br />
 		<br />
 		
@@ -886,14 +886,14 @@ To configure the server profile:
 		Click <b>Add</b> to apply changes.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/05_configure_server_schema.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/05_configure_server_schema.png" />
 		<br />
 		<br />
 		
 		Your schema will appear on the <b>Server-side EP profile schemas</b> list with a version number.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/06_verify_schema_version.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/06_verify_schema_version.png" />
 		<br />
 		<br />
 		
@@ -933,7 +933,7 @@ SELECT * FROM kaa.logs_monitoring_values ;
 		The console will display the output similar to the one below.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/07_cqlsh.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/07_cqlsh.png" />
 		<br />
 		<br />
 	
@@ -944,7 +944,7 @@ SELECT * FROM kaa.logs_monitoring_values ;
 		The statistics is displayed in the <b>Sever-side EP profile</b> section.
 		
 		<br />
-		<img src="https://raw.github.com/hunch7/sample-apps/app-467-telemetry-master/datacollection/datacollection-demo/resources/pic/08_statistics.png" />
+		<img src="http://localhost:9080/sandbox/resources/datacollection/08_statistics.png" />
 		<br />
 		<br />
 		

@@ -161,13 +161,13 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         logger.info("Demo application build finished.");
         Map<SdkTokenDto, String> sdkProfiles = new HashMap<>(); 
         for (Project projectConfig : projectConfigs.getProjects()) {
-            logger.debug("Processing projectConfig with id = [{}]", projectConfig.getId());
+            logger.info("Processing projectConfig with id = [{}]", projectConfig.getId());
             String iconBase64 = loadIconBase64(projectConfig.getId());
             projectConfig.setIconBase64(iconBase64);
             SdkProfileDto sdkProfileDto = this.sdkProfileDto;
             if (isMultiApplicationProject()) {
                 Map<String, SdkProfileDto> projectsSdkMap = getProjectsSdkMap();
-                logger.debug("Processing multi application project, projectsSdkMap = [{}]", projectsSdkMap);
+                logger.info("Processing multi application project, projectsSdkMap = [{}]", projectsSdkMap);
                 sdkProfileDto = projectsSdkMap.get(projectConfig.getId());
             }
             SdkTokenDto sdkProfileToken = sdkProfileDto.toSdkTokenDto();

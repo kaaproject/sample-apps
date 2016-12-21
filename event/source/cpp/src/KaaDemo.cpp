@@ -151,11 +151,11 @@ public:
 
     void printHelp() const {
         std::cout << "Available commands:\n";
-        std::cout << "join <room> - join room\n";
-        std::cout << "create <room> - create room\n";
-        std::cout << "delete <room> - delete room\n";
-        std::cout << "rooms - list available rooms\n";
-        std::cout << "quit - exit application\n";
+        std::cout << "1. Join room\n";
+        std::cout << "2. Create room\n";
+        std::cout << "3. Delete room\n";
+        std::cout << "4. List available rooms\n";
+        std::cout << "5. Exit application\n";
     }
 
     void printRooms() const {
@@ -172,35 +172,29 @@ public:
 
 private:
     bool processCommand(const std::string &command) {
-        if (command.compare(0, sizeof("quit")-1, "quit") == 0) {
-            return false;
-        }
-
-        if (command.compare(0, sizeof("rooms")-1, "rooms") == 0) {
+        if (command.compare("1") == 0) {
+            return command_join();
+        } else if (command.compare("2") == 0) {
+            return command_create();
+        }  else if (command.compare("3") == 0) {
+            return command_delete();
+        } else if (command.compare("4") == 0) {
             printRooms();
             return true;
-        }
-
-        std::string room = "";
-        size_t pos = command.find_first_of(" ", 0);
-        if (pos != std::string::npos && pos+1 < command.length()) {
-            room = command.substr(pos+1);
-        }
-
-        if (command.compare(0, sizeof("join")-1, "join") == 0) {
-            return command_join(room);
-        } else if (command.compare(0, sizeof("create")-1, "create") == 0) {
-            return command_create(room);
-        }  else if (command.compare(0, sizeof("delete")-1, "delete") == 0) {
-            return command_delete(room);
+        } else if (command.compare("5") == 0) {
+            return false;
         }
 
         std::cout << "Unknown command " << command << '\n';
         return true;
     }
 
-    bool command_join(const std::string &room)
+    bool command_join()
     {
+        std::cout << "Enter chat room name:" << std::endl;
+        std::string room;
+        std::getline(std::cin, room);
+
         if (room.empty()) {
             std::cout << "Wrong command syntax\n";
             printHelp();
@@ -217,8 +211,12 @@ private:
         return true;
     }
 
-    bool command_create(const std::string &room)
+    bool command_create()
     {
+        std::cout << "Enter chat room name:" << std::endl;
+        std::string room;
+        std::getline(std::cin, room);
+
         if (room.empty()) {
             std::cout << "Wrong command syntax\n";
             printHelp();
@@ -234,8 +232,12 @@ private:
         return true;
     }
 
-    bool command_delete(const std::string &room)
+    bool command_delete()
     {
+        std::cout << "Enter chat room name:" << std::endl;
+        std::string room;
+        std::getline(std::cin, room);
+
         if (room.empty()) {
             std::cout << "Wrong command syntax\n";
             printHelp();
@@ -265,10 +267,14 @@ public:
 
 
     virtual void onEventListenersReceived(const std::vector<std::string> &eventListeners)
-    {}
+    {
+        std::cout << "Kaa Demo found " << eventListeners.size() << " event listeners" << std::endl;
+    }
 
     virtual void onRequestFailed()
-    {}
+    {
+        std::cout << "Kaa Demo event listeners not found" << std::endl;
+    }
 
 private:
     EventFamilyFactory& eventFactory_;
@@ -297,6 +303,8 @@ private:
 
 int main(int argc, char *argv[])
 {
+    std::cout << "Event demo started" << std::endl;
+
     const std::string KAA_USER_ID("userid");
     const std::string KAA_USER_ACCESS_TOKEN("token");
 

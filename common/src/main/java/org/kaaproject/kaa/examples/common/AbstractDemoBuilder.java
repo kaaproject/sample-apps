@@ -159,7 +159,6 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
         buildDemoApplicationImpl(client);
         projectConfigs = loadProjectConfigs();
         logger.info("Demo application build finished.");
-        
         Map<SdkTokenDto, String> sdkProfiles = new HashMap<>(); 
         for (Project projectConfig : projectConfigs.getProjects()) {
             logger.debug("Processing projectConfig with id = [{}]", projectConfig.getId());

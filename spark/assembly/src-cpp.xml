@@ -40,11 +40,6 @@
         </fileSet>
         <fileSet>
             <directory>${main.dir}/common/build-scripts/</directory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CppSparkDataAnalyticsDemo</outputDirectory>
-        </fileSet>
-        <fileSet>
-            <directory>${main.dir}/common/build-scripts/</directory>
             <includes>
                 <include>CMakeLists.txt</include>
             </includes>

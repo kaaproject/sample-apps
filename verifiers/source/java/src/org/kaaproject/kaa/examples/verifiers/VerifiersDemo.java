@@ -82,6 +82,11 @@ public class VerifiersDemo {
         });
 
         /*
+            Set a "user friendly" access token. Without this a random UUID will be generated.
+         */
+        kaaClient.setEndpointAccessToken("access_token");
+
+        /*
          * Add message listener to receive test messages.
          */
         addMessageListener();

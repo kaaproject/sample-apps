@@ -30,7 +30,7 @@ void target_gpio_led_init(void)
     GPIO_OUTPUT_SET(2, LOW);
 }
 
-void target_gpio_led_toggle(unsigned int led, bool status);
+void target_gpio_led_toggle(unsigned int led, bool status)
 {
     if (led >= NUM_GPIO_LEDS) {
         return;

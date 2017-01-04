@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 
+cmake_minimum_required(VERSION 3.0.2)
+
 project(VerifiersDemo C)
 
 # Disable unused features

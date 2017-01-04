@@ -139,7 +139,7 @@ After you installed the "gdb-apple" package, manage its code signing certificate
 To use CMake tools to generate a project, you need to have the following software installed:
 
 * Eclipse version 4.6 and newer.
-* CMake version 2.8.8 and newer.
+* CMake version 3.0.2 and newer.
 
 After you installed the above software:
 

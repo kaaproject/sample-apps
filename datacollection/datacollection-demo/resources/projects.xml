@@ -113,16 +113,16 @@ If you want to modify the sample application source code or create your own appl
 
 <p>
 	When you start the application, the last five log records will be sent from the endpoint to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a>.
-	The Kaa cluster will persist those records in the MongoDB database of the Sandbox using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+	The Kaa cluster will persist those records in the Cassandra database of the Sandbox using the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/Cassandra-log-appender/" target="_blank">Cassandra log appender</a>.
 </p>
 
 <p>
-	You can access the collected data by querying an instance of the MongoDB database in the Sandbox.
+	You can access the collected data by querying an instance of the Cassandra database in the Sandbox.
 	To do this, run the following commands in the Kaa Sandbox console.
 	
 <pre>
-$ mongo kaa
-db.logs_$your_application_token$.find()
+cqlsh
+SELECT * FROM kaa.logs_example;
 </pre>
 </p>
             ]]>
@@ -206,14 +206,14 @@ mkdir -p build \
 <h2>How do I check if the server received the log records?</h2>
 
 When <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> receives log records, it sends them to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-appenders" target="_blank">log appender</a>.
-This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/Cassandra-log-appender/" target="_blank">Cassandra log appender</a>.
 
 <p>
 	To check if the server received the log records, use the following commands.
 	
 <pre>
-$ mongo kaa
-> db.logs_$YOUR_APPLICATION_TOKEN.find()
+cqlsh
+SELECT * FROM kaa.logs_example;
 </pre>
 </p>
 
@@ -330,14 +330,14 @@ build/demo_client.exe
 <h2>How do I check if the server received the log records?</h2>
 
 When <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-server" target="_blank">Kaa server</a> receives log records, it sends them to the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/#log-appenders" target="_blank">log appender</a>.
-This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+This sample application uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/Cassandra-log-appender/" target="_blank">Cassandra log appender</a>.
 
 <p>
 	To check if the server received the log records, use the following commands.
 	
 <pre>
-$ mongo kaa
-> db.logs_$YOUR_APPLICATION_TOKEN.find()
+cqlsh
+SELECT * FROM kaa.logs_example;
 </pre>
 </p>
 
@@ -518,7 +518,7 @@ Make sure that the build target is set to <b>DataCollectionDemo</b>, not <b>Kaa<
 <h2>Log schema</h2>
 
 The structure of Kaa logs is defined by the chosen CT schema.
-This demo <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">application</a> will record the readings of the temperature sensors and save them to the MongoDB database.
+This demo <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">application</a> will record the readings of the temperature sensors and save them to the <a href="http://cassandra.apache.org/" target="_blank">Cassandra database</a>.
 
 <p>
 	The following schema is used to define the format of the log records.
@@ -617,7 +617,7 @@ To do this:
 
 <h2>Log appenders</h2>
 
-To send the log records from the Operations service to the MongoDB database, Kaa uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/MongoDB-log-appender/" target="_blank">MongoDB log appender</a>.
+To send the log records from the Operations service to the Cassandra database, Kaa uses the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/Cassandra-log-appender/" target="_blank">Cassandra log appender</a>.
 
 <p>
 	To view the list of log appenders, open the <b>Log appenders</b> page of the application.
@@ -635,37 +635,70 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 	
 <pre>
 {
-   "mongoServers":[
-	  {
-		 "host":"localhost",
-		 "port":27017
-	  }
-   ],
-   "mongoCredentials":[
-
-   ],
-   "dbName":"kaa",
-   "connectionsPerHost":{
-	  "int":30
-   },
-   "maxWaitTime":{
-	  "int":120000
-   },
-   "connectionTimeout":{
-	  "int":5000
-   },
-   "socketTimeout":{
-	  "int":0
-   },
-   "socketKeepalive":{
-	  "boolean":false
-   },
-   "includeClientProfile":{
-	  "boolean":false
-   },
-   "includeServerProfile":{
-	  "boolean":false
-   }
+    "cassandraServers":[
+        {
+            "host":"localhost",
+            "port ":9042
+        }
+    ],
+    "cassandraCredential":{
+        "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraCredential ":{
+            "user":"user",
+            "password":"password"
+        }
+    },
+    "keySpace":"kaa",
+    "tableNamePattern":"logs_$app_token_$config_hash",
+    "columnMapping":[
+        {
+            "type ":"HEADER_FIELD",
+            "value ":{
+                "string ":"applicationToken"
+            },
+            "columnName":"application_token",
+            "columnType":"TEXT ",
+            "partitionKey ":false,
+            "clusteringKey ":false
+        },
+        {
+            "type":"EVENT_FIELD",
+            "value ":{
+                "string ":"message"
+            },
+            "columnName":"message",
+            "columnType ":"TEXT ",
+            "partitionKey ":false,
+            "clusteringKey ":false
+        },
+        {
+            "type":"UUID",
+            "value ":{
+                "string ":"id "
+            },
+            "columnName":"id",
+            "columnType":"UUID",
+            "partitionKey":true,
+            "clusteringKey":false
+        }
+    ],
+    "clusteringMapping":[
+    ],
+    "cassandraBatchType":{
+        "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraBatchType":"UNLOGGED"
+    },
+    "cassandraSocketOption":null,
+    "executorThreadPoolSize ":1,
+    "callbackThreadPoolSize ":2,
+    "dataTTL ":0,
+    "cassandraWriteConsistencyLevel ":{
+        "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraWriteConsistencyLevel ":"ONE "
+    },
+    "cassandraCompression":{
+        "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraCompression ":"NONE "
+    },
+    "cassandraExecuteRequestType":{
+        "org.kaaproject.kaa.server.appenders.cassandra.config.gen.CassandraExecuteRequestType ":"SYNC "
+    }
 }
 </pre>
 
@@ -694,23 +727,20 @@ To send the log records from the Operations service to the MongoDB database, Kaa
 ...
 </pre>
 	
-	You can access the collected data directly from the database using the MongoDB CLI tool.
-	To do this, access Sandbox virtual machine over ssh with the username <b>kaa</b> and password <b>kaa</b>, or use the virtual machine to run a Mongo client application for the MongoDB database.
-	
+To verify functioning of the Cassandra log appender, run the <code>cqlsh</code> command from the <code>/usr/lib/kaa-node/lib/</code> directory, then run the below command.
+		
 <pre>
- $ ssh kaa@%your_sandbox_instance_ip/host%
-
- $ mongo kaa
- > db.logs_%data_collection_application_token%.find()
+SELECT * FROM kaa.logs_monitoring_values ;
 </pre>
-	
-	You will see the following output.
-	
+		
+The console will display the output similar to the one below.
+
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_0.png" />
+	<img src="http://localhost:9080/sandbox/resources/datacollection/07_cqlsh.png" />
 	<br />
-	<br />	
-	
+	<br />
+
+<p>
 	Now you need to replace <i>%your_sandbox_instance_ip/host%</i> with the actual host/ip address of your Sandbox.
 	To do this, go to the Sandbox Management page and specify the real IP of your machine in the <b>Kaahost/IP</b> block.
 	Alternatively, you can use the following command: <code>$ ssh kaa@127.0.0.1 -p 2222</code>.

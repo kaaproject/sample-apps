@@ -51,6 +51,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     private static final String GPIO_MASTER_ANDROID_ID = "gpiocontrol_demo_android_master";
     private static final String GPIO_MASTER_OBJC_ID = "gpiocontrol_demo_objc_master";
     private static final String GPIO_C_ID = "gpiocontrol_demo_c_slave";
+    private static final String GPIO_CPP_ID = "gpiocontrol_demo_cpp_slave";
     private static final String GPIO_ARTIK5_ID = "gpiocontrol_demo_artik5_slave";
 
     private static final String REMOTE_CONTROL_ECF_NAME = "Remote Control Event Class Family";
@@ -145,6 +146,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         sdkProfile.setAefMapIds(aefMapIds);
 
         projectsSdkMap.put(GPIO_C_ID, sdkProfile);
+        projectsSdkMap.put(GPIO_CPP_ID, sdkProfile);
         projectsSdkMap.put(GPIO_ARTIK5_ID, sdkProfile);
     }
 

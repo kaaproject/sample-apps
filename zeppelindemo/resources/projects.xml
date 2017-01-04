@@ -123,7 +123,7 @@ ERROR - Detected unreadable sstables
 </pre>
 or
 <pre>
-"ERROR Exception encountered during startup java.lang.IllegalStateException: Unknown commitlog version 6
+ERROR - Exception encountered during startup java.lang.IllegalStateException: Unknown commitlog version 6
 </pre>
 If that is the case, run the following commands.
 <pre>

@@ -117,7 +117,15 @@ Reboot Cassandra cluster. <br />
 <pre>
 sudo cassandra
 </pre>
-Note: while downdrading from newer versions of Cassandra in some cases ("ERROR Detected unreadable sstables" or "ERROR Exception encountered during startup java.lang.IllegalStateException: Unknown commitlog version 6") requered following commands: <br />
+While downgrading from newer versions of Cassandra, you might encounter the following errors.
+<pre>
+ERROR - Detected unreadable sstables
+</pre>
+or
+<pre>
+"ERROR Exception encountered during startup java.lang.IllegalStateException: Unknown commitlog version 6
+</pre>
+If that is the case, run the following commands.
 <pre>
 sudo rm -rf /var/lib/cassandra/commitlog
 sudo rm -rf /var/lib/cassandra/data

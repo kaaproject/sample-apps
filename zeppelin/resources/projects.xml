@@ -163,7 +163,14 @@ sudo apt-get install libjna-java
 <pre>
 sudo cassandra
 </pre>
-		
+
+        Note: while downdrading from newer versions of Cassandra in some cases ("ERROR Detected unreadable sstables" or "ERROR Exception encountered during startup java.lang.IllegalStateException: Unknown commitlog version 6") requered following commands:
+
+<pre>
+sudo rm -rf /var/lib/cassandra/commitlog
+sudo rm -rf /var/lib/cassandra/data
+</pre>
+
 		Check cassandra cql shell.
 		
 <pre>

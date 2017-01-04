@@ -109,14 +109,6 @@ You can check if the Cassandra service is running by executing the following com
 <pre>
 sudo netstat -ntlp | grep 9042
 </pre>
-Install Java Native Access (JNA). <br />
-<pre>
-sudo apt-get install libjna-java
-</pre>
-Reboot Cassandra cluster. <br />
-<pre>
-sudo cassandra
-</pre>
 While downgrading from newer versions of Cassandra, you might encounter the following errors.
 <pre>
 ERROR - Detected unreadable sstables
@@ -129,6 +121,14 @@ If that is the case, run the following commands.
 <pre>
 sudo rm -rf /var/lib/cassandra/commitlog
 sudo rm -rf /var/lib/cassandra/data
+</pre>
+7. Install Java Native Access (JNA). <br />
+<pre>
+sudo apt-get install libjna-java
+</pre>
+Reboot Cassandra cluster. <br />
+<pre>
+sudo cassandra
 </pre>
 Check cassandra cql shell. <br />
 <pre>

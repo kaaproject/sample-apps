@@ -65,6 +65,7 @@
                         <descriptor>assembly/src-android-master.xml</descriptor>
                         <descriptor>assembly/src-objc-master.xml</descriptor>
                         <descriptor>assembly/src-c-slave.xml</descriptor>
+                        <descriptor>assembly/src-cpp-slave.xml</descriptor>
                         <descriptor>assembly/src-artik5-slave.xml</descriptor>
                     </descriptors>
                 </configuration>

@@ -30,7 +30,6 @@ using namespace kaa;
 
 #define NUM_GPIO_LEDS 4
 
-
 class ECFListener: public RemoteControlECF::RemoteControlECFListener
 {
 public:
@@ -45,7 +44,7 @@ public:
         }
     }
 
-    void onEvent(const nsRemoteControlECF::DeviceInfoRequest& event, const std::string& source)
+    void onEvent(const nsRemoteControlECF::DeviceInfoRequest& event, const std::string& source) override
     {
         nsRemoteControlECF::DeviceInfoResponse response;
 
@@ -56,7 +55,7 @@ public:
         remote.sendEvent(response);
     }
 
-    void onEvent(const nsRemoteControlECF::GpioToggleRequest& event, const std::string& source)
+    void onEvent(const nsRemoteControlECF::GpioToggleRequest& event, const std::string& source) override
     {
         if (event.gpio.status) {
             _setLedStatus(event.gpio.id, true);

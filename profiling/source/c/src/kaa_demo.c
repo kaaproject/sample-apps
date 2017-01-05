@@ -27,6 +27,8 @@
 #include <kaa_profile.h>
 #include <platform/ext_key_utils.h>
 
+#define KAA_CONFIGURATION_STORAGE "kaa_configuration.bin"
+
 static kaa_client_t *kaa_client = NULL;
 
 void kaa_demo_print_configuration_message(const kaa_root_configuration_t *configuration)
@@ -94,6 +96,11 @@ int main(int argc, char *argv[])
     size_t endpoint_key_hash_length = 0;
 
     ext_get_sha1_base64_public(&endpoint_key_hash, &endpoint_key_hash_length);
+
+    if (access(KAA_CONFIGURATION_STORAGE, F_OK) != -1) {
+        printf("Waiting for new configuration for\n");
+        printf("Endpoint ID %.*s\n", (int)endpoint_key_hash_length, endpoint_key_hash);
+    }
 
     printf("- - -\n");
     printf("Endpoint ID %.*s\n", (int)endpoint_key_hash_length,

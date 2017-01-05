@@ -401,11 +401,11 @@ mkdir -p build \
         To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
-        Run your sample application.
+    	Run your sample application.
 <pre>
 ./build/demo_client
 </pre>
-    </li>
+	</li>
 </ol>
 
 <h1>Troubleshooting</h1>

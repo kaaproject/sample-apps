@@ -24,19 +24,26 @@ Copyright 2014-2016 CyberVision, Inc.
         <name>Spark data analytics demo</name>
         <description>IoT data ingestion in Spark Streaming using Kaa</description>
         <details><![CDATA[
-This sample application collects real-time data from Kaa endpoints into Apache Spark for stream processing using Kaa. <br /> <br />
-Please review the webinar below for hands-on experience based on an earlier version of the Kaa platform. <br /> <br />
-<iframe width="691" height="389" src="https://www.youtube.com/embed/a5Dw57Q-OIc" frameborder="0" allowfullscreen></iframe> <br />
+<p>
+	This sample application collects real-time data from Kaa endpoints into Apache Spark for stream processing using Kaa.
+	Please review the webinar below for hands-on experience based on an earlier version of the Kaa platform.
+	<br />
+	<br />
+	<iframe width="691" height="389" src="https://www.youtube.com/embed/a5Dw57Q-OIc" frameborder="0" allowfullscreen></iframe>
+
 <h2>Installation</h2>
-1. Install Apache Spark on your host PC.
-<div onclick="elm = document.getElementById('box'); if(elm.style.display == 'none') elm.style.display = 'block'; else elm.style.display = 'none';">
-<u>Click here to show Apache Spark installation instructions</u></div>
-<div style="display:none;" id="box">
 
-We assume that you have installed java on your PC. <br />
-First, install ssh, ntp and python-software-properties: <br />
+<ol>
+	<li>
+		Install Apache Spark on your host PC.
+		<div onclick="elm = document.getElementById('box'); if(elm.style.display == 'none') elm.style.display = 'block'; else elm.style.display = 'none';">
+		<u>Click here to show Apache Spark installation instructions</u></div>
+		<div style="display:none;" id="box">
 
-Log in as a user with sudo:
+		We assume that you have installed java on your PC. <br />
+		First, install ssh, ntp and python-software-properties: <br />
+
+		Log in as a user with sudo:
 <pre>
 $ sudo apt-get update
 $ sudo ntpdate pool.ntp.org
@@ -45,7 +52,7 @@ $ sudo apt-get install ntp
 $ sudo apt-get install python-software-properties
 </pre>
 
-Second, download and install Apache Spark
+		Second, download and install Apache Spark
 <pre>
 $ cd ~
 $ mkdir spark
@@ -60,7 +67,7 @@ $ cd /usr/local/
 $ sudo ln -s spark-1.6.0 spark
 </pre>
 
-Third, create a Spark user with proper privileges and ssh keys.
+		Third, create a Spark user with proper privileges and ssh keys.
 <pre>
 $ sudo addgroup spark
 $ sudo useradd -g spark spark
@@ -68,10 +75,12 @@ $ sudo adduser spark sudo
 $ sudo mkdir /home/spark
 $ sudo chown spark:spark /home/spark
 </pre>
-Add to /etc/sudoers file:
+
+		Add to /etc/sudoers file:
 <pre>
 spark ALL=(ALL) NOPASSWD:ALL
 </pre>
+
 <pre>
 $ sudo chown -R spark:spark /usr/local/spark/
 $ sudo su spark
@@ -81,7 +90,8 @@ $ ssh localhost
 $ exit
 </pre>
 
-Next, setup some Apache Spark working directories with proper user permissions
+		Next, setup some Apache Spark working directories with proper user permissions:
+	
 <pre>
 $ sudo mkdir -p /srv/spark/{logs,work,tmp,pids}
 $ mkdir /tmp/spark-events
@@ -89,7 +99,7 @@ $ sudo chown -R spark:spark /srv/spark
 $ sudo chmod 4755 /srv/spark/tmp
 </pre>
 
-Finally, let's adjust some Spark configuration files
+		Finally, let's adjust some Spark configuration files:
 <pre>
 $ cd /usr/local/spark/conf/
 $ cp -p spark-env.sh.template spark-env.sh
@@ -134,7 +144,7 @@ spark.eventLog.enabled  true
 spark.serializer        org.apache.spark.serializer.KryoSerializer
 </pre>
 
-Time to start up Apache Spark
+		Time to start up Apache Spark:
 <pre>
 $ cd /usr/local/spark/sbin
 
@@ -142,32 +152,67 @@ $ sudo ./start-master.sh -h hostnamepub
 $ sudo ./start-slave.sh spark://hostnamepub:7077
 </pre>
 
-To stop the processes, use:
+		To stop the processes, use:
 <pre>
 $ sudo ./stop-slave.sh
 $ sudo ./stop-master.sh
 </pre>
 </div>
+	</li>
+	<li>
+		Download the source code by clicking the "Source" button on the left and unpack the downloaded archive.
+	</li>
+	<li>
+		Go to the KaaSparkLauncher folder.
+		Open spark.properties file and change flume.bind.host, spark.master.url and spark.home according to your spark cluster properties.
+	</li>
+	<li>
+		Run server side application by executing the following command:
 
-2. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
-3. Go to the KaaSparkLauncher folder. Open spark.properties file and change flume.bind.host, spark.master.url and spark.home according to your spark cluster
-properties. <br />
-4. Run server side application by executing the following command:
 <pre>
 $ java -jar KaaSparkLauncher.jar
 </pre>
-5. Change the host in your flume appender configuration of Spark data analytics demo application via Administration UI from holcalhost to your host address. <br />
-6. Go to the CppSparkDataAnalyticsDemo folder and run the client application using the following command in the console:
+	</li>
+	<li>
+		Change the host in your flume appender configuration of Spark data analytics demo application via Administration UI from holcalhost to your host address.
+	</li>
+	<li>
+		Unpack the SDK archive.
+
 <pre>
-$ ./build.sh deploy
+tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
+	</li>
+	<li>
+		Install CMake.
+		To do this, run the following commands (copy and paste them to the terminal all at once).
+
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+		By default, the project is generated for POSIX platform.
+		To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Run your sample application.
+
+<pre>
+./build/demo_client
+</pre>
+	</li>
+</ol>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Spark data analytics demo" application, you will receive statistics values from
-the endpoint in your server side application.
-<br /> <br />
-For more details, please refer to our webinar video embeded above <a href="https://www.youtube.com/watch?v=a5Dw57Q-OIc">"IoT data ingestion in Spark Streaming
-using Kaa"</a>.
+
+Make sure that the Kaa Sandbox is up and running.
+After starting the "Spark data analytics demo" application, you will receive statistics values from the endpoint in your server side application.
+
+<p>
+	For more details, please refer to our webinar video embeded above <a href="https://www.youtube.com/watch?v=a5Dw57Q-OIc">"IoT data ingestion in Spark Streaming using Kaa"</a>.
+</p>
             ]]>
         </details>
 

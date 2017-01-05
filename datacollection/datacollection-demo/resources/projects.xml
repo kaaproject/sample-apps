@@ -941,7 +941,7 @@ private static final int SCHEMA_VERSION = 1;
 mvn clean install
 </pre>
 
-Copy the <code>telemetry-monitor-<version>.jar</code> file to this Sanbox directory: <code>/usr/lib/kaa-node/lib/</code> and restart the <code>kaa-node</code> service.
+Copy the <code>telemetry-monitor-<version>.jar</code> file to this Sandbox directory: <code>/usr/lib/kaa-node/lib/</code> and restart the <code>kaa-node</code> service.
 
 	</li>
 </ol>	

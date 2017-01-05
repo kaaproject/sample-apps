@@ -30,7 +30,7 @@ Apache Storm tutorial</a>.
 
 <h2>Installation</h2>
 1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
-2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.8 and Maven 3.0+ installed):
+2. Go to the KaaStormServer folder and run server side Storm application by executing following command (we assume you have JDK 1.8 and Maven 3.0+ installed):
 <pre>
 $ mvn clean install
 </pre>
@@ -95,37 +95,78 @@ the endpoint in your server side application.
         <name>Storm data analytics C demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
-This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С SDK-based client application. <br /> <br />
-Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
-To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
+<p>
+	This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С SDK-based client application.
+</p>
+<p>
+	Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data.
+</p>
+<p>
+	To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
 Apache Storm tutorial</a>.
+</p>
 
 <h2>Installation</h2>
-1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
-2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.8 and Maven 3.0+ installed):
+
+<ol>
+	<li>
+		Download the source code by clicking the "Source" button on the left and unpack the downloaded archive.
+	</li>
+	<li>
+		Go to the KaaStormServer folder and run server side Storm application by executing following command (we assume you have JDK 1.8 and Maven 3.0+ installed):
+
 <pre>
 $ mvn clean install
 </pre>
-3. After the following message appears:
+	</li>
+	<li>
+		When the following message appears:
+
 <pre>
 [INFO] BUILD SUCCESS
 </pre>
-Run:
+
+		Run:
+
 <pre>
 $ java -jar target/storm-server-example.jar
 </pre>
-If no errors occurred, you’ve successfully started the Storm topology. <br />
-4. Configure Flume log appender via the
-<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>
-of your Kaa Sandbox. As a tenant developer, go to the
-"Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender"
-and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b>
-(<b>if you run Storm locally, this will be the external IP of your computer</b>). Click Save button. <br />
-5. Go to CStormAnalyticsDemo folder of your unpacked archive and execute command:
+		If no errors occurred, you’ve successfully started the Storm topology.
+	</li>
+	<li>
+		Configure Flume log appender via the
+		<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> of your Kaa Sandbox.
+		As a tenant developer, go to the "Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender" and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b> (if you run Storm locally, this will be the external IP of your computer).
+		Click Save button.
+	</li>
+	<li>
+		Unpack the SDK archive.
 <pre>
-$ ./build.sh deploy
+tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
-6. Now look at the Storm server output. You will see the following lines:
+	</li>
+	<li>
+		Install CMake.
+		To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+		By default, the project is generated for POSIX platform.
+		To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+	Run your sample application.
+<pre>
+./build/demo_client
+</pre>
+	</li>
+	<li>
+		Now look at the Storm server output.
+		You will see the following lines:
+
 <pre>
 ...
 Sample zone ID: 9, panel ID: 7, power: 68.49944021603773
@@ -134,10 +175,13 @@ Total records received: 1
 Total samples received: 100
 …
 </pre>
+	</li>
+</ol>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Storm data analytics demo" application, you will receive statistics values from
-the endpoint in your server side application.
+
+Make sure that the Kaa Sandbox is up and running.
+After starting the "Storm data analytics demo" application, you will receive statistics values from the endpoint in your server side application.
             ]]>
         </details>
 
@@ -164,37 +208,74 @@ the endpoint in your server side application.
         <name>Storm data analytics C++ demo</name>
         <description>IoT real-time data processing in Storm using Kaa</description>
         <details><![CDATA[
-This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С++ SDK-based client application. <br /> <br />
-Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data. <br />
-To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
-Apache Storm tutorial</a>.
+<p>
+	This application demonstrates real-time data processing in Apache Storm using Kaa platform, and Kaa С++ SDK-based client application.
+</p>
+<p>
+	Storm receives log data from Kaa clients via the Kaa Flume log appender as a Flume event and then prints this data.
+</p>
+<p>
+	To learn more about Storm basics such as a spout, a bolt, etc., please refer to the <a href="https://storm.apache.org/documentation/Tutorial.html">official
+	Apache Storm tutorial</a>.
+</p>
 
 <h2>Installation</h2>
-1. Download the source code by clicking the "Source" button on the left and unpack the downloaded archive. <br />
-2. Go to the KaaStormServer folder and run server side Storm application by executing folowing command (we assume you have JDK 1.8 and Maven 3.0+ installed):
+
+<ol>
+	<li>
+		Download the source code by clicking the "Source" button on the left and unpack the downloaded archive.
+	</li>
+	<li>
+		Go to the KaaStormServer folder and run server side Storm application by executing following command (we assume you have JDK 1.8 and Maven 3.0+ installed):
+
 <pre>
 $ mvn clean install
 </pre>
-3. After the following message appears:
+	</li>
+	<li>
+		After the following message appears:
+
 <pre>
 [INFO] BUILD SUCCESS
 </pre>
-Run:
+
+		Run:
+
 <pre>
 $ java -jar target/storm-server-example.jar
 </pre>
-If no errors occurred, you’ve successfully started the Storm topology. <br />
-4. Configure Flume log appender via the
-<a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a>
-of your Kaa Sandbox. As a tenant developer, go to the
-"Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender"
-and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b>
-(<b>if you run Storm locally, this will be the external IP of your computer</b>). Click Save button. <br />
-5. Go to CppStormAnalyticsDemo folder of your unpacked archive and execute command:
+		If no errors occurred, you’ve successfully started the Storm topology.
+	<li>
+		Configure Flume log appender via the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administration UI</a> of your Kaa Sandbox.
+		As a tenant developer, go to the "Storm data analytics demo application >> Log Appenders >> Storm data analytics demo log appender" and change host parameter from <b>"localhost"</b> to <b>Storm server host address</b> (if you run Storm locally, this will be the external IP of your computer). Click Save button.
+	</li>
+	<li>
+		Unpack the SDK archive.
 <pre>
-$ ./build.sh deploy
+tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
-6. Now look at the Storm server output. You will see the following lines:
+	</li>
+	<li>
+		Install CMake.
+		To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+		By default, the project is generated for POSIX platform.
+		To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+	Run your sample application.
+<pre>
+./build/demo_client
+</pre>
+	</li>
+	<li>
+		Now look at the Storm server output. You will see the following lines:
+
 <pre>
 ...
 Sample zone ID: 9, panel ID: 7, power: 68.49944021603773
@@ -203,10 +284,13 @@ Total records received: 1
 Total samples received: 100
 …
 </pre>
+	</li>
+</ol>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. After starting the "Storm data analytics demo" application, you will receive statistics values from
-the endpoint in your server side application.
+
+Make sure that the Kaa Sandbox is up and running.
+After starting the "Storm data analytics demo" application, you will receive statistics values from the endpoint in your server side application.
             ]]>
         </details>
 

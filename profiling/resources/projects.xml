@@ -430,37 +430,15 @@ mongo
 	</li>
 	<li>
 		In the MongoDB console, run the following commands to delete the endpoint_profile table.
+
 <pre>
 use kaa
 show tables
 db.endpoint_profile.remove({})
 </pre>
-		
+
 		Now the endpoint profiles are deleted.
-</ol>		
-	
-<h2>Running the build.sh script returns an error message</h2>
-
-<pre>
-Please, put the generated C/C++ SDK tarball into the libs/kaa folder and re-run the script.
-</pre>
-
-<p>
-	This means that no SDK tarball was found in the libs/kaa directory.
-</p>
-
-Try the following:
-
-<ul>
-	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
-	</li>
-	<li>
-		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
-	</li>
-</ul>
+</ol>
 
 <h2>CMake returns an error message</h2>
 

@@ -385,24 +385,34 @@ To launch this sample application on the Kaa C SDK:
 		A project source download window will open.
 		Click <b>Ok</b> and download the .tar.gz file.
 	</li>
-	<li>
-		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+    <li>
+        Unpack the downloaded archive.
+    </li>
+    <li>
+        Unpack the SDK archive.
 <pre>
-./build.sh deploy
+tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
-	</li>
+    </li>
 	<li>
-		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">supported platforms</a> and press Enter.
-		The C SDK and the demo application are now built and the demo application is launched.
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+    </li>
+    <li>
+    	Run your sample application.
+<pre>
+./build/demo_client
+</pre>
 	</li>
 </ol>
-
-Once you built the application, you can start it at any time using the following command.
-
-<pre>
-./build.sh run
-</pre>
 
 When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.
 
@@ -410,30 +420,7 @@ If the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/K
 
 <h1>Troubleshooting</h1>
 
-<h2>Running the build.sh script returns an error message</h2>
-
-<pre>
-libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.
-</pre>
-
-<p>
-	This means that no SDK tarball was found in the libs/kaa directory.
-</p>
-
-Try the following:
-
-<ul>
-	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
-	</li>
-	<li>
-		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
-	</li>
-</ul>
-
-<<h2>CMake returns an error message</h2>
+<h2>CMake returns an error message</h2>
 
 <pre>
 CMake error: The following variables are used in this project, but they are set to NOTFOUND: (...)
@@ -480,54 +467,40 @@ To launch this sample application on the Kaa C++ SDK:
 		Click the <b>Source</b> button.
 		A project source download window will open.
 		Click <b>Ok</b> and download the .tar.gz file.
-	</li>
-	<li>
-		Unpack the downloaded archive and run the following command from the directory containing the unpacked source files.
+    <li>
+        Unpack the downloaded archive.
+    </li>
+    <li>
+        Unpack the SDK archive.
 <pre>
-./build.sh deploy
+tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
-	</li>
+    </li>
 	<li>
-		The program will ask you to enter the target platform for your build.
-		Press Enter to specify the x86-64 platform (default) or enter the name of one of the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">supported platforms</a> and press Enter.
-		The C SDK and the demo application are now built and the demo application is launched.
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+    </li>
+    <li>
+    	Run your sample application.
+<pre>
+./build/demo_client
+</pre>
 	</li>
 </ol>
-
-Once you built the application, you can start it at any time using the following command.
-
-<pre>
-./build.sh run
-</pre>
 
 When you start the application, Kaa client generates its endpoint access token, publishes it on the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-cluster" target="_blank">Kaa cluster</a> and displays it in the console.
 
 If the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-ownership/#assisted-attachment" target="_blank">assisted attachment</a> was successful, Kaa client will display the message previously sent from the mobile application.
 
 <h1>Troubleshooting</h1>
-
-<h2>Running the build.sh script returns an error message</h2>
-
-<pre>
-libs/kaa/kaa-c*.tar.gz: Cannot open: No such file or directory.
-</pre>
-
-<p>
-	This means that no SDK tarball was found in the libs/kaa directory.
-</p>
-
-Try the following:
-
-<ul>
-	<li>
-		Download and install the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-sandbox" target="_blank">Kaa Sandbox</a>.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Getting-started/" target="_blank">Getting started</a>.
-	</li>
-	<li>
-		Download the SDK tarball for this sample application and put it in the libs/kaa folder.
-		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Your-first-Kaa-application/#generate-sdk" target="_blank">Generate SDK</a>.
-	</li>
-</ul>
 
 <h2>CMake returns an error message</h2>
 

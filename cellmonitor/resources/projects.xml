@@ -26,24 +26,39 @@
         <description>Cell monitor demo app for Android</description>
         <details>
             <![CDATA[
-This simple Android app illustrates time-series data collection using cell tower parameters (operator code, name, cell ID, signal strength, etc.), and the phone GPS location.
+<p>
+	This simple Android app illustrates time-series data collection using cell tower parameters (operator code, name, cell ID, signal strength, etc.), and the phone GPS location.
+</p>
 
 <h2>Installation</h2>
-Download the .apk to your Android device by clicking the "Binary" button on the left. Make sure that the device permits installing apps from "Unknown sources". Open the downloaded apk and follow the on-screen instructions.
+
+Download the .apk to your Android device by clicking the "Binary" button on the left.
+Make sure that the device permits installing apps from "Unknown sources".
+Open the downloaded apk and follow the on-screen instructions.
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor Android" demo, you will see the latest data that the application sends to the Kaa Sandbox server.<br/><br/>
 
-Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and go to the "Cell monitor" application, then select "Schemas", "Log". Choose the latest schema version to inspect the schema of the data collected from the app.<br/><br/>
+Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor Android" demo, you will see the latest data that the application sends to the Kaa Sandbox server.
 
-In this demo application, the data is collected into a MongoDB instance. To review the configuration of the active log appender, browse to the "Log appenders" section under the "Cell monitor" application, and choose "Cell monitor log appender" from the table. You can explore the collected data by querying the Sandbox MongoDB instance as follows:
+<p>
+	Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window.
+	Log in as a tenant developer (devuser / devuser123), and go to the "Cell monitor" application, then select "Schemas", "Log".
+	Choose the latest schema version to inspect the schema of the data collected from the app.
+</p>
+
+<p>
+	In this demo application, the data is collected into a <a href="http://cassandra.apache.org/" target="_blank">Cassandra database instance</a>.
+	To review the configuration of the active log appender, browse to the "Log appenders" section under the "Cell monitor" application, and choose "Cell monitor log appender" from the table.
+</p>
+<p>
+	You can explore the collected data by querying the Sandbox Cassandra instance as follows.
+
 <pre>
-$ mongo kaa
-db.logs_$your_application_token$.find()
+cqlsh
+SELECT * FROM kaa.logs_example;
 </pre>
 
-Where $your_application_token$ is the application token you can copy from the main window of the application in the Administration UI.<br/><br/>
-
+</p>
 <h2>What's next?</h2>
 
 For more background on the Kaa Logging subsystem please refer to the corresponding programming guide and design reference sections.
@@ -74,27 +89,38 @@ For more background on the Kaa Logging subsystem please refer to the correspondi
         <description>Cell monitor demo app for iOS</description>
         <details>
             <![CDATA[
-This simple iOS app illustrates time-series data collection using cell tower parameters (operator code, name, signal strength, etc.), and the phone GPS location.
+<p>
+	This simple iOS app illustrates time-series data collection using cell tower parameters (operator code, name, signal strength, etc.), and the phone GPS location.
+</p>
 
 <h2>Installation</h2>
 
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+Download the source code by clicking the "Source" button on the left.
+Unpack the downloaded archive and run the application using the following command in the console.
+
 <pre>
 $ ./build.sh
 </pre>
 
 <h2>Playing around</h2>
-Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor iOS" demo, you will see the latest data that the application sends to the Kaa Sandbox server.<br/><br/>
 
-Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window. Log in as a tenant developer (devuser / devuser123), and go to the "Cell monitor" application, then select "Schemas", "Log". Choose the latest schema version to inspect the schema of the data collected from the app.<br/><br/>
+Make sure that the Kaa Sandbox is up and running. By opening the "Cell monitor iOS" demo, you will see the latest data that the application sends to the Kaa Sandbox server.
 
-In this demo application, the data is collected into a MongoDB instance. To review the configuration of the active log appender, browse to the "Log appenders" section under the "Cell monitor" application, and choose "Cell monitor log appender" from the table. You can explore the collected data by querying the Sandbox MongoDB instance as follows:
+<p>
+	Navigate to the Kaa server administrative interface by clicking the "Administrative console" link at the top of the Sandbox window.
+	Log in as a tenant developer (devuser / devuser123), and go to the "Cell monitor" application, then select "Schemas", "Log".
+	Choose the latest schema version to inspect the schema of the data collected from the app.
+</p>
+<p>
+	In this demo application, the data is collected into a <a href="http://cassandra.apache.org/" target="_blank">Cassandra database instance</a>.
+	To review the configuration of the active log appender, browse to the "Log appenders" section under the "Cell monitor" application, and choose "Cell monitor log appender" from the table.
+	You can explore the collected data by querying the Sandbox Cassandra instance as follows.
+
 <pre>
-$ mongo kaa
-db.logs_$your_application_token$.find()
+cqlsh
+SELECT * FROM kaa.logs_example;
 </pre>
-
-Where $your_application_token$ is the application token you can copy from the main window of the application in the Administration UI.<br/><br/>
+</p>
 
 <h2>What's next?</h2>
 

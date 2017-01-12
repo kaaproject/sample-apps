@@ -155,8 +155,8 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
         <complexity>REGULAR</complexity>
         <bundleId>gpio_control</bundleId>
         <sourceArchive>c-slave/gpiocontrol_demo.tar.gz</sourceArchive>
-        <projectFolder>gpio-c-client</projectFolder>
-        <sdkLibDir>gpio-c-client/libs/kaa</sdkLibDir>
+        <projectFolder>CGPIODemo</projectFolder>
+        <sdkLibDir>CGPIODemo/libs/kaa</sdkLibDir>
         <destBinaryFile></destBinaryFile>
     </project>
     <project id="gpiocontrol_demo_artik5_slave">

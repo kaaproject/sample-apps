@@ -58,8 +58,6 @@ cqlsh
 SELECT * FROM kaa.logs_example;
 </pre>
 
-Where $your_application_token$ is the application token you can copy from the main window of the application in the Administration UI.
-
 </p>
 <h2>What's next?</h2>
 
@@ -123,8 +121,6 @@ cqlsh
 SELECT * FROM kaa.logs_example;
 </pre>
 </p>
-
-Where $your_application_token$ is the application token you can copy from the main window of the application in the Administration UI.
 
 <h2>What's next?</h2>
 

@@ -39,8 +39,6 @@ cqlsh
 SELECT * FROM kaa.logs_example;
 </pre>
 
-Where $your_application_token$ is the application token you can copy from the main application page of the Administrative UI.<br/><br/>
-
 Now it's time to test things out: navigate to the Kaa server administrative interface by clicking on the "Administrative console" link from the Sandbox screen. Log in as a tenant developer (devuser / devuser123), and navigate to the "Data collection demo" application, then select "Log appenders". From here you can <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide#AdministrationUIguide-Logappenders">manage log appenders</a>. Do not forget to activate updated configuration - otherwise the endpoint will not be able to see it. Make sure you have tried creating Flume or Cassandra log appenders!<br/><br/>
 
 Please note that all features of <a href="http://docs.kaaproject.org/display/KAA/Administration+UI+guide">Administrative UI</a> are also supported by <a href="http://docs.kaaproject.org/display/KAA/Admin+REST+API">REST API</a>.

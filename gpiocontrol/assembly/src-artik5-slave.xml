@@ -36,7 +36,7 @@
                 <include>CMakeLists.txt</include>
             </includes>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>gpio-arti5-client</outputDirectory>
+            <outputDirectory>gpio-artik5-client</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

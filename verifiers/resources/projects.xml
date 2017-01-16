@@ -59,7 +59,7 @@ To install this sample application using the binary files:
 			<br />
 			Connect the Android device to your Windows machine and run the following command from the sdk/platform-tools directory.
 <pre>
-adb install <path_to_the_apk>/app-debug.apk
+adb install <path_to_the_apk>/verifiersdemo.apk
 </pre>
 		</p>
 		<p>
@@ -67,7 +67,7 @@ adb install <path_to_the_apk>/app-debug.apk
 			<br />
 			Connect the Android device to your Linux machine and run the following command from the sdk/platform-tools directory.
 <pre>
-./adb install <path_to_the_apk>/app-debug.apk
+./adb install <path_to_the_apk>/verifiersdemo.apk
 </pre>
 		</p>
 	</li>

@@ -111,7 +111,7 @@ public class DataCollectionDemoBuilder extends AbstractDemoBuilder {
         LOG.info("Log schema was created.");
 
         LOG.info("Data collection demo: Creating Log appenders...");
-        LOG.info("Creating MongoDb Log Appender");
+        LOG.info("Creating Cassandra Log Appender");
         client.editLogAppenderDto(createCassandraLogAppender(dataCollectionApplication));
         LOG.info("Creating Telemetry Monitor Appender");
         client.editLogAppenderDto(createTelemetryMonitorAppender(dataCollectionApplication));

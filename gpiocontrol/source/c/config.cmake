@@ -14,13 +14,24 @@
 #  limitations under the License.
 #
 
-project(C-SDK-sample C)
-
 # Our application name.
 set(APP_NAME demo_client)
 
+# Disable unused features
+set (WITH_EXTENSION_CONFIGURATION OFF CACHE BOOL "")
+set (WITH_EXTENSION_NOTIFICATION OFF CACHE BOOL "")
+set (WITH_EXTENSION_LOGGING OFF CACHE BOOL "")
+set (WITH_EXTENSION_CONFIGURATION OFF CACHE BOOL "")
+set (WITH_EXTENSION_USER OFF CACHE BOOL "")
+set (WITH_ENCRYPTION OFF CACHE BOOL "")
+
 # Target-independent flags.
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -g -Wall -Wextra")
+
+if(KAA_PLATFORM STREQUAL "esp8266")
+    set (CMAKE_BUILD_TYPE MinSizeRel)
+    set(KAA_MAX_LOG_LEVEL 0)
+endif()
 
 # Directory containing target support library.
 add_subdirectory(targets/${KAA_PLATFORM})
@@ -31,7 +42,7 @@ add_subdirectory(targets/common)
 # The blank.c file is a placeholder for CMake's add_executable()
 # All the code (Kaa SDK, ESP8266 SDK and demo) is compiled as static libraries
 # and linked into that executable.
-if("${KAA_PLATFORM}" STREQUAL "esp8266")
+if(KAA_PLATFORM STREQUAL "esp8266")
     add_library(${APP_NAME}_s STATIC src/kaa_demo.c)
     file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/blank.c "")
     add_executable(${APP_NAME} ${CMAKE_CURRENT_BINARY_DIR}/blank.c)

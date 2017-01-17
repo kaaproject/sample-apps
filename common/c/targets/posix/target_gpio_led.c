@@ -20,6 +20,13 @@
 #include "target.h"
 #include "target_gpio_led.h"
 
+static gpio_port_t gpios[] = {
+    { "RED",   1 },
+    { "YELOW", 2 },
+    { "GREEN", 3 },
+    { "BLUE",  4 },
+};
+
 static bool gpio_led_status[NUM_GPIO_LEDS];
 
 void target_gpio_led_init(void)
@@ -58,6 +65,8 @@ unsigned int target_gpio_led_get_count(void)
 
 gpio_port_t *target_get_gpio_port(unsigned int led)
 {
-    /* It is necessary to realize the reading of the list of leds */
-    return NULL;
+	 if (led >= NUM_GPIO_LEDS) {
+        return NULL;
+    }
+	return &gpios[led];
 }

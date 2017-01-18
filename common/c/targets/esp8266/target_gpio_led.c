@@ -43,7 +43,7 @@ void target_gpio_led_init(void)
         pGPIOConfig.GPIO_Pin = (BIT(gpios[i].number));
         gpio_config(&pGPIOConfig);
 
-        GPIO_OUTPUT_SET(gpios[i].number, 0);
+        GPIO_OUTPUT_SET(gpios[i].number, LOW);
     }
 }
 
@@ -53,7 +53,7 @@ void target_gpio_led_toggle(unsigned int led, bool status)
         return;
     }
 
-    gpios[led].state = (status) ? 1 : 0;
+    gpios[led].state = (status) ? HIGH : LOW;
 
     GPIO_OUTPUT_SET(gpios[led].number, gpios[led].state);
 }
@@ -63,16 +63,18 @@ bool target_gpio_led_get_state(unsigned int led)
     if (led >= NUM_GPIO_LEDS) {
         return 0;
     }
-    return (gpios[led].state != 0) ? true : false;
+    return (gpios[led].state != LOW) ? true : false;
 }
+
 unsigned int target_gpio_led_get_count(void )
 {
     return NUM_GPIO_LEDS;
 }
-gpio_port_t *target_get_gpio_port( unsigned int led )
+
+gpio_port_t *target_get_gpio_port(unsigned int led)
 {
     if (led >= NUM_GPIO_LEDS) {
         return NULL;
     }
-	return &gpios[led];
+    return &gpios[led];
 }

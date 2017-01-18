@@ -43,13 +43,13 @@ void target_gpio_led_toggle(unsigned int id, bool status)
     }
 
     gpio_led_status[id] = status;
-    
+
     demo_printf("GPIO LED status: ");
-    
+
     for (int n = 0; n < NUM_GPIO_LEDS; n++) {
         demo_printf("%d", (int)gpio_led_status[n]);
     }
-    
+
     demo_printf("\n");
 }
 
@@ -65,8 +65,8 @@ unsigned int target_gpio_led_get_count(void)
 
 gpio_port_t *target_get_gpio_port(unsigned int led)
 {
-	 if (led >= NUM_GPIO_LEDS) {
+    if (led >= NUM_GPIO_LEDS) {
         return NULL;
     }
-	return &gpios[led];
+    return &gpios[led];
 }

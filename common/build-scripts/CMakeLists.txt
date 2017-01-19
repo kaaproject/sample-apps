@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.0.2)
 include(config.cmake)
 
 if (NOT DEFINED KAA_MAX_LOG_LEVEL)

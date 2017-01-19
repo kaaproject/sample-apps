@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0.2)
 
 if(NOT DEFINED ESP_RTOS_SDK)
     set(ESP_RTOS_SDK /opt/Espressif/esp-rtos-sdk)

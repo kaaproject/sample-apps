@@ -28,17 +28,17 @@
         <fileSet>
             <directory>${project.basedir}/source/c</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CGPIODemo</outputDirectory>
+            <outputDirectory>gpio-c-client</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>${main.dir}/common/nix/</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CGPIODemo</outputDirectory>
+            <outputDirectory>gpio-c-client</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>${main.dir}/common/c/</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CGPIODemo</outputDirectory>
+            <outputDirectory>gpio-c-client</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>${main.dir}/common/build-scripts/</directory>
@@ -46,7 +46,7 @@
                 <include>CMakeLists.txt</include>
             </includes>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>CGPIODemo</outputDirectory>
+            <outputDirectory>gpio-c-client</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

@@ -22,4 +22,8 @@ set(KAA_WITHOUT_NOTIFICATIONS 1)
 set(KAA_WITHOUT_EVENTS 1)
 
 add_executable(demo_client src/KaaDemo.cpp)
+
+target_compile_definitions(demo_client PRIVATE
+    -DDEMO_ACCESS_TOKEN="${DEMO_ACCESS_TOKEN}")
+
 target_link_libraries(demo_client kaacpp)

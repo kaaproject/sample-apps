@@ -17,6 +17,8 @@
 #include <memory>
 #include <string>
 #include <cstdint>
+#include <random>
+#include <cmath>
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
@@ -86,8 +88,12 @@ private:
 
     int32_t getTemperature()
     {
-        // For sake of example random data is used
-        return rand() % 10 + 25;
+        static std::random_device rand_device;
+        static std::mt19937 generator(rand_device());
+        static const float T = 90.0;
+        static const float PI = 3.141592653;
+        std::uniform_real_distribution<float> distribution(0, 1);
+        return (0.6f * (distribution(generator) - 0.5f) + std::sin((2*PI/T) * std::time(nullptr))) * 25 + 15;
     }
 
     void sendTemperature()

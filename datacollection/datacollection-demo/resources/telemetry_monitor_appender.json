@@ -8,7 +8,7 @@
   "cassandraCredential": null,
   "keySpace": "kaa",
   "monitoringValuesTableName": "logs_datacollection_monitoring_values",
-  "threshold": 20,
+  "threshold": 40,
   "minLogSchemaVersion": 1,
   "maxLogSchemaVersion": 2147483647,
   "pluginTypeName": "TelemetryMonitor",

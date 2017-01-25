@@ -29,6 +29,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <stdint.h>
+#include <time.h>
+#include <math.h>
 
 /* Demo print routine. Default printf exists for posix target. */
 #define demo_printf(msg, ...) printf((msg), ##__VA_ARGS__)
@@ -48,6 +52,13 @@ static inline int target_initialize(void)
 static inline int target_wifi_reconnect_if_disconected(void)
 {
     return 0;
+}
+
+static inline int32_t target_get_temperature(void)
+{
+    static const float PI = 3.141592653;
+    float random_real = rand()/(float)RAND_MAX;
+    return (0.6f * (random_real - 0.5) + sin((2 * PI / 90) * time(NULL))) * 25 + 15;
 }
 
 #endif // POSIX_SUPPORT_H

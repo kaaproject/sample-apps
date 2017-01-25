@@ -192,3 +192,8 @@ int target_wifi_reconnect_if_disconected(void)
     return 0;
 }
 
+int32_t target_get_temperature(void)
+{
+    return -15 + rand() % 61;
+}
+

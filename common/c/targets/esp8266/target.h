@@ -57,4 +57,6 @@ int getchar(void);
 
 int target_wifi_reconnect_if_disconected(void);
 
+int32_t target_get_temperature(void);
+
 #endif //ESP8266_SUPPORT_H_

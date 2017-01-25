@@ -21,6 +21,7 @@ add_library(target_support
 
 target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(target_support PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../common)
+target_link_libraries(target_support m)
 
 # Expose WiFi credentials
 target_compile_definitions(target_support

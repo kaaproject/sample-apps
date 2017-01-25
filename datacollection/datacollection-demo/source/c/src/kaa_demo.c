@@ -62,7 +62,7 @@ static kaa_error_t configuration_update(void *context,
 
 static void send_temperature(kaa_client_t *kaa_client)
 {
-    int32_t temp = rand() % 10 + 25;
+    int32_t temp = target_get_temperature();
     int64_t timestamp = time(NULL);
     kaa_logging_data_collection_t *log_record = kaa_logging_data_collection_create();
     if (!log_record) {
@@ -115,6 +115,11 @@ int main(void)
     }
     
     demo_printf("Data collection demo started\r\n");
+
+    /*
+     * Initialize random number generator
+     */
+    srand(time(NULL));
 
     /**
      * Initialize Kaa client.

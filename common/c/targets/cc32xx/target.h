@@ -32,6 +32,7 @@
 #include "common.h"
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #define demo_printf(msg, ...) UART_PRINT((msg), ##__VA_ARGS__)
 
@@ -44,6 +45,9 @@
  * the WiFi spot using SSID and password supplied during build.
  */
 int target_initialize(void);
+
 int target_wifi_reconnect_if_disconected(void);
+
+int32_t target_get_temperature(void);
 
 #endif //CC32XX_SUPPORT_H_

@@ -47,8 +47,6 @@ public class DataCollectionDemo {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemo.class);
     private static final int LOGS_DEFAULT_THRESHOLD = 1;
-    private static final int MIN_TEMPERATURE = -25;
-    private static final int MAX_TEMPERATURE = 45;
     private static final int MAX_SECONDS_TO_INIT_KAA = 2;
     private static final int MAX_SECONDS_BEFORE_STOP = 3;
 
@@ -180,7 +178,10 @@ public class DataCollectionDemo {
     }
 
     private static DataCollection generateTemperatureSample() {
-        Integer temperature = MIN_TEMPERATURE + rand.nextInt((MAX_TEMPERATURE - MIN_TEMPERATURE) + 1);
+        long t = System.currentTimeMillis();
+        double result = (0.6 * (Math.random() - 0.5) + Math.sin((2 * Math.PI * t) / 90_000)) * 25 + 15;
+        System.out.println(Math.round(result));
+        Integer temperature = Long.valueOf(Math.round(result)).intValue();
         return new DataCollection(temperature, System.currentTimeMillis());
     }
 

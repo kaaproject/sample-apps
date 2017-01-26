@@ -629,7 +629,7 @@ To do this:
 		You will see the list of all client-side EP profile schemas stored for your application.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_0.png" />
+		<img src="/sandbox/resources/profiling/profiling_demo_0.png" />
 		<br />
 		<br />
 		
@@ -639,7 +639,7 @@ To do this:
 		The <b>Client-side EP profile schema details</b> page will open.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_1.png" />
+		<img src="/sandbox/resources/profiling/profiling_demo_1.png" />
 		<br />
 		<br />
 		
@@ -735,7 +735,7 @@ This means that once you start your endpoint, it will receive the default config
 	To view the list of endpoint groups, open the <b>Endpoint groups</b> page of the application.
 	
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_6.png" />
+	<img src="/sandbox/resources/profiling/profiling_demo_6.png" />
 	<br />
 	<br />
 	
@@ -806,7 +806,7 @@ To manage profile filters for a group
 		The <b>Endpoint group details</b> page will open.
 	
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_7.png" />
+		<img src="/sandbox/resources/profiling/profiling_demo_7.png" />
 		<br />
 		<br />
 	
@@ -817,7 +817,7 @@ To manage profile filters for a group
 		The <b>Profile filter details</b> page will open.
 	
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_8.png" />
+		<img src="/sandbox/resources/profiling/profiling_demo_8.png" />
 		<br />
 		<br />	
 	
@@ -887,7 +887,7 @@ This means that the endpoints #1 and #2 were updated with new configuration beca
 	To view the the <b>Audio and vibration</b> group configuration, select this group on the <b>Endpoint groups</b> page and select the configuration from the <b>Configurations</b> section.
 
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_10.png" />
+	<img src="/sandbox/resources/profiling/profiling_demo_10.png" />
 	<br />
 	<br />
 
@@ -910,7 +910,7 @@ This means that the endpoints #1 and #2 were updated with new configuration beca
 			On the <b>Profile filter details</b> page, select the <b>Draft</b> tab and click the <b>Activate</b> button.
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_11.png" />
+			<img src="/sandbox/resources/profiling/profiling_demo_11.png" />
 			<br />
 			<br />
 			
@@ -968,7 +968,7 @@ To do this:
 		Open the <b>Endpoint groups</b> page and create a <b>Disable all signals</b> group and set its <b>Weight</b> value to <b>100</b>.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_12.png" />
+		<img src="/sandbox/resources/profiling/profiling_demo_12.png" />
 		<br />
 		<br />
 		
@@ -981,7 +981,7 @@ To do this:
 		In the <b>Draft</b> tab of the <b>Configuration details</b> page, edit the contents of the <b>Configuration body</b> block to look like this.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_13.png" />
+		<img src="/sandbox/resources/profiling/profiling_demo_13.png" />
 		<br />
 		<br />
 		
@@ -1099,7 +1099,7 @@ To do this:
 	Now your list of endpoint groups should look like this.
 	
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_15.png" />
+		<img src="/sandbox/resources/profiling/profiling_demo_15.png" />
 		<br />
 		<br />
 	
@@ -1114,7 +1114,7 @@ To do this:
 			Open the <b>Endpoint profiles</b> page of the application.
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_16.png" />
+			<img src="/sandbox/resources/profiling/profiling_demo_16.png" />
 			<br />
 			<br />
 						
@@ -1124,7 +1124,7 @@ To do this:
 			The <b>Endpoint profile details</b> page will open.
 						
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/profiling/profiling_demo_17.png" />
+			<img src="/sandbox/resources/profiling/profiling_demo_17.png" />
 			<br />
 			<br />
 						

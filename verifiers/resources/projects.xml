@@ -285,7 +285,7 @@ sh build.sh
 		You should see the following message.
 
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/verifiers/ownership-objc-1.png" />
+		<img src="/sandbox/resources/verifiers/ownership-objc-1.png" />
 		<br />
 		<br />
 
@@ -296,7 +296,7 @@ sh build.sh
 		If the authorization is successful the following message will be displayed.
 
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/verifiers/ownership-objc-2.png" />
+		<img src="/sandbox/resources/verifiers/ownership-objc-2.png" />
 		<br />
 		<br />
 
@@ -643,7 +643,7 @@ To try the endpoint attachment feature:
 		The mobile application will automatically attach to the specified Kaa owner.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/verifiers/iOS-screen2.png" />
+		<img src="/sandbox/resources/verifiers/iOS-screen2.png" />
 		<br />
 		<br />
 		
@@ -664,7 +664,7 @@ To try the endpoint attachment feature:
 		Copy the access token from the console message above, paste it in the <b>Type endpoint access token</b> field of your mobile Kaa client and click <b>Attach</b>.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/verifiers/iOS-screen3.png" />
+		<img src="/sandbox/resources/verifiers/iOS-screen3.png" />
 		<br />
 		<br />
 		
@@ -677,7 +677,7 @@ To try the endpoint attachment feature:
 	Type in your message in the <b>Message text</b> field and click <b>Send</b>.
 	
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/verifiers/iOS-screen5.png" />
+	<img src="/sandbox/resources/verifiers/iOS-screen5.png" />
 	<br />
 	<br />
 	
@@ -704,7 +704,7 @@ To try the endpoint attachment feature:
 			Open the <b>Endpoint profiles</b> page of the sample application to see the list of registered endpoints.
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/verifiers/EP_ownership_EP_List.jpg" />
+			<img src="/sandbox/resources/verifiers/EP_ownership_EP_List.jpg" />
 			<br />
 			<br />
 										
@@ -713,7 +713,7 @@ To try the endpoint attachment feature:
 			Click the corresponding row to open the <b>Endpoint profile details</b> page of your mobile device endpoint to view the <b>User ID</b>.
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/verifiers/EP_ownership_EP_attacher.jpg" />
+			<img src="/sandbox/resources/verifiers/EP_ownership_EP_attacher.jpg" />
 			<br />
 			<br />
 			
@@ -723,7 +723,7 @@ To try the endpoint attachment feature:
 			It has the same <b>User ID</b> as the mobile device endpoint because you attached it to the same user.
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/verifiers/EP_ownership_EP_being_attached.jpg" />
+			<img src="/sandbox/resources/verifiers/EP_ownership_EP_being_attached.jpg" />
 			<br />
 			<br />
 			

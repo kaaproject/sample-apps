@@ -560,7 +560,7 @@ To do this:
 		You will see the list of all log schemas stored for your application.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_6.png" />
+		<img src="/sandbox/resources/datacollection/collection_demo_6.png" />
 		<br />
 		<br />
 		
@@ -570,13 +570,13 @@ To do this:
 		The <b>Log schema details</b> page will open.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_7.png" />
+		<img src="/sandbox/resources/datacollection/collection_demo_7.png" />
 		<br />
 		<br />
 		
 		The <b>DataCollection</b> schema is included in the Sandbox for demonstration purpose.
 		You can create your own log schemas.
-		To do this, use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#!/Logging/saveLogSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-client-side-ep-profile-schema" target="_blank">these instructions</a>for Administration UI.
+		To do this, use the <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Server-REST-APIs/#!/Logging/saveLogSchema" target="_blank">server REST API</a> or follow <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Endpoint-profiles/#setting-client-side-ep-profile-schema" target="_blank">these instructions</a> for Administration UI.
 	</li>
 </ol>
 
@@ -601,14 +601,14 @@ To do this:
 	To view the list of configuration schemas, open the <b>Configuration</b> page under the <b>Schemas</b> section of the application.
 	
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_8.png" />
+	<img src="/sandbox/resources/datacollection/collection_demo_8.png" />
 	<br />
 	<br />	
 	
 	To edit a configuration schema, click the corresponding row to open the <b>Configuration schema details</b> page.
 	
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_9.png" />
+	<img src="/sandbox/resources/datacollection/collection_demo_9.png" />
 	<br />
 	<br />	
 	
@@ -623,7 +623,7 @@ To send the log records from the Operations service to the Cassandra database, K
 	To view the list of log appenders, open the <b>Log appenders</b> page of the application.
 	
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_10.png" />
+	<img src="/sandbox/resources/datacollection/collection_demo_10.png" />
 	<br />
 	<br />	
 	
@@ -736,7 +736,7 @@ SELECT * FROM kaa.logs_monitoring_values ;
 The console will display the output similar to the one below.
 
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/datacollection/07_cqlsh.png" />
+	<img src="/sandbox/resources/datacollection/07_cqlsh.png" />
 	<br />
 	<br />
 
@@ -748,7 +748,7 @@ The console will display the output similar to the one below.
 	To view the application token, open the <b>Application details</b> page.
 	
 	<br />
-	<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_1.png" />
+	<img src="/sandbox/resources/datacollection/collection_demo_1.png" />
 	<br />
 	<br />
 	
@@ -769,7 +769,7 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 			The <b>Endpoint group details</b> page will open.
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_2.png" />
+			<img src="/sandbox/resources/datacollection/collection_demo_2.png" />
 			<br />
 			<br />
 			
@@ -778,7 +778,7 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 			In the <b>Configurations</b> section, select the current configuration (the one that has the latest version).
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_3.png" />
+			<img src="/sandbox/resources/datacollection/collection_demo_3.png" />
 			<br />
 			<br />
 			
@@ -788,7 +788,7 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 			For example, set it to <b>5</b>
 			
 			<br />
-			<img src="http://localhost:9080/sandbox/resources/datacollection/collection_demo_5.png" />
+			<img src="/sandbox/resources/datacollection/collection_demo_5.png" />
 			<br />
 			<br />
 			
@@ -867,7 +867,7 @@ To create a Telemetry monitor log appender in <a href="http://kaaproject.github.
 		Open the <b>Log appenders</b> page of the sample application and click <b>Add new log appender</b> button.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/01_add_new_log_appender.png" />
+		<img src="/sandbox/resources/datacollection/01_add_new_log_appender.png" />
 		<br />
 		<br />
 	</li>
@@ -877,7 +877,7 @@ To create a Telemetry monitor log appender in <a href="http://kaaproject.github.
 		Monitoring values that exceed the value specified in the <b>Threshold value</b> field will be saved to a separate table named as specified in the <b>Table name for monitoring values</b>.
 
    		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/02_setup_log_appender.png" />
+		<img src="/sandbox/resources/datacollection/02_setup_log_appender.png" />
 		<br />
 		<br />
 		
@@ -897,7 +897,7 @@ To configure the server profile:
 		Unfold the <b>Schemas</b> list of the sample application, select the <b>Server-side EP profile</b> page, and click <b>Add schema</b>.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/03_add_server_schema.png" />
+		<img src="/sandbox/resources/datacollection/03_add_server_schema.png" />
 		<br />
 		<br />
 		
@@ -906,30 +906,30 @@ To configure the server profile:
 		On the <b>Server-side EP profile schema details</b> page, click <b>Create new type</b>.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/04_create_server_schema_type.png" />
+		<img src="/sandbox/resources/datacollection/04_create_server_schema_type.png" />
 		<br />
 		<br />
 		
 	</li>
 	<li>
-		On the <b>Common type details</b> page, fill in the required fields and use the <b>Upload from file</b> option to upload <a href="https://github.com/kaaproject/sample-apps/blob/master/datacollection/datacollection-demo/resources/telemetry_monitor_server_profile.avsc">this sample Avro schema</a>.
+		On the <b>Common type details</b> page, fill in the required fields and use the <b>Upload from file</b> option to upload <a href="/sandbox/resources/datacollection/telemetry_monitor_server_profile.avsc">this sample Avro schema</a>.
 		Click <b>Add</b> to apply changes.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/05_configure_server_schema.png" />
+		<img src="/sandbox/resources/datacollection/05_configure_server_schema.png" />
 		<br />
 		<br />
 		
 		Your schema will appear on the <b>Server-side EP profile schemas</b> list with a version number.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/06_verify_schema_version.png" />
+		<img src="/sandbox/resources/datacollection/06_verify_schema_version.png" />
 		<br />
 		<br />
 		
 	</li>
 	<li>
-		If the version of your new schema is other than <b>1</b>, open <a href="https://github.com/kaaproject/sample-apps/blob/master/datacollection/datacollection-demo/src/main/java/org/kaaproject/kaa/server/appenders/telemetry/appender/TelemetryMonitor.java" target="_blank">this file</a> from the <code>telemetry-monitor</code> directory and change the schema version in it.
+		If the version of your new schema is other than <b>1</b>, open <code>TelemetryMonitor.java</code> file from the <code>telemetry-monitor</code> directory and change the schema version in it.
 	
 <pre>
 private static final int SCHEMA_VERSION = 1;
@@ -963,7 +963,7 @@ SELECT * FROM kaa.logs_monitoring_values ;
 		The console will display the output similar to the one below.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/07_cqlsh.png" />
+		<img src="/sandbox/resources/datacollection/07_cqlsh.png" />
 		<br />
 		<br />
 	
@@ -974,7 +974,7 @@ SELECT * FROM kaa.logs_monitoring_values ;
 		The statistics is displayed in the <b>Sever-side EP profile</b> section.
 		
 		<br />
-		<img src="http://localhost:9080/sandbox/resources/datacollection/08_statistics.png" />
+		<img src="/sandbox/resources/datacollection/08_statistics.png" />
 		<br />
 		<br />
 		

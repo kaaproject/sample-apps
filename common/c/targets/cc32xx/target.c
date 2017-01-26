@@ -338,6 +338,8 @@ int target_wifi_reconnect_if_disconected(void)
 
 int32_t target_get_temperature(void)
 {
-    return -15 + rand() % 61;
+    static const int32_t multiplier = 1000;
+    static const int32_t T = 90;
+    return (6 * (rand() % 100 - 50) + integer_sin((360 * time(NULL) / T, multiplier)) * 25 / multiplier + 15;
 }
 

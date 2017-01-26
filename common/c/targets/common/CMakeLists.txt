@@ -14,5 +14,5 @@
 #  limitations under the License.
 #
 
-add_library(target_common INTERFACE)
-target_include_directories(target_common INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(target_common STATIC integer_math.c)
+target_include_directories(target_common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

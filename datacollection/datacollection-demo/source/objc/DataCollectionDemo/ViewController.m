@@ -18,9 +18,6 @@
 
 @import Kaa;
 
-static const int32_t temperatureLowerLimit = 25;
-static const int32_t temperatureUpperLimit = 35;
-
 @interface ViewController () <KaaClientStateDelegate, ProfileContainer, ConfigurationDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextView *logTextView;
@@ -135,9 +132,13 @@ static const int32_t temperatureUpperLimit = 35;
 }
 
 - (void)generateAndSendLogRecord {
+    int timeStamp = CACurrentMediaTime();
+    int temperature = (0.6 * ((float)(arc4random() % 100) / 100 - 0.5) + sin(2 * M_PI / 90 * timeStamp)) * 25 + 15;
+    
     KAALoggingDataCollection *log = [[KAALoggingDataCollection alloc] init];
-    log.temperature = (arc4random() % (temperatureUpperLimit - temperatureLowerLimit)) + temperatureLowerLimit;
-    log.timeStamp = CACurrentMediaTime() * 1000;
+    log.timeStamp = timeStamp;
+    log.temperature = temperature;
+    
     [self addLogWithText:[NSString stringWithFormat:@"Log sent with temperature: %d, timestamp: %lld", log.temperature, log.timeStamp]];
     
     self.bucketRunnersDictionary[@(log.timeStamp)] = [self.kaaClient addLogRecord:log];

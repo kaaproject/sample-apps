@@ -284,8 +284,7 @@ void menu()
         } else if (!strncmp(answer, "4", strnlen(answer, KAA_STRING_MAX_LENGTH))) {
             print_rooms();
         } else if (!strncmp(answer, "5", strnlen(answer, KAA_STRING_MAX_LENGTH))) {
-            printf("Event demo stopped\n");
-            kaa_list_destroy(lst, &kaa_data_destroy);
+            kaa_client_stop(kaa_client);
             return EXIT_SUCCESS;
         } else {
             printf("Wrong command syntax\n");
@@ -376,6 +375,8 @@ int main(/*int argc, char *argv[]*/)
 
     pthread_join(menu_thread, NULL);
     pthread_mutex_destroy(&lock);
+
+    kaa_list_destroy(lst, &kaa_data_destroy);
 
     /**
      * Destroy Kaa client.

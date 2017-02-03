@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.smarttrashcan;
+package org.kaaproject.kaa.demo.datacollection;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -31,18 +31,9 @@ import org.kaaproject.kaa.client.logging.BucketInfo;
 import org.kaaproject.kaa.client.logging.RecordInfo;
 import org.kaaproject.kaa.client.logging.future.RecordFuture;
 import org.kaaproject.kaa.client.logging.strategies.RecordCountLogUploadStrategy;
-import org.kaaproject.kaa.client.notification.NotificationListener;
 import org.kaaproject.kaa.schema.sample.Configuration;
 import org.kaaproject.kaa.schema.sample.DataCollection;
 
-/**
- * Project: SmartTrashCan
- * Code style: SquareAndroid (https://github.com/square/java-code-styles)
- * Follow me: @tonyshkurenko
- *
- * @author Anton Shkurenko
- * @since 11/7/16
- */
 final class KaaManager {
 
   private static final int DEFAULT_COUNT_THRESHOLD = 1;

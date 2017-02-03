@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.smarttrashcan;
+package org.kaaproject.kaa.demo.datacollection;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,6 +28,7 @@ import android.util.Log;
 import android.widget.TextView;
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.kaaproject.kaa.client.configuration.base.ConfigurationListener;
 import org.kaaproject.kaa.schema.sample.Configuration;
@@ -43,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
   private final Random mRandom = new Random();
   private final Runnable mPeriodicalLogRunnable = new Runnable() {
     @Override public void run() {
-      final int temp = mRandom.nextInt(50);
-      appendLog("Updating progress " + temp + "%", Logger.DEFAULT_COLOR);
-      mKaaCanManager.postDatacollection(temp, System.currentTimeMillis());
+      final long timeStamp = System.currentTimeMillis();
+      final double result = (0.6 * (Math.random() - 0.5) + Math.sin((2 * Math.PI * timeStamp) / 90_000)) * 25 + 15;
+      final int temp = Long.valueOf(Math.round(result)).intValue();
+      appendLog("Log sent with temperature: " + temp + " timestamp: " + timeStamp, Logger.DEFAULT_COLOR);
+      mKaaCanManager.postDatacollection(temp, timeStamp);
     }
   };
 
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         cancelRepeatTask(mCurrentTask);
       }
 
-      mCurrentTask = initRepeatTask(mPeriodicalLogRunnable, sensorConfig.getSamplePeriod());
+      mCurrentTask = initRepeatTask(mPeriodicalLogRunnable, TimeUnit.SECONDS.toMillis(sensorConfig.getSamplePeriod()));
     }
   };
 
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     mKaaCanManager.stop();
   }
 
-  Runnable initRepeatTask(final Runnable task, final int delay) {
+  Runnable initRepeatTask(final Runnable task, final long delay) {
 
     final Runnable repeatTask = new Runnable() {
       @Override public void run() {

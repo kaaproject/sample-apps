@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.smarttrashcan;
+package org.kaaproject.kaa.demo.datacollection;
 
 /**
  * Project: SmartTrashCan

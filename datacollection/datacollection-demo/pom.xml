@@ -115,6 +115,7 @@
                         <descriptor>assembly/src-cpp.xml</descriptor>
                         <descriptor>assembly/src-java.xml</descriptor>
                         <descriptor>assembly/src-objc.xml</descriptor>
+                        <descriptor>assembly/src-android.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

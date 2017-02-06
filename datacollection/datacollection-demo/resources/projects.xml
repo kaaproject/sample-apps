@@ -493,7 +493,7 @@ Make sure that the build target is set to <b>DataCollectionDemo</b>, not <b>Kaa<
         <destBinaryFile></destBinaryFile>
     </project>
         <project id="datacollection_demo_android">
-        <name>Data collection Android-C demo</name>
+        <name>Data collection Android demo</name>
         <description>Kaa Logging subsystem demo app based on Java SDK for Android</description>
         <details>
             <![CDATA[

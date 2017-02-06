@@ -28,7 +28,7 @@
         <fileSet>
             <directory>${project.basedir}/source/android</directory>
             <useDefaultExcludes>true</useDefaultExcludes>
-            <outputDirectory>AndroidDataCollectionDemo</outputDirectory>
+            <outputDirectory>datacollection_demo/DataCollectionDemo</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

@@ -115,17 +115,4 @@ final class KaaManager {
   void stop() {
     mKaaClient.stop();
   }
-
-  private String getAndroidId() {
-
-    if (mAndroidId == null) {
-
-      mAndroidId = "ANDROID_" + Settings.Secure.getString(mContext.getContentResolver(),
-          Settings.Secure.ANDROID_ID);
-
-      mLogger.log("Android id: " + mAndroidId, Color.GREEN);
-    }
-
-    return mAndroidId;
-  }
 }

@@ -178,11 +178,11 @@ public class DataCollectionDemo {
     }
 
     private static DataCollection generateTemperatureSample() {
-        long t = System.currentTimeMillis();
-        double result = (0.6 * (Math.random() - 0.5) + Math.sin((2 * Math.PI * t) / 90_000)) * 25 + 15;
+        long t = System.currentTimeMillis()/1000;
+        double result = (0.6 * (Math.random() - 0.5) + Math.sin((2 * Math.PI * t)/90)) * 25 + 15;
         System.out.println(Math.round(result));
         Integer temperature = Long.valueOf(Math.round(result)).intValue();
-        return new DataCollection(temperature, System.currentTimeMillis());
+        return new DataCollection(temperature, t);
     }
 
     private static void displayConfiguration(Configuration configuration) {

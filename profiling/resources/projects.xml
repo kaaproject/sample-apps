@@ -387,22 +387,16 @@ To launch this sample application on the Kaa C SDK:
 tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
 	</li>
-	<li>
-        Install CMake.
-        To do this, run the following commands (copy and paste them to the terminal all at once).
+    <li>
+Run the <b>build.sh</b> script:
 <pre>
-mkdir -p build \
-&& cd build \
-&& cmake .. \
-&& make
+./build.sh build
 </pre>
-        By default, the project is generated for POSIX platform.
-        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
     </li>
     <li>
-        Run your sample application.
-<pre>
-./build/demo_client
+Run your sample application.
+        <pre>
+./build.sh run
 </pre>
     </li>
 </ol>

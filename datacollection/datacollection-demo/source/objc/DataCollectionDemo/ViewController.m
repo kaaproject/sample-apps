@@ -132,7 +132,7 @@
 }
 
 - (void)generateAndSendLogRecord {
-    int timeStamp = CACurrentMediaTime();
+    int timeStamp = [[NSDate date] timeIntervalSince1970];
     int temperature = (0.6 * ((float)(arc4random() % 100) / 100 - 0.5) + sin(2 * M_PI / 90 * timeStamp)) * 25 + 15;
     
     KAALoggingDataCollection *log = [[KAALoggingDataCollection alloc] init];
@@ -150,7 +150,7 @@
         [self.bucketRunnersQueue addOperationWithBlock:^{
             BucketRunner *runner = self.bucketRunnersDictionary[@(timeStamp)];
             BucketInfo *bucketInfo = [runner getValue];
-            int64_t timeSpent = bucketInfo.scheduledBucketRunnerTimestamp - timeStamp + bucketInfo.bucketDeliveryDuration;
+            int64_t timeSpent = bucketInfo.bucketDeliveryDuration;
             [self addLogWithText:[NSString stringWithFormat:@"Received log record delivery info. Bucket id [%d], delivery time [%lld ms]", bucketInfo.bucketId, timeSpent]];
         }];
     } @catch (NSException *exception) {

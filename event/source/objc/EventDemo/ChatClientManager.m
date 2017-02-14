@@ -42,7 +42,7 @@
     if (self)
     {
         [self initializeKaa];
-        self.defaultRooms = @[@"Living", @"Guest"];
+        self.defaultRooms = @[@"Living room", @"Guest room"];
         self.rooms = [NSMutableArray arrayWithArray:_defaultRooms];
         self.messages = [NSMutableDictionary dictionary];
     }

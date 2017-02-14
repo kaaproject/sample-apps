@@ -137,7 +137,7 @@ static const int32_t temperatureUpperLimit = 35;
 - (void)generateAndSendLogRecord {
     KAALoggingDataCollection *log = [[KAALoggingDataCollection alloc] init];
     log.temperature = (arc4random() % (temperatureUpperLimit - temperatureLowerLimit)) + temperatureLowerLimit;
-    log.timeStamp = CACurrentMediaTime() * 1000;
+    log.timeStamp = [[NSDate date] timeIntervalSince1970];
     [self addLogWithText:[NSString stringWithFormat:@"Log sent with temperature: %d, timestamp: %lld", log.temperature, log.timeStamp]];
     
     self.bucketRunnersDictionary[@(log.timeStamp)] = [self.kaaClient addLogRecord:log];
@@ -149,7 +149,7 @@ static const int32_t temperatureUpperLimit = 35;
         [self.bucketRunnersQueue addOperationWithBlock:^{
             BucketRunner *runner = self.bucketRunnersDictionary[@(timeStamp)];
             BucketInfo *bucketInfo = [runner getValue];
-            int64_t timeSpent = bucketInfo.scheduledBucketRunnerTimestamp - timeStamp + bucketInfo.bucketDeliveryDuration;
+            int64_t timeSpent = bucketInfo.bucketDeliveryDuration;
             [self addLogWithText:[NSString stringWithFormat:@"Received log record delivery info. Bucket id [%d], delivery time [%lld ms]", bucketInfo.bucketId, timeSpent]];
         }];
     } @catch (NSException *exception) {

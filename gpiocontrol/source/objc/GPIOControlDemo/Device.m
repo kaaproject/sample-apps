@@ -41,9 +41,10 @@
 - (NSArray *)getGpioStatuses {
     NSMutableArray *gpioStatuses = [NSMutableArray array];
     for (NSNumber *key in self.gpioStatuses.allKeys) {
-        KAAEventGpioStatus *status = [[KAAEventGpioStatus alloc] init];
-        status.id = key.intValue;
-        status.status = [self.gpioStatuses[key] boolValue];
+        KAAEventGpioStatus *status = [[KAAEventGpioStatus alloc]
+                                      initWithId:key.intValue
+                                      type:@""
+                                      status:self.gpioStatuses[key]];
         [gpioStatuses addObject:status];
     }
     return gpioStatuses;

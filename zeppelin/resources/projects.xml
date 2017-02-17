@@ -150,33 +150,30 @@ Configuration file '/etc/cassandra/cassandra.yaml'
 <pre>
 sudo netstat -ntlp | grep 9042
 </pre>
+    <li>
+        Run the following commands:
 
-        While downgrading from newer versions of Cassandra, you might encounter the following errors.
+        <pre>
+            sudo rm -rf /var/lib/cassandra/commitlog
+            sudo rm -rf /var/lib/cassandra/data</pre>
+    </li>
 
-<pre>
-ERROR - Detected unreadable sstables
-</pre>
-
-or
-
-<pre>
-ERROR - Exception encountered during startup java.lang.IllegalStateException: Unknown commitlog version 6
-</pre>
-
-		If that is the case, run the following commands.
-
-<pre>
-sudo rm -rf /var/lib/cassandra/commitlog
-sudo rm -rf /var/lib/cassandra/data
-</pre>
 	</li>
+
+	<li>
+        Change file: <b>/etc/cassandra/cassandra.yaml</b>:
+	    <pre>enable_user_defined_functions=true</pre>
+	</li>
+
 	<li>
 		Install Java Native Access (JNA).
 		
 <pre>
 sudo apt-get install libjna-java
 </pre>
-		
+		Check that there is no any process that uses port 9042 except cassandra.
+		<pre>netstat -pln | grep 9042</pre>
+
 		Reboot Cassandra cluster.
 		
 <pre>
@@ -275,7 +272,7 @@ and panel_id={{panel_id='Panel 0'}} and timestamp > logs.timeDelta(toUnixTimesta
 
 	<li>
     	Define a function in Cassandra that will return a threshold constant.
-    	<pre>CREATE FUNCTION kaa.getthreshold() RETURNS NULL ON NULL INPUT RETURNS int LANGUAGE java AS $$ return 40; $$</pre>
+    	<pre>CREATE FUNCTION kaa.getthreshold() RETURNS NULL ON NULL INPUT RETURNS int LANGUAGE java AS $$ return 40; $$;</pre>
 	</li>
 
     <li>

@@ -17,7 +17,7 @@
 package org.kaaproject.kaa.demo.datacollection;
 
 /**
- * Project: SmartTrashCan
+ * Project: DataCollectionDemo 
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  *

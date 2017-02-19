@@ -12,6 +12,6 @@
 -->
 
 <resources>
-  <string name="app_name">SmartTrashCan</string>
+  <string name="app_name">DataCollectionDemo</string>
   <string name="action_settings">Settings</string>
 </resources>

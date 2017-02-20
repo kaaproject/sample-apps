@@ -110,7 +110,7 @@
 #pragma mark - ConfigurationDelegate
 
 - (void)onConfigurationUpdate:(KAAConfigurationConfiguration *)configuration {
-    [self addLogWithText:[NSString stringWithFormat:@"Configuration update received. New sample period is is %d", configuration.samplePeriod]];
+    [self addLogWithText:[NSString stringWithFormat:@"Configuration update received. New sample period is %d", configuration.samplePeriod]];
     dispatch_async(dispatch_get_main_queue(), ^{
         // Schedules the new log timer with updated threshold.
         [self repeatedTimerWithTimeInterval:configuration.samplePeriod];

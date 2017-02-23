@@ -129,7 +129,7 @@ sudo apt-get update
 sudo apt-get install cassandra=2.2.5
 </pre>
 		
-		If you receive the following console messages choose <b>Y</b> option for downgrading cassandra.
+		If you receive the following console messages, choose <b>Y</b> option for downgrading cassandra.
 
 <pre>
 Configuration file '/etc/cassandra/cassandra.yaml'
@@ -142,37 +142,40 @@ Configuration file '/etc/cassandra/cassandra.yaml'
 	  Z     : start a shell to examine the situation
  The default action is to keep your current version.
 *** cassandra.yaml (Y/I/N/O/D/Z) [default=N] ?
-
 </pre>
 		
-		Run the following command to check if the Cassandra service is running.
+		Check if the Cassandra service is running.
 		
 <pre>
 sudo netstat -ntlp | grep 9042
 </pre>
-    <li>
-        Run the following commands:
 
-        <pre>
-            sudo rm -rf /var/lib/cassandra/commitlog
-            sudo rm -rf /var/lib/cassandra/data</pre>
-    </li>
+        Recursively delete the <code>commitlog</code> and <code>data</code> directories.
 
+<pre>
+sudo rm -rf /var/lib/cassandra/commitlog
+sudo rm -rf /var/lib/cassandra/data
+</pre>
+
+        Modify the <code>/etc/cassandra/cassandra.yaml</code> file as follows.
+        
+<pre>
+enable_user_defined_functions=true
+</pre>
 	</li>
-
 	<li>
-        Change file: <b>/etc/cassandra/cassandra.yaml</b>:
-	    <pre>enable_user_defined_functions=true</pre>
-	</li>
-
-	<li>
-		Install Java Native Access (JNA).
+	
+		Install <a href="https://github.com/java-native-access/jna" target="_blank">Java Native Access (JNA)</a>.
 
 <pre>
 sudo apt-get install libjna-java
 </pre>
-		Check that there is no any process that uses port 9042 except cassandra.
-		<pre>netstat -pln | grep 9042</pre>
+
+		Make sure no other process is using port 9042 except Cassandra.
+		
+<pre>
+netstat -pln | grep 9042
+</pre>
 
 		Reboot Cassandra cluster.
 
@@ -180,7 +183,7 @@ sudo apt-get install libjna-java
 sudo cassandra
 </pre>
 
-		Check cassandra cql shell.
+		Check Cassandra cql shell.
 
 <pre>
 cqlsh
@@ -192,7 +195,7 @@ cqlsh>
 
 	</li>
 	<li>
-		Add initial data into Cassandra cluster from "cqlsh" shell.
+		Add initial data into Cassandra cluster from the <code>cqlsh</code> shell.
 
 <pre>
 CREATE KEYSPACE logs WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
@@ -258,10 +261,7 @@ and panel_id={{panel_id='Panel 0'}} and timestamp > logs.timeDelta(toUnixTimesta
 </p>
 
 
-
-
 <h2>Configure Zeppelin for DataCollection</h2>
-
 
 
 <ol>
@@ -306,15 +306,8 @@ and panel_id={{panel_id='Panel 0'}} and timestamp > logs.timeDelta(toUnixTimesta
 	    <img src="/sandbox/resources/zeppelin/03_data-collection-zeppelin.png" />
 	    <br/>
 	</li>
-
 </ol>
-
-
-
-
-
-
-]]>
+                ]]>
         </details>
 
 

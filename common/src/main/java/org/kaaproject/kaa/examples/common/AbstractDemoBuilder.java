@@ -155,7 +155,6 @@ public abstract class AbstractDemoBuilder implements DemoBuilder {
     @Override
     public void buildDemoApplication(AdminClient client) throws Exception {
         logger.info("Demo application build started...");
-
         createUsers(client);
         buildDemoApplicationImpl(client);
         projectConfigs = loadProjectConfigs();

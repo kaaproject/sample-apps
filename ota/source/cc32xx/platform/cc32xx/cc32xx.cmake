@@ -49,7 +49,7 @@ include_directories(${CC32XX_SDK}/simplelink/include)
 include_directories(${CC32XX_SDK}/simplelink/source)
 include_directories(${CC32XX_SDK}/example/common)
 
-set(LIB_KAA ${CMAKE_CURRENT_SOURCE_DIR}/build/libkaac_s.a)
+set(LIB_KAA ${CMAKE_CURRENT_SOURCE_DIR}/build/libkaac.a)
 set(LIB_DRIVER ${CC32XX_SDK}/driverlib/gcc/exe/libdriver.a)
 set(LIB_SIMPLELINK_NONOS ${CC32XX_SDK}/simplelink/gcc/exe/libsimplelink_nonos.a)
 set(LIB_GCC ${KAA_ARM_TOOLCHAIN}/lib/gcc/arm-none-eabi/4.9.3/armv7e-m/libgcc.a)

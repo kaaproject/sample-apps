@@ -19,26 +19,31 @@ cmake_minimum_required(VERSION 2.8.8)
 project (C-SDK-sample)
 enable_language(C)
 
-if(KAA_PLATFORM STREQUAL "" OR KAA_PLATFORM STREQUAL "posix")
-  set(KAA_PLATFORM "posix")
-  set(APP_LIBS kaac_s)
-  set(SAMPLE_SOURCE_FILES
-            src/kaa_demo.c 
-     )
-  link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
-else()
-  include(${CMAKE_CURRENT_SOURCE_DIR}/platform/${KAA_PLATFORM}/${KAA_PLATFORM}.cmake)
-endif()
+set(APP_NAME demo_client)
+
+add_definitions(-DSSID="${SSID}")
+add_definitions(-DPWD="${PWD}")
+
+# Disable unused features
+set(WITH_EXTENSION_NOTIFICATION OFF CACHE BOOL "")
+set(WITH_EXTENSION_LOGGING OFF CACHE BOOL "")
+set(WITH_EXTENSION_USER OFF CACHE BOOL "")
+set(WITH_ENCRYPTION OFF CACHE BOOL "")
+
+set(CMAKE_BUILD_TYPE MinSizeRel)
+
+add_subdirectory(libs/kaa)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -g -Wall -Wextra -DSSID='\"${SSID}\"' -DPWD='\"${PWD}\"' \
 -DMAJOR_VERSION=${MAJOR_VERSION} -DMINOR_VERSION=${MINOR_VERSION} -DCLASSIFIER_VERSION='\"${CLASSIFIER_VERSION}\"' -DDEMO_LED=${DEMO_LED} ")
 
+include(platform/${KAA_PLATFORM}/${KAA_PLATFORM}.cmake)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src
                     ${CMAKE_CURRENT_SOURCE_DIR}/libs/kaa/src
                    )
 
-add_executable(${APP_NAME} ${SAMPLE_SOURCE_FILES})
-target_link_libraries(${APP_NAME} ${APP_LIBS})
+add_executable(${APP_NAME} src/kaa_demo.c)
+target_link_libraries(${APP_NAME} kaac)
 
 add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME}.afx ${APP_NAME}.bin)

@@ -19,23 +19,21 @@
 #include <string.h>
 #include <time.h>
 
-#include <kaa/kaa_error.h>
-#include <kaa/kaa_context.h>
-#include <kaa/platform/kaa_client.h>
-#include <kaa/utilities/kaa_log.h>
-#include <kaa/utilities/kaa_mem.h>
-#include <kaa/kaa_user.h>
-#include <kaa/kaa_configuration_manager.h>
-#include <kaa/gen/kaa_profile_gen.h>
-#include <kaa/gen/kaa_configuration_gen.h>
-#include <kaa/kaa_profile.h>
-#include <kaa/platform/time.h>
-#include <kaa/platform/stdio.h>
+#include <kaa_error.h>
+#include <kaa_context.h>
+#include <platform/kaa_client.h>
+#include <utilities/kaa_log.h>
+#include <utilities/kaa_mem.h>
+#include <kaa_configuration_manager.h>
+#include <gen/kaa_profile_gen.h>
+#include <gen/kaa_configuration_gen.h>
+#include <kaa_profile.h>
+#include <platform/time.h>
+#include <platform/stdio.h>
+#include <../platform/cc32xx/cc32xx_support.h>
 
-#include <kaa/platform-impl/cc32xx/cc32xx_file_utils.h>
+#include <platform/file_utils.h>
 
-#ifdef CC32XX
-#include "../platform/cc32xx/cc32xx_support.h"
 
 #define KAA_DEMO_RETURN_IF_ERROR(error, message) \
     if ((error)) { \
@@ -43,14 +41,6 @@
         return (error); \
     }
 #define DEMO_LOG(msg, ...) UART_PRINT(msg "\r", ##__VA_ARGS__);
-#else
-#define KAA_DEMO_RETURN_IF_ERROR(error, message) \
-    if ((error)) { \
-        printf(message ", error code %d\n", (error)); \
-        return (error); \
-    }
-#define DEMO_LOG(msg, ...) printf(msg, ##__VA_ARGS__);
-#endif
 
 static kaa_client_t *kaa_client = NULL;
 static bool is_shutdown = false;
@@ -132,7 +122,7 @@ int main(/*int argc, char *argv[]*/)
 #ifdef CC32XX
     BoardInit();
 
-    if (strlen(get_firmware_version().classifier)) {
+    if (sizeof(get_firmware_version().classifier)) {
         DEMO_LOG("FIRMWARE VERSION=%d.%d-%s\n", get_firmware_version().major, get_firmware_version().minor, get_firmware_version().classifier);
     } else {
         DEMO_LOG("FIRMWARE VERSION=%d.%d\n", get_firmware_version().major, get_firmware_version().minor);

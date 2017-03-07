@@ -85,7 +85,7 @@
         "avro.java.string": "String"
       },
       "displayName": "Table name for monitoring values",
-      "by_default": "logs_monitoring_values"
+      "by_default": "logs_datacollection_monitoring_values"
     },
     {
       "name": "threshold",

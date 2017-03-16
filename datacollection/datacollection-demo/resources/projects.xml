@@ -823,7 +823,7 @@ To send the log records from the Operations service to the Cassandra database, K
 To verify functioning of the Cassandra log appender, run the <code>cqlsh</code> command from the <code>/usr/lib/kaa-node/lib/</code> directory, then run the below command.
 		
 <pre>
-SELECT * FROM kaa.logs_monitoring_values ;
+SELECT * FROM kaa.logs_datacollection_monitoring_values ;
 </pre>
 		
 The console will display the output similar to the one below.
@@ -1051,7 +1051,7 @@ To verify the functioning of the Telemetry monitor log appender:
 		Run the <code>cqlsh</code> command from the <code>/usr/lib/kaa-node/lib/</code> directory, then run the below command.
 		
 <pre>
-SELECT * FROM kaa.logs_monitoring_values ;
+SELECT * FROM kaa.logs_datacollection_monitoring_values ;
 </pre>
 		The console will display the output similar to the one below.
 		

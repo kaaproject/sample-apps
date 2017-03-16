@@ -67,7 +67,6 @@ public class KaaAdminManager {
             LOG.info("Success generation!");
         } catch (IOException | InvalidKeyException | NoSuchAlgorithmException e) {
             LOG.error("Error in generateKeys", e);
-            e.printStackTrace();
         }
     }
 
@@ -90,7 +89,6 @@ public class KaaAdminManager {
             LOG.info("Credentials is successfully provisioned!");
         } catch (NullPointerException | IOException | InvalidKeyException | NoSuchAlgorithmException e) {
             LOG.error("Provision credentials with public key failed. Please check if keys already generated.");
-            e.printStackTrace();
         }
     }
 
@@ -111,7 +109,6 @@ public class KaaAdminManager {
             LOG.info("Credentials is successfully provisioned!");
         } catch (Exception e) {
             LOG.error("Provision credentials with public key failed. Please check your public key.");
-            e.printStackTrace();
         }
     }
 

@@ -905,7 +905,295 @@ See also <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide
 	This means that the sampling period has been changed in the default configuration, and now the application sends the log records every 5 seconds.
 </p>
 
+<h1>Zeppelin data analytics</h1>
+
+<p>
+	This sample <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-application" target="_blank">Kaa application</a> is designed to read power measurements and upload the readings to <a href="http://cassandra.apache.org/" target="_blank">Apache Cassandra</a> for further processing.
+	To follow the guide below, you need to have Cassandra installed on a Zeppelin notebook to be able to make analytics queries against the collected data and generate insightful charts and reports.
+</p>
+
+<p>
+	This application can be used as a prototype for building a production-grade Kaa-based IoT application that collects any kind of sensor data on endpoints and uploads it into the preferred analytics platform.
+</p>
+
+<p>
+	To get some hands-on experience, see the webinar below based on an earlier version of <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#kaa-platform" target="_blank">Kaa platform</a>.
+</p>
+
+<p>
+	<iframe width="691" height="389" src="https://www.youtube.com/embed/MFdQvlnptsM" frameborder="0" allowfullscreen></iframe>
+</p>
+	
+<h2>Cassandra and Zeppelin</h2>
+
+<p>
+	The Apache Cassandra database is an open source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
+	Linear scalability and proven fault-tolerance on commodity hardware or cloud infrastructure make it the perfect platform for mission-critical data.
+</p>
+
+<p>
+	The Apache Zeppelin is a web-based notebook that enables interactive data analytics.
+	You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and virtually any other language or data-processing backend.
+</p>
+
+<h2>Installation</h2>
+
+Follow the steps below to install this sample application on the Kaa Java SDK.
+
+<ol>
+	<li>
+		Prepare your Java SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/Java/" target="_blank">Using Kaa endpoint SDKs</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		Connect to your Kaa Sandbox through ssh by running the following command from the JZeppelinDataAnalyticsDemo directory.
+		
+<pre>
+ssh kaa@YOUR-SANDBOX-IP
+password: kaa
+</pre>
+		
+	</li>
+	<li>
+		Download Apache Zeppelin and install it to your Sandbox.
+				
+<pre>
+cd /opt
+sudo wget http://archive.apache.org/dist/zeppelin/zeppelin-0.6.1/zeppelin-0.6.1-bin-all.tgz
+sudo tar -xzvf zeppelin-0.6.1-bin-all.tgz
+sudo ln -s /opt/zeppelin-0.6.1-bin-all /opt/zeppelin
+cd ./zeppelin/conf
+sudo cp ./zeppelin-env.sh.template  ./zeppelin-env.sh
+</pre>
+		
+		<p>
+			If the download link does not work, you can download the archive directly from the <a href="http://zeppelin.apache.org/download.html" target="_blank">official page</a>.
+		</p>
+	
+			Add the following line into the <b>zeppelin-env.sh</b> file to change the port. Otherwise  Zeppelin will use port 8080 by default.
+
+				
+<pre>
+export ZEPPELIN_PORT=7080
+</pre>
+						
+	</li>
+	<li>
+		Start Zeppelin.
+		
+<pre>
+sudo /opt/zeppelin/bin/zeppelin-daemon.sh start
+</pre>
+		
+		<p>
+			Zeppelin is compatible with Cassandra version 2.2 and earlier.
+			If you have a later version of Cassandra installed, you need to downgrade it to launch Zeppelin.
+		</p>
+		
+		Add the DataStax Community repository to the /etc/apt/sources.list.d/cassandra.sources.list file.
+		
+<pre>
+echo "deb http://debian.datastax.com/community stable main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+</pre>
+	</li>
+	<li>
+		Install Cassandra 2.2.5.
+
+<pre>
+sudo apt-get update
+sudo apt-get install cassandra=2.2.5
+</pre>
+		
+		If you receive the following console messages, choose <b>Y</b> option for downgrading cassandra.
+
+<pre>
+Configuration file '/etc/cassandra/cassandra.yaml'
+ ==> Modified (by you or by a script) after installation.
+ ==> Package distributor has shipped an updated version.
+   Choose an option:
+	Y or I  : install the package maintainer's version
+	N or O  : keep your currently installed version
+	  D     : show differences between the versions
+	  Z     : start a shell to examine the situation
+ The default action is to keep your current version.
+*** cassandra.yaml (Y/I/N/O/D/Z) [default=N] ?
+</pre>
+		
+		Check if the Cassandra service is running.
+		
+<pre>
+sudo netstat -ntlp | grep 9042
+</pre>
+
+        Recursively delete the <code>commitlog</code> and <code>data</code> directories.
+
+<pre>
+sudo rm -rf /var/lib/cassandra/commitlog
+sudo rm -rf /var/lib/cassandra/data
+</pre>
+
+        Modify the <code>/etc/cassandra/cassandra.yaml</code> file as follows.
+        
+<pre>
+enable_user_defined_functions=true
+</pre>
+	</li>
+	<li>
+	
+		Install <a href="https://github.com/java-native-access/jna" target="_blank">Java Native Access (JNA)</a>.
+
+<pre>
+sudo apt-get install libjna-java
+</pre>
+
+		Make sure no other process is using port 9042 except Cassandra.
+		
+<pre>
+netstat -pln | grep 9042
+</pre>
+
+		Reboot Cassandra cluster.
+
+<pre>
+sudo cassandra
+</pre>
+
+		Check Cassandra cql shell.
+
+<pre>
+cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
+Use HELP for help.
+cqlsh>
+</pre>
+
+	</li>
+	<li>
+		Add initial data into Cassandra cluster from the <code>cqlsh</code> shell.
+
+<pre>
+CREATE KEYSPACE logs WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+use logs;
+CREATE OR REPLACE FUNCTION logs.timeFormat(time bigint) RETURNS NULL ON NULL INPUT RETURNS text LANGUAGE java AS $$ return new java.text.SimpleDateFormat("mm:ss").format(new java.util.Date(time));$$;
+CREATE OR REPLACE FUNCTION logs.timeDelta(arg bigint, delta bigint) RETURNS NULL ON NULL INPUT RETURNS bigint LANGUAGE java AS $$ return arg - delta;$$;
+</pre>
+	</li>
+	<li>
+		Recover Cassandra log appenders.
+
+		<p>
+			On the Sandbox main page, click <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administrattion UI</a> and log in as a tenant developer using default <b>devuser</b> username and <b>devuser123</b> password.
+			Open the <b>Log appenders</b> page of the <b>Zeppelin data analytics demo</b> application.
+			On this page, you can manage two log appenders: <b>Panel per row appender</b> and <b>Zone per row appender</b>.
+			Recover the Cassandra log by empty-editing it (only edit name and revert back) for both the appenders and click <b>Save</b>.
+		</p>
+	</li>
+	<li>
+		Open the JZeppelinDataAnalyticsDemo/lib folder and rename kaa-java-ep-sdk-&lt;SDK token&gt;.jar to the kaa-java-ep-sdk.jar.
+	</li>
+	<li>
+		Run the following command from the JZeppelinDataAnalyticsDemo directory to start Zeppelin data analytics demo.
+
+<pre>
+mvn clean install exec:java
+</pre>
+
+	</li>
+	<li>
+		Enter the following address in your browser to open your Zeppelin.
+
+<pre>
+YOUR-SANDBOX-IP:7080/#/
+</pre>
+
+		You can also use <a href="http://localhost:7080/#/">this link</a> when accessing from the same host machine the Sandbox is running on.
+	</li>
+</ol>
+
+<h2>Configure Cassandra Zeppelin interpreter</h2>
+
+To configure the Cassandra Zeppelin interpreter according to your Cassandra cluster configuration, refer to the official <a href="http://zeppelin.incubator.apache.org/">website</a>.
+Below is the illustration of the custom notebook used to test the sample application.
+
+<h3>Panel power</h3>
+
+%cassandra select zone_id, panel_id, power as "power, MW", timeFormat(timestamp) as time from logs.zone_per_row where zone_id={{zone_id='Sierra'}}
+and timestamp > logs.timeDelta(toUnixTimestamp(now()), 60000) ORDER BY timestamp ASC; <br /> <br />
+<img src="/sandbox/resources/zeppelin/01_zeppelin_demo.png" style="width:699px;height:552px;"/> <br />
+
+<h3>Zone power</h3>
+
+%cassandra select zone_id, panel_id, power as "power, MW", timeFormat(timestamp) as time from logs.panel_per_row where zone_id={{zone_id='Sierra'}}
+and panel_id={{panel_id='Panel 0'}} and timestamp > logs.timeDelta(toUnixTimestamp(now()), 60000) ORDER BY timestamp ASC; <br /> <br />
+<img src="/sandbox/resources/zeppelin/02_zeppelin_demo.png" style="width:699px;height:552px;"/> <br /> <br />
+
+<p>
+	After you successfully made a query, additional controls will appear.
+	Click the <b>settings</b> link and arrange the fields as per example below to build your own diagrams.
+	To schedule your updates, use the scheduler by clicking the clock icon on the toolbar.
+	For example, value <b>"0/10 * * * * ?"</b> sets a 10 second update interval.
+</p>
+
+
+<h2>Configure Zeppelin for DataCollection</h2>
+
+
+<ol>
+	<li>
+    	Add <b>kaa</b> keyspace into Cassandra cluster from "cqlsh" shell.
+    	<pre>CREATE KEYSPACE kaa WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};</pre>
+	</li>
+
+	<li>
+    	Define a function in Cassandra that will return a threshold constant.
+    	<pre>CREATE FUNCTION kaa.getthreshold() RETURNS NULL ON NULL INPUT RETURNS int LANGUAGE java AS $$ return 40; $$;</pre>
+	</li>
+
+    <li>
+    	Recover Cassandra log appenders.
+		<p>
+			On the Sandbox main page, click <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Glossary/#administration-ui" target="_blank">Administrattion UI</a> and log in as a tenant developer using default <b>devuser</b> username and <b>devuser123</b> password.
+			Open the <b>Log appenders</b> page of the <b>Data Collection demo</b> application.
+			On this page, you can manage two log appenders: <b>Data collection log appender</b> and <b>Telemetry Monitor</b>.
+			Recover the Cassandra log by empty-editing it (only edit name and revert back) for both the appenders and click <b>Save</b>.
+		</p>
+	</li>
+	<li>
+	    Start <a href="http://localhost:9080/sandbox/#bundleId:bundleId=datacollection_demos" target= "_blank">Data Collection Demo</a> to have some data in the database.
+	</li>
+	<li>
+	    Create new note for Data Collection in Zeppelin via <b>Notebook -> Create new note</b>
+	</li>
+	<li>
+	     Add the following code and run the query:
+         <pre>
+         %cassandra
+            select
+               timestamp_field,
+               temperature_field,
+               kaa.getthreshold()
+            from kaa.logs_datacollection_samples;
+         </pre>
+    </li>
+	<li>
+        Choose the appropriate chart and configure <b>Keys</b> and <b>Values</b> as in the picture:
+	    <br/><br/>
+	    <img src="/sandbox/resources/zeppelin/03_data-collection-zeppelin.png" />
+	    <br/>
+	</li>
+</ol>
+
+
 <h1>Telemetry monitor</h1>
+
 
 The <b>Telemetry monitor</b> is a custom log appender for <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Key-platform-features/Data-collection/" target="_blank">Data collection</a> extension that allows users to detect, process, and save specific threshold values to the database and save statistics to the server profile.
 

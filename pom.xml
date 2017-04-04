@@ -50,7 +50,8 @@
 	    powerplant-couchbase-proxy,
 	    powerplant-dashboard,
 	    twitterled,
-	    vehicletelemetry
+	    vehicletelemetry,
+        zeppelin
 	</excludeSamples>
     </properties>
 

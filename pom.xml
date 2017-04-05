@@ -51,7 +51,7 @@
 	    powerplant-dashboard,
 	    twitterled,
 	    vehicletelemetry,
-        zeppelin
+            zeppelin
 	</excludeSamples>
     </properties>
 

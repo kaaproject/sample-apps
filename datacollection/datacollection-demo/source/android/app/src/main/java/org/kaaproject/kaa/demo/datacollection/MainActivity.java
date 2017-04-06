@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
   private final Random mRandom = new Random();
   private final Runnable mPeriodicalLogRunnable = new Runnable() {
     @Override public void run() {
-      final long timeStamp = System.currentTimeMillis();
-      final double result = (0.6 * (Math.random() - 0.5) + Math.sin((2 * Math.PI * timeStamp) / 90_000)) * 25 + 15;
+      final long timeStamp = System.currentTimeMillis()/1000;
+      final double result = (0.6 * (Math.random() - 0.5) + Math.sin((2 * Math.PI * timeStamp) / 90)) * 25 + 15;
       final int temp = Long.valueOf(Math.round(result)).intValue();
       appendLog("Log sent with temperature: " + temp + " timestamp: " + timeStamp, Logger.DEFAULT_COLOR);
       mKaaCanManager.postDatacollection(temp, timeStamp);

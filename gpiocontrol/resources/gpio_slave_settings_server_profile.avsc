@@ -1,0 +1,31 @@
+{
+  "type" : "record",
+  "name" : "GPIOSlaveSettings",
+  "namespace" : "org.kaaproject.kaa.examples.gpiocontrol",
+  "fields" : [ {
+    "name" : "LockSettings",
+    "type" : {
+      "type" : "array",
+      "items" : {
+        "type" : "record",
+        "name" : "LockEntry",
+        "fields" : [ {
+          "name" : "id",
+          "type" : "long",
+          "by_default" : -1
+        }, {
+          "name" : "lockPassword",
+          "type" : {
+            "type" : "string",
+            "avro.java.string" : "String"
+          },
+          "maxLength" : 40,
+          "inputType" : "plain"
+        } ]
+      }
+    }
+  } ],
+  "version" : 1,
+  "displayName" : "GPIO Controller server side settings",
+  "description" : "GPIO Controller server side settings"
+}

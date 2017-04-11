@@ -16,19 +16,11 @@
 
 package org.kaaproject.kaa.examples.gpiocontrol;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.kaaproject.kaa.common.dto.ApplicationDto;
+import org.kaaproject.kaa.common.dto.ServerProfileSchemaDto;
 import org.kaaproject.kaa.common.dto.admin.SdkProfileDto;
-import org.kaaproject.kaa.common.dto.event.ApplicationEventAction;
-import org.kaaproject.kaa.common.dto.event.ApplicationEventFamilyMapDto;
-import org.kaaproject.kaa.common.dto.event.ApplicationEventMapDto;
-import org.kaaproject.kaa.common.dto.event.EventClassDto;
-import org.kaaproject.kaa.common.dto.event.EventClassFamilyDto;
-import org.kaaproject.kaa.common.dto.event.EventClassType;
+import org.kaaproject.kaa.common.dto.ctl.CTLSchemaDto;
+import org.kaaproject.kaa.common.dto.event.*;
 import org.kaaproject.kaa.common.dto.user.UserVerifierDto;
 import org.kaaproject.kaa.examples.common.AbstractDemoBuilder;
 import org.kaaproject.kaa.examples.common.KaaDemoBuilder;
@@ -42,11 +34,16 @@ import org.kaaproject.kaa.server.verifiers.trustful.config.TrustfulVerifierConfi
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @KaaDemoBuilder
 public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
-    private static final Logger logger = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GPIOcontrolDemoBuilder.class);
 
     private static final String GPIO_MASTER_ANDROID_ID = "gpiocontrol_demo_android_master";
     private static final String GPIO_MASTER_OBJC_ID = "gpiocontrol_demo_objc_master";
@@ -83,7 +80,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
     @Override
     protected void buildDemoApplicationImpl(AdminClient client) throws Exception {
 
-        logger.info("Loading 'GPIO control Demo Application' data...");
+        LOG.info("Loading 'GPIO control Demo Application' data...");
 
         loginTenantAdmin(client);
 
@@ -106,9 +103,24 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
         loginTenantDeveloper(client);
 
         configureMasterApp(client, GPIOcontrolApplicationMaster.getId(), GPIOcontrolApplicationMaster.getApplicationToken(), ecfMap);
+
+        configureServerSideProfileForSlaveApp(client, GPIOcontrolApplicationSlave);
         configureSlaveApp(client, GPIOcontrolApplicationSlave.getId(), GPIOcontrolApplicationSlave.getApplicationToken(), ecfMap);
 
-        logger.info("Finished loading 'GPIO control Demo Application' data.");
+        LOG.info("Finished loading 'GPIO control Demo Application' data.");
+    }
+
+    private void configureServerSideProfileForSlaveApp(AdminClient client, ApplicationDto GPIOcontrolApplicationSlave) throws Exception {
+        LOG.info("GPIO control Demo: Creating server profile schema for GPIO Slave settings...");
+        CTLSchemaDto serverProfileCtlSchema = saveCTLSchemaWithAppToken(client, "gpio_slave_settings_server_profile.avsc", GPIOcontrolApplicationSlave);
+        ServerProfileSchemaDto serverProfileSchemaDto = new ServerProfileSchemaDto();
+        serverProfileSchemaDto.setApplicationId(GPIOcontrolApplicationSlave.getId());
+        serverProfileSchemaDto.setName("GPIOSlaveSettings");
+        serverProfileSchemaDto.setVersion(serverProfileCtlSchema.getVersion());
+        serverProfileSchemaDto.setCtlSchemaId(serverProfileCtlSchema.getId());
+        serverProfileSchemaDto.setDescription("GPIO Controller server side settings");
+        serverProfileSchemaDto = client.saveServerProfileSchema(serverProfileSchemaDto);
+        LOG.info("GPIO Slave settings schema was created: [{}]", serverProfileSchemaDto);
     }
 
     private void configureMasterApp(AdminClient client,

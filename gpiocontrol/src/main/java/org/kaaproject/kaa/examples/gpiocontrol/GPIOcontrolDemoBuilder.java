@@ -47,6 +47,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
     private static final String GPIO_MASTER_ANDROID_ID = "gpiocontrol_demo_android_master";
     private static final String GPIO_MASTER_OBJC_ID = "gpiocontrol_demo_objc_master";
+    private static final String GPIO_MASTER_POSIX_C_ID = "gpiocontrol_demo_posix_c_master";
     private static final String GPIO_C_ID = "gpiocontrol_demo_c_slave";
     private static final String GPIO_CPP_ID = "gpiocontrol_demo_cpp_slave";
     private static final String GPIO_ARTIK5_ID = "gpiocontrol_demo_artik5_slave";
@@ -140,6 +141,7 @@ public class GPIOcontrolDemoBuilder extends AbstractDemoBuilder {
 
         projectsSdkMap.put(GPIO_MASTER_ANDROID_ID, sdkProfile);
         projectsSdkMap.put(GPIO_MASTER_OBJC_ID, sdkProfile);
+        projectsSdkMap.put(GPIO_MASTER_POSIX_C_ID, sdkProfile);
     }
 
     private void configureSlaveApp(AdminClient client,

@@ -165,13 +165,51 @@ After you successfully installed this app on your CC32XX device, go to "GPIO con
         <description>GPIO control POSIX C app that demonstrates capabilities of the Kaa Event subsystem</description>
         <details>
             <![CDATA[
-<h2>Installation</h2>
-Download the source code by clicking the "Source" button on the left. Unpack the downloaded archive and run the application using the following command in the console:
+<h1>Launching</h1>
+
+To launch this sample application on the Kaa C SDK:
+
+<ol>
+	<li>
+		Prepare your C SDK environment.
+		To do this, follow the instructions in <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/C/" target="_blank">Using Kaa C SDK</a>.
+	</li>
+	<li>
+		Click the <b>Source</b> button.
+		A project source download window will open.
+		Click <b>Ok</b> and download the .tar.gz file.
+	</li>
+	<li>
+		Unpack the downloaded archive.
+	</li>
+	<li>
+		Unpack the SDK archive.
 <pre>
-$ cmake ..
+tar -zxf libs/kaa/kaa* -C libs/kaa
 </pre>
-<h2>Playing around</h2>
-After you successfully installed this app on your device, go to "GPIO control Android" or "GPIO control iOS" Sandbox app and follow the steps described there.
+	</li>
+	<li>
+        Install CMake.
+        To do this, run the following commands (copy and paste them to the terminal all at once).
+<pre>
+mkdir -p build \
+&& cd build \
+&& cmake .. \
+&& make
+</pre>
+        By default, the project is generated for POSIX platform.
+        To build a project for other supported platforms, see <a href="http://kaaproject.github.io/kaa/docs/v0.10.0/Programming-guide/Using-Kaa-endpoint-SDKs/" target="_blank">Using Kaa endpoint SDKs</a>.
+    </li>
+    <li>
+        Run your sample application.
+<pre>
+./build/demo_client
+</pre>
+    </li>
+</ol>
+
+<h1>Playing around</h1>
+After you successfully installed this application on your device, go to <b>GPIO control Android</b> or <b>GPIO control iOS</b> Sandbox application and follow the page instructions.
             ]]>
         </details>
 

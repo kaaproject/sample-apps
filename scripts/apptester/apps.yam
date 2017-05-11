@@ -59,13 +59,13 @@ configuration:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "configuration/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 verifiers:
   name: "User verifiers demo"
@@ -75,13 +75,13 @@ verifiers:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "verifiers/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 credentials:
   name: "Credentials demo"
@@ -91,13 +91,13 @@ credentials:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "credentials/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 datacollection:
   name: "Data collection demo"
@@ -107,13 +107,13 @@ datacollection:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "datacollection/datacollection-demo/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 event:
   name: "Event demo"
@@ -123,13 +123,13 @@ event:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "event/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 notification:
   name: "Notification demo"
@@ -139,13 +139,13 @@ notification:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "notification/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 storm:
   name: "Storm data analytics demo"
@@ -155,13 +155,13 @@ storm:
       platform:
         posix:
           dependencies: [["common/c/targets", "targets"], ["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "storm/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 spark:
   name: "Spark data analytics demo"
@@ -171,7 +171,7 @@ spark:
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
 
 profiling:
   name: "Endpoint profiles and grouping demo"
@@ -181,10 +181,10 @@ profiling:
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"
     cpp:
       src: "profiling/source/cpp"
       platform:
         posix:
           dependencies: [["common/build-scripts/CMakeLists.txt", "."]]
-          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make"
+          buildcmd: "tar -zxf libs/kaa/kaa* -C libs/kaa && mkdir -p build && cd build && cmake .. && make -j5"

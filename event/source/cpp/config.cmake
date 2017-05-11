@@ -21,5 +21,7 @@ set(KAA_WITHOUT_CONFIGURATION 1)
 set(KAA_WITHOUT_NOTIFICATIONS 1)
 set(KAA_WITHOUT_LOGGING 1)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
+
 add_executable(demo_client src/KaaDemo.cpp)
 target_link_libraries(demo_client kaacpp)

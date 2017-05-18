@@ -34,10 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -47,7 +44,7 @@ public class DataCollectionDemo {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataCollectionDemo.class);
     private static final int LOGS_DEFAULT_THRESHOLD = 1;
-    private static final int MAX_SECONDS_TO_INIT_KAA = 2;
+    private static final int MAX_SECONDS_TO_INIT_KAA = 5;
     private static final int MAX_SECONDS_BEFORE_STOP = 3;
 
     private static int samplePeriodInSeconds = 1;
@@ -58,16 +55,18 @@ public class DataCollectionDemo {
     private static ScheduledExecutorService executor;
     private static ScheduledFuture<?> executorHandle;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         LOG.info("--= Data collection demo started =--");
 
         /*
          * Create a Kaa client with the Kaa desktop context.
          */
+        final CountDownLatch startupLatch = new CountDownLatch(1);
         KaaClient kaaClient = Kaa.newClient(new DesktopKaaPlatformContext(), new SimpleKaaClientStateListener() {
             @Override
             public void onStarted() {
                 LOG.info("--= Kaa client started =--");
+                startupLatch.countDown();
             }
 
             @Override
@@ -103,6 +102,7 @@ public class DataCollectionDemo {
          * Start the Kaa client and connect it to the Kaa server.
          */
         kaaClient.start();
+        startupLatch.await();
         sleepForSeconds(MAX_SECONDS_TO_INIT_KAA);
 
         /*

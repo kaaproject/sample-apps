@@ -22,6 +22,7 @@
     <version>2.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+
     <name>Sample applications for Kaa Sandbox</name>
     <url>http://kaaproject.org</url>
 
@@ -461,6 +462,6 @@
             <id>repository.kaaproject.shapshots</id>
             <url>http://repository.kaaproject.org/repository/snapshots/</url>
         </repository>
-    </repositories>
 
+    </repositories>
 </project>
